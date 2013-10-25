@@ -70,6 +70,24 @@ namespace Hl7.Fhir.ModelBinding.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot deserialize to primitive type {0}.
+        /// </summary>
+        internal static string CannotDeserializePrimitive {
+            get {
+                return ResourceManager.GetString("CannotDeserializePrimitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can only deserialize to IList: type {0} does not implement IList.
+        /// </summary>
+        internal static string CanOnlyDeserializeIList {
+            get {
+                return ResourceManager.GetString("CanOnlyDeserializeIList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No data to deserialize (data is null).
         /// </summary>
         internal static string DataToDeserializeNull {

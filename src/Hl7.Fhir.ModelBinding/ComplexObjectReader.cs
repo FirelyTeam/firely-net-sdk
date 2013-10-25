@@ -22,11 +22,14 @@ namespace Hl7.Fhir.ModelBinding
         public object Deserialize(object existingInstance)
         {
             if (existingInstance == null) throw Error.ArgumentNull("existingInstance");
-
+           
             Type objectType = existingInstance.GetType();
+            if (objectType.IsPrimitive) throw Error.InvalidOperation(Messages.CannotDeserializePrimitive, objectType.Name);
 
             var typeMembers = ReflectionHelper.FindPublicProperties(objectType);
                 
+            //TODO: is reader on complex object?
+
             foreach (var memberData in _data)
             {
                 var memberName = memberData.Key;
@@ -37,11 +40,24 @@ namespace Hl7.Fhir.ModelBinding
                 if (typeMembers.TryGetValue(memberName.ToUpperInvariant(), out propInfo))
                 {
                     Debug.WriteLine("Handling member " + memberName);
+                    if( memberData.Value is JObject )
+                    {
+                        //TODO: check whether property is not a primitive
+                        var subReader = new ComplexObjectReader((JObject)memberData.Value);
+                        var propValue = subReader.Deserialize(propInfo.PropertyType);
+                    }
+                    else if (memberData.Value is JArray)
+                    {
+                        //TODO: check whether property is indeed enumerable
+
+                    }
                 }
                 else
                 {
                     if (BindingConfiguration.AcceptUnknownMembers == false)
-                        Error.InvalidOperation(Messages.DeserializeUnknownMember, memberName);
+                        throw Error.InvalidOperation(Messages.DeserializeUnknownMember, memberName);
+                    else
+                        Debug.WriteLine("Skipping unknown member " + memberName);
                 }
 
                 //TODO: get the member's type
@@ -56,15 +72,15 @@ namespace Hl7.Fhir.ModelBinding
 
         public object Deserialize(Type expectedType)
         {
-            if (_data == null) Error.InvalidOperation(Messages.DataToDeserializeNull);
             if (expectedType == null) throw Error.ArgumentNull("expectedType");
+            if (expectedType.IsPrimitive) throw Error.InvalidOperation(Messages.CannotDeserializePrimitive, expectedType.Name);
 
             var factory = BindingConfiguration.ModelClassFactories != null ?
                 BindingConfiguration.ModelClassFactories.FindFactory(expectedType) : null;
-            if (factory == null) Error.InvalidOperation(Messages.NoSuchClassFactory, expectedType.Name);
+            if (factory == null) throw Error.InvalidOperation(Messages.NoSuchClassFactory, expectedType.Name);
 
             object result = factory.Create(expectedType);
-            if(result == null) Error.InvalidOperation(Messages.FactoryCreationFailed);
+            if(result == null) throw Error.InvalidOperation(Messages.FactoryCreationFailed);
 
             return Deserialize(result);
         }

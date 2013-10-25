@@ -83,9 +83,9 @@ namespace Hl7.Fhir.ModelBinding
         /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static void ArgumentNullOrEmpty(string parameterName)
+        internal static ArgumentException ArgumentNullOrEmpty(string parameterName)
         {
-            Error.Argument(parameterName, Messages.ArgumentNullOrEmpty, parameterName);
+            return Error.Argument(parameterName, Messages.ArgumentNullOrEmpty, parameterName);
         }
 
 

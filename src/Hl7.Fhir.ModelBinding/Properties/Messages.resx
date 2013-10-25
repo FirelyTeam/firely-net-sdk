@@ -120,6 +120,12 @@
   <data name="ArgumentNullOrEmpty" xml:space="preserve">
     <value>The argument '{0}' is null or empty.</value>
   </data>
+  <data name="CannotDeserializePrimitive" xml:space="preserve">
+    <value>Cannot deserialize to primitive type {0}</value>
+  </data>
+  <data name="CanOnlyDeserializeIList" xml:space="preserve">
+    <value>Can only deserialize to IList: type {0} does not implement IList</value>
+  </data>
   <data name="DataToDeserializeNull" xml:space="preserve">
     <value>No data to deserialize (data is null)</value>
   </data>

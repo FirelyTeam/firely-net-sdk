@@ -10,7 +10,7 @@ namespace Hl7.Fhir.ModelBinding
     {
         internal static IDictionary<string,PropertyInfo> FindPublicProperties(Type t)
         {
-            if(t == null) Error.ArgumentNull("t");
+            if(t == null) throw Error.ArgumentNull("t");
 
             var props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
@@ -19,6 +19,23 @@ namespace Hl7.Fhir.ModelBinding
                 result.Add(prop.Name.ToUpperInvariant(), prop);
 
             return result;
+        }
+
+        internal static bool HasDefaultPublicConstructor(Type t)
+        {
+            if (t == null) throw Error.ArgumentNull("t");
+
+            if (t.IsValueType)
+                return true;
+
+            return (GetDefaultPublicConstructor(t) != null);
+        }
+
+        public static ConstructorInfo GetDefaultPublicConstructor(Type t)
+        {
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+
+            return t.GetConstructors(bindingFlags).SingleOrDefault(c => !c.GetParameters().Any());
         }
     }
 }
