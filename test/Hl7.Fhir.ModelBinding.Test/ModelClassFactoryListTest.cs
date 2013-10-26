@@ -34,7 +34,7 @@ namespace Hl7.Fhir.ModelBinding.Test
 
             var specificFactory = new SpecificModelClassFactory();
             BindingConfiguration.ModelClassFactories.Add(specificFactory);
-            var defaultFactory = new DefaultModelClassFactory();
+            var defaultFactory = new DefaultModelFactory();
             BindingConfiguration.ModelClassFactories.Add(defaultFactory);
 
             var selectedFactory = BindingConfiguration.ModelClassFactories.FindFactory(typeof(SpecificModelClass));

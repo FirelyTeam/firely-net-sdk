@@ -57,10 +57,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DefaultModelClassFactoryTest.cs" />
+    <Compile Include="DefaultModelFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelClassFactoryListTest.cs" />
-    <Compile Include="ComplexObjectReaderTest.cs" />
+    <Compile Include="ComplexMemberReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Hl7.Fhir.ModelBinding\Hl7.Fhir.ModelBinding.csproj">

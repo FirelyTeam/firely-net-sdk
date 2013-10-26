@@ -120,11 +120,11 @@
   <data name="ArgumentNullOrEmpty" xml:space="preserve">
     <value>The argument '{0}' is null or empty.</value>
   </data>
-  <data name="CannotDeserializePrimitive" xml:space="preserve">
-    <value>Cannot deserialize to primitive type {0}</value>
+  <data name="CanOnlyDeserializeComplex" xml:space="preserve">
+    <value>Can only deserialize model classes, not {0}</value>
   </data>
-  <data name="CanOnlyDeserializeIList" xml:space="preserve">
-    <value>Can only deserialize to IList: type {0} does not implement IList</value>
+  <data name="CanOnlyDeserializeTypedCollections" xml:space="preserve">
+    <value>Can only deserialize typed collections: type {0} is neither an array, nor does it implement IEnumerable&lt;T&gt;</value>
   </data>
   <data name="DataToDeserializeNull" xml:space="preserve">
     <value>No data to deserialize (data is null)</value>

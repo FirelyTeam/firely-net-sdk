@@ -13,40 +13,29 @@ namespace Hl7.Fhir.ModelBinding
 {
     public class RepeatingMemberReader
     {
-        private JObject _data;
+        private JArray _data;
 
-        public RepeatingMemberReader(JObject data)
+        public RepeatingMemberReader(JArray data)
         {
             _data = data;
         }
 
-        public object Deserialize(IList existingInstance)
+        public void Deserialize(IList existingInstance)
         {
             if (existingInstance == null) throw Error.ArgumentNull("existingInstance");
 
             Type objectType = existingInstance.GetType();
-            if (!typeof(IList).IsAssignableFrom(objectType)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeIList, objectType.Name);
-               
-            //TODO: is reader on array?
-            
-            
-            return existingInstance;
-        }
+            if (!ReflectionHelper.IsTypedCollection(objectType)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeTypedCollections, objectType.Name);
 
-        public object Deserialize(Type expectedType)
-        {
-            if (expectedType == null) throw Error.ArgumentNull("expectedType");
-            if (!typeof(IList).IsAssignableFrom(expectedType)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeIList, expectedType.Name);
+            Type elementType = ReflectionHelper.GetCollectionItemType(objectType);
 
-            var factory = BindingConfiguration.ModelClassFactories != null ?
-                BindingConfiguration.ModelClassFactories.FindFactory(expectedType) : null;
-            if (factory == null) throw Error.InvalidOperation(Messages.NoSuchClassFactory, expectedType.Name);
+            foreach(var element in _data)
+            {
+                var reader = new DispatchingReader(element);
+                var result = reader.Deserialize(elementType);
 
-            IList result = factory.Create(expectedType) as IList;
-            if(result == null) throw Error.InvalidOperation(Messages.FactoryCreationFailed);
-
-            return Deserialize(result);
+                existingInstance.Add(result);
+            }
         }
     }
-
 }

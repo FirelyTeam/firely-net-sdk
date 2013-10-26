@@ -70,20 +70,20 @@ namespace Hl7.Fhir.ModelBinding.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot deserialize to primitive type {0}.
+        ///   Looks up a localized string similar to Can only deserialize model classes, not {0}.
         /// </summary>
-        internal static string CannotDeserializePrimitive {
+        internal static string CanOnlyDeserializeComplex {
             get {
-                return ResourceManager.GetString("CannotDeserializePrimitive", resourceCulture);
+                return ResourceManager.GetString("CanOnlyDeserializeComplex", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can only deserialize to IList: type {0} does not implement IList.
+        ///   Looks up a localized string similar to Can only deserialize typed collections: type {0} is neither an array, nor does it implement IEnumerable&lt;T&gt;.
         /// </summary>
-        internal static string CanOnlyDeserializeIList {
+        internal static string CanOnlyDeserializeTypedCollections {
             get {
-                return ResourceManager.GetString("CanOnlyDeserializeIList", resourceCulture);
+                return ResourceManager.GetString("CanOnlyDeserializeTypedCollections", resourceCulture);
             }
         }
         

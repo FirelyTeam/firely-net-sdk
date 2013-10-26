@@ -8,7 +8,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.ModelBinding.Test
 {
     [TestClass]
-    public class ComplexObjectReaderTest
+    public class ComplexMemberReaderTest
     {
         [TestMethod]
         public void TestLoadObject()
@@ -18,8 +18,13 @@ namespace Hl7.Fhir.ModelBinding.Test
             var root = JObject.Load(jsonReader);
             BindingConfiguration.AcceptUnknownMembers = true;
 
-            var objReader = new ComplexObjectReader(root);
-            var result = objReader.Deserialize(typeof(Patient));
+           // var objReader = new ComplexMemberReader(root);
+           // var result = objReader.Deserialize(typeof(Patient));
+
+            BindingConfiguration.ModelAssemblies.Add(typeof(Resource).Assembly);
+
+            var reader = new DispatchingReader(root);
+            var result = reader.Deserialize();
         }
     }
 }

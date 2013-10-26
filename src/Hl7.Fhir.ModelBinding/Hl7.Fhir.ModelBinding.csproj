@@ -41,9 +41,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BindingConfiguration.cs" />
+    <Compile Include="DispatchingReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RepeatingMemberReader.cs" />
-    <Compile Include="ComplexObjectReader.cs" />
-    <Compile Include="DefaultModelClassFactory.cs" />
+    <Compile Include="ComplexMemberReader.cs" />
+    <Compile Include="DefaultModelFactory.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

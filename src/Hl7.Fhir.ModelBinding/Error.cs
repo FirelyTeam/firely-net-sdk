@@ -122,8 +122,18 @@ namespace Hl7.Fhir.ModelBinding
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static NotSupportedException NotSupported(string messageFormat, params object[] messageArgs)
         {
-
             return new NotSupportedException(Error.Format(messageFormat, messageArgs));
+        }
+
+        /// <summary>
+        /// Creates an <see cref="NotImplementedException"/>.
+        /// </summary>
+        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+        /// <returns>The logged <see cref="Exception"/>.</returns>
+        internal static NotImplementedException NotImplemented(string messageFormat, params object[] messageArgs)
+        {
+            return new NotImplementedException(Error.Format(messageFormat, messageArgs));
         }
     }
 }
