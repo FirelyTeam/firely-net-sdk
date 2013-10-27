@@ -20,22 +20,26 @@ namespace Hl7.Fhir.ModelBinding
             _data = data;
         }
 
-        public void Deserialize(IList existingInstance)
+        public IList Deserialize(Type type, IList instance=null)
         {
-            if (existingInstance == null) throw Error.ArgumentNull("existingInstance");
+            if (type == null) throw Error.ArgumentNull("type");
 
-            Type objectType = existingInstance.GetType();
-            if (!ReflectionHelper.IsTypedCollection(objectType)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeTypedCollections, objectType.Name);
+            if (!ReflectionHelper.IsTypedCollection(type)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeTypedCollections, type.Name);
 
-            Type elementType = ReflectionHelper.GetCollectionItemType(objectType);
+            Type elementType = ReflectionHelper.GetCollectionItemType(type);
+
+            if(instance == null)
+                instance = (IList)BindingConfiguration.ModelClassFactories.InvokeFactory(type);
 
             foreach(var element in _data)
             {
                 var reader = new DispatchingReader(element);
                 var result = reader.Deserialize(elementType);
 
-                existingInstance.Add(result);
+                instance.Add(result);
             }
+
+            return instance;
         }
     }
 }

@@ -22,15 +22,17 @@ namespace Hl7.Fhir.ModelBinding
             _data = data;
         }
 
-        public void Deserialize(object existingInstance)
+        public object Deserialize(Type type, object instance=null)
         {
-            if (existingInstance == null) throw Error.ArgumentNull("existingInstance");
+            if (type == null) throw Error.ArgumentNull("type");
            
-            Type objectType = existingInstance.GetType();
-            if (!ReflectionHelper.IsComplexType(objectType)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeComplex, objectType.Name);
+            if (!ReflectionHelper.IsComplexType(type)) throw Error.InvalidOperation(Messages.CanOnlyDeserializeComplex, type.Name);
 
-            var typeMembers = ReflectionHelper.FindPublicProperties(objectType);
-                
+            var typeMembers = ReflectionHelper.FindPublicProperties(type);
+
+            if (instance == null)
+                instance = BindingConfiguration.ModelClassFactories.InvokeFactory(type);
+
             foreach (var memberData in _data)
             {
                 var memberName = memberData.Key;
@@ -42,16 +44,13 @@ namespace Hl7.Fhir.ModelBinding
                 {
                     Debug.WriteLine("Handling member " + memberName);
 
-                    var value = propInfo.GetValue(existingInstance,null);
+                    var value = propInfo.GetValue(instance,null);
 
                     var reader = new DispatchingReader(_data[memberName]);
 
-                    if (value == null)
-                        value = reader.Deserialize(propInfo.PropertyType);
-                    else
-                        value = reader.Deserialize(value);
+                    value = reader.Deserialize(propInfo.PropertyType,value);
 
-                    propInfo.SetValue(existingInstance, value, null);
+                    propInfo.SetValue(instance, value, null);
                 }
                 else if(NORMALIZED_RESOURCETYPE_MEMBER_NAME.Equals(normalizedMemberName))
                 {
@@ -73,6 +72,8 @@ namespace Hl7.Fhir.ModelBinding
                 //TODO: handle narrative
                 //TODO: handle contained objects
             }
+
+            return instance;
         }
     }
 

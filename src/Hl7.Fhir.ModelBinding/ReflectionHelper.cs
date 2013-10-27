@@ -55,13 +55,14 @@ namespace Hl7.Fhir.ModelBinding
 
         internal static bool IsPrimitive(Type objectType)
         {
-            return objectType.IsPrimitive;
+            return objectType.IsPrimitive || objectType == typeof(string);
         }
 
         internal static bool IsComplexType(Type objectType)
         {
             //TODO: This can probably be improved on
-            return !IsPrimitive(objectType) && !IsCollection(objectType);
+            return !IsPrimitive(objectType) && !IsCollection(objectType) &&
+                !IsNullableType(objectType) && !IsEnum(objectType);
         }
 
 
@@ -178,5 +179,6 @@ namespace Hl7.Fhir.ModelBinding
         {
             return type.IsEnum;
         }
+
     }
 }

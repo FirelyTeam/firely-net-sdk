@@ -18,46 +18,51 @@ namespace Hl7.Fhir.ModelBinding
             _data = data;
         }
 
-        public object Deserialize(object instance)
+        public object Deserialize(Type type, object instance=null)
         {
-            Type type = instance.GetType();
+            if (type == null) throw Error.ArgumentNull("type");
 
-            if (ReflectionHelper.IsPrimitive(type))
+            var typeToDeserialize = type;
+
+            if (ReflectionHelper.IsNullableType(type))
+                typeToDeserialize = ReflectionHelper.GetNullableArgument(type);
+
+            if (ReflectionHelper.IsPrimitive(typeToDeserialize))
             {
                 // throw Error.NotImplemented("Cannot yet read primitives");
                 Debug.WriteLine("Cannot yet handle primitive");
                 return instance;
             }
-            if(ReflectionHelper.IsTypedCollection(type))
+            if(ReflectionHelper.IsTypedCollection(typeToDeserialize))
             {
                 if (_data is JArray)
                 {
                     var reader = new RepeatingMemberReader((JArray)_data);
-                    reader.Deserialize((IList)instance);
+                    reader.Deserialize(typeToDeserialize, (IList)instance);
                     return instance;
                 }
                 else
                     throw Error.InvalidOperation("Trying to read a collection, but reader is not at a repeating member");
             }
-            if (ReflectionHelper.IsComplexType(type))
+            if (ReflectionHelper.IsComplexType(typeToDeserialize))
             {
                 if (_data is JObject)
                 {
                     var reader = new ComplexMemberReader((JObject)_data);
-                    reader.Deserialize(instance);
+                    reader.Deserialize(typeToDeserialize, instance);
                     return instance;
                 }
                 else
                     throw Error.InvalidOperation("Trying to read a complex object, but reader is not at an object member");
             }
-            else if (ReflectionHelper.IsEnum(type))
+            else if (ReflectionHelper.IsEnum(typeToDeserialize))
             {
                 // throw Error.NotImplemented("Cannot yet read enumerations");
                 Debug.WriteLine("Cannot yet handle enumerations");
                 return instance;
             }
             else
-                throw Error.InvalidOperation("Don't know how to read data for type {0}", type.Name);
+                throw Error.InvalidOperation("Don't know how to read data for type {0}", typeToDeserialize.Name);
         }
 
 
@@ -88,18 +93,6 @@ namespace Hl7.Fhir.ModelBinding
             }
 
             throw Error.InvalidOperation("Cannot determine type to create from input data");
-        }
-
-
-        public object Deserialize(Type type)
-        {
-            if (type == null) throw Error.ArgumentNull("expectedType");
-
-            //TODO: if type is an interface (e.g. IList<X> member), this won't work
-            //Factories have to know to fill IList<T> with a new List<T> ?
-            var result = BindingConfiguration.ModelClassFactories.InvokeFactory(type);
-
-            return Deserialize(result);
         }
 
         public object Deserialize()

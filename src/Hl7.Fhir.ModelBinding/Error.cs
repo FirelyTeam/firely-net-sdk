@@ -135,5 +135,14 @@ namespace Hl7.Fhir.ModelBinding
         {
             return new NotImplementedException(Error.Format(messageFormat, messageArgs));
         }
+
+        /// <summary>
+        /// Creates an <see cref="NotImplementedException"/>.
+        /// </summary>
+        /// <returns></returns>
+        internal static NotImplementedException NotImplemented()
+        {
+            return new NotImplementedException();
+        }
     }
 }
