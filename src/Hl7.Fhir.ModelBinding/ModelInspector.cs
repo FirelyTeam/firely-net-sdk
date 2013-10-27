@@ -12,26 +12,56 @@ namespace Hl7.Fhir.ModelBinding
 {
     public class ModelInspector
     {
+        // Index for easy lookup of resources, Tuple is <upper resource, upper profile>
         private Dictionary<Tuple<string,string>,MappedModelClass> _resourceClasses = 
             new Dictionary<Tuple<string,string>,MappedModelClass>();
 
 
         public void Inspect(Assembly assembly)
         {
-            throw Error.NotImplemented();
+            if (assembly == null) throw Error.ArgumentNull("assembly");
+
+            foreach (Type t in assembly.GetExportedTypes()) Inspect(t);
         }
 
         public void Inspect(Type type)
         {
+            if (type == null) throw Error.ArgumentNull("type");
+
             //TODO: if FhirComposite (specify enumerated fhir datatype) attribute is applied
-            //TODO: capture profile context
             //TODO: overwrite existing class for each resource
             //TODO: profile-specific versus generic Resource handler
 
-            //if(IsFhirResource(type))
+            if(IsFhirResource(type))
+            {
+                var mapped = MappedModelClass.ForResource(type);
+                var key = buildResourceKey(mapped.Name,mapped.Profile);
+
+                _resourceClasses[key] = mapped;
+            }
         }
 
 
+        private static Tuple<string, string> buildResourceKey(string name, string profile)
+        {
+            var normalizedName = name.ToUpperInvariant();
+            var normalizedProfile = profile != null ? profile.ToUpperInvariant() : null;
+
+            return Tuple.Create(normalizedName, normalizedProfile);
+        }
+
+        public MappedModelClass GetMappedClassForResource(string name, string profile = null)
+        {
+            var key = buildResourceKey(name, profile);
+            
+            MappedModelClass entry = null;
+            var sucess = _resourceClasses.TryGetValue(key, out entry);
+
+            if (sucess)
+                return entry;
+            else
+                return null;
+        }
         
 
         public static bool IsFhirResource(Type type)
@@ -85,50 +115,5 @@ namespace Hl7.Fhir.ModelBinding
         Resource
     }
 
-    internal sealed class MappedModelClass
-    {
-        internal const string RESOURCENAME_SUFFIX = "Resource";
-
-        public FhirModelConstruct ModelConstruct;
-
-        public string Name { get; set; }
-
-        public string Profile { get; set; }
-        public Type ImplementingType { get; set; }
-
-        public static MappedModelClass ForResource(Type t)
-        {
-            var result = new MappedModelClass();
-            result.ModelConstruct = FhirModelConstruct.Resource;
-            result.Name = getMappedResourceName(t);
-            result.Profile = getProfile(t);
-            result.ImplementingType = t;
-            
-            return result;
-        }
-
-        internal static string getProfile(Type type)
-        {
-            var attr = (FhirResourceAttribute)Attribute.GetCustomAttribute(type, typeof(FhirResourceAttribute));
-
-            return attr != null ? attr.Profile : null;
-        }
-
-        internal static string getMappedResourceName(Type type)
-        {
-            var attr = (FhirResourceAttribute)Attribute.GetCustomAttribute(type, typeof(FhirResourceAttribute));
-
-            if (attr != null)
-                return attr.Name;
-            else
-            {
-                var name = type.Name;
-                if (name.EndsWith(RESOURCENAME_SUFFIX))
-                    name = name.Substring(0, name.Length - RESOURCENAME_SUFFIX.Length);
-
-                return name;
-            }
-        }
-
-    }
+   
 }

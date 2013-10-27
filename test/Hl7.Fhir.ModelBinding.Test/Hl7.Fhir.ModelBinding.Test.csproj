@@ -58,18 +58,19 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DefaultModelFactoryTest.cs" />
+    <Compile Include="ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelClassFactoryListTest.cs" />
     <Compile Include="ComplexMemberReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hl7.Fhir.ModelBinding\Hl7.Fhir.ModelBinding.csproj">
-      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.ModelBinding</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="TestPatient.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestPatient.json" />
+    <ProjectReference Include="..\..\src\Hl7.Fhir.ModelBinding\Hl7.Fhir.ModelBinding.Net40.csproj">
+      <Project>{73224a03-bf79-47cd-9b79-0ee63d09ea98}</Project>
+      <Name>Hl7.Fhir.ModelBinding.Net40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
