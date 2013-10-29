@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,14 @@ using System.Text;
 
 namespace Hl7.Fhir.ModelBinding
 {
+    public enum FhirModelConstruct
+    {
+        PrimitiveType,
+        ComplexType,
+        Resource
+    }
+
+
     public class MappedModelClass
     {
         internal const string RESOURCENAME_SUFFIX = "Resource";
@@ -17,19 +26,39 @@ namespace Hl7.Fhir.ModelBinding
         public string Profile { get; set; }
         public Type ImplementingType { get; set; }
 
-        public static MappedModelClass ForResource(Type t)
+
+        // Elements indexed by uppercase name for access speed
+        private Dictionary<string, MappedModelElement> _elements = new Dictionary<string, MappedModelElement>();
+
+        public IEnumerable<MappedModelElement> Elements
+        {
+            get
+            {
+                return _elements.Values;
+            }
+        }
+
+        internal void AddElements(IEnumerable<MappedModelElement> elements)
+        {
+            foreach(var element in elements)
+            {
+                _elements.Add(element.Name.ToUpperInvariant(), element);
+            }
+        }
+
+        public static MappedModelClass CreateForResource(Type t)
         {
             var result = new MappedModelClass();
             result.ModelConstruct = FhirModelConstruct.Resource;
             result.Name = getMappedResourceName(t);
             result.Profile = getProfile(t);
             result.ImplementingType = t;
-
+            
             return result;
         }
 
 
-        public static MappedModelClass ForComplexType(Type t)
+        public static MappedModelClass CreateForComplexType(Type t)
         {
             var result = new MappedModelClass();
             result.ModelConstruct = FhirModelConstruct.ComplexType;
@@ -40,7 +69,7 @@ namespace Hl7.Fhir.ModelBinding
             return result;
         }
 
-        public static MappedModelClass ForFhirPrimitive(Type t)
+        public static MappedModelClass CreateForFhirPrimitive(Type t)
         {
             var result = new MappedModelClass();
             result.ModelConstruct = FhirModelConstruct.PrimitiveType;
@@ -97,5 +126,32 @@ namespace Hl7.Fhir.ModelBinding
             else
                 return type.Name;
         }
+
+        public static bool IsFhirResource(Type type)
+        {
+            return typeof(Resource).IsAssignableFrom(type)
+                    || hasResourceNameSuffix(type)
+                    || type.IsDefined(typeof(FhirResourceAttribute),true);
+        }
+
+        private static bool hasResourceNameSuffix(Type type)
+        {
+            // This means it *ends* in Resource, not just "Resource"
+            return type.Name.EndsWith(MappedModelClass.RESOURCENAME_SUFFIX) && MappedModelClass.RESOURCENAME_SUFFIX != type.Name;
+        }
+
+        public static bool IsFhirComplexType(Type type)
+        {
+            return typeof(ComplexElement).IsAssignableFrom(type)
+                || type.IsDefined(typeof(FhirComplexTypeAttribute), true);
+        }
+
+        public static bool IsFhirPrimitive(Type type)
+        {
+            return typeof(PrimitiveElement).IsAssignableFrom(type)
+                || type.IsDefined(typeof(FhirPrimitiveTypeAttribute), true)
+                || type.IsDefined(typeof(FhirEnumerationAttribute), false);
+        }    
+
     }
 }

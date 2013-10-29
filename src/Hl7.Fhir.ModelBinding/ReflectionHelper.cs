@@ -9,17 +9,11 @@ namespace Hl7.Fhir.ModelBinding
 {
     internal static class ReflectionHelper
     {
-        internal static IDictionary<string,PropertyInfo> FindPublicProperties(Type t)
+        internal static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {
             if(t == null) throw Error.ArgumentNull("t");
 
-            var props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-
-            var result = new Dictionary<string,PropertyInfo>();
-            foreach (var prop in props)
-                result.Add(prop.Name.ToUpperInvariant(), prop);
-
-            return result;
+            return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }
 
         internal static bool HasDefaultPublicConstructor(Type t)
@@ -38,44 +32,6 @@ namespace Hl7.Fhir.ModelBinding
 
             return t.GetConstructors(bindingFlags).SingleOrDefault(c => !c.GetParameters().Any());
         }
-
-        internal static Type FindTypeByName(string typeName)
-        {
-            //TODO: Inspect additional assemblies that have been added to the configuration
-            //and look up all model classes
-
-            foreach( Assembly assembly in BindingConfiguration.ModelAssemblies )
-            {
-                var type = assembly.GetType("Hl7.Fhir.Model." + typeName);
-                if (type != null) return type;
-            }
-
-            return null;
-        }
-
-        internal static bool IsPrimitive(Type objectType)
-        {
-            return objectType.IsPrimitive || objectType == typeof(string);
-        }
-
-        internal static bool IsComplexType(Type objectType)
-        {
-            //TODO: This can probably be improved on
-            return !IsPrimitive(objectType) && !IsCollection(objectType) &&
-                !IsNullableType(objectType) && !IsEnum(objectType);
-        }
-
-
-        public static bool IsCollection(Type type)
-        {
-            return typeof(IEnumerable).IsAssignableFrom(type);
-        }
-
-        public static bool IsTypedCollection(Type type)
-        {
-            return type.IsArray || ImplementsGenericDefinition(type, typeof(IEnumerable<>));
-        }
-
 
         public static bool IsNullableType(Type type)
         {
@@ -96,6 +52,12 @@ namespace Hl7.Fhir.ModelBinding
                 throw Error.Argument("type", "Type {0} is not a Nullable<T>", type.Name);
         }
 
+        public static bool IsTypedCollection(Type type)
+        {
+            return type.IsArray || ImplementsGenericDefinition(type, typeof(ICollection<>));
+        }
+
+
         /// <summary>
         /// Gets the type of the typed collection's items.
         /// </summary>
@@ -111,7 +73,7 @@ namespace Hl7.Fhir.ModelBinding
             {
                 return type.GetElementType();
             }
-            else if (ImplementsGenericDefinition(type, typeof(IEnumerable<>), out genericListType))
+            else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out genericListType))
             {
                 //EK: If I look at ImplementsGenericDefinition, I don't think this can actually occur.
                 //if (genericListType.IsGenericTypeDefinition)

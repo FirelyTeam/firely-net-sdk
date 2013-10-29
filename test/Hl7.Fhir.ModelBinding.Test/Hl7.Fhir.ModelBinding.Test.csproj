@@ -58,10 +58,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DefaultModelFactoryTest.cs" />
+    <Compile Include="ModelInspectorMembersTest.cs" />
     <Compile Include="ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelClassFactoryListTest.cs" />
-    <Compile Include="ComplexMemberReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestPatient.json" />
