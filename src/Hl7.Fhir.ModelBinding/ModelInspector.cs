@@ -25,6 +25,8 @@ namespace Hl7.Fhir.ModelBinding
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
 
+            if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
+
             foreach (Type t in assembly.GetExportedTypes()) Inspect(t);
         }
 
@@ -32,7 +34,9 @@ namespace Hl7.Fhir.ModelBinding
         {
             if (type == null) throw Error.ArgumentNull("type");
 
-            if(type.IsAbstract)
+            if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) return;
+
+            if (type.IsAbstract)
             {
                 // Ignore this class
                 Message.Info("Skipped type {0} while doing inspection: abstract classes can not be used as mapping targets", type.Name);
@@ -41,22 +45,25 @@ namespace Hl7.Fhir.ModelBinding
 
             checkMutualExclusiveAttributes(type);
 
-            if(IsFhirResource(type))
+            if (MappedModelClass.IsFhirResource(type))
             {
-                var mapped = MappedModelClass.ForResource(type);
-                var key = buildResourceKey(mapped.Name,mapped.Profile);
+                var mapped = MappedModelClass.CreateForResource(type);
+                var key = buildResourceKey(mapped.Name, mapped.Profile);
+                addProps(mapped, type);
                 _resourceClasses[key] = mapped;
             }
-            else if(IsFhirComplexType(type))
+            else if (MappedModelClass.IsFhirComplexType(type))
             {
-                var mapped = MappedModelClass.ForComplexType(type);
+                var mapped = MappedModelClass.CreateForComplexType(type);
                 var key = mapped.Name.ToUpperInvariant();
+                addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
             }
-            else if(IsFhirPrimitive(type))
+            else if (MappedModelClass.IsFhirPrimitive(type))
             {
-                var mapped = MappedModelClass.ForFhirPrimitive(type);
+                var mapped = MappedModelClass.CreateForFhirPrimitive(type);
                 var key = mapped.Name.ToUpperInvariant();
+                addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
             }
             else
@@ -66,13 +73,45 @@ namespace Hl7.Fhir.ModelBinding
             }
         }
 
+        private void addProps(MappedModelClass mapped, Type type)
+        {
+            var propCollection = new List<MappedModelElement>();
+
+            foreach (var property in ReflectionHelper.FindPublicProperties(type))
+            {
+                var mappedProperty = Inspect(property);
+
+                if (mappedProperty != null) propCollection.Add(mappedProperty);
+            }
+
+            mapped.AddElements(propCollection);
+        }
+
+
+        internal MappedModelElement Inspect(PropertyInfo property)
+        {
+            if (property == null) throw Error.ArgumentNull("property");
+
+            if (Attribute.GetCustomAttribute(property, typeof(NotMappedAttribute)) != null) return null;
+
+            if (!MappedModelElement.IsMappableElement(property))
+            {
+                Message.Info("Skipped member {0} in type {1} while doing inspection: not a mappable property",
+                        property.Name, property.DeclaringType.Name);
+                return null;
+            }
+
+            return MappedModelElement.Create(property);
+        }
+
+
         private void checkMutualExclusiveAttributes(Type type)
         {
-            if (IsFhirResource(type) && IsFhirComplexType(type))
+            if (MappedModelClass.IsFhirResource(type) && MappedModelClass.IsFhirComplexType(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-            if (IsFhirResource(type) && IsFhirPrimitive(type))
+            if (MappedModelClass.IsFhirResource(type) && MappedModelClass.IsFhirPrimitive(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-            if (IsFhirComplexType(type) && IsFhirPrimitive(type))
+            if (MappedModelClass.IsFhirComplexType(type) && MappedModelClass.IsFhirPrimitive(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
         }
 
@@ -116,63 +155,5 @@ namespace Hl7.Fhir.ModelBinding
             else
                 return null;
         }
-
-
-        public static bool IsFhirResource(Type type)
-        {
-            return typeof(Resource).IsAssignableFrom(type)
-                    || hasResourceNameSuffix(type)
-                    || type.IsDefined(typeof(FhirResourceAttribute),true);
-        }
-
-        private static bool hasResourceNameSuffix(Type type)
-        {
-            // This means it *ends* in Resource, not just "Resource"
-            return type.Name.EndsWith(MappedModelClass.RESOURCENAME_SUFFIX) && MappedModelClass.RESOURCENAME_SUFFIX != type.Name;
-        }
-
-        public static bool IsFhirComplexType(Type type)
-        {
-            return typeof(ComplexElement).IsAssignableFrom(type)
-                || type.IsDefined(typeof(FhirComplexTypeAttribute), true);
-        }
-
-        public static bool IsFhirPrimitive(Type type)
-        {
-            return typeof(PrimitiveElement).IsAssignableFrom(type)
-                || type.IsDefined(typeof(FhirPrimitiveTypeAttribute), true)
-                || type.IsDefined(typeof(FhirEnumerationAttribute), false);
-        }
-
-        private static bool isFhirPrimtiveAsNativeType(Type type)
-        {
-            return type == typeof(bool?) ||
-                   type == typeof(int?) ||
-                   type == typeof(decimal?) ||
-                   type == typeof(byte[]) ||
-                   type == typeof(DateTimeOffset?) ||
-                   type == typeof(string);
-        }
-
-        public void Inspect(PropertyInfo property)
-        {
-            //TODO: convention: if nullable<primitive> or other supported primitive (e.g. string)
-            //TODO: if FhirPrimitive attribute (specify enumerated fhir primitive type)
-            //TODO: if enum
-            //TODO: if IEnumerable<X> -> still primitive
-            //TODO: [Ignore]
-            //TODO: if type of member is recognized as a composite...
-            //TODO: else ingored
-        }
     }
-
-
-    public enum FhirModelConstruct
-    {
-        PrimitiveType,
-        ComplexType,
-        Resource
-    }
-
-   
 }
