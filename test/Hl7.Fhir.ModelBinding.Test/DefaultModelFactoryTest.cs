@@ -6,29 +6,6 @@ using System.Collections;
 
 namespace Hl7.Fhir.ModelBinding.Test
 {
-    public class TestCreate
-    {
-    }
-
-    public class TestCreatePublicConstructor
-    {
-        public TestCreatePublicConstructor()
-        {
-        }
-    }
-
-    public class TestCreateArgConstructor
-    {
-        public TestCreateArgConstructor(int test)
-        {
-        }
-    }
-
-    public class TestCreatePrivateConstructor
-    {
-        private TestCreatePrivateConstructor() { }
-    }
-
     [TestClass]
     public class DefaultModelFactoryTest
     {    
@@ -83,5 +60,28 @@ namespace Hl7.Fhir.ModelBinding.Test
             // Cannot create arrays, since we don't know size upfront
             Assert.IsFalse(factory.CanCreateType(typeof(int[])));
         }
+    }
+
+    public class TestCreate
+    {
+    }
+
+    public class TestCreatePublicConstructor
+    {
+        public TestCreatePublicConstructor()
+        {
+        }
+    }
+
+    public class TestCreateArgConstructor
+    {
+        public TestCreateArgConstructor(int test)
+        {
+        }
+    }
+
+    public class TestCreatePrivateConstructor
+    {
+        private TestCreatePrivateConstructor() { }
     }
 }

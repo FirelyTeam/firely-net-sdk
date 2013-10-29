@@ -28,6 +28,30 @@ namespace Hl7.Fhir.ModelBinding
             return result;
         }
 
+
+        public static MappedModelClass ForComplexType(Type t)
+        {
+            var result = new MappedModelClass();
+            result.ModelConstruct = FhirModelConstruct.ComplexType;
+            result.Name = getMappedComplexTypeName(t);
+            result.Profile = null;  // No support for profiled datatypes
+            result.ImplementingType = t;
+
+            return result;
+        }
+
+        public static MappedModelClass ForFhirPrimitive(Type t)
+        {
+            var result = new MappedModelClass();
+            result.ModelConstruct = FhirModelConstruct.PrimitiveType;
+            result.Name = getMappedPrimitiveTypeName(t);
+            result.Profile = null;  // No support for profiled datatypes
+            result.ImplementingType = t;
+
+            return result;
+        }
+
+
         private static string getProfile(Type type)
         {
             var attr = (FhirResourceAttribute)Attribute.GetCustomAttribute(type, typeof(FhirResourceAttribute));
@@ -39,9 +63,7 @@ namespace Hl7.Fhir.ModelBinding
         {
             var attr = (FhirResourceAttribute)Attribute.GetCustomAttribute(type, typeof(FhirResourceAttribute));
 
-            // The abstract base-class has a Resource attribute too, calling it "resource"
-            // avoid this becoming the name, since that class is abstract.
-            if (attr != null && attr.Name != "Resource")
+            if (attr != null)
             {
                 return attr.Name;
             }                
@@ -55,5 +77,25 @@ namespace Hl7.Fhir.ModelBinding
             }
         }
 
+
+        private static string getMappedComplexTypeName(Type type)
+        {
+            var attr = (FhirComplexTypeAttribute)Attribute.GetCustomAttribute(type, typeof(FhirComplexTypeAttribute));
+
+            if (attr != null)
+                return attr.Name;
+            else
+                return type.Name;
+        }
+
+        private static string getMappedPrimitiveTypeName(Type type)
+        {
+            var attr = (FhirPrimitiveTypeAttribute)Attribute.GetCustomAttribute(type, typeof(FhirPrimitiveTypeAttribute));
+
+            if (attr != null)
+                return attr.Name;
+            else
+                return type.Name;
+        }
     }
 }

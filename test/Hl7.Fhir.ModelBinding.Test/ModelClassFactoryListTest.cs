@@ -3,27 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.ModelBinding.Test
 {
-    public class SpecificModelClass
-    {
-    }
-
-    public class GenericModelClass
-    {
-    }
-
-    public class SpecificModelClassFactory : IModelClassFactory
-    {
-        public bool CanCreateType(Type type)
-        {
-            return type == typeof(SpecificModelClass);
-        }
-
-        public object Create(Type type)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+   
     [TestClass]
     public class ClassFactoryListTest
     {
@@ -53,6 +33,28 @@ namespace Hl7.Fhir.ModelBinding.Test
             BindingConfiguration.ModelClassFactories.Add(new SpecificModelClassFactory());
 
             var result = BindingConfiguration.ModelClassFactories.FindFactory(typeof(GenericModelClass));
+        }
+    }
+
+
+    public class SpecificModelClass
+    {
+    }
+
+    public class GenericModelClass
+    {
+    }
+
+    public class SpecificModelClassFactory : IModelClassFactory
+    {
+        public bool CanCreateType(Type type)
+        {
+            return type == typeof(SpecificModelClass);
+        }
+
+        public object Create(Type type)
+        {
+            throw new NotImplementedException();
         }
     }
 }

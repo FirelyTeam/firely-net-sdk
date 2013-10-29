@@ -31,10 +31,9 @@ namespace Hl7.Fhir.ModelBinding
 
         public static object InvokeFactory(this IList<IModelClassFactory> list, Type type)
         {
-            var chosenFactory = BindingConfiguration.ModelClassFactories != null ?
-                BindingConfiguration.ModelClassFactories.FindFactory(type) : null;
-            if (chosenFactory == null) throw Error.InvalidOperation(Messages.NoSuchClassFactory, type.Name);
+            var chosenFactory = list != null ? list.FindFactory(type) : null;
             if (type == null) throw Error.ArgumentNull("type");
+            if (chosenFactory == null) throw Error.InvalidOperation(Messages.NoSuchClassFactory, type.Name);
 
             object result = chosenFactory.Create(type);
             if (result == null) throw Error.InvalidOperation(Messages.FactoryCreationFailed);

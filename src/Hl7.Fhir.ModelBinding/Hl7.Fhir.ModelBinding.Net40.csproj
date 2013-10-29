@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,7 +58,7 @@
     <Compile Include="ComplexMemberReader.cs" />
     <Compile Include="DefaultModelFactory.cs" />
     <Compile Include="DispatchingReader.cs" />
-    <Compile Include="Error.cs" />
+    <Compile Include="Logging.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MappedModelClass.cs" />
     <Compile Include="ModelInspector.cs" />

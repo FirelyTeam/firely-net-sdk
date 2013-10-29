@@ -4,20 +4,27 @@ using Hl7.Fhir.ModelBinding.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 
 namespace Hl7.Fhir.ModelBinding
 {
+    internal static class Message
+    {
+        internal static void Info(string messageFormat, params object[] messageArgs)
+        {
+            Debug.WriteLine(Error.Format(messageFormat,messageArgs));
+        }
+    }
+
+
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.
     /// </summary>
     internal static class Error
     {
-        private const string HttpScheme = "http";
-        private const string HttpsScheme = "https";
-
         /// <summary>
         /// Formats the specified resource string using <see cref="M:CultureInfo.CurrentCulture"/>.
         /// </summary>
