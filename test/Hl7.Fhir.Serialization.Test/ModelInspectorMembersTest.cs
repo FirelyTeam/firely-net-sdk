@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization.Test
 
             inspector.Inspect(typeof(TestResource));
 
-            var mappedType = inspector.FindMappedClassForResource("Test");
+            var mappedType = inspector.FindClassMappingForResource("Test");
 
             //TODO: Write test
             throw new NotImplementedException();

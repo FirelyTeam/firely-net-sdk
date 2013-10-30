@@ -58,6 +58,12 @@ namespace Hl7.Fhir.Serialization
         }
 
 
+        public static IList CreateGenericList(Type itemType)
+        {
+            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
+        }
+
+
         /// <summary>
         /// Gets the type of the typed collection's items.
         /// </summary>

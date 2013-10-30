@@ -21,38 +21,38 @@ namespace Hl7.Fhir.Serialization.Test
 
             inspector.Inspect(typeof(ModelInspectorTest));  // shouldn't give an exception
 
-            var road = inspector.FindMappedClassForResource("roAd");
+            var road = inspector.FindClassMappingForResource("roAd");
             Assert.IsNotNull(road);
             Assert.AreEqual(FhirModelConstruct.Resource, road.ModelConstruct);
             Assert.AreEqual("Road", road.Name);
             Assert.IsNull(road.Profile);
             Assert.AreEqual(road.ImplementingType, typeof(RoadResource));
 
-            var way = inspector.FindMappedClassForResource("Way");
+            var way = inspector.FindClassMappingForResource("Way");
             Assert.IsNotNull(way);
             Assert.AreEqual("Way", way.Name);
             Assert.IsNull(way.Profile);
             Assert.AreEqual(way.ImplementingType, typeof(Way));
 
-            var pway = inspector.FindMappedClassForResource("way", "http://nu.nl/profile#street");
+            var pway = inspector.FindClassMappingForResource("way", "http://nu.nl/profile#street");
             Assert.IsNotNull(pway);
             Assert.AreEqual("Way", pway.Name);
             Assert.AreEqual("http://nu.nl/profile#street", pway.Profile);
             Assert.AreEqual(pway.ImplementingType, typeof(ProfiledWay));
 
-            var pway2 = inspector.FindMappedClassForResource("way", "http://nux.nl/profile#street");
+            var pway2 = inspector.FindClassMappingForResource("way", "http://nux.nl/profile#street");
             Assert.IsNotNull(pway2);
             Assert.AreEqual("Way", pway2.Name);
             Assert.IsNull(pway2.Profile);
             Assert.AreEqual(pway2.ImplementingType, typeof(Way));
 
-            var street = inspector.FindMappedClassForResource("Street");
+            var street = inspector.FindClassMappingForResource("Street");
             Assert.IsNotNull(street);
             Assert.AreEqual("Street", street.Name);
             Assert.IsNull(street.Profile);
             Assert.AreEqual(street.ImplementingType, typeof(NewStreet));
 
-            var noway = inspector.FindMappedClassForResource("nonexistent");
+            var noway = inspector.FindClassMappingForResource("nonexistent");
             Assert.IsNull(noway);
         }
 
@@ -68,28 +68,28 @@ namespace Hl7.Fhir.Serialization.Test
             inspector.Inspect(typeof(SomeEnum));
             inspector.Inspect(typeof(ActResource.SomeOtherEnum));
 
-            var result = inspector.GetMappedClassForDataType("animalname");
+            var result = inspector.FindClassMappingForFhirDataType("animalname");
             Assert.IsNotNull(result);
             Assert.AreEqual(FhirModelConstruct.ComplexType, result.ModelConstruct);
             Assert.AreEqual("AnimalName", result.Name);
             Assert.IsNull(result.Profile);
             Assert.AreEqual(result.ImplementingType, typeof(NewAnimalName));
 
-            result = inspector.GetMappedClassForDataType("cOmpleX");
+            result = inspector.FindClassMappingForFhirDataType("cOmpleX");
             Assert.IsNotNull(result);
             Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
             Assert.AreEqual("Complex", result.Name);
             Assert.IsNull(result.Profile);
             Assert.AreEqual(result.ImplementingType, typeof(ComplexNumber));
 
-            result = inspector.GetMappedClassForDataType("SomeEnum");
+            result = inspector.FindClassMappingForFhirDataType("SomeEnum");
             Assert.IsNotNull(result);
             Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
             Assert.AreEqual("SomeEnum", result.Name);
             Assert.IsNull(result.Profile);
             Assert.AreEqual(result.ImplementingType, typeof(SomeEnum));
 
-            result = inspector.GetMappedClassForDataType("someOtherenum");
+            result = inspector.FindClassMappingForFhirDataType("someOtherenum");
             Assert.IsNotNull(result);
             Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
             Assert.AreEqual("SomeOtherEnum", result.Name);
@@ -117,17 +117,17 @@ namespace Hl7.Fhir.Serialization.Test
             inspector.Inspect(typeof(Resource).Assembly);
 
             // Check for presence of some basic ingredients
-            Assert.IsNotNull(inspector.FindMappedClassForResource("patient"));
-            Assert.IsNotNull(inspector.GetMappedClassForDataType("HumanName"));
-            Assert.IsNotNull(inspector.GetMappedClassForDataType("code"));
-            Assert.IsNotNull(inspector.GetMappedClassForDataType("boolean"));
+            Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("HumanName"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("code"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
 
             // Verify presence of nested enumerations
-            Assert.IsNotNull(inspector.GetMappedClassForDataType("AddressUse"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("AddressUse"));
 
             // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindMappedClassForResource("Resource"));
-            Assert.IsNull(inspector.FindMappedClassForResource("Element"));
+            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
+            Assert.IsNull(inspector.FindClassMappingForResource("Element"));
         }
     }
 

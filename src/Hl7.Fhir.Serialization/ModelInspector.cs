@@ -15,11 +15,13 @@ namespace Hl7.Fhir.Serialization
     public class ModelInspector
     {
         // Index for easy lookup of resources, key is Tuple<upper resourcename, upper profile>
-        private Dictionary<Tuple<string,string>,MappedModelClass> _resourceClasses = 
-            new Dictionary<Tuple<string,string>,MappedModelClass>();
+        private Dictionary<Tuple<string,string>,ClassMapping> _resourceClasses = new Dictionary<Tuple<string,string>,ClassMapping>();
 
         // Index for easy lookup of datatypes, key is upper typenanme
-        private Dictionary<string, MappedModelClass> _dataTypeClasses = new Dictionary<string,MappedModelClass>();
+        private Dictionary<string, ClassMapping> _dataTypeClasses = new Dictionary<string,ClassMapping>();
+
+        // Index for easy lookup of classmappings, key is Type
+        private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
 
         public void Inspect(Assembly assembly)
         {
@@ -45,26 +47,29 @@ namespace Hl7.Fhir.Serialization
 
             checkMutualExclusiveAttributes(type);
 
-            if (MappedModelClass.IsFhirResource(type))
+            if (ClassMapping.IsFhirResource(type))
             {
-                var mapped = MappedModelClass.CreateForResource(type);
+                var mapped = ClassMapping.CreateForResource(type);
                 var key = buildResourceKey(mapped.Name, mapped.Profile);
                 addProps(mapped, type);
                 _resourceClasses[key] = mapped;
+                _classMappingsByType[type] = mapped;
             }
-            else if (MappedModelClass.IsFhirComplexType(type))
+            else if (ClassMapping.IsFhirComplexType(type))
             {
-                var mapped = MappedModelClass.CreateForComplexType(type);
+                var mapped = ClassMapping.CreateForComplexType(type);
                 var key = mapped.Name.ToUpperInvariant();
                 addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
+                _classMappingsByType[type] = mapped;
             }
-            else if (MappedModelClass.IsFhirPrimitive(type))
+            else if (ClassMapping.IsFhirPrimitive(type))
             {
-                var mapped = MappedModelClass.CreateForFhirPrimitive(type);
+                var mapped = ClassMapping.CreateForFhirPrimitive(type);
                 var key = mapped.Name.ToUpperInvariant();
                 addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
+                _classMappingsByType[type] = mapped;
             }
             else
             {
@@ -73,9 +78,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private void addProps(MappedModelClass mapped, Type type)
+        private void addProps(ClassMapping mapped, Type type)
         {
-            var propCollection = new List<MappedModelProperty>();
+            var propCollection = new List<PropertyMapping>();
 
             foreach (var property in ReflectionHelper.FindPublicProperties(type))
             {
@@ -88,15 +93,15 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        internal MappedModelProperty Inspect(PropertyInfo property)
+        internal PropertyMapping Inspect(PropertyInfo property)
         {
             if (property == null) throw Error.ArgumentNull("property");
 
             if (Attribute.GetCustomAttribute(property, typeof(NotMappedAttribute)) != null) return null;
 
-            MappedModelProperty element = null;
+            PropertyMapping element = null;
 
-            bool success = MappedModelProperty.TryCreateFromProperty(property, out element);
+            bool success = PropertyMapping.TryCreateFromProperty(property, this, out element);
 
             if (!success)
             {
@@ -111,11 +116,11 @@ namespace Hl7.Fhir.Serialization
 
         private void checkMutualExclusiveAttributes(Type type)
         {
-            if (MappedModelClass.IsFhirResource(type) && MappedModelClass.IsFhirComplexType(type))
+            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-            if (MappedModelClass.IsFhirResource(type) && MappedModelClass.IsFhirPrimitive(type))
+            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-            if (MappedModelClass.IsFhirComplexType(type) && MappedModelClass.IsFhirPrimitive(type))
+            if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
                 throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
         }
 
@@ -127,12 +132,12 @@ namespace Hl7.Fhir.Serialization
             return Tuple.Create(normalizedName, normalizedProfile);
         }
 
-        public MappedModelClass FindMappedClassForResource(string name, string profile = null)
+        public ClassMapping FindClassMappingForResource(string name, string profile = null)
         {
             var key = buildResourceKey(name, profile);
             var noProfileKey = buildResourceKey(name, null);
 
-            MappedModelClass entry = null;
+            ClassMapping entry = null;
 
             // Try finding a resource with the specified profile first
             var success = _resourceClasses.TryGetValue(key, out entry);
@@ -147,12 +152,23 @@ namespace Hl7.Fhir.Serialization
                 return null;
         }
 
-        public MappedModelClass GetMappedClassForDataType(string name)
+        public ClassMapping FindClassMappingForFhirDataType(string name)
         {
             var key = name.ToUpperInvariant();
 
-            MappedModelClass entry = null;
+            ClassMapping entry = null;
             var success = _dataTypeClasses.TryGetValue(key, out entry);
+
+            if (success)
+                return entry;
+            else
+                return null;
+        }
+
+        public ClassMapping FindClassMappingByImplementingType(Type type)
+        {
+            ClassMapping entry = null;
+            var success = _classMappingsByType.TryGetValue(type, out entry);
 
             if (success)
                 return entry;

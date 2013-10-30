@@ -12,44 +12,87 @@ namespace Hl7.Fhir.Serialization
 {
     internal class ComplexTypeReader
     {
-        private JObject _data;
+        private JToken _data;
         private ModelInspector _inspector;
 
-        public ComplexTypeReader(ModelInspector inspector, JObject data)
+        public ComplexTypeReader(ModelInspector inspector, JToken data)
         {
             _data = data;
             _inspector = inspector;
         }
 
-        internal object Deserialize(MappedModelClass type, object existing=null)
+
+        private bool isResourceOrComplexMapping(ClassMapping mapping)
+        {
+            return mapping.ModelConstruct == FhirModelConstruct.ComplexType || mapping.ModelConstruct == FhirModelConstruct.Resource;
+        }
+
+
+        internal object Deserialize(Type type, object existing=null)
         {
             if (type == null) throw Error.ArgumentNull("type");
+
+            var mapping = _inspector.FindClassMappingByImplementingType(type);
+
+            if (mapping == null) throw Error.Argument("Cannot find class mapping for type {0} while deserializing a complex type", type.Name);
+
+            return Deserialize(mapping, existing);
+        }
+
+        internal object Deserialize(ClassMapping mapping, object existing=null)
+        {
+            if (mapping == null) throw Error.ArgumentNull("type");
            
-            if (type.ModelConstruct != FhirModelConstruct.ComplexType && type.ModelConstruct != FhirModelConstruct.Resource  ) 
-                throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, type.Name);
+            if(!isResourceOrComplexMapping(mapping))
+                throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
+            //TODO: is 'existing' compatible with the mapping?
 
-            if (existing == null)
-                existing = BindingConfiguration.ModelClassFactories.InvokeFactory(type.ImplementingType);
+            if (_data is JObject)
+            {
+                if (existing == null)
+                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mapping.ImplementingType);
 
-            foreach (var memberData in _data)
+                read(mapping, (JObject)_data, existing);
+
+                return existing;
+            }
+            else
+                throw Error.InvalidOperation("Trying to read a complex object, but reader is not at the start of an object");
+        }
+
+
+        private void read(ClassMapping mapping, JObject source, object existing)
+        {
+            foreach (var memberData in source)
             {
                 var memberName = memberData.Key;
-                
-                var mappedProperty = type.FindMappedPropertyForElement(memberName);
+
+                var mappedProperty = mapping.FindMappedPropertyForElement(memberName);
 
                 if (mappedProperty != null)
                 {
                     Debug.WriteLine("Handling member " + memberName);
 
-                    var value = mappedProperty.ImplementingProperty.GetValue(existing,null);
+                    var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
+                   
+                    ClassMapping propMapping = null;
 
-                    //var reader = new DispatchingReader(_data[memberName]);
+                    if(!mappedProperty.IsPolymorhic)
+                    {
+                        propMapping = mappedProperty.PropertyTypeMapping;
+                    }
+                    else
+                    {
+                        //TODO: If polymorph...determine type from instance member name
+                        throw Error.NotImplemented("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
+                    }
 
-                    //value = reader.Deserialize(propInfo.PropertyType,value);
+                    var reader = new DispatchingReader(_inspector, source[memberName]);
+                    value = reader.Deserialize(propMapping, mappedProperty.MayRepeat, value);
 
                     mappedProperty.ImplementingProperty.SetValue(existing, value, null);
                 }
-                else if (type.ModelConstruct == FhirModelConstruct.Resource &&
+                else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
                         memberName.Equals(ResourceReader.RESOURCETYPE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
                 {
                     //TODO: Detecting whether this is a special, serialization format-specific member should be
@@ -59,10 +102,11 @@ namespace Hl7.Fhir.Serialization
                     // ResourceReader to figure out the actual type when this is unknown
                     // from the context
                 }
-                else if(type.ModelConstruct == FhirModelConstruct.Resource &&
+                else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
                             memberName.Equals(ResourceReader.CONTAINED_RESOURCE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
                 {
                     //TODO: Handle contained resourcs
+                    Message.Info("Skipped parsing contained resources - not yet supported");
                 }
                 else
                 {
@@ -76,7 +120,6 @@ namespace Hl7.Fhir.Serialization
                 //TODO: handle _name containing id/extensions for primitive members
             }
 
-            return existing;
         }
     }
 

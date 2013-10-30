@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
     }
 
 
-    public class MappedModelClass
+    public class ClassMapping
     {
         internal const string RESOURCENAME_SUFFIX = "Resource";
 
@@ -28,9 +28,9 @@ namespace Hl7.Fhir.Serialization
 
 
         // Elements indexed by uppercase name for access speed
-        private Dictionary<string, MappedModelProperty> _elements = new Dictionary<string, MappedModelProperty>();
+        private Dictionary<string, PropertyMapping> _elements = new Dictionary<string, PropertyMapping>();
 
-        public IEnumerable<MappedModelProperty> Elements
+        public IEnumerable<PropertyMapping> Elements
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal void AddElements(IEnumerable<MappedModelProperty> elements)
+        internal void AddElements(IEnumerable<PropertyMapping> elements)
         {
             foreach(var element in elements)
             {
@@ -46,11 +46,11 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal MappedModelProperty FindMappedPropertyForElement(string name)
+        internal PropertyMapping FindMappedPropertyForElement(string name)
         {
             var normalizedName = name.ToUpperInvariant();
 
-            MappedModelProperty prop = null;
+            PropertyMapping prop = null;
 
             bool success = _elements.TryGetValue(normalizedName, out prop);
 
@@ -60,9 +60,9 @@ namespace Hl7.Fhir.Serialization
                 return null;
         }
 
-        public static MappedModelClass CreateForResource(Type t)
+        public static ClassMapping CreateForResource(Type t)
         {
-            var result = new MappedModelClass();
+            var result = new ClassMapping();
             result.ModelConstruct = FhirModelConstruct.Resource;
             result.Name = getMappedResourceName(t);
             result.Profile = getProfile(t);
@@ -72,9 +72,9 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static MappedModelClass CreateForComplexType(Type t)
+        public static ClassMapping CreateForComplexType(Type t)
         {
-            var result = new MappedModelClass();
+            var result = new ClassMapping();
             result.ModelConstruct = FhirModelConstruct.ComplexType;
             result.Name = getMappedComplexTypeName(t);
             result.Profile = null;  // No support for profiled datatypes
@@ -83,9 +83,9 @@ namespace Hl7.Fhir.Serialization
             return result;
         }
 
-        public static MappedModelClass CreateForFhirPrimitive(Type t)
+        public static ClassMapping CreateForFhirPrimitive(Type t)
         {
-            var result = new MappedModelClass();
+            var result = new ClassMapping();
             result.ModelConstruct = FhirModelConstruct.PrimitiveType;
             result.Name = getMappedPrimitiveTypeName(t);
             result.Profile = null;  // No support for profiled datatypes
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Serialization
         private static bool hasResourceNameSuffix(Type type)
         {
             // This means it *ends* in Resource, not just "Resource"
-            return type.Name.EndsWith(MappedModelClass.RESOURCENAME_SUFFIX) && MappedModelClass.RESOURCENAME_SUFFIX != type.Name;
+            return type.Name.EndsWith(ClassMapping.RESOURCENAME_SUFFIX) && ClassMapping.RESOURCENAME_SUFFIX != type.Name;
         }
 
         public static bool IsFhirComplexType(Type type)

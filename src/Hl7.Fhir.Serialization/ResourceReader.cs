@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Serialization.Properties;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Properties;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -14,10 +15,10 @@ namespace Hl7.Fhir.Serialization
         public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
         public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";
 
-        private JObject _data;
+        private JToken _data;
         private ModelInspector _inspector;
 
-        public ResourceReader(ModelInspector inspector, JObject data)
+        public ResourceReader(ModelInspector inspector, JToken data)
         {
             _data = data;
             _inspector = inspector;
@@ -26,19 +27,23 @@ namespace Hl7.Fhir.Serialization
         public object Deserialize(object existing=null)
         {
             var resourceType = getResourceNameFromData();
-            var mappedType = _inspector.FindMappedClassForResource(resourceType);
+            var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
-            var result = existing;
+            //TODO: if existing != null -> compatible with mapped type?
 
-            if (result == null)
-                BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.ImplementingType);
+            if (_data is JObject)
+            {
+                var complex = (JObject)_data;
 
-            // Delegate the actual work to the ComplexTypeReader
-            var cplxReader = new ComplexTypeReader(_inspector, _data);
-
-            result = cplxReader.Deserialize(mappedType, result);
-
-            return result;
+                if (existing == null)
+                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.ImplementingType);
+               
+                // Delegate the actual work to the ComplexTypeReader
+                var cplxReader = new ComplexTypeReader(_inspector, _data);
+                return cplxReader.Deserialize(mappedType, existing);
+            }
+            else
+                throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");
         }
 
         private string getResourceNameFromData()

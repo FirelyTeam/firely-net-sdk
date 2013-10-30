@@ -7,28 +7,21 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public enum ElementKind
+    public class PropertyMapping
     {
-        Primitive,
-        Complex,
-        Polymorph
-    }
-
-    public class MappedModelProperty
-    {
-        public ElementKind Kind { get; set; }
         public string Name { get; set; }
+        public bool IsPolymorhic { get; set; }
         public bool MayRepeat { get; set; }
 
-        public Type MappedElementType { get; set; }
+        public ClassMapping PropertyTypeMapping { get; set; }
 
         public PropertyInfo ImplementingProperty { get; set; }     
 
-        public static bool TryCreateFromProperty(PropertyInfo prop, out MappedModelProperty result)
+        public static bool TryCreateFromProperty(PropertyInfo prop, ModelInspector inspector, out PropertyMapping result)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
-            result = new MappedModelProperty();
+            result = new PropertyMapping();
             result.Name = prop.Name;
             result.ImplementingProperty = prop;
 
@@ -42,26 +35,35 @@ namespace Hl7.Fhir.Serialization
                 elementType = ReflectionHelper.GetCollectionItemType(elementType);
             }
 
-            result.MappedElementType = elementType;
-
-            if (elementType == typeof(Element))
+            if (elementType == typeof(Element) || elementType == typeof(object))
             {
                 // Special case: polymorphic (choice) properties are generated to have type Element
-                result.Kind = ElementKind.Polymorph;
-            }
-            else if (MappedModelClass.IsFhirComplexType(elementType))
-            {
-                result.Kind = ElementKind.Complex;
-            }
-            else if (MappedModelClass.IsFhirPrimitive(elementType)
-                            || isFhirPrimtiveMappedAsNativePrimitive(elementType))
-            {
-                result.Kind = ElementKind.Primitive;
+                result.IsPolymorhic = true;
+                result.PropertyTypeMapping = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
+                return true;
             }
             else
-                return false;
+            {
+                if(isFhirPrimtiveMappedAsNativePrimitive(elementType))
+                {
+                    //TODO: pick up an attribute to see which fhirtype maps to this primitive .NET
+                    Message.Info("Property {0} on type {1}: mappings to .NET native types are not yet supported", prop.Name, prop.DeclaringType.Name);
+                    return false;
+                }
 
-            return true;
+                //TODO: because we don't currently load all the model assemblies first, we are not certain
+                //to find the mapped type for all complex types we encounter.
+                // pre-fetch the mapping for this property, saves lookups while parsing instance
+                var mappedPropertyType = inspector.FindClassMappingByImplementingType(elementType);
+                if(mappedPropertyType == null)
+                {
+                    Message.Info("Property {0} on type {1}: property maps to a type that is not recognized as a mapped FHIR type", prop.Name, prop.DeclaringType.Name);
+                    return false;
+                }
+
+                result.PropertyTypeMapping = mappedPropertyType;
+                return true;
+            }
         }
 
         private static bool isFhirPrimtiveMappedAsNativePrimitive(Type type)
@@ -91,8 +93,8 @@ namespace Hl7.Fhir.Serialization
             var type = prop.PropertyType;
 
             return type == typeof(Element)
-                        || MappedModelClass.IsFhirComplexType(type)
-                        || MappedModelClass.IsFhirPrimitive(type)
+                        || ClassMapping.IsFhirComplexType(type)
+                        || ClassMapping.IsFhirPrimitive(type)
                         || isFhirPrimtiveMappedAsNativePrimitive(type);
         }
     }
