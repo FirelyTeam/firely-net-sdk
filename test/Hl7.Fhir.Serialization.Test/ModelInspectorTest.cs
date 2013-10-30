@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.ModelBinding.Test
+namespace Hl7.Fhir.Serialization.Test
 {
     [TestClass]
     public class ModelInspectorTest
@@ -21,38 +21,38 @@ namespace Hl7.Fhir.ModelBinding.Test
 
             inspector.Inspect(typeof(ModelInspectorTest));  // shouldn't give an exception
 
-            var road = inspector.GetMappedClassForResource("roAd");
+            var road = inspector.FindMappedClassForResource("roAd");
             Assert.IsNotNull(road);
             Assert.AreEqual(FhirModelConstruct.Resource, road.ModelConstruct);
             Assert.AreEqual("Road", road.Name);
             Assert.IsNull(road.Profile);
             Assert.AreEqual(road.ImplementingType, typeof(RoadResource));
 
-            var way = inspector.GetMappedClassForResource("Way");
+            var way = inspector.FindMappedClassForResource("Way");
             Assert.IsNotNull(way);
             Assert.AreEqual("Way", way.Name);
             Assert.IsNull(way.Profile);
             Assert.AreEqual(way.ImplementingType, typeof(Way));
 
-            var pway = inspector.GetMappedClassForResource("way", "http://nu.nl/profile#street");
+            var pway = inspector.FindMappedClassForResource("way", "http://nu.nl/profile#street");
             Assert.IsNotNull(pway);
             Assert.AreEqual("Way", pway.Name);
             Assert.AreEqual("http://nu.nl/profile#street", pway.Profile);
             Assert.AreEqual(pway.ImplementingType, typeof(ProfiledWay));
 
-            var pway2 = inspector.GetMappedClassForResource("way", "http://nux.nl/profile#street");
+            var pway2 = inspector.FindMappedClassForResource("way", "http://nux.nl/profile#street");
             Assert.IsNotNull(pway2);
             Assert.AreEqual("Way", pway2.Name);
             Assert.IsNull(pway2.Profile);
             Assert.AreEqual(pway2.ImplementingType, typeof(Way));
 
-            var street = inspector.GetMappedClassForResource("Street");
+            var street = inspector.FindMappedClassForResource("Street");
             Assert.IsNotNull(street);
             Assert.AreEqual("Street", street.Name);
             Assert.IsNull(street.Profile);
             Assert.AreEqual(street.ImplementingType, typeof(NewStreet));
 
-            var noway = inspector.GetMappedClassForResource("nonexistent");
+            var noway = inspector.FindMappedClassForResource("nonexistent");
             Assert.IsNull(noway);
         }
 
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.ModelBinding.Test
             inspector.Inspect(typeof(Resource).Assembly);
 
             // Check for presence of some basic ingredients
-            Assert.IsNotNull(inspector.GetMappedClassForResource("patient"));
+            Assert.IsNotNull(inspector.FindMappedClassForResource("patient"));
             Assert.IsNotNull(inspector.GetMappedClassForDataType("HumanName"));
             Assert.IsNotNull(inspector.GetMappedClassForDataType("code"));
             Assert.IsNotNull(inspector.GetMappedClassForDataType("boolean"));
@@ -126,8 +126,8 @@ namespace Hl7.Fhir.ModelBinding.Test
             Assert.IsNotNull(inspector.GetMappedClassForDataType("AddressUse"));
 
             // Should have skipped abstract classes
-            Assert.IsNull(inspector.GetMappedClassForResource("Resource"));
-            Assert.IsNull(inspector.GetMappedClassForResource("Element"));
+            Assert.IsNull(inspector.FindMappedClassForResource("Resource"));
+            Assert.IsNull(inspector.FindMappedClassForResource("Element"));
         }
     }
 

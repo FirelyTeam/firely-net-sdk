@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.ModelBinding.Test
+namespace Hl7.Fhir.Serialization.Test
 {
     [TestClass]
     public class ModelInspectorMembersTest
@@ -17,7 +17,10 @@ namespace Hl7.Fhir.ModelBinding.Test
 
             inspector.Inspect(typeof(TestResource));
 
-            var mappedType = inspector.GetMappedClassForResource("Test");
+            var mappedType = inspector.FindMappedClassForResource("Test");
+
+            //TODO: Write test
+            throw new NotImplementedException();
         }
 
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Hl7.Fhir.ModelBinding.Test
+namespace Hl7.Fhir.Serialization.Test
 {
    
     [TestClass]

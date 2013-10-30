@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
-using Hl7.Fhir.ModelBinding.Properties;
+using Hl7.Fhir.Serialization.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     internal static class Message
     {

@@ -3,14 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.ModelBinding.Test", "test\Hl7.Fhir.ModelBinding.Test\Hl7.Fhir.ModelBinding.Test.csproj", "{D6CE2817-0931-4D56-B989-AAC5319B78CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Serialization.Test", "test\Hl7.Fhir.Serialization.Test\Hl7.Fhir.Serialization.Test.csproj", "{D6CE2817-0931-4D56-B989-AAC5319B78CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.ModelBinding.Net40", "src\Hl7.Fhir.ModelBinding\Hl7.Fhir.ModelBinding.Net40.csproj", "{73224A03-BF79-47CD-9B79-0EE63D09EA98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Serialization.Net40", "src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.Net40.csproj", "{73224A03-BF79-47CD-9B79-0EE63D09EA98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11899A8A-5232-4F5D-97C7-135467A73FC9}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,8 +26,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

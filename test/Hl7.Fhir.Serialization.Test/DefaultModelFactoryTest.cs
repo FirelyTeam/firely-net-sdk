@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.Collections;
 
-namespace Hl7.Fhir.ModelBinding.Test
+namespace Hl7.Fhir.Serialization.Test
 {
     [TestClass]
     public class DefaultModelFactoryTest

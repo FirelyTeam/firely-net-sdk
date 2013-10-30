@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hl7.Fhir.ModelBinding.Properties {
+namespace Hl7.Fhir.Serialization.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ModelBinding.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hl7.Fhir.ModelBinding.Properties.Messages", typeof(Messages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hl7.Fhir.Serialization.Properties.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,11 @@ namespace Hl7.Fhir.ModelBinding.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can only deserialize model classes, not {0}.
+        ///   Looks up a localized string similar to Can only deserialize resources and complex model classes, not {0}.
         /// </summary>
-        internal static string CanOnlyDeserializeComplex {
+        internal static string CanOnlyDeserializeResourceAndComplex {
             get {
-                return ResourceManager.GetString("CanOnlyDeserializeComplex", resourceCulture);
+                return ResourceManager.GetString("CanOnlyDeserializeResourceAndComplex", resourceCulture);
             }
         }
         

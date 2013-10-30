@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     public enum FhirModelConstruct
     {
@@ -28,9 +28,9 @@ namespace Hl7.Fhir.ModelBinding
 
 
         // Elements indexed by uppercase name for access speed
-        private Dictionary<string, MappedModelElement> _elements = new Dictionary<string, MappedModelElement>();
+        private Dictionary<string, MappedModelProperty> _elements = new Dictionary<string, MappedModelProperty>();
 
-        public IEnumerable<MappedModelElement> Elements
+        public IEnumerable<MappedModelProperty> Elements
         {
             get
             {
@@ -38,12 +38,26 @@ namespace Hl7.Fhir.ModelBinding
             }
         }
 
-        internal void AddElements(IEnumerable<MappedModelElement> elements)
+        internal void AddElements(IEnumerable<MappedModelProperty> elements)
         {
             foreach(var element in elements)
             {
                 _elements.Add(element.Name.ToUpperInvariant(), element);
             }
+        }
+
+        internal MappedModelProperty FindMappedPropertyForElement(string name)
+        {
+            var normalizedName = name.ToUpperInvariant();
+
+            MappedModelProperty prop = null;
+
+            bool success = _elements.TryGetValue(normalizedName, out prop);
+
+            if (success)
+                return prop;
+            else
+                return null;
         }
 
         public static MappedModelClass CreateForResource(Type t)

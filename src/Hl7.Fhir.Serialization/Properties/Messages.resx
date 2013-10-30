@@ -120,8 +120,8 @@
   <data name="ArgumentNullOrEmpty" xml:space="preserve">
     <value>The argument '{0}' is null or empty.</value>
   </data>
-  <data name="CanOnlyDeserializeComplex" xml:space="preserve">
-    <value>Can only deserialize model classes, not {0}</value>
+  <data name="CanOnlyDeserializeResourceAndComplex" xml:space="preserve">
+    <value>Can only deserialize resources and complex model classes, not {0}</value>
   </data>
   <data name="CanOnlyDeserializeTypedCollections" xml:space="preserve">
     <value>Can only deserialize typed collections: type {0} is neither an array, nor does it implement IEnumerable&lt;T&gt;</value>

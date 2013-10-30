@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     internal static class ReflectionHelper
     {

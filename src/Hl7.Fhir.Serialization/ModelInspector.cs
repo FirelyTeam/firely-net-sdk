@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     //TODO: Specify type using enumerated fhir datatype
     //TODO: Find out the right way to handle named resource-local component types (i.e. Patient.AnimalComponent)
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.ModelBinding
 
         private void addProps(MappedModelClass mapped, Type type)
         {
-            var propCollection = new List<MappedModelElement>();
+            var propCollection = new List<MappedModelProperty>();
 
             foreach (var property in ReflectionHelper.FindPublicProperties(type))
             {
@@ -88,15 +88,15 @@ namespace Hl7.Fhir.ModelBinding
         }
 
 
-        internal MappedModelElement Inspect(PropertyInfo property)
+        internal MappedModelProperty Inspect(PropertyInfo property)
         {
             if (property == null) throw Error.ArgumentNull("property");
 
             if (Attribute.GetCustomAttribute(property, typeof(NotMappedAttribute)) != null) return null;
 
-            MappedModelElement element = null;
+            MappedModelProperty element = null;
 
-            bool success = MappedModelElement.TryCreateFromProperty(property, out element);
+            bool success = MappedModelProperty.TryCreateFromProperty(property, out element);
 
             if (!success)
             {
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.ModelBinding
             return Tuple.Create(normalizedName, normalizedProfile);
         }
 
-        public MappedModelClass GetMappedClassForResource(string name, string profile = null)
+        public MappedModelClass FindMappedClassForResource(string name, string profile = null)
         {
             var key = buildResourceKey(name, profile);
             var noProfileKey = buildResourceKey(name, null);

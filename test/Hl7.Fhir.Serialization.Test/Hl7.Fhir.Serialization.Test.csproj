@@ -6,8 +6,8 @@
     <ProjectGuid>{D6CE2817-0931-4D56-B989-AAC5319B78CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir.ModelBinding.Test</RootNamespace>
-    <AssemblyName>Hl7.Fhir.ModelBinding.Test</AssemblyName>
+    <RootNamespace>Hl7.Fhir.Serialization.Test</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Serialization.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,9 +67,9 @@
     <EmbeddedResource Include="TestPatient.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hl7.Fhir.ModelBinding\Hl7.Fhir.ModelBinding.Net40.csproj">
+    <ProjectReference Include="..\..\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.Net40.csproj">
       <Project>{73224a03-bf79-47cd-9b79-0ee63d09ea98}</Project>
-      <Name>Hl7.Fhir.ModelBinding.Net40</Name>
+      <Name>Hl7.Fhir.Serialization.Net40</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

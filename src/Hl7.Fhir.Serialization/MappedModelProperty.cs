@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     public enum ElementKind
     {
@@ -14,19 +14,21 @@ namespace Hl7.Fhir.ModelBinding
         Polymorph
     }
 
-    public class MappedModelElement
+    public class MappedModelProperty
     {
         public ElementKind Kind { get; set; }
         public string Name { get; set; }
         public bool MayRepeat { get; set; }
 
+        public Type MappedElementType { get; set; }
+
         public PropertyInfo ImplementingProperty { get; set; }     
 
-        public static bool TryCreateFromProperty(PropertyInfo prop, out MappedModelElement result)
+        public static bool TryCreateFromProperty(PropertyInfo prop, out MappedModelProperty result)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
-            result = new MappedModelElement();
+            result = new MappedModelProperty();
             result.Name = prop.Name;
             result.ImplementingProperty = prop;
 
@@ -39,6 +41,8 @@ namespace Hl7.Fhir.ModelBinding
                 // If this is a collection, inspect the collection's element type
                 elementType = ReflectionHelper.GetCollectionItemType(elementType);
             }
+
+            result.MappedElementType = elementType;
 
             if (elementType == typeof(Element))
             {

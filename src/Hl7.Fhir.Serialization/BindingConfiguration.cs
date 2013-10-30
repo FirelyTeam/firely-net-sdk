@@ -1,11 +1,11 @@
-﻿using Hl7.Fhir.ModelBinding.Properties;
+﻿using Hl7.Fhir.Serialization.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.ModelBinding
+namespace Hl7.Fhir.Serialization
 {
     public static class BindingConfiguration
     {
@@ -53,7 +53,6 @@ namespace Hl7.Fhir.ModelBinding
         {
             get { return _modelAssemblies.Value; }
         }
-
 
 
         private static bool _acceptUnknownMembers = false;
