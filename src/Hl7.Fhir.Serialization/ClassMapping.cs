@@ -21,12 +21,11 @@ namespace Hl7.Fhir.Serialization
 
         public FhirModelConstruct ModelConstruct;
 
-        public string Name { get; set; }
-
-        public string Profile { get; set; }
-        public Type ImplementingType { get; set; }
-
-
+        public string Name { get; private set; }
+        public string Profile { get; private set; }
+        
+        public Type ImplementingType { get; private set; }
+   
         // Elements indexed by uppercase name for access speed
         private Dictionary<string, PropertyMapping> _elements = new Dictionary<string, PropertyMapping>();
 
@@ -54,10 +53,14 @@ namespace Hl7.Fhir.Serialization
 
             bool success = _elements.TryGetValue(normalizedName, out prop);
 
-            if (success)
-                return prop;
-            else
-                return null;
+            // Direct success
+            if (success) return prop;
+            
+            // Not found, maybe a polymorphic name
+            // TODO: specify possible polymorhpic variations using attributes
+            // to speedup look up & aid validation
+            return Elements.SingleOrDefault(p => p.IsPolymorhic 
+                        && name.ToUpperInvariant().StartsWith(p.Name.ToUpperInvariant()));            
         }
 
         public static ClassMapping CreateForResource(Type t)
@@ -67,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             result.Name = getMappedResourceName(t);
             result.Profile = getProfile(t);
             result.ImplementingType = t;
-            
+
             return result;
         }
 

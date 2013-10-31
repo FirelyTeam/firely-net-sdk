@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class ResourceReader
+    public class ResourceReader
     {
         public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
         public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";

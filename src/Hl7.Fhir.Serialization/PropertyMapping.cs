@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,22 @@ namespace Hl7.Fhir.Serialization
 {
     public class PropertyMapping
     {
-        public string Name { get; set; }
-        public bool IsPolymorhic { get; set; }
-        public bool MayRepeat { get; set; }
+        public string Name { get; private set; }
+        public bool IsPolymorhic { get; private set; }
+        public Type PolymorphicBase { get; private set; }
+        public bool MayRepeat { get; private set; }
 
-        public ClassMapping PropertyTypeMapping { get; set; }
+        public ClassMapping PropertyTypeMapping { get; private set; }
+        public IEnumerable<Type> GenericParams { get; private set; }
 
-        public PropertyInfo ImplementingProperty { get; set; }     
+        public PropertyInfo ImplementingProperty { get; private set; }     
 
         public static bool TryCreateFromProperty(PropertyInfo prop, ModelInspector inspector, out PropertyMapping result)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
             result = new PropertyMapping();
-            result.Name = prop.Name;
+            result.Name = getMappedElementName(prop);
             result.ImplementingProperty = prop;
 
             result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
@@ -35,11 +38,15 @@ namespace Hl7.Fhir.Serialization
                 elementType = ReflectionHelper.GetCollectionItemType(elementType);
             }
 
-            if (elementType == typeof(Element) || elementType == typeof(object))
+            //TODO: a profiled class may have a single fixed type left as choice, so
+            //could map this to a fixed type.
+            if (elementType == typeof(Element) || elementType == typeof(Resource) || elementType == typeof(object))
             {
                 // Special case: polymorphic (choice) properties are generated to have type Element
+                // Special case: the contained property of resources can have any Resource
                 result.IsPolymorhic = true;
                 result.PropertyTypeMapping = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
+                result.PolymorphicBase = elementType;  // keep the type, so we know whether to expect any element or any resource (contained)
                 return true;
             }
             else
@@ -50,9 +57,24 @@ namespace Hl7.Fhir.Serialization
                     Message.Info("Property {0} on type {1}: mappings to .NET native types are not yet supported", prop.Name, prop.DeclaringType.Name);
                     return false;
                 }
+               
+                // Special case: this is a closed generic type try to find the mapping for
+                // its open, defining type instead
+                if (elementType.IsGenericType)
+                {
+                    if (ReflectionHelper.IsClosedGenericType(elementType))
+                    {
+                        result.GenericParams = elementType.GetGenericArguments();
+                        elementType = elementType.GetGenericTypeDefinition();
+                    }
+                    else
+                    {
+                        Message.Info("Property {0} on type {1}: property has an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
+                        return false;
+                    }
 
-                //TODO: because we don't currently load all the model assemblies first, we are not certain
-                //to find the mapped type for all complex types we encounter.
+                }
+
                 // pre-fetch the mapping for this property, saves lookups while parsing instance
                 var mappedPropertyType = inspector.FindClassMappingByImplementingType(elementType);
                 if(mappedPropertyType == null)
@@ -64,6 +86,17 @@ namespace Hl7.Fhir.Serialization
                 result.PropertyTypeMapping = mappedPropertyType;
                 return true;
             }
+        }
+
+
+        private static string getMappedElementName(PropertyInfo prop)
+        {
+            var attr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+
+            if (attr != null)
+                return attr.Name;
+            else
+                return prop.Name;
         }
 
         private static bool isFhirPrimtiveMappedAsNativePrimitive(Type type)

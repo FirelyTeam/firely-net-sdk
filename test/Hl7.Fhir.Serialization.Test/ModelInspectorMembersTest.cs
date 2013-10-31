@@ -15,7 +15,8 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Inspect(typeof(TestResource));
+            inspector.Import(typeof(TestResource));
+            inspector.Process();
 
             var mappedType = inspector.FindClassMappingForResource("Test");
 

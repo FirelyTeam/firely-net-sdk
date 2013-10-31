@@ -5,25 +5,27 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.ModelBinding.Test
+namespace Hl7.Fhir.Serialization.Test
 {
     [TestClass]
-    public class ComplexMemberReaderTest
+    public class ResourceReadingTest
     {
         [TestMethod]
-        public void TestLoadObject()
+        public void TestLoadResource()
         {
-            Stream s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.ModelBinding.Test.TestPatient.json");
+            Stream s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Serialization.Test.TestPatient.json");
             var jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
             var root = JObject.Load(jsonReader);
             BindingConfiguration.AcceptUnknownMembers = true;
 
-           // var objReader = new ComplexMemberReader(root);
-           // var result = objReader.Deserialize(typeof(Patient));
-
             BindingConfiguration.ModelAssemblies.Add(typeof(Resource).Assembly);
 
-            var reader = new DispatchingReader(root);
+            var inspector = new ModelInspector();
+            inspector.Import(typeof(Resource).Assembly);
+            inspector.Process();
+
+            var reader = new ResourceReader(inspector, root);
+
             var result = reader.Deserialize();
         }
     }

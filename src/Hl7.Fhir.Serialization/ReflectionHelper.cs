@@ -64,6 +64,16 @@ namespace Hl7.Fhir.Serialization
         }
 
 
+        public static bool IsClosedGenericType(Type type)
+        {
+            return type.IsGenericType && !type.ContainsGenericParameters;
+        }
+
+        public static bool IsOpenGenericType(Type type)
+        {
+            return type.IsGenericType && type.ContainsGenericParameters;
+        }
+
         /// <summary>
         /// Gets the type of the typed collection's items.
         /// </summary>

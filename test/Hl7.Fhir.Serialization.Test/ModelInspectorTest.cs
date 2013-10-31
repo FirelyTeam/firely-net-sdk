@@ -13,13 +13,13 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Inspect(typeof(Street));
-            inspector.Inspect(typeof(RoadResource));
-            inspector.Inspect(typeof(Way));
-            inspector.Inspect(typeof(ProfiledWay));
-            inspector.Inspect(typeof(NewStreet));
-
-            inspector.Inspect(typeof(ModelInspectorTest));  // shouldn't give an exception
+            inspector.Import(typeof(Street));
+            inspector.Import(typeof(RoadResource));
+            inspector.Import(typeof(Way));
+            inspector.Import(typeof(ProfiledWay));
+            inspector.Import(typeof(NewStreet));
+            inspector.Import(typeof(ModelInspectorTest));  // shouldn't give an exception
+            inspector.Process();
 
             var road = inspector.FindClassMappingForResource("roAd");
             Assert.IsNotNull(road);
@@ -62,11 +62,12 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Inspect(typeof(AnimalName));
-            inspector.Inspect(typeof(NewAnimalName));
-            inspector.Inspect(typeof(ComplexNumber));
-            inspector.Inspect(typeof(SomeEnum));
-            inspector.Inspect(typeof(ActResource.SomeOtherEnum));
+            inspector.Import(typeof(AnimalName));
+            inspector.Import(typeof(NewAnimalName));
+            inspector.Import(typeof(ComplexNumber));
+            inspector.Import(typeof(SomeEnum));
+            inspector.Import(typeof(ActResource.SomeOtherEnum));
+            inspector.Process();
 
             var result = inspector.FindClassMappingForFhirDataType("animalname");
             Assert.IsNotNull(result);
@@ -105,7 +106,8 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Inspect(typeof(Chameleon));
+            inspector.Import(typeof(Chameleon));
+            inspector.Process();
         }
 
         [TestMethod]
@@ -114,7 +116,8 @@ namespace Hl7.Fhir.Serialization.Test
             var inspector = new ModelInspector();
 
             // Inspect the HL7.Fhir.Model assembly
-            inspector.Inspect(typeof(Resource).Assembly);
+            inspector.Import(typeof(Resource).Assembly);
+            inspector.Process();
 
             // Check for presence of some basic ingredients
             Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));
@@ -128,7 +131,30 @@ namespace Hl7.Fhir.Serialization.Test
             // Should have skipped abstract classes
             Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
             Assert.IsNull(inspector.FindClassMappingForResource("Element"));
+
+            // Code<> should still be there (the only generic type definition accepted)
+            var codeOfT = inspector.FindClassMappingByImplementingType(typeof(Code<>));
+            Assert.IsNotNull(codeOfT);
+            Assert.AreEqual(FhirModelConstruct.PrimitiveType, codeOfT.ModelConstruct);
+
+            // Test presence of a basic member
+            // Test presence of a xxxxxElement member
+
         }
+
+        //[TestMethod]
+        //public void TestCodeOfTInspection()
+        //{
+        //    var inspector = new ModelInspector();
+
+        //    var x = typeof(Code<>);
+        //    var y = typeof(Code<Address.AddressUse>);
+
+        //    // Inspect the HL7.Fhir.Model assembly
+        //    inspector.Import(typeof(Code<>));
+        //    inspector.Import(typeof(Address));
+        //    inspector.Process();
+        //}
     }
 
     /*

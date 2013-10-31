@@ -67,11 +67,13 @@ namespace Hl7.Fhir.Serialization
             {
                 var memberName = memberData.Key;
 
+                // Find a property on the instance that matches the element found in the data
+                // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
                 var mappedProperty = mapping.FindMappedPropertyForElement(memberName);
 
                 if (mappedProperty != null)
                 {
-                    Debug.WriteLine("Handling member " + memberName);
+                    Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
 
                     var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
                    
@@ -84,7 +86,9 @@ namespace Hl7.Fhir.Serialization
                     else
                     {
                         //TODO: If polymorph...determine type from instance member name
-                        throw Error.NotImplemented("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
+                        //throw Error.NotImplemented("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
+                        Message.Info("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
+                        continue;
                     }
 
                     var reader = new DispatchingReader(_inspector, source[memberName]);
@@ -95,19 +99,19 @@ namespace Hl7.Fhir.Serialization
                 else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
                         memberName.Equals(ResourceReader.RESOURCETYPE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    //TODO: Detecting whether this is a special, serialization format-specific member should be
-                    //done in an abstraction around the json or xml readers.
-
                     // Ignore type discriminator in Resources, that member is used in the 
                     // ResourceReader to figure out the actual type when this is unknown
                     // from the context
+
+                    //TODO: Detecting whether this is a special, serialization format-specific member should be
+                    //done in an abstraction around the json or xml readers.
                 }
-                else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
-                            memberName.Equals(ResourceReader.CONTAINED_RESOURCE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    //TODO: Handle contained resourcs
-                    Message.Info("Skipped parsing contained resources - not yet supported");
-                }
+                //else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
+                //            memberName.Equals(ResourceReader.CONTAINED_RESOURCE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
+                //{
+                //    //TODO: Handle contained resourcs
+                //    Message.Info("Skipped parsing contained resources - not yet supported");
+                //}
                 else
                 {
                     if (BindingConfiguration.AcceptUnknownMembers == false)

@@ -23,25 +23,57 @@ namespace Hl7.Fhir.Serialization
         // Index for easy lookup of classmappings, key is Type
         private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
 
-        public void Inspect(Assembly assembly)
+        // List of all imported types.
+        private List<Type> _importedTypes = new List<Type>();
+
+        public void Import(Assembly assembly)
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
 
             if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
 
-            foreach (Type t in assembly.GetExportedTypes()) Inspect(t);
+            foreach (Type t in assembly.GetExportedTypes()) Import(t);
         }
 
-        public void Inspect(Type type)
+        public void Import(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
 
+            _importedTypes.Add(type);
+        }
+
+        public void Process()
+        {
+            _resourceClasses.Clear();
+            _dataTypeClasses.Clear();
+            _classMappingsByType.Clear();
+
+            foreach (var type in _importedTypes) processType(type);
+
+            // Once all classes have been inspected, process their properties
+            // (if you process properties before all types are inspected, you won't be able
+            // to find the classmappings the properties may refer to) 
+            foreach(var type in _classMappingsByType.Keys)
+            {
+                var mapping = _classMappingsByType[type];
+                addProps(mapping, type);
+            }
+        }
+
+        private void processType(Type type)
+        {
             if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) return;
 
             if (type.IsAbstract)
             {
                 // Ignore this class
-                Message.Info("Skipped type {0} while doing inspection: abstract classes can not be used as mapping targets", type.Name);
+                Message.Info("Skipped type {0} while doing inspection: abstract/static classes can not be used as mapping targets", type.Name);
+                return;
+            }
+
+            if(ReflectionHelper.IsOpenGenericType(type) && type != typeof(Code<>))
+            {
+                Message.Info("Skipped type {0} while doing inspection: open generic types (except Code<>) can not be used as mapping targets", type.Name);
                 return;
             }
 
@@ -51,7 +83,6 @@ namespace Hl7.Fhir.Serialization
             {
                 var mapped = ClassMapping.CreateForResource(type);
                 var key = buildResourceKey(mapped.Name, mapped.Profile);
-                addProps(mapped, type);
                 _resourceClasses[key] = mapped;
                 _classMappingsByType[type] = mapped;
             }
@@ -59,7 +90,6 @@ namespace Hl7.Fhir.Serialization
             {
                 var mapped = ClassMapping.CreateForComplexType(type);
                 var key = mapped.Name.ToUpperInvariant();
-                addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
                 _classMappingsByType[type] = mapped;
             }
@@ -67,7 +97,6 @@ namespace Hl7.Fhir.Serialization
             {
                 var mapped = ClassMapping.CreateForFhirPrimitive(type);
                 var key = mapped.Name.ToUpperInvariant();
-                addProps(mapped, type);
                 _dataTypeClasses[key] = mapped;
                 _classMappingsByType[type] = mapped;
             }
@@ -84,7 +113,7 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var property in ReflectionHelper.FindPublicProperties(type))
             {
-                var mappedProperty = Inspect(property);
+                var mappedProperty = processProperty(property);
 
                 if (mappedProperty != null) propCollection.Add(mappedProperty);
             }
@@ -93,7 +122,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        internal PropertyMapping Inspect(PropertyInfo property)
+        private PropertyMapping processProperty(PropertyInfo property)
         {
             if (property == null) throw Error.ArgumentNull("property");
 
