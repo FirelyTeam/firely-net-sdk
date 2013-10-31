@@ -25,6 +25,19 @@ namespace Hl7.Fhir.Serialization
         public string Profile { get; private set; }
         
         public Type ImplementingType { get; private set; }
+   //     public Type PrimitiveType { get; private set; }
+
+        private Func<string, object> _primitiveParsingFunction;
+
+        public object Parse(string value)
+        {
+            if (ModelConstruct == FhirModelConstruct.PrimitiveType)
+            {
+                return _primitiveParsingFunction(value);
+            }
+            else
+                throw Error.InvalidOperation("Can only invoke Parse on a primitive mapped class");
+        }
    
         // Elements indexed by uppercase name for access speed
         private Dictionary<string, PropertyMapping> _elements = new Dictionary<string, PropertyMapping>();
@@ -59,8 +72,7 @@ namespace Hl7.Fhir.Serialization
             // Not found, maybe a polymorphic name
             // TODO: specify possible polymorhpic variations using attributes
             // to speedup look up & aid validation
-            return Elements.SingleOrDefault(p => p.IsPolymorhic 
-                        && name.ToUpperInvariant().StartsWith(p.Name.ToUpperInvariant()));            
+            return Elements.SingleOrDefault(p => p.MatchesSuffixedName(name));            
         }
 
         public static ClassMapping CreateForResource(Type t)
@@ -94,9 +106,34 @@ namespace Hl7.Fhir.Serialization
             result.Profile = null;  // No support for profiled datatypes
             result.ImplementingType = t;
 
+            // Now determine actual .NET primitive used for the ImplementingType's Value property
+            //var valueProperty = ReflectionHelper.FindPublicProperty(result.ImplementingType, "Value");
+            //if(valueProperty == null) throw Error.InvalidOperation("Expected a Value property on the mapped primitive class {0}", result.ImplementingType.Name);
+            //result.PrimitiveType = valueProperty.PropertyType;
+            if (result.ImplementingType.IsEnum)
+            {
+                result._primitiveParsingFunction = input => invokeEnumParser(input, result.ImplementingType);                
+            }
+            else
+            {
+                var parseMethod = ReflectionHelper.FindPublicStaticMethod(result.ImplementingType, "Parse", typeof(string));
+                if (parseMethod == null) throw Error.InvalidOperation("Expected a static Parse(string) function on the mapped primitive class {0}", result.ImplementingType.Name);
+                result._primitiveParsingFunction = input => parseMethod.Invoke(null, new object[] { input });
+            }
             return result;
         }
 
+
+        private static object invokeEnumParser(string input, Type enumType)
+        {
+            object result = null;
+            bool success = EnumHelper.TryParseEnum(input, enumType, out result);
+
+            if (!success)
+                throw Error.InvalidOperation("Parsing of enum failed");
+
+            return result;
+        }
 
         private static string getProfile(Type type)
         {

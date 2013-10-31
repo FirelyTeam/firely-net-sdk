@@ -16,6 +16,22 @@ namespace Hl7.Fhir.Serialization
             return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }
 
+        internal static PropertyInfo FindPublicProperty(Type t, string name)
+        {
+            if(t == null) throw Error.ArgumentNull("t");
+            if (name == null) throw Error.ArgumentNull("name");
+
+            return t.GetProperty(name, BindingFlags.Instance | BindingFlags.Public);
+        }
+
+        internal static MethodInfo FindPublicStaticMethod(Type t, string name, params Type[] arguments)
+        {
+            if (t == null) throw Error.ArgumentNull("t");
+            if (name == null) throw Error.ArgumentNull("name");
+
+            return t.GetMethod(name,BindingFlags.Public | BindingFlags.Static, null, arguments, null);
+        }
+
         internal static bool HasDefaultPublicConstructor(Type t)
         {
             if (t == null) throw Error.ArgumentNull("t");

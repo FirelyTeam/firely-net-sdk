@@ -81,14 +81,14 @@ namespace Hl7.Fhir.Serialization
 
                     if(!mappedProperty.IsPolymorhic)
                     {
-                        propMapping = mappedProperty.PropertyTypeMapping;
+                        propMapping = mappedProperty.MappedPropertyType;
                     }
                     else
                     {
-                        //TODO: If polymorph...determine type from instance member name
-                        //throw Error.NotImplemented("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
-                        Message.Info("Handling of polymorphic properties ({0}) not implemented yet", mappedProperty.Name);
-                        continue;
+                        var typeName = mappedProperty.GetSuffixFromName(memberName);
+                        propMapping = _inspector.FindClassMappingForFhirDataType(typeName);
+                        if (propMapping == null)
+                            throw Error.InvalidOperation("Encountered polymorph member {0}, which uses unknown datatype {1}", memberName, typeName);
                     }
 
                     var reader = new DispatchingReader(_inspector, source[memberName]);

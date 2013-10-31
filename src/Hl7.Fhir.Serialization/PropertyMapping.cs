@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
         public Type PolymorphicBase { get; private set; }
         public bool MayRepeat { get; private set; }
 
-        public ClassMapping PropertyTypeMapping { get; private set; }
+        public ClassMapping MappedPropertyType { get; private set; }
         public IEnumerable<Type> GenericParams { get; private set; }
 
         public PropertyInfo ImplementingProperty { get; private set; }     
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
                 // Special case: polymorphic (choice) properties are generated to have type Element
                 // Special case: the contained property of resources can have any Resource
                 result.IsPolymorhic = true;
-                result.PropertyTypeMapping = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
+                result.MappedPropertyType = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
                 result.PolymorphicBase = elementType;  // keep the type, so we know whether to expect any element or any resource (contained)
                 return true;
             }
@@ -83,11 +83,30 @@ namespace Hl7.Fhir.Serialization
                     return false;
                 }
 
-                result.PropertyTypeMapping = mappedPropertyType;
+                result.MappedPropertyType = mappedPropertyType;
                 return true;
             }
         }
 
+
+        public bool MatchesSuffixedName(string suffixedName)
+        {
+            if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
+
+            return this.IsPolymorhic &&
+                       suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
+        }
+
+        public string GetSuffixFromName(string suffixedName)
+        {
+            if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
+
+            if (MatchesSuffixedName(suffixedName))
+                return suffixedName.Remove(0, Name.Length);
+            else
+                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
+                                            suffixedName, Name);
+        }
 
         private static string getMappedElementName(PropertyInfo prop)
         {

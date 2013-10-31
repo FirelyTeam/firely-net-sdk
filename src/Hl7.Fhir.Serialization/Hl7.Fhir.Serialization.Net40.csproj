@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingConfiguration.cs" />
+    <Compile Include="PrimitiveTypeReader.cs" />
     <Compile Include="ComplexTypeReader.cs" />
     <Compile Include="DefaultModelFactory.cs" />
     <Compile Include="DispatchingReader.cs" />
