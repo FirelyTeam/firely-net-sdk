@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Serialization.Properties;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Properties;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -58,9 +59,16 @@ namespace Hl7.Fhir.Serialization
                 primitiveValue = (string)source.Value;
             else
                 throw Error.InvalidOperation("Encountered a json primitive of type {0} while only string, boolean and number are allowed", source.Type);
-        
+
+            // Fix for stupid dotnet conversion true => "True"
+            if (primitiveValue is bool)
+                primitiveValue = (bool)primitiveValue ? "true" : "false";
+
             // anyway, we use the Parse() function on the primitive types, which takes a string...
-            return mapping.Parse(primitiveValue.ToString());
+            if (mapping.Name.StartsWith("Code`1") || mapping.Name.StartsWith("codeOfT"))
+                return null;
+            else
+                return mapping.Parse(primitiveValue.ToString());
 
             /* TODO: map the values to one of the datatypes
                 boolean	

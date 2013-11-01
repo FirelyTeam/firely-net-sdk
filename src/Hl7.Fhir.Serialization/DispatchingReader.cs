@@ -33,9 +33,8 @@ namespace Hl7.Fhir.Serialization
             }
             else if (mapping.ModelConstruct == FhirModelConstruct.PrimitiveType)
             {
-                // throw Error.NotImplemented("Cannot yet read primitives");
-                Message.Info("Cannot yet handle primitives");
-                return existing;
+                var reader = new PrimitiveTypeReader(_inspector, _data);
+                return reader.Deserialize(mapping);
             }
             else if (mapping.ModelConstruct == FhirModelConstruct.ComplexType)
             {

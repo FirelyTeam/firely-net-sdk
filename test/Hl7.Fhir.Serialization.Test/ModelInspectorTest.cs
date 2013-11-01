@@ -142,19 +142,28 @@ namespace Hl7.Fhir.Serialization.Test
 
         }
 
-        //[TestMethod]
-        //public void TestCodeOfTInspection()
-        //{
-        //    var inspector = new ModelInspector();
+        [TestMethod]
+        public void TestCodeOfTInspection()
+        {
+            var inspector = new ModelInspector();
 
-        //    var x = typeof(Code<>);
-        //    var y = typeof(Code<Address.AddressUse>);
+            var x = typeof(Tester);
 
-        //    // Inspect the HL7.Fhir.Model assembly
-        //    inspector.Import(typeof(Code<>));
-        //    inspector.Import(typeof(Address));
-        //    inspector.Process();
-        //}
+            // Inspect the HL7.Fhir.Model assembly
+            //inspector.Import(typeof(Code<>));
+            //inspector.Import(typeof(Address));
+            //inspector.Process();
+        }
+    }
+
+
+    class Open<T, X> { }
+
+    class Half<X> : Open<int,X> { }
+
+    class Tester
+    {
+        public Half<string> Y { get; set; }
     }
 
     /*

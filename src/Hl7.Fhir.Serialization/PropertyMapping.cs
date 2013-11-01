@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class PropertyMapping
+    public class PropertyMapping : ICloneable
     {
         public string Name { get; private set; }
         public bool IsPolymorhic { get; private set; }
@@ -16,9 +16,22 @@ namespace Hl7.Fhir.Serialization
         public bool MayRepeat { get; private set; }
 
         public ClassMapping MappedPropertyType { get; private set; }
-        public IEnumerable<Type> GenericParams { get; private set; }
-
+        
         public PropertyInfo ImplementingProperty { get; private set; }     
+
+        public object Clone()
+        {
+            var result = new PropertyMapping();
+
+            result.Name = this.Name;
+            result.IsPolymorhic = this.IsPolymorhic;
+            result.PolymorphicBase = this.PolymorphicBase;
+            result.MayRepeat = this.MayRepeat;
+            result.MappedPropertyType = this.MappedPropertyType;
+            result.ImplementingProperty = this.ImplementingProperty;
+
+            return result;
+        }
 
         public static bool TryCreateFromProperty(PropertyInfo prop, ModelInspector inspector, out PropertyMapping result)
         {
@@ -45,26 +58,27 @@ namespace Hl7.Fhir.Serialization
                 // Special case: polymorphic (choice) properties are generated to have type Element
                 // Special case: the contained property of resources can have any Resource
                 result.IsPolymorhic = true;
-                result.MappedPropertyType = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
                 result.PolymorphicBase = elementType;  // keep the type, so we know whether to expect any element or any resource (contained)
+                result.MappedPropertyType = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
                 return true;
+            }
+            else if(isFhirPrimtiveMappedAsNativePrimitive(elementType))
+            {
+                //TODO: pick up an attribute to see which fhirtype maps to this primitive .NET
+                Message.Info("Property {0} on type {1}: mappings to .NET native types are not yet supported", prop.Name, prop.DeclaringType.Name);
+                return false;
             }
             else
             {
-                if(isFhirPrimtiveMappedAsNativePrimitive(elementType))
-                {
-                    //TODO: pick up an attribute to see which fhirtype maps to this primitive .NET
-                    Message.Info("Property {0} on type {1}: mappings to .NET native types are not yet supported", prop.Name, prop.DeclaringType.Name);
-                    return false;
-                }
-               
+                Type[] genericParams = null;
+
                 // Special case: this is a closed generic type try to find the mapping for
                 // its open, defining type instead
                 if (elementType.IsGenericType)
                 {
                     if (ReflectionHelper.IsClosedGenericType(elementType))
                     {
-                        result.GenericParams = elementType.GetGenericArguments();
+                        genericParams = elementType.GetGenericArguments();
                         elementType = elementType.GetGenericTypeDefinition();
                     }
                     else
@@ -72,7 +86,6 @@ namespace Hl7.Fhir.Serialization
                         Message.Info("Property {0} on type {1}: property has an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
                         return false;
                     }
-
                 }
 
                 // pre-fetch the mapping for this property, saves lookups while parsing instance
@@ -83,7 +96,15 @@ namespace Hl7.Fhir.Serialization
                     return false;
                 }
 
+                // If we mapped to the open generic definition of a closed generic type,
+                // now close the mapped class for this property again.
+                if(genericParams != null)
+                {
+                    mappedPropertyType = mappedPropertyType.CloseGenericMapping(genericParams);
+                }
+
                 result.MappedPropertyType = mappedPropertyType;
+                
                 return true;
             }
         }

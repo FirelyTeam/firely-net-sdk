@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Serialization
                 if (mappedProperty != null)
                 {
                     Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
-
+                    //object value = null;
                     var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
                    
                     ClassMapping propMapping = null;
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Serialization
                     if (BindingConfiguration.AcceptUnknownMembers == false)
                         throw Error.InvalidOperation(Messages.DeserializeUnknownMember, memberName);
                     else
-                        Debug.WriteLine("Skipping unknown member " + memberName);
+                        Message.Info("Skipping unknown member " + memberName);
                 }
 
                 //TODO: handle extension array in complex object

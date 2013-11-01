@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
     }
 
 
-    public class ClassMapping
+    public class ClassMapping : ICloneable
     {
         internal const string RESOURCENAME_SUFFIX = "Resource";
 
@@ -29,6 +29,22 @@ namespace Hl7.Fhir.Serialization
 
         private Func<string, object> _primitiveParsingFunction;
 
+        public object Clone()
+        {
+            var result = new ClassMapping();
+
+            result.ModelConstruct = this.ModelConstruct;
+            result.Name = this.Name;
+            result.Profile = this.Profile;
+            result._elements = this._elements;
+            result.ImplementingType = this.ImplementingType;
+
+            result._primitiveParsingFunction = buildPrimitiveParserInvoker(result.ImplementingType);
+
+            return result;
+        }
+
+
         public object Parse(string value)
         {
             if (ModelConstruct == FhirModelConstruct.PrimitiveType)
@@ -39,6 +55,23 @@ namespace Hl7.Fhir.Serialization
                 throw Error.InvalidOperation("Can only invoke Parse on a primitive mapped class");
         }
    
+
+        public ClassMapping CloseGenericMapping(params Type[] genericArgs)
+        {
+            if (ImplementingType.ContainsGenericParameters)
+            {
+                var closedMapping = (ClassMapping)this.Clone();
+                closedMapping.ImplementingType = ImplementingType.MakeGenericType(genericArgs);
+
+                return closedMapping;
+            }
+            else
+            {
+                Message.Info("Called CloseGenericMapping on already closed generic {0}", ImplementingType.Name);
+                return null;
+            }
+        }
+
         // Elements indexed by uppercase name for access speed
         private Dictionary<string, PropertyMapping> _elements = new Dictionary<string, PropertyMapping>();
 
@@ -105,22 +138,28 @@ namespace Hl7.Fhir.Serialization
             result.Name = getMappedPrimitiveTypeName(t);
             result.Profile = null;  // No support for profiled datatypes
             result.ImplementingType = t;
+            result._primitiveParsingFunction = buildPrimitiveParserInvoker(t);
+            
+            return result;
+        }
 
+        private static Func<string,object> buildPrimitiveParserInvoker(Type implementingType)
+        {
             // Now determine actual .NET primitive used for the ImplementingType's Value property
             //var valueProperty = ReflectionHelper.FindPublicProperty(result.ImplementingType, "Value");
             //if(valueProperty == null) throw Error.InvalidOperation("Expected a Value property on the mapped primitive class {0}", result.ImplementingType.Name);
             //result.PrimitiveType = valueProperty.PropertyType;
-            if (result.ImplementingType.IsEnum)
+            if (implementingType.IsEnum)
             {
-                result._primitiveParsingFunction = input => invokeEnumParser(input, result.ImplementingType);                
+                return input => invokeEnumParser(input, implementingType);
             }
             else
             {
-                var parseMethod = ReflectionHelper.FindPublicStaticMethod(result.ImplementingType, "Parse", typeof(string));
-                if (parseMethod == null) throw Error.InvalidOperation("Expected a static Parse(string) function on the mapped primitive class {0}", result.ImplementingType.Name);
-                result._primitiveParsingFunction = input => parseMethod.Invoke(null, new object[] { input });
+                var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "Parse", typeof(string));
+                if (parseMethod == null) throw Error.InvalidOperation("Expected a static Parse(string) function on the mapped primitive class {0}", implementingType.Name);
+
+                return input => parseMethod.Invoke(null, new object[] { input });
             }
-            return result;
         }
 
 
