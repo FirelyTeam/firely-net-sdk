@@ -3,19 +3,12 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public enum FhirModelConstruct
-    {
-        PrimitiveType,
-        ComplexType,
-        Resource
-    }
-
-
-    public class ClassMapping : ICloneable
+    public class ClassMapping
     {
         internal const string RESOURCENAME_SUFFIX = "Resource";
 
@@ -25,23 +18,18 @@ namespace Hl7.Fhir.Serialization
         public string Profile { get; private set; }
         
         public Type ImplementingType { get; private set; }
-   //     public Type PrimitiveType { get; private set; }
 
         private Func<string, object> _primitiveParsingFunction;
+        
+        // Elements indexed by uppercase name for access speed
+        private Dictionary<string, PropertyMapping> _propMappings = new Dictionary<string, PropertyMapping>();
 
-        public object Clone()
+        public IEnumerable<PropertyMapping> PropertyMappings
         {
-            var result = new ClassMapping();
-
-            result.ModelConstruct = this.ModelConstruct;
-            result.Name = this.Name;
-            result.Profile = this.Profile;
-            result._elements = this._elements;
-            result.ImplementingType = this.ImplementingType;
-
-            result._primitiveParsingFunction = buildPrimitiveParserInvoker(result.ImplementingType);
-
-            return result;
+            get
+            {
+                return _propMappings.Values;
+            }
         }
 
 
@@ -54,50 +42,60 @@ namespace Hl7.Fhir.Serialization
             else
                 throw Error.InvalidOperation("Can only invoke Parse on a primitive mapped class");
         }
-   
 
-        public ClassMapping CloseGenericMapping(params Type[] genericArgs)
+        // Class mappings are built in two phases: first all the classes are mapped, after that their
+        // properties. Necessary because to determine the mapped type of a property, all mapped classes 
+        // have to be known and already mapped. This internal function will only be called by the
+        // Inspector after it has created all class mappings.
+        internal void InspectProperties(ModelInspector inspector)
         {
-            if (ImplementingType.ContainsGenericParameters)
-            {
-                var closedMapping = (ClassMapping)this.Clone();
-                closedMapping.ImplementingType = ImplementingType.MakeGenericType(genericArgs);
+            foreach (var property in ReflectionHelper.FindPublicProperties(ImplementingType))
+            {            
+                //Skip the Value property of a PrimitiveElement, this is handled as a special case by the parser
+                if (typeof(PrimitiveElement).IsAssignableFrom(property.DeclaringType) && property.Name == "Value")
+                    continue;
 
-                return closedMapping;
-            }
-            else
-            {
-                Message.Info("Called CloseGenericMapping on already closed generic {0}", ImplementingType.Name);
-                return null;
-            }
-        }
+                var propMapping = processProperty(inspector, property);
 
-        // Elements indexed by uppercase name for access speed
-        private Dictionary<string, PropertyMapping> _elements = new Dictionary<string, PropertyMapping>();
-
-        public IEnumerable<PropertyMapping> Elements
-        {
-            get
-            {
-                return _elements.Values;
+                if (propMapping != null) addPropertyMapping(propMapping);
             }
         }
 
-        internal void AddElements(IEnumerable<PropertyMapping> elements)
+        private void addPropertyMapping(PropertyMapping mapping)
         {
-            foreach(var element in elements)
-            {
-                _elements.Add(element.Name.ToUpperInvariant(), element);
-            }
+            _propMappings.Add(mapping.Name.ToUpperInvariant(), mapping);
         }
 
-        internal PropertyMapping FindMappedPropertyForElement(string name)
+
+        private PropertyMapping processProperty(ModelInspector inspector, PropertyInfo prop)
         {
+            if (Attribute.GetCustomAttribute(prop, typeof(NotMappedAttribute)) != null) return null;
+
+            return PropertyMapping.Create(inspector, prop);
+
+            //PropertyMapping element = null;
+            //bool success = PropertyMapping.TryCreate(inspector, property, out element);
+
+            //if (!success)
+            //{
+            //    Message.Info("Skipped member {0} in type {1} while doing inspection: not a mappable property",
+            //            property.Name, property.DeclaringType.Name);
+            //    return null;
+            //}
+
+            //return element;
+        }
+
+
+        public PropertyMapping FindMappedPropertyForElement(string name)
+        {
+            if (name == null) throw Error.ArgumentNull("name");
+
             var normalizedName = name.ToUpperInvariant();
 
             PropertyMapping prop = null;
 
-            bool success = _elements.TryGetValue(normalizedName, out prop);
+            bool success = _propMappings.TryGetValue(normalizedName, out prop);
 
             // Direct success
             if (success) return prop;
@@ -105,43 +103,65 @@ namespace Hl7.Fhir.Serialization
             // Not found, maybe a polymorphic name
             // TODO: specify possible polymorhpic variations using attributes
             // to speedup look up & aid validation
-            return Elements.SingleOrDefault(p => p.MatchesSuffixedName(name));            
+            return PropertyMappings.SingleOrDefault(p => p.MatchesSuffixedName(name));            
         }
 
-        public static ClassMapping CreateForResource(Type t)
+
+        public static bool TryCreate(Type type, out ClassMapping mapping)
         {
+            mapping = null;
+
+            if (IsMappableClass(type))
+            {
+                try
+                {
+                    mapping = Create(type);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+
+
+        public static ClassMapping Create(Type type)
+        {
+            checkMutualExclusiveAttributes(type);
+
             var result = new ClassMapping();
-            result.ModelConstruct = FhirModelConstruct.Resource;
-            result.Name = getMappedResourceName(t);
-            result.Profile = getProfile(t);
-            result.ImplementingType = t;
+
+            if (IsFhirResource(type))
+            {
+                result.ModelConstruct = FhirModelConstruct.Resource;
+                result.Name = getMappedResourceName(type);
+                result.Profile = getProfile(type);
+            }
+            else if (IsFhirComplexType(type))
+            {
+                result.ModelConstruct = FhirModelConstruct.ComplexType;
+                result.Name = getMappedComplexTypeName(type);
+                result.Profile = null;  // No support for profiled datatypes
+            }
+            else if (IsFhirPrimitive(type))
+            {
+                result.ModelConstruct = FhirModelConstruct.PrimitiveType;
+                result.Name = getMappedPrimitiveTypeName(type);
+                result.Profile = null;  // No support for profiled datatypes
+                result.ImplementingType = type;
+                result._primitiveParsingFunction = buildPrimitiveParserInvoker(type);
+            }
+            else
+                throw Error.Argument("type", "Type {0} is not recognized as either a Fhir Resource, complex datatype or primitive", type.Name);
+
+            result.ImplementingType = type;
 
             return result;
         }
 
-
-        public static ClassMapping CreateForComplexType(Type t)
-        {
-            var result = new ClassMapping();
-            result.ModelConstruct = FhirModelConstruct.ComplexType;
-            result.Name = getMappedComplexTypeName(t);
-            result.Profile = null;  // No support for profiled datatypes
-            result.ImplementingType = t;
-
-            return result;
-        }
-
-        public static ClassMapping CreateForFhirPrimitive(Type t)
-        {
-            var result = new ClassMapping();
-            result.ModelConstruct = FhirModelConstruct.PrimitiveType;
-            result.Name = getMappedPrimitiveTypeName(t);
-            result.Profile = null;  // No support for profiled datatypes
-            result.ImplementingType = t;
-            result._primitiveParsingFunction = buildPrimitiveParserInvoker(t);
-            
-            return result;
-        }
 
         private static Func<string,object> buildPrimitiveParserInvoker(Type implementingType)
         {
@@ -160,6 +180,16 @@ namespace Hl7.Fhir.Serialization
 
                 return input => parseMethod.Invoke(null, new object[] { input });
             }
+        }
+
+        private static void checkMutualExclusiveAttributes(Type type)
+        {
+            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
+                throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
+            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
+                throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
+            if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
+                throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
         }
 
 
@@ -198,7 +228,6 @@ namespace Hl7.Fhir.Serialization
                 return name;
             }
         }
-
 
         private static string getMappedComplexTypeName(Type type)
         {
@@ -246,5 +275,18 @@ namespace Hl7.Fhir.Serialization
                 || type.IsDefined(typeof(FhirEnumerationAttribute), false);
         }    
 
+        public static bool IsMappableClass(Type type)
+        {
+            return ClassMapping.IsFhirComplexType(type) || ClassMapping.IsFhirPrimitive(type) || ClassMapping.IsFhirResource(type);
+        }
     }
+
+
+    public enum FhirModelConstruct
+    {
+        PrimitiveType,
+        ComplexType,
+        Resource
+    }
+
 }

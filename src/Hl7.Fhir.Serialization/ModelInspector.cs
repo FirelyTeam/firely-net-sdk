@@ -53,11 +53,14 @@ namespace Hl7.Fhir.Serialization
             // Once all classes have been inspected, process their properties
             // (if you process properties before all types are inspected, you won't be able
             // to find the classmappings the properties may refer to) 
-            foreach(var type in _classMappingsByType.Keys)
+            foreach(ClassMapping mapping in _classMappingsByType.Values)
             {
-                var mapping = _classMappingsByType[type];
-                addProps(mapping, type);
+                mapping.InspectProperties(this);                
             }
+
+            Message.Info("Finished processing {0} classes. Found {1} resources, {2} complex datatypes, {3} primitive/enum datatypes",
+                _importedTypes.Count, _resourceClasses.Count, _dataTypeClasses.Values.Count(m => m.ModelConstruct == FhirModelConstruct.ComplexType),
+                 _dataTypeClasses.Values.Count(map => map.ModelConstruct == FhirModelConstruct.PrimitiveType));
         }
 
         private void processType(Type type)
@@ -71,87 +74,38 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            if(ReflectionHelper.IsOpenGenericType(type) && type != typeof(Code<>))
+            if(ReflectionHelper.IsOpenGenericTypeDefinition(type) && type != typeof(Code<>))
             {
-                Message.Info("Skipped type {0} while doing inspection: open generic types (except Code<>) can not be used as mapping targets", type.Name);
+                Message.Info("Skipped type {0} while doing inspection: open generic type definitions (except Code<>) can not be used as mapping targets", type.Name);
                 return;
             }
 
-            checkMutualExclusiveAttributes(type);
+            if(!ClassMapping.IsMappableClass(type))
+            {
+                Message.Info("Skipped type {0} while doing inspection: not a mappable class", type.Name);
+                return;
+            }
 
-            if (ClassMapping.IsFhirResource(type))
+            var mapping = ClassMapping.Create(type);
+            _classMappingsByType[type] = mapping;
+
+            if (mapping.ModelConstruct == FhirModelConstruct.Resource)
             {
-                var mapped = ClassMapping.CreateForResource(type);
-                var key = buildResourceKey(mapped.Name, mapped.Profile);
-                _resourceClasses[key] = mapped;
-                _classMappingsByType[type] = mapped;
+                var key = buildResourceKey(mapping.Name, mapping.Profile);
+                _resourceClasses[key] = mapping;
             }
-            else if (ClassMapping.IsFhirComplexType(type))
+            else if(mapping.ModelConstruct == FhirModelConstruct.PrimitiveType ||
+                        mapping.ModelConstruct == FhirModelConstruct.ComplexType )
             {
-                var mapped = ClassMapping.CreateForComplexType(type);
-                var key = mapped.Name.ToUpperInvariant();
-                _dataTypeClasses[key] = mapped;
-                _classMappingsByType[type] = mapped;
-            }
-            else if (ClassMapping.IsFhirPrimitive(type))
-            {
-                var mapped = ClassMapping.CreateForFhirPrimitive(type);
-                var key = mapped.Name.ToUpperInvariant();
-                _dataTypeClasses[key] = mapped;
-                _classMappingsByType[type] = mapped;
+                var key = mapping.Name.ToUpperInvariant();
+                _dataTypeClasses[key] = mapping;
             }
             else
             {
-                // Ignore this class
-                Message.Info("Skipped type {0} while doing inspection: not a resource, complex type or Fhir primitive", type.Name);
+                throw Error.InvalidOperation("Internal logic error: produced classmapping is of unhandled kind {0}", mapping.ModelConstruct);
             }
         }
 
-        private void addProps(ClassMapping mapped, Type type)
-        {
-            var propCollection = new List<PropertyMapping>();
-
-            foreach (var property in ReflectionHelper.FindPublicProperties(type))
-            {
-                var mappedProperty = processProperty(property);
-
-                if (mappedProperty != null) propCollection.Add(mappedProperty);
-            }
-
-            mapped.AddElements(propCollection);
-        }
-
-
-        private PropertyMapping processProperty(PropertyInfo property)
-        {
-            if (property == null) throw Error.ArgumentNull("property");
-
-            if (Attribute.GetCustomAttribute(property, typeof(NotMappedAttribute)) != null) return null;
-
-            PropertyMapping element = null;
-
-            bool success = PropertyMapping.TryCreateFromProperty(property, this, out element);
-
-            if (!success)
-            {
-                Message.Info("Skipped member {0} in type {1} while doing inspection: not a mappable property",
-                        property.Name, property.DeclaringType.Name);
-                return null;
-            }
-
-            return element;
-        }
-
-
-        private void checkMutualExclusiveAttributes(Type type)
-        {
-            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
-                throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-            if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
-                throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-            if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
-                throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
-        }
 
         private static Tuple<string, string> buildResourceKey(string name, string profile)
         {

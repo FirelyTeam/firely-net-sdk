@@ -82,12 +82,18 @@ namespace Hl7.Fhir.Serialization
 
         public static bool IsClosedGenericType(Type type)
         {
-            return type.IsGenericType && !type.ContainsGenericParameters;
+            return !type.ContainsGenericParameters;
         }
 
-        public static bool IsOpenGenericType(Type type)
+
+        public static bool IsOpenGenericTypeDefinition(Type type)
         {
-            return type.IsGenericType && type.ContainsGenericParameters;
+            return type.IsGenericTypeDefinition;
+        }
+
+        public static bool IsConstructedFromGenericTypeDefinition(Type type, Type genericBase)
+        {
+            return type.GetGenericTypeDefinition() == genericBase;
         }
 
         /// <summary>

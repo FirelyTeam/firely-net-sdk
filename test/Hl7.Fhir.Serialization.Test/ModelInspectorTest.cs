@@ -67,7 +67,17 @@ namespace Hl7.Fhir.Serialization.Test
             inspector.Import(typeof(ComplexNumber));
             inspector.Import(typeof(SomeEnum));
             inspector.Import(typeof(ActResource.SomeOtherEnum));
-            inspector.Process();
+
+            try
+            {
+                inspector.Process();
+            }
+            catch(InvalidOperationException nse)
+            {
+                if (!nse.Message.Contains("Property Extension on type Element")) throw nse;
+                //This exception may occur because our testclasses derive from Element,
+                //which has additional members that we did not import
+            }
 
             var result = inspector.FindClassMappingForFhirDataType("animalname");
             Assert.IsNotNull(result);
@@ -136,35 +146,10 @@ namespace Hl7.Fhir.Serialization.Test
             var codeOfT = inspector.FindClassMappingByImplementingType(typeof(Code<>));
             Assert.IsNotNull(codeOfT);
             Assert.AreEqual(FhirModelConstruct.PrimitiveType, codeOfT.ModelConstruct);
-
-            // Test presence of a basic member
-            // Test presence of a xxxxxElement member
-
         }
 
-        [TestMethod]
-        public void TestCodeOfTInspection()
-        {
-            var inspector = new ModelInspector();
+   }
 
-            var x = typeof(Tester);
-
-            // Inspect the HL7.Fhir.Model assembly
-            //inspector.Import(typeof(Code<>));
-            //inspector.Import(typeof(Address));
-            //inspector.Process();
-        }
-    }
-
-
-    class Open<T, X> { }
-
-    class Half<X> : Open<int,X> { }
-
-    class Tester
-    {
-        public Half<string> Y { get; set; }
-    }
 
     /*
      * Resource classes for tests 
@@ -190,11 +175,10 @@ namespace Hl7.Fhir.Serialization.Test
     public class NewAnimalName { }
 
     [FhirPrimitiveType("Complex")]
-    public class ComplexNumber : PrimitiveElement { }
+    public class ComplexNumber : PrimitiveElement { public static object Parse(string s) { return null; } }
 
     [FhirComplexType("Chameleon")]
     public class Chameleon : PrimitiveElement { }
-
 
     [FhirEnumeration("SomeEnum")]
     public enum SomeEnum { Member, AnotherMember }
