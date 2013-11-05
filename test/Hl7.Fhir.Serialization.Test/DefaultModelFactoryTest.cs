@@ -32,16 +32,16 @@ namespace Hl7.Fhir.Serialization.Test
 
             // Test handling of collection interfaces
             object collection = null;
-            Assert.IsTrue(factory.CanCreateType(typeof(IEnumerable<string>)));
-            collection = factory.Create(typeof(IEnumerable<string>));
+            Assert.IsTrue(factory.CanCreateType(typeof(ICollection<string>)));
+            collection = factory.Create(typeof(ICollection<string>));
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection is List<string>);
 
             Assert.IsTrue(factory.CanCreateType(typeof(IList<HumanName>)));
-            Assert.IsNotNull(factory.Create(typeof(IEnumerable<HumanName>)));
+            Assert.IsNotNull(factory.Create(typeof(ICollection<HumanName>)));
             
             Assert.IsTrue(factory.CanCreateType(typeof(IList<int?>)));
-            collection = factory.Create(typeof(IEnumerable<int?>));
+            collection = factory.Create(typeof(ICollection<int?>));
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection is List<int?>);
         }

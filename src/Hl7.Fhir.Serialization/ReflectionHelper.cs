@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
             if (t == null) throw Error.ArgumentNull("t");
             if (name == null) throw Error.ArgumentNull("name");
 
-            return t.GetMethod(name,BindingFlags.Public | BindingFlags.Static, null, arguments, null);
+            return t.GetMethod(name,arguments);
         }
 
         internal static bool HasDefaultPublicConstructor(Type t)

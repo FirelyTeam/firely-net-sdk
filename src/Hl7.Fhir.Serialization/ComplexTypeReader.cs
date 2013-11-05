@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization
                     mappedProperty.ImplementingProperty.SetValue(existing, value, null);
                 }
                 else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
-                        memberName.Equals(ResourceReader.RESOURCETYPE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
+                        memberName.Equals(ResourceReader.RESOURCETYPE_MEMBER_NAME, StringComparison.OrdinalIgnoreCase))
                 {
                     // Ignore type discriminator in Resources, that member is used in the 
                     // ResourceReader to figure out the actual type when this is unknown

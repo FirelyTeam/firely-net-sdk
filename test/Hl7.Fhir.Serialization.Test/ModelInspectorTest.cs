@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(Street));
+            inspector.Import(typeof(StreetResource));
             inspector.Import(typeof(RoadResource));
             inspector.Import(typeof(Way));
             inspector.Import(typeof(ProfiledWay));
@@ -155,15 +155,17 @@ namespace Hl7.Fhir.Serialization.Test
      * Resource classes for tests 
      */
     public class RoadResource {}
-    public class Way : Resource {}
+
+    [FhirResource("Way")]
+    public class Way { }
     
     [FhirResource("Way", Profile="http://nu.nl/profile#street")]
     public class ProfiledWay {}
 
-    public class Street : Resource {}
+    public class StreetResource {}
 
     [FhirResource("Street")]
-    public class NewStreet : Resource { }
+    public class NewStreet { }
 
 
     /* 

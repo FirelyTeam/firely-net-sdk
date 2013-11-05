@@ -68,9 +68,9 @@
     <EmbeddedResource Include="TestPatient.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.Net40.csproj">
-      <Project>{73224a03-bf79-47cd-9b79-0ee63d09ea98}</Project>
-      <Name>Hl7.Fhir.Serialization.Net40</Name>
+    <ProjectReference Include="..\..\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj">
+      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
+      <Name>Hl7.Fhir.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
