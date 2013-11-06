@@ -67,7 +67,9 @@ namespace Hl7.Fhir.Serialization
         {
             if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) return;
 
-            if (type.IsAbstract)
+            // There's no support for abstract classes yet, but having a classmapping for Resource
+            // is useful to map the 'contained' element.
+            if (type.IsAbstract && type != typeof(Resource))
             {
                 // Ignore this class
                 Message.Info("Skipped type {0} while doing inspection: abstract/static classes can not be used as mapping targets", type.Name);

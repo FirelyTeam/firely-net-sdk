@@ -38,12 +38,12 @@ namespace Hl7.Fhir.Serialization
             }
             else if (mapping.ModelConstruct == FhirModelConstruct.ComplexType)
             {
-                var reader = new ComplexTypeReader(_inspector, _data);
+                var reader = new ComplexTypeReader(_inspector, new JsonDomFhirReader(_data));
                 return reader.Deserialize(mapping, existing);
             }
             else if(mapping.ModelConstruct == FhirModelConstruct.Resource)
             {
-                var reader = new ResourceReader(_inspector, _data);
+                var reader = new ResourceReader(_inspector, new JsonDomFhirReader(_data));
                 return reader.Deserialize(existing);
             }
             else

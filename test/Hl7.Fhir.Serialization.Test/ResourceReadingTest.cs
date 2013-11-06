@@ -11,6 +11,7 @@ namespace Hl7.Fhir.Serialization.Test
     [TestClass]
     public class ResourceReadingTest
     {
+
         [TestMethod]
         public void TestLoadResource()
         {
@@ -27,24 +28,24 @@ namespace Hl7.Fhir.Serialization.Test
             s.Seek(0, SeekOrigin.Begin);
             var jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
             var root = JObject.Load(jsonReader);
-            var reader = new ResourceReader(inspector, root);
+            var reader = new ResourceReader(inspector, new JsonDomFhirReader(root));
             var result = reader.Deserialize();
 
-            Stopwatch x = new Stopwatch();
+            //Stopwatch x = new Stopwatch();
 
-            x.Start();
+            //x.Start();
 
-            for (int i = 0; i < 10000; i++)
-            {
-                s.Seek(0, SeekOrigin.Begin);
-                jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
-                root = JObject.Load(jsonReader);
-                reader = new ResourceReader(inspector, root);
-                result = reader.Deserialize();
-            }
-            x.Stop();
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    s.Seek(0, SeekOrigin.Begin);
+            //    jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
+            //    root = JObject.Load(jsonReader);
+            //    reader = new ResourceReader(inspector, root);
+            //    result = reader.Deserialize();
+            //}
+            //x.Stop();
 
-            Debug.WriteLine(x.ElapsedMilliseconds);
+            //Debug.WriteLine(x.ElapsedMilliseconds);
             
         }
     }

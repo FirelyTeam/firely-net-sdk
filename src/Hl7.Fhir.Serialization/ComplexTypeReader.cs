@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Serialization.Properties;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Properties;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ namespace Hl7.Fhir.Serialization
 {
     internal class ComplexTypeReader
     {
-        private JToken _data;
+        private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public ComplexTypeReader(ModelInspector inspector, JToken data)
+        public ComplexTypeReader(ModelInspector inspector, IFhirReader reader)
         {
-            _data = data;
+            _current = reader;
             _inspector = inspector;
         }
 
@@ -47,12 +48,12 @@ namespace Hl7.Fhir.Serialization
                 throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
             //TODO: is 'existing' compatible with the mapping?
 
-            if (_data is JObject)
+            if (_current.IsAtComplexObject())
             {
                 if (existing == null)
                     existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mapping.ImplementingType);
 
-                read(mapping, (JObject)_data, existing);
+                read(mapping, existing);
 
                 return existing;
             }
@@ -61,11 +62,14 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private void read(ClassMapping mapping, JObject source, object existing)
+        private void read(ClassMapping mapping, object existing)
         {
-            foreach (var memberData in source)
+            bool hasMember = false;
+
+            foreach (var memberData in _current.GetMembers())
             {
-                var memberName = memberData.Key;
+                hasMember = true;
+                var memberName = memberData.Item1;  // tuple: first is name of member
 
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
@@ -74,44 +78,29 @@ namespace Hl7.Fhir.Serialization
                 if (mappedProperty != null)
                 {
                     Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
-                    //object value = null;
+                                    
                     var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
-                   
-                    ClassMapping propMapping = null;
 
-                    if(!mappedProperty.IsPolymorhic)
-                    {
-                        propMapping = mappedProperty.MappedPropertyType;
-                    }
+                    ClassMapping propTypeMapping;
+
+                    // For Element properties, determine the actual type of the element using
+                    // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
+                    if (mappedProperty.PolymorphicBase == typeof(Element))
+                        propTypeMapping = determineElementPropertyType(mappedProperty, memberName);
+
+                    // For Resources, the type is not yet known more precisely than Resource,
+                    // the specific Resource type is determined by Resource.resourceType later on.
+                    else if (mappedProperty.PolymorphicBase == typeof(Resource))
+                        propTypeMapping = _inspector.FindClassMappingByImplementingType(typeof(Resource));
+
                     else
-                    {
-                        var typeName = mappedProperty.GetSuffixFromName(memberName);
-                        propMapping = _inspector.FindClassMappingForFhirDataType(typeName);
-                        if (propMapping == null)
-                            throw Error.InvalidOperation("Encountered polymorph member {0}, which uses unknown datatype {1}", memberName, typeName);
-                    }
+                        propTypeMapping = mappedProperty.MappedPropertyType;
 
-                    var reader = new DispatchingReader(_inspector, source[memberName]);
-                    value = reader.Deserialize(propMapping, mappedProperty.MayRepeat, value);
+                    var reader = new DispatchingReader(_inspector, ((JsonDomFhirReader)memberData.Item2).Current);
+                    value = reader.Deserialize(propTypeMapping, mappedProperty.MayRepeat, value);
 
                     mappedProperty.ImplementingProperty.SetValue(existing, value, null);
                 }
-                else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
-                        memberName.Equals(ResourceReader.RESOURCETYPE_MEMBER_NAME, StringComparison.OrdinalIgnoreCase))
-                {
-                    // Ignore type discriminator in Resources, that member is used in the 
-                    // ResourceReader to figure out the actual type when this is unknown
-                    // from the context
-
-                    //TODO: Detecting whether this is a special, serialization format-specific member should be
-                    //done in an abstraction around the json or xml readers.
-                }
-                //else if (mapping.ModelConstruct == FhirModelConstruct.Resource &&
-                //            memberName.Equals(ResourceReader.CONTAINED_RESOURCE_MEMBER_NAME, StringComparison.InvariantCultureIgnoreCase))
-                //{
-                //    //TODO: Handle contained resourcs
-                //    Message.Info("Skipped parsing contained resources - not yet supported");
-                //}
                 else
                 {
                     if (BindingConfiguration.AcceptUnknownMembers == false)
@@ -120,10 +109,27 @@ namespace Hl7.Fhir.Serialization
                         Message.Info("Skipping unknown member " + memberName);
                 }
 
-                //TODO: handle extension array in complex object
                 //TODO: handle _name containing id/extensions for primitive members
             }
 
+            if (!hasMember)
+                throw Error.NotSupported("Fhir serialization does not allow nor support empty elements");
+        }
+
+        private ClassMapping determineElementPropertyType(PropertyMapping mappedProperty, string memberName)
+        {
+            ClassMapping result = null;
+
+            var typeName = mappedProperty.GetSuffixFromName(memberName);
+
+            // Exception: valueResource actually means the element is of type ResourceReference
+            if (typeName == "Resource") typeName = "ResourceReference";
+
+            result = _inspector.FindClassMappingForFhirDataType(typeName);
+            if (result == null)
+                throw Error.InvalidOperation("Encountered polymorph member {0}, which uses unknown datatype {1}", memberName, typeName);
+
+            return result;
         }
     }
 

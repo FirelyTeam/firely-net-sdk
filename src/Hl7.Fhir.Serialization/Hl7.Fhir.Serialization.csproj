@@ -47,6 +47,8 @@
     <Compile Include="DispatchingReader.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IFhirReader.cs" />
+    <Compile Include="JsonDomFhirReader.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="ModelInspector.cs" />
     <Compile Include="PrimitiveTypeReader.cs" />

@@ -12,68 +12,38 @@ namespace Hl7.Fhir.Serialization
 {
     public class ResourceReader
     {
-        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
+       
         public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";
 
-        private JToken _data;
+        private IFhirReader _reader;
         private ModelInspector _inspector;
 
-        public ResourceReader(ModelInspector inspector, JToken data)
+        public ResourceReader(ModelInspector inspector, IFhirReader reader)
         {
-            _data = data;
+            _reader = reader;
             _inspector = inspector;
         }
 
         public object Deserialize(object existing=null)
         {
-            var resourceType = getResourceNameFromData();
-            var mappedType = _inspector.FindClassMappingForResource(resourceType);
-
-            //TODO: if existing != null -> compatible with mapped type?
-
-            if (_data is JObject)
+            if (_reader.IsAtComplexObject())
             {
-                var complex = (JObject)_data;
+                // If there's no a priori knowledge of the type of Resource we will encounter,
+                // we'll have to determine from the data itself. 
+                var resourceType = _reader.GetResourceTypeName();
+                var mappedType = _inspector.FindClassMappingForResource(resourceType);
+                //TODO: if existing != null -> compatible with mapped type?
 
                 if (existing == null)
                     existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.ImplementingType);
                
-                // Delegate the actual work to the ComplexTypeReader
-                var cplxReader = new ComplexTypeReader(_inspector, _data);
+                // Delegate the actual work to the ComplexTypeReader, since
+                // the serialization of Resources and ComplexTypes are virtuall the same
+                var cplxReader = new ComplexTypeReader(_inspector, _reader);
                 return cplxReader.Deserialize(mappedType, existing);
             }
             else
                 throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");
         }
-
-        private string getResourceNameFromData()
-        {
-            // If there's no a priori knowledge of the type of data we will encounter,
-            // we'll have to determine from the data itself. That's possible by looking
-            // for the 'resourceType' property.
-            if (_data is JObject)
-            {
-                var complexData = (JObject)_data;
-                var resourceTypeMember = complexData[RESOURCETYPE_MEMBER_NAME];
-
-                if (resourceTypeMember != null)
-                {
-                    if (resourceTypeMember is JValue)
-                    {
-                        var memberValue = (JValue)resourceTypeMember;
-
-                        if (memberValue.Type == JTokenType.String)
-                        {
-                            return (string)memberValue.Value;
-                        }
-                    }
-
-                    throw Error.InvalidOperation("resourceMember should be a primitive string json value");
-                }
-            }
-
-            throw Error.InvalidOperation("Cannot determine type to create from input data");
-        }
-
     }
 }

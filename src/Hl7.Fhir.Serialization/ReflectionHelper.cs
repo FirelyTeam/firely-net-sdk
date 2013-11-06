@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
 
 
         public static IList CreateGenericList(Type itemType)
-        {
+        {          
             return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
         }
 

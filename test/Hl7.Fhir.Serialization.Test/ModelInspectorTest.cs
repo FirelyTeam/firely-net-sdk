@@ -139,8 +139,11 @@ namespace Hl7.Fhir.Serialization.Test
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("AddressUse"));
 
             // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
+            Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));
             Assert.IsNull(inspector.FindClassMappingForResource("Element"));
+
+            // But Resource should be there
+            Assert.IsNotNull(inspector.FindClassMappingForResource("Resource"));
 
             // Code<> should still be there (the only generic type definition accepted)
             var codeOfT = inspector.FindClassMappingByImplementingType(typeof(Code<>));

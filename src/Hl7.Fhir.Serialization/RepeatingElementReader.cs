@@ -15,11 +15,13 @@ namespace Hl7.Fhir.Serialization
     {
         private JToken _data;
         private ModelInspector _inspector;
+        private bool _inExtensionArrayMode = false;
 
-        public RepeatingElementReader(ModelInspector inspector, JToken data)
+        public RepeatingElementReader(ModelInspector inspector, JToken data, bool inExtensionArrayMode = false)
         {
             _data = data;
             _inspector = inspector;
+            _inExtensionArrayMode = inExtensionArrayMode;
         }
 
         public object Deserialize(ClassMapping mapping, object existing=null)
@@ -45,6 +47,7 @@ namespace Hl7.Fhir.Serialization
                     var reader = new DispatchingReader(_inspector, element);
                     var item = reader.Deserialize(mapping, repeating:false); // repeating elements cannot be themselves repeating
 
+                    result.
                     result.Add(item);
                 }
 
