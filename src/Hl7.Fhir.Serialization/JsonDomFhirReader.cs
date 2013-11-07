@@ -19,14 +19,38 @@ namespace Hl7.Fhir.Serialization
             _current = root;
         }
 
-        public bool IsAtComplexObject()
+        public TokenType CurrentToken
         {
-            return _current is JObject;
+            get
+            {
+                if (_current is JObject) return TokenType.Object;
+                if (_current is JArray) return TokenType.Array;
+                if (_current is JValue)
+                {
+                    var val = (JValue)_current;
+                    if(val.Type == JTokenType.Integer || val.Type == JTokenType.Float) return TokenType.Number;
+                    if(val.Type == JTokenType.Boolean) return TokenType.Boolean;
+                    if(val.Type == JTokenType.String) return TokenType.String;
+                    if (val.Type == JTokenType.Null) return TokenType.Null;
+
+                    throw Error.InvalidOperation("Encountered a json primitive of type {0} while only string, boolean and number are allowed", val.Type);
+                }
+
+                throw Error.NotSupported("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", _current.GetType().Name);
+            }
+        }
+
+        public object GetPrimitiveValue()
+        {
+            if (_current is JValue)
+                return ((JValue)_current).Value;
+            else
+                throw Error.InvalidOperation("Tried to read a primitive value while reader is not at a json primitive");
         }
 
         public string GetResourceTypeName()
         {
-            if (!IsAtComplexObject())
+            if (CurrentToken != TokenType.Object)
                 throw Error.InvalidOperation("Need to be at a complex object to determine resource type");
 
             var resourceTypeMember = ((JObject)_current)[RESOURCETYPE_MEMBER_NAME];
@@ -76,6 +100,19 @@ namespace Hl7.Fhir.Serialization
 
                     yield return Tuple.Create(memberName,nestedReader);
                 }
+            }
+        }
+
+        public IEnumerable<IFhirReader> GetArrayElements()
+        {
+            var array = _current as JArray;
+
+            if (array == null)
+                throw Error.InvalidOperation("Need to be at an array to list elements");
+
+            foreach(var element in array)
+            {
+                yield return new JsonDomFhirReader(element);
             }
         }
     }

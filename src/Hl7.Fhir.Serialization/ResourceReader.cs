@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
 
         public object Deserialize(object existing=null)
         {
-            if (_reader.IsAtComplexObject())
+            if (_reader.CurrentToken == TokenType.Object)
             {
                 // If there's no a priori knowledge of the type of Resource we will encounter,
                 // we'll have to determine from the data itself. 

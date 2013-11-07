@@ -44,11 +44,11 @@ namespace Hl7.Fhir.Serialization
         {
             if (mapping == null) throw Error.ArgumentNull("type");
            
-            if(!isResourceOrComplexMapping(mapping))
-                throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
+            //if(!isResourceOrComplexMapping(mapping))
+            //    throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
             //TODO: is 'existing' compatible with the mapping?
 
-            if (_current.IsAtComplexObject())
+            if (_current.CurrentToken == TokenType.Object)
             {
                 if (existing == null)
                     existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mapping.ImplementingType);
@@ -96,8 +96,16 @@ namespace Hl7.Fhir.Serialization
                     else
                         propTypeMapping = mappedProperty.MappedPropertyType;
 
-                    var reader = new DispatchingReader(_inspector, ((JsonDomFhirReader)memberData.Item2).Current);
-                    value = reader.Deserialize(propTypeMapping, mappedProperty.MayRepeat, value);
+                    if (mappedProperty.MayRepeat)
+                    {
+                        var reader = new RepeatingElementReader(_inspector, memberData.Item2);
+                        value = reader.Deserialize(propTypeMapping, mappedProperty, value);
+                    }
+                    else
+                    {
+                        var reader = new DispatchingReader(_inspector, memberData.Item2);
+                        value = reader.Deserialize(propTypeMapping, mappedProperty, value);
+                    }
 
                     mappedProperty.ImplementingProperty.SetValue(existing, value, null);
                 }
@@ -108,8 +116,6 @@ namespace Hl7.Fhir.Serialization
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }
-
-                //TODO: handle _name containing id/extensions for primitive members
             }
 
             if (!hasMember)

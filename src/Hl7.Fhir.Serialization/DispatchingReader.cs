@@ -11,39 +11,34 @@ namespace Hl7.Fhir.Serialization
 {
     public class DispatchingReader
     {
-        private JToken _data;
+        private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public DispatchingReader(ModelInspector inspector, JToken data)
+        public DispatchingReader(ModelInspector inspector, IFhirReader data)
         {
-            _data = data;
+            _current = data;
             _inspector = inspector;
         }
 
         // no more arg polymorph -> caller (often the complex reader) must have determined type from instance by now
         // a.k.a. no repeating polymorph elements supported where every element is of a different type
-        public object Deserialize(ClassMapping mapping, bool repeating, object existing=null)
+        public object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
-
-            if(repeating)
+          
+            if (mapping.ModelConstruct == FhirModelConstruct.PrimitiveType)
             {
-                var reader = new RepeatingElementReader(_inspector, _data);
-                return reader.Deserialize(mapping, existing);
-            }
-            else if (mapping.ModelConstruct == FhirModelConstruct.PrimitiveType)
-            {
-                var reader = new PrimitiveTypeReader(_inspector, _data);
-                return reader.Deserialize(mapping);
+                var reader = new PrimitiveTypeReader(_inspector, _current);
+                return reader.Deserialize(mapping,prop,existing);
             }
             else if (mapping.ModelConstruct == FhirModelConstruct.ComplexType)
             {
-                var reader = new ComplexTypeReader(_inspector, new JsonDomFhirReader(_data));
+                var reader = new ComplexTypeReader(_inspector, _current);
                 return reader.Deserialize(mapping, existing);
             }
             else if(mapping.ModelConstruct == FhirModelConstruct.Resource)
             {
-                var reader = new ResourceReader(_inspector, new JsonDomFhirReader(_data));
+                var reader = new ResourceReader(_inspector, _current);
                 return reader.Deserialize(existing);
             }
             else

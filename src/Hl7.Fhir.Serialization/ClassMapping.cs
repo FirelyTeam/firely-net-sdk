@@ -175,8 +175,9 @@ namespace Hl7.Fhir.Serialization
             }
             else
             {
-                var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "Parse", typeof(string));
-                if (parseMethod == null) throw Error.InvalidOperation("Expected a static Parse(string) function on the mapped primitive class {0}", implementingType.Name);
+                var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "ParseValue", typeof(string));
+                
+                if (parseMethod == null) throw Error.InvalidOperation("Expected a static ParseValue(string) function on the mapped primitive class {0}", implementingType.Name);
 
                 return input => parseMethod.Invoke(null, new object[] { input });
             }

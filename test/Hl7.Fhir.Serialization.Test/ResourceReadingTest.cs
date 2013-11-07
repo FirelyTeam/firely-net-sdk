@@ -27,6 +27,8 @@ namespace Hl7.Fhir.Serialization.Test
 
             s.Seek(0, SeekOrigin.Begin);
             var jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
+            jsonReader.FloatParseHandling = FloatParseHandling.Decimal;
+            
             var root = JObject.Load(jsonReader);
             var reader = new ResourceReader(inspector, new JsonDomFhirReader(root));
             var result = reader.Deserialize();

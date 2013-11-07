@@ -13,48 +13,72 @@ namespace Hl7.Fhir.Serialization
 {
     public class RepeatingElementReader
     {
-        private JToken _data;
+        private IFhirReader _current;
         private ModelInspector _inspector;
         private bool _inExtensionArrayMode = false;
 
-        public RepeatingElementReader(ModelInspector inspector, JToken data, bool inExtensionArrayMode = false)
+        public RepeatingElementReader(ModelInspector inspector, IFhirReader reader)
         {
-            _data = data;
+            _current = reader;
             _inspector = inspector;
-            _inExtensionArrayMode = inExtensionArrayMode;
         }
 
-        public object Deserialize(ClassMapping mapping, object existing=null)
+        public object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
-            if (_data is JArray)
+            bool overwriteMode;
+            IEnumerable<IFhirReader> elements;
+
+            if(_current.CurrentToken == TokenType.Array)        // Json has members that are arrays, if we encounter multiple, update the old values of the array
             {
-                var array = (JArray)_data;
-                IList result;
+                overwriteMode = existing != null;
+                elements = _current.GetArrayElements();
+            }
+            else if(_current.CurrentToken == TokenType.Object)  // Xml has repeating members, if we encounter multiple, add them to the array
+            {
+                overwriteMode = false;
+                elements = new List<IFhirReader>() { _current };
+            }
+            else
+                throw Error.InvalidOperation("Expecting to be either at a repeating complex element or an array when parsing a repeating member.");
 
-                if (existing == null) 
-                    result = ReflectionHelper.CreateGenericList(mapping.ImplementingType);
-                else
+            IList result;
+
+            if (existing == null) existing = ReflectionHelper.CreateGenericList(mapping.ImplementingType);
+
+            result = existing as IList;                       
+            if(result == null) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+
+            var position = 0;
+            foreach(var element in elements)
+            {
+                var reader = new DispatchingReader(_inspector, element);
+
+                if(overwriteMode)
                 {
-                    result = existing as IList;
-                        
-                    if(result == null) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+                    if (position >= result.Count)
+                        throw Error.InvalidOperation("The value and extension array are not well-aligned");
+
+                    // Arrays may contain null values as placeholders
+                    if(element.CurrentToken != TokenType.Null)
+                        result[position] = reader.Deserialize(mapping, prop, existing: result[position]);
                 }
-
-                foreach (var element in array)
-                {
-                    var reader = new DispatchingReader(_inspector, element);
-                    var item = reader.Deserialize(mapping, repeating:false); // repeating elements cannot be themselves repeating
-
-                    result.
+                else
+                {                   
+                    object item = null;
+                    if (element.CurrentToken != TokenType.Null)
+                        item = reader.Deserialize(mapping, prop);
+                    else
+                        item = null;  // Arrays may contain null values as placeholders
+                    
                     result.Add(item);
                 }
 
-                return result;
+                position++;
             }
-            else
-                throw Error.InvalidOperation("Trying to read a collection, but reader is not at a repeating member");          
+
+            return result;
         }
     }
 }
