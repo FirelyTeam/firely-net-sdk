@@ -43,40 +43,19 @@ namespace Hl7.Fhir.Serialization
         internal void InspectProperties(ModelInspector inspector)
         {
             foreach (var property in ReflectionHelper.FindPublicProperties(ImplementingType))
-            {            
-                //Skip the Value property of a PrimitiveElement, this is handled as a special case by the parser
-                if (typeof(PrimitiveElement).IsAssignableFrom(property.DeclaringType) && property.Name == "Value")
-                    continue;
+            {
+                // Skip properties that are marked as NotMapped
+                if (Attribute.GetCustomAttribute(property, typeof(NotMappedAttribute)) != null) continue;
 
-                var propMapping = processProperty(inspector, property);
+                var propMapping = PropertyMapping.Create(inspector, property);
 
-                if (propMapping != null) addPropertyMapping(propMapping);
+                // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
+                if(propMapping.IsNativeValueProperty)
+                    this.PrimitiveValueProperty = propMapping;
+
+                if (propMapping != null)
+                    _propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
             }
-        }
-
-        private void addPropertyMapping(PropertyMapping mapping)
-        {
-            _propMappings.Add(mapping.Name.ToUpperInvariant(), mapping);
-        }
-
-
-        private PropertyMapping processProperty(ModelInspector inspector, PropertyInfo prop)
-        {
-            if (Attribute.GetCustomAttribute(prop, typeof(NotMappedAttribute)) != null) return null;
-
-            return PropertyMapping.Create(inspector, prop);
-
-            //PropertyMapping element = null;
-            //bool success = PropertyMapping.TryCreate(inspector, property, out element);
-
-            //if (!success)
-            //{
-            //    Message.Info("Skipped member {0} in type {1} while doing inspection: not a mappable property",
-            //            property.Name, property.DeclaringType.Name);
-            //    return null;
-            //}
-
-            //return element;
         }
 
 
@@ -153,27 +132,6 @@ namespace Hl7.Fhir.Serialization
 
             return result;
         }
-
-
-        //private static Func<string,object> buildPrimitiveParserInvoker(Type implementingType)
-        //{
-        //    // Now determine actual .NET primitive used for the ImplementingType's Value property
-        //    //var valueProperty = ReflectionHelper.FindPublicProperty(result.ImplementingType, "Value");
-        //    //if(valueProperty == null) throw Error.InvalidOperation("Expected a Value property on the mapped primitive class {0}", result.ImplementingType.Name);
-        //    //result.PrimitiveType = valueProperty.PropertyType;
-        //    if (implementingType.IsEnum)
-        //    {
-        //        return input => invokeEnumParser(input, implementingType);
-        //    }
-        //    else
-        //    {
-        //        var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "ParseValue", typeof(string));
-                
-        //        if (parseMethod == null) throw Error.InvalidOperation("Expected a static ParseValue(string) function on the mapped primitive class {0}", implementingType.Name);
-
-        //        return input => parseMethod.Invoke(null, new object[] { input });
-        //    }
-        //}
 
         private static void checkMutualExclusiveAttributes(Type type)
         {

@@ -36,8 +36,8 @@ namespace Hl7.Fhir.Serialization
             if (existing == null)
             {
                 var creationType = mapping.ImplementingType;
-                if (prop != null && prop.IsEnumeratedProperty)
-                    creationType = mapping.ImplementingType.MakeGenericType(prop.EnumType);
+                if (prop != null && prop.IsCodeOfTProperty)
+                    creationType = mapping.ImplementingType.MakeGenericType(prop.CodeOfTEnumType);
 
                 existing = BindingConfiguration.ModelClassFactories.InvokeFactory(creationType);
             }
@@ -63,17 +63,23 @@ namespace Hl7.Fhir.Serialization
         {
             object primitiveValue = _current.GetPrimitiveValue();
             object parsedValue = null;
+            var valueProp = ReflectionHelper.FindPublicProperty(existing.GetType(), "Value");
 
-            if (prop.IsEnumeratedProperty)
+            if (prop.IsCodeOfTProperty)
             {
-                EnumHelper.TryParseEnum(primitiveValue.ToString(), prop.EnumType, out parsedValue);
+                EnumHelper.TryParseEnum(primitiveValue.ToString(), prop.CodeOfTEnumType, out parsedValue);
             }
             else
             {
-                parsedValue = PrimitiveTypeConverter.Convert(primitiveValue, prop.);
+                var valueType = valueProp.PropertyType;
+
+                //TODO: move to propertymapping
+                if (ReflectionHelper.IsNullableType(valueType))
+                    valueType = ReflectionHelper.GetNullableArgument(valueType);
+
+                parsedValue = PrimitiveTypeConverter.Convert(primitiveValue, valueType);
             }
 
-            var valueProp = ReflectionHelper.FindPublicProperty(existing.GetType(), "Value");
             valueProp.SetValue(existing, parsedValue, null);
 
             return existing;

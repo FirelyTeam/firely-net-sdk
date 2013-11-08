@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
                 // Delegate the actual work to the ComplexTypeReader, since
                 // the serialization of Resources and ComplexTypes are virtuall the same
                 var cplxReader = new ComplexTypeReader(_inspector, _reader);
-                return cplxReader.Deserialize(mappedType, existing);
+                return cplxReader.Deserialize(mappedType, null, existing);
             }
             else
                 throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");

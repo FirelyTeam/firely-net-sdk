@@ -22,19 +22,15 @@ namespace Hl7.Fhir.Serialization
 
         public ClassMapping MappedPropertyType { get; private set; }
 
-        public Type EnumType { get; private set; }
+        public Type CodeOfTEnumType { get; private set; }
 
-        public bool IsEnumeratedProperty
+        public bool IsCodeOfTProperty
         {
-            get { return EnumType != null; }
+            get { return CodeOfTEnumType != null; }
         }
 
-        public Type NativeType { get; private set }
-
-        public bool IsNativeValueProperty
-        {
-            get { return NativeType != null; }
-        }
+        public bool IsNativeValueProperty { get; private set; }
+        public Type NativeType { get; private set; }
 
         public PropertyInfo ImplementingProperty { get; private set; }
 
@@ -53,6 +49,14 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+
+        private static bool isPrimitiveValueElement(PropertyInfo prop)
+        {
+            var valueElement = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+
+            return valueElement != null && valueElement.IsPrimitiveValue;
+        }
+
         public static PropertyMapping Create(ModelInspector inspector, PropertyInfo prop)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
@@ -62,9 +66,32 @@ namespace Hl7.Fhir.Serialization
             result.Name = getMappedElementName(prop);
             result.ImplementingProperty = prop;
 
-            result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
+            Type elementType = prop.PropertyType;         
 
-            Type elementType = prop.PropertyType;
+            // First, check the special case: a native .NET property that will hold a primitive value,
+            // not map to a FHIR datatype
+            if(isPrimitiveValueElement(prop))
+            {
+              //  if (!isAllowedNativeTypeForDataTypeValue(elementType))
+              //      throw Error.InvalidOperation("Property {0} is a primitive value element, but does not use a supported native type", prop.Name);
+
+                var primitiveType = elementType;
+                result.IsNativeValueProperty = true;
+
+                if (ReflectionHelper.IsNullableType(elementType))
+                    primitiveType = ReflectionHelper.GetNullableArgument(elementType);
+
+                if (ReflectionHelper.IsClosedGenericType(primitiveType))
+                    result.NativeType = primitiveType;
+                else
+                    result.NativeType = null;   // If this property has a open generic type, we don't know its type yet => null
+
+                result.MappedPropertyType = null;   // native, so no mapped class
+                return result;
+            }
+
+            // Property uses one of the FHIR datatypes, make the mapping
+            result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
 
             // If this is a collection, map to the collection's element type, not the collection type
             if (result.MayRepeat)
@@ -81,23 +108,16 @@ namespace Hl7.Fhir.Serialization
                 result.PolymorphicBase = elementType;  // keep the type, so we know whether to expect any element or any resource (contained)
                 result.MappedPropertyType = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
             }
-            else if (isFhirPrimtiveMappedAsNativePrimitive(elementType))
-            {
-                // TODO: Handle mapping to direct primitives instead to PrimitiveElement
-                // (we will not currently encounter this in the generated mappings, but it is conceivable
-                // in custom mapped classes)
-                throw Error.NotSupported("Property {0} on type {1}: mappings to .NET native types are not yet supported", prop.Name, prop.DeclaringType.Name);
-            }
             else
             {
-                // Special case: this is a member that used the closed generic Code<T> type - 
+                // Special case: this is a member that uses the closed generic Code<T> type - 
                 // do mapping for its open, defining type instead
                 if (elementType.IsGenericType)
                 {
                     if (ReflectionHelper.IsClosedGenericType(elementType) &&  
                         ReflectionHelper.IsConstructedFromGenericTypeDefinition(elementType, typeof(Code<>)) )
                     {
-                        result.EnumType = elementType.GetGenericArguments()[0];
+                        result.CodeOfTEnumType = elementType.GetGenericArguments()[0];
                         elementType = elementType.GetGenericTypeDefinition();
                     }
                     else
@@ -109,6 +129,7 @@ namespace Hl7.Fhir.Serialization
                 if (mappedPropertyType == null)
                     throw Error.InvalidOperation("Property {0} on type {1}: property maps to a type that is not recognized as a mapped FHIR type", prop.Name, prop.DeclaringType.Name);
 
+                result.NativeType = null;   // mapped complex class, so not a native primitive
                 result.MappedPropertyType = mappedPropertyType;
             }
 
@@ -145,14 +166,15 @@ namespace Hl7.Fhir.Serialization
                 return prop.Name;
         }
 
-        private static bool isFhirPrimtiveMappedAsNativePrimitive(Type type)
+        private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {
             if (type == typeof(bool?) ||
                    type == typeof(int?) ||
                    type == typeof(decimal?) ||
                    type == typeof(byte[]) ||
                    type == typeof(DateTimeOffset?) ||
-                   type == typeof(string))
+                   type == typeof(string) ||
+                   type == typeof(Uri))
                 return true;
 
             // Special case, allow Nullable<enum>
@@ -174,7 +196,7 @@ namespace Hl7.Fhir.Serialization
             return type == typeof(Element)
                         || ClassMapping.IsFhirComplexType(type)
                         || ClassMapping.IsFhirPrimitive(type)
-                        || isFhirPrimtiveMappedAsNativePrimitive(type);
+                        || isAllowedNativeTypeForDataTypeValue(type);
         }
     }
 }

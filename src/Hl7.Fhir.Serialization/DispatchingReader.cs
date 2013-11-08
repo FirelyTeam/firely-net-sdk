@@ -28,13 +28,13 @@ namespace Hl7.Fhir.Serialization
           
             if (mapping.ModelConstruct == FhirModelConstruct.PrimitiveType)
             {
-                var reader = new PrimitiveTypeReader(_inspector, _current);
-                return reader.Deserialize(mapping,prop,existing);
+                var reader = new ComplexTypeReader(_inspector, _current);
+                return reader.Deserialize(mapping, prop, existing);
             }
             else if (mapping.ModelConstruct == FhirModelConstruct.ComplexType)
             {
                 var reader = new ComplexTypeReader(_inspector, _current);
-                return reader.Deserialize(mapping, existing);
+                return reader.Deserialize(mapping, prop, existing);
             }
             else if(mapping.ModelConstruct == FhirModelConstruct.Resource)
             {

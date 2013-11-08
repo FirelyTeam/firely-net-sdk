@@ -23,24 +23,24 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private bool isResourceOrComplexMapping(ClassMapping mapping)
-        {
-            return mapping.ModelConstruct == FhirModelConstruct.ComplexType || mapping.ModelConstruct == FhirModelConstruct.Resource;
-        }
+        //private bool isResourceOrComplexMapping(ClassMapping mapping)
+        //{
+        //    return mapping.ModelConstruct == FhirModelConstruct.ComplexType || mapping.ModelConstruct == FhirModelConstruct.Resource;
+        //}
 
 
-        internal object Deserialize(Type type, object existing=null)
-        {
-            if (type == null) throw Error.ArgumentNull("type");
+        //internal object Deserialize(Type type, object existing=null)
+        //{
+        //    if (type == null) throw Error.ArgumentNull("type");
 
-            var mapping = _inspector.FindClassMappingByImplementingType(type);
+        //    var mapping = _inspector.FindClassMappingByImplementingType(type);
 
-            if (mapping == null) throw Error.Argument("Cannot find class mapping for type {0} while deserializing a complex type", type.Name);
+        //    if (mapping == null) throw Error.Argument("Cannot find class mapping for type {0} while deserializing a complex type", type.Name);
 
-            return Deserialize(mapping, existing);
-        }
+        //    return Deserialize(mapping, existing);
+        //}
 
-        internal object Deserialize(ClassMapping mapping, object existing=null)
+        internal object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("type");
            
@@ -48,25 +48,57 @@ namespace Hl7.Fhir.Serialization
             //    throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
             //TODO: is 'existing' compatible with the mapping?
 
+            if (existing == null)
+            {
+                var creationType = mapping.ImplementingType;
+
+                // Special case, we have one class mapping that is a generic (Code<>)
+                // now we know the actual closed generic type of the property,
+                // create the specific code Code<T>
+                if (prop != null && prop.IsCodeOfTProperty)
+                    creationType = mapping.ImplementingType.MakeGenericType(prop.CodeOfTEnumType);
+
+                existing = BindingConfiguration.ModelClassFactories.InvokeFactory(creationType);
+            }
+
+            IEnumerable<Tuple<string, IFhirReader>> members = null;
+
             if (_current.CurrentToken == TokenType.Object)
             {
-                if (existing == null)
-                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mapping.ImplementingType);
+                members = _current.GetMembers();
+            }
+            else if(_current.IsPrimitive())
+            {
+                // Ok, we expected a complex type, but we found a primitive instead. This may happen
+                // in Json where the value property and the other elements are separately put into
+                // member and _member. In this case, we will parse the primitive into the Value property
+                // of the complex type
+                if (mapping.PrimitiveValueProperty == null)
+                    throw Error.InvalidOperation("Complex object does not have a value property, yet the reader is at a primitive");
 
-                read(mapping, existing);
-
-                return existing;
+                // Simulate this as actually receiving a member "Value" in a normal complex object,
+                // and resume normally
+                var valueMember = Tuple.Create(mapping.PrimitiveValueProperty.Name, _current);
+                members = new List<Tuple<string, IFhirReader>> { valueMember };
             }
             else
-                throw Error.InvalidOperation("Trying to read a complex object, but reader is not at the start of an object");
+                throw Error.InvalidOperation("Trying to read a complex object, but reader is not at the start of an object or primitive");
+
+            if(prop != null && prop.IsCodeOfTProperty)
+                read(mapping, prop.CodeOfTEnumType, members, existing);
+            else
+                read(mapping, null, members, existing);
+
+            return existing;
+
         }
 
 
-        private void read(ClassMapping mapping, object existing)
+        private void read(ClassMapping mapping, Type codeType, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
         {
             bool hasMember = false;
 
-            foreach (var memberData in _current.GetMembers())
+            foreach (var memberData in members)
             {
                 hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member
@@ -78,36 +110,58 @@ namespace Hl7.Fhir.Serialization
                 if (mappedProperty != null)
                 {
                     Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
-                                    
-                    var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
-
-                    ClassMapping propTypeMapping;
-
-                    // For Element properties, determine the actual type of the element using
-                    // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
-                    if (mappedProperty.PolymorphicBase == typeof(Element))
-                        propTypeMapping = determineElementPropertyType(mappedProperty, memberName);
-
-                    // For Resources, the type is not yet known more precisely than Resource,
-                    // the specific Resource type is determined by Resource.resourceType later on.
-                    else if (mappedProperty.PolymorphicBase == typeof(Resource))
-                        propTypeMapping = _inspector.FindClassMappingByImplementingType(typeof(Resource));
-
-                    else
-                        propTypeMapping = mappedProperty.MappedPropertyType;
-
-                    if (mappedProperty.MayRepeat)
+                  
+                    // Handle primitive member => no getter necessary
+                    if (mappedProperty.IsNativeValueProperty)
                     {
-                        var reader = new RepeatingElementReader(_inspector, memberData.Item2);
-                        value = reader.Deserialize(propTypeMapping, mappedProperty, value);
+                        var nativeType = mappedProperty.NativeType;
+                        var prop = mappedProperty.ImplementingProperty;
+
+                        // If the property is the value of Code<T> (an open generic value type), get to the
+                        // closed property
+                        if (codeType != null)
+                        {
+                            nativeType = codeType;
+                            prop = ReflectionHelper.FindPublicProperty(existing.GetType(),prop.Name);
+                        }
+
+                        var reader = new PrimitiveValueReader(_inspector, memberData.Item2);
+                        var value = reader.Deserialize(nativeType);
+                        prop.SetValue(existing, value, null);
                     }
                     else
                     {
-                        var reader = new DispatchingReader(_inspector, memberData.Item2);
-                        value = reader.Deserialize(propTypeMapping, mappedProperty, value);
-                    }
+                        var value = mappedProperty.ImplementingProperty.GetValue(existing, null);
 
-                    mappedProperty.ImplementingProperty.SetValue(existing, value, null);
+                        ClassMapping propTypeMapping;
+
+                        // For Element properties, determine the actual type of the element using
+                        // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
+                        if (mappedProperty.PolymorphicBase == typeof(Element))
+                            propTypeMapping = determineElementPropertyType(mappedProperty, memberName);
+
+                        // For Resources, the type is not yet known more precisely than Resource,
+                        // the specific Resource type is determined by Resource.resourceType later on.
+                        else if (mappedProperty.PolymorphicBase == typeof(Resource))
+                            propTypeMapping = _inspector.FindClassMappingByImplementingType(typeof(Resource));
+
+                        else
+                            propTypeMapping = mappedProperty.MappedPropertyType;
+
+
+                        if (mappedProperty.MayRepeat)
+                        {
+                            var reader = new RepeatingElementReader(_inspector, memberData.Item2);
+                            value = reader.Deserialize(propTypeMapping, mappedProperty, value);
+                        }
+                        else
+                        {
+                            var reader = new DispatchingReader(_inspector, memberData.Item2);
+                            value = reader.Deserialize(propTypeMapping, mappedProperty, value);
+                        }
+
+                        mappedProperty.ImplementingProperty.SetValue(existing, value, null);
+                    }
                 }
                 else
                 {

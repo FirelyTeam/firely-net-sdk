@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
 
         public static bool IsTypedCollection(Type type)
         {
-            return type.IsArray || ImplementsGenericDefinition(type, typeof(ICollection<>));
+            return ImplementsGenericDefinition(type, typeof(ICollection<>));
         }
 
 
