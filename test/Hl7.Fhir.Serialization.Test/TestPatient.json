@@ -1,5 +1,33 @@
 ﻿{
     "resourceType": "Patient",
+    "identifier": [{
+        "label": "MRN",
+        "period": {"start": "2001-05-06"},
+        "assigner": {"display": "Acme Healthcare"},
+        "use": "usual",
+        "system": "urn:oid:1.2.36.146.595.217.0.1",
+        "value": "12345"
+    }],
+    "managingOrganization": {"reference": "Organization/1"},
+    "_active": {"extension": [{
+        "url": "http://hl7.org/fhir/example-do-not-use#recordStatus",
+        "valueCode": "archived"
+    }]},
+    "active": false,
+    "name": [
+        {
+            "given": [
+                "Peter",
+                "James"
+            ],
+            "use": "official",
+            "family": ["Chalmers"]
+        },
+        {
+            "given": ["Jim"],
+            "use": "usual"
+        }
+    ],
     "extension": [
         {
             "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
@@ -9,14 +37,37 @@
             }
         },
         {
-            "url": "http://hl7.org/fhir/example-do-not-use#pi",
+            "url": "urn:example-do-not-use:pi",
             "valueDecimal": 3.141592653589793
         },
         {
-            "url": "http://hl7.org/fhir/example-do-not-use#avogadro",
+            "url": "urn:example-do-not-use:avogadro",
             "valueDecimal": 6.0221416246424E23
         }
     ],
+    "gender": {"coding": [{
+        "system": "http://hl7.org/fhir/v3/AdministrativeGender",
+        "code": "M",
+        "display": "Male"
+    }]},
+    "birthDate": "1974-12",
+    "deceasedBoolean": true,
+    "address": [{
+        "use": "home",
+        "line": ["534 Erewhon St"],
+        "city": "PleasantVille",
+        "state": "Vic",
+        "zip": "3999"
+    }],
+    "_maritalStatus": {"extension": [{
+        "valueCode": "ASKU",
+        "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor"
+    }]},
+    "multipleBirthInteger": 3,
+    "text": {
+        "status": "generated",
+        "div": "<div>\n      <table>\n        <tbody>\n          <tr>\n            <td>Name<\/td>\n            <td>Peter James <b>Chalmers<\/b> (&quot;Jim&quot;)<\/td>\n          <\/tr>\n          <tr>\n            <td>Address<\/td>\n            <td>534 Erewhon, Pleasantville, Vic, 3999<\/td>\n          <\/tr>\n          <tr>\n            <td>Contacts<\/td>\n            <td>Home: unknown. Work: (03) 5555 6473<\/td>\n          <\/tr>\n          <tr>\n            <td>Id<\/td>\n            <td>MRN: 12345 (Acme Healthcare)<\/td>\n          <\/tr>\n        <\/tbody>\n      <\/table>\n    <\/div>"
+    },
     "contained": [
         {
             "resourceType": "Binary",
@@ -38,71 +89,20 @@
             "name": "Good Health Clinic"
         }
     ],
-    "text": {
-        "status": "generated",
-        "div": "<div>\n      <table>\n        <tbody>\n          <tr>\n            <td>Name<\/td>\n            <td>Peter James <b>Chalmers<\/b> (&quot;Jim&quot;)<\/td>\n          <\/tr>\n          <tr>\n            <td>Address<\/td>\n            <td>534 Erewhon, Pleasantville, Vic, 3999<\/td>\n          <\/tr>\n          <tr>\n            <td>Contacts<\/td>\n            <td>Home: unknown. Work: (03) 5555 6473<\/td>\n          <\/tr>\n          <tr>\n            <td>Id<\/td>\n            <td>MRN: 12345 (Acme Healthcare)<\/td>\n          <\/tr>\n        <\/tbody>\n      <\/table>\n    <\/div>"
-    },
-    "identifier": [{
-        "use": "usual",
-        "label": "MRN",
-        "system": "urn:oid:1.2.36.146.595.217.0.1",
-        "value": "12345",
-        "period": {"start": "2001-05-06"},
-        "assigner": {"display": "Acme Healthcare"}
-    }],
-    "name": [
-        {
-            "use": "official",
-            "family": ["Chalmers"],
-            "given": [
-                "Peter",
-                "James"
-            ]
-        },
-        {
-            "use": "usual",
-            "given": ["Jim"]
-        }
-    ],
-    "telecom": [
-        {"use": "home"},
-        {
-            "system": "phone",
-            "value": "(03) 5555 6473",
-            "use": "work"
-        }
-    ],
-    "gender": {"coding": [{
-        "system": "http://hl7.org/fhir/v3/AdministrativeGender",
-        "code": "M",
-        "display": "Male"
-    }]},
-    "birthDate": "1974-12-25",
-    "deceasedBoolean": true,
-    "address": [{
-        "use": "home",
-        "line": ["534 Erewhon St"],
-        "city": "PleasantVille",
-        "state": "Vic",
-        "zip": "3999"
-    }],
-    "_maritalStatus": {"extension": [{
-        "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
-        "valueCode": "ASKU"
-    }]},
-    "multipleBirthInteger": 3,
     "contact": [{
-        "relationship": [{"coding": [{
-            "system": "http://hl7.org/fhir/patient-contact-relationship",
-            "code": "partner"
-        }]}],
         "name": {
             "family": [
+                null,
                 "du",
+                null,
                 "Marché",
                 null
             ],
             "_family": [
+                {"extension": [{
+                    "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
+                    "valueCode": "ASKU"
+                }]},
                 {
                     "id": "a2",
                     "extension": [{
@@ -110,11 +110,15 @@
                         "valueCode": "VV"
                     }]
                 },
+                {"extension": [{
+                    "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
+                    "valueCode": "ASKU"
+                }]},
                 null,
                 {"extension": [{
                     "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
                     "valueCode": "ASKU"
-                }]}
+                }]}                
             ],
             "_given": [
                 null,
@@ -124,23 +128,31 @@
                         "url": "http://hl7.org/fhir/Profileiso-21090#qualifier",
                         "valueCode": "MID"
                     }]
-                }
+                },
+                null
             ],
             "given": [
                 "Bénédicte",
-                "Denise"
+                "Denise",
+                "Marie"
             ]
         },
+        "relationship": [{"coding": [{
+            "system": "http://hl7.org/fhir/patient-contact-relationship",
+            "code": "partner"
+        }]}],
         "telecom": [{
             "system": "phone",
             "value": "+33 (237) 998327"
         }]
     }],
     "careProvider": {"reference": "#org3141"},
-    "managingOrganization": {"reference": "Organization/1"},
-    "_active": {"extension": [{
-        "url": "http://hl7.org/fhir/example-do-not-use#recordStatus",
-        "valueCode": "archived"
-    }]},
-    "active": false
+    "telecom": [
+        {"use": "home"},
+        {
+            "system": "phone",
+            "value": "(03) 5555 6473",
+            "use": "work"
+        }
+    ]
 }

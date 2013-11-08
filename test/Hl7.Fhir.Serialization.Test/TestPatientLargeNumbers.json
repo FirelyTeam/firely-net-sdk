@@ -1,26 +1,6 @@
 ﻿{
     "resourceType": "Patient",
-    "extension": [
-        {
-            "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
-            "valueResource": {
-                "reference": "#pic1",
-                "display": "Duck image"
-            }
-        },
-        {
-            "url": "http://hl7.org/fhir/example-do-not-use#pi",
-            "valueDecimal": 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975
-        },
-		{
-            "url": "http://hl7.org/fhir/example-do-not-use#avogadro",
-            "valueDecimal": 602214162464240016093369 
-        } 
-	    {
-            "url": "http://hl7.org/fhir/example-do-not-use#avogadro",
-            "valueInteger": 602214162464240016093369 
-        } 
-    ],
+   
     "contained": [
         {
             "resourceType": "Binary",
@@ -75,6 +55,27 @@
             "value": "(03) 5555 6473",
             "use": "work"
         }
+    ],
+	 "extension": [
+        {
+            "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
+            "valueResource": {
+                "reference": "#pic1",
+                "display": "Duck image"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/example-do-not-use#pi",
+            "valueDecimal": 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975
+        },
+		{
+            "url": "http://hl7.org/fhir/example-do-not-use#avogadro",
+            "valueDecimal": 602214162464240016093369 
+        } 
+	    {
+            "url": "http://hl7.org/fhir/example-do-not-use#avogadro",
+            "valueInteger": 602214162464240016093369 
+        } 
     ],
     "gender": {"coding": [{
         "system": "http://hl7.org/fhir/v3/AdministrativeGender",

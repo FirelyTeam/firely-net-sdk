@@ -51,6 +51,7 @@
     <Compile Include="JsonDomFhirReader.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="ModelInspector.cs" />
+    <Compile Include="PrimitiveTypeConverter.cs" />
     <Compile Include="PrimitiveTypeReader.cs" />
     <Compile Include="PropertyMapping.cs" />
     <Compile Include="DefaultModelFactory.cs" />

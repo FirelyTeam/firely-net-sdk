@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
             if (existing == null)
             {
                 var creationType = mapping.ImplementingType;
-                if (prop != null && prop.IsEnumeratedType)
+                if (prop != null && prop.IsEnumeratedProperty)
                     creationType = mapping.ImplementingType.MakeGenericType(prop.EnumType);
 
                 existing = BindingConfiguration.ModelClassFactories.InvokeFactory(creationType);
@@ -62,52 +62,21 @@ namespace Hl7.Fhir.Serialization
         private PrimitiveElement read(ClassMapping mapping, PropertyMapping prop, PrimitiveElement existing)
         {
             object primitiveValue = _current.GetPrimitiveValue();
-
-            string valueAsString = null;
-
-            // Fix for stupid dotnet conversion true => "True"
-            if (primitiveValue is bool)
-                valueAsString = XmlConvert.ToString((bool)primitiveValue);
-            else if (primitiveValue is decimal)
-                valueAsString = XmlConvert.ToString((decimal)primitiveValue);
-            else if (primitiveValue is string)
-                valueAsString = (string)primitiveValue;
-            else
-                valueAsString = primitiveValue.ToString();
-
             object parsedValue = null;
 
-            if (prop.IsEnumeratedType)
+            if (prop.IsEnumeratedProperty)
             {
-                EnumHelper.TryParseEnum(valueAsString, prop.EnumType, out parsedValue);
+                EnumHelper.TryParseEnum(primitiveValue.ToString(), prop.EnumType, out parsedValue);
             }
             else
             {
-                // anyway, we use the Parse() function on the primitive types, which takes a string...                
-                parsedValue = mapping.Parse(valueAsString);
+                parsedValue = PrimitiveTypeConverter.Convert(primitiveValue, prop.);
             }
 
             var valueProp = ReflectionHelper.FindPublicProperty(existing.GetType(), "Value");
             valueProp.SetValue(existing, parsedValue, null);
 
             return existing;
-
-            /* TODO: warn for rounding issues if reading float/decimal/long into a....Fhir Integer */
-            /* TODO: map the values to one of the datatypes
-                boolean	
-                integer	
-                decimal	
-                base64Binary
-                instant
-                string
-                uri
-                date
-                dateTime
-                code
-                oid	      
-                uuid
-                id 
-             */
         }
     }
 

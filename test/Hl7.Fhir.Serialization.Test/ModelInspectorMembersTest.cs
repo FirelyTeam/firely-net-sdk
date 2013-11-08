@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization.Test
             Assert.AreEqual("HumanName", member.MappedPropertyType.Name);
 
             member = mappedType.FindMappedPropertyForElement("nameuse");
-            Assert.IsTrue(member.IsEnumeratedType);
+            Assert.IsTrue(member.IsEnumeratedProperty);
             Assert.AreEqual(typeof(HumanName.NameUse), member.EnumType);
 
             member = mappedType.FindMappedPropertyForElement("references");

@@ -16,11 +16,14 @@ namespace Hl7.Fhir.Serialization
 
         public string Name { get; private set; }
         public string Profile { get; private set; }
-        
-        public Type ImplementingType { get; private set; }
 
-        private Func<string, object> _primitiveParsingFunction;
-        
+        // The .NET class this is a mapping to and that implements a FHIR type
+        public Type ImplementingType { get; private set; }   
+
+        // Set to an element from the PropertyMappings collection, which contains the .NET native
+        // property with the actual value of the PrimitiveType.
+        public PropertyMapping PrimitiveValueProperty { get; private set; }
+       
         // Elements indexed by uppercase name for access speed
         private Dictionary<string, PropertyMapping> _propMappings = new Dictionary<string, PropertyMapping>();
 
@@ -32,16 +35,6 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
-        public object Parse(string value)
-        {
-            if (ModelConstruct == FhirModelConstruct.PrimitiveType)
-            {
-                return _primitiveParsingFunction(value);
-            }
-            else
-                throw Error.InvalidOperation("Can only invoke Parse on a primitive mapped class");
-        }
 
         // Class mappings are built in two phases: first all the classes are mapped, after that their
         // properties. Necessary because to determine the mapped type of a property, all mapped classes 
@@ -151,8 +144,7 @@ namespace Hl7.Fhir.Serialization
                 result.ModelConstruct = FhirModelConstruct.PrimitiveType;
                 result.Name = getMappedPrimitiveTypeName(type);
                 result.Profile = null;  // No support for profiled datatypes
-                result.ImplementingType = type;
-                result._primitiveParsingFunction = buildPrimitiveParserInvoker(type);
+                result.ImplementingType = type;              
             }
             else
                 throw Error.Argument("type", "Type {0} is not recognized as either a Fhir Resource, complex datatype or primitive", type.Name);
@@ -163,25 +155,25 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static Func<string,object> buildPrimitiveParserInvoker(Type implementingType)
-        {
-            // Now determine actual .NET primitive used for the ImplementingType's Value property
-            //var valueProperty = ReflectionHelper.FindPublicProperty(result.ImplementingType, "Value");
-            //if(valueProperty == null) throw Error.InvalidOperation("Expected a Value property on the mapped primitive class {0}", result.ImplementingType.Name);
-            //result.PrimitiveType = valueProperty.PropertyType;
-            if (implementingType.IsEnum)
-            {
-                return input => invokeEnumParser(input, implementingType);
-            }
-            else
-            {
-                var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "ParseValue", typeof(string));
+        //private static Func<string,object> buildPrimitiveParserInvoker(Type implementingType)
+        //{
+        //    // Now determine actual .NET primitive used for the ImplementingType's Value property
+        //    //var valueProperty = ReflectionHelper.FindPublicProperty(result.ImplementingType, "Value");
+        //    //if(valueProperty == null) throw Error.InvalidOperation("Expected a Value property on the mapped primitive class {0}", result.ImplementingType.Name);
+        //    //result.PrimitiveType = valueProperty.PropertyType;
+        //    if (implementingType.IsEnum)
+        //    {
+        //        return input => invokeEnumParser(input, implementingType);
+        //    }
+        //    else
+        //    {
+        //        var parseMethod = ReflectionHelper.FindPublicStaticMethod(implementingType, "ParseValue", typeof(string));
                 
-                if (parseMethod == null) throw Error.InvalidOperation("Expected a static ParseValue(string) function on the mapped primitive class {0}", implementingType.Name);
+        //        if (parseMethod == null) throw Error.InvalidOperation("Expected a static ParseValue(string) function on the mapped primitive class {0}", implementingType.Name);
 
-                return input => parseMethod.Invoke(null, new object[] { input });
-            }
-        }
+        //        return input => parseMethod.Invoke(null, new object[] { input });
+        //    }
+        //}
 
         private static void checkMutualExclusiveAttributes(Type type)
         {

@@ -24,9 +24,16 @@ namespace Hl7.Fhir.Serialization
 
         public Type EnumType { get; private set; }
 
-        public bool IsEnumeratedType
+        public bool IsEnumeratedProperty
         {
             get { return EnumType != null; }
+        }
+
+        public Type NativeType { get; private set }
+
+        public bool IsNativeValueProperty
+        {
+            get { return NativeType != null; }
         }
 
         public PropertyInfo ImplementingProperty { get; private set; }
