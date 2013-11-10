@@ -22,30 +22,10 @@ namespace Hl7.Fhir.Serialization
             _inspector = inspector;
         }
 
-
-        //private bool isResourceOrComplexMapping(ClassMapping mapping)
-        //{
-        //    return mapping.ModelConstruct == FhirModelConstruct.ComplexType || mapping.ModelConstruct == FhirModelConstruct.Resource;
-        //}
-
-
-        //internal object Deserialize(Type type, object existing=null)
-        //{
-        //    if (type == null) throw Error.ArgumentNull("type");
-
-        //    var mapping = _inspector.FindClassMappingByImplementingType(type);
-
-        //    if (mapping == null) throw Error.Argument("Cannot find class mapping for type {0} while deserializing a complex type", type.Name);
-
-        //    return Deserialize(mapping, existing);
-        //}
-
         internal object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("type");
            
-            //if(!isResourceOrComplexMapping(mapping))
-            //    throw Error.InvalidOperation(Messages.CanOnlyDeserializeResourceAndComplex, mapping.ModelConstruct);
             //TODO: is 'existing' compatible with the mapping?
 
             if (existing == null)
@@ -85,16 +65,16 @@ namespace Hl7.Fhir.Serialization
                 throw Error.InvalidOperation("Trying to read a complex object, but reader is not at the start of an object or primitive");
 
             if(prop != null && prop.IsCodeOfTProperty)
-                read(mapping, prop.CodeOfTEnumType, members, existing);
+                read(mapping, members, existing);
             else
-                read(mapping, null, members, existing);
+                read(mapping, members, existing);
 
             return existing;
 
         }
 
 
-        private void read(ClassMapping mapping, Type codeType, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
+        private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
         {
             bool hasMember = false;
 
@@ -117,12 +97,12 @@ namespace Hl7.Fhir.Serialization
                         var nativeType = mappedProperty.NativeType;
                         var prop = mappedProperty.ImplementingProperty;
 
-                        // If the property is the value of Code<T> (an open generic value type), get to the
-                        // closed property
-                        if (codeType != null)
+                        // If the property used an open generic type while inspecting, we don't
+                        // know the actual property & type yet. Take a look at the actual instance to get it.
+                        if (nativeType == null)
                         {
-                            nativeType = codeType;
                             prop = ReflectionHelper.FindPublicProperty(existing.GetType(),prop.Name);
+                            nativeType = ReflectionHelper.GetInstantiableNativeType(prop.PropertyType);
                         }
 
                         var reader = new PrimitiveValueReader(_inspector, memberData.Item2);

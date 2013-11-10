@@ -180,5 +180,18 @@ namespace Hl7.Fhir.Serialization
             return type.IsEnum;
         }
 
+
+        internal static Type GetInstantiableNativeType(Type t)
+        {
+            Type result = t;
+
+            if (ReflectionHelper.IsNullableType(result))
+                result = ReflectionHelper.GetNullableArgument(result);
+
+            if (ReflectionHelper.IsClosedGenericType(result))
+                return result;
+            else
+                return null;
+        }
     }
 }

@@ -144,10 +144,11 @@ namespace Hl7.Fhir.Serialization.Test
 
             // But Resource should be there
             Assert.IsNotNull(inspector.FindClassMappingForResource("Resource"));
-
+           
             // Code<> should still be there (the only generic type definition accepted)
             var codeOfT = inspector.FindClassMappingByImplementingType(typeof(Code<>));
             Assert.IsNotNull(codeOfT);
+            Assert.IsTrue(codeOfT.HasGenericArguments);
             Assert.AreEqual(FhirModelConstruct.PrimitiveType, codeOfT.ModelConstruct);
         }
 

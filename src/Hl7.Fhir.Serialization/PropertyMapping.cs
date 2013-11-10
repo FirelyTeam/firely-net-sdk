@@ -72,32 +72,18 @@ namespace Hl7.Fhir.Serialization
             // not map to a FHIR datatype
             if(isPrimitiveValueElement(prop))
             {
-              //  if (!isAllowedNativeTypeForDataTypeValue(elementType))
-              //      throw Error.InvalidOperation("Property {0} is a primitive value element, but does not use a supported native type", prop.Name);
-
-                var primitiveType = elementType;
                 result.IsNativeValueProperty = true;
-
-                if (ReflectionHelper.IsNullableType(elementType))
-                    primitiveType = ReflectionHelper.GetNullableArgument(elementType);
-
-                if (ReflectionHelper.IsClosedGenericType(primitiveType))
-                    result.NativeType = primitiveType;
-                else
-                    result.NativeType = null;   // If this property has a open generic type, we don't know its type yet => null
-
+                result.NativeType = ReflectionHelper.GetInstantiableNativeType(elementType);
                 result.MappedPropertyType = null;   // native, so no mapped class
                 return result;
             }
 
             // Property uses one of the FHIR datatypes, make the mapping
-            result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
 
             // If this is a collection, map to the collection's element type, not the collection type
-            if (result.MayRepeat)
-            {
-                elementType = ReflectionHelper.GetCollectionItemType(elementType);
-            }
+            result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
+
+            if (result.MayRepeat) elementType = ReflectionHelper.GetCollectionItemType(elementType);
 
             if (elementType == typeof(Element) || elementType == typeof(Resource))
             {

@@ -18,7 +18,10 @@ namespace Hl7.Fhir.Serialization
         public string Profile { get; private set; }
 
         // The .NET class this is a mapping to and that implements a FHIR type
-        public Type ImplementingType { get; private set; }   
+        public Type ImplementingType { get; private set; }
+
+        // If the implementing type has generic arguments, this will be set to true
+        public bool HasGenericArguments { get; private set; }
 
         // Set to an element from the PropertyMappings collection, which contains the .NET native
         // property with the actual value of the PrimitiveType.
@@ -79,32 +82,15 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static bool TryCreate(Type type, out ClassMapping mapping)
-        {
-            mapping = null;
-
-            if (IsMappableClass(type))
-            {
-                try
-                {
-                    mapping = Create(type);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            else
-                return false;
-        }
-
-
         public static ClassMapping Create(Type type)
         {
             checkMutualExclusiveAttributes(type);
 
             var result = new ClassMapping();
+            result.ImplementingType = type;
+
+            if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+                result.HasGenericArguments = true;
 
             if (IsFhirResource(type))
             {
@@ -122,13 +108,10 @@ namespace Hl7.Fhir.Serialization
             {
                 result.ModelConstruct = FhirModelConstruct.PrimitiveType;
                 result.Name = getMappedPrimitiveTypeName(type);
-                result.Profile = null;  // No support for profiled datatypes
-                result.ImplementingType = type;              
+                result.Profile = null;  // No support for profiled datatypes           
             }
             else
                 throw Error.Argument("type", "Type {0} is not recognized as either a Fhir Resource, complex datatype or primitive", type.Name);
-
-            result.ImplementingType = type;
 
             return result;
         }
