@@ -193,5 +193,11 @@ namespace Hl7.Fhir.Serialization
             else
                 return null;
         }
+
+        internal static T GetAttribute<T>(MemberInfo member) where T : Attribute
+        {
+            var attr = Attribute.GetCustomAttribute(member, typeof(T));
+            return (T)attr;
+        }
     }
 }

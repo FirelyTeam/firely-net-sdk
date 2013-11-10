@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
 
             IList result;
 
-            if (existing == null) existing = ReflectionHelper.CreateGenericList(mapping.ImplementingType);
+            if (existing == null) existing = ReflectionHelper.CreateGenericList(mapping.NativeType);
 
             result = existing as IList;                       
             if(result == null) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");

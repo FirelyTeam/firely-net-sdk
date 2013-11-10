@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
                 //TODO: if existing != null -> compatible with mapped type?
 
                 if (existing == null)
-                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.ImplementingType);
+                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.NativeType);
                
                 // Delegate the actual work to the ComplexTypeReader, since
                 // the serialization of Resources and ComplexTypes are virtuall the same

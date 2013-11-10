@@ -30,13 +30,13 @@ namespace Hl7.Fhir.Serialization
 
             if (existing == null)
             {
-                var creationType = mapping.ImplementingType;
+                var creationType = mapping.NativeType;
 
                 // Special case, we have one class mapping that is a generic (Code<>)
                 // now we know the actual closed generic type of the property,
                 // create the specific code Code<T>
                 if (prop != null && prop.IsCodeOfTProperty)
-                    creationType = mapping.ImplementingType.MakeGenericType(prop.CodeOfTEnumType);
+                    creationType = mapping.NativeType.MakeGenericType(prop.CodeOfTEnumType);
 
                 existing = BindingConfiguration.ModelClassFactories.InvokeFactory(creationType);
             }

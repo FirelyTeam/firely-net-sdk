@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
             return valueElement != null && valueElement.IsPrimitiveValue;
         }
 
-        public static PropertyMapping Create(ModelInspector inspector, PropertyInfo prop)
+        public static PropertyMapping Create(PropertyInfo prop)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
             if (inspector == null) throw Error.ArgumentNull("inspector");

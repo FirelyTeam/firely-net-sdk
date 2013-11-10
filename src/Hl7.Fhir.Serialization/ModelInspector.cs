@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization
             // to find the classmappings the properties may refer to) 
             foreach(ClassMapping mapping in _classMappingsByType.Values)
             {
-                mapping.InspectProperties(this);                
+                mapping.inspectProperties(this);                
             }
 
             Message.Info("Finished processing {0} classes. Found {1} resources, {2} complex datatypes, {3} primitive/enum datatypes",
