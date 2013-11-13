@@ -26,23 +26,18 @@ namespace Hl7.Fhir.Serialization
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
           
-            if (mapping.ModelConstruct == FhirModelConstruct.PrimitiveType)
+            if (!mapping.IsResource)
             {
                 var reader = new ComplexTypeReader(_inspector, _current);
                 return reader.Deserialize(mapping, prop, existing);
             }
-            else if (mapping.ModelConstruct == FhirModelConstruct.ComplexType)
-            {
-                var reader = new ComplexTypeReader(_inspector, _current);
-                return reader.Deserialize(mapping, prop, existing);
-            }
-            else if(mapping.ModelConstruct == FhirModelConstruct.Resource)
+            else
             {
                 var reader = new ResourceReader(_inspector, _current);
                 return reader.Deserialize(existing);
             }
-            else
-                throw Error.InvalidOperation("Don't know how to handle members of type {0}", mapping.Name);
+            //else
+            //    throw Error.InvalidOperation("Don't know how to handle members of type {0}", mapping.Name);
         }
     }
 }

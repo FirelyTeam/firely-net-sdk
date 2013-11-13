@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
 
         public static bool IsTypedCollection(Type type)
         {
-            return ImplementsGenericDefinition(type, typeof(ICollection<>));
+            return type.IsArray || ImplementsGenericDefinition(type, typeof(ICollection<>));
         }
 
 
@@ -198,6 +198,20 @@ namespace Hl7.Fhir.Serialization
         {
             var attr = Attribute.GetCustomAttribute(member, typeof(T));
             return (T)attr;
+        }
+
+        internal static ICollection<T> GetAttributes<T>(MemberInfo member) where T : Attribute
+        {
+            var attr = Attribute.GetCustomAttributes(member, typeof(T));
+            return (ICollection<T>)attr;
+        }
+
+
+        internal static IEnumerable<FieldInfo> FindEnumFields(Type t)
+        {
+            if (t == null) throw Error.ArgumentNull("t");
+
+            return t.GetFields(BindingFlags.Public | BindingFlags.Static);
         }
     }
 }

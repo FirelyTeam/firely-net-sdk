@@ -82,9 +82,9 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            if(!ClassMapping.IsMappableClass(type))
+            if(!ClassMapping.IsFhirType(type))
             {
-                Message.Info("Skipped type {0} while doing inspection: not a mappable class", type.Name);
+                Message.Info("Skipped type {0} while doing inspection: not recognized as representing a FHIR type", type.Name);
                 return;
             }
 

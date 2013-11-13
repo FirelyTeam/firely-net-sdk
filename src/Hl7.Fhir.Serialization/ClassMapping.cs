@@ -18,6 +18,11 @@ namespace Hl7.Fhir.Serialization
         public string Name { get; private set; }
 
         /// <summary>
+        /// Profile scope within this Name and mapping are applicable
+        /// </summary>
+        public string Profile { get; private set; }
+
+        /// <summary>
         /// The .NET class that implements the FHIR datatype/resource
         /// </summary>
         public Type NativeType { get; private set; }
@@ -37,7 +42,7 @@ namespace Hl7.Fhir.Serialization
         /// Collection of PropertyMappings that capture information about this classes
         /// properties
         /// </summary>
-        public IEnumerable<PropertyMapping> PropertyMappings
+        public ICollection<PropertyMapping> PropertyMappings
         {
             get
             {
@@ -52,31 +57,12 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public PropertyMapping PrimitiveValueProperty { get; private set; }
 
-
-        /// <summary>
-        /// Enumerate this class' properties using reflection, create PropertyMappings
-        /// for them and add them to the PropertyMappings.
-        /// </summary>
-        private void inspectProperties()
-        {
-            foreach (var property in ReflectionHelper.FindPublicProperties(NativeType))
-            {
-                // Skip properties that are marked as NotMapped
-                if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
-
-                var propMapping = PropertyMapping.Create(property);
-
-                // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
-                if(propMapping.IsNativeValueProperty)
-                    this.PrimitiveValueProperty = propMapping;
-
-                if (propMapping != null)
-                    _propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
-            }
+        public bool HoldsPrimitiveValue
+        { 
+            get { return PrimitiveValueProperty != null; } 
         }
 
-
-        public PropertyMapping FindMappedPropertyForElement(string name)
+        public PropertyMapping FindMappedElementByName(string name)
         {
             if (name == null) throw Error.ArgumentNull("name");
 
@@ -112,12 +98,41 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument("type", "Type {0} is a open generic type and cannot be used directly to represent a FHIR datatype", type.Name);
 
                 result.Name = collectTypeName(type);
+                result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
+
+                if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
+                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile", type.Name);
+
+                inspectProperties(result);
+
+                return result;
             }
             else
                 throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]", type.Name);
+        }
 
-            return result;
+
+        /// <summary>
+        /// Enumerate this class' properties using reflection, create PropertyMappings
+        /// for them and add them to the PropertyMappings.
+        /// </summary>
+        private static void inspectProperties(ClassMapping me)
+        {
+            foreach (var property in ReflectionHelper.FindPublicProperties(me.NativeType))
+            {
+                // Skip properties that are marked as NotMapped
+                if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
+
+                var propMapping = PropertyMapping.Create(property);
+
+                // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
+                if (propMapping.HoldsFhirPrimitiveValue)
+                    me.PrimitiveValueProperty = propMapping;
+
+                if (propMapping != null)
+                    me._propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
+            }
         }
 
         //private static void checkMutualExclusiveAttributes(Type type)
@@ -153,19 +168,11 @@ namespace Hl7.Fhir.Serialization
         private static string collectTypeName(Type type)
         {
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-                
-            if (attr != null)
-            {
-                return attr.Name;
-            }                
-            else
-            {
-                var name = type.Name;
-                if (name.EndsWith(RESOURCENAME_SUFFIX))
-                    name = name.Substring(0, name.Length - RESOURCENAME_SUFFIX.Length);
 
-                return name;
-            }
+            if (attr != null)
+                return attr.Name;
+            else
+                return type.Name;
         }
 
         public static bool IsFhirResource(Type type)
@@ -173,7 +180,6 @@ namespace Hl7.Fhir.Serialization
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
 
             return typeof(Resource).IsAssignableFrom(type)
-                    || type.Name.EndsWith(RESOURCENAME_SUFFIX)
                     || (attr != null && attr.IsResource);
         }
 

@@ -10,128 +10,104 @@ namespace Hl7.Fhir.Serialization
 {
     public class PropertyMapping
     {
-        public string Name { get; private set; }        
-        public Type PolymorphicBase { get; private set; }
+        public string Name { get; private set; }
 
-        public bool IsPolymorhic
+        private ICollection<ChoiceAttribute> _choices = null;
+
+        public bool HasChoices
         {
-            get { return PolymorphicBase != null; }
+            get { return _choices != null; }
         }
 
-        public bool MayRepeat { get; private set; }
+        public bool IsCollection { get; private set; }
 
-        public ClassMapping MappedPropertyType { get; private set; }
+        public bool HoldsFhirPrimitiveValue { get; private set; }
 
-        public Type CodeOfTEnumType { get; private set; }
+        public Type ReturnType { get; private set; }
+        public Type ElementType { get; private set; }
 
-        public bool IsCodeOfTProperty
+        public static PropertyMapping Create(PropertyInfo prop)
         {
-            get { return CodeOfTEnumType != null; }
+            IEnumerable<Type> dummy;
+
+            return Create(prop, out dummy);
         }
 
-        public bool IsNativeValueProperty { get; private set; }
-        public Type NativeType { get; private set; }
-
-        public PropertyInfo ImplementingProperty { get; private set; }
-
-        public static bool TryCreate(ModelInspector inspector, PropertyInfo prop, out PropertyMapping result)
+        
+        internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)        
         {
-            result = null;
+            if (prop == null) throw Error.ArgumentNull("prop");
 
-            try
-            {
-                result = Create(inspector, prop);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var foundTypes = new List<Type>();
+
+            PropertyMapping result = new PropertyMapping();
+            result.Name = getMappedElementName(prop);
+            result.ReturnType = prop.PropertyType;
+            result.ElementType = result.ReturnType;
+
+            foundTypes.Add(result.ElementType);
+
+            result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
+
+            // Get to the actual (native) type representing this element
+            if (result.IsCollection) result.ElementType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (ReflectionHelper.IsNullableType(result.ElementType)) result.ElementType = ReflectionHelper.GetNullableArgument(result.ElementType);
+
+            // Check wether this property represents a native .NET type
+            // marked to receive the class' primitive value in the fhir serialization
+            // (e.g. the value from the Xml 'value' attribute or the Json primitive member value)
+            result.HoldsFhirPrimitiveValue = isPrimitiveValueElement(prop);
+
+            result._choices = ReflectionHelper.GetAttributes<ChoiceAttribute>(prop);
+
+            if (result.HasChoices)
+                foundTypes.AddRange(result._choices.Select(cattr => cattr.Type));
+
+            referredTypes = foundTypes;
+            return result;
+        }
+
+
+        private static string buildQualifiedPropName(PropertyInfo prop)
+        {
+            return prop.DeclaringType.Name + "." + prop.Name;
         }
 
 
         private static bool isPrimitiveValueElement(PropertyInfo prop)
         {
             var valueElement = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var isPrimitive = valueElement != null && valueElement.IsPrimitiveValue;
 
-            return valueElement != null && valueElement.IsPrimitiveValue;
+            if(isPrimitive && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
+                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type is not supported by the serializer.", buildQualifiedPropName(prop));
+
+            return isPrimitive;
         }
 
-        public static PropertyMapping Create(PropertyInfo prop)
-        {
-            if (prop == null) throw Error.ArgumentNull("prop");
-            if (inspector == null) throw Error.ArgumentNull("inspector");
 
-            PropertyMapping result = new PropertyMapping();
-            result.Name = getMappedElementName(prop);
-            result.ImplementingProperty = prop;
-
-            Type elementType = prop.PropertyType;         
-
-            // First, check the special case: a native .NET property that will hold a primitive value,
-            // not map to a FHIR datatype
-            if(isPrimitiveValueElement(prop))
-            {
-                result.IsNativeValueProperty = true;
-                result.NativeType = ReflectionHelper.GetInstantiableNativeType(elementType);
-                result.MappedPropertyType = null;   // native, so no mapped class
-                return result;
-            }
-
-            // Property uses one of the FHIR datatypes, make the mapping
-
-            // If this is a collection, map to the collection's element type, not the collection type
-            result.MayRepeat = ReflectionHelper.IsTypedCollection(prop.PropertyType);
-
-            if (result.MayRepeat) elementType = ReflectionHelper.GetCollectionItemType(elementType);
-
-            if (elementType == typeof(Element) || elementType == typeof(Resource))
-            {
-                // Polymorphic types:
-                // * Polymorphic (choice) properties are generated to have type Element
-                // * The contents of the 'contained' property of a resource are of type Resource
-                //TODO: a profiled class may have a single fixed type left as choice, so could map this to a fixed type.
-                result.PolymorphicBase = elementType;  // keep the type, so we know whether to expect any element or any resource (contained)
-                result.MappedPropertyType = null;   // polymorphic, so cannot be known in advance (look at member name in instance)
-            }
-            else
-            {
-                // Special case: this is a member that uses the closed generic Code<T> type - 
-                // do mapping for its open, defining type instead
-                if (elementType.IsGenericType)
-                {
-                    if (ReflectionHelper.IsClosedGenericType(elementType) &&  
-                        ReflectionHelper.IsConstructedFromGenericTypeDefinition(elementType, typeof(Code<>)) )
-                    {
-                        result.CodeOfTEnumType = elementType.GetGenericArguments()[0];
-                        elementType = elementType.GetGenericTypeDefinition();
-                    }
-                    else
-                        throw Error.NotSupported("Property {0} on type {1} uses an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
-                }
-
-                // pre-fetch the mapping for this property, saves lookups while parsing instance
-                var mappedPropertyType = inspector.FindClassMappingByImplementingType(elementType);
-                if (mappedPropertyType == null)
-                    throw Error.InvalidOperation("Property {0} on type {1}: property maps to a type that is not recognized as a mapped FHIR type", prop.Name, prop.DeclaringType.Name);
-
-                result.NativeType = null;   // mapped complex class, so not a native primitive
-                result.MappedPropertyType = mappedPropertyType;
-            }
-
-            return result;
-        }
-
+         //// Special case: this is a member that uses the closed generic Code<T> type - 
+         //       // do mapping for its open, defining type instead
+         //       if (elementType.IsGenericType)
+         //       {
+         //           if (ReflectionHelper.IsClosedGenericType(elementType) &&  
+         //               ReflectionHelper.IsConstructedFromGenericTypeDefinition(elementType, typeof(Code<>)) )
+         //           {
+         //               result.CodeOfTEnumType = elementType.GetGenericArguments()[0];
+         //               elementType = elementType.GetGenericTypeDefinition();
+         //           }
+         //           else
+         //               throw Error.NotSupported("Property {0} on type {1} uses an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
+         //       }
 
         public bool MatchesSuffixedName(string suffixedName)
         {
             if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
 
-            return this.IsPolymorhic &&
-                       suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
+            return this.HasChoices && suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
         }
 
-        public string GetSuffixFromName(string suffixedName)
+        public string GetChoiceSuffixFromName(string suffixedName)
         {
             if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
 
@@ -140,6 +116,24 @@ namespace Hl7.Fhir.Serialization
             else
                 throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
                                             suffixedName, Name);
+        }
+
+        public bool IsAllowedChoice(string choiceSuffix)
+        {
+            var suffix = choiceSuffix.ToUpperInvariant();
+            return HasChoices && _choices.Any(cattr => cattr.TypeName.ToUpperInvariant() == suffix);
+        }
+
+        public Type GetChoiceType(string choiceSuffix)
+        {
+            string suffix = choiceSuffix.ToUpperInvariant();
+
+            if(!HasChoices) return null;
+
+            return _choices
+                        .Where(cattr => cattr.TypeName.ToUpperInvariant() == suffix)
+                        .Select(cattr => cattr.Type)
+                        .FirstOrDefault(); 
         }
 
         private static string getMappedElementName(PropertyInfo prop)
@@ -154,35 +148,24 @@ namespace Hl7.Fhir.Serialization
 
         private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {
-            if (type == typeof(bool?) ||
-                   type == typeof(int?) ||
-                   type == typeof(decimal?) ||
-                   type == typeof(byte[]) ||
-                   type == typeof(DateTimeOffset?) ||
-                   type == typeof(string) ||
-                   type == typeof(Uri))
-                return true;
-
             // Special case, allow Nullable<enum>
             if (ReflectionHelper.IsNullableType(type))
-            {
-                var nullable = ReflectionHelper.GetNullableArgument(type);
-                if (nullable.IsEnum) return true;
-            }
+                type = ReflectionHelper.GetNullableArgument(type);
+
+            // We support all primitive .NET types in the serializer
+            if (type.IsPrimitive) return true;
+
+            // And some specific complex native types
+            if(  type == typeof(byte[]) ||
+                 type == typeof(string) ||
+                 type == typeof(DateTimeOffset?) ||
+                 type == typeof(Uri) )
+                return true;
+
+            // And enumerations
+            if (type.IsEnum) return true;
 
             return false;
-        }
-
-        internal static bool IsMappableElement(PropertyInfo prop)
-        {
-            if (prop == null) throw Error.ArgumentNull("prop");
-
-            var type = prop.PropertyType;
-
-            return type == typeof(Element)
-                        || ClassMapping.IsFhirComplexType(type)
-                        || ClassMapping.IsFhirPrimitive(type)
-                        || isAllowedNativeTypeForDataTypeValue(type);
         }
     }
 }
