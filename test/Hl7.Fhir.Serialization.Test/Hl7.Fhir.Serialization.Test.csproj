@@ -61,6 +61,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnumMappingTest.cs" />
+    <Compile Include="ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyMappingTest.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class EnumMapping
+    public class EnumMapping
     {
         public string Name { get; private set; }
 
@@ -63,6 +63,12 @@ namespace Hl7.Fhir.Serialization
 
             return result;
         }
+
+        public static bool IsMappableEnum(Type t)
+        {
+            return t.IsEnum && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
+        }
+
 
         private static string getEnumName(Type t)
         {

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization
             var isPrimitive = valueElement != null && valueElement.IsPrimitiveValue;
 
             if(isPrimitive && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
-                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type is not supported by the serializer.", buildQualifiedPropName(prop));
+                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.", buildQualifiedPropName(prop), prop.PropertyType.Name);
 
             return isPrimitive;
         }
@@ -152,20 +152,8 @@ namespace Hl7.Fhir.Serialization
             if (ReflectionHelper.IsNullableType(type))
                 type = ReflectionHelper.GetNullableArgument(type);
 
-            // We support all primitive .NET types in the serializer
-            if (type.IsPrimitive) return true;
-
-            // And some specific complex native types
-            if(  type == typeof(byte[]) ||
-                 type == typeof(string) ||
-                 type == typeof(DateTimeOffset?) ||
-                 type == typeof(Uri) )
-                return true;
-
-            // And enumerations
-            if (type.IsEnum) return true;
-
-            return false;
+            return type.IsEnum ||
+                    PrimitiveTypeConverter.CanConvert(type);
         }
     }
 }

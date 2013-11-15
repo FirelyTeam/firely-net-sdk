@@ -10,7 +10,6 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    //TODO: Specify type using enumerated fhir datatype
     //TODO: Find out the right way to handle named resource-local component types (i.e. Patient.AnimalComponent)
     public class ModelInspector
     {
@@ -22,6 +21,10 @@ namespace Hl7.Fhir.Serialization
 
         // Index for easy lookup of classmappings, key is Type
         private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
+
+        // Index for easy lookup of enummappings, key is Type
+        private Dictionary<Type, EnumMapping> _enumMappingsByType = new Dictionary<Type, EnumMapping>();
+
 
         // List of all imported types.
         private List<Type> _importedTypes = new List<Type>();
@@ -38,51 +41,58 @@ namespace Hl7.Fhir.Serialization
         public void Import(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
+            if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) return;
+
+            if(!_importedTypes.Contains(type)) _importedTypes.Add(type);
 
             _importedTypes.Add(type);
+
+            if (type.IsEnum)
+                processEnum(type);
+            else
+                processType(type);
         }
 
-        public void Process()
-        {
-            _resourceClasses.Clear();
-            _dataTypeClasses.Clear();
-            _classMappingsByType.Clear();
 
-            foreach (var type in _importedTypes) processType(type);
+        //public void Process()
+        //{
+        //    _resourceClasses.Clear();
+        //    _dataTypeClasses.Clear();
+        //    _classMappingsByType.Clear();
 
-            // Once all classes have been inspected, process their properties
-            // (if you process properties before all types are inspected, you won't be able
-            // to find the classmappings the properties may refer to) 
-            foreach(ClassMapping mapping in _classMappingsByType.Values)
-            {
-                mapping.inspectProperties(this);                
-            }
+        //    foreach (var type in _importedTypes) processType(type);
 
-            Message.Info("Finished processing {0} classes. Found {1} resources, {2} complex datatypes, {3} primitive/enum datatypes",
-                _importedTypes.Count, _resourceClasses.Count, _dataTypeClasses.Values.Count(m => m.ModelConstruct == FhirModelConstruct.ComplexType),
-                 _dataTypeClasses.Values.Count(map => map.ModelConstruct == FhirModelConstruct.PrimitiveType));
-        }
+        //    // Once all classes have been inspected, process their properties
+        //    // (if you process properties before all types are inspected, you won't be able
+        //    // to find the classmappings the properties may refer to) 
+        //    foreach(ClassMapping mapping in _classMappingsByType.Values)
+        //    {
+        //        mapping.inspectProperties(this);                
+        //    }
 
-        private void processType(Type type)
+        //    Message.Info("Finished processing {0} classes. Found {1} resources, {2} complex datatypes, {3} primitive/enum datatypes",
+        //        _importedTypes.Count, _resourceClasses.Count, _dataTypeClasses.Values.Count(m => m.ModelConstruct == FhirModelConstruct.ComplexType),
+        //         _dataTypeClasses.Values.Count(map => map.ModelConstruct == FhirModelConstruct.PrimitiveType));
+        //}
+
+        private void processEnum(Type type)
         {
             if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) return;
 
-            // There's no support for abstract classes yet, but having a classmapping for Resource
-            // is useful to map the 'contained' element.
-            if (type.IsAbstract && type != typeof(Resource))
+            if (!EnumMapping.IsMappableEnum(type))
             {
-                // Ignore this class
-                Message.Info("Skipped type {0} while doing inspection: abstract/static classes can not be used as mapping targets", type.Name);
+                Message.Info("Skipped enum {0} while doing inspection: not recognized as representing a FHIR enumeration", type.Name);
                 return;
             }
 
-            if(ReflectionHelper.IsOpenGenericTypeDefinition(type) && type != typeof(Code<>))
-            {
-                Message.Info("Skipped type {0} while doing inspection: open generic type definitions (except Code<>) can not be used as mapping targets", type.Name);
-                return;
-            }
+            var mapping = EnumMapping.Create(type);
+            _enumMappingsByType[type] = mapping;
+        }
 
-            if(!ClassMapping.IsFhirType(type))
+
+        private void processType(Type type)
+        {
+            if(!ClassMapping.IsMappableType(type))
             {
                 Message.Info("Skipped type {0} while doing inspection: not recognized as representing a FHIR type", type.Name);
                 return;
@@ -91,20 +101,15 @@ namespace Hl7.Fhir.Serialization
             var mapping = ClassMapping.Create(type);
             _classMappingsByType[type] = mapping;
 
-            if (mapping.ModelConstruct == FhirModelConstruct.Resource)
+            if (mapping.IsResource)
             {
                 var key = buildResourceKey(mapping.Name, mapping.Profile);
                 _resourceClasses[key] = mapping;
             }
-            else if(mapping.ModelConstruct == FhirModelConstruct.PrimitiveType ||
-                        mapping.ModelConstruct == FhirModelConstruct.ComplexType )
+            else
             {
                 var key = mapping.Name.ToUpperInvariant();
                 _dataTypeClasses[key] = mapping;
-            }
-            else
-            {
-                throw Error.InvalidOperation("Internal logic error: produced classmapping is of unhandled kind {0}", mapping.ModelConstruct);
             }
         }
 
@@ -115,6 +120,22 @@ namespace Hl7.Fhir.Serialization
             var normalizedProfile = profile != null ? profile.ToUpperInvariant() : null;
 
             return Tuple.Create(normalizedName, normalizedProfile);
+        }
+
+        public EnumMapping FindEnumMappingByType(Type type)
+        {
+            if (type == null) throw Error.ArgumentNull("type");
+            if (!type.IsEnum) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
+
+            EnumMapping entry = null;
+
+            // Try finding a resource with the specified profile first
+            var success = _enumMappingsByType.TryGetValue(type, out entry);
+
+            if (success)
+                return entry;
+            else
+                return null;
         }
 
         public ClassMapping FindClassMappingForResource(string name, string profile = null)
@@ -150,7 +171,7 @@ namespace Hl7.Fhir.Serialization
                 return null;
         }
 
-        public ClassMapping FindClassMappingByImplementingType(Type type)
+        public ClassMapping FindClassMappingByType(Type type)
         {
             ClassMapping entry = null;
             var success = _classMappingsByType.TryGetValue(type, out entry);

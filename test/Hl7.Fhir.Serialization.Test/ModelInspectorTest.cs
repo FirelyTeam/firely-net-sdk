@@ -9,47 +9,34 @@ namespace Hl7.Fhir.Serialization.Test
     public class ModelInspectorTest
     {
         [TestMethod]
-        public void TestResourceClassInspection()
+        public void TestResourceNameResolving()
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(StreetResource));
-            inspector.Import(typeof(RoadResource));
+            inspector.Import(typeof(Road));
             inspector.Import(typeof(Way));
             inspector.Import(typeof(ProfiledWay));
             inspector.Import(typeof(NewStreet));
-            inspector.Import(typeof(ModelInspectorTest));  // shouldn't give an exception
-            inspector.Process();
+            //inspector.Process();
 
             var road = inspector.FindClassMappingForResource("roAd");
             Assert.IsNotNull(road);
-            Assert.AreEqual(FhirModelConstruct.Resource, road.ModelConstruct);
-            Assert.AreEqual("Road", road.Name);
-            Assert.IsNull(road.Profile);
-            Assert.AreEqual(road.NativeType, typeof(RoadResource));
+            Assert.AreEqual(road.NativeType, typeof(Road));
 
             var way = inspector.FindClassMappingForResource("Way");
             Assert.IsNotNull(way);
-            Assert.AreEqual("Way", way.Name);
-            Assert.IsNull(way.Profile);
             Assert.AreEqual(way.NativeType, typeof(Way));
 
             var pway = inspector.FindClassMappingForResource("way", "http://nu.nl/profile#street");
             Assert.IsNotNull(pway);
-            Assert.AreEqual("Way", pway.Name);
-            Assert.AreEqual("http://nu.nl/profile#street", pway.Profile);
             Assert.AreEqual(pway.NativeType, typeof(ProfiledWay));
 
             var pway2 = inspector.FindClassMappingForResource("way", "http://nux.nl/profile#street");
             Assert.IsNotNull(pway2);
-            Assert.AreEqual("Way", pway2.Name);
-            Assert.IsNull(pway2.Profile);
             Assert.AreEqual(pway2.NativeType, typeof(Way));
 
             var street = inspector.FindClassMappingForResource("Street");
             Assert.IsNotNull(street);
-            Assert.AreEqual("Street", street.Name);
-            Assert.IsNull(street.Profile);
             Assert.AreEqual(street.NativeType, typeof(NewStreet));
 
             var noway = inspector.FindClassMappingForResource("nonexistent");
@@ -58,66 +45,34 @@ namespace Hl7.Fhir.Serialization.Test
 
 
         [TestMethod]
-        public void TestDataTypeInspection()
+        public void TypeDataTypeNameResolving()
         {
             var inspector = new ModelInspector();
 
             inspector.Import(typeof(AnimalName));
             inspector.Import(typeof(NewAnimalName));
-            inspector.Import(typeof(ComplexNumber));
-            inspector.Import(typeof(SomeEnum));
-            inspector.Import(typeof(ActResource.SomeOtherEnum));
-
-            try
-            {
-                inspector.Process();
-            }
-            catch(InvalidOperationException nse)
-            {
-                if (!nse.Message.Contains("Property Extension on type Element")) throw nse;
-                //This exception may occur because our testclasses derive from Element,
-                //which has additional members that we did not import
-            }
 
             var result = inspector.FindClassMappingForFhirDataType("animalname");
             Assert.IsNotNull(result);
-            Assert.AreEqual(FhirModelConstruct.ComplexType, result.ModelConstruct);
-            Assert.AreEqual("AnimalName", result.Name);
-            Assert.IsNull(result.Profile);
             Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
-
-            result = inspector.FindClassMappingForFhirDataType("cOmpleX");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
-            Assert.AreEqual("Complex", result.Name);
-            Assert.IsNull(result.Profile);
-            Assert.AreEqual(result.NativeType, typeof(ComplexNumber));
-
-            result = inspector.FindClassMappingForFhirDataType("SomeEnum");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
-            Assert.AreEqual("SomeEnum", result.Name);
-            Assert.IsNull(result.Profile);
-            Assert.AreEqual(result.NativeType, typeof(SomeEnum));
-
-            result = inspector.FindClassMappingForFhirDataType("someOtherenum");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(FhirModelConstruct.PrimitiveType, result.ModelConstruct);
-            Assert.AreEqual("SomeOtherEnum", result.Name);
-            Assert.IsNull(result.Profile);
-            Assert.AreEqual(result.NativeType, typeof(ActResource.SomeOtherEnum));
         }
 
 
-
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestMixedDataTypeDetection()
+        public void TestEnumTypeResolving()
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(Chameleon));
-            inspector.Process();
+            inspector.Import(typeof(SomeEnum));
+            inspector.Import(typeof(ActResource.SomeOtherEnum));
+
+            var result = inspector.FindEnumMappingByType(typeof(SomeEnum));
+            Assert.IsNotNull(result);
+            Assert.AreEqual(typeof(SomeEnum), result.EnumType);
+
+            result = inspector.FindEnumMappingByType(typeof(ActResource.SomeOtherEnum));
+            Assert.IsNotNull(result);
+            Assert.AreEqual(typeof(ActResource.SomeOtherEnum), result.EnumType);
         }
 
         [TestMethod]
@@ -127,7 +82,6 @@ namespace Hl7.Fhir.Serialization.Test
 
             // Inspect the HL7.Fhir.Model assembly
             inspector.Import(typeof(Resource).Assembly);
-            inspector.Process();
 
             // Check for presence of some basic ingredients
             Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));
@@ -136,55 +90,20 @@ namespace Hl7.Fhir.Serialization.Test
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
 
             // Verify presence of nested enumerations
-            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("AddressUse"));
+            Assert.IsNotNull(inspector.FindEnumMappingByType(typeof(Address.AddressUse)));
 
             // Should have skipped abstract classes
             Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));
             Assert.IsNull(inspector.FindClassMappingForResource("Element"));
-
-            // But Resource should be there
-            Assert.IsNotNull(inspector.FindClassMappingForResource("Resource"));
+            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
            
-            // Code<> should still be there (the only generic type definition accepted)
-            var codeOfT = inspector.FindClassMappingByImplementingType(typeof(Code<>));
-            Assert.IsNotNull(codeOfT);
-            Assert.IsTrue(codeOfT.HasGenericArguments);
-            Assert.AreEqual(FhirModelConstruct.PrimitiveType, codeOfT.ModelConstruct);
+            // The open generic Code<> should not be there
+            var codeOfT = inspector.FindClassMappingByType(typeof(Code<>));
+            Assert.IsNull(codeOfT);
         }
 
    }
 
-
-    /*
-     * Resource classes for tests 
-     */
-    public class RoadResource {}
-
-    [FhirResource("Way")]
-    public class Way { }
-    
-    [FhirResource("Way", Profile="http://nu.nl/profile#street")]
-    public class ProfiledWay {}
-
-    public class StreetResource {}
-
-    [FhirResource("Street")]
-    public class NewStreet { }
-
-
-    /* 
-     * Datatype classes for tests
-     */
-    public class AnimalName : ComplexElement { }
-
-    [FhirComplexType("AnimalName")]
-    public class NewAnimalName { }
-
-    [FhirPrimitiveType("Complex")]
-    public class ComplexNumber : PrimitiveElement { public static object Parse(string s) { return null; } }
-
-    [FhirComplexType("Chameleon")]
-    public class Chameleon : PrimitiveElement { }
 
     [FhirEnumeration("SomeEnum")]
     public enum SomeEnum { Member, AnotherMember }

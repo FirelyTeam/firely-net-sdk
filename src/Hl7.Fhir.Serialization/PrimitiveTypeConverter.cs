@@ -175,6 +175,23 @@ namespace Hl7.Fhir.Serialization
             return (T)Convert(value,typeof(T));
         }
 
-     
+
+
+        public static bool CanConvert(Type type)
+        {
+            var typeCode = Type.GetTypeCode(type);
+
+            // We support all primitive .NET types in the serializer
+            if (typeCode != TypeCode.Object) return true;
+
+            // And some specific complex native types
+            if (type == typeof(byte[]) ||
+                 type == typeof(string) ||
+                 type == typeof(DateTimeOffset) ||
+                 type == typeof(Uri))
+                return true;
+
+            return false;
+        }
     }
 }

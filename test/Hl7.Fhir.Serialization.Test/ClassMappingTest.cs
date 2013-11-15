@@ -6,15 +6,15 @@ using Hl7.Fhir.Support;
 namespace Hl7.Fhir.Serialization.Test
 {
     [TestClass]
-    public class ModelInspectorTest
+    public class ClassMappingTest
     {
         [TestMethod]
-        public void TestResourceCreation()
+        public void TestResourceMappingCreation()
         {
-            var mapping = ClassMapping.Create(typeof(RoadResource));
+            var mapping = ClassMapping.Create(typeof(Road));
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Road", mapping.Name);
-            Assert.AreEqual(typeof(RoadResource), mapping.NativeType);
+            Assert.AreEqual(typeof(Road), mapping.NativeType);
             Assert.IsNull(mapping.Profile);
 
             mapping = ClassMapping.Create(typeof(Way));
@@ -33,12 +33,12 @@ namespace Hl7.Fhir.Serialization.Test
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Street", mapping.Name);
             Assert.AreEqual(typeof(NewStreet), mapping.NativeType);
-            Assert.IsNotNull(mapping.Profile);
+            Assert.IsNull(mapping.Profile);
         }
 
 
         [TestMethod]
-        public void TestDatatypeCreation()
+        public void TestDatatypeMappingCreation()
         {
             var mapping = ClassMapping.Create(typeof(AnimalName));
             Assert.IsFalse(mapping.IsResource);
@@ -69,8 +69,8 @@ namespace Hl7.Fhir.Serialization.Test
     /*
      * Resource classes for tests 
      */
-    [FhirType]
-    public class RoadResource {}
+    [FhirType(IsResource=true)]
+    public class Road {}
 
     [FhirType]
     public class Way : Resource { }

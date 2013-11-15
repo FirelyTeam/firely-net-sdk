@@ -89,14 +89,8 @@ namespace Hl7.Fhir.Serialization
             var result = new ClassMapping();
             result.NativeType = type;
 
-            if (IsFhirType(type))
+            if (IsMappableType(type))
             {
-                // Ignore generic type definitions, they can never appear as roots of objects
-                // to parse, in which case they will either have been used in closed type definitions
-                // or as the closed type of a property.
-                if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
-                    throw Error.Argument("type", "Type {0} is a open generic type and cannot be used directly to represent a FHIR datatype", type.Name);
-
                 result.Name = collectTypeName(type);
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
@@ -169,7 +163,7 @@ namespace Hl7.Fhir.Serialization
         {
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
 
-            if (attr != null)
+            if (attr != null && attr.Name != null)
                 return attr.Name;
             else
                 return type.Name;
@@ -183,9 +177,27 @@ namespace Hl7.Fhir.Serialization
                     || (attr != null && attr.IsResource);
         }
 
-        public static bool IsFhirType(Type type)
+        public static bool IsMappableType(Type type)
         {
-            return type.IsDefined(typeof(FhirTypeAttribute),false);
+            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute),false);
+
+            if(!hasAttribute) return false;
+
+            if (type.IsAbstract)
+                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
+
+            // Open generic type definitions can never appear as roots of objects
+            // to parse. In instances, they will either have been used in closed type definitions
+            // or as the closed type of a property. However, the FhirType attribute propagates to
+            // these closed definitions, so we will allow having this attribute on an open generic,
+            // it's not going to be directly mappable however.
+            if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+            {
+                Message.Info("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -44,5 +44,12 @@ namespace Hl7.Fhir.Serialization.Test
             Assert.AreEqual(typeof(Uri),valueProp.ElementType);
         }
 
+
+        [TestMethod]
+        public void TestComplexDataTypeMapping()
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
     }
 }
