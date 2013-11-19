@@ -11,33 +11,85 @@ namespace Hl7.Fhir.Serialization
 {
     public class DispatchingReader
     {
-        private IFhirReader _current;
-        private ModelInspector _inspector;
+        private readonly IFhirReader _current;
+        private readonly ModelInspector _inspector;
+        private readonly bool _arrayMode;
 
-        public DispatchingReader(ModelInspector inspector, IFhirReader data)
+        public DispatchingReader(IFhirReader data, bool arrayMode = false)
         {
             _current = data;
-            _inspector = inspector;
+            _inspector = SerializationConfig.Inspector;
+            _arrayMode = arrayMode;
         }
 
-        // no more arg polymorph -> caller (often the complex reader) must have determined type from instance by now
-        // a.k.a. no repeating polymorph elements supported where every element is of a different type
-        public object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
+        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
-            if (mapping == null) throw Error.ArgumentNull("mapping");
-          
-            if (!mapping.IsResource)
+            if (prop == null) throw Error.ArgumentNull("prop");
+
+            // ArrayMode avoid the dispatcher making nested calls into the RepeatingElementReader again
+            // when reading array elements. FHIR does not support nested arrays, and this avoids an endlessly
+            // nesting series of dispatcher calls
+            if (!_arrayMode && prop.IsCollection)
             {
-                var reader = new ComplexTypeReader(_inspector, _current);
-                return reader.Deserialize(mapping, prop, existing);
+                var reader = new RepeatingElementReader(_current);
+                return reader.Deserialize(prop, memberName, existing);
             }
-            else
+
+            // If this is a primitive type, no classmappings and reflection is involved,
+            // just parse the primitive from the input
+            if(prop.IsPrimitive)
             {
-                var reader = new ResourceReader(_inspector, _current);
+                var reader = new PrimitiveValueReader(_current);
+                return reader.Deserialize(prop.ElementType);
+            }
+
+            // A Choice property that contains a choice of any resource
+            // (as used in Resource.contained)
+            if(prop.HasAnyResourceWildcard())
+            {
+                var reader = new ResourceReader(_current);
                 return reader.Deserialize(existing);
             }
-            //else
-            //    throw Error.InvalidOperation("Don't know how to handle members of type {0}", mapping.Name);
+
+            ClassMapping mapping;
+
+            // Handle other Choices having any datatype or a list of datatypes
+            if(prop.HasChoices)
+            {
+                // For Choice properties, determine the actual type of the element using
+                // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
+                // This function implements type substitution.
+                mapping = determineElementPropertyType(prop, memberName);
+            }   
+            // Else use the actual return type of the property
+            else
+            {
+                mapping = _inspector.ImportType(prop.ElementType);
+            }
+
+            var cplxReader = new ComplexTypeReader(_current);
+            return cplxReader.Deserialize(mapping, existing);
         }
+
+        private ClassMapping determineElementPropertyType(PropertyMapping mappedProperty, string memberName)
+        {
+            ClassMapping result = null;
+
+            var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
+
+            // Exception: valueResource actually means the element is of type ResourceReference
+            if (typeName == "Resource") typeName = "ResourceReference";
+
+            // NB: this will return the latest type registered for that name, so supports type mapping/overriding
+            // Maybe we should Import the types present on the choice, to make sure they are available. For now
+            // assume the caller has Imported all types in the right (overriding) order.
+            result = _inspector.FindClassMappingForFhirDataType(typeName);
+
+            if (result == null)
+                throw Error.InvalidOperation("Encountered polymorph member {0}, which uses unknown datatype {1}", memberName, typeName);
+
+            return result;
+        }
+
     }
 }

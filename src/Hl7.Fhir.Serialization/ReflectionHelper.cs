@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Serialization
 
         public static bool IsClosedGenericType(Type type)
         {
-            return !type.ContainsGenericParameters;
+            return type.IsGenericType && !type.ContainsGenericParameters;
         }
 
 
@@ -180,19 +180,6 @@ namespace Hl7.Fhir.Serialization
             return type.IsEnum;
         }
 
-
-        internal static Type GetInstantiableNativeType(Type t)
-        {
-            Type result = t;
-
-            if (ReflectionHelper.IsNullableType(result))
-                result = ReflectionHelper.GetNullableArgument(result);
-
-            if (ReflectionHelper.IsClosedGenericType(result))
-                return result;
-            else
-                return null;
-        }
 
         internal static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {

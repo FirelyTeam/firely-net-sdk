@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public PrimitiveValueReader(ModelInspector inspector, IFhirReader data)
+        public PrimitiveValueReader(IFhirReader data)
         {
             _current = data;
-            _inspector = inspector;
+            _inspector = SerializationConfig.Inspector;
         }
 
 
@@ -40,19 +40,16 @@ namespace Hl7.Fhir.Serialization
         private object read(Type nativeType)
         {
             object primitiveValue = _current.GetPrimitiveValue();
-            object parsedValue = null;
             
-            if (nativeType.IsEnum)
+            if (nativeType.IsEnum && primitiveValue.GetType() == typeof(string))
             {
-                EnumHelper.TryParseEnum(primitiveValue.ToString(), nativeType, out parsedValue);
-            }
-            else
-            {
-                var valueType = nativeType;
-                parsedValue = PrimitiveTypeConverter.Convert(primitiveValue, valueType);
+                var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+
+                if (enumMapping != null)
+                    return enumMapping.ParseLiteral((string)primitiveValue);
             }
 
-            return parsedValue;
+            return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
         }
     }
 

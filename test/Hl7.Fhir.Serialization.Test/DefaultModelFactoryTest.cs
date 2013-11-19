@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.Collections;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Serialization.Test
 {
@@ -15,35 +17,39 @@ namespace Hl7.Fhir.Serialization.Test
             var factory = new DefaultModelFactory();
 
             // Test creation of a class with no constructor
-            Assert.IsTrue(factory.CanCreateType(typeof(TestCreate)));
+            Assert.IsTrue(factory.CanCreate(typeof(TestCreate)));
             Assert.IsNotNull(factory.Create(typeof(TestCreate)));
             
             // Test creation of class with a public no-args constructor
-            Assert.IsTrue(factory.CanCreateType(typeof(TestCreatePublicConstructor)));
+            Assert.IsTrue(factory.CanCreate(typeof(TestCreatePublicConstructor)));
             Assert.IsNotNull(factory.Create(typeof(TestCreatePublicConstructor)));
             
             // Test creation of primitives
-            Assert.IsTrue(factory.CanCreateType(typeof(int)));
+            Assert.IsTrue(factory.CanCreate(typeof(int)));
             Assert.IsNotNull(factory.Create(typeof(int)));
 
             // Test creation of Nullable<T>
-            Assert.IsTrue(factory.CanCreateType(typeof(int?)));
+            Assert.IsTrue(factory.CanCreate(typeof(int?)));
             Assert.IsNotNull(factory.Create(typeof(int?)));
 
             // Test handling of collection interfaces
             object collection = null;
-            Assert.IsTrue(factory.CanCreateType(typeof(ICollection<string>)));
+            Assert.IsTrue(factory.CanCreate(typeof(ICollection<string>)));
             collection = factory.Create(typeof(ICollection<string>));
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection is List<string>);
 
-            Assert.IsTrue(factory.CanCreateType(typeof(IList<HumanName>)));
+            Assert.IsTrue(factory.CanCreate(typeof(IList<HumanName>)));
             Assert.IsNotNull(factory.Create(typeof(ICollection<HumanName>)));
             
-            Assert.IsTrue(factory.CanCreateType(typeof(IList<int?>)));
+            Assert.IsTrue(factory.CanCreate(typeof(IList<int?>)));
             collection = factory.Create(typeof(ICollection<int?>));
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection is List<int?>);
+
+            // Test handling of closed generics
+            Assert.IsTrue(factory.CanCreate(typeof(Code<Address.AddressUse>)));
+            Assert.IsNotNull(factory.Create(typeof(Code<Address.AddressUse>)));
         }
 
         [TestMethod]
@@ -51,16 +57,19 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var factory = new DefaultModelFactory();
 
-            Assert.IsFalse(factory.CanCreateType(typeof(TestCreatePrivateConstructor)));
-            Assert.IsFalse(factory.CanCreateType(typeof(TestCreateArgConstructor)));
+            Assert.IsFalse(factory.CanCreate(typeof(TestCreatePrivateConstructor)));
+            Assert.IsFalse(factory.CanCreate(typeof(TestCreateArgConstructor)));
 
             // Cannot create interface types
-            Assert.IsFalse(factory.CanCreateType(typeof(ICloneable)));
+            Assert.IsFalse(factory.CanCreate(typeof(ICloneable)));
 
             // Cannot create arrays, since we don't know size upfront
-            Assert.IsFalse(factory.CanCreateType(typeof(int[])));
+            Assert.IsFalse(factory.CanCreate(typeof(int[])));
         }
     }
+
+    [FhirType("Patient")]   // implicitly, this is a resource
+    public class NewPatient : Patient { }
 
     public class TestCreate
     {

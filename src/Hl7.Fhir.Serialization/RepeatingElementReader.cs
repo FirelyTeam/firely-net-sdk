@@ -15,17 +15,16 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirReader _current;
         private ModelInspector _inspector;
-        private bool _inExtensionArrayMode = false;
 
-        public RepeatingElementReader(ModelInspector inspector, IFhirReader reader)
+        public RepeatingElementReader(IFhirReader reader)
         {
             _current = reader;
-            _inspector = inspector;
+            _inspector = SerializationConfig.Inspector;
         }
 
-        public object Deserialize(ClassMapping mapping, PropertyMapping prop, object existing=null)
+        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
-            if (mapping == null) throw Error.ArgumentNull("mapping");
+            if (prop == null) throw Error.ArgumentNull("prop");
 
             bool overwriteMode;
             IEnumerable<IFhirReader> elements;
@@ -45,7 +44,7 @@ namespace Hl7.Fhir.Serialization
 
             IList result;
 
-            if (existing == null) existing = ReflectionHelper.CreateGenericList(mapping.NativeType);
+            if (existing == null) existing = ReflectionHelper.CreateGenericList(prop.ElementType);
 
             result = existing as IList;                       
             if(result == null) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
@@ -53,7 +52,7 @@ namespace Hl7.Fhir.Serialization
             var position = 0;
             foreach(var element in elements)
             {
-                var reader = new DispatchingReader(_inspector, element);
+                var reader = new DispatchingReader(element, arrayMode: true);
 
                 if(overwriteMode)
                 {
@@ -62,13 +61,13 @@ namespace Hl7.Fhir.Serialization
 
                     // Arrays may contain null values as placeholders
                     if(element.CurrentToken != TokenType.Null)
-                        result[position] = reader.Deserialize(mapping, prop, existing: result[position]);
+                        result[position] = reader.Deserialize(prop, memberName, existing: result[position]);
                 }
                 else
                 {                   
                     object item = null;
                     if (element.CurrentToken != TokenType.Null)
-                        item = reader.Deserialize(mapping, prop);
+                        item = reader.Deserialize(prop, memberName);
                     else
                         item = null;  // Arrays may contain null values as placeholders
                     

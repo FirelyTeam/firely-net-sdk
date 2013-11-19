@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
     {
         internal static void Info(string messageFormat, params object[] messageArgs)
         {
-            Debug.WriteLine(Error.Format(messageFormat,messageArgs));
+        //    Debug.WriteLine(Error.Format(messageFormat,messageArgs));
         }
     }
 

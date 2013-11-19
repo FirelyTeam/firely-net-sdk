@@ -10,17 +10,17 @@ namespace Hl7.Fhir.Serialization.Test
         [TestMethod]
         public void FindModelClassFactory()
         {
-            BindingConfiguration.ModelClassFactories.Clear();
+            SerializationConfig.ModelClassFactories.Clear();
 
             var specificFactory = new SpecificModelClassFactory();
-            BindingConfiguration.ModelClassFactories.Add(specificFactory);
+            SerializationConfig.ModelClassFactories.Add(specificFactory);
             var defaultFactory = new DefaultModelFactory();
-            BindingConfiguration.ModelClassFactories.Add(defaultFactory);
+            SerializationConfig.ModelClassFactories.Add(defaultFactory);
 
-            var selectedFactory = BindingConfiguration.ModelClassFactories.FindFactory(typeof(SpecificModelClass));
+            var selectedFactory = SerializationConfig.ModelClassFactories.FindFactory(typeof(SpecificModelClass));
             Assert.AreEqual(specificFactory, selectedFactory);
 
-            selectedFactory = BindingConfiguration.ModelClassFactories.FindFactory(typeof(GenericModelClass));
+            selectedFactory = SerializationConfig.ModelClassFactories.FindFactory(typeof(GenericModelClass));
             Assert.AreEqual(defaultFactory, selectedFactory);
         }
 
@@ -28,11 +28,11 @@ namespace Hl7.Fhir.Serialization.Test
         [ExpectedException(typeof(InvalidOperationException))]
         public void FailWhenNoFactoryFound()
         {
-            BindingConfiguration.ModelClassFactories.Clear();
+            SerializationConfig.ModelClassFactories.Clear();
 
-            BindingConfiguration.ModelClassFactories.Add(new SpecificModelClassFactory());
+            SerializationConfig.ModelClassFactories.Add(new SpecificModelClassFactory());
 
-            var result = BindingConfiguration.ModelClassFactories.FindFactory(typeof(GenericModelClass));
+            var result = SerializationConfig.ModelClassFactories.FindFactory(typeof(GenericModelClass));
         }
     }
 
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization.Test
 
     public class SpecificModelClassFactory : IModelClassFactory
     {
-        public bool CanCreateType(Type type)
+        public bool CanCreate(Type type)
         {
             return type == typeof(SpecificModelClass);
         }

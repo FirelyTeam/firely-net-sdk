@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public PropertyMapping PrimitiveValueProperty { get; private set; }
 
-        public bool HoldsPrimitiveValue
+        public bool HasPrimitiveValueMember
         { 
             get { return PrimitiveValueProperty != null; } 
         }
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Serialization
                 var propMapping = PropertyMapping.Create(property);
 
                 // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
-                if (propMapping.HoldsFhirPrimitiveValue)
+                if (propMapping.RepresentsValueElement)
                     me.PrimitiveValueProperty = propMapping;
 
                 if (propMapping != null)
@@ -162,11 +162,21 @@ namespace Hl7.Fhir.Serialization
         private static string collectTypeName(Type type)
         {
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            string name;
 
             if (attr != null && attr.Name != null)
-                return attr.Name;
+                name =  attr.Name;
             else
-                return type.Name;
+                name = type.Name;
+            
+            if(ReflectionHelper.IsClosedGenericType(type))
+            {
+                name += "<";
+                name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
+                name += ">";
+            }
+
+            return name;
         }
 
         public static bool IsFhirResource(Type type)

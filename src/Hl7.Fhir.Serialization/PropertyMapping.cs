@@ -21,7 +21,8 @@ namespace Hl7.Fhir.Serialization
 
         public bool IsCollection { get; private set; }
 
-        public bool HoldsFhirPrimitiveValue { get; private set; }
+        public bool IsPrimitive { get; private set; }
+        public bool RepresentsValueElement { get; private set; }
 
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
@@ -52,18 +53,28 @@ namespace Hl7.Fhir.Serialization
             // Get to the actual (native) type representing this element
             if (result.IsCollection) result.ElementType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
             if (ReflectionHelper.IsNullableType(result.ElementType)) result.ElementType = ReflectionHelper.GetNullableArgument(result.ElementType);
+            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ElementType);
 
             // Check wether this property represents a native .NET type
             // marked to receive the class' primitive value in the fhir serialization
             // (e.g. the value from the Xml 'value' attribute or the Json primitive member value)
-            result.HoldsFhirPrimitiveValue = isPrimitiveValueElement(prop);
+            if(result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
 
+            // Get the choice attributes. If there are none, set the _choices to null instead
+            // of an empty list, which saves checking using Count() while parsing.
             result._choices = ReflectionHelper.GetAttributes<ChoiceAttribute>(prop);
+            if (result._choices != null && result._choices.Count == 0) result._choices = null;
 
             if (result.HasChoices)
                 foundTypes.AddRange(result._choices.Select(cattr => cattr.Type));
 
             referredTypes = foundTypes;
+
+            // May need to generate getters/setters using pre-compiled expression trees for performance.
+            // See http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
+            result._getter = instance => prop.GetValue(instance, null);
+            result._setter = (instance,value) => prop.SetValue(instance, value, null);
+            
             return result;
         }
 
@@ -76,13 +87,13 @@ namespace Hl7.Fhir.Serialization
 
         private static bool isPrimitiveValueElement(PropertyInfo prop)
         {
-            var valueElement = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
-            var isPrimitive = valueElement != null && valueElement.IsPrimitiveValue;
+            var valueElementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
-            if(isPrimitive && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
+            if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
                 throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.", buildQualifiedPropName(prop), prop.PropertyType.Name);
 
-            return isPrimitive;
+            return isValueElement;
         }
 
 
@@ -136,6 +147,21 @@ namespace Hl7.Fhir.Serialization
                         .FirstOrDefault(); 
         }
 
+        public bool HasAnyResourceWildcard()
+        {
+            if (!HasChoices) return false;
+
+            return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyResource);
+        }
+
+        public bool HasAnyDataTypeWildcard()
+        {
+            if (!HasChoices) return false;
+
+            return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyDatatype);
+        }
+
+
         private static string getMappedElementName(PropertyInfo prop)
         {
             var attr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
@@ -154,6 +180,20 @@ namespace Hl7.Fhir.Serialization
 
             return type.IsEnum ||
                     PrimitiveTypeConverter.CanConvert(type);
+        }
+
+
+        private Func<object, object> _getter;
+        private Action<object, object> _setter;
+
+        public object GetValue(object instance)
+        {
+            return _getter(instance);
+        }
+
+        public void SetValue(object instance, object value)
+        {
+            _setter(instance, value);
         }
     }
 }

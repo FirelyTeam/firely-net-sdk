@@ -11,17 +11,16 @@ using System.Text;
 namespace Hl7.Fhir.Serialization
 {
     public class ResourceReader
-    {
-       
-        public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";
+    {       
+     //   public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";
 
         private IFhirReader _reader;
         private ModelInspector _inspector;
 
-        public ResourceReader(ModelInspector inspector, IFhirReader reader)
+        public ResourceReader(IFhirReader reader)
         {
             _reader = reader;
-            _inspector = inspector;
+            _inspector = SerializationConfig.Inspector;
         }
 
         public object Deserialize(object existing=null)
@@ -32,15 +31,19 @@ namespace Hl7.Fhir.Serialization
                 // we'll have to determine from the data itself. 
                 var resourceType = _reader.GetResourceTypeName();
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
-                //TODO: if existing != null -> compatible with mapped type?
 
                 if (existing == null)
-                    existing = BindingConfiguration.ModelClassFactories.InvokeFactory(mappedType.NativeType);
+                    existing = SerializationConfig.ModelClassFactories.InvokeFactory(mappedType.NativeType);
+                else
+                {
+                    if (mappedType.NativeType != existing.GetType())
+                        throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, resourceType);
+                }
                
                 // Delegate the actual work to the ComplexTypeReader, since
-                // the serialization of Resources and ComplexTypes are virtuall the same
-                var cplxReader = new ComplexTypeReader(_inspector, _reader);
-                return cplxReader.Deserialize(mappedType, null, existing);
+                // the serialization of Resources and ComplexTypes are virtually the same
+                var cplxReader = new ComplexTypeReader(_reader);
+                return cplxReader.Deserialize(mappedType, existing);
             }
             else
                 throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");

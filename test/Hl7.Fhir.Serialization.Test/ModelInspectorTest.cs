@@ -13,10 +13,10 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(Road));
-            inspector.Import(typeof(Way));
-            inspector.Import(typeof(ProfiledWay));
-            inspector.Import(typeof(NewStreet));
+            inspector.ImportType(typeof(Road));
+            inspector.ImportType(typeof(Way));
+            inspector.ImportType(typeof(ProfiledWay));
+            inspector.ImportType(typeof(NewStreet));
             //inspector.Process();
 
             var road = inspector.FindClassMappingForResource("roAd");
@@ -49,10 +49,15 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(AnimalName));
-            inspector.Import(typeof(NewAnimalName));
+            inspector.ImportType(typeof(AnimalName));
+            inspector.ImportType(typeof(NewAnimalName));
 
             var result = inspector.FindClassMappingForFhirDataType("animalname");
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
+
+            // Validate a mapping for a type will return the newest registration
+            result = inspector.FindClassMappingByType(typeof(AnimalName));
             Assert.IsNotNull(result);
             Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
         }
@@ -63,8 +68,8 @@ namespace Hl7.Fhir.Serialization.Test
         {
             var inspector = new ModelInspector();
 
-            inspector.Import(typeof(SomeEnum));
-            inspector.Import(typeof(ActResource.SomeOtherEnum));
+            inspector.ImportEnum(typeof(SomeEnum));
+            inspector.ImportEnum(typeof(ActResource.SomeOtherEnum));
 
             var result = inspector.FindEnumMappingByType(typeof(SomeEnum));
             Assert.IsNotNull(result);
