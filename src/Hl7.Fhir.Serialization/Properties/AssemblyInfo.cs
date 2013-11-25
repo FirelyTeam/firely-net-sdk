@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hl7.Fhir.ModelBinding")]
+[assembly: AssemblyTitle("Hl7.Fhir.Api")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Furore")]
-[assembly: AssemblyProduct("Hl7.Fhir.ModelBinding")]
-[assembly: AssemblyCopyright("Copyright © Furore 2013")]
+[assembly: AssemblyProduct("Hl7.Fhir.Api")]
+[assembly: AssemblyCopyright("Copyright © Ewout Kramer 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -29,4 +29,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly:InternalsVisibleTo("Hl7.Fhir.Serialization.Test")]
+[assembly:InternalsVisibleTo("Hl7.Fhir.Test")]
