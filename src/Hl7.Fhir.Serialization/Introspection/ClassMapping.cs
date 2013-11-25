@@ -118,14 +118,13 @@ namespace Hl7.Fhir.Introspection
                 // Skip properties that are marked as NotMapped
                 if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
 
-                var propMapping = PropertyMapping.Create(property);
+                var propMapping = PropertyMapping.Create(property);      
+
+                me._propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
 
                 // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
                 if (propMapping.RepresentsValueElement)
                     me.PrimitiveValueProperty = propMapping;
-
-                if (propMapping != null)
-                    me._propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
             }
         }
 

@@ -39,6 +39,7 @@ namespace Hl7.Fhir.Serialization
 
             // If this is a primitive type, no classmappings and reflection is involved,
             // just parse the primitive from the input
+            // NB: no choices for primitives!
             if(prop.IsPrimitive)
             {
                 var reader = new PrimitiveValueReader(_current);
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Serialization
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if(prop.HasAnyResourceWildcard())
+            if(prop.HasAnyResourceWildcard)
             {
                 var reader = new ResourceReader(_current);
                 return reader.Deserialize(existing);

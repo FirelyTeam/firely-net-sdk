@@ -9,20 +9,23 @@ namespace Hl7.Fhir.Serialization
 {
     public interface IFhirWriter : IDisposable
     {
+        void EmitResourceTypeName(string name);
+
         void WriteStartRootObject(string name);
         void WriteEndRootObject();
 
-        void WriteStartElement(string name);
-        void WriteEndElement();
+        void WriteStartMember(string name);
+        void WriteEndMember();
 
         void WriteStartComplexContent();
         void WriteEndComplexContent();
 
         void WritePrimitiveContents(string name, object value, XmlSerializationHint xmlFormatHint);
 
+        void WriteStartArray(string name);
         void WriteStartArrayElement(string name);
-        void WriteStartArrayMember(string name);
-        void WriteEndArrayMember();
         void WriteEndArrayElement();
+        void WriteEndArray();
+        void WriteArrayNull();
     }
 }

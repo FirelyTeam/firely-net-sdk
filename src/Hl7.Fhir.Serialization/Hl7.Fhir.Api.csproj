@@ -48,10 +48,12 @@
     <Compile Include="Serialization\BundleJsonSerializer.cs" />
     <Compile Include="Serialization\BundleXmlParser.cs" />
     <Compile Include="Serialization\BundleXmlSerializer.cs" />
+    <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Serialization\DefaultModelFactory.cs" />
+    <Compile Include="Serialization\DispatchingWriter.cs" />
     <Compile Include="Serialization\DispatchingReader.cs" />
     <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -59,6 +61,8 @@
     <Compile Include="Serialization\FhirSerializer.cs" />
     <Compile Include="Serialization\IFhirReader.cs" />
     <Compile Include="Serialization\IFhirWriter.cs" />
+    <Compile Include="Serialization\PrimitiveValueWriter.cs" />
+    <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\JsonFhirWriter.cs" />

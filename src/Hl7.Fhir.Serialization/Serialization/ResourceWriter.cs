@@ -27,9 +27,13 @@ namespace Hl7.Fhir.Serialization
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
-            var mappedType = _inspector.FindClassMappingByType(instance.GetType());
+            var mapping = _inspector.ImportType(instance.GetType());
 
-            _writer.WriteStartRootObject(mappedType.Name);
+            _writer.WriteStartRootObject(mapping.Name);
+
+            var complexSerializer = new ComplexTypeWriter(_writer, forResource: true);
+            complexSerializer.Serialize(mapping, instance);
+
             _writer.WriteEndRootObject();
         }
     }

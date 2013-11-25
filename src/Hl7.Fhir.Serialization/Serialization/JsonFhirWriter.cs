@@ -49,23 +49,24 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteStartRootObject(string name)
         {
-            jw.WriteStartObject();
+        }
 
-            // BTW: serialization hint is ignored by our own WritePrimitiveContents           
-            WritePrimitiveContents(SerializationConfig.RESOURCETYPE_MEMBER_NAME, name, XmlSerializationHint.Attribute);
+        public void EmitResourceTypeName(string name)
+        {        
+            WritePrimitiveContents(SerializationConfig.RESOURCETYPE_MEMBER_NAME, name, XmlSerializationHint.None);
         }
 
         public void WriteEndRootObject()
         {
-            jw.WriteEndObject();
+         //   jw.WriteEndObject();
         }
 
-        public void WriteStartElement(string name)
+        public void WriteStartMember(string name)
         {
             jw.WritePropertyName(name);
         }
 
-        public void WriteEndElement()
+        public void WriteEndMember()
         {
             // Nothing
         }
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Serialization
       
         public void WritePrimitiveContents(string name, object value, XmlSerializationHint xmlFormatHint)
         {
-            WriteStartElement(name);
+            WriteStartMember(name);
 
             if (value is bool)
                 jw.WriteValue((bool)value);
@@ -96,27 +97,31 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public void WriteStartArrayElement(string name)
+        public void WriteStartArray(string name)
         {
             jw.WritePropertyName(name);
             jw.WriteStartArray();
         }
 
-        public void WriteStartArrayMember(string name)
-        {
-            // Nothing
-        }
-
-        public void WriteEndArrayMember()
+        public void WriteStartArrayElement(string name)
         {
             // Nothing
         }
 
         public void WriteEndArrayElement()
         {
+            // Nothing
+        }
+
+        public void WriteEndArray()
+        {
             jw.WriteEndArray();
         }
 
+        public void WriteArrayNull()
+        {
+            jw.WriteNull();
+        }
 
         public void Dispose()
         {

@@ -28,6 +28,8 @@ namespace Hl7.Fhir.Introspection
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
 
+        public XmlSerializationHint SerializationHint { get; set; }
+        
         public static PropertyMapping Create(PropertyInfo prop)
         {
             IEnumerable<Type> dummy;
@@ -43,9 +45,18 @@ namespace Hl7.Fhir.Introspection
             var foundTypes = new List<Type>();
 
             PropertyMapping result = new PropertyMapping();
-            result.Name = getMappedElementName(prop);
+
+            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+       
+            result.Name = prop.Name;
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
+
+            if(elementAttr != null)
+            {
+                result.Name = elementAttr.Name;
+                result.SerializationHint = elementAttr.XmlSerialization;
+            }
 
             foundTypes.Add(result.ElementType);
 
@@ -148,30 +159,28 @@ namespace Hl7.Fhir.Introspection
                         .FirstOrDefault(); 
         }
 
-        public bool HasAnyResourceWildcard()
+        public bool HasAnyResourceWildcard
         {
-            if (!HasChoices) return false;
+            get
+            {
+                if (!HasChoices) return false;
 
-            return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyResource);
+                return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyResource);
+            }
         }
 
-        public bool HasAnyDataTypeWildcard()
+        public bool HasAnyDataTypeWildcard
         {
-            if (!HasChoices) return false;
+            get
+            {
+                if (!HasChoices) return false;
 
-            return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyDatatype);
+                return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyDatatype);
+            }
         }
 
 
-        private static string getMappedElementName(PropertyInfo prop)
-        {
-            var attr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
-
-            if (attr != null)
-                return attr.Name;
-            else
-                return prop.Name;
-        }
+      
 
         private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {
