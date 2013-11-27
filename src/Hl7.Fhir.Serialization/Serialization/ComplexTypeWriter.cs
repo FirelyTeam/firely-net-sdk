@@ -80,6 +80,15 @@ namespace Hl7.Fhir.Serialization
         }
 
 
+        private static string upperCamel(string p)
+        {
+            if (p == null) return p;
+
+            var c = p[0];
+
+            return Char.ToUpperInvariant(c) + p.Remove(0, 1);
+        }
+
         private string determineElementMemberName(string memberName, Type type)
         {
             var mapping = _inspector.ImportType(type);
@@ -87,7 +96,7 @@ namespace Hl7.Fhir.Serialization
             var suffix = mapping.Name;
             if (suffix == "ResourceReference") suffix = "Resource";
 
-            return memberName + mapping.Name;
+            return memberName + upperCamel(suffix);
         }
     }
 }

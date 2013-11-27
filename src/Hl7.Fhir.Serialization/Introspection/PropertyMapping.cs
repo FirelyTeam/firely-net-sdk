@@ -3,6 +3,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -28,6 +29,8 @@ namespace Hl7.Fhir.Introspection
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
 
+        public int Order { get; private set; }
+
         public XmlSerializationHint SerializationHint { get; set; }
         
         public static PropertyMapping Create(PropertyInfo prop)
@@ -48,14 +51,14 @@ namespace Hl7.Fhir.Introspection
 
             var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
        
-            result.Name = prop.Name;
+            result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
 
-            if(elementAttr != null)
+            if (elementAttr != null)
             {
-                result.Name = elementAttr.Name;
                 result.SerializationHint = elementAttr.XmlSerialization;
+                result.Order = elementAttr.Order;
             }
 
             foundTypes.Add(result.ElementType);
@@ -88,6 +91,25 @@ namespace Hl7.Fhir.Introspection
             result._setter = (instance,value) => prop.SetValue(instance, value, null);
             
             return result;
+        }
+
+        private static string determinePropertyName(PropertyInfo prop)
+        {
+            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+
+            if(elementAttr != null && elementAttr.Name != null)
+                return elementAttr.Name;
+            else
+                return lowerCamel(prop.Name);            
+        }
+
+        private static string lowerCamel(string p)
+        {
+            if (p == null) return p;
+
+            var c = p[0];
+
+            return Char.ToLowerInvariant(c) + p.Remove(0, 1);
         }
 
 

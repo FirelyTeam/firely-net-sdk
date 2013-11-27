@@ -31,6 +31,11 @@ namespace Hl7.Fhir.Serialization
                 new ModelFactoryList { new DefaultModelFactory(Inspector) });
         }
 
+        public static void Clear()
+        {
+            _inspector = new Lazy<ModelInspector>();
+        }
+
         public static ModelFactoryList ModelClassFactories
         {
             get { return _modelClassFactories.Value; }

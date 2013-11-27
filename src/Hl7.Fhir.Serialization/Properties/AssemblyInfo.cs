@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-[assembly: System.CLSCompliant(true)]
+//[assembly: System.CLSCompliant(true)]
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version

@@ -39,6 +39,12 @@ namespace Hl7.Fhir.Introspection
         private Dictionary<string, PropertyMapping> _propMappings = new Dictionary<string, PropertyMapping>();
 
         /// <summary>
+        /// PropertyMappings in the order as the appear in the reflected class, which is the order
+        /// in which they must be serialized.
+        /// </summary>
+        private ICollection<PropertyMapping> _orderedMappings;
+
+        /// <summary>
         /// Collection of PropertyMappings that capture information about this classes
         /// properties
         /// </summary>
@@ -46,7 +52,7 @@ namespace Hl7.Fhir.Introspection
         {
             get
             {
-                return _propMappings.Values;
+                return _orderedMappings; 
             }
         }
 
@@ -126,6 +132,8 @@ namespace Hl7.Fhir.Introspection
                 if (propMapping.RepresentsValueElement)
                     me.PrimitiveValueProperty = propMapping;
             }
+
+            me._orderedMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
         }
 
         //private static void checkMutualExclusiveAttributes(Type type)
