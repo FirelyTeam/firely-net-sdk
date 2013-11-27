@@ -23,18 +23,18 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(object instance)
+        public void Serialize(object instance, bool contained = false)
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
             var mapping = _inspector.ImportType(instance.GetType());
 
-            _writer.WriteStartRootObject(mapping.Name);
+            _writer.WriteStartRootObject(mapping.Name,contained);
 
-            var complexSerializer = new ComplexTypeWriter(_writer, forResource: true);
+            var complexSerializer = new ComplexTypeWriter(_writer);
             complexSerializer.Serialize(mapping, instance);
 
-            _writer.WriteEndRootObject();
+            _writer.WriteEndRootObject(contained);
         }
     }
 }

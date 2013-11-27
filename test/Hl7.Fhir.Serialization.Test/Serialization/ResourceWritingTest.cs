@@ -23,8 +23,9 @@ namespace Hl7.Fhir.Test.Serialization
             var jsonReader = new Newtonsoft.Json.JsonTextReader(new System.IO.StreamReader(s));
             var result = FhirParser.ParseResource(jsonReader);
 
-            var xml = FhirSerializer.SerializeResourceToXml(result);
             var json = FhirSerializer.SerializeResourceToJson(result);
+            var xml = FhirSerializer.SerializeResourceToXml(result);
+           
 
             //Stopwatch x = new Stopwatch();
 

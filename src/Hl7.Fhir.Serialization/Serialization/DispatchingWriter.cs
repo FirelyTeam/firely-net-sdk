@@ -11,55 +11,73 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class DispatchingWriter
+    internal class DispatchingWriter
     {
         private readonly IFhirWriter _current;
         private readonly ModelInspector _inspector;
         private readonly bool _arrayMode;
 
-        public DispatchingWriter(IFhirWriter data, bool arrayMode = false)
+        public DispatchingWriter(IFhirWriter data)
         {
             _current = data;
             _inspector = SerializationConfig.Inspector;
-            _arrayMode = arrayMode;
         }
 
-        public void Serialize(PropertyMapping prop, string memberName, object instance)
+        internal void Serialize(PropertyMapping prop, object instance, ComplexTypeWriter.SerializationMode mode)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
             // ArrayMode avoid the dispatcher making nested calls into the RepeatingElementWriter again
             // when writing array elements. FHIR does not support nested arrays, and this avoids an endlessly
             // nesting series of dispatcher calls
-            if (!_arrayMode && prop.IsCollection)
+            if (prop.IsCollection)
             {
-                var writer = new RepeatingElementWriter(_current);
-                writer.Serialize(prop, memberName, instance);
-                return;
-            }
+                var elements = instance as IList;
+                if (elements == null) throw Error.Argument("existing", "Can only write repeating elements from a type implementing IList");
 
+                _current.WriteStartArray();
+
+                foreach (var element in elements)
+                    write(prop, element, mode);
+
+                _current.WriteEndArray();
+            }
+            else
+                write(prop, instance, mode);
+        }
+
+        private void write(PropertyMapping prop, object instance, ComplexTypeWriter.SerializationMode mode)
+        {
             // If this is a primitive type, no classmappings and reflection is involved,
             // just serialize the primitive to the writer
-            if(prop.IsPrimitive)
+            if (prop.IsPrimitive)
             {
                 var writer = new PrimitiveValueWriter(_current);
-                writer.Serialize(memberName, instance, prop.SerializationHint);
+                writer.Serialize(instance, prop.SerializationHint);
                 return;
             }
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if(prop.HasAnyResourceWildcard)
+            if (prop.HasAnyResourceWildcard)
             {
                 var writer = new ResourceWriter(_current);
-                writer.Serialize(instance);
+                writer.Serialize(instance, contained: true);
                 return;
             }
 
-            ClassMapping mapping = _inspector.ImportType(instance.GetType());           
+            ClassMapping mapping = _inspector.ImportType(instance.GetType());
 
-            var cplxWriter = new ComplexTypeWriter(_current);
-            cplxWriter.Serialize(mapping, instance);
+            if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
+            {
+                var cplxWriter = new ComplexTypeWriter(_current);
+                cplxWriter.Serialize(mapping, instance, mode);
+            }
+            else
+            {
+                object value = mapping.PrimitiveValueProperty.GetValue(instance);
+                write(mapping.PrimitiveValueProperty, value, ComplexTypeWriter.SerializationMode.AllMembers);
+            }
         }
     }
 }

@@ -35,14 +35,16 @@ using System.Text;
 using Newtonsoft.Json;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class JsonFhirWriter : IFhirWriter
+    internal class JsonDomFhirWriter : IFhirWriter
     {
         private JsonWriter jw;
-        
-        public JsonFhirWriter(JsonWriter jwriter)
+        private JToken _current = null;
+ 
+        public JsonDomFhirWriter(JsonWriter jwriter)
         {
             jw = jwriter;
         }
@@ -57,62 +59,125 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteEndRootObject(bool contained)
         {
+           
+
          //   jw.WriteEndObject();
         }
 
         public void WriteStartProperty(string name)
         {
-            jw.WritePropertyName(name);
+            var prop = new JProperty(name, null);
+            ((JObject)_current).Add(prop);
+            _current = prop;
         }
 
         public void WriteEndProperty()
         {
+            var prop = (JProperty)_current;
 
+            var parent = _current.Parent;
+
+            if (prop.Value.Type == JTokenType.Null)
+                _current.Remove();
+
+            _current = parent;
         }
 
         public void WriteStartComplexContent()
         {
-            jw.WriteStartObject();
+            if (_current == null)
+                _current = new JObject();
+            else
+            {
+                JObject obj = new JObject();
+
+                if (_current is JProperty)
+                    ((JProperty)_current).Value = obj;
+                else if (_current is JArray)
+                    ((JArray)_current).Add(obj);
+
+                _current = obj;
+            }
 
             // When this is the first complex scope when writing a resource,
             // emit a type member
             if(_rootType != null)
             {
-                WriteStartProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME);
-                WritePrimitiveContents(_rootType, XmlSerializationHint.None);
+                ((JObject)_current).Add(new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, _rootType));
                 _rootType = null;
             }
         }
 
         public void WriteEndComplexContent()
         {
-            jw.WriteEndObject();
+            var parent = _current.Parent;
+
+            var obj = (JObject)_current;
+
+            foreach(var child in obj.Children())
+                if(child is JProperty && ((JProperty)child).Value.Type == JTokenType.Null)
+                    child.Remove();
+
+            if (obj.Count == 0)
+            {
+                if (parent is JArray)
+                    obj.Replace(null);
+                else if (parent is JProperty)
+                    ((JProperty)parent).Value = null;
+            }
+            if(parent == null)
+                _current.WriteTo(jw);
+
+            _current = parent;
         }
 
       
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
+            JValue val;
+
             if (value == null)
-                jw.WriteNull();
+                val = null;
             else if (value is bool)
-                jw.WriteValue((bool)value);
+                val = new JValue(value);
             else if (value is Int32 || value is Int16)
-                jw.WriteValue((int)value);
+                val = new JValue(value);
             else if (value is decimal)
-                jw.WriteValue((decimal)value);
+                val = new JValue(value);
             else
-                jw.WriteValue(PrimitiveTypeConverter.Convert<string>(value));
+                val = new JValue(PrimitiveTypeConverter.Convert<string>(value));
+
+            if (_current is JArray)
+                ((JArray)_current).Add(val);
+            else if (_current is JProperty)
+                ((JProperty)_current).Value = val;
         }
 
 
         public void WriteStartArray()
-        {         
-            jw.WriteStartArray();
+        {
+            var arr = new JArray();
+
+            ((JProperty)_current).Value = arr;
+
+            _current = arr;
         }
 
         public void WriteEndArray()
         {
-            jw.WriteEndArray();
+            var arr = (JArray)_current;
+
+            var parent = _current.Parent;
+
+            if (arr.Count == 0 ||
+                arr.All(arrelem => arrelem.Type == JTokenType.Null))
+            {
+                if (parent is JArray)
+                    arr.Replace(null);
+                else if (parent is JProperty)
+                    ((JProperty)parent).Value = null;
+            }
+            _current = parent;
         }
 
         public bool HasValueElementSupport

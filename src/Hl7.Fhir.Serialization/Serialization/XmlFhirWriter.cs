@@ -43,53 +43,71 @@ namespace Hl7.Fhir.Serialization
     {
         private XmlWriter xw;
 
-        public void EmitResourceTypeName(string name)
-        {
-        }
-
         public XmlFhirWriter(XmlWriter xwriter)
         {
             xw = xwriter;
         }
 
-        public void WriteStartRootObject(string name)
+        public void WriteStartRootObject(string name, bool contained = false)
         {
-            WriteStartMember(name);
+            if (contained)
+                WriteStartComplexContent();
+
+            WriteStartProperty(name);
         }
 
-        public void WriteEndRootObject()
+        public void WriteEndRootObject(bool contained=false)
         {
-            WriteEndMember();
+            if (contained)
+                WriteEndComplexContent();
         }
 
-        public void WriteStartMember(string name)
+
+        private string _currentMemberName = null;
+
+
+        public void WriteStartProperty(string name)
         {
-            xw.WriteStartElement(name, Util.FHIRNS);            
+            _currentMemberName = name;
         }
 
-        public void WriteEndMember()
+        public void WriteEndProperty()
         {
-            xw.WriteEndElement();
+
         }
+
+
+        private Stack<string> _memberNameStack = new Stack<string>();
 
         public void WriteStartComplexContent()
         {
-            // Nothing
+            if (_currentMemberName == null)
+                throw Error.InvalidOperation("There is no current member name set while starting complex content");
+
+            xw.WriteStartElement(_currentMemberName, Util.FHIRNS);
+
+            // A new complex element starts a new scope with its own members and member names
+            _memberNameStack.Push(_currentMemberName);
+            _currentMemberName = null;
         }
 
         public void WriteEndComplexContent()
         {
-            // Nothing
+            _currentMemberName = _memberNameStack.Pop();
+            xw.WriteEndElement();
         }
 
-        public void WritePrimitiveContents(string name, object value, XmlSerializationHint xmlFormatHint)
+
+        public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
+            if (value == null) throw Error.ArgumentNull("value", "There's no support for null values in Xml Fhir serialization");
+
             if (xmlFormatHint == XmlSerializationHint.None) xmlFormatHint = XmlSerializationHint.Attribute;
 
             var valueAsString = PrimitiveTypeConverter.Convert<string>(value);
 
             if (xmlFormatHint == XmlSerializationHint.Attribute)
-                writePrimitiveAttribute(name, valueAsString);
+                xw.WriteAttributeString(_currentMemberName, valueAsString);
             else if (xmlFormatHint == XmlSerializationHint.TextNode)
                 xw.WriteString(valueAsString);
             else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
@@ -107,35 +125,19 @@ namespace Hl7.Fhir.Serialization
                 throw new ArgumentException("Unsupported xmlFormatHint " + xmlFormatHint);
         }
 
-        private void writePrimitiveAttribute(string name, string value)
+        public void WriteStartArray()
         {
-            xw.WriteAttributeString(name, value);
-        }
-
-
-        public void WriteStartArray(string name)
-        {
-            // Nothing
-        }
-
-        public void WriteStartArrayElement(string name)
-        {
-            WriteStartMember(name);
-        }
-
-        public void WriteEndArrayElement()
-        {
-            WriteEndMember();
+            //nothing
         }
 
         public void WriteEndArray()
         {
-            // Nothing
+            //nothing
         }
 
-        public void WriteArrayNull()
+        public bool HasValueElementSupport
         {
-            // Nothing - not supported in XML
+            get { return false; }
         }
 
         public void Dispose()

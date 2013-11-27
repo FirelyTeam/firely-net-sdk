@@ -61,6 +61,7 @@
     <Compile Include="Serialization\FhirSerializer.cs" />
     <Compile Include="Serialization\IFhirReader.cs" />
     <Compile Include="Serialization\IFhirWriter.cs" />
+    <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />

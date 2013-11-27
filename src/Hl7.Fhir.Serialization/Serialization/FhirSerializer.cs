@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
 
         public static string SerializeResourceToJson(Resource resource, bool summary = false)
         {
-            return jsonWriterToString(jw => FhirSerializer.SerializeResource(resource, new JsonFhirWriter(jw), summary));
+            return jsonWriterToString(jw => FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(jw), summary));
         }
 
         public static string SerializeTagListToJson(IList<Tag> list)

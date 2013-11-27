@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class RepeatingElementWriter
+    internal class RepeatingElementWriter
     {
         private IFhirWriter _current;
         private ModelInspector _inspector;
@@ -24,25 +24,22 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(PropertyMapping prop, string memberName, object instance)
+        public void Serialize(PropertyMapping prop, object instance, ComplexTypeWriter.SerializationMode mode)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
             var elements = instance as IList;                       
             if(elements == null) throw Error.Argument("existing", "Can only write repeating elements from a type implementing IList");
 
+            _current.WriteStartArray();
+
             foreach(var element in elements)
             {
-                _current.WriteStartArrayElement(memberName);
-                var writer = new DispatchingWriter(_current, arrayMode: true);
-
-                if(element != null)
-                    writer.Serialize(prop, memberName, element);
-                else
-                    _current.WriteArrayNull();
-
-                _current.WriteEndArrayElement();
+                var writer = new DispatchingWriter(_current);
+                writer.Serialize(prop, element, mode);
             }
+
+            _current.WriteEndArray();
         }
     }
 }

@@ -13,7 +13,6 @@
         "url": "http://hl7.org/fhir/example-do-not-use#recordStatus",
         "valueCode": "archived"
     }]},
-    "active": false,
     "name": [
         {
             "given": [

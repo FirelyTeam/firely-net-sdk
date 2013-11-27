@@ -18,38 +18,46 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _current;
         private ModelInspector _inspector;
-        private bool _forResource = false;
+ 
 
-        public ComplexTypeWriter(IFhirWriter writer, bool forResource = false)
+        internal enum SerializationMode
+        {
+            AllMembers,
+            ValueElement,
+            NonValueElements
+        }
+
+        public ComplexTypeWriter(IFhirWriter writer)
         {
             _current = writer;
             _inspector = SerializationConfig.Inspector;
-            _forResource = forResource;
         }
 
-        internal void Serialize(ClassMapping mapping, object instance)
+        internal void Serialize(ClassMapping mapping, object instance, SerializationMode mode = SerializationMode.AllMembers)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
             _current.WriteStartComplexContent();
 
-            if (_forResource)
-                _current.EmitResourceTypeName(mapping.Name);
-
             // Emit members that need xml attributes first (to facilitate stream writer API)
-            var withAttr = mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute);
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
-                write(mapping, instance, prop);
+                write(mapping, instance, prop, mode);
 
             // Then emit the rest
-            foreach (var prop in mapping.PropertyMappings.Where( pm => pm.SerializationHint != XmlSerializationHint.Attribute))
-                write(mapping, instance, prop);
+            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
+                write(mapping, instance, prop, mode);
 
             _current.WriteEndComplexContent();
         }
 
-        private void write(ClassMapping mapping, object instance, PropertyMapping prop)
+        private void write(ClassMapping mapping, object instance, PropertyMapping prop, SerializationMode mode)
         {
+            // Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
+            // or only the other members (Extension, Id etc in primitive Fhir datatypes)
+            // Default is all
+            if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement) return;
+            if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement) return;
+
             var value = prop.GetValue(instance);
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
@@ -59,26 +67,48 @@ namespace Hl7.Fhir.Serialization
             {
                 string memberName = prop.Name;
 
-                // For Choice properties, determine the actual name of the element using
+                // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
+                // Exception: this system is not used for the contained resources
                 if (prop.HasChoices && !prop.HasAnyResourceWildcard)
                     memberName = determineElementMemberName(prop.Name, value.GetType());
 
-                if (prop.IsCollection)
-                    _current.WriteStartArray(memberName);
-                else if (!prop.IsPrimitive)
-                    _current.WriteStartMember(memberName);
-
+                _current.WriteStartProperty(memberName);
+               
                 var writer = new DispatchingWriter(_current);
-                writer.Serialize(prop, memberName, value);
 
-                if (prop.IsCollection)
-                    _current.WriteEndArray();
-                else if (!prop.IsPrimitive)
-                    _current.WriteEndMember();
+                // Now, if our writer does not use dual properties for primitive values + rest (xml),
+                // or this is a complex property without value element, serialize data normally
+                if(!_current.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
+                    writer.Serialize(prop, value, SerializationMode.AllMembers);
+                else
+                {
+                    // else split up between two properties, name and _name
+                    writer.Serialize(prop,value, SerializationMode.ValueElement);
+                    _current.WriteEndProperty();
+                    _current.WriteStartProperty("_" + memberName);
+                    writer.Serialize(prop, value, SerializationMode.NonValueElements);
+                }
+
+                _current.WriteEndProperty();
             }
         }
 
+
+        // If we have a normal complex property, for which the type has a primitive value member...
+        private bool serializedIntoTwoProperties(PropertyMapping prop, object instance)
+        {
+            if (instance as IList != null)
+                instance = ((IList)instance)[0];
+
+            if (!prop.IsPrimitive && !prop.HasAnyResourceWildcard)
+            {
+                var mapping = _inspector.ImportType(instance.GetType());
+                return mapping.HasPrimitiveValueMember;
+            }
+            else
+                return false;
+        }
 
         private static string upperCamel(string p)
         {

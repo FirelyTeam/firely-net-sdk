@@ -26,21 +26,22 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        internal void Serialize(string name, object value, XmlSerializationHint hint)
+        internal void Serialize(object value, XmlSerializationHint hint)
         {
-            if (value == null) throw Error.ArgumentNull("value");
-
-            var nativeType = value.GetType();
-
-            if (nativeType.IsEnum)
+            if (value != null)
             {
-                var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+                var nativeType = value.GetType();
 
-                if (enumMapping != null)
-                    value = enumMapping.GetLiteral((Enum)value);
+                if (nativeType.IsEnum)
+                {
+                    var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+
+                    if (enumMapping != null)
+                        value = enumMapping.GetLiteral((Enum)value);
+                }
             }
 
-            _current.WritePrimitiveContents(name, value, hint);
+            _current.WritePrimitiveContents(value, hint);
         }
     }
 
