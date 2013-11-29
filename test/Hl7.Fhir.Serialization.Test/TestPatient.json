@@ -39,10 +39,6 @@
             "url": "urn:example-do-not-use:pi",
             "valueDecimal": 3.141592653589793
         },
-        {
-            "url": "urn:example-do-not-use:avogadro",
-            "valueDecimal": 6.0221416246424E23
-        }
     ],
     "gender": {"coding": [{
         "system": "http://hl7.org/fhir/v3/AdministrativeGender",
@@ -58,7 +54,7 @@
         "state": "Vic",
         "zip": "3999"
     }],
-    "_maritalStatus": {"extension": [{
+    "maritalStatus": {"extension": [{
         "valueCode": "ASKU",
         "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor"
     }]},
@@ -145,7 +141,7 @@
             "value": "+33 (237) 998327"
         }]
     }],
-    "careProvider": {"reference": "#org3141"},
+    "careProvider": [{"reference": "#org3141"}],
     "telecom": [
         {"use": "home"},
         {

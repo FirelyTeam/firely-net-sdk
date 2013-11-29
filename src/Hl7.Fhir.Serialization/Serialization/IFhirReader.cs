@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Serialization
 {
     public interface IFhirReader
     {
-        string GetResourceTypeName();
+        string GetResourceTypeName(bool nested);
 
         IEnumerable<Tuple<string, IFhirReader>> GetMembers();
 
@@ -16,6 +16,9 @@ namespace Hl7.Fhir.Serialization
         object GetPrimitiveValue();
 
         TokenType CurrentToken { get; }
+
+        int LineNumber { get; }
+        int LinePosition { get; }
     }
 
     public enum TokenType
@@ -25,7 +28,7 @@ namespace Hl7.Fhir.Serialization
         String,
         Boolean,
         Number,
-        Null
+        Null,
     }
 
     public static class FhirReaderExtensions

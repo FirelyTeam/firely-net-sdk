@@ -36,8 +36,10 @@ namespace Hl7.Fhir.Serialization
                 overwriteMode = existing != null;
                 elements = _current.GetArrayElements();
             }
-            else if(_current.CurrentToken == TokenType.Object)  // Xml has repeating members, if we encounter multiple, add them to the array
+            else if(_current.CurrentToken == TokenType.Object)  // Xml has repeating members, so this results in an "array" of just 1 member
             {
+                //TODO: This makes   member : {x} in Json valid too,
+                //even if json should have member : [{x}]
                 overwriteMode = false;
                 elements = new List<IFhirReader>() { _current };
             }
