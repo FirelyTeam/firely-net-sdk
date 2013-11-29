@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization
 
         public static byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
         {
-            return jsonWriterToBytes(jw => FhirSerializer.SerializeResource(resource, new JsonFhirWriter(jw), summary));
+            return jsonWriterToBytes(jw => FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(jw), summary));
         }
 
         public static byte[] SerializeTagListToJsonBytes(IEnumerable<Tag> list)
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization
 
         public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
         {
-            FhirSerializer.SerializeResource(resource, new JsonFhirWriter(writer), summary);
+            FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(writer), summary);
         }
 
         public static void SerializeTagList(IList<Tag> list, JsonWriter jw)

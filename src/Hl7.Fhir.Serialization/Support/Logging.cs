@@ -15,7 +15,9 @@ namespace Hl7.Fhir.Support
     {
         internal static void Info(string messageFormat, params object[] messageArgs)
         {
-            Debug.WriteLine(Error.Format(messageFormat,messageArgs));
+#if DEBUG
+            Debug.WriteLine(Error.formatMessage(messageFormat,messageArgs));
+#endif
         }
     }
 
@@ -31,7 +33,7 @@ namespace Hl7.Fhir.Support
         /// <param name="format">A composite format string.</param>
         /// <param name="args">An object array that contains zero or more objects to format.</param>
         /// <returns>The formatted string.</returns>
-        private static string formatMessage(string format, params object[] args)
+        internal static string formatMessage(string format, params object[] args)
         {
             return String.Format(CultureInfo.CurrentCulture, format, args);
         }

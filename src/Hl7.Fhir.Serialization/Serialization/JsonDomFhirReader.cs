@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Support;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.InvalidOperation("Tried to read a primitive value while reader is not at a json primitive");
         }
 
-        public string GetResourceTypeName()
+        public string GetResourceTypeName(bool nested)
         {
             if (CurrentToken != TokenType.Object)
                 throw Error.InvalidOperation("Need to be at a complex object to determine resource type");
@@ -113,6 +114,32 @@ namespace Hl7.Fhir.Serialization
             foreach(var element in array)
             {
                 yield return new JsonDomFhirReader(element);
+            }
+        }
+
+        public int LineNumber
+        {
+            get
+            {
+                var li = (IJsonLineInfo)_current;
+
+                if (!li.HasLineInfo())
+                    throw Error.InvalidOperation("No lineinfo available. Please read the Json document using...");
+
+                return li.LineNumber;
+            }
+        }
+
+        public int LinePosition
+        {
+            get
+            {
+                var li = (IJsonLineInfo)_current;
+
+                if (!li.HasLineInfo())
+                    throw Error.InvalidOperation("No lineinfo available. Please read the Json document using...");
+
+                return li.LinePosition;
             }
         }
     }

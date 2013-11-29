@@ -66,7 +66,6 @@
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
-    <Compile Include="Serialization\JsonFhirWriter.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\TagListParser.cs" />
     <Compile Include="Serialization\TagListSerializer.cs" />

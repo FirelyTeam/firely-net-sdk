@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.HasAnyResourceWildcard)
             {
                 var reader = new ResourceReader(_current);
-                return reader.Deserialize(existing);
+                return reader.Deserialize(existing, nested:true);
             }
 
             ClassMapping mapping;
