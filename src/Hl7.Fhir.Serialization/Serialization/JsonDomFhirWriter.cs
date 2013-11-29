@@ -49,6 +49,10 @@ namespace Hl7.Fhir.Serialization
             jw = jwriter;
         }
 
+        internal JsonDomFhirWriter()
+        {
+        }
+
         private string _rootType;
         
         public void WriteStartRootObject(string name, bool contained)
@@ -59,9 +63,6 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteEndRootObject(bool contained)
         {
-           
-
-         //   jw.WriteEndObject();
         }
 
         public void WriteStartProperty(string name)
@@ -82,6 +83,9 @@ namespace Hl7.Fhir.Serialization
 
             _current = parent;
         }
+
+
+        internal JObject Result;
 
         public void WriteStartComplexContent()
         {
@@ -125,8 +129,11 @@ namespace Hl7.Fhir.Serialization
                 else if (parent is JProperty)
                     ((JProperty)parent).Value = null;
             }
-            if(parent == null)
-                _current.WriteTo(jw);
+            if (parent == null)
+            {
+                Result = (JObject)_current;
+                if(jw != null) _current.WriteTo(jw);
+            }
 
             _current = parent;
         }

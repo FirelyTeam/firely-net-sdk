@@ -13,8 +13,25 @@ namespace Hl7.Fhir.Serialization
     {
         XObject _current;
 
-        public XmlDomFhirReader(XObject root)
-        {            
+        public XmlDomFhirReader(XmlReader reader)
+        {
+            var settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreWhitespace = true;
+
+            var internalReader = XmlReader.Create(reader, settings);
+
+            setRoot(XDocument.Load(internalReader, LoadOptions.SetLineInfo));
+        }
+
+        internal XmlDomFhirReader(XObject root)
+        {
+            setRoot(root);
+        }
+
+        private void setRoot(XObject root)
+        {
             if (root is XDocument)
                 _current = ((XDocument)root).Root;
             else
@@ -37,8 +54,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static readonly XName XHTMLDIV = XNamespace.Get(Util.XHTMLNS) + "div";
-
+        private static readonly XName XHTMLDIV = XNamespace.Get(SerializationUtil.XHTMLNS) + "div";
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
@@ -49,6 +65,7 @@ namespace Hl7.Fhir.Serialization
 
                 // First, any attributes
                 result.AddRange(rootElem.Attributes()
+                    .Where(xattr => xattr.Name.LocalName != "xmlns")
                     .Select(xattr => Tuple.Create(xattr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(xattr))));
 
                 foreach(var node in rootElem.Nodes())
@@ -63,7 +80,7 @@ namespace Hl7.Fhir.Serialization
                         var elem = (XElement)node;
                         
                         // All normal elements
-                        if(elem.Name.NamespaceName == Util.FHIRNS)
+                        if(elem.Name.NamespaceName == SerializationUtil.FHIRNS)
                             result.Add(Tuple.Create(elem.Name.LocalName, (IFhirReader)new XmlDomFhirReader(elem)));
 
                         // The special xhtml div element

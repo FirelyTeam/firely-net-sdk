@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,18 @@ namespace Hl7.Fhir.Serialization
 
         public static bool AcceptUnknownMembers { get; set; }
 
-        private static Lazy<ModelInspector> _inspector = new Lazy<ModelInspector>();
+        private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
+
+        private static Lazy<ModelInspector> createDefaultModelInspector()
+        {
+            return new Lazy<ModelInspector>(() =>
+                {
+                    var result = new ModelInspector();
+                    result.Import(typeof(Resource).Assembly);
+                    return result;
+                });
+
+        }
 
         internal static ModelInspector Inspector 
         { 
@@ -25,22 +37,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static Lazy<ModelFactoryList> _modelClassFactories = createDefaultClassFactoryList();
-
-        private static Lazy<ModelFactoryList> createDefaultClassFactoryList()
-        {
-            return new Lazy<ModelFactoryList>(() =>
-                new ModelFactoryList { new DefaultModelFactory(Inspector) });
-        }
-
         public static void Clear()
         {
-            _inspector = new Lazy<ModelInspector>();
-        }
-
-        public static ModelFactoryList ModelClassFactories
-        {
-            get { return _modelClassFactories.Value; }
+            _inspector = createDefaultModelInspector();
         }
 
         public static void AddModelAssembly(Assembly assembly)

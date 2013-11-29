@@ -9,49 +9,18 @@ namespace Hl7.Fhir.Serialization
 {
     public class DefaultModelFactory : IModelClassFactory
     {
-        private ModelInspector _inspector;
-
-        public DefaultModelFactory(ModelInspector inspector)
-        {
-            _inspector = inspector;
-        }
-
         public DefaultModelFactory()
         {
-            _inspector = null;
         }
 
-        //private Type findTypeSubstitution(Type type)
-        //{
-        //    if (_inspector == null) return type;
-
-        //    var mapping = _inspector.FindClassMappingByType(type);
-
-        //    // The given type has no type mapping, so there is no type substitution for it
-        //    if (mapping == null) return type;
-
-        //    var name = mapping.Name;
-
-        //    if (mapping.IsResource)
-        //        mapping = _inspector.FindClassMappingForResource(name);
-        //    else
-        //        mapping = _inspector.FindClassMappingForFhirDataType(name);
-
-        //    // Return the mapping found, unless there's no mapping, then return the original type
-        //    return mapping.NativeType ?? type;
-        //}
-
-
+     
         public bool CanCreate(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
 
-            var typeToCreate = type;
-//            var typeToCreate = findTypeSubstitution(type);
-
             // Can create any type, as long as a public default constructor is present
-            var canCreate = ReflectionHelper.HasDefaultPublicConstructor(typeToCreate) ||
-                        (ReflectionHelper.IsTypedCollection(typeToCreate) && !type.IsArray);
+            var canCreate = ReflectionHelper.HasDefaultPublicConstructor(type) ||
+                        (ReflectionHelper.IsTypedCollection(type) && !type.IsArray);
 
             return canCreate;
         }

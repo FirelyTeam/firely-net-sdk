@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization
             var root = new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_FEED);
 
             if (!String.IsNullOrWhiteSpace(bundle.Title)) root.Add(xmlCreateTitle(bundle.Title));
-            if (Util.UriHasValue(bundle.Id)) root.Add(xmlCreateId(bundle.Id));
+            if (SerializationUtil.UriHasValue(bundle.Id)) root.Add(xmlCreateId(bundle.Id));
             if (bundle.LastUpdated != null) root.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_UPDATED, bundle.LastUpdated));
 
             if (!String.IsNullOrWhiteSpace(bundle.AuthorName))
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Serialization
                 result = new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_ENTRY);
 
                 if (!String.IsNullOrEmpty(re.Title)) result.Add(xmlCreateTitle(re.Title));
-                if (Util.UriHasValue(entry.Id)) result.Add(xmlCreateId(entry.Id));
+                if (SerializationUtil.UriHasValue(entry.Id)) result.Add(xmlCreateId(entry.Id));
 
                 if (re.LastUpdated != null) result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_UPDATED, re.LastUpdated.Value));
                 if (re.Published != null) result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_PUBLISHED, re.Published.Value));
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 result = new XElement(BundleXmlParser.XTOMBSTONE + BundleXmlParser.XATOM_DELETED_ENTRY);
-                if (Util.UriHasValue(entry.Id))
+                if (SerializationUtil.UriHasValue(entry.Id))
                     result.Add(new XAttribute(BundleXmlParser.XATOM_DELETED_REF, entry.Id.ToString()));
                 if (((DeletedEntry)entry).When != null)
                     result.Add(new XAttribute(BundleXmlParser.XATOM_DELETED_WHEN, ((DeletedEntry)entry).When));
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Serialization
                 if (re.Resource != null)
                     result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT,
                         new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "text/xml"),
-                        FhirSerializer.SerializeResourceAsXElement(re.Resource, summary)));
+                        getContentAsXElement(re.Resource, summary)));
 
                 // Note: this is a read-only property, so it is serialized but never parsed
                 if (entry.Summary != null)
                 {
                     var xelem = XElement.Parse(entry.Summary);
-                    xelem.Name = XNamespace.Get(Util.XHTMLNS) + xelem.Name.LocalName;
+                    xelem.Name = XNamespace.Get(SerializationUtil.XHTMLNS) + xelem.Name.LocalName;
 
                     result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_SUMMARY,
                             new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "xhtml"), xelem));
@@ -133,6 +133,13 @@ namespace Hl7.Fhir.Serialization
             }
 
             return result;
+        }
+
+        private static object getContentAsXElement(Resource resource, bool summary)
+        {
+            var xml = FhirSerializer.SerializeResourceToXml(resource, summary);
+
+            return XElement.Parse(xml);
         }
 
         private static XElement xmlCreateId(Uri id)

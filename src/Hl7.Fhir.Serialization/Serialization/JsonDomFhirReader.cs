@@ -14,9 +14,17 @@ namespace Hl7.Fhir.Serialization
 
         internal JToken Current { get { return _current; } }            // just for while refactoring
 
-        public JsonDomFhirReader(JToken root)
+        internal JsonDomFhirReader(JToken root)
         {
             _current = root;
+        }
+
+        public JsonDomFhirReader(JsonReader reader)
+        {
+            reader.DateParseHandling = DateParseHandling.None;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
+
+            _current = JObject.Load(reader);
         }
 
         public TokenType CurrentToken

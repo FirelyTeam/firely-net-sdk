@@ -20,10 +20,7 @@ namespace Hl7.Fhir.Test.Serialization
             Stream jsonExample = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.json");
             string json = new StreamReader(jsonExample).ReadToEnd();
 
-            SerializationConfig.AcceptUnknownMembers = true;
-            SerializationConfig.AddModelAssembly(typeof(Resource).Assembly);
-
-//            var once = FhirParser.ParseResourceFromJson(json);
+ //            var once = FhirParser.ParseResourceFromJson(json);
             var once = FhirParser.ParseResourceFromXml(xml);
 
             Stopwatch x = new Stopwatch();

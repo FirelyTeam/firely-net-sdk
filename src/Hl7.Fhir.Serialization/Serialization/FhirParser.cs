@@ -47,55 +47,36 @@ namespace Hl7.Fhir.Serialization
     {
         public static Resource ParseResourceFromXml(string xml)
         {
-            var reader = Util.XmlReaderFromString(xml);
+            var reader = XmlReaderFromString(xml);
             return ParseResource(reader);
         }
 
         public static Resource ParseResourceFromJson(string json)
         {
-            var reader = Util.JsonReaderFromString(json);
+            var reader = JsonReaderFromString(json);
             return ParseResource(reader);
         }
 
         public static IList<Tag> ParseTagListFromXml(string xml)
         {
-            var reader = Util.XmlReaderFromString(xml);
+            var reader = XmlReaderFromString(xml);
             return ParseTagList(reader);
         }
 
         public static IList<Tag> ParseTagListFromJson(string json)
         {
-            var reader = Util.JsonReaderFromString(json);
+            var reader = JsonReaderFromString(json);
             return ParseTagList(reader);
-        }
-
-        internal static Resource ParseResource(IFhirReader reader)
-        {
-            return new ResourceReader(reader).Deserialize();
-        }
-
-
-        internal static XDocument GetDocumentFromReader(XmlReader reader)
-        {
-            return XDocument.Load(reader, LoadOptions.SetLineInfo);
-        }
-
-        internal static JObject GetDocumentFromReader(JsonReader reader)
-        {
-            reader.DateParseHandling = DateParseHandling.None;
-            reader.FloatParseHandling = FloatParseHandling.Decimal;
-
-            return JObject.Load(reader);
         }
 
         public static Resource ParseResource(XmlReader reader)
         {
-            return ParseResource(new XmlDomFhirReader(GetDocumentFromReader(reader)));
+            return ParseResource(new XmlDomFhirReader(reader));
         }
 
         public static Resource ParseResource(JsonReader reader)
         {
-            return ParseResource(new JsonDomFhirReader(GetDocumentFromReader(reader)));
+            return ParseResource(new JsonDomFhirReader(reader));
         }
 
         public static IList<Tag> ParseTagList(XmlReader reader)
@@ -144,12 +125,12 @@ namespace Hl7.Fhir.Serialization
 
         public static BundleEntry ParseBundleEntryFromJson(string json)
         {
-            return ParseBundleEntry(Util.JsonReaderFromString(json));
+            return ParseBundleEntry(JsonReaderFromString(json));
         }
 
         public static BundleEntry ParseBundleEntryFromXml(string xml)
         {
-            return ParseBundleEntry(Util.XmlReaderFromString(xml));
+            return ParseBundleEntry(XmlReaderFromString(xml));
         }
 
         public static Bundle ParseBundle(JsonReader reader)
@@ -165,7 +146,7 @@ namespace Hl7.Fhir.Serialization
 
         public static Bundle ParseBundleFromJson(string json)
         {
-            return ParseBundle(Util.JsonReaderFromString(json));
+            return ParseBundle(JsonReaderFromString(json));
         }
 
         public static Bundle ParseBundle(XmlReader reader)
@@ -181,7 +162,22 @@ namespace Hl7.Fhir.Serialization
 
         public static Bundle ParseBundleFromXml(string xml)
         {
-            return ParseBundle(Util.XmlReaderFromString(xml));
+            return ParseBundle(XmlReaderFromString(xml));
+        }
+
+        internal static Resource ParseResource(IFhirReader reader)
+        {
+            return new ResourceReader(reader).Deserialize();
+        }
+
+        internal static XmlReader XmlReaderFromString(string xml)
+        {
+            return XmlReader.Create(new StringReader(xml));
+        }
+
+        internal static JsonTextReader JsonReaderFromString(string json)
+        {
+            return new JsonTextReader(new StringReader(json));
         }
     }
 }

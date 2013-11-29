@@ -169,11 +169,6 @@ namespace Hl7.Fhir.Serialization
             return xmlWriterToBytes(xw => BundleXmlSerializer.WriteTo(entry, xw, summary));
         }
 
-        public static XElement SerializeResourceAsXElement(Resource resource, bool summary = false)
-        {
-            return XElement.Parse(SerializeResourceToXml(resource, summary));
-        }
-
         private static byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();

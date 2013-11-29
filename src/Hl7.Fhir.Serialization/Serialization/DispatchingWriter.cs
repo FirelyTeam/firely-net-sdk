@@ -15,7 +15,6 @@ namespace Hl7.Fhir.Serialization
     {
         private readonly IFhirWriter _current;
         private readonly ModelInspector _inspector;
-        private readonly bool _arrayMode;
 
         public DispatchingWriter(IFhirWriter data)
         {

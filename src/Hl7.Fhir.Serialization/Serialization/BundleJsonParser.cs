@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Serialization
                 {
                     Title = feed.Value<string>(BundleXmlParser.XATOM_TITLE),
                     LastUpdated = instantOrNull(feed[BundleXmlParser.XATOM_UPDATED]),
-                    Id = Util.UriValueOrNull(feed[BundleXmlParser.XATOM_ID]),
+                    Id = SerializationUtil.UriValueOrNull(feed[BundleXmlParser.XATOM_ID]),
                     Links = getLinks(feed[BundleXmlParser.XATOM_LINK]),
                     AuthorName = feed[BundleXmlParser.XATOM_AUTHOR] as JArray != null ?
                                 feed[BundleXmlParser.XATOM_AUTHOR]
@@ -140,6 +140,7 @@ namespace Hl7.Fhir.Serialization
         {
             JObject entry;
             reader.DateParseHandling = DateParseHandling.DateTimeOffset;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
 
             try
             {
@@ -181,7 +182,7 @@ namespace Hl7.Fhir.Serialization
                         throw new InvalidOperationException("BundleEntry has empty content: cannot determine Resource type in parser");
                 }
 
-                result.Id = Util.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
+                result.Id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
                 if (result.Id != null) errors.DefaultContext = String.Format("Entry '{0}'", result.Id.ToString());
 
                 result.Links = getLinks(entry[BundleXmlParser.XATOM_LINK]);
@@ -228,7 +229,7 @@ namespace Hl7.Fhir.Serialization
             {
                 foreach (var link in links)
                 {
-                    var uri = Util.UriValueOrNull(link[BundleXmlParser.XATOM_LINK_HREF]);
+                    var uri = SerializationUtil.UriValueOrNull(link[BundleXmlParser.XATOM_LINK_HREF]);
 
                     if (uri != null)
                         result.Add(new UriLinkEntry

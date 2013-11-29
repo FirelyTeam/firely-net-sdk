@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
 
             if (!String.IsNullOrWhiteSpace(bundle.Title))
                 result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, bundle.Title));
-            if (Util.UriHasValue(bundle.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, bundle.Id));
+            if (SerializationUtil.UriHasValue(bundle.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, bundle.Id));
             if (bundle.LastUpdated != null) 
                 result.Add(new JProperty(BundleXmlParser.XATOM_UPDATED, bundle.LastUpdated));
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Serialization
             {
                 ResourceEntry re = (ResourceEntry)entry;
                 if (!String.IsNullOrEmpty(re.Title)) result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, re.Title));
-                if (Util.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
+                if (SerializationUtil.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
 
                 if (re.LastUpdated != null) result.Add(new JProperty(BundleXmlParser.XATOM_UPDATED, re.LastUpdated));
                 if (re.Published != null) result.Add(new JProperty(BundleXmlParser.XATOM_PUBLISHED, re.Published));
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Serialization
             {
                 DeletedEntry de = (DeletedEntry)entry;
                 if (de.When != null) result.Add(new JProperty(BundleJsonParser.JATOM_DELETED, de.When));
-                if (Util.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
+                if (SerializationUtil.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
             }
 
             if(entry.Links != null && entry.Links.Count() > 0)
@@ -162,15 +162,11 @@ namespace Hl7.Fhir.Serialization
 
         private static JObject getContentsAsJObject(Resource resource, bool summary)
         {
-            StringWriter w = new StringWriter();
+            JsonDomFhirWriter writer = new JsonDomFhirWriter();
+            ResourceWriter w = new ResourceWriter(writer);
+            w.Serialize(resource);
 
-            //TODO: This would be much more efficient if we could serialize
-            //the resource to a JObject directly
-            FhirSerializer.SerializeResource(resource, new JsonTextWriter(w), summary);
-
-            JsonTextReader reader = Util.JsonReaderFromString(w.ToString());
-            reader.DateParseHandling = DateParseHandling.None;
-            return JObject.Load(reader);
+            return writer.Result;
         }
     }
 }

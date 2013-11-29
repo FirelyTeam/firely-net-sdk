@@ -40,8 +40,7 @@
       <HintPath>..\..\lib\Hl7.Fhir.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
@@ -63,6 +62,7 @@
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Inspection\EnumMappingTest.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Serialization\MeasurePerformance.cs" />
     <Compile Include="Serialization\EdgeCasePatientRoundtrip.cs" />
     <Compile Include="JsonAssert.cs" />
+    <Compile Include="Serialization\TagParsingTests.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestPatient.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

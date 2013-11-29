@@ -44,13 +44,5 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(valueProp.RepresentsValueElement);
             Assert.AreEqual(typeof(Uri),valueProp.ElementType);
         }
-
-
-        [TestMethod]
-        public void TestComplexDataTypeMapping()
-        {
-            //TODO
-            throw new NotImplementedException();
-        }
     }
 }

@@ -34,8 +34,11 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument("existing", "Existing instance is of type {0}, but type parameter indicates data type is a {1}", existing.GetType().Name, mapping.NativeType.Name);
             }
             else
-                existing = SerializationConfig.ModelClassFactories.InvokeFactory(mapping.NativeType);
-           
+            {
+                var fac = new DefaultModelFactory();
+                existing = fac.Create(mapping.NativeType);
+            }
+
             IEnumerable<Tuple<string, IFhirReader>> members = null;
 
             if (_current.CurrentToken == TokenType.Object)

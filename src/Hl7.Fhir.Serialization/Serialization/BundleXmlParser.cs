@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
 
         public static readonly XNamespace XATOMNS = ATOMPUB_NS;
         public static readonly XNamespace XTOMBSTONE = ATOMPUB_TOMBSTONES_NS;
-        public static readonly XNamespace XFHIRNS = Util.FHIRNS;
+        public static readonly XNamespace XFHIRNS = SerializationUtil.FHIRNS;
         public static readonly XNamespace XOPENSEARCHNS = OPENSEARCH_NS;
 
 
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                feed = XDocument.Load(reader).Root;
+                feed = XDocument.Load(reader, LoadOptions.SetLineInfo).Root;
             }
             catch (Exception exc)
             {
@@ -99,17 +99,17 @@ namespace Hl7.Fhir.Serialization
             {
                 result = new Bundle()
                 {
-                    Title = Util.StringValueOrNull(feed.Element(XATOMNS + XATOM_TITLE)),
-                    LastUpdated = Util.InstantOrNull(feed.Element(XATOMNS + XATOM_UPDATED)),
-                    Id = Util.UriValueOrNull(feed.Element(XATOMNS + XATOM_ID)),
+                    Title = SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_TITLE)),
+                    LastUpdated = SerializationUtil.InstantOrNull(feed.Element(XATOMNS + XATOM_UPDATED)),
+                    Id = SerializationUtil.UriValueOrNull(feed.Element(XATOMNS + XATOM_ID)),
                     Links = getLinks(feed.Elements(XATOMNS + XATOM_LINK)),
                     AuthorName = feed.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                            Util.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
+                            SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
                                 .Element(XATOMNS + XATOM_AUTH_NAME)),
                     AuthorUri = feed.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                            Util.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
+                            SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
                                 .Element(XATOMNS + XATOM_AUTH_URI)),
-                    TotalResults = Util.IntValueOrNull(feed.Element(XOPENSEARCHNS + XATOM_TOTALRESULTS))
+                    TotalResults = SerializationUtil.IntValueOrNull(feed.Element(XOPENSEARCHNS + XATOM_TOTALRESULTS))
                 };
             }
             catch (Exception exc)
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization
 
         internal static Bundle Load(string xml, ErrorList errors)
         {
-            return Load(Util.XmlReaderFromString(xml), errors);
+            return Load(FhirParser.XmlReaderFromString(xml), errors);
         }
 
         private static ManagedEntryList loadEntries(IEnumerable<XElement> entries, Bundle parent, ErrorList errors)
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Serialization
 
         internal static BundleEntry LoadEntry(string xml, ErrorList errors)
         {
-            return LoadEntry(Util.XmlReaderFromString(xml), errors);
+            return LoadEntry(FhirParser.XmlReaderFromString(xml), errors);
         }
 
         internal static BundleEntry LoadEntry(XmlReader reader, ErrorList errors)
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Serialization
                 if (entry.Name == XTOMBSTONE + XATOM_DELETED_ENTRY)
                 {
                     result = new DeletedEntry();
-                    result.Id = Util.UriValueOrNull(entry.Attribute(XATOM_DELETED_REF));
+                    result.Id = SerializationUtil.UriValueOrNull(entry.Attribute(XATOM_DELETED_REF));
                     if (result.Id != null) errors.DefaultContext = String.Format("Entry '{0}'", result.Id.ToString());
                 }
                 else
                 {
                     XElement content = entry.Element(XATOMNS + XATOM_CONTENT);
-                    var id = Util.UriValueOrNull(entry.Element(XATOMNS + XATOM_ID));
+                    var id = SerializationUtil.UriValueOrNull(entry.Element(XATOMNS + XATOM_ID));
 
                     if (id != null) errors.DefaultContext = String.Format("Entry '{0}'", id.ToString());
 
@@ -208,19 +208,19 @@ namespace Hl7.Fhir.Serialization
 
                 if (result is DeletedEntry)
                 {
-                    ((DeletedEntry)result).When = Util.InstantOrNull(entry.Attribute(XATOM_DELETED_WHEN));
+                    ((DeletedEntry)result).When = SerializationUtil.InstantOrNull(entry.Attribute(XATOM_DELETED_WHEN));
                 }
                 else
                 {
                     ResourceEntry re = (ResourceEntry)result;
-                    re.Title = Util.StringValueOrNull(entry.Element(XATOMNS + XATOM_TITLE));
-                    re.LastUpdated = Util.InstantOrNull(entry.Element(XATOMNS + XATOM_UPDATED));
-                    re.Published = Util.InstantOrNull(entry.Element(XATOMNS + XATOM_PUBLISHED));
+                    re.Title = SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_TITLE));
+                    re.LastUpdated = SerializationUtil.InstantOrNull(entry.Element(XATOMNS + XATOM_UPDATED));
+                    re.Published = SerializationUtil.InstantOrNull(entry.Element(XATOMNS + XATOM_PUBLISHED));
                     re.AuthorName = entry.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                                Util.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
+                                SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
                                     .Element(XATOMNS + XATOM_AUTH_NAME));
                     re.AuthorUri = entry.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                                Util.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
+                                SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
                                     .Element(XATOMNS + XATOM_AUTH_URI));
 
                     
@@ -245,15 +245,15 @@ namespace Hl7.Fhir.Serialization
             return new UriLinkList(
                 links.Select(el => new UriLinkEntry
                 {
-                    Rel = Util.StringValueOrNull(el.Attribute(XATOM_LINK_REL)),
-                    Uri = Util.UriValueOrNull(el.Attribute(XATOM_LINK_HREF))
+                    Rel = SerializationUtil.StringValueOrNull(el.Attribute(XATOM_LINK_REL)),
+                    Uri = SerializationUtil.UriValueOrNull(el.Attribute(XATOM_LINK_HREF))
                 }));
         }
 
 
         private static Resource getContents(XElement content, ErrorList errors)
         {
-            string contentType = Util.StringValueOrNull(content.Attribute(XATOM_CONTENT_TYPE));
+            string contentType = SerializationUtil.StringValueOrNull(content.Attribute(XATOM_CONTENT_TYPE));
 
             if (contentType != "text/xml")
             {
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Serialization
                 return null;
             }
 
-            return new ResourceReader(new XmlDomFhirReader(content)).Deserialize();
+            return new ResourceReader(new XmlDomFhirReader(content)).Deserialize(nested:true);
         }    
     }
 }

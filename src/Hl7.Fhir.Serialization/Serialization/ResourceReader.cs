@@ -35,7 +35,10 @@ namespace Hl7.Fhir.Serialization
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
                 if (existing == null)
-                    existing = SerializationConfig.ModelClassFactories.InvokeFactory(mappedType.NativeType);
+                {
+                    var fac = new DefaultModelFactory();
+                    existing = fac.Create(mappedType.NativeType);
+                }
                 else
                 {
                     if (mappedType.NativeType != existing.GetType())

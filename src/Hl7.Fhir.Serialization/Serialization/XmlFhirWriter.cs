@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             if (_currentMemberName == null)
                 throw Error.InvalidOperation("There is no current member name set while starting complex content");
 
-            xw.WriteStartElement(_currentMemberName, Util.FHIRNS);
+            xw.WriteStartElement(_currentMemberName, SerializationUtil.FHIRNS);
 
             // A new complex element starts a new scope with its own members and member names
             _memberNameStack.Push(_currentMemberName);

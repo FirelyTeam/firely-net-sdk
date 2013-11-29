@@ -18,9 +18,8 @@ namespace Hl7.Fhir.Test
 
         public static void AreSame(string expected, string actual)
         {
-            // JObject.Load won't work, since you cannot set float parse handling
-            JObject exp = FhirParser.GetDocumentFromReader(new JsonTextReader(new StringReader(expected)));
-            JObject act = FhirParser.GetDocumentFromReader(new JsonTextReader(new StringReader(actual)));
+            JObject exp = JObject.Parse(expected);
+            JObject act = JObject.Parse(actual);
 
             AreSame(exp, act);
         }

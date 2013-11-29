@@ -11,17 +11,17 @@ namespace Hl7.Fhir.Test.Serialization
         [TestMethod]
         public void FindModelClassFactory()
         {
-            SerializationConfig.ModelClassFactories.Clear();
+            ModelFactoryList facs = new ModelFactoryList();
 
             var specificFactory = new SpecificModelClassFactory();
-            SerializationConfig.ModelClassFactories.Add(specificFactory);
+            facs.Add(specificFactory);
             var defaultFactory = new DefaultModelFactory();
-            SerializationConfig.ModelClassFactories.Add(defaultFactory);
+            facs.Add(defaultFactory);
 
-            var selectedFactory = SerializationConfig.ModelClassFactories.FindFactory(typeof(SpecificModelClass));
+            var selectedFactory = facs.FindFactory(typeof(SpecificModelClass));
             Assert.AreEqual(specificFactory, selectedFactory);
 
-            selectedFactory = SerializationConfig.ModelClassFactories.FindFactory(typeof(GenericModelClass));
+            selectedFactory = facs.FindFactory(typeof(GenericModelClass));
             Assert.AreEqual(defaultFactory, selectedFactory);
         }
 
@@ -29,11 +29,11 @@ namespace Hl7.Fhir.Test.Serialization
         [ExpectedException(typeof(InvalidOperationException))]
         public void FailWhenNoFactoryFound()
         {
-            SerializationConfig.ModelClassFactories.Clear();
+            ModelFactoryList facs = new ModelFactoryList();
 
-            SerializationConfig.ModelClassFactories.Add(new SpecificModelClassFactory());
+            facs.Add(new SpecificModelClassFactory());
 
-            var result = SerializationConfig.ModelClassFactories.FindFactory(typeof(GenericModelClass));
+            var result = facs.FindFactory(typeof(GenericModelClass));
         }
     }
 

@@ -105,9 +105,9 @@ namespace Hl7.Fhir.Serialization
             {
                 foreach (var tag in tags)
                 {
-                    var scheme = Util.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_SCHEME));
-                    var term = Util.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_TERM));
-                    var label = Util.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_LABEL));
+                    var scheme = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_SCHEME));
+                    var term = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_TERM));
+                    var label = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_LABEL));
 
                     result.Add(new Tag(term,scheme,label));
                 }

@@ -14,7 +14,6 @@ namespace Hl7.Fhir.Test.Serialization
     [TestClass]
     public class EdgeCasePatientRoundtrip
     {
-
         [TestMethod]
         public void Roundtrip()
         {
@@ -22,9 +21,6 @@ namespace Hl7.Fhir.Test.Serialization
             string xml = new StreamReader(xmlExample).ReadToEnd();
             Stream jsonExample = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.json");
             string json = new StreamReader(jsonExample).ReadToEnd();
-
-            SerializationConfig.AcceptUnknownMembers = true;
-            SerializationConfig.AddModelAssembly(typeof(Resource).Assembly);
 
             var poco = FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
