@@ -49,15 +49,9 @@ namespace Hl7.Fhir.Serialization
         public const string XHTMLNS = "http://www.w3.org/1999/xhtml";
         public const string XMLNS = "http://www.w3.org/2000/xmlns/";
 
-        public const string RESTPARAM_FORMAT = "_format";
-       
-        public const string SEARCH_PARAM_ID = "_id";
-        public const string SEARCH_PARAM_COUNT = "_count";
-        public const string SEARCH_PARAM_INCLUDE = "_include";
-        public const string HISTORY_PARAM_SINCE = "_since";
-        public const string SEARCH_PARAM_SORT = "_sort";
+      
 
-        public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
+     
 
         public static bool UriHasValue(Uri u)
         {
@@ -161,22 +155,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static Binary MakeBinary(byte[] data, string contentType)
-        {
-            var binary = new Binary();
-
-            binary.Content = data;
-            binary.ContentType = contentType;
-            //Note: binaries don't have Text narrative
-            //binary.Text = new Narrative()
-            //{
-            //    Status = Narrative.NarrativeStatus.Generated,
-            //    Div = new XElement(XNamespace.Get(XHTMLNS) + "div",
-            //                "Binary content of type " + contentType).ToString()
-            //};
-
-            return binary;
-        }
+      
 
 
     }

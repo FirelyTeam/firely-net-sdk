@@ -36,8 +36,6 @@ using Hl7.Fhir;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Net;
-using Hl7.Fhir.Parsers;
-using Hl7.Fhir.Serializers;
 using System.IO;
 using Newtonsoft.Json;
 

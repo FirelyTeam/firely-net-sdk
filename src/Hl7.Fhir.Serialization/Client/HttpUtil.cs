@@ -53,6 +53,14 @@ namespace Hl7.Fhir.Client
         public const string LASTMODIFIED = "Last-Modified";
         public const string CATEGORY = "Category";
 
+        public const string RESTPARAM_FORMAT = "_format";
+
+        public const string SEARCH_PARAM_ID = "_id";
+        public const string SEARCH_PARAM_COUNT = "_count";
+        public const string SEARCH_PARAM_INCLUDE = "_include";
+        public const string HISTORY_PARAM_SINCE = "_since";
+        public const string SEARCH_PARAM_SORT = "_sort";
+        public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
 
         public static byte[] ReadAllFromStream(Stream s, int contentLength)
         {
@@ -149,57 +157,72 @@ namespace Hl7.Fhir.Client
             return String.Join(", ", result);
         }
 
+        public static Binary MakeBinary(byte[] data, string contentType)
+        {
+            var binary = new Binary();
 
+            binary.Content = data;
+            binary.ContentType = contentType;
+            //Note: binaries don't have Text narrative
+            //binary.Text = new Narrative()
+            //{
+            //    Status = Narrative.NarrativeStatus.Generated,
+            //    Div = new XElement(XNamespace.Get(XHTMLNS) + "div",
+            //                "Binary content of type " + contentType).ToString()
+            //};
 
-        //public static ResourceEntry SingleResourceResponse(string body, byte[] data, string contentType, 
-        //    string requestUri=null, string location=null,
-        //    string category=null, string lastModified=null )
-        //{
-        //    Resource resource = null;
+            return binary;
+        }
 
-        //    if (body != null)
-        //        resource = parseBody<Resource>(body, contentType,
-        //            (b, e) => FhirParser.ParseResourceFromXml(b, e),
-        //            (b, e) => FhirParser.ParseResourceFromJson(b, e));
-        //    else
-        //        resource = Util.MakeBinary(data, contentType);
+        public static ResourceEntry SingleResourceResponse(string body, byte[] data, string contentType,
+            string requestUri = null, string location = null,
+            string category = null, string lastModified = null)
+        {
+            Resource resource = null;
 
-        //    ResourceEntry result = ResourceEntry.Create(resource);
-        //    string versionIdInRequestUri = null;
+            if (body != null)
+                resource = parseBody<Resource>(body, contentType,
+                    b => FhirParser.ParseResourceFromXml(b),
+                    b => FhirParser.ParseResourceFromJson(b));
+            else
+                resource = MakeBinary(data, contentType);
 
-        //    if (!String.IsNullOrEmpty(requestUri))
-        //    {
-        //        ResourceLocation reqLoc = new ResourceLocation(requestUri);
-        //        versionIdInRequestUri = reqLoc.VersionId;
-        //        ResourceLocation idLoc = new ResourceLocation(reqLoc.ServiceUri);
-        //        idLoc.Collection = reqLoc.Collection;
-        //        idLoc.Id = reqLoc.Id;
-        //        result.Id = idLoc.ToUri();
-        //    }
+            ResourceEntry result = ResourceEntry.Create(resource);
+            string versionIdInRequestUri = null;
 
-        //    if (!String.IsNullOrEmpty(location))
-        //        result.SelfLink = new Uri(location, UriKind.Absolute);
-        //    else
-        //    {
-        //        // Try to get the SelfLink from the requestUri (might contain specific version id)
-        //        if (!String.IsNullOrEmpty(versionIdInRequestUri))
-        //        {
-        //            var rl = new ResourceLocation(result.Id);
-        //            rl.VersionId = versionIdInRequestUri;
-        //            result.SelfLink = rl.ToUri();
-        //        }
-        //    }
+            if (!String.IsNullOrEmpty(requestUri))
+            {
+                ResourceLocation reqLoc = new ResourceLocation(requestUri);
+                versionIdInRequestUri = reqLoc.VersionId;
+                ResourceLocation idLoc = new ResourceLocation(reqLoc.ServiceUri);
+                idLoc.Collection = reqLoc.Collection;
+                idLoc.Id = reqLoc.Id;
+                result.Id = idLoc.ToUri();
+            }
 
-        //    if(!String.IsNullOrEmpty(lastModified))
-        //        result.LastUpdated = DateTimeOffset.Parse(lastModified);
+            if (!String.IsNullOrEmpty(location))
+                result.SelfLink = new Uri(location, UriKind.Absolute);
+            else
+            {
+                // Try to get the SelfLink from the requestUri (might contain specific version id)
+                if (!String.IsNullOrEmpty(versionIdInRequestUri))
+                {
+                    var rl = new ResourceLocation(result.Id);
+                    rl.VersionId = versionIdInRequestUri;
+                    result.SelfLink = rl.ToUri();
+                }
+            }
 
-        //    if (!String.IsNullOrEmpty(category))
-        //        result.Tags = ParseCategoryHeader(category);
+            if (!String.IsNullOrEmpty(lastModified))
+                result.LastUpdated = DateTimeOffset.Parse(lastModified);
 
-        //    result.Title = "A " + resource.GetType().Name + " resource";
-            
-        //    return result;
-        //}
+            if (!String.IsNullOrEmpty(category))
+                result.Tags = ParseCategoryHeader(category);
+
+            result.Title = "A " + resource.GetType().Name + " resource";
+
+            return result;
+        }
 
 
 

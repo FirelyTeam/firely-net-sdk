@@ -42,7 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Client\ContentType.cs" />
+    <Compile Include="Client\FhirClient.cs" />
+    <Compile Include="Client\FhirOperationException.cs" />
     <Compile Include="Client\HttpUtil.cs" />
+    <Compile Include="Client\ResponseDetails.cs" />
+    <Compile Include="Client\SystemNetMimeContentType.cs" />
+    <Compile Include="Client\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +98,17 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
+    <Compile Include="Support\QueryParam.cs" />
+    <Compile Include="Support\ResourceLocation.cs" />
+    <Compile Include="Support\Search\BoolParamValue.cs" />
+    <Compile Include="Support\Search\CombinedParamValue.cs" />
+    <Compile Include="Support\Search\DateParamValue.cs" />
+    <Compile Include="Support\Search\IntegerParamValue.cs" />
+    <Compile Include="Support\Search\ReferenceParamValue.cs" />
+    <Compile Include="Support\Search\SearchParam.cs" />
+    <Compile Include="Support\Search\SearchParamValue.cs" />
+    <Compile Include="Support\Search\StringParamValue.cs" />
+    <Compile Include="Support\Search\TokenParamValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Messages.resx">

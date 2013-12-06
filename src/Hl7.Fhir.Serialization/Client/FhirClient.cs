@@ -36,11 +36,10 @@ using Hl7.Fhir;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Net;
-using Hl7.Fhir.Parsers;
-using Hl7.Fhir.Serializers;
 using System.IO;
 using Newtonsoft.Json;
 using Hl7.Fhir.Support.Search;
+using Hl7.Fhir.Serialization;
 
 
 
@@ -324,8 +323,8 @@ namespace Hl7.Fhir.Client
 
             var rl = new ResourceLocation(endpoint);
 
-            if (since != null) rl.SetParam(Util.HISTORY_PARAM_SINCE, Util.FormatIsoDateTime(since.Value));
-            if(count != null) rl.SetParam(Util.HISTORY_PARAM_COUNT, count.ToString());
+            if (since != null) rl.SetParam(HttpUtil.HISTORY_PARAM_SINCE, Util.FormatIsoDateTime(since.Value));
+            if(count != null) rl.SetParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
 
             return FetchBundle(rl.ToUri());
         }
@@ -455,10 +454,10 @@ namespace Hl7.Fhir.Client
                 rl.Operation = ResourceLocation.RESTOPER_SEARCH;
 
             if( count.HasValue )
-                rl.AddParam(Util.SEARCH_PARAM_COUNT, count.Value.ToString());
+                rl.AddParam(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
 
             if (sort != null)
-                rl.AddParam(Util.SEARCH_PARAM_SORT, sort);
+                rl.AddParam(HttpUtil.SEARCH_PARAM_SORT, sort);
 
             if (criteria != null)
             {
@@ -469,7 +468,7 @@ namespace Hl7.Fhir.Client
             if (includes != null)
             {
                 foreach (string includeParam in includes)
-                    rl.AddParam(Util.SEARCH_PARAM_INCLUDE, includeParam);
+                    rl.AddParam(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
             }
 
             return FetchBundle(rl.ToUri());
@@ -522,7 +521,7 @@ namespace Hl7.Fhir.Client
         /// returned resource refers to.</remarks>
         public Bundle SearchById(ResourceType resource, string id, string[] includes=null, int? count=null)
         {
-            return Search(resource, Util.SEARCH_PARAM_ID, id, null, includes, count);
+            return Search(resource, HttpUtil.SEARCH_PARAM_ID, id, null, includes, count);
         }
 
 
@@ -706,7 +705,7 @@ namespace Hl7.Fhir.Client
             if (UseFormatParam)
             {
                 var rl = new ResourceLocation(location);
-                rl.SetParam(Util.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
+                rl.SetParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
                 endpoint = rl.ToUri();
             }
 
