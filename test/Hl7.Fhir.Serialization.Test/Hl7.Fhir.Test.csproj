@@ -39,6 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Hl7.Fhir.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -73,7 +76,9 @@
     <Compile Include="Serialization\MeasurePerformance.cs" />
     <Compile Include="Serialization\EdgeCasePatientRoundtrip.cs" />
     <Compile Include="JsonAssert.cs" />
+    <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\TagParsingTests.cs" />
+    <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +94,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestPatient.xml" />
+    <EmbeddedResource Include="TestPatient.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

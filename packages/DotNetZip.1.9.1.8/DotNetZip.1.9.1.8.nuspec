@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotNetZip</id>
+    <version>1.9.1.8</version>
+    <title>DotNetZip</title>
+    <authors>Dino Chiesa</authors>
+    <owners>Dino Chiesa</owners>
+    <licenseUrl>http://dotnetzip.codeplex.com/license</licenseUrl>
+    <projectUrl>http://dotnetzip.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>DotNetZip is an easy-to-use, FAST, FREE class library and toolset for manipulating zip files or folders.</description>
+    <summary>DotNetZip is an easy-to-use, FAST, FREE class library and toolset for manipulating zip files or folders.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>zip</tags>
+  </metadata>
+</package>

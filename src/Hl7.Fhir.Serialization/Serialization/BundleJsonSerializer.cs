@@ -50,6 +50,8 @@ namespace Hl7.Fhir.Serialization
 
             JObject result = new JObject();
 
+            result.Add(new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, "Bundle"));
+
             if (!String.IsNullOrWhiteSpace(bundle.Title))
                 result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, bundle.Title));
             if (SerializationUtil.UriHasValue(bundle.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, bundle.Id));
@@ -59,8 +61,11 @@ namespace Hl7.Fhir.Serialization
             if (!String.IsNullOrWhiteSpace(bundle.AuthorName))
                 result.Add(jsonCreateAuthor(bundle.AuthorName, bundle.AuthorUri));
             if (bundle.TotalResults != null) result.Add(new JProperty(BundleXmlParser.XATOM_TOTALRESULTS, bundle.TotalResults.ToString()));
+          
             if (bundle.Links.Count > 0)
                 result.Add(new JProperty(BundleXmlParser.XATOM_LINK, jsonCreateLinkArray(bundle.Links)));
+            if (bundle.Tags != null && bundle.Tags.Count() > 0)
+                result.Add( TagListSerializer.CreateTagCategoryPropertyJson(bundle.Tags));
 
             var entryArray = new JArray();
 

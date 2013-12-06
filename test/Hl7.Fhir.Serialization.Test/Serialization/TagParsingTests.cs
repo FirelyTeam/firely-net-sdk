@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Client;
 using Hl7.Fhir.Serialization;
+using System.IO;
 
 namespace Hl7.Fhir.Test
 {
@@ -40,6 +41,14 @@ namespace Hl7.Fhir.Test
                         @"label=""confusion, abounds - beyond!""; scheme=""http://hl7.org/fhir/tag""", cat);
         }
 
+        [TestMethod]
+        public void AcceptsEmptyTagList()
+        {
+            var parsedTags = FhirParser.ParseTagListFromJson(jsonTagListEmpty);
+
+            Assert.IsNotNull(parsedTags);
+            Assert.AreEqual(0, parsedTags.Count);
+        }
 
         [TestMethod]
         public void TagEquality()
@@ -63,7 +72,10 @@ namespace Hl7.Fhir.Test
             tl.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed" ));
 
             string json = FhirSerializer.SerializeTagListToJson(tl);
+            File.WriteAllText("c:\\temp\\j1.json",json);
+            File.WriteAllText("c:\\temp\\j2.json", jsonTagList);
             Assert.AreEqual(jsonTagList, json);
+         
 
             string xml = FhirSerializer.SerializeTagListToXml(tl);
             Assert.AreEqual(xmlTagList, xml);
@@ -107,16 +119,23 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("http://www.furore.com/tags", tl[1].Term);
         }
 
-        private string jsonTagList = @"{""taglist"":{""category"":[" +
+        private string jsonTagList = @"{""resourceType"":""taglist"",""category"":[" +
             @"{""term"":""http://www.nu.nl/tags"",""label"":""No!"",""scheme"":""http://hl7.org/fhir/tag""}," +
-            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe, indeed"",""scheme"":""http://hl7.org/fhir/tag""}]}}";
+            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe, indeed"",""scheme"":""http://hl7.org/fhir/tag""}]" +
+            @"}";
+        private string jsonTagListEmpty = @"{""resourceType"":""taglist""}";
 
-        private string jsonTagListE1 = @"{""Xtaglist"":{""category"":[" +
+
+        // Error: misses the resourceType member
+        private string jsonTagListE1 = @"{""category"":[" +
             @"{""term"":""http://www.nu.nl/tags"",""label"":""No!"",""scheme"":""http://hl7.org/fhir/tag""}," +
-            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe"",""scheme"":""http://hl7.org/fhir/tag""}]}}";
-        private string jsonTagListE2 = @"{""taglist"":{""Xcategory"":[" +
+            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe"",""scheme"":""http://hl7.org/fhir/tag""}" +
+            @"]}";
+        // Error: has the wrong the resourceType member
+        private string jsonTagListE2 = @"{""resourceType"":""XTagList"", ""category"":[" +
             @"{""term"":""http://www.nu.nl/tags"",""label"":""No!"",""scheme"":""http://hl7.org/fhir/tag""}," +
-            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe"",""scheme"":""http://hl7.org/fhir/tag""}]}}";
+            @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe"",""scheme"":""http://hl7.org/fhir/tag""}" +
+            @"]}";
 
 
         private string xmlTagList = @"<?xml version=""1.0"" encoding=""utf-16""?><taglist xmlns=""http://hl7.org/fhir"">" +

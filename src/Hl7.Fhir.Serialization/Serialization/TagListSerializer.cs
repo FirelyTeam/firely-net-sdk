@@ -44,21 +44,40 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class TagListSerializer
     {
-        public const string TAGLIST_ROOT = "taglist";
+        public const string TAGLIST_TYPE = "taglist";
 
         internal static void SerializeTagList(IEnumerable<Tag> list, JsonWriter writer)
         {
             JObject jTagList = new JObject(
-                new JProperty(TAGLIST_ROOT,
-                    new JObject(CreateTagCategoryPropertyJson(list))));
+                new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, TAGLIST_TYPE),
+                CreateTagCategoryPropertyJson(list));
 
             jTagList.WriteTo(writer);
         }
 
 
+        internal static JProperty CreateTagCategoryPropertyJson(IEnumerable<Tag> tagList)
+        {
+            JArray jTags = new JArray();
+            JProperty result = new JProperty(BundleXmlParser.XATOM_CATEGORY, jTags);
+
+            foreach (Tag tag in tagList)
+            {
+                JObject jTag = new JObject();
+                if (!String.IsNullOrEmpty(tag.Term))
+                    jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_TERM, tag.Term));
+                if (!String.IsNullOrEmpty(tag.Label))
+                    jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_LABEL, tag.Label));
+                jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_SCHEME, tag.Scheme.ToString()));
+                jTags.Add(jTag);
+            }
+
+            return result;
+        }
+
         internal static void SerializeTagList(IEnumerable<Tag> list, XmlWriter writer)
         {
-            XElement xTagList = new XElement(BundleXmlParser.XFHIRNS + TAGLIST_ROOT);
+            XElement xTagList = new XElement(BundleXmlParser.XFHIRNS + TAGLIST_TYPE);
 
             foreach (var tag in list)
                 xTagList.Add(CreateTagCategoryPropertyXml(tag, useAtomNs: false));
@@ -76,28 +95,11 @@ namespace Hl7.Fhir.Serialization
                 result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_TERM, tag.Term));
             if (!String.IsNullOrEmpty(tag.Label))
                 result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_LABEL, tag.Label));
-            result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_SCHEME, Tag.FHIRTAGNS));
+            result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_SCHEME, tag.Scheme.ToString()));
 
             return result;
         }
 
-        internal static JProperty CreateTagCategoryPropertyJson(IEnumerable<Tag> tagList)
-        {                       
-            JArray jTags = new JArray();
-            JProperty result = new JProperty(BundleXmlParser.XATOM_CATEGORY, jTags);
-
-            foreach (Tag tag in tagList)
-            {
-                JObject jTag = new JObject();
-                if(!String.IsNullOrEmpty(tag.Term))
-                    jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_TERM, tag.Term) );
-                if(!String.IsNullOrEmpty(tag.Label))
-                    jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_LABEL, tag.Label));
-                jTag.Add(new JProperty(BundleXmlParser.XATOM_CAT_SCHEME, Tag.FHIRTAGNS));
-                jTags.Add(jTag);
-            }
-
-            return result;
-        }
+    
     }
 }

@@ -55,8 +55,18 @@ namespace Hl7.Fhir.Serialization
             if (!String.IsNullOrWhiteSpace(bundle.AuthorName))
                 root.Add(xmlCreateAuthor(bundle.AuthorName, bundle.AuthorUri));
             if (bundle.TotalResults != null) root.Add(new XElement(BundleXmlParser.XOPENSEARCHNS + BundleXmlParser.XATOM_TOTALRESULTS, bundle.TotalResults));
-            foreach (var l in bundle.Links)
-                root.Add(xmlCreateLink(l.Rel, l.Uri));
+
+            if (bundle.Links != null)
+            {
+                foreach (var l in bundle.Links)
+                    root.Add(xmlCreateLink(l.Rel, l.Uri));
+            }
+
+            if (bundle.Tags != null)
+            {
+                foreach (var tag in bundle.Tags)
+                    root.Add(TagListSerializer.CreateTagCategoryPropertyXml(tag));
+            }
 
             foreach (var entry in bundle.Entries)
                 root.Add(createEntry(entry, summary));

@@ -81,24 +81,12 @@ namespace Hl7.Fhir.Serialization
 
         public static IList<Tag> ParseTagList(XmlReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = TagListParser.ParseTags(reader,errors);
-
-            if (errors.Count > 0)
-                throw  Error.Format(errors.ToString());
-
-            return result;
+            return TagListParser.ParseTags(reader);
         }
 
         public static IList<Tag> ParseTagList(JsonReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = TagListParser.ParseTags(reader, errors);
-
-            if (errors.Count > 0)
-                throw Error.Format(errors.ToString());
-
-            return result;
+            return TagListParser.ParseTags(reader);
         }
 
         public static BundleEntry ParseBundleEntry(JsonReader reader)

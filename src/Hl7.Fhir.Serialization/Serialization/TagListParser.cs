@@ -44,57 +44,36 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class TagListParser
     {
-        internal static IList<Tag> ParseTags(XmlReader xr, ErrorList errors)
+        internal static IList<Tag> ParseTags(XmlReader xr)
         {
             xr.MoveToContent();
 
-            try
-            {
-                var taglist = (XElement)XElement.ReadFrom(xr);
+            var taglist = (XElement)XElement.ReadFrom(xr);
 
-                if (taglist.Name == BundleXmlParser.XFHIRNS + TagListSerializer.TAGLIST_ROOT)
-                {
-                    if (taglist.Elements().All(xe => xe.Name == BundleXmlParser.XFHIRNS + BundleXmlParser.XATOM_CATEGORY))
-                        return ParseTags(taglist.Elements());
-                    else
-                        errors.Add("TagList contains unexpected child elements");
-                }
+            if (taglist.Name == BundleXmlParser.XFHIRNS + TagListSerializer.TAGLIST_TYPE)
+            {
+                if (taglist.Elements().All(xe => xe.Name == BundleXmlParser.XFHIRNS + BundleXmlParser.XATOM_CATEGORY))
+                    return ParseTags(taglist.Elements());
                 else
-                    errors.Add(String.Format("Unexpected element name {0} found at start of TagList", taglist.Name));
+                    throw Error.Format("TagList contains unexpected child elements");
             }
-            catch (Exception exc)
-            {
-                errors.Add("Exception while loading taglist: " + exc.Message);
-            }
-
-            return null;
+            else
+                throw Error.Format("Unexpected element name {0} found at start of TagList", taglist.Name);
         }
 
-        internal static IList<Tag> ParseTags(JsonReader xr, ErrorList errors)
+        internal static IList<Tag> ParseTags(JsonReader xr)
         {
-            try
-            {
-                var tagObj = JObject.Load(xr);
+            var tagObj = JObject.Load(xr);
 
-                var tagListContents = tagObj[TagListSerializer.TAGLIST_ROOT] as JObject;
-                if (tagObj.Count == 1 && tagListContents != null)
-                {                 
-                    var categoryArray = tagListContents[BundleXmlParser.XATOM_CATEGORY] as JArray;
+            var tagType = tagObj[SerializationConfig.RESOURCETYPE_MEMBER_NAME];
+            if(tagType == null || tagType.Value<string>() != TagListSerializer.TAGLIST_TYPE)
+                throw Error.Format("TagList should start with a resourceType member TagList");
 
-                    if (tagListContents.Count == 1 && categoryArray != null)
-                        return ParseTags(categoryArray);
-                    else
-                        errors.Add("TagList contains unexpected child elements");
-                }
-                else
-                    errors.Add("Unexpected property found at start of TagList object");
-            }
-            catch (Exception exc)
-            {
-                errors.Add("Exception while loading taglist: " + exc.Message);
-            }
-
-            return null;
+            var categoryArray = tagObj[BundleXmlParser.XATOM_CATEGORY] as JArray;
+            if (categoryArray != null)
+                return ParseTags(categoryArray);
+            else
+                return new List<Tag>();
         }
 
         internal static IList<Tag> ParseTags(IEnumerable<XElement> tags)
@@ -136,8 +115,5 @@ namespace Hl7.Fhir.Serialization
 
             return result;
         }
-
-      
-
     }
 }

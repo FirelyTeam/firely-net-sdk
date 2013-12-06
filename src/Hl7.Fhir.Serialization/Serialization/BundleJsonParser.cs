@@ -59,16 +59,17 @@ namespace Hl7.Fhir.Serialization
         {
             if (attr == null) return null;
 
-            return attr.Value<DateTimeOffset?>();
+            return Util.ParseIsoDateTime(attr.Value<string>());
         }
 
         internal static Bundle Load(JsonReader reader, ErrorList errors)
         {
             JObject feed;
-            reader.DateParseHandling = DateParseHandling.DateTimeOffset;
 
             try
             {
+                reader.DateParseHandling = DateParseHandling.None;
+                reader.FloatParseHandling = FloatParseHandling.Decimal;
                 feed = JObject.Load(reader);
             }
             catch (Exception exc)
@@ -87,6 +88,7 @@ namespace Hl7.Fhir.Serialization
                     LastUpdated = instantOrNull(feed[BundleXmlParser.XATOM_UPDATED]),
                     Id = SerializationUtil.UriValueOrNull(feed[BundleXmlParser.XATOM_ID]),
                     Links = getLinks(feed[BundleXmlParser.XATOM_LINK]),
+                    Tags = TagListParser.ParseTags(feed[BundleXmlParser.XATOM_CATEGORY]),
                     AuthorName = feed[BundleXmlParser.XATOM_AUTHOR] as JArray != null ?
                                 feed[BundleXmlParser.XATOM_AUTHOR]
                                     .Select(auth => auth.Value<string>(BundleXmlParser.XATOM_AUTH_NAME))

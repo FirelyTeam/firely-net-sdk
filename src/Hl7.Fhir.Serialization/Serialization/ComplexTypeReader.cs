@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization
 
                 if (mappedProperty != null)
                 {
-                    Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
+                 //   Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
 
                     object value = null;
 
@@ -100,14 +100,14 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.InvalidOperation(Messages.DeserializeUnknownMember, memberName);
+                        throw Error.Format(Messages.DeserializeUnknownMember, memberName);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }
             }
 
             if (!hasMember)
-                throw Error.NotSupported("Fhir serialization does not allow nor support empty elements");
+                throw Error.Format("Fhir serialization does not allow nor support empty elements");
         }
     }
 }

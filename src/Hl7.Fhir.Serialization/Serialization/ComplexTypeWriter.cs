@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization
             var value = prop.GetValue(instance);
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
-            Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
+         //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
             if (value != null && !isEmptyArray)
             {

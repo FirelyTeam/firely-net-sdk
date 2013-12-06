@@ -83,9 +83,16 @@ namespace Hl7.Fhir.Serialization
         {
             XElement feed;
 
+            var settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreWhitespace = true;
+
             try
             {
-                feed = XDocument.Load(reader, LoadOptions.SetLineInfo).Root;
+
+                var internalReader = XmlReader.Create(reader, settings);
+                feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
             }
             catch (Exception exc)
             {
@@ -103,6 +110,7 @@ namespace Hl7.Fhir.Serialization
                     LastUpdated = SerializationUtil.InstantOrNull(feed.Element(XATOMNS + XATOM_UPDATED)),
                     Id = SerializationUtil.UriValueOrNull(feed.Element(XATOMNS + XATOM_ID)),
                     Links = getLinks(feed.Elements(XATOMNS + XATOM_LINK)),
+                    Tags = TagListParser.ParseTags(feed.Elements(XATOMNS + XATOM_CATEGORY)),
                     AuthorName = feed.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
                             SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
                                 .Element(XATOMNS + XATOM_AUTH_NAME)),
@@ -261,7 +269,18 @@ namespace Hl7.Fhir.Serialization
                 return null;
             }
 
-            return new ResourceReader(new XmlDomFhirReader(content)).Deserialize(nested:true);
+            XElement resource = null;
+
+            try
+            {
+                resource = content.Elements().Single();
+            }
+            catch
+            {
+                throw Error.Format("Entry <content> node should have a single child: the resource");
+            }
+
+            return new ResourceReader(new XmlDomFhirReader(resource)).Deserialize();
         }    
     }
 }

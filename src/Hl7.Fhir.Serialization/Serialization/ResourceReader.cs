@@ -14,8 +14,6 @@ namespace Hl7.Fhir.Serialization
 {
     public class ResourceReader
     {       
-     //   public const string CONTAINED_RESOURCE_MEMBER_NAME = "contained";
-
         private IFhirReader _reader;
         private ModelInspector _inspector;
 
