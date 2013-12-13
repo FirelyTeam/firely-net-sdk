@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Serialization
                 if (re.Resource != null)
                     result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT,
                         new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "text/xml"),
-                        getContentAsXElement(re.Resource, summary)));
+                        getContentAsXElement(re.Resource)));
 
                 // Note: this is a read-only property, so it is serialized but never parsed
                 if (entry.Summary != null)
@@ -145,9 +145,9 @@ namespace Hl7.Fhir.Serialization
             return result;
         }
 
-        private static object getContentAsXElement(Resource resource, bool summary)
+        private static object getContentAsXElement(Resource resource)
         {
-            var xml = FhirSerializer.SerializeResourceToXml(resource, summary);
+            var xml = FhirSerializer.SerializeResourceToXml(resource);
 
             return XElement.Parse(xml);
         }

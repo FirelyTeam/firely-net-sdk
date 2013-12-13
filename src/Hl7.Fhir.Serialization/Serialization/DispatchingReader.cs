@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if(prop.HasAnyResourceWildcard)
+            if(prop.Choice == ChoiceType.ResourceChoice)
             {
                 var reader = new ResourceReader(_current);
                 return reader.Deserialize(existing, nested:true);
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
             ClassMapping mapping;
 
             // Handle other Choices having any datatype or a list of datatypes
-            if(prop.HasChoices)
+            if(prop.Choice == ChoiceType.DatatypeChoice)
             {
                 // For Choice properties, determine the actual type of the element using
                 // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)

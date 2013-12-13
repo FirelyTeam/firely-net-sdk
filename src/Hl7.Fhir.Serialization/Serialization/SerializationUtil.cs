@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Serialization
             string value = StringValueOrNull(elem);
 
             return String.IsNullOrEmpty(value) ? (DateTimeOffset?)null : 
-                Hl7.Fhir.Support.Util.ParseIsoDateTime(value);
+                PrimitiveTypeConverter.Convert<DateTimeOffset>(value);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public Resource Deserialize(object existing=null, bool nested = false)
+        public object Deserialize(object existing=null, bool nested = false)
         {
             if (_reader.CurrentToken == TokenType.Object)
             {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
                 // Delegate the actual work to the ComplexTypeReader, since
                 // the serialization of Resources and ComplexTypes are virtually the same
                 var cplxReader = new ComplexTypeReader(_reader);
-                return (Resource)cplxReader.Deserialize(mappedType, existing);
+                return cplxReader.Deserialize(mappedType, existing);
             }
             else
                 throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");

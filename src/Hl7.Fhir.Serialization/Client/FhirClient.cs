@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Client
 
             var rl = new ResourceLocation(endpoint);
 
-            if (since != null) rl.SetParam(HttpUtil.HISTORY_PARAM_SINCE, Util.FormatIsoDateTime(since.Value));
+            if (since != null) rl.SetParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
             if(count != null) rl.SetParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
 
             return FetchBundle(rl.ToUri());
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Client
 
             var req = createRequest(rl.ToUri(), true);
 
-            return doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            return (doRequest(req, HttpStatusCode.OK, () => tagListFromResponse())).Category;
         }
 
 
@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Client
             rl.VersionId = version;
 
             var req = createRequest(rl.ToUri(), true);
-            return doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            return (doRequest(req, HttpStatusCode.OK, () => tagListFromResponse())).Category;
         }
 
 
@@ -662,14 +662,14 @@ namespace Hl7.Fhir.Client
             rl.Id = id;
             rl.VersionId = version;
 
-            var data = HttpUtil.TagListBody(tags, PreferredFormat);
+            var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             
             var req = createRequest(rl.ToUri(), true);
             req.Method = "POST";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
             prepareRequest(req, data);
 
-            return doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            return (doRequest(req, HttpStatusCode.OK, () => tagListFromResponse())).Category;
         }
 
 
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Client
             rl.Id = id;
             rl.VersionId = version;
 
-            var data = HttpUtil.TagListBody(tags, PreferredFormat);
+            var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             var req = createRequest(rl.ToUri(), true);
             req.Method = "DELETE";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Client
         }
 
 
-        private IEnumerable<Tag> tagListFromResponse()
+        private TagList tagListFromResponse()
         {
             return HttpUtil.TagListResponse(LastResponseDetails.BodyAsString(), LastResponseDetails.ContentType);
         }

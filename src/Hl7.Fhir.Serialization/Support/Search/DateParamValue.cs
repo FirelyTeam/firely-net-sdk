@@ -30,6 +30,7 @@
 
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -57,11 +58,13 @@ namespace Hl7.Fhir.Support.Search
             Comparison = comparison;
         }
 
-        public DateParamValue(DateTimeOffset value) : this(Util.FormatIsoDateTime(value))
+        public DateParamValue(DateTimeOffset value) 
+            : this(PrimitiveTypeConverter.Convert<string>(value))
         {             
         }
 
-        public DateParamValue(ComparisonOperator comparison, DateTimeOffset value) : this(comparison,Util.FormatIsoDateTime(value))
+        public DateParamValue(ComparisonOperator comparison, DateTimeOffset value) 
+            : this(comparison,PrimitiveTypeConverter.Convert<string>(value))
         {
         }
 
@@ -72,11 +75,7 @@ namespace Hl7.Fhir.Support.Search
             var value = compVal.Item1;
             var comp = compVal.Item2;
 
-            string dummy;
-            if( FhirDateTime.TryParseValue(value, out dummy) )
-                return new DateParamValue(comp, value);
-            else
-                throw new FormatException("Date query parameters should be valid (partial) xml date/times");
+            return new DateParamValue(comp, value);
         }
 
         private static Tuple<string, ComparisonOperator> findComparator(string value)

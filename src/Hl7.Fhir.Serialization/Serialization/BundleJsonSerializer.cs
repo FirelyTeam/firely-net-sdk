@@ -78,7 +78,6 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-
         public static void WriteTo(BundleEntry entry, JsonWriter writer, bool summary = false)
         {
             if (entry == null) throw new ArgumentException("Entry cannot be null");

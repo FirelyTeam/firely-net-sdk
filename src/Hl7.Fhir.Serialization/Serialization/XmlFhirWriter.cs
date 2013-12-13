@@ -36,6 +36,7 @@ using System.Xml;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using System.Xml.Linq;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -98,6 +99,8 @@ namespace Hl7.Fhir.Serialization
         }
 
 
+        private const string XHTMLNS = "http://www.w3.org/1999/xhtml";
+
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
             if (value == null) throw Error.ArgumentNull("value", "There's no support for null values in Xml Fhir serialization");
@@ -112,7 +115,7 @@ namespace Hl7.Fhir.Serialization
                 xw.WriteString(valueAsString);
             else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
             {
-                XNamespace xhtml = Support.Util.XHTMLNS;
+                XNamespace xhtml = XHTMLNS;
                 XElement xe = XElement.Parse(valueAsString);
                 xe.Name = xhtml + xe.Name.LocalName;
                     

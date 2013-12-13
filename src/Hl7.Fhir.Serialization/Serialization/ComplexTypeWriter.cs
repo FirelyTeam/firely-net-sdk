@@ -69,8 +69,7 @@ namespace Hl7.Fhir.Serialization
 
                 // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
-                // Exception: this system is not used for the contained resources
-                if (prop.HasChoices && !prop.HasAnyResourceWildcard)
+                if (prop.Choice == ChoiceType.DatatypeChoice)
                     memberName = determineElementMemberName(prop.Name, value.GetType());
 
                 _current.WriteStartProperty(memberName);
@@ -98,10 +97,10 @@ namespace Hl7.Fhir.Serialization
         // If we have a normal complex property, for which the type has a primitive value member...
         private bool serializedIntoTwoProperties(PropertyMapping prop, object instance)
         {
-            if (instance as IList != null)
+            if (instance is IList)
                 instance = ((IList)instance)[0];
 
-            if (!prop.IsPrimitive && !prop.HasAnyResourceWildcard)
+            if (!prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
             {
                 var mapping = _inspector.ImportType(instance.GetType());
                 return mapping.HasPrimitiveValueMember;

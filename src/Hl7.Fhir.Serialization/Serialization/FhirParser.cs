@@ -45,70 +45,112 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirParser
     {
+        internal static object Parse(IFhirReader reader)
+        {
+            return new ResourceReader(reader).Deserialize();
+        }
+
+        internal static T Parse<T>(IFhirReader reader) where T : class
+        {
+            var result = Parse(reader);
+
+            if (result is T)
+                return (T)result;
+            else
+                throw Error.Format("Parsed data is not of given type {0}", typeof(T).Name);
+        }
+
+
+        public static object Parse(XmlReader reader)
+        {
+            return Parse(new XmlDomFhirReader(reader));
+        }
+
+        public static T Parse<T>(XmlReader reader) where T : class
+        {
+            return Parse<T>(new XmlDomFhirReader(reader));
+        }
+
+
+        public static object Parse(JsonReader reader)
+        {
+            return Parse(new JsonDomFhirReader(reader));
+        }
+
+        public static T Parse<T>(JsonReader reader) where T : class
+        {
+            return Parse<T>(new JsonDomFhirReader(reader));
+        }
+
+        public static object ParseFromXml(string xml)
+        {
+            return Parse(XmlReaderFromString(xml));
+        }
+
+        public static T ParseFromXml<T>(string xml) where T : class
+        {
+            return Parse<T>(XmlReaderFromString(xml));
+        }
+
+        public static object ParseFromJson(string json)
+        {
+             return Parse(JsonReaderFromString(json));
+        }
+
+        public static T ParseFromJson<T>(string json) where T : class
+        {
+             return Parse<T>(JsonReaderFromString(json));
+        }
+
+
         public static Resource ParseResourceFromXml(string xml)
         {
-            var reader = XmlReaderFromString(xml);
-            return ParseResource(reader);
+            return ParseFromXml<Resource>(xml);
         }
 
         public static Resource ParseResourceFromJson(string json)
         {
-            var reader = JsonReaderFromString(json);
-            return ParseResource(reader);
+            return ParseFromJson<Resource>(json);
         }
 
-        public static IList<Tag> ParseTagListFromXml(string xml)
+        public static TagList ParseTagListFromXml(string xml)
         {
-            var reader = XmlReaderFromString(xml);
-            return ParseTagList(reader);
+            return ParseFromXml<TagList>(xml);
         }
 
-        public static IList<Tag> ParseTagListFromJson(string json)
+        public static TagList ParseTagListFromJson(string json)
         {
-            var reader = JsonReaderFromString(json);
-            return ParseTagList(reader);
+            return ParseFromJson<TagList>(json);
         }
 
         public static Resource ParseResource(XmlReader reader)
         {
-            return ParseResource(new XmlDomFhirReader(reader));
+            return Parse<Resource>(reader);
         }
 
         public static Resource ParseResource(JsonReader reader)
         {
-            return ParseResource(new JsonDomFhirReader(reader));
+            return Parse<Resource>(reader);
         }
 
-        public static IList<Tag> ParseTagList(XmlReader reader)
+        public static TagList ParseTagList(XmlReader reader)
         {
-            return TagListParser.ParseTags(reader);
+            return Parse<TagList>(reader);
         }
 
-        public static IList<Tag> ParseTagList(JsonReader reader)
+        public static TagList ParseTagList(JsonReader reader)
         {
-            return TagListParser.ParseTags(reader);
+            return Parse<TagList>(reader);
         }
 
         public static BundleEntry ParseBundleEntry(JsonReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = BundleJsonParser.LoadEntry(reader,errors);
-
-            if (errors.Count > 0)
-                throw Error.Format(errors.ToString());
-
-            return result;
+            return BundleJsonParser.LoadEntry(reader);
         }
 
         public static BundleEntry ParseBundleEntry(XmlReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = BundleXmlParser.LoadEntry(reader, errors);
-
-            if (errors.Count > 0)
-                throw Error.Format(errors.ToString());
-
-            return result;
+            return BundleXmlParser.LoadEntry(reader);
         }
 
         public static BundleEntry ParseBundleEntryFromJson(string json)
@@ -123,13 +165,7 @@ namespace Hl7.Fhir.Serialization
 
         public static Bundle ParseBundle(JsonReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = BundleJsonParser.Load(reader, errors);
-
-            if (errors.Count > 0)
-                throw Error.Format(errors.ToString());
-
-            return result;
+            return BundleJsonParser.Load(reader);
         }
 
         public static Bundle ParseBundleFromJson(string json)
@@ -139,13 +175,7 @@ namespace Hl7.Fhir.Serialization
 
         public static Bundle ParseBundle(XmlReader reader)
         {
-            ErrorList errors = new ErrorList();
-            var result = BundleXmlParser.Load(reader, errors);
-
-            if (errors.Count > 0)
-                throw Error.Format(errors.ToString());
-
-            return result;
+            return BundleXmlParser.Load(reader);
         }
 
         public static Bundle ParseBundleFromXml(string xml)
@@ -153,11 +183,7 @@ namespace Hl7.Fhir.Serialization
             return ParseBundle(XmlReaderFromString(xml));
         }
 
-        internal static Resource ParseResource(IFhirReader reader)
-        {
-            return new ResourceReader(reader).Deserialize();
-        }
-
+      
         internal static XmlReader XmlReaderFromString(string xml)
         {
             return XmlReader.Create(new StringReader(xml));

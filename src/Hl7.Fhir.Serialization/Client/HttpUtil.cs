@@ -234,16 +234,16 @@ namespace Hl7.Fhir.Client
         }
 
 
-        public static IList<Tag> TagListResponse(string body, string contentType)
+        public static TagList TagListResponse(string body, string contentType)
         {
             return parseBody(body, contentType,
                 (b) => FhirParser.ParseTagListFromXml(b),
                 (b) => FhirParser.ParseTagListFromJson(b));
         }
 
-        public static byte[] TagListBody(IEnumerable<Tag> tags, ContentType.ResourceFormat format)
+        public static byte[] TagListBody(TagList tags, ContentType.ResourceFormat format)
         {
-            return serializeBody<IEnumerable<Tag>>(tags, format,
+            return serializeBody<TagList>(tags, format,
                 t => FhirSerializer.SerializeTagListToXmlBytes(tags),
                 t => FhirSerializer.SerializeTagListToJsonBytes(tags));
         }

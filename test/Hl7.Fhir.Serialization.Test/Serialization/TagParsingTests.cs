@@ -16,6 +16,20 @@ namespace Hl7.Fhir.Test
     public class TagParsingTests
     {
         [TestMethod]
+        public void TestUseFhirParserToTagList()
+        {
+            TagList l = new TagList();
+            l.Category = new List<Tag>();
+
+            l.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME, "No!"));
+            l.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed"));
+
+            var xml = FhirSerializer.SerializeToXml(l);
+            Assert.AreEqual(xmlTagList, xml);
+        }
+
+
+        [TestMethod]
         public void TagHeaderParsing()
         {
             string tag1 = @"http://furore.com/tags/test1; label = ""yes""; scheme=""http://hl7.org/fhir/tag""";
@@ -47,7 +61,7 @@ namespace Hl7.Fhir.Test
             var parsedTags = FhirParser.ParseTagListFromJson(jsonTagListEmpty);
 
             Assert.IsNotNull(parsedTags);
-            Assert.AreEqual(0, parsedTags.Count);
+            Assert.AreEqual(0, parsedTags.Category.Count);
         }
 
         [TestMethod]
@@ -66,25 +80,23 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void SerializeAndDeserializeTagList()
         {
-            IList<Tag> tl = new List<Tag>();
+            TagList tl = new TagList();
 
-            tl.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME, "No!"));
-            tl.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed" ));
+            tl.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME, "No!"));
+            tl.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed" ));
 
             string json = FhirSerializer.SerializeTagListToJson(tl);
-            File.WriteAllText("c:\\temp\\j1.json",json);
-            File.WriteAllText("c:\\temp\\j2.json", jsonTagList);
             Assert.AreEqual(jsonTagList, json);
          
-
             string xml = FhirSerializer.SerializeTagListToXml(tl);
             Assert.AreEqual(xmlTagList, xml);
 
+
             tl = FhirParser.ParseTagListFromXml(xml);
-            verifyTagList(tl);
+            verifyTagList(tl.Category);
 
             tl = FhirParser.ParseTagListFromJson(json);
-            verifyTagList(tl);
+            verifyTagList(tl.Category);
         }
 
         [TestMethod]

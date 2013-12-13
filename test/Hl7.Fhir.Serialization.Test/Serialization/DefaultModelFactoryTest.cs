@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using System.Collections;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Test.Serialization
 {

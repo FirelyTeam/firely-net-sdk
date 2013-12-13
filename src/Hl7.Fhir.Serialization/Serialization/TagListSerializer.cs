@@ -46,14 +46,14 @@ namespace Hl7.Fhir.Serialization
     {
         public const string TAGLIST_TYPE = "taglist";
 
-        internal static void SerializeTagList(IEnumerable<Tag> list, JsonWriter writer)
-        {
-            JObject jTagList = new JObject(
-                new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, TAGLIST_TYPE),
-                CreateTagCategoryPropertyJson(list));
+        //internal static void SerializeTagList(IEnumerable<Tag> list, JsonWriter writer)
+        //{
+        //    JObject jTagList = new JObject(
+        //        new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, TAGLIST_TYPE),
+        //        CreateTagCategoryPropertyJson(list));
 
-            jTagList.WriteTo(writer);
-        }
+        //    jTagList.WriteTo(writer);
+        //}
 
 
         internal static JProperty CreateTagCategoryPropertyJson(IEnumerable<Tag> tagList)
@@ -75,15 +75,15 @@ namespace Hl7.Fhir.Serialization
             return result;
         }
 
-        internal static void SerializeTagList(IEnumerable<Tag> list, XmlWriter writer)
-        {
-            XElement xTagList = new XElement(BundleXmlParser.XFHIRNS + TAGLIST_TYPE);
+        //internal static void SerializeTagList(IEnumerable<Tag> list, XmlWriter writer)
+        //{
+        //    XElement xTagList = new XElement(BundleXmlParser.XFHIRNS + TAGLIST_TYPE);
 
-            foreach (var tag in list)
-                xTagList.Add(CreateTagCategoryPropertyXml(tag, useAtomNs: false));
+        //    foreach (var tag in list)
+        //        xTagList.Add(CreateTagCategoryPropertyXml(tag, useAtomNs: false));
 
-            xTagList.WriteTo(writer);
-        }
+        //    xTagList.WriteTo(writer);
+        //}
 
         internal static XElement CreateTagCategoryPropertyXml(Tag tag, bool useAtomNs = true)
         {           

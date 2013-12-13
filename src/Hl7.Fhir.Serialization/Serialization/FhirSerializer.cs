@@ -43,71 +43,92 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirSerializer
     {
-        public static string SerializeResourceToXml(Resource resource, bool summary = false)
+        internal static void Serialize(object instance, IFhirWriter writer)
         {
-            return xmlWriterToString( xw => FhirSerializer.SerializeResource(resource, new XmlFhirWriter(xw), summary) );
+            new ResourceWriter(writer).Serialize(instance);
         }
 
-        internal static void SerializeResource(Resource resource, IFhirWriter writer, bool summary)
+        public static string SerializeToXml(object instance)
         {
-            new ResourceWriter(writer).Serialize(resource);
+            return xmlWriterToString(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw)));
         }
 
-        public static string SerializeTagListToXml(IEnumerable<Tag> list)
+        public static string SerializeToJson(object instance)
         {
-            return xmlWriterToString(xw => TagListSerializer.SerializeTagList(list, xw));
+            return jsonWriterToString(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw)));
         }
 
-        public static byte[] SerializeResourceToXmlBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeToXmlBytes(object instance)
         {
-            return xmlWriterToBytes(xw => FhirSerializer.SerializeResource(resource, new XmlFhirWriter(xw), summary));
+            return xmlWriterToBytes(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw)));
         }
 
-        public static byte[] SerializeTagListToXmlBytes(IEnumerable<Tag> list)
+        public static byte[] SerializeToJsonBytes(object instance)
         {
-            return xmlWriterToBytes(xw => TagListSerializer.SerializeTagList(list, xw));
+            return jsonWriterToBytes(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw)));
         }
 
-        public static string SerializeResourceToJson(Resource resource, bool summary = false)
+        public static string SerializeResourceToXml(Resource resource)
         {
-            return jsonWriterToString(jw => FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(jw), summary));
+            return SerializeToXml(resource);
         }
 
-        public static string SerializeTagListToJson(IList<Tag> list)
+        public static string SerializeTagListToXml(TagList list)
         {
-            return jsonWriterToString(jw => TagListSerializer.SerializeTagList(list, jw));
+            return SerializeToXml(list);
+        }
+            
+        public static byte[] SerializeResourceToXmlBytes(Resource resource)
+        {
+            return SerializeToXmlBytes(resource);
         }
 
-        public static byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeTagListToXmlBytes(TagList list)
         {
-            return jsonWriterToBytes(jw => FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(jw), summary));
+            return SerializeToXmlBytes(list);
         }
 
-        public static byte[] SerializeTagListToJsonBytes(IEnumerable<Tag> list)
+        public static string SerializeResourceToJson(Resource resource)
         {
-            return jsonWriterToBytes(jw => TagListSerializer.SerializeTagList(list, jw));
+            return SerializeToJson(resource);
+        }
+
+        public static string SerializeTagListToJson(TagList list)
+        {
+            return SerializeToJson(list);
+        }
+
+        public static byte[] SerializeResourceToJsonBytes(Resource resource)
+        {
+            return SerializeToJsonBytes(resource);
+        }
+
+        public static byte[] SerializeTagListToJsonBytes(TagList list)
+        {
+            return SerializeToJsonBytes(list);
         }
 
 
-        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, JsonWriter writer)
         {
-            FhirSerializer.SerializeResource(resource, new JsonDomFhirWriter(writer), summary);
+            FhirSerializer.Serialize(resource, new JsonDomFhirWriter(writer));
         }
 
-        public static void SerializeTagList(IList<Tag> list, JsonWriter jw)
+        public static void SerializeTagList(TagList list, JsonWriter jw)
         {
-            TagListSerializer.SerializeTagList(list, jw);
+            FhirSerializer.Serialize(list, new JsonDomFhirWriter(jw));
         }
 
         public static void SerializeTagList(IList<Tag> list, XmlWriter xw)
         {
-            TagListSerializer.SerializeTagList(list, xw);
+            FhirSerializer.Serialize(list, new XmlFhirWriter(xw));
         }
 
-        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, XmlWriter writer)
         {
-            FhirSerializer.SerializeResource(resource, new XmlFhirWriter(writer), summary);
+            FhirSerializer.Serialize(resource, new XmlFhirWriter(writer));
         }
+
 
         public static void SerializeBundle(Bundle bundle, JsonWriter writer, bool summary = false)
         {

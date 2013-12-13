@@ -59,10 +59,10 @@ namespace Hl7.Fhir.Serialization
         {
             if (attr == null) return null;
 
-            return Util.ParseIsoDateTime(attr.Value<string>());
+            return PrimitiveTypeConverter.Convert<DateTimeOffset>(attr.Value<string>());
         }
 
-        internal static Bundle Load(JsonReader reader, ErrorList errors)
+        internal static Bundle Load(JsonReader reader)
         {
             JObject feed;
 
@@ -74,8 +74,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while loading feed: " + exc.Message);
-                return null;
+                throw Error.Format("Exception while parsing feed: " + exc.Message);
             }
 
             Bundle result;
@@ -103,9 +102,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while parsing json feed attributes: " + exc.Message,
-                    String.Format("Feed '{0}'", feed.Value<string>(BundleXmlParser.XATOM_ID)));
-                return null;
+                throw Error.Format("Exception while parsing json feed attributes: " + exc.Message);                
             }
 
             var entries = feed[BundleXmlParser.XATOM_ENTRY];
@@ -113,32 +110,29 @@ namespace Hl7.Fhir.Serialization
             {
                 if (!(entries is JArray))
                 {
-                    errors.Add("The json feed contains a single entry, instead of an array");
-                    return null;
+                    throw Error.Format("The json feed contains a single entry, instead of an array");
                 }
 
-                result.Entries = loadEntries((JArray)entries, result, errors);
+                result.Entries = loadEntries((JArray)entries, result);
             }
-
-            errors.AddRange(result.Validate());
 
             return result;
         }
 
-        private static ManagedEntryList loadEntries(JArray entries, Bundle parent, ErrorList errors)
+        private static IList<BundleEntry> loadEntries(JArray entries, Bundle parent)
         {
-            var result = new ManagedEntryList(parent);
+            var result = new List<BundleEntry>();
 
             foreach (var entry in entries)
             {
-                var loaded = loadEntry(entry, errors);
+                var loaded = loadEntry(entry);
                 if(entry != null) result.Add(loaded);
             }
 
             return result;
         }
 
-        internal static BundleEntry LoadEntry(JsonReader reader, ErrorList errors)
+        internal static BundleEntry LoadEntry(JsonReader reader)
         {
             JObject entry;
             reader.DateParseHandling = DateParseHandling.DateTimeOffset;
@@ -150,19 +144,16 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while loading entry: " + exc.Message);
-                return null;
+                throw Error.Format("Exception while parsing json for entry: " + exc.Message);
             }
 
-            return loadEntry(entry, errors);
+            return loadEntry(entry);
         }
 
 
-        private static BundleEntry loadEntry(JToken entry, ErrorList errors)
+        private static BundleEntry loadEntry(JToken entry)
         {
             BundleEntry result;
-
-            errors.DefaultContext = "An atom entry";
 
             try
             {
@@ -174,18 +165,17 @@ namespace Hl7.Fhir.Serialization
 
                     if (content != null)
                     {
-                        var parsed = getContents(content, errors);
+                        var parsed = getContents(content);
                         if (parsed != null)
                             result = ResourceEntry.Create(parsed);
                         else
                             return null;
                     }
                     else
-                        throw new InvalidOperationException("BundleEntry has empty content: cannot determine Resource type in parser");
+                        throw Error.Format("BundleEntry has empty content: cannot determine Resource type in parser");
                 }
 
                 result.Id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
-                if (result.Id != null) errors.DefaultContext = String.Format("Entry '{0}'", result.Id.ToString());
 
                 result.Links = getLinks(entry[BundleXmlParser.XATOM_LINK]);
                 result.Tags = TagListParser.ParseTags(entry[BundleXmlParser.XATOM_CATEGORY]);
@@ -210,12 +200,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while reading entry: " + exc.Message);
-                return null;
-            }
-            finally
-            {
-                errors.DefaultContext = null;
+                throw Error.Format("Exception while reading entry: " + exc.Message);
             }
 
             return result;
@@ -245,9 +230,9 @@ namespace Hl7.Fhir.Serialization
             return result;
         }
 
-        private static Resource getContents(JToken token, ErrorList errors)
+        private static Resource getContents(JToken token)
         {
-            return new ResourceReader(new JsonDomFhirReader(token)).Deserialize();
+            return (Resource)(new ResourceReader(new JsonDomFhirReader(token)).Deserialize());
         }
     }
 }

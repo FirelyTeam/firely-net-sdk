@@ -44,37 +44,37 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class TagListParser
     {
-        internal static IList<Tag> ParseTags(XmlReader xr)
-        {
-            xr.MoveToContent();
+        //internal static IList<Tag> ParseTags(XmlReader xr)
+        //{
+        //    xr.MoveToContent();
 
-            var taglist = (XElement)XElement.ReadFrom(xr);
+        //    var taglist = (XElement)XElement.ReadFrom(xr);
 
-            if (taglist.Name == BundleXmlParser.XFHIRNS + TagListSerializer.TAGLIST_TYPE)
-            {
-                if (taglist.Elements().All(xe => xe.Name == BundleXmlParser.XFHIRNS + BundleXmlParser.XATOM_CATEGORY))
-                    return ParseTags(taglist.Elements());
-                else
-                    throw Error.Format("TagList contains unexpected child elements");
-            }
-            else
-                throw Error.Format("Unexpected element name {0} found at start of TagList", taglist.Name);
-        }
+        //    if (taglist.Name == BundleXmlParser.XFHIRNS + TagListSerializer.TAGLIST_TYPE)
+        //    {
+        //        if (taglist.Elements().All(xe => xe.Name == BundleXmlParser.XFHIRNS + BundleXmlParser.XATOM_CATEGORY))
+        //            return ParseTags(taglist.Elements());
+        //        else
+        //            throw Error.Format("TagList contains unexpected child elements");
+        //    }
+        //    else
+        //        throw Error.Format("Unexpected element name {0} found at start of TagList", taglist.Name);
+        //}
 
-        internal static IList<Tag> ParseTags(JsonReader xr)
-        {
-            var tagObj = JObject.Load(xr);
+        //internal static IList<Tag> ParseTags(JsonReader xr)
+        //{
+        //    var tagObj = JObject.Load(xr);
 
-            var tagType = tagObj[SerializationConfig.RESOURCETYPE_MEMBER_NAME];
-            if(tagType == null || tagType.Value<string>() != TagListSerializer.TAGLIST_TYPE)
-                throw Error.Format("TagList should start with a resourceType member TagList");
+        //    var tagType = tagObj[SerializationConfig.RESOURCETYPE_MEMBER_NAME];
+        //    if(tagType == null || tagType.Value<string>() != TagListSerializer.TAGLIST_TYPE)
+        //        throw Error.Format("TagList should start with a resourceType member TagList");
 
-            var categoryArray = tagObj[BundleXmlParser.XATOM_CATEGORY] as JArray;
-            if (categoryArray != null)
-                return ParseTags(categoryArray);
-            else
-                return new List<Tag>();
-        }
+        //    var categoryArray = tagObj[BundleXmlParser.XATOM_CATEGORY] as JArray;
+        //    if (categoryArray != null)
+        //        return ParseTags(categoryArray);
+        //    else
+        //        return new List<Tag>();
+        //}
 
         internal static IList<Tag> ParseTags(IEnumerable<XElement> tags)
         {

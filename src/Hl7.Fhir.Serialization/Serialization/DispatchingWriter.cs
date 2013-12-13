@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if (prop.HasAnyResourceWildcard)
+            if (prop.Choice == ChoiceType.ResourceChoice)
             {
                 var writer = new ResourceWriter(_current);
                 writer.Serialize(instance, contained: true);

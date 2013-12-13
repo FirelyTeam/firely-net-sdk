@@ -8,18 +8,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
+
 namespace Hl7.Fhir.Introspection
 {
     public class PropertyMapping
     {
         public string Name { get; private set; }
-
-        private ICollection<ChoiceAttribute> _choices = null;
-
-        public bool HasChoices
-        {
-            get { return _choices != null; }
-        }
 
         public bool IsCollection { get; private set; }
 
@@ -32,7 +26,9 @@ namespace Hl7.Fhir.Introspection
         public int Order { get; private set; }
 
         public XmlSerializationHint SerializationHint { get; set; }
-        
+
+        public ChoiceType Choice { get; set; }
+
         public static PropertyMapping Create(PropertyInfo prop)
         {
             IEnumerable<Type> dummy;
@@ -54,6 +50,7 @@ namespace Hl7.Fhir.Introspection
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
+            result.Choice = elementAttr.Choice;
 
             if (elementAttr != null)
             {
@@ -74,14 +71,6 @@ namespace Hl7.Fhir.Introspection
             // marked to receive the class' primitive value in the fhir serialization
             // (e.g. the value from the Xml 'value' attribute or the Json primitive member value)
             if(result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
-
-            // Get the choice attributes. If there are none, set the _choices to null instead
-            // of an empty list, which saves checking using Count() while parsing.
-            result._choices = ReflectionHelper.GetAttributes<ChoiceAttribute>(prop);
-            if (result._choices != null && result._choices.Count == 0) result._choices = null;
-
-            if (result.HasChoices)
-                foundTypes.AddRange(result._choices.Select(cattr => cattr.Type));
 
             referredTypes = foundTypes;
 
@@ -149,7 +138,7 @@ namespace Hl7.Fhir.Introspection
         {
             if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
 
-            return this.HasChoices && suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
+            return Choice == ChoiceType.DatatypeChoice && suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
         }
 
         public string GetChoiceSuffixFromName(string suffixedName)
@@ -162,47 +151,19 @@ namespace Hl7.Fhir.Introspection
                 throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
                                             suffixedName, Name);
         }
+     
+        //public Type GetChoiceType(string choiceSuffix)
+        //{
+        //    string suffix = choiceSuffix.ToUpperInvariant();
 
-        public bool IsAllowedChoice(string choiceSuffix)
-        {
-            var suffix = choiceSuffix.ToUpperInvariant();
-            return HasChoices && _choices.Any(cattr => cattr.TypeName.ToUpperInvariant() == suffix);
-        }
+        //    if(!HasChoices) return null;
 
-        public Type GetChoiceType(string choiceSuffix)
-        {
-            string suffix = choiceSuffix.ToUpperInvariant();
-
-            if(!HasChoices) return null;
-
-            return _choices
-                        .Where(cattr => cattr.TypeName.ToUpperInvariant() == suffix)
-                        .Select(cattr => cattr.Type)
-                        .FirstOrDefault(); 
-        }
-
-        public bool HasAnyResourceWildcard
-        {
-            get
-            {
-                if (!HasChoices) return false;
-
-                return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyResource);
-            }
-        }
-
-        public bool HasAnyDataTypeWildcard
-        {
-            get
-            {
-                if (!HasChoices) return false;
-
-                return _choices.Any(ca => ca.Wildcard == WildcardChoice.AnyDatatype);
-            }
-        }
-
-
-      
+        //    return _choices
+        //                .Where(cattr => cattr.TypeName.ToUpperInvariant() == suffix)
+        //                .Select(cattr => cattr.Type)
+        //                .FirstOrDefault(); 
+        //}
+   
 
         private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {

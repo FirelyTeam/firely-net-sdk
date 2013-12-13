@@ -36,6 +36,7 @@ using Newtonsoft.Json;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {

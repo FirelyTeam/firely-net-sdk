@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization
         public static readonly XNamespace XOPENSEARCHNS = OPENSEARCH_NS;
 
 
-        internal static Bundle Load(XmlReader reader, ErrorList errors)
+        internal static Bundle Load(XmlReader reader)
         {
             XElement feed;
 
@@ -96,8 +96,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while loading feed: " + exc.Message);
-                return null;
+                throw Error.Format("Exception while loading feed: " + exc.Message);
             }
 
             Bundle result;
@@ -122,44 +121,40 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while parsing xml feed attributes: " + exc.Message,
-                    String.Format("Feed '{0}'", feed.Element(XATOMNS + XATOM_ID).Value));
-                return null;
+                throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message);
             }
 
             result.Entries = loadEntries(feed.Elements().Where(elem =>
                         (elem.Name == XATOMNS + XATOM_ENTRY ||
-                         elem.Name == XTOMBSTONE + XATOM_DELETED_ENTRY)), result, errors);
-
-            errors.AddRange(result.Validate());
+                         elem.Name == XTOMBSTONE + XATOM_DELETED_ENTRY)), result);
 
             return result;
         }
 
-        internal static Bundle Load(string xml, ErrorList errors)
+        internal static Bundle Load(string xml)
         {
-            return Load(FhirParser.XmlReaderFromString(xml), errors);
+            return Load(FhirParser.XmlReaderFromString(xml));
         }
 
-        private static ManagedEntryList loadEntries(IEnumerable<XElement> entries, Bundle parent, ErrorList errors)
+        private static IList<BundleEntry> loadEntries(IEnumerable<XElement> entries, Bundle parent)
         {
-            var result = new ManagedEntryList(parent);
+            var result = new List<BundleEntry>();
 
             foreach (var entry in entries)
             {
-                var loaded = loadEntry(entry, errors);
+                var loaded = loadEntry(entry);
                 if (entry != null) result.Add(loaded);
             }
 
             return result;
         }
 
-        internal static BundleEntry LoadEntry(string xml, ErrorList errors)
+        internal static BundleEntry LoadEntry(string xml)
         {
-            return LoadEntry(FhirParser.XmlReaderFromString(xml), errors);
+            return LoadEntry(FhirParser.XmlReaderFromString(xml));
         }
 
-        internal static BundleEntry LoadEntry(XmlReader reader, ErrorList errors)
+        internal static BundleEntry LoadEntry(XmlReader reader)
         {
             XElement entry;
 
@@ -169,18 +164,15 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while loading entry: " + exc.Message);
-                return null;
+                throw Error.Format("Exception while loading entry: " + exc.Message);
             }
 
-            return loadEntry(entry, errors);
+            return loadEntry(entry);
         }
 
-        private static BundleEntry loadEntry(XElement entry, ErrorList errors)
+        private static BundleEntry loadEntry(XElement entry)
         {
             BundleEntry result;
-
-            errors.DefaultContext = "An atom entry";
 
             try
             {
@@ -188,25 +180,22 @@ namespace Hl7.Fhir.Serialization
                 {
                     result = new DeletedEntry();
                     result.Id = SerializationUtil.UriValueOrNull(entry.Attribute(XATOM_DELETED_REF));
-                    if (result.Id != null) errors.DefaultContext = String.Format("Entry '{0}'", result.Id.ToString());
                 }
                 else
                 {
                     XElement content = entry.Element(XATOMNS + XATOM_CONTENT);
                     var id = SerializationUtil.UriValueOrNull(entry.Element(XATOMNS + XATOM_ID));
 
-                    if (id != null) errors.DefaultContext = String.Format("Entry '{0}'", id.ToString());
-
                     if (content != null)
                     {
-                        var parsed = getContents(content, errors);
+                        var parsed = getContents(content);
                         if (parsed != null)
                             result = ResourceEntry.Create(parsed);
                         else
                             return null;
                     }
                     else
-                        throw new InvalidOperationException("BundleEntry has empty content: cannot determine Resource type in parser.");
+                        throw Error.Format("BundleEntry has empty content: cannot determine Resource type in parser.");
 
                     result.Id = id;
                 }
@@ -236,12 +225,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                errors.Add("Exception while reading entry: " + exc.Message);
-                return null;
-            }
-            finally
-            {
-                errors.DefaultContext = null;
+                throw Error.Format("Exception while reading entry: " + exc.Message);
             }
 
             return result;
@@ -259,14 +243,13 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static Resource getContents(XElement content, ErrorList errors)
+        private static Resource getContents(XElement content)
         {
             string contentType = SerializationUtil.StringValueOrNull(content.Attribute(XATOM_CONTENT_TYPE));
 
             if (contentType != "text/xml")
             {
-                errors.Add("Entry should have contents of type 'text/xml'");
-                return null;
+                throw Error.Format("Entry should have contents of type 'text/xml'");
             }
 
             XElement resource = null;
@@ -280,7 +263,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Entry <content> node should have a single child: the resource");
             }
 
-            return new ResourceReader(new XmlDomFhirReader(resource)).Deserialize();
+            return (Resource)(new ResourceReader(new XmlDomFhirReader(resource)).Deserialize());
         }    
     }
 }
