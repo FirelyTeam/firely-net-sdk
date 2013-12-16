@@ -24,7 +24,6 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
 
 */
 
@@ -40,6 +39,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Hl7.Fhir.Support.Search;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Rest;
 
 
 
@@ -47,26 +47,37 @@ namespace Hl7.Fhir.Client
 {
     public class FhirClient
     {
+        private Endpoint endpoint;
+
         /// <summary>
         /// Creates a new client using a default endpoint
         /// </summary>
         public FhirClient(Uri endpoint) : this()
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
-
-            Endpoint = endpoint;
+            this.endpoint = new Endpoint(endpoint);
         }
 
         public FhirClient()
         {
-            PreferredFormat = ContentType.ResourceFormat.Xml;
+            PreferredFormat = ResourceFormat.Xml;
         }
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints.
         /// </summary>
-        public Uri Endpoint { get; set; }
+        public Uri Endpoint 
+        {
+            get
+            {
+                return endpoint.Uri; 
+            }
+            set
+            {
+                endpoint = new Endpoint(value);
+            }
+        }
 
 
         /// <summary>
@@ -127,9 +138,9 @@ namespace Hl7.Fhir.Client
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
             var rl = new ResourceLocation(endpoint);
-            if (!useOptionsVerb) rl.Operation = ResourceLocation.RESTOPER_METADATA;
+            if (!useOptionsVerb) rl.Operation = RestOperation.METADATA;
 
-            var req = createRequest(rl.ToUri(), false);
+            var req = createRequest(rl.Uri, false);
             req.Method = useOptionsVerb ? "OPTIONS" : "GET";
 
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<Conformance>());
@@ -144,7 +155,7 @@ namespace Hl7.Fhir.Client
             var rl = buildResourceEndpoint<TResource>(id);
             rl.VersionId = versionId;
 
-            return Fetch<TResource>(rl.ToUri());
+            return Fetch<TResource>(rl.Uri);
         }
 
 
@@ -186,7 +197,7 @@ namespace Hl7.Fhir.Client
             }
             else
             {
-                data = PreferredFormat == ContentType.ResourceFormat.Xml ?
+                data = PreferredFormat == ResourceFormat.Xml ?
                     FhirSerializer.SerializeResourceToXmlBytes(entry.Resource) :
                     FhirSerializer.SerializeResourceToJsonBytes(entry.Resource);
                 contentType = ContentType.BuildContentType(PreferredFormat, false);
@@ -233,7 +244,7 @@ namespace Hl7.Fhir.Client
 
             var rl = buildResourceEndpoint<TResource>(id);
 
-            Delete(rl.ToUri());
+            Delete(rl.Uri);
         }
 
 
@@ -264,7 +275,7 @@ namespace Hl7.Fhir.Client
             }
             else
             {
-                data = PreferredFormat == ContentType.ResourceFormat.Xml ?
+                data = PreferredFormat == ResourceFormat.Xml ?
                     FhirSerializer.SerializeResourceToXmlBytes(resource) :
                     FhirSerializer.SerializeResourceToJsonBytes(resource);
                 contentType = ContentType.BuildContentType(PreferredFormat, false);
@@ -284,10 +295,13 @@ namespace Hl7.Fhir.Client
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (resource == null) throw new ArgumentNullException("resource");
 
-            string collection = ResourceLocation.GetCollectionNameForResource(typeof(TResource));
-            var rl = new ResourceLocation(Endpoint,collection);
+            string collection = typeof(TResource).GetCollectionName();
+                // rem. ResourceLocation.GetCollectionNameForResource(typeof(TResource)); /mh
 
-            return Create<TResource>(rl.ToUri(), resource, tags);
+            Uri uri = endpoint.Collection(collection).Uri;
+            // //new ResourceLocation(Endpoint,collection);
+
+            return Create<TResource>(uri, resource, tags);
         }
 
         public ResourceEntry<TResource> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null) where TResource : Resource, new()
@@ -296,11 +310,11 @@ namespace Hl7.Fhir.Client
             if (resource == null) throw new ArgumentNullException("resource");
 
             var rl = new ResourceLocation(Endpoint);
-            rl.Collection = ResourceLocation.GetCollectionNameForResource(typeof(TResource));
+            rl.Collection = typeof(TResource).GetCollectionName();
             rl.Id = id;
 
             var re = new ResourceEntry<TResource>();
-            re.Id = rl.ToUri();
+            re.Id = rl.Uri;
             re.Resource = resource;
 
             return Update<TResource>(re);
@@ -321,12 +335,13 @@ namespace Hl7.Fhir.Client
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            var rl = new ResourceLocation(endpoint);
 
-            if (since != null) rl.SetParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
-            if(count != null) rl.SetParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
-
-            return FetchBundle(rl.ToUri());
+            var query = new RestUriParameters();
+            if (since != null) query.Add(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
+            if(count != null) query.Add(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
+            
+            var uri = this.endpoint.NewRestUri().Query(query).Uri;
+            return FetchBundle(uri);
         }
 
 
@@ -344,11 +359,11 @@ namespace Hl7.Fhir.Client
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
-            var collection = ResourceLocation.GetCollectionNameForResource(typeof(TResource));
-            var rl = ResourceLocation.Build(Endpoint, collection, id);
-            rl.Operation = ResourceLocation.RESTOPER_HISTORY;
+            var collection = typeof(TResource).GetCollectionName();
+            var rl = ResourceLocation.ForResource(Endpoint, collection, id);
+            rl.Operation = RestOperation.HISTORY;
             
-            return History(rl.ToUri(), since, count);
+            return History(rl.Uri, since, count);
         }
 
 
@@ -363,11 +378,9 @@ namespace Hl7.Fhir.Client
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
-            var collection = ResourceLocation.GetCollectionNameForResource(typeof(TResource));
-            var rl = ResourceLocation.Build(Endpoint, collection);
-            rl.Operation = ResourceLocation.RESTOPER_HISTORY;
-
-            return History(rl.ToUri(), since, count);
+            var collection = typeof(TResource).GetCollectionName();
+            var rl = this.endpoint.CollectionHistory(collection);
+            return History(rl.Uri, since, count);
         }
 
 
@@ -383,9 +396,9 @@ namespace Hl7.Fhir.Client
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             var rl = new ResourceLocation(Endpoint);
-            rl.Operation = ResourceLocation.RESTOPER_HISTORY;
+            rl.Operation = RestOperation.HISTORY;
 
-            return History(rl.ToUri(), since, count);
+            return History(rl.Uri, since, count);
         }
 
 
@@ -404,13 +417,13 @@ namespace Hl7.Fhir.Client
 
             string contentType = ContentType.BuildContentType(PreferredFormat, false);
 
-            byte[] data = PreferredFormat == ContentType.ResourceFormat.Xml ?
+            byte[] data = PreferredFormat == ResourceFormat.Xml ?
                 FhirSerializer.SerializeResourceToXmlBytes(entry.Resource) :
                 FhirSerializer.SerializeResourceToJsonBytes(entry.Resource);
 
             var rl = new ResourceLocation(entry.Id);
-            rl.Operation = ResourceLocation.RESTOPER_VALIDATE;
-            var req = createRequest(rl.ToUri(), false);
+            rl.Operation = RestOperation.VALIDATE;
+            var req = createRequest(rl.Uri, false);
 
             req.Method = "POST";
             req.ContentType = contentType;
@@ -446,32 +459,35 @@ namespace Hl7.Fhir.Client
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            var rl = new ResourceLocation(endpoint);
+            //var rl = new ResourceLocation(endpoint);
+            var rest = this.endpoint.NewRestUri();
 
             // Since there is confusion between using /resource/?param, /resource?param, use
             // the /resource/search?param instead
+            /*
             if(rl.Collection != null)
-                rl.Operation = ResourceLocation.RESTOPER_SEARCH;
+                rl.Operation = FhirRestOperation.OPERATION_SEARCH;
+            */
 
             if( count.HasValue )
-                rl.AddParam(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
+                rest.Parameters.Add(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
 
             if (sort != null)
-                rl.AddParam(HttpUtil.SEARCH_PARAM_SORT, sort);
+                rest.Parameters.Add(HttpUtil.SEARCH_PARAM_SORT, sort);
 
             if (criteria != null)
             {
                 foreach (var criterium in criteria)
-                    rl.AddParam(criterium.QueryKey, criterium.QueryValue);
+                    rest.Parameters.Add(criterium.QueryKey, criterium.QueryValue);
             }
 
             if (includes != null)
             {
                 foreach (string includeParam in includes)
-                    rl.AddParam(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
+                    rest.Parameters.Add(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
             }
 
-            return FetchBundle(rl.ToUri());
+            return FetchBundle(rest.Uri);
         }
 
         public Bundle Search(Uri endpoint, string name, string value, string sort=null, string[] includes = null, int? count = null)
@@ -482,9 +498,8 @@ namespace Hl7.Fhir.Client
         public Bundle Search(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-            var rl = new ResourceLocation(Endpoint);
 
-            return Search(rl.ToUri(), criteria, sort, includes, count);
+            return Search(Endpoint, criteria, sort, includes, count);
         }
 
         public Bundle Search(string name, string value, string sort=null, string[] includes = null, int? count = null)
@@ -496,10 +511,10 @@ namespace Hl7.Fhir.Client
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
-            var collection = resource.ToString().ToLower();
-            var rl = ResourceLocation.Build(Endpoint, collection);
+            //var collection = resource.ToString().ToLower();
+            var rest = endpoint.Collection(resource);
 
-            return Search(rl.ToUri(), criteria, sort, includes, count);
+            return Search(rest.Uri, criteria, sort, includes, count);
         }
 
         public Bundle Search(ResourceType resource, string name, string value, string sort=null, string[] includes = null, int? count = null)
@@ -571,9 +586,9 @@ namespace Hl7.Fhir.Client
             byte[] data;
             string contentType = ContentType.BuildContentType(PreferredFormat, false);
 
-            if (PreferredFormat == ContentType.ResourceFormat.Json)
+            if (PreferredFormat == ResourceFormat.Json)
                 data = FhirSerializer.SerializeBundleToJsonBytes(batch);
-            else if (PreferredFormat == ContentType.ResourceFormat.Xml)
+            else if (PreferredFormat == ResourceFormat.Xml)
                 data = FhirSerializer.SerializeBundleToXmlBytes(batch);
             else
                 throw new ArgumentException("Cannot encode a batch into format " + PreferredFormat.ToString());
@@ -603,9 +618,9 @@ namespace Hl7.Fhir.Client
             byte[] data;
             string contentType = ContentType.BuildContentType(PreferredFormat, false);
 
-            if (PreferredFormat == ContentType.ResourceFormat.Json)
+            if (PreferredFormat == ResourceFormat.Json)
                 data = FhirSerializer.SerializeBundleToJsonBytes(bundle);
-            else if (PreferredFormat == ContentType.ResourceFormat.Xml)
+            else if (PreferredFormat == ResourceFormat.Xml)
                 data = FhirSerializer.SerializeBundleToXmlBytes(bundle);
             else
                 throw new ArgumentException("Cannot encode a batch into format " + PreferredFormat.ToString());
@@ -625,10 +640,11 @@ namespace Hl7.Fhir.Client
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
+            endpoint.Tags();
             var rl = new ResourceLocation(Endpoint);
-            rl.Operation = ResourceLocation.RESTOPER_TAGS;
+            rl.Operation = RestOperation.TAGS;
 
-            var req = createRequest(rl.ToUri(), true);
+            var req = createRequest(rl.Uri, true);
 
             return (doRequest(req, HttpStatusCode.OK, () => tagListFromResponse())).Category;
         }
@@ -639,13 +655,23 @@ namespace Hl7.Fhir.Client
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (version != null && id == null) throw new ArgumentException("Must specify an id if you specify a version");
 
-            var rl = new ResourceLocation(Endpoint);
-            rl.Operation = ResourceLocation.RESTOPER_TAGS;
-            rl.Collection = type.ToString().ToLower();
-            rl.Id = id;
-            rl.VersionId = version;
+            
+            //var rl = new ResourceLocation(Endpoint);
+            //rl.Operation = FhirRestOperation.OPERATION_TAGS;
 
-            var req = createRequest(rl.ToUri(), true);
+            RestUrl api;
+            string collection = type.GetCollectionName();
+            if (id == null)
+                api = endpoint.CollectionTags(collection);
+            else if (version == null)
+                api = endpoint.ResourceTags(collection, id);
+            else 
+                api = endpoint.ResourceHistoryTags(collection, id, version);
+            
+            //rl.Id = id;
+            //rl.VersionId = version;
+
+            var req = createRequest(api.Uri, true);
             return (doRequest(req, HttpStatusCode.OK, () => tagListFromResponse())).Category;
         }
 
@@ -657,14 +683,14 @@ namespace Hl7.Fhir.Client
             if (tags == null) throw new ArgumentNullException("tags");
 
             var rl = new ResourceLocation(Endpoint);
-            rl.Operation = ResourceLocation.RESTOPER_TAGS;
+            rl.Operation = RestOperation.TAGS;
             rl.Collection = type.ToString().ToLower();
             rl.Id = id;
             rl.VersionId = version;
 
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             
-            var req = createRequest(rl.ToUri(), true);
+            var req = createRequest(rl.Uri, true);
             req.Method = "POST";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
             prepareRequest(req, data);
@@ -680,13 +706,13 @@ namespace Hl7.Fhir.Client
             if (tags == null) throw new ArgumentNullException("tags");
 
             var rl = new ResourceLocation(Endpoint);
-            rl.Operation = ResourceLocation.RESTOPER_TAGS;
+            rl.Operation = RestOperation.TAGS;
             rl.Collection = type.ToString().ToLower();
             rl.Id = id;
             rl.VersionId = version;
 
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
-            var req = createRequest(rl.ToUri(), true);
+            var req = createRequest(rl.Uri, true);
             req.Method = "DELETE";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
             prepareRequest(req, data);
@@ -694,22 +720,24 @@ namespace Hl7.Fhir.Client
             doRequest(req, HttpStatusCode.OK, () => true);
         }
 
-        public ContentType.ResourceFormat PreferredFormat { get; set; }
+        public ResourceFormat PreferredFormat { get; set; }
         public bool UseFormatParam { get; set; }
         
 
         private HttpWebRequest createRequest(Uri location, bool forBundle)
         {
-            Uri endpoint = location;
+            //Uri endpoint = location;
+            endpoint = new Endpoint(location);
+            RestUrl api = endpoint.NewRestUri();
 
             if (UseFormatParam)
             {
-                var rl = new ResourceLocation(location);
-                rl.SetParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
-                endpoint = rl.ToUri();
+                api.Parameters.Add(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
             }
+            Uri uri = api.Uri;
 
-            var req = (HttpWebRequest)HttpWebRequest.Create(endpoint);
+
+            var req = (HttpWebRequest)HttpWebRequest.Create(uri);
             var agent =  "FhirClient for FHIR " + Model.ModelInfo.Version;
             req.Method = "GET";
             req.Headers[HttpRequestHeader.UserAgent] = agent;
@@ -727,7 +755,7 @@ namespace Hl7.Fhir.Client
         {
             var rl = new ResourceLocation(Endpoint);
             rl.Id = id;
-            rl.Collection = ResourceLocation.GetCollectionNameForResource(typeof(TResource));
+            rl.Collection = typeof(TResource).GetCollectionName();
             return rl;
         }
 

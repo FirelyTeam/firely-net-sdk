@@ -37,6 +37,16 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Client
 {
+    /// <summary>
+    /// The supported formats for Fhir Resources
+    /// </summary>
+    public enum ResourceFormat
+    {
+        Xml = 1,
+        Json = 2,
+        Unknown = 3
+    }
+
     public static class ContentType
     {
         public const string JSON_CONTENT_HEADER3 = "application/fhir json";  // The formal FHIR mime type (still to be registered).
@@ -53,15 +63,7 @@ namespace Hl7.Fhir.Client
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";
 
-        /// <summary>
-        /// The supported formats for Fhir Resources
-        /// </summary>
-        public enum ResourceFormat
-        {
-            Xml = 1,
-            Json = 2,
-            Unknown = 3
-        }
+        
 
         /// <summary>
         /// Converts a format string to a ResourceFormat

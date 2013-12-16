@@ -66,6 +66,7 @@
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TestRestUrl.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
