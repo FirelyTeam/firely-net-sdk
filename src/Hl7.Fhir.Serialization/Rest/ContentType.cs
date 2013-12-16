@@ -35,7 +35,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 
 
-namespace Hl7.Fhir.Client
+namespace Hl7.Fhir.Rest
 {
     /// <summary>
     /// The supported formats for Fhir Resources

@@ -41,13 +41,13 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Client\ContentType.cs" />
-    <Compile Include="Client\FhirClient.cs" />
-    <Compile Include="Client\FhirOperationException.cs" />
-    <Compile Include="Client\HttpUtil.cs" />
-    <Compile Include="Client\ResponseDetails.cs" />
-    <Compile Include="Client\SystemNetMimeContentType.cs" />
-    <Compile Include="Client\WebRequestExtensions.cs" />
+    <Compile Include="Rest\ContentType.cs" />
+    <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirOperationException.cs" />
+    <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\ResponseDetails.cs" />
+    <Compile Include="Rest\SystemNetMimeContentType.cs" />
+    <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -77,8 +77,8 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
-    <Compile Include="Support\RestUrl.cs" />
-    <Compile Include="Support\RestUrlExtensions.cs" />
+    <Compile Include="Rest\RestUrl.cs" />
+    <Compile Include="Rest\RestUrlExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
@@ -100,10 +100,10 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Support\QueryParam.cs" />
-    <Compile Include="Support\ResourceLocation.cs" />
-    <Compile Include="Support\ResourceLocationExtensions.cs" />
-    <Compile Include="Support\RestOperation.cs" />
+    <Compile Include="Rest\QueryParam.cs" />
+    <Compile Include="Rest\ResourceLocation.cs" />
+    <Compile Include="Rest\ResourceLocationExtensions.cs" />
+    <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Support\Search\BoolParamValue.cs" />
     <Compile Include="Support\Search\CombinedParamValue.cs" />
     <Compile Include="Support\Search\DateParamValue.cs" />

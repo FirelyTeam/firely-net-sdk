@@ -28,12 +28,16 @@ namespace Hl7.Fhir.Serialization
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
+            if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+
+            IList result = existing as IList;
+
             bool overwriteMode;
             IEnumerable<IFhirReader> elements;
 
             if(_current.CurrentToken == TokenType.Array)        // Json has members that are arrays, if we encounter multiple, update the old values of the array
             {
-                overwriteMode = existing != null;
+                overwriteMode = result != null && result.Count > 0;
                 elements = _current.GetArrayElements();
             }
             else if(_current.CurrentToken == TokenType.Object)  // Xml has repeating members, so this results in an "array" of just 1 member
@@ -46,12 +50,7 @@ namespace Hl7.Fhir.Serialization
             else
                 throw Error.InvalidOperation("Expecting to be either at a repeating complex element or an array when parsing a repeating member.");
 
-            IList result;
-
-            if (existing == null) existing = ReflectionHelper.CreateGenericList(prop.ElementType);
-
-            result = existing as IList;                       
-            if(result == null) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
             var position = 0;
             foreach(var element in elements)

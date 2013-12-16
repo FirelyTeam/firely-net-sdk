@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Support
+namespace Hl7.Fhir.Rest
 {
     public static class ResourceLocationExtensions
     {

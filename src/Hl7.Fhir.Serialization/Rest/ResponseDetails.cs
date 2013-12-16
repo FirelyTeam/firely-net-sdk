@@ -37,7 +37,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Hl7.Fhir.Client
+namespace Hl7.Fhir.Rest
 {
     public class ResponseDetails
     {

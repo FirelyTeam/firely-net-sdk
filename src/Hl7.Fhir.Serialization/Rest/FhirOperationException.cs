@@ -41,7 +41,7 @@ using Newtonsoft.Json;
 
 
 
-namespace Hl7.Fhir.Client
+namespace Hl7.Fhir.Rest
 {
     public class FhirOperationException : Exception
     {

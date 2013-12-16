@@ -43,7 +43,7 @@ using Hl7.Fhir.Rest;
 
 
 
-namespace Hl7.Fhir.Client
+namespace Hl7.Fhir.Rest
 {
     public class FhirClient
     {

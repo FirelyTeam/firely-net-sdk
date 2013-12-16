@@ -45,7 +45,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Client
+namespace Hl7.Fhir.Rest
 {
     public static class HttpUtil
     {

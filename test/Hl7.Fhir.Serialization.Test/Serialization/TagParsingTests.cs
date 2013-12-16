@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Client;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using System.IO;
 
