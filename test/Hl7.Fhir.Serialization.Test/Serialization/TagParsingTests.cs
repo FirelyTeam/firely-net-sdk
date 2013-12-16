@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TagEquality()
         {
-            var t1 = new Tag("dog");
+            var t1 = new Tag("dog", new Uri("http://nu.nl"));
             var t2 = new Tag("dog", new Uri("http://knmi.nl") );
             var t3 = new Tag("dog", "http://knmi.nl");
 
