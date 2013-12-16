@@ -30,6 +30,7 @@
 
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json;
@@ -197,7 +198,7 @@ namespace Hl7.Fhir.Client
                 ResourceLocation idLoc = new ResourceLocation(reqLoc.ServiceUri);
                 idLoc.Collection = reqLoc.Collection;
                 idLoc.Id = reqLoc.Id;
-                result.Id = idLoc.ToUri();
+                result.Id = idLoc.Uri;
             }
 
             if (!String.IsNullOrEmpty(location))
@@ -209,7 +210,7 @@ namespace Hl7.Fhir.Client
                 {
                     var rl = new ResourceLocation(result.Id);
                     rl.VersionId = versionIdInRequestUri;
-                    result.SelfLink = rl.ToUri();
+                    result.SelfLink = rl.Uri;
                 }
             }
 
@@ -241,20 +242,20 @@ namespace Hl7.Fhir.Client
                 (b) => FhirParser.ParseTagListFromJson(b));
         }
 
-        public static byte[] TagListBody(TagList tags, ContentType.ResourceFormat format)
+        public static byte[] TagListBody(TagList tags, ResourceFormat format)
         {
             return serializeBody<TagList>(tags, format,
                 t => FhirSerializer.SerializeTagListToXmlBytes(tags),
                 t => FhirSerializer.SerializeTagListToJsonBytes(tags));
         }
 
-        private static byte[] serializeBody<T>(T data, ContentType.ResourceFormat format, Func<T, byte[]> xmlSerializer, Func<T, byte[]> jsonSerializer)
+        private static byte[] serializeBody<T>(T data, ResourceFormat format, Func<T, byte[]> xmlSerializer, Func<T, byte[]> jsonSerializer)
         {
             var isBundle = data is Bundle;
 
-            if (format == ContentType.ResourceFormat.Json)
+            if (format == ResourceFormat.Json)
                 return jsonSerializer(data); // FhirSerializer.SerializeBundleToJsonBytes(bundle);
-            else if (format == ContentType.ResourceFormat.Xml)
+            else if (format == ResourceFormat.Xml)
                 return xmlSerializer(data);   // FhirSerializer.SerializeBundleToXmlBytes(bundle);
             else
                 throw new ArgumentException("Cannot encode a batch into format " + format.ToString());
@@ -266,14 +267,14 @@ namespace Hl7.Fhir.Client
         {
             T result = null;
 
-            ContentType.ResourceFormat format = ContentType.GetResourceFormatFromContentType(contentType);
+            ResourceFormat format = ContentType.GetResourceFormatFromContentType(contentType);
 
             switch (format)
             {
-                case ContentType.ResourceFormat.Json:
+                case ResourceFormat.Json:
                     result = jsonParser(body); 
                     break;
-                case ContentType.ResourceFormat.Xml:
+                case ResourceFormat.Xml:
                     result = xmlParser(body);
                     break;
                 default:
