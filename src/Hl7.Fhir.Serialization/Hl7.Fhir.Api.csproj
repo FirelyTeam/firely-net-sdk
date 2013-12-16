@@ -77,6 +77,8 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\RestUrl.cs" />
+    <Compile Include="Support\RestUrlExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
@@ -100,6 +102,8 @@
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\QueryParam.cs" />
     <Compile Include="Support\ResourceLocation.cs" />
+    <Compile Include="Support\ResourceLocationExtensions.cs" />
+    <Compile Include="Support\RestOperation.cs" />
     <Compile Include="Support\Search\BoolParamValue.cs" />
     <Compile Include="Support\Search\CombinedParamValue.cs" />
     <Compile Include="Support\Search\DateParamValue.cs" />
