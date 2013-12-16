@@ -21,8 +21,18 @@ namespace Hl7.Fhir.Serialization
             settings.IgnoreWhitespace = true;
 
             var internalReader = XmlReader.Create(reader, settings);
+            XDocument doc;
 
-            setRoot(XDocument.Load(internalReader, LoadOptions.SetLineInfo));
+            try
+            {
+                doc = XDocument.Load(internalReader, LoadOptions.SetLineInfo);
+            }
+            catch (XmlException xec)
+            {
+                throw Error.Format("Cannot parse xml: " + xec.Message);
+            }
+
+            setRoot(doc);
         }
 
         internal XmlDomFhirReader(XObject root)
@@ -50,7 +60,7 @@ namespace Hl7.Fhir.Serialization
 
                 return ((XElement)_current).Name.LocalName;
             else
-                throw Error.InvalidOperation("Cannot get resource type name: reader not at an element");
+                throw Error.Format("Cannot get resource type name: reader not at an element");
         }
 
 
@@ -102,7 +112,7 @@ namespace Hl7.Fhir.Serialization
                 return result;
             }
             else
-                throw Error.InvalidOperation("Cannot get members: reader not at an element");
+                throw Error.Format("Cannot get members: reader not at an element");
             
         }
 

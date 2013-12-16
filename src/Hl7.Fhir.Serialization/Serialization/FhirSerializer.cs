@@ -48,22 +48,22 @@ namespace Hl7.Fhir.Serialization
             new ResourceWriter(writer).Serialize(instance);
         }
 
-        public static string SerializeToXml(object instance)
+        internal static string SerializeToXml(object instance)
         {
             return xmlWriterToString(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw)));
         }
 
-        public static string SerializeToJson(object instance)
+        internal static string SerializeToJson(object instance)
         {
             return jsonWriterToString(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw)));
         }
 
-        public static byte[] SerializeToXmlBytes(object instance)
+        internal static byte[] SerializeToXmlBytes(object instance)
         {
             return xmlWriterToBytes(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw)));
         }
 
-        public static byte[] SerializeToJsonBytes(object instance)
+        internal static byte[] SerializeToJsonBytes(object instance)
         {
             return jsonWriterToBytes(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw)));
         }

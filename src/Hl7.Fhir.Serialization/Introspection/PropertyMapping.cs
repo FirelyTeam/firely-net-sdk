@@ -50,7 +50,8 @@ namespace Hl7.Fhir.Introspection
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
-            result.Choice = elementAttr.Choice;
+            
+            result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
 
             if (elementAttr != null)
             {

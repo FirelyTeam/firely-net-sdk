@@ -41,10 +41,10 @@ namespace Hl7.Fhir.Serialization
                     if(val.Type == JTokenType.String) return TokenType.String;
                     if (val.Type == JTokenType.Null) return TokenType.Null;
 
-                    throw Error.InvalidOperation("Encountered a json primitive of type {0} while only string, boolean and number are allowed", val.Type);
+                    throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", val.Type);
                 }
 
-                throw Error.NotSupported("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", _current.GetType().Name);
+                throw Error.Format("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", _current.GetType().Name);
             }
         }
 
@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Serialization
             if (_current is JValue)
                 return ((JValue)_current).Value;
             else
-                throw Error.InvalidOperation("Tried to read a primitive value while reader is not at a json primitive");
+                throw Error.Format("Tried to read a primitive value while reader is not at a json primitive");
         }
 
         public string GetResourceTypeName(bool nested)
         {
             if (CurrentToken != TokenType.Object)
-                throw Error.InvalidOperation("Need to be at a complex object to determine resource type");
+                throw Error.Format("Need to be at a complex object to determine resource type");
 
             var resourceTypeMember = ((JObject)_current)[SerializationConfig.RESOURCETYPE_MEMBER_NAME];
 
@@ -75,10 +75,10 @@ namespace Hl7.Fhir.Serialization
                     }
                 }
 
-                throw Error.InvalidOperation("resourceType should be a primitive string json value");
+                throw Error.Format("resourceType should be a primitive string json value");
             }
 
-            throw Error.InvalidOperation("Cannot determine type of resource to create from json input data: no member {0} was found", 
+            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", 
                             SerializationConfig.RESOURCETYPE_MEMBER_NAME);
         }
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Serialization
             var complex = _current as JObject;
  
             if (complex == null)
-                throw Error.InvalidOperation("Need to be at a complex object to list child members");
+                throw Error.Format("Need to be at a complex object to list child members");
            
             foreach(var member in complex)
             {
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Serialization
             var array = _current as JArray;
 
             if (array == null)
-                throw Error.InvalidOperation("Need to be at an array to list elements");
+                throw Error.Format("Need to be at an array to list elements");
 
             foreach(var element in array)
             {

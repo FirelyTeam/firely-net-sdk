@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Test.Serialization
             catch (Exception) { }
 
             Instant ins5 = Instant.FromDateTimeUtc(2011, 3, 4, 16, 45, 33);
-            Assert.AreEqual("2011-03-04T16:45:33+00:00", ins5.ToString());
+            Assert.AreEqual(new DateTimeOffset(2011,3,4,16,45,33, TimeSpan.Zero),ins5.Value);
         }
 
         [TestMethod]

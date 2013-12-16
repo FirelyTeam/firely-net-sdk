@@ -106,8 +106,10 @@ namespace Hl7.Fhir.Serialization
                 }
             }
 
-            if (!hasMember)
-                throw Error.Format("Fhir serialization does not allow nor support empty elements");
+            // Not sure if the reader needs to verify this. Certainly, I want to accept empty elements for the
+            // pseudo-resource TagList (no tags) and probably others.
+            //if (!hasMember)
+            //    throw Error.Format("Fhir serialization does not allow nor support empty elements");
         }
     }
 }

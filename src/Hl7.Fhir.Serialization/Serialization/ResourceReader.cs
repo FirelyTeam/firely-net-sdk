@@ -32,6 +32,9 @@ namespace Hl7.Fhir.Serialization
                 var resourceType = _reader.GetResourceTypeName(nested);
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
+                if (mappedType == null)
+                    throw Error.InvalidOperation("Resource is of type {0}, but no class mapping was found for that type", resourceType);
+
                 if (existing == null)
                 {
                     var fac = new DefaultModelFactory();

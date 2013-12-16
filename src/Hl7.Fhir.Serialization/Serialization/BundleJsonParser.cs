@@ -125,7 +125,10 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var entry in entries)
             {
-                var loaded = loadEntry(entry);
+                if (entry.Type != JTokenType.Object)
+                    throw Error.Format("Expected a complex object when reading an entry");
+
+                var loaded = loadEntry((JObject)entry);
                 if(entry != null) result.Add(loaded);
             }
 
@@ -135,7 +138,7 @@ namespace Hl7.Fhir.Serialization
         internal static BundleEntry LoadEntry(JsonReader reader)
         {
             JObject entry;
-            reader.DateParseHandling = DateParseHandling.DateTimeOffset;
+            reader.DateParseHandling = DateParseHandling.None;
             reader.FloatParseHandling = FloatParseHandling.Decimal;
 
             try
@@ -151,13 +154,13 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static BundleEntry loadEntry(JToken entry)
+        private static BundleEntry loadEntry(JObject entry)
         {
             BundleEntry result;
 
             try
             {
-                if (entry.Value<DateTimeOffset?>(JATOM_DELETED) != null)
+                if (entry[JATOM_DELETED] != null)
                     result = new DeletedEntry();
                 else
                 {

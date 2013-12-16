@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Test
 
         private string testBundleAsJson =
             @"{" +
-            @"""resourceType"":""Bundle""" +
+            @"""resourceType"":""Bundle""," +
             @"""title"":""Updates to resource 233""," +
             @"""id"":""urn:uuid:0d0dcca9-23b9-4149-8619-65002224c3""," +
             @"""updated"":""2012-11-02T14:17:21+00:00""," +

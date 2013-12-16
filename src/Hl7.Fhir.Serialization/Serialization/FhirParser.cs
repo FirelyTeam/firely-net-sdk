@@ -61,47 +61,46 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static object Parse(XmlReader reader)
+        internal static object Parse(XmlReader reader)
         {
             return Parse(new XmlDomFhirReader(reader));
         }
 
-        public static T Parse<T>(XmlReader reader) where T : class
+        internal static T Parse<T>(XmlReader reader) where T : class
         {
             return Parse<T>(new XmlDomFhirReader(reader));
         }
 
 
-        public static object Parse(JsonReader reader)
+        internal static object Parse(JsonReader reader)
         {
             return Parse(new JsonDomFhirReader(reader));
         }
 
-        public static T Parse<T>(JsonReader reader) where T : class
+        internal static T Parse<T>(JsonReader reader) where T : class
         {
             return Parse<T>(new JsonDomFhirReader(reader));
         }
 
-        public static object ParseFromXml(string xml)
+        internal static object ParseFromXml(string xml)
         {
             return Parse(XmlReaderFromString(xml));
         }
 
-        public static T ParseFromXml<T>(string xml) where T : class
+        internal static T ParseFromXml<T>(string xml) where T : class
         {
             return Parse<T>(XmlReaderFromString(xml));
         }
 
-        public static object ParseFromJson(string json)
+        internal static object ParseFromJson(string json)
         {
              return Parse(JsonReaderFromString(json));
         }
 
-        public static T ParseFromJson<T>(string json) where T : class
+        internal static T ParseFromJson<T>(string json) where T : class
         {
              return Parse<T>(JsonReaderFromString(json));
         }
-
 
         public static Resource ParseResourceFromXml(string xml)
         {

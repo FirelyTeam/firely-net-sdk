@@ -105,7 +105,13 @@ namespace Hl7.Fhir.Test
             formatExceptionOrFail(()=> FhirParser.ParseTagListFromXml(xmlTagListE1));           
             formatExceptionOrFail(()=> FhirParser.ParseTagListFromXml(xmlTagListE2));
             formatExceptionOrFail(()=> FhirParser.ParseTagListFromJson(jsonTagListE1));
-            formatExceptionOrFail(()=> FhirParser.ParseTagListFromJson(jsonTagListE2));
+
+            try
+            {
+                FhirParser.ParseTagListFromJson(jsonTagListE2);
+                Assert.Fail();
+            }
+            catch (InvalidOperationException) { }
         }
 
         private static void formatExceptionOrFail(Action a)
@@ -131,11 +137,11 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("http://www.furore.com/tags", tl[1].Term);
         }
 
-        private string jsonTagList = @"{""resourceType"":""taglist"",""category"":[" +
+        private string jsonTagList = @"{""resourceType"":""TagList"",""category"":[" +
             @"{""term"":""http://www.nu.nl/tags"",""label"":""No!"",""scheme"":""http://hl7.org/fhir/tag""}," +
             @"{""term"":""http://www.furore.com/tags"",""label"":""Maybe, indeed"",""scheme"":""http://hl7.org/fhir/tag""}]" +
             @"}";
-        private string jsonTagListEmpty = @"{""resourceType"":""taglist""}";
+        private string jsonTagListEmpty = @"{""resourceType"":""TagList""}";
 
 
         // Error: misses the resourceType member
@@ -150,15 +156,15 @@ namespace Hl7.Fhir.Test
             @"]}";
 
 
-        private string xmlTagList = @"<?xml version=""1.0"" encoding=""utf-16""?><taglist xmlns=""http://hl7.org/fhir"">" +
+        private string xmlTagList = @"<?xml version=""1.0"" encoding=""utf-16""?><TagList xmlns=""http://hl7.org/fhir"">" +
             @"<category term=""http://www.nu.nl/tags"" label=""No!"" scheme=""http://hl7.org/fhir/tag"" />" +
-            @"<category term=""http://www.furore.com/tags"" label=""Maybe, indeed"" scheme=""http://hl7.org/fhir/tag"" /></taglist>";
+            @"<category term=""http://www.furore.com/tags"" label=""Maybe, indeed"" scheme=""http://hl7.org/fhir/tag"" /></TagList>";
         private string xmlTagListE1 = @"<?xml version=""1.0"" encoding=""utf-16""?><Xtaglist xmlns=""http://hl7.org/fhir"">" +
             @"<category term=""http://www.nu.nl/tags"" label=""No!"" scheme=""http://hl7.org/fhir/tag"" />" +
-            @"<category term=""http://www.furore.com/tags"" label=""Maybe"" scheme=""http://hl7.org/fhir/tag"" /></taglist>";
-        private string xmlTagListE2 = @"<?xml version=""1.0"" encoding=""utf-16""?><taglist xmlns=""http://hl7.org/fhir"">" +
+            @"<category term=""http://www.furore.com/tags"" label=""Maybe"" scheme=""http://hl7.org/fhir/tag"" /></TagList>";
+        private string xmlTagListE2 = @"<?xml version=""1.0"" encoding=""utf-16""?><TagList xmlns=""http://hl7.org/fhir"">" +
             @"<category term=""http://www.nu.nl/tags"" label=""No!"" scheme=""http://hl7.org/fhir/tag"" />" +
-            @"<categoryX term=""http://www.furore.com/tags"" label=""Maybe"" scheme=""http://hl7.org/fhir/tag"" /></taglist>";
+            @"<categoryX term=""http://www.furore.com/tags"" label=""Maybe"" scheme=""http://hl7.org/fhir/tag"" /></TagList>";
 
 
     }
