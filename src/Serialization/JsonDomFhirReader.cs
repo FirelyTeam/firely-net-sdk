@@ -10,6 +10,8 @@ namespace Hl7.Fhir.Serialization
 {
     public class JsonDomFhirReader : IFhirReader
     {
+        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
+
         private JToken _current;
 
         internal JToken Current { get { return _current; } }            // just for while refactoring
@@ -61,7 +63,7 @@ namespace Hl7.Fhir.Serialization
             if (CurrentToken != TokenType.Object)
                 throw Error.Format("Need to be at a complex object to determine resource type");
 
-            var resourceTypeMember = ((JObject)_current)[SerializationConfig.RESOURCETYPE_MEMBER_NAME];
+            var resourceTypeMember = ((JObject)_current)[JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME];
 
             if (resourceTypeMember != null)
             {
@@ -79,7 +81,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", 
-                            SerializationConfig.RESOURCETYPE_MEMBER_NAME);
+                            JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
         }
 
         //When enumerating properties for a complex object, make sure not to let resourceType get through
@@ -98,7 +100,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var memberName = member.Key;
 
-                if(memberName != SerializationConfig.RESOURCETYPE_MEMBER_NAME)
+                if(memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
                 {
                     IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
 

@@ -43,7 +43,8 @@
       <HintPath>..\..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -90,7 +91,7 @@
     <EmbeddedResource Include="TestPatientLargeNumbers.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hl7.Fhir.Serialization\Hl7.Fhir.Api.csproj">
+    <ProjectReference Include="..\src\Hl7.Fhir.Api.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Api</Name>
     </ProjectReference>

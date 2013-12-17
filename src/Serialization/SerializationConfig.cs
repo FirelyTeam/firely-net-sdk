@@ -10,7 +10,6 @@ namespace Hl7.Fhir.Serialization
 {
     public static class SerializationConfig
     {
-        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
         public const string BINARY_CONTENT_MEMBER_NAME = "content";
 
 

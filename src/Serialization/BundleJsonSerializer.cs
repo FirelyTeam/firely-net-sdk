@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Serialization
 
             JObject result = new JObject();
 
-            result.Add(new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, "Bundle"));
+            result.Add(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, "Bundle"));
 
             if (!String.IsNullOrWhiteSpace(bundle.Title))
                 result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, bundle.Title));

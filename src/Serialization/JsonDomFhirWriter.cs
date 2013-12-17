@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization
             // emit a type member
             if(_rootType != null)
             {
-                ((JObject)_current).Add(new JProperty(SerializationConfig.RESOURCETYPE_MEMBER_NAME, _rootType));
+                ((JObject)_current).Add(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, _rootType));
                 _rootType = null;
             }
         }
