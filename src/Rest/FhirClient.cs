@@ -468,21 +468,21 @@ namespace Hl7.Fhir.Rest
             */
 
             if( count.HasValue )
-                rest.Parameters.Add(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
+                rest.AddParam(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
 
             if (sort != null)
-                rest.Parameters.Add(HttpUtil.SEARCH_PARAM_SORT, sort);
+                rest.AddParam(HttpUtil.SEARCH_PARAM_SORT, sort);
 
             if (criteria != null)
             {
                 foreach (var criterium in criteria)
-                    rest.Parameters.Add(criterium.QueryKey, criterium.QueryValue);
+                    rest.AddParam(criterium.QueryKey, criterium.QueryValue);
             }
 
             if (includes != null)
             {
                 foreach (string includeParam in includes)
-                    rest.Parameters.Add(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
+                    rest.AddParam(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
             }
 
             return FetchBundle(rest.Uri);
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Rest
 
             if (UseFormatParam)
             {
-                api.Parameters.Add(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
+                api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
             }
             Uri uri = api.Uri;
 

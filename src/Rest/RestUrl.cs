@@ -8,14 +8,16 @@ namespace Hl7.Fhir.Rest
 {
     public class RestUrl
     {
-        private Uri endpoint;
-        private UriBuilder builder;
-        private RestUriParameters parameters = new RestUriParameters();
+        private Uri _endpoint;
+        private UriBuilder _builder;
+        private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
+
         public Uri Uri 
         { 
-            get 
-            {   builder.Query = parameters.AsString();
-                return builder.Uri;
+            get
+            {
+                _builder.Query = QueryParam.Join(_parameters);
+                return _builder.Uri;
             } 
         }
         public string AsString
@@ -27,8 +29,8 @@ namespace Hl7.Fhir.Rest
         }
         internal RestUrl(Uri endpoint)
         {
-            this.endpoint = endpoint;
-            builder = new UriBuilder(endpoint);
+            this._endpoint = endpoint;
+            _builder = new UriBuilder(endpoint);
         }
         private static string delimit(string path)
         {
@@ -41,22 +43,14 @@ namespace Hl7.Fhir.Rest
         internal RestUrl SetPath(params string[] components)
         {
             string _components = string.Join("/", components).Trim('/');
-            builder.Path = delimit(builder.Path)+ _components;
+            _builder.Path = delimit(_builder.Path)+ _components;
             return this;
         }
 
         public RestUrl AddParam(string name, string value)
         {
-            Parameters.Add(name, value);
+            _parameters.Add(Tuple.Create(name, value));
             return this;
-        }
-
-        public RestUriParameters Parameters
-        {
-            get
-            {
-                return this.parameters;
-            }
         }
 
         public override string ToString()
@@ -65,27 +59,7 @@ namespace Hl7.Fhir.Rest
         }
     }
 
-    public class RestUriParameters
-    {
-        // todo: Ewout had hier al een versie van onder ResourceLocation /mh
-
-        private List<Tuple<string, string>> parameters = new List<Tuple<string, string>>();
-        public void Add(string name, string value)
-        {
-            parameters.Add(new Tuple<string, string>(name, value));
-        }
-        public string AsString()
-        {
-            IEnumerable<string> items = parameters.Select(t => t.Item1 + "=" + t.Item2);
-            return string.Join("&", items); 
-            // todo: dit moet nog escaped worden. enzo.
-        }
-        public RestUriParameters Format(string contentType)
-        {
-            this.Add(HttpUtil.RESTPARAM_FORMAT, contentType);
-            return this;
-        }
-    }
+  
 
     
 }
