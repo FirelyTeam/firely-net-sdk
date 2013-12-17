@@ -21,8 +21,8 @@ namespace Hl7.Fhir.Test
             TagList l = new TagList();
             l.Category = new List<Tag>();
 
-            l.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME, "No!"));
-            l.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed"));
+            l.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME_GENERAL, "No!"));
+            l.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME_GENERAL, "Maybe, indeed"));
 
             var xml = FhirSerializer.SerializeToXml(l);
             Assert.AreEqual(xmlTagList, xml);
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual(@"confusion, abounds - beyond!", t2.Label);
             Assert.AreEqual("http://furore.com/tags/test1", t2.Term);
 
-            string cat = HttpUtil.BuildCategoryHeader(parsedTags.FilterFhirTags());
+            string cat = HttpUtil.BuildCategoryHeader(parsedTags.FilterByScheme(Tag.FHIRTAGSCHEME_GENERAL));
 
             Assert.AreEqual(@"http://furore.com/tags/test1; label=""yes""; scheme=""http://hl7.org/fhir/tag"", http://furore.com/tags/test1; " +
                         @"label=""confusion, abounds - beyond!""; scheme=""http://hl7.org/fhir/tag""", cat);
@@ -82,8 +82,8 @@ namespace Hl7.Fhir.Test
         {
             TagList tl = new TagList();
 
-            tl.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME, "No!"));
-            tl.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME, "Maybe, indeed" ));
+            tl.Category.Add(new Tag("http://www.nu.nl/tags", Tag.FHIRTAGSCHEME_GENERAL, "No!"));
+            tl.Category.Add(new Tag("http://www.furore.com/tags", Tag.FHIRTAGSCHEME_GENERAL, "Maybe, indeed" ));
 
             string json = FhirSerializer.SerializeTagListToJson(tl);
             Assert.AreEqual(jsonTagList, json);

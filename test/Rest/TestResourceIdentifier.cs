@@ -94,11 +94,11 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("patient/A100/_history/H2", identity.ToString());
 
             Endpoint endpoint = new Endpoint("http://spark.furore.com/fhir");
-            identity = endpoint.Identity("organization", "ORG01");
+            identity = endpoint.ToResourceIdentity("organization", "ORG01");
             Assert.AreEqual("http://spark.furore.com/fhir/organization/ORG01", identity.ToString());
 
             endpoint = new Endpoint("http://spark.furore.com/fhir/");
-            identity = endpoint.Identity("organization", "ORG01", "HV4");
+            identity = endpoint.ToResourceIdentity("organization", "ORG01", "HV4");
             Assert.AreEqual("http://spark.furore.com/fhir/organization/ORG01/_history/HV4", identity.ToString());
 
         }

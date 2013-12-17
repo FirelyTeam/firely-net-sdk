@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Rest
             return categories;
         }
 
-        public static IEnumerable<Tag> ParseCategoryHeader(string value)
+        public static ICollection<Tag> ParseCategoryHeader(string value)
         {
             if (String.IsNullOrEmpty(value)) return new List<Tag>();
 
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Rest
                 if (!String.IsNullOrEmpty(tag.Label))
                     sb.AppendFormat("; label=\"{0}\"", tag.Label);
 
-                sb.AppendFormat("; scheme=\"{0}\"", Tag.FHIRTAGNS);
+                sb.AppendFormat("; scheme=\"{0}\"", tag.Scheme.ToString());
                 result.Add(sb.ToString());
             }
 

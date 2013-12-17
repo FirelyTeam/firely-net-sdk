@@ -41,13 +41,14 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Model\BundleExtensions.cs" />
+    <Compile Include="Model\ValueSet.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\Endpoint.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
-    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\ResponseDetails.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Support\Search\SearchParamValue.cs" />
     <Compile Include="Support\Search\StringParamValue.cs" />
     <Compile Include="Support\Search\TokenParamValue.cs" />
+    <Compile Include="Model\TagListExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Messages.resx">

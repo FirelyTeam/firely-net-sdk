@@ -7,7 +7,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class EndpointExtensions
+    internal static class EndpointExtensions
     {
         public static RestUrl WithMetadata(this Endpoint endpoint)
         {

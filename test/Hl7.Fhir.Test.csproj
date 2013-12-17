@@ -35,8 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.Fhir">
-      <HintPath>..\..\FHIR\Sprinkler\TEMPLIB\Hl7.Fhir.dll</HintPath>
+    <Reference Include="Hl7.Fhir, Version=0.12.2040.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Hl7.Fhir.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,6 +65,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +85,7 @@
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\TagParsingTests.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
+    <Compile Include="Model\TagExtensionsTest.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>

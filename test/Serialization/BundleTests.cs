@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Test
             e1.AuthorName = "110.143.187.242";
             e1.Links.SelfLink = new Uri("http://test.com/fhir/patient/@233/history/@1");
             e1.Links.SearchLink = new Uri("http://test.com/fhir/patient/search?name=Kramer");
-            e1.Tags = new List<Tag>() { new Tag("http://test.com/tag/test", Tag.FHIRTAGSCHEME, "YES") };
+            e1.Tags = new List<Tag>() { new Tag("http://test.com/tag/test", Tag.FHIRTAGSCHEME_GENERAL, "YES") };
 
             e1.Resource = new Model.Patient()
             {

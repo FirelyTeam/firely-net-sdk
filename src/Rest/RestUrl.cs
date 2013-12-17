@@ -6,11 +6,18 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public class RestUrl
+    internal class RestUrl
     {
         private Uri _endpoint;
         private UriBuilder _builder;
         private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
+
+        internal RestUrl(Uri endpoint)
+        {
+            this._endpoint = endpoint;
+            _builder = new UriBuilder(endpoint);
+        }
+
 
         public Uri Uri 
         { 
@@ -20,6 +27,7 @@ namespace Hl7.Fhir.Rest
                 return _builder.Uri;
             } 
         }
+
         public string AsString
         {
             get
@@ -27,11 +35,8 @@ namespace Hl7.Fhir.Rest
                 return Uri.ToString();
             }
         }
-        internal RestUrl(Uri endpoint)
-        {
-            this._endpoint = endpoint;
-            _builder = new UriBuilder(endpoint);
-        }
+
+
         private static string delimit(string path)
         {
             return path.EndsWith(@"/") ? path : path + @"/";
@@ -51,6 +56,26 @@ namespace Hl7.Fhir.Rest
         {
             _parameters.Add(Tuple.Create(name, value));
             return this;
+        }
+
+        /// <summary>
+        /// Make a new ResourceLocation that represents a location after navigating to the specified path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <example>If the current path is "http://hl7.org/svc/patient", NavigatingTo("../observation") will 
+        /// result in a ResourceLocation of "http://hl7.org/svc/observation"</example>
+        public RestUrl NavigateTo(string path)
+        {
+            return NavigateTo(new Uri(path, UriKind.RelativeOrAbsolute));
+        }
+
+        public RestUrl NavigateTo(Uri path)
+        {
+            if (path.IsAbsoluteUri)
+                throw new ArgumentException("Can only navigate to relative paths", "path");
+
+            return new RestUrl(new Uri(this.Uri, path));
         }
 
         public override string ToString()

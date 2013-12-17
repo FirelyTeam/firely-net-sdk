@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public class Endpoint
+    internal class Endpoint
     {
         // A lot of extensions will be built upon this class.
 
@@ -18,15 +18,28 @@ namespace Hl7.Fhir.Rest
         public Endpoint(string uri)
         {
             this.Uri = new Uri(uri);
-        } 
+        }
+
         public RestUrl AsRestUrl()
         {
             return new RestUrl(this.Uri);
-        } 
-        public ResourceIdentity AsResourceIdentity()
+        }
+
+        public ResourceIdentity ToResourceIdentity()
         {
             return new ResourceIdentity(this.Uri);
         }
+
+        public ResourceIdentity ToResourceIdentity(string collection, string id)
+        {
+            return ResourceIdentity.Build(this.Uri, collection, id);
+        }
+
+        public ResourceIdentity ToResourceIdentity(string collection, string id, string vid)
+        {
+            return ResourceIdentity.Build(this.Uri, collection, id, vid);
+        }
+
         public override string ToString()
         {
             return Uri.ToString();
