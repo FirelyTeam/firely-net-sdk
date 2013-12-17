@@ -63,6 +63,7 @@
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TestresourceIdentifier.cs" />
     <Compile Include="TestRestUrl.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\TagParsingTests.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
-    <Compile Include="UnitTest2.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>

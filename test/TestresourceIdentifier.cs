@@ -81,6 +81,26 @@ namespace Hl7.Fhir.Test
 
             identity = new ResourceIdentity("http://localhost/fhir");
             Assert.AreEqual(null, identity.VersionId);
+        }
+
+        [TestMethod]
+        public void Build()
+        {
+            ResourceIdentity identity;
+
+            identity = ResourceIdentity.Build("patient", "A100");
+            Assert.AreEqual("patient/A100", identity.ToString());
+
+            identity = ResourceIdentity.Build("patient", "A100", "H2");
+            Assert.AreEqual("patient/A100/_history/H2", identity.ToString());
+
+            Endpoint endpoint = new Endpoint("http://spark.furore.com/fhir");
+            identity = endpoint.Identity("organization", "ORG01");
+            Assert.AreEqual("http://spark.furore.com/fhir/organization/ORG01", identity.ToString());
+
+            endpoint = new Endpoint("http://spark.furore.com/fhir/");
+            identity = endpoint.Identity("organization", "ORG01", "HV4");
+            Assert.AreEqual("http://spark.furore.com/fhir/organization/ORG01/_history/HV4", identity.ToString());
 
         }
     }

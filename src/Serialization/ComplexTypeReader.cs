@@ -71,11 +71,11 @@ namespace Hl7.Fhir.Serialization
 
         private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
         {
-            bool hasMember;
+            //bool hasMember;
 
             foreach (var memberData in members)
             {
-                hasMember = true;
+                //hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member
 
                 // Find a property on the instance that matches the element found in the data

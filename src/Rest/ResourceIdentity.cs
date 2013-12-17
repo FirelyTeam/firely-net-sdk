@@ -7,27 +7,30 @@ namespace Hl7.Fhir.Rest
 {
     public class ResourceIdentity : Uri
     {
-        private Uri endpoint;
-
         public ResourceIdentity(string uri) : base(uri) {  }
-        public ResourceIdentity(Uri endpoint) : base(endpoint.ToString()) { }
+        internal ResourceIdentity(string uri, UriKind kind) : base(uri.ToString(), kind) { }
+        internal ResourceIdentity(Uri uri) : base(uri.ToString()) { }
 
-        public void Build(Uri endpoint, string collection, string id)
+        public static ResourceIdentity Build(Uri endpoint, string collection, string id)
         {
-            construct(endpoint, collection, id);
+            return new ResourceIdentity(construct(endpoint, collection, id));
         }
-        public void Build(Uri endpoint, string collection, string id, string vid)
+        public static ResourceIdentity Build(Uri endpoint, string collection, string id, string vid)
         {
-            construct(endpoint, collection, id, RestOperation.HISTORY, vid);
+            return new ResourceIdentity(construct(endpoint, collection, id, RestOperation.HISTORY, vid));
         }
-        public void Build(string collection, string id)
+        
+        public static ResourceIdentity Build(string collection, string id)
         {
-            construct(endpoint, collection, id);
+            return new ResourceIdentity(string.Format("{0}/{1}", collection, id), UriKind.Relative);
         }
-        public void Build(string collection, string id, string vid)
+        public static ResourceIdentity Build(string collection, string id, string vid)
         {
-            construct(endpoint, collection, id, RestOperation.HISTORY, vid);
+            return new ResourceIdentity(
+                string.Format("{0}/{1}/{2}/{3}", collection, id, RestOperation.HISTORY, vid),
+                UriKind.Relative);
         }
+        
         private static string delimit(string path)
         {
             return path.EndsWith(@"/") ? path : path + @"/";
@@ -119,4 +122,6 @@ namespace Hl7.Fhir.Rest
 
         }
     }
+
+   
 }

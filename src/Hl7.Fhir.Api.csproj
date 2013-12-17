@@ -47,6 +47,7 @@
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\ResponseDetails.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
