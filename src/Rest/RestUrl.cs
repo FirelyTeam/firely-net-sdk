@@ -38,27 +38,19 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        internal RestUrl Path(params string[] components)
+        internal RestUrl SetPath(params string[] components)
         {
             string _components = string.Join("/", components).Trim('/');
             builder.Path = delimit(builder.Path)+ _components;
             return this;
         }
-        public RestUrl Format(string contentType)
+
+        public RestUrl AddParam(string name, string value)
         {
-            parameters.Add(HttpUtil.RESTPARAM_FORMAT, contentType);
+            Parameters.Add(name, value);
             return this;
         }
-        public RestUrl Param(string name, string value)
-        {
-            parameters.Add(name, value);
-            return this;
-        }
-        public RestUrl Query(RestUriParameters query)
-        {
-            builder.Query = query.ToString(); 
-            return this;
-        }
+
         public RestUriParameters Parameters
         {
             get

@@ -11,6 +11,7 @@ namespace Hl7.Fhir.Rest
         {
             return ResourceIdentity.Build(endpoint.Uri, collection, id);
         }
+
         public static ResourceIdentity Identity(this Endpoint endpoint, string collection, string id, string vid)
         {
             return ResourceIdentity.Build(endpoint.Uri, collection, id, vid);

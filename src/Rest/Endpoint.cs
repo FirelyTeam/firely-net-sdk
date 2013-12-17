@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Rest
         {
             this.Uri = new Uri(uri);
         } 
-        public RestUrl NewRestUrl()
+        public RestUrl AsRestUrl()
         {
             return new RestUrl(this.Uri);
         } 
-        public ResourceIdentity NewResourceIdentity()
+        public ResourceIdentity AsResourceIdentity()
         {
             return new ResourceIdentity(this.Uri);
         }

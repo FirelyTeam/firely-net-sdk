@@ -10,8 +10,8 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestResourceIdentity()
         {
-            ResourceIdentity id = new ResourceIdentity("http://localhost/fhir/patient/3");
-            Assert.AreEqual("http://localhost/fhir/patient/3", id.ToString());
+            ResourceIdentity id = new ResourceIdentity("http://localhost/services/fhir/v012/patient/3");
+            Assert.AreEqual("http://localhost/services/fhir/v012/patient/3", id.ToString());
             Assert.AreEqual("patient", id.Collection);
         }
 
@@ -34,7 +34,6 @@ namespace Hl7.Fhir.Test
 
             identity = new ResourceIdentity("http://localhost/fhir");
             Assert.AreEqual(null, identity.Collection);
-
         }
 
         [TestMethod]
@@ -102,6 +101,22 @@ namespace Hl7.Fhir.Test
             identity = endpoint.Identity("organization", "ORG01", "HV4");
             Assert.AreEqual("http://spark.furore.com/fhir/organization/ORG01/_history/HV4", identity.ToString());
 
+        }
+
+        [TestMethod]
+        public void AddVersionNumberToExistingIdentifier()
+        {
+            var identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            var newIdentity = identity.WithVersion("3141");
+
+            Assert.AreEqual("B256", newIdentity.Id);
+            Assert.AreEqual("3141", newIdentity.VersionId);
+
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98");
+            newIdentity = identity.WithVersion("3141");
+
+            Assert.AreEqual("3", newIdentity.Id);
+            Assert.AreEqual("3141", newIdentity.VersionId);
         }
     }
 }

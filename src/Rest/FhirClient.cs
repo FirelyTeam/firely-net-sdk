@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Rest
 {
     public class FhirClient
     {
-        private Endpoint endpoint;
+        private Endpoint _endpoint;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Rest
         public FhirClient(Uri endpoint) : this()
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
-            this.endpoint = new Endpoint(endpoint);
+            _endpoint = new Endpoint(endpoint);
         }
 
         public FhirClient()
@@ -71,11 +71,11 @@ namespace Hl7.Fhir.Rest
         {
             get
             {
-                return endpoint.Uri; 
+                return _endpoint != null ? _endpoint.Uri : null; 
             }
             set
             {
-                endpoint = new Endpoint(value);
+                _endpoint = new Endpoint(value);
             }
         }
 
@@ -137,8 +137,12 @@ namespace Hl7.Fhir.Rest
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            var rl = new ResourceLocation(endpoint);
-            if (!useOptionsVerb) rl.Operation = RestOperation.METADATA;
+            RestUrl rl;
+
+            if (useOptionsVerb)
+                rl = new Endpoint(endpoint).AsRestUrl();
+            else
+                rl = new Endpoint(endpoint).WithMetadata();
 
             var req = createRequest(rl.Uri, false);
             req.Method = useOptionsVerb ? "OPTIONS" : "GET";
@@ -152,10 +156,21 @@ namespace Hl7.Fhir.Rest
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
-            var rl = buildResourceEndpoint<TResource>(id);
-            rl.VersionId = versionId;
+            ResourceIdentity ri = buildResourceIdentityUrl<TResource>(id, versionId);
 
-            return Fetch<TResource>(rl.Uri);
+            return Fetch<TResource>(ri);
+        }
+
+        private ResourceIdentity buildResourceIdentityUrl<TResource>(string id, string versionId=null) where TResource : Resource, new()
+        {
+            var collection = typeof(TResource).GetCollectionName();
+            ResourceIdentity ri;
+
+            if (versionId != null)
+                ri = ResourceIdentity.Build(Endpoint, collection, id, versionId);
+            else
+                ri = ResourceIdentity.Build(Endpoint, collection, id);
+            return ri;
         }
 
 
@@ -242,9 +257,9 @@ namespace Hl7.Fhir.Rest
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
-            var rl = buildResourceEndpoint<TResource>(id);
+            var rl = buildResourceIdentityUrl<TResource>(id);
 
-            Delete(rl.Uri);
+            Delete(rl);
         }
 
 
@@ -298,7 +313,7 @@ namespace Hl7.Fhir.Rest
             string collection = typeof(TResource).GetCollectionName();
                 // rem. ResourceLocation.GetCollectionNameForResource(typeof(TResource)); /mh
 
-            Uri uri = endpoint.Collection(collection).Uri;
+            Uri uri = _endpoint.ForCollection(collection).Uri;
             // //new ResourceLocation(Endpoint,collection);
 
             return Create<TResource>(uri, resource, tags);
@@ -309,41 +324,15 @@ namespace Hl7.Fhir.Rest
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (resource == null) throw new ArgumentNullException("resource");
 
-            var rl = new ResourceLocation(Endpoint);
-            rl.Collection = typeof(TResource).GetCollectionName();
-            rl.Id = id;
-
+            var collection = typeof(TResource).GetCollectionName();
+            var rl = ResourceIdentity.Build(collection, id);
+            
             var re = new ResourceEntry<TResource>();
-            re.Id = rl.Uri;
+            re.Id = rl;
             re.Resource = resource;
 
             return Update<TResource>(re);
         }
-
-
-        /// <summary>
-        /// Retrieve the version history from a history endpoint
-        /// </summary>
-        /// <param name="endpoint">The endpoint where the history request is sent.</param>
-        /// <param name="since">Optional. Returns only changes after the given date</param>
-        /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
-        /// <returns>A bundle with the requested history, may contain both ResourceEntries and DeletedEntries.</returns>
-        /// <remarks>The endpoint may be a FHIR server for server-wide history, a collection endpoint (
-        /// i.e. /patient) for history of a certain type of resources or a resource id, for the
-        /// history of that specific resource instance.</remarks>
-        public Bundle History(Uri endpoint, DateTimeOffset? since = null, int? count = null)
-        {
-            if (endpoint == null) throw new ArgumentNullException("endpoint");
-
-
-            var query = new RestUriParameters();
-            if (since != null) query.Add(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
-            if(count != null) query.Add(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
-            
-            var uri = this.endpoint.NewRestUrl().Query(query).Uri;
-            return FetchBundle(uri);
-        }
-
 
 
         /// <summary>
@@ -356,14 +345,16 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
 	    public Bundle History<TResource>(string id, DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
             var collection = typeof(TResource).GetCollectionName();
-            var rl = ResourceLocation.ForResource(Endpoint, collection, id);
-            rl.Operation = RestOperation.HISTORY;
-            
-            return History(rl.Uri, since, count);
+            var rl = _endpoint.ResourceHistory(collection, id);
+
+            if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
+            if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
+
+            return FetchBundle(rl.Uri);           
         }
 
 
@@ -376,11 +367,14 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Bundle History<TResource>(DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             var collection = typeof(TResource).GetCollectionName();
-            var rl = this.endpoint.CollectionHistory(collection);
-            return History(rl.Uri, since, count);
+            var rl = _endpoint.CollectionHistory(collection);
+
+            if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
+            
+            return FetchBundle(rl.Uri);
         }
 
 
@@ -393,12 +387,14 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Bundle History(DateTimeOffset? since = null, int? count = null )
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
-            var rl = new ResourceLocation(Endpoint);
-            rl.Operation = RestOperation.HISTORY;
+            var rl = _endpoint.ServerHistory();
 
-            return History(rl.Uri, since, count);
+            if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
+            if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
+
+            return FetchBundle(rl.Uri);
         }
 
 
@@ -421,13 +417,15 @@ namespace Hl7.Fhir.Rest
                 FhirSerializer.SerializeResourceToXmlBytes(entry.Resource) :
                 FhirSerializer.SerializeResourceToJsonBytes(entry.Resource);
 
-            var rl = new ResourceLocation(entry.Id);
-            rl.Operation = RestOperation.VALIDATE;
+            var collection = entry.Resource.GetCollectionName();
+
+            var rl = _endpoint.Validate(collection,new ResourceIdentity(entry.Id).Id);
+
             var req = createRequest(rl.Uri, false);
 
             req.Method = "POST";
             req.ContentType = contentType;
-            prepareRequest(req, data, entry.Tags);
+            prepareRequest(req, data);
 
             try
             {
@@ -460,7 +458,7 @@ namespace Hl7.Fhir.Rest
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
             //var rl = new ResourceLocation(endpoint);
-            var rest = this.endpoint.NewRestUrl();
+            var rest = this._endpoint.AsRestUrl();
 
             // Since there is confusion between using /resource/?param, /resource?param, use
             // the /resource/search?param instead
@@ -512,7 +510,7 @@ namespace Hl7.Fhir.Rest
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             //var collection = resource.ToString().ToLower();
-            var rest = endpoint.Collection(resource);
+            var rest = _endpoint.Collection(resource);
 
             return Search(rest.Uri, criteria, sort, includes, count);
         }
@@ -638,11 +636,9 @@ namespace Hl7.Fhir.Rest
 
         public IEnumerable<Tag> GetTags()
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
-            endpoint.Tags();
-            var rl = new ResourceLocation(Endpoint);
-            rl.Operation = RestOperation.TAGS;
+            var rl = _endpoint.Tags();
 
             var req = createRequest(rl.Uri, true);
 
@@ -662,11 +658,9 @@ namespace Hl7.Fhir.Rest
             RestUrl api;
             string collection = type.GetCollectionName();
             if (id == null)
-                api = endpoint.CollectionTags(collection);
-            else if (version == null)
-                api = endpoint.ResourceTags(collection, id);
+                api = _endpoint.CollectionTags(collection);
             else 
-                api = endpoint.ResourceHistoryTags(collection, id, version);
+                api = _endpoint.ResourceTags(collection, id,version);
             
             //rl.Id = id;
             //rl.VersionId = version;
@@ -682,11 +676,7 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw new ArgumentNullException("id");
             if (tags == null) throw new ArgumentNullException("tags");
 
-            var rl = new ResourceLocation(Endpoint);
-            rl.Operation = RestOperation.TAGS;
-            rl.Collection = type.ToString().ToLower();
-            rl.Id = id;
-            rl.VersionId = version;
+            RestUrl rl = _endpoint.ResourceTags(type, id, version);
 
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             
@@ -705,12 +695,7 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw new ArgumentNullException("id");
             if (tags == null) throw new ArgumentNullException("tags");
 
-            var rl = new ResourceLocation(Endpoint);
-            rl.Operation = RestOperation.TAGS;
-            rl.Collection = type.ToString().ToLower();
-            rl.Id = id;
-            rl.VersionId = version;
-
+            var rl = _endpoint.ResourceTags(type, id, version);
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             var req = createRequest(rl.Uri, true);
             req.Method = "DELETE";
@@ -727,8 +712,8 @@ namespace Hl7.Fhir.Rest
         private HttpWebRequest createRequest(Uri location, bool forBundle)
         {
             //Uri endpoint = location;
-            endpoint = new Endpoint(location);
-            RestUrl api = endpoint.NewRestUrl();
+            _endpoint = new Endpoint(location);
+            RestUrl api = _endpoint.AsRestUrl();
 
             if (UseFormatParam)
             {
@@ -750,14 +735,6 @@ namespace Hl7.Fhir.Rest
 
 
         public ResponseDetails LastResponseDetails { get; private set; }
-
-        private ResourceLocation buildResourceEndpoint<TResource>(string id) where TResource : Resource, new()
-        {
-            var rl = new ResourceLocation(Endpoint);
-            rl.Id = id;
-            rl.Collection = typeof(TResource).GetCollectionName();
-            return rl;
-        }
 
 
         private TagList tagListFromResponse()

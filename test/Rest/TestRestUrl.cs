@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Test
             Endpoint endpoint = new Endpoint("http://localhost/fhir");
             RestUrl resturi;
 
-            resturi = endpoint.Collection("patient");
+            resturi = endpoint.ForCollection("patient");
             Assert.AreEqual("http://localhost/fhir/patient", resturi.AsString);
 
             resturi = endpoint.Resource("patient", "1");
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Test
             Endpoint endpoint = new Endpoint("http://localhost/fhir/");
             RestUrl resturi;
             
-            resturi = endpoint.Search("organization").Param("family", "Johnson").Param("given", "William");
+            resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
             Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
         }
 

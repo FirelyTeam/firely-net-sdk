@@ -193,12 +193,9 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(requestUri))
             {
-                ResourceLocation reqLoc = new ResourceLocation(requestUri);
-                versionIdInRequestUri = reqLoc.VersionId;
-                ResourceLocation idLoc = new ResourceLocation(reqLoc.ServiceUri);
-                idLoc.Collection = reqLoc.Collection;
-                idLoc.Id = reqLoc.Id;
-                result.Id = idLoc.Uri;
+                ResourceIdentity reqId = new ResourceIdentity(requestUri);
+                versionIdInRequestUri = reqId.VersionId;
+                result.Id = ResourceIdentity.Build(reqId.Collection,reqId.Id);
             }
 
             if (!String.IsNullOrEmpty(location))
@@ -208,9 +205,7 @@ namespace Hl7.Fhir.Rest
                 // Try to get the SelfLink from the requestUri (might contain specific version id)
                 if (!String.IsNullOrEmpty(versionIdInRequestUri))
                 {
-                    var rl = new ResourceLocation(result.Id);
-                    rl.VersionId = versionIdInRequestUri;
-                    result.SelfLink = rl.Uri;
+                    result.SelfLink = new ResourceIdentity(result.Id).WithVersion(versionIdInRequestUri);
                 }
             }
 

@@ -49,14 +49,13 @@ namespace Hl7.Fhir.Rest
 
     public static class ContentType
     {
-        public const string JSON_CONTENT_HEADER3 = "application/fhir json";  // The formal FHIR mime type (still to be registered).
-        public const string JSON_CONTENT_HEADER = "application/fhir+json";  // The formal FHIR mime type (still to be registered).
-        public const string JSON_CONTENT_HEADER2 = "application/json";      // Also accepted, but never sent
-        
-        public const string XML_CONTENT_HEADER = "application/fhir+xml";           // The formal FHIR mime type (still to be registered).
-        public const string XML_CONTENT_HEADER4 = "application/fhir xml";           // The formal FHIR mime type (still to be registered).
-        public const string XML_CONTENT_HEADER2 = "text/xml";               // Also accepted, but never sent
-        public const string XML_CONTENT_HEADER3 = "application/xml";        // Also accepted, but never sent
+        public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
+        public static readonly string[] JSON_CONTENT_HEADERS = new string[]
+            { JSON_CONTENT_HEADER, "application/json fhir", "application/fhir+json", "application/fhir json", "application/json" };
+
+        public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
+        public static readonly string[] XML_CONTENT_HEADERS = new string[] 
+            { XML_CONTENT_HEADER, "application/xml fhir", "application/fhir+xml", "application/fhir xml", "text/xml", "application/xml" };
         
         public const string ATOM_CONTENT_HEADER = "application/atom+xml";
 
@@ -64,7 +63,6 @@ namespace Hl7.Fhir.Rest
         public const string FORMAT_PARAM_JSON = "json";
 
         
-
         /// <summary>
         /// Converts a format string to a ResourceFormat
         /// </summary>
@@ -72,24 +70,17 @@ namespace Hl7.Fhir.Rest
         /// <returns>The Resource format or the special value Unknow if the format was unrecognized</returns>
         public static ResourceFormat GetResourceFormatFromFormatParam(string format)
         {
-            switch (format.ToLowerInvariant())
-            {
-                case FORMAT_PARAM_JSON:
-                case JSON_CONTENT_HEADER:
-                case JSON_CONTENT_HEADER2:
-                case JSON_CONTENT_HEADER3:
-                    return ResourceFormat.Json;
-                case FORMAT_PARAM_XML:
-                case XML_CONTENT_HEADER:
-                case XML_CONTENT_HEADER2:
-                case XML_CONTENT_HEADER3:
-                case XML_CONTENT_HEADER4:
-                    return ResourceFormat.Xml;
-                default:
-                    return ResourceFormat.Unknown;
-            }
-        }
+            if (String.IsNullOrEmpty(format)) return ResourceFormat.Unknown;
 
+            var f = format.ToLowerInvariant();
+
+            if(f == FORMAT_PARAM_JSON || JSON_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Json;
+            else if(f == FORMAT_PARAM_XML || XML_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Xml;
+            else
+                return ResourceFormat.Unknown;
+        }
 
 
         /// <summary>
@@ -99,23 +90,16 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceFormat GetResourceFormatFromContentType(string contentType)
         {
-            if (String.IsNullOrEmpty(contentType))
-                return ResourceFormat.Unknown;
+            if (String.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
 
-            switch (contentType.ToLowerInvariant())
-            {
-                case JSON_CONTENT_HEADER:
-                case JSON_CONTENT_HEADER2:
-                    return ResourceFormat.Json;
-                case XML_CONTENT_HEADER:
-                case XML_CONTENT_HEADER2:
-                case XML_CONTENT_HEADER3:                
-                    return ResourceFormat.Xml;
-                case ATOM_CONTENT_HEADER:
-                    return ResourceFormat.Xml;
-                default:
-                    return ResourceFormat.Unknown;
-            }
+            var f = contentType.ToLowerInvariant();
+
+            if (JSON_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Json;
+            else if (XML_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Xml;
+            else
+                return ResourceFormat.Unknown;
         }
 
 
@@ -153,11 +137,9 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static bool IsValidResourceContentType(string contentType)
         {
-            return (contentType == JSON_CONTENT_HEADER ||
-                contentType == JSON_CONTENT_HEADER2 ||
-                contentType == XML_CONTENT_HEADER2 ||
-                contentType == XML_CONTENT_HEADER3 ||
-                contentType == XML_CONTENT_HEADER);
+            var f = contentType.ToLowerInvariant();
+
+            return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f);
         }
 
 
@@ -168,8 +150,9 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static bool IsValidBundleContentType(string contentType)
         {
-            return (contentType == JSON_CONTENT_HEADER || contentType == JSON_CONTENT_HEADER2 ||
-                contentType == ATOM_CONTENT_HEADER);
+            var f = contentType.ToLowerInvariant();
+
+            return (JSON_CONTENT_HEADERS.Contains(f) || f == ATOM_CONTENT_HEADER);
         }
 
 
