@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Rest
             if (since != null) query.Add(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
             if(count != null) query.Add(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
             
-            var uri = this.endpoint.NewRestUri().Query(query).Uri;
+            var uri = this.endpoint.NewRestUrl().Query(query).Uri;
             return FetchBundle(uri);
         }
 
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Rest
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
             //var rl = new ResourceLocation(endpoint);
-            var rest = this.endpoint.NewRestUri();
+            var rest = this.endpoint.NewRestUrl();
 
             // Since there is confusion between using /resource/?param, /resource?param, use
             // the /resource/search?param instead
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Rest
         {
             //Uri endpoint = location;
             endpoint = new Endpoint(location);
-            RestUrl api = endpoint.NewRestUri();
+            RestUrl api = endpoint.NewRestUrl();
 
             if (UseFormatParam)
             {

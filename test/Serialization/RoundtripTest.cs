@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using Ionic.Zip;
+//using Ionic.Zip;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Test;
@@ -53,11 +53,15 @@ namespace Hl7.Fhir.Tests
 
             // Unzip files into this path
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
+
+
+            // todo: not working - reference dll missing.
+            /*
             using (var zipfile = ZipFile.Read(examplesZip))
             {
                 zipfile.ExtractAll(examplePath, ExtractExistingFileAction.OverwriteSilently);
             }
-
+            */
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             convertFiles(examplePath, intermediate1Path);

@@ -32,7 +32,8 @@ namespace Hl7.Fhir.Test
             
             resturi = endpoint.Search("organization").Param("family", "Johnson").Param("given", "William");
             Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
-
         }
+
+       
     }
 }

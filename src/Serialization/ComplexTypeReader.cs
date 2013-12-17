@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
 
         private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
         {
-            bool hasMember = false;
+            bool hasMember;
 
             foreach (var memberData in members)
             {

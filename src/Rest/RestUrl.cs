@@ -6,30 +6,6 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public class Endpoint
-    {
-        // A lot of extensions will be built upon this class.
-        
-        public Uri Uri { get; private set; }
-        public Endpoint(Uri uri)
-        {
-            // todo: test if this uri is an Url.
-            this.Uri = uri;
-        }
-        public Endpoint(string uri)
-        {
-            this.Uri = new Uri(uri);
-        }
-        public RestUrl NewRestUri()
-        {
-            return new RestUrl(this.Uri);
-        }
-        public override string ToString()
-        {
-            return Uri.ToString();
-        }
-    }
-
     public class RestUrl
     {
         private Uri endpoint;
