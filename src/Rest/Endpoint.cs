@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace Hl7.Fhir.Rest
         public Uri Uri { get; private set; }
         public Endpoint(Uri uri)
         {
-            // todo: test if this uri is an Url.
+            if (uri.Scheme != "http")
+                Error.Argument("uri", "Endpoint must be based on an url (start with http://)");
+
             this.Uri = uri;
         }
+
         public Endpoint(string uri)
         {
             this.Uri = new Uri(uri);
@@ -23,6 +27,12 @@ namespace Hl7.Fhir.Rest
         public RestUrl AsRestUrl()
         {
             return new RestUrl(this.Uri);
+        }
+
+
+        public bool IsWithinEndpoint(Uri other)
+        {
+            return this.Uri.IsBaseOf(other);
         }
 
         public ResourceIdentity ToResourceIdentity()

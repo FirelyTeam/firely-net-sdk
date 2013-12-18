@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
         public static string GetCollectionName(this Type type)
         {
             if (typeof(Resource).IsAssignableFrom(type))
-                return ModelInfo.GetResourceNameForType(type).ToLower();
+                return ModelInfo.GetResourceNameForType(type);
             else
                 throw new ArgumentException(String.Format(
                     "Cannot determine collection name, type {0} is not a resource type", type.Name));

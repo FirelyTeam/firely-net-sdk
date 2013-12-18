@@ -54,21 +54,21 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public static WebResponse GetResponseNoEx(this WebRequest req)
-        {
-            WebResponse result = null;
+        //public static WebResponse GetResponseNoEx(this WebRequest req)
+        //{
+        //    WebResponse result = null;
 
-            AsyncCallback callback = new AsyncCallback(ar =>
-                {
-                        var request = (WebRequest)ar.AsyncState;
-                        result = request.EndGetResponseNoEx(ar);
-                });
+        //    AsyncCallback callback = new AsyncCallback(ar =>
+        //        {
+        //                var request = (WebRequest)ar.AsyncState;
+        //                result = request.EndGetResponseNoEx(ar);
+        //        });
 
-            var async = req.BeginGetResponse(callback, req);
+        //    var async = req.BeginGetResponse(callback, req);
             
-            async.AsyncWaitHandle.WaitOne();
+        //    async.AsyncWaitHandle.WaitOne();
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

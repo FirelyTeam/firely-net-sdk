@@ -89,12 +89,11 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of resource to fetch</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist</returns>
-        public Task<ResourceEntry<TResource>> Fetch<TResource>(Uri endpoint) where TResource : Resource, new()
+        public ResourceEntry<TResource> Fetch<TResource>(Uri endpoint) where TResource : Resource, new()
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            var req = createRequest(endpoint, false);
-
+            var req = prepareRequest("GET", endpoint, null, null, expectBundleResponse: false);
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<TResource>());
         }
 
@@ -106,12 +105,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="endpoint">The url of the endpoint which returns a Bundle</param>
         /// <returns>The Bundle as received by performing a GET on the endpoint. This operation will throw an exception
         /// if the operation does not result in a HttpStatus OK.</returns>
-        public Task<Bundle> FetchBundle(Uri endpoint)
+        public Bundle FetchBundle(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            var req = createRequest(endpoint, true);
-
+            var req = prepareRequest("GET", endpoint, null, null, expectBundleResponse: true);
             return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
         }
 
@@ -121,9 +119,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="useOptionsVerb">If true, uses the Http OPTIONS verb to get the conformance, otherwise uses the /metadata endpoint</param>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Task<ResourceEntry<Conformance>> Conformance(bool useOptionsVerb = false)
+        public ResourceEntry<Conformance> Conformance(bool useOptionsVerb = false)
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             return Conformance(Endpoint, useOptionsVerb);
         }
@@ -134,31 +132,23 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="useOptionsVerb">If true, uses the Http OPTIONS verb to get the conformance, otherwise uses the /metadata endpoint</param>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Task<ResourceEntry<Conformance>> Conformance(Uri endpoint, bool useOptionsVerb = false)
+        public ResourceEntry<Conformance> Conformance(Uri endpoint, bool useOptionsVerb = false)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
-            RestUrl rl;
+            RestUrl url = useOptionsVerb ? _endpoint.AsRestUrl() : new Endpoint(endpoint).WithMetadata();
 
-            if (useOptionsVerb)
-                rl = new Endpoint(endpoint).AsRestUrl();
-            else
-                rl = new Endpoint(endpoint).WithMetadata();
-
-            var req = createRequest(rl.Uri, false);
-            req.Method = useOptionsVerb ? "OPTIONS" : "GET";
-
+            var req = prepareRequest(useOptionsVerb ? "OPTIONS" : "GET", url.Uri, null, null, expectBundleResponse:false);
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<Conformance>());
         }
 
        
-        public Task<ResourceEntry<TResource>> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
+        public ResourceEntry<TResource> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
             ResourceIdentity ri = buildResourceIdentityUrl<TResource>(id, versionId);
-
             return Fetch<TResource>(ri);
         }
 
@@ -175,9 +165,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Task<ResourceEntry<TResource>> VRead<TResource>(string id, string versionId) where TResource : Resource, new()
+        public ResourceEntry<TResource> VRead<TResource>(string id, string versionId) where TResource : Resource, new()
         {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
             if (String.IsNullOrEmpty(versionId)) throw new ArgumentNullException("versionId");
             
@@ -194,43 +184,148 @@ namespace Hl7.Fhir.Rest
         /// <returns>The resource as updated on the server. Throws an exception when the update failed,
         /// in particular may throw an exception when the server returns a 409 when a conflict is detected
         /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
-        public Task<ResourceEntry<TResource>> Update<TResource>(ResourceEntry<TResource> entry, bool versionAware = false)
+        public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool versionAware = false)
                         where TResource : Resource, new()
         {
-            if (entry == null) throw new ArgumentNullException("entry");
-            if (entry.Resource == null) throw new ArgumentException("Entry does not contain a Resource to update", "entry");
-            if (entry.Id == null) throw new ArgumentException("Entry needs a non-null entry.id to send the update to", "entry");
-            if (versionAware && entry.SelfLink == null) throw new ArgumentException("When requesting version-aware updates, Entry.SelfLink may not be null.", "entry");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (entry == null) throw Error.ArgumentNull("entry");
+            if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
+            if (entry.Id == null) throw Error.Argument("entry","Entry needs a non-null entry.id to send the update to");
+            if (versionAware && entry.SelfLink == null) throw Error.Argument("entry", "When requesting version-aware updates, Entry.SelfLink may not be null.");
 
-            string contentType = null;
-            byte[] data = null;
+            if (!_endpoint.IsWithinEndpoint(entry.Id)) throw Error.Argument("Entry.id is not located on this FhirClient's endpoint");
+            if (entry.SelfLink != null && !_endpoint.IsWithinEndpoint(entry.SelfLink)) 
+                        throw Error.Argument("Entry.SelfLink is not located on this FhirClient's endpoint");
 
-            if (entry.Resource is Binary)
-            {
-                var bin = entry.Resource as Binary;
-                data = bin.Content;
-                contentType = bin.ContentType;
-            }
-            else
-            {
-                data = PreferredFormat == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeResourceToXmlBytes(entry.Resource) :
-                    FhirSerializer.SerializeResourceToJsonBytes(entry.Resource);
-                contentType = ContentType.BuildContentType(PreferredFormat, false);
-            }
-
-            var req = createRequest(entry.Id, false);
-
-            req.Method = "PUT";
-            req.ContentType = contentType;
-            prepareRequest(req, data, entry.Tags);
+            var req = prepareRequest("PUT", entry.Id, entry.Resource, entry.Tags, expectBundleResponse: false);
 
             // If a version id is given, post the data to a version-specific url
-            if (versionAware)
-                req.Headers[HttpRequestHeader.ContentLocation] = entry.SelfLink.ToString();
+            if (versionAware) req.Headers[HttpRequestHeader.ContentLocation] = entry.SelfLink.ToString();
 
             return doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, 
                     () => resourceEntryFromResponse<TResource>() );
+        }
+
+
+        /// <summary>
+        /// Update (or create) a resource at a given endpoint
+        /// </summary>
+        /// <param name="entry">A ResourceEntry containing the resource to update</param>
+        /// <param name="versionAware">Whether or not version aware update is used.</param>
+        /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
+        /// <returns>The resource as updated on the server. Throws an exception when the update failed,
+        /// in particular may throw an exception when the server returns a 409 when a conflict is detected
+        /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
+        public ResourceEntry<TResource> Update<TResource>(TResource resource, string id, IEnumerable<Tag> tags, bool versionAware = false)
+                        where TResource : Resource, new()
+        {
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (resource == null) throw Error.ArgumentNull("resource");
+            if (entry.Id == null) throw Error.Argument("entry", "Entry needs a non-null entry.id to send the update to");
+            if (versionAware && entry.SelfLink == null) throw Error.Argument("entry", "When requesting version-aware updates, Entry.SelfLink may not be null.");
+
+            if (!_endpoint.IsWithinEndpoint(entry.Id)) throw Error.Argument("Entry.id is not located on this FhirClient's endpoint");
+            if (entry.SelfLink != null && !_endpoint.IsWithinEndpoint(entry.SelfLink))
+                throw Error.Argument("Entry.SelfLink is not located on this FhirClient's endpoint");
+
+            var req = prepareRequest("PUT", entry.Id, entry.Resource, entry.Tags, expectBundleResponse: false);
+
+            // If a version id is given, post the data to a version-specific url
+            if (versionAware) req.Headers[HttpRequestHeader.ContentLocation] = entry.SelfLink.ToString();
+
+            return doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK },
+                    () => resourceEntryFromResponse<TResource>());
+        }
+
+
+        private HttpWebRequest prepareRequest(string method, Uri endpoint, object data, IEnumerable<Tag> tags, bool expectBundleResponse) 
+        {
+            byte[] body = null;
+
+            RestUrl api = new RestUrl(endpoint);
+
+            if (UseFormatParam)
+            {
+                api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
+            }
+
+            var req = initializeRequest(endpoint, method);
+
+            if (!UseFormatParam)
+                req.Accept = ContentType.BuildContentType(PreferredFormat, forBundle: expectBundleResponse);
+
+            if (data is Binary)
+            {
+                var bin = (Binary)data;
+                body = bin.Content;
+                req.ContentType = bin.ContentType;
+            }
+            else if(data is Resource) 
+            {
+                body = PreferredFormat == ResourceFormat.Xml ?
+                    FhirSerializer.SerializeResourceToXmlBytes((Resource)data) :
+                    FhirSerializer.SerializeResourceToJsonBytes((Resource)data);
+
+                req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
+            }
+            else if (data is Bundle)
+            {
+                body = PreferredFormat == ResourceFormat.Xml ?
+                    FhirSerializer.SerializeBundleToXmlBytes((Bundle)data) :
+                    FhirSerializer.SerializeBundleToJsonBytes((Bundle)data);
+
+                req.ContentType = ContentType.BuildContentType(PreferredFormat, true);
+            }
+
+            if (tags != null) req.Headers[HttpUtil.CATEGORY] = HttpUtil.BuildCategoryHeader(tags);
+
+            writeBody(req, body);
+            return req;
+        }
+
+        private HttpWebRequest initializeRequest(Uri location, string method)
+        {
+            var req = (HttpWebRequest)HttpWebRequest.Create(location);
+            var agent = ".NET FhirClient for FHIR " + Model.ModelInfo.Version;
+            req.Method = method;
+
+            try
+            {
+                System.Reflection.PropertyInfo prop = req.GetType().GetProperty("UserAgent");
+
+                if (prop != null) prop.SetValue(req, agent, null);
+            }
+            catch (Exception) 
+            { 
+                // platform does not support UserAgent property...too bad
+            }
+
+            return req;
+        }
+
+        private void writeBody(HttpWebRequest request, byte[] data)
+        {
+            Stream outs = getRequestStream(request);
+
+            outs.Write(data, 0, (int)data.Length);
+            outs.Flush();
+        }
+
+
+        private Stream getRequestStream(HttpWebRequest request)
+        {
+            Stream requestStream = null;
+            AsyncCallback callBack = new AsyncCallback(ar =>
+            {
+                var req = (HttpWebRequest)ar.AsyncState;
+                requestStream = req.EndGetRequestStream(ar);
+            });
+
+            var async = request.BeginGetRequestStream(callBack, request);
+
+            async.AsyncWaitHandle.WaitOne();
+
+            return requestStream;
         }
 
  
@@ -242,25 +337,24 @@ namespace Hl7.Fhir.Rest
         /// <returns>Returns normally if delete succeeded, throws an exception otherwise, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public Task Delete(Uri endpoint)
+        public void Delete<TResource>(string id) where TResource : Resource, new()
         {
-            if (endpoint == null) throw new ArgumentNullException("endpoint");
-
-            var req = createRequest(endpoint, false);
-            req.Method = "DELETE";
-
-            return doRequest(req, HttpStatusCode.NoContent, () => true );
-        }
-
-
-        public Task Delete<TResource>(string id) where TResource : Resource, new()
-        {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
 
             var rl = buildResourceIdentityUrl<TResource>(id);
 
-            return Delete(rl);
+            var req = prepareRequest("DELETE", rl, null, null, expectBundleResponse: false);
+            doRequest(req, HttpStatusCode.NoContent, () => true);
+        }
+
+     
+        public ResourceEntry<TResource> Create<TResource>(TResource resource, IEnumerable<Tag> tags=null) where TResource : Resource, new()
+        {
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (resource == null) throw new ArgumentNullException("resource");
+
+            return Create<TResource>(resource, null, tags);
         }
 
 
@@ -275,59 +369,23 @@ namespace Hl7.Fhir.Rest
         /// <remarks><para>The returned resource need not be the same as the resources passed as a parameter,
         /// since the server may have updated or changed part of the data because of business rules.</para>
         /// </remarks>
-        public Task<ResourceEntry<TResource>> Create<TResource>(Uri collectionEndpoint, TResource resource, IEnumerable<Tag> tags=null) where TResource : Resource, new()
+        public ResourceEntry<TResource> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null) where TResource : Resource, new()
         {
-            if (collectionEndpoint == null) throw new ArgumentNullException("collectionEndpoint");
+            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (resource == null) throw new ArgumentNullException("resource");
+             
+            var collection = typeof(TResource).GetCollectionName();
 
-            string contentType = null;
-            byte[] data = null;
-
-            if (resource is Binary)
+            if (id == null)
             {
-                var bin = resource as Binary;
-                data = bin.Content;
-                contentType = bin.ContentType;
+                // A normal create
+                var rl = _endpoint.ForCollection(collection);
+                var req = prepareRequest("POST", rl.Uri, resource, tags, expectBundleResponse: false);
+                return doRequest(req, HttpStatusCode.Created, () => resourceEntryFromResponse<TResource>());
             }
             else
             {
-                data = PreferredFormat == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeResourceToXmlBytes(resource) :
-                    FhirSerializer.SerializeResourceToJsonBytes(resource);
-                contentType = ContentType.BuildContentType(PreferredFormat, false);
             }
-
-            var req = createRequest(collectionEndpoint, false);
-            req.Method = "POST";
-            req.ContentType = contentType;
-            prepareRequest(req, data, tags);
-
-            return doRequest(req, HttpStatusCode.Created, () => resourceEntryFromResponse<TResource>() );
-        }
-
-       
-        public Task<ResourceEntry<TResource>> Create<TResource>(TResource resource, IEnumerable<Tag> tags=null) where TResource : Resource, new()
-        {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-            if (resource == null) throw new ArgumentNullException("resource");
-
-            string collection = typeof(TResource).GetCollectionName();
-                // rem. ResourceLocation.GetCollectionNameForResource(typeof(TResource)); /mh
-
-            Uri uri = _endpoint.ForCollection(collection).Uri;
-            // //new ResourceLocation(Endpoint,collection);
-
-            return Create<TResource>(uri, resource, tags);
-        }
-
-        public Task<ResourceEntry<TResource>> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null) where TResource : Resource, new()
-        {
-            if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-            if (resource == null) throw new ArgumentNullException("resource");
-
-            var collection = typeof(TResource).GetCollectionName();
-            var rl = ResourceIdentity.Build(collection, id);
-            
             var re = new ResourceEntry<TResource>();
             re.Id = rl;
             re.Resource = resource;
@@ -344,7 +402,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Task<Bundle> History<TResource>(string id, DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
+	    public Bundle History<TResource>(string id, DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
         {
             if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
@@ -366,7 +424,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> History<TResource>(DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
+        public Bundle History<TResource>(DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
         {
             if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
@@ -386,7 +444,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> History(DateTimeOffset? since = null, int? count = null )
+        public Bundle History(DateTimeOffset? since = null, int? count = null )
         {
             if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
@@ -422,11 +480,11 @@ namespace Hl7.Fhir.Rest
 
             var rl = _endpoint.Validate(collection,new ResourceIdentity(entry.Id).Id);
 
-            var req = createRequest(rl.Uri, false);
+            var req = initializeRequest(rl.Uri, false);
 
             req.Method = "POST";
             req.ContentType = contentType;
-            prepareRequest(req, data);
+            writeBody(req, data);
 
             try
             {
@@ -454,7 +512,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>The endpoint may be a FHIR server for server-wide search or a collection endpoint 
         /// (i.e. /patient) for searching within a certain type of resources. This operation supports include 
         /// parameters to include resources in the bundle that the returned resources refer to.</remarks>
-        public Task<Bundle> Search(Uri endpoint, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? count = null)
+        public Bundle Search(Uri endpoint, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? count = null)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -489,24 +547,24 @@ namespace Hl7.Fhir.Rest
             return FetchBundle(rest.Uri);
         }
 
-        public Task<Bundle> Search(Uri endpoint, string name, string value, string sort=null, string[] includes = null, int? count = null)
+        public Bundle Search(Uri endpoint, string name, string value, string sort=null, string[] includes = null, int? count = null)
         {
             return Search(endpoint, new SearchParam[] { new SearchParam(name, value) }, sort, includes, count);
         }
 
-        public Task<Bundle> Search(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
+        public Bundle Search(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             return Search(Endpoint, criteria, sort, includes, count);
         }
 
-        public Task<Bundle> Search(string name, string value, string sort=null, string[] includes = null, int? count = null)
+        public Bundle Search(string name, string value, string sort=null, string[] includes = null, int? count = null)
         {
             return Search(new SearchParam[] { new SearchParam(name, value) }, sort, includes, count);
         }
 
-        public Task<Bundle> Search(ResourceType resource, SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
+        public Bundle Search(ResourceType resource, SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
@@ -516,7 +574,7 @@ namespace Hl7.Fhir.Rest
             return Search(rest.Uri, criteria, sort, includes, count);
         }
 
-        public Task<Bundle> Search(ResourceType resource, string name, string value, string sort=null, string[] includes = null, int? count = null)
+        public Bundle Search(ResourceType resource, string name, string value, string sort=null, string[] includes = null, int? count = null)
         {
             return Search(resource, new SearchParam[] { new SearchParam(name, value) }, sort, includes, count);
         }
@@ -533,7 +591,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<Bundle> SearchById(ResourceType resource, string id, string[] includes=null, int? count=null)
+        public Bundle SearchById(ResourceType resource, string id, string[] includes=null, int? count=null)
         {
             return Search(resource, HttpUtil.SEARCH_PARAM_ID, id, null, includes, count);
         }
@@ -546,7 +604,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="direction">Optional. Direction to browse to, default is the next page of results.</param>
         /// <returns>A bundle containing a new page of results based on the browse direction, or null if
         /// the server did not have more results in that direction.</returns>
-        public Task<Bundle> Continue(Bundle current, PageDirection direction = PageDirection.Next)
+        public Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next)
         {
             if (current.Links == null) return null;
 
@@ -577,7 +635,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="batch">The contents of the batch to be sent</param>
         /// <returns>A bundle as returned by the server after it has processed the updates in the batch, or null
         /// if an error occurred.</returns>
-        public Task<Bundle> Batch(Bundle batch)
+        public Bundle Batch(Bundle batch)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (batch == null) throw new ArgumentNullException("batch");
@@ -592,10 +650,10 @@ namespace Hl7.Fhir.Rest
             else
                 throw new ArgumentException("Cannot encode a batch into format " + PreferredFormat.ToString());
 
-            var req = createRequest(Endpoint, true);
+            var req = initializeRequest(Endpoint, true);
             req.Method = "POST";
             req.ContentType = contentType;
-            prepareRequest(req, data);
+            writeBody(req, data);
 
             return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
         }
@@ -610,7 +668,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This method differs from Batch, in that it can be used to deliver a Bundle
         /// at the endpoint for messages, documents or binaries, instead of the batched update
         /// REST endpoint.</remarks>
-        public Task<bool> DeliverBundle(Bundle bundle, string path)
+        public bool DeliverBundle(Bundle bundle, string path)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
@@ -624,30 +682,30 @@ namespace Hl7.Fhir.Rest
             else
                 throw new ArgumentException("Cannot encode a batch into format " + PreferredFormat.ToString());
 
-            var req = createRequest(Endpoint, true);
+            var req = initializeRequest(Endpoint, true);
             req.Method = "POST";
             req.ContentType = contentType;
-            prepareRequest(req, data);
+            writeBody(req, data);
 
             return doRequest(req, HttpStatusCode.OK, () => true);
         }
 
 
-        public async Task<IEnumerable<Tag>> GetTags()
+        public IEnumerable<Tag> GetTags()
         {
             if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
             var rl = _endpoint.Tags();
 
-            var req = createRequest(rl.Uri, true);
+            var req = initializeRequest(rl.Uri, true);
 
-            var result = await doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
 
             return result.Category;
         }
 
 
-        public async Task<IEnumerable<Tag>> GetTags(ResourceType type, string id=null, string version=null)
+        public IEnumerable<Tag> GetTags(ResourceType type, string id=null, string version=null)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (version != null && id == null) throw new ArgumentException("Must specify an id if you specify a version");
@@ -666,13 +724,13 @@ namespace Hl7.Fhir.Rest
             //rl.Id = id;
             //rl.VersionId = version;
 
-            var req = createRequest(api.Uri, true);
-            var result = await doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            var req = initializeRequest(api.Uri, true);
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
             return result.Category;
         }
 
 
-        public async Task<IEnumerable<Tag>> AffixTags(IEnumerable<Tag> tags, ResourceType type, string id, string version=null)
+        public IEnumerable<Tag> AffixTags(IEnumerable<Tag> tags, ResourceType type, string id, string version=null)
         {
             if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
             if (id == null) throw new ArgumentNullException("id");
@@ -682,12 +740,12 @@ namespace Hl7.Fhir.Rest
 
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
             
-            var req = createRequest(rl.Uri, true);
+            var req = initializeRequest(rl.Uri, true);
             req.Method = "POST";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
-            prepareRequest(req, data);
+            writeBody(req, data);
 
-            var result = await doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
             return result.Category;
         }
 
@@ -700,10 +758,10 @@ namespace Hl7.Fhir.Rest
 
             var rl = _endpoint.ResourceTags(type, id, version);
             var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
-            var req = createRequest(rl.Uri, true);
+            var req = initializeRequest(rl.Uri, true);
             req.Method = "DELETE";
             req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
-            prepareRequest(req, data);
+            writeBody(req, data);
 
             doRequest(req, HttpStatusCode.OK, () => true);
         }
@@ -712,37 +770,7 @@ namespace Hl7.Fhir.Rest
         public bool UseFormatParam { get; set; }
         
 
-        private HttpWebRequest createRequest(Uri location, bool forBundle)
-        {
-            //Uri endpoint = location;
-            _endpoint = new Endpoint(location);
-            RestUrl api = _endpoint.AsRestUrl();
-
-            if (UseFormatParam)
-            {
-                api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
-            }
-            Uri uri = api.Uri;
-
-
-            var req = (HttpWebRequest)HttpWebRequest.Create(uri);
-            var agent =  "FhirClient for FHIR " + Model.ModelInfo.Version;
-            req.Method = "GET";
-
-            System.Reflection.PropertyInfo prop = req.GetType().GetProperty("UserAgent");
-
-            if (prop != null)
-            {
-                prop.SetValue(req, agent, null);
-            }
-
-//            req.Headers[HttpRequestHeader.UserAgent] = agent;
-
-            if (!UseFormatParam)
-                req.Accept = ContentType.BuildContentType(PreferredFormat, forBundle);
-
-            return req;
-        }
+     
 
 
         public ResponseDetails LastResponseDetails { get; private set; }
@@ -784,24 +812,19 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private Task<T> doRequest<T>(HttpWebRequest req, HttpStatusCode success, Func<T> onSuccess)
+        private T doRequest<T>(HttpWebRequest req, HttpStatusCode success, Func<T> onSuccess)
         {
             return doRequest(req, new HttpStatusCode[] { success }, onSuccess);
         }
 
 
-        private Task<WebResponse> makeAsyncRequest(HttpWebRequest req)
-        {
-            return Task.Factory.FromAsync<WebResponse>(req.BeginGetResponse,
-                req.EndGetResponse, null);                
-        }
- 
-
-        private async Task<T> doRequest<T>(HttpWebRequest req, HttpStatusCode[] success, Func<T> onSuccess)
+        private T doRequest<T>(HttpWebRequest req, HttpStatusCode[] success, Func<T> onSuccess)
         {
             //HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx();
-            var getResponseTask = makeAsyncRequest(req);
-            HttpWebResponse response = (HttpWebResponse)await getResponseTask;
+            var getResponseTask = Task.Factory.FromAsync<WebResponse>(req.BeginGetResponse,
+                req.EndGetResponseNoEx, null); 
+
+            HttpWebResponse response = (HttpWebResponse)(getResponseTask.ConfigureAwait(false).GetAwaiter().GetResult());
 
             LastResponseDetails = ResponseDetails.FromHttpWebResponse(response);
 
@@ -830,34 +853,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
-        private void prepareRequest(HttpWebRequest request, byte[] data, IEnumerable<Tag> tags=null)
-        {
-            if (tags != null)
-                request.Headers[HttpUtil.CATEGORY] = HttpUtil.BuildCategoryHeader(tags);
-
-            Stream outs = getRequestStream(request);
-
-            outs.Write(data, 0, (int)data.Length);
-            outs.Flush();
-        }
-
-       
-        private Stream getRequestStream(HttpWebRequest request)
-        {         
-            Stream requestStream = null;
-            AsyncCallback callBack = new AsyncCallback( ar => 
-                    { 
-                        var req = (HttpWebRequest)ar.AsyncState;
-                        requestStream = req.EndGetRequestStream(ar);
-                    });
-
-            var async = request.BeginGetRequestStream(callBack, request);
-
-            async.AsyncWaitHandle.WaitOne();
-
-            return requestStream;
-        }
+      
     }
 
     public enum PageDirection
