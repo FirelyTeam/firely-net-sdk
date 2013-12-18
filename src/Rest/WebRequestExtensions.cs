@@ -38,32 +38,34 @@ namespace Hl7.Fhir.Rest
 {
     public static class WebRequestExtensions
     {
-        public static WebResponse GetResponseNoEx(this WebRequest req)
+
+        public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
         {
             try
             {
-                return getResponse(req);
+                return (HttpWebResponse)req.EndGetResponse(ar);
             }
-            catch (WebException wex)
+            catch (WebException we)
             {
-                if (wex.Response != null)
-                {
-                    return wex.Response;
-                }
-                throw;
+                var resp = we.Response as HttpWebResponse;
+                if (resp == null)
+                    throw;
+                return resp;
             }
         }
 
-        private static WebResponse getResponse(WebRequest req)
+        public static WebResponse GetResponseNoEx(this WebRequest req)
         {
             WebResponse result = null;
+
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
-                    var request = (WebRequest)ar.AsyncState;
-                    result = request.EndGetResponse(ar);
+                        var request = (WebRequest)ar.AsyncState;
+                        result = request.EndGetResponseNoEx(ar);
                 });
 
             var async = req.BeginGetResponse(callback, req);
+            
             async.AsyncWaitHandle.WaitOne();
 
             return result;

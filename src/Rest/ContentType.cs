@@ -55,7 +55,8 @@ namespace Hl7.Fhir.Rest
 
         public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
         public static readonly string[] XML_CONTENT_HEADERS = new string[] 
-            { XML_CONTENT_HEADER, "application/xml fhir", "application/fhir+xml", "application/fhir xml", "text/xml", "application/xml" };
+            { XML_CONTENT_HEADER, "application/xml fhir", "application/fhir+xml", "application/fhir xml", "text/xml", "application/xml",
+                "text/xml+fhir"};
         
         public const string ATOM_CONTENT_HEADER = "application/atom+xml";
 

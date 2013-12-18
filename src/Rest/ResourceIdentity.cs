@@ -205,7 +205,20 @@ namespace Hl7.Fhir.Rest
                 return new ResourceIdentity(construct(this, RestOperation.HISTORY, version));
             else
             {
-                var path = construct(new Uri(getHost()), Components.Take(index).Union( new string[] { RestOperation.HISTORY, version }));
+                var path = construct(new Uri(getHost()), Components.Take(index).Concat( new string[] { RestOperation.HISTORY, version }));
+                return new ResourceIdentity(path);
+            }
+        }
+
+        public ResourceIdentity RemoveVersion()
+        {
+            int index = Components.IndexOf(RestOperation.HISTORY);
+
+            if (index == -1)
+                return this;
+            else
+            {
+                var path = construct(new Uri(getHost()), Components.Take(index));
                 return new ResourceIdentity(path);
             }
         }

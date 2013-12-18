@@ -42,6 +42,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -182,9 +183,11 @@ namespace Hl7.Fhir.Rest
             Resource resource = null;
 
             if (body != null)
+            {
                 resource = parseBody<Resource>(body, contentType,
                     b => FhirParser.ParseResourceFromXml(b),
                     b => FhirParser.ParseResourceFromJson(b));
+            }
             else
                 resource = MakeBinary(data, contentType);
 
@@ -195,7 +198,7 @@ namespace Hl7.Fhir.Rest
             {
                 ResourceIdentity reqId = new ResourceIdentity(requestUri);
                 versionIdInRequestUri = reqId.VersionId;
-                result.Id = ResourceIdentity.Build(reqId.Collection,reqId.Id);
+                result.Id = reqId.RemoveVersion(); 
             }
 
             if (!String.IsNullOrEmpty(location))
