@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class ResourceLocationExtensions
+    public static class ResourceIdentityExtensions
     {
         // todo: dit is losgetrokken uit ResourceLocation. Maar nog niet af.
 

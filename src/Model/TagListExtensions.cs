@@ -148,7 +148,22 @@ namespace Hl7.Fhir.Model
 
             return tags.Where(e => Uri.Equals(e.Scheme, scheme));
         }
+        public static bool UriIsFhirScheme(Uri scheme)
+        {
+            return
+                Uri.Equals(scheme, Tag.FHIRTAGSCHEME_GENERAL)
+                || Uri.Equals(scheme, Tag.FHIRTAGSCHEME_PROFILE)
+                || Uri.Equals(scheme, Tag.FHIRTAGSCHEME_SECURITY);
+        }
+        public static bool HasFhirScheme(this Tag tag)
+        {
+            return UriIsFhirScheme(tag.Scheme);
+        }
 
+        public static IEnumerable<Tag> FilterOnFhirSchemes(this IEnumerable<Tag> tags)
+        {
+            return tags.Where(e => e.HasFhirScheme());
+        }
 
         public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, IEnumerable<Tag> that)
         {
