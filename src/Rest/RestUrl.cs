@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        internal RestUrl SetPath(params string[] components)
+        internal RestUrl AddPath(params string[] components)
         {
             string _components = string.Join("/", components).Trim('/');
             _builder.Path = delimit(_builder.Path)+ _components;

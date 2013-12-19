@@ -149,7 +149,6 @@ namespace Hl7.Fhir.Model
             return tags.Where(e => Uri.Equals(e.Scheme, scheme));
         }
 
-
         public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, IEnumerable<Tag> that)
         {
             if (that == null) Error.ArgumentNull("that");

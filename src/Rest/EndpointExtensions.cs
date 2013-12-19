@@ -11,96 +11,63 @@ namespace Hl7.Fhir.Rest
     {
         public static RestUrl WithMetadata(this Endpoint endpoint)
         {
-            return endpoint.AsRestUrl().SetPath(RestOperation.METADATA);
+            return endpoint.AsRestUrl().AddPath(RestOperation.METADATA);
         }
 
         public static RestUrl ForCollection(this Endpoint endpoint, string collection)
         {
-            return endpoint.AsRestUrl().SetPath(collection);
-        }
-        public static RestUrl Collection(this Endpoint endpoint, ResourceType resource)
-        {
-            return endpoint.ForCollection(resource.GetCollectionName());
+            return endpoint.AsRestUrl().AddPath(collection);
         }
 
         public static RestUrl Validate(this Endpoint endpoint, string collection, string id=null)
         {
             if(id != null)
-                return endpoint.AsRestUrl().SetPath(collection, RestOperation.VALIDATE);
+                return endpoint.AsRestUrl().AddPath(collection, RestOperation.VALIDATE);
             else
-                return endpoint.AsRestUrl().SetPath(collection, RestOperation.VALIDATE, id);
+                return endpoint.AsRestUrl().AddPath(collection, RestOperation.VALIDATE, id);
         }
 
         public static RestUrl Resource(this Endpoint endpoint, string collection, string id)
         {
-            return endpoint.AsRestUrl().SetPath(collection, id);
-        }
-        public static RestUrl Resource(this Endpoint endpoint, ResourceType resource, string id)
-        {
-             return endpoint.Resource(resource.GetCollectionName(), id);
+            return endpoint.AsRestUrl().AddPath(collection, id);
         }
 
         public static RestUrl CollectionHistory(this Endpoint endpoint, string collection)
         {
-            return endpoint.AsRestUrl().SetPath(collection, RestOperation.HISTORY);
-        }
-        public static RestUrl CollectionHistory(this Endpoint endpoint, ResourceType resource)
-        {
-            return endpoint.CollectionHistory(resource.GetCollectionName());
+            return endpoint.AsRestUrl().AddPath(collection, RestOperation.HISTORY);
         }
 
         public static RestUrl ResourceHistory(this Endpoint endpoint, string collection, string id)
         {
-            return endpoint.AsRestUrl().SetPath(collection, id, RestOperation.HISTORY);
-        }
-        public static RestUrl ResourceHistory(this Endpoint endpoint, ResourceType resource, string id)
-        {
-            return endpoint.AsRestUrl().SetPath(resource.GetCollectionName(), id, RestOperation.HISTORY);
+            return endpoint.AsRestUrl().AddPath(collection, id, RestOperation.HISTORY);
         }
 
         public static RestUrl ServerHistory(this Endpoint endpoint)
         {
-            return endpoint.AsRestUrl().SetPath(RestOperation.HISTORY);
+            return endpoint.AsRestUrl().AddPath(RestOperation.HISTORY);
         }
 
         public static RestUrl Search(this Endpoint endpoint, string collection)
         {
-            return endpoint.AsRestUrl().SetPath(collection, RestOperation.SEARCH);
-        }
-        public static RestUrl Search(this Endpoint endpoint, ResourceType resource)
-        {
-            return endpoint.AsRestUrl().SetPath(resource.GetCollectionName(), RestOperation.SEARCH);
+            return endpoint.AsRestUrl().AddPath(collection, RestOperation.SEARCH);
         }
 
         public static RestUrl Tags(this Endpoint endpoint)
         {
-            return endpoint.AsRestUrl().SetPath(RestOperation.TAGS);
+            return endpoint.AsRestUrl().AddPath(RestOperation.TAGS);
         }
 
         public static RestUrl CollectionTags(this Endpoint endpoint, string collection)
         {
-            return endpoint.AsRestUrl().SetPath(collection, RestOperation.TAGS);
+            return endpoint.AsRestUrl().AddPath(collection, RestOperation.TAGS);
         }
-        public static RestUrl CollectionTags(this Endpoint endpoint, ResourceType resource)
-        {
-            return endpoint.AsRestUrl().SetPath(resource.GetCollectionName(), RestOperation.TAGS);
-        }
-
 
         public static RestUrl ResourceTags(this Endpoint endpoint, string collection, string id, string vid=null)
         {
             if(vid == null)
-                return endpoint.AsRestUrl().SetPath(collection, id, RestOperation.TAGS);
+                return endpoint.AsRestUrl().AddPath(collection, id, RestOperation.TAGS);
             else
-                return endpoint.AsRestUrl().SetPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
+                return endpoint.AsRestUrl().AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
         }
-
-        public static RestUrl ResourceTags(this Endpoint endpoint, ResourceType resource, string id, string vid=null)
-        {
-            if(vid == null)
-                return endpoint.AsRestUrl().SetPath(resource.GetCollectionName(), id, RestOperation.TAGS);
-            else
-                return endpoint.AsRestUrl().SetPath(resource.GetCollectionName(), id, RestOperation.HISTORY, vid, RestOperation.TAGS);
-        }       
     }
 }

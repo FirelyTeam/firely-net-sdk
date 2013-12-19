@@ -12,35 +12,19 @@ namespace Hl7.Fhir.Rest
         public ResourceIdentity(Uri uri) : base(uri.ToString()) { }
         internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
         
-        /// <summary>
-        /// Creates an absolute Uri representing a Resource identitity for a given resource type and id.
-        /// </summary>
-        /// <param name="endpoint">Absolute path giving the FHIR service endpoint</param>
-        /// <param name="collection">Name of the collection (resource type)</param>
-        /// <param name="id">The resource's logical id</param>
-        /// <returns></returns>
-        public static ResourceIdentity Build(Uri endpoint, string collection, string id)
-        {
-            if (collection == null) Error.ArgumentNull("collection");
-            if (id == null) Error.ArgumentNull("id");
-            if (!endpoint.IsAbsoluteUri) Error.Argument("endpoint", "endpoint must be an absolute path");
-
-            return new ResourceIdentity(construct(endpoint, collection, id));
-        }
 
         /// <summary>
-        /// Creates an absolute Uri representing a Resource identitity for a given resource type, id and version.
+        /// Creates an absolute Uri representing a Resource identitity for a given resource type, id and optional version.
         /// </summary>
         /// <param name="endpoint">Absolute path giving the FHIR service endpoint</param>
         /// <param name="collection">Name of the collection (resource type)</param>
         /// <param name="id">The resource's logical id</param>
         /// <param name="vid">The resource's version id</param>
         /// <returns></returns>
-        public static ResourceIdentity Build(Uri endpoint, string collection, string id, string vid)
+        public static ResourceIdentity Build(Uri endpoint, string collection, string id, string vid=null)
         {
             if (collection == null) Error.ArgumentNull("collection");
             if (id == null) Error.ArgumentNull("id");
-            if (vid == null) Error.ArgumentNull("vid");
             if (!endpoint.IsAbsoluteUri) Error.Argument("endpoint", "endpoint must be an absolute path");
             
             return new ResourceIdentity(construct(endpoint, collection, id, RestOperation.HISTORY, vid));
@@ -48,37 +32,24 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
-        /// Creates an relative Uri representing a Resource identitity for a given resource type and id.
-        /// </summary>
-        /// <param name="collection">Name of the collection (resource type)</param>
-        /// <param name="id">The resource's logical id</param>
-        /// <returns></returns>
-        public static ResourceIdentity Build(string collection, string id)
-        {
-            if (collection == null) Error.ArgumentNull("collection");
-            if (id == null) Error.ArgumentNull("id");
-
-            return new ResourceIdentity(string.Format("{0}/{1}", collection, id), UriKind.Relative);
-        }
-
-
-        /// <summary>
-        /// Creates a relative Uri representing a Resource identitity for a given resource type, id and version.
+        /// Creates a relative Uri representing a Resource identitity for a given resource type, id and optional version.
         /// </summary>
         /// <param name="collection">Name of the collection (resource type)</param>
         /// <param name="id">The resource's logical id</param>
         /// <param name="vid">The resource's version id</param>
         /// <returns></returns>
 
-        public static ResourceIdentity Build(string collection, string id, string vid)
+        public static ResourceIdentity Build(string collection, string id, string vid=null)
         {
             if (collection == null) Error.ArgumentNull("collection");
             if (id == null) Error.ArgumentNull("id");
             if (vid == null) Error.ArgumentNull("vid");
 
-            return new ResourceIdentity(
-                string.Format("{0}/{1}/{2}/{3}", collection, id, RestOperation.HISTORY, vid),
-                UriKind.Relative);
+            string url = vid != null ?
+                string.Format("{0}/{1}/{2}/{3}", collection, id, RestOperation.HISTORY, vid) :
+                string.Format("{0}/{1}", collection, id);
+            
+            return new ResourceIdentity(url, UriKind.Relative);
         }
         
         

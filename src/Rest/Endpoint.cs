@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public bool IsWithinEndpoint(Uri other)
+        public bool IsEndpointFor(Uri other)
         {
             return this.Uri.IsBaseOf(other);
         }

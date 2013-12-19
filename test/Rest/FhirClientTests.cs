@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
                             FhirSerializer.SerializeBundleEntryToJson(loc2));
 
-            var loc3 = client.Fetch<Location>(loc.SelfLink);
+            var loc3 = client.Read<Location>(loc.SelfLink);
             Assert.IsNotNull(loc3);
             Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
                             FhirSerializer.SerializeBundleEntryToJson(loc3));
