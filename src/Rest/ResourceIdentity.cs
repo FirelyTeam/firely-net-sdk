@@ -222,6 +222,12 @@ namespace Hl7.Fhir.Rest
                 return new ResourceIdentity(path);
             }
         }
+
+        public Uri OperationPath()
+        {
+            // dit maakt de uri altijd relatief
+            return ResourceIdentity.Build(this.Collection, this.Id, this.VersionId);
+        }
     }
 
    
