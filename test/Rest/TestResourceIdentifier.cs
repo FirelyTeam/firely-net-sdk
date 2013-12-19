@@ -118,5 +118,21 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
         }
+
+
+        [TestMethod]
+        public void TestRelativeUri()
+        {
+            var identity = new ResourceIdentity("patient/8");
+            
+            Assert.AreEqual("patient", identity.Collection);
+            Assert.AreEqual("8", identity.Id);
+
+            identity = new ResourceIdentity("patient/8/_history/H30");
+
+            Assert.AreEqual("patient", identity.Collection);
+            Assert.AreEqual("8", identity.Id);
+            Assert.AreEqual("H30", identity.VersionId);
+        }
     }
 }

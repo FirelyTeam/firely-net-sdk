@@ -8,8 +8,8 @@ namespace Hl7.Fhir.Rest
 {
     public class ResourceIdentity : Uri
     {
-        public ResourceIdentity(string uri) : base(uri) {  }
-        public ResourceIdentity(Uri uri) : base(uri.ToString()) { }
+        public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) {  }
+        public ResourceIdentity(Uri uri) : base(uri.ToString(), UriKind.RelativeOrAbsolute) { }
         internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
         
         /// <summary>
@@ -114,7 +114,8 @@ namespace Hl7.Fhir.Rest
 
         private IEnumerable<string> splitPath()
         {
-            return this.LocalPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            string path = (this.IsAbsoluteUri) ? this.LocalPath : this.ToString();
+            return path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         internal List<string> Components
