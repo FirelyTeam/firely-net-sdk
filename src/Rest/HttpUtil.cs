@@ -240,13 +240,6 @@ namespace Hl7.Fhir.Rest
                 (b) => FhirParser.ParseTagListFromJson(b));
         }
 
-        public static byte[] TagListBody(TagList tags, ResourceFormat format)
-        {
-            return serializeBody<TagList>(tags, format,
-                t => FhirSerializer.SerializeTagListToXmlBytes(tags),
-                t => FhirSerializer.SerializeTagListToJsonBytes(tags));
-        }
-
         private static byte[] serializeBody<T>(T data, ResourceFormat format, Func<T, byte[]> xmlSerializer, Func<T, byte[]> jsonSerializer)
         {
             var isBundle = data is Bundle;

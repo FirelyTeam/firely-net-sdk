@@ -276,6 +276,14 @@ namespace Hl7.Fhir.Rest
 
                 req.ContentType = ContentType.BuildContentType(PreferredFormat, true);
             }
+            else if(data is TagList)
+            {
+                body = PreferredFormat == ResourceFormat.Xml ?
+                    FhirSerializer.SerializeTagListToXmlBytes((TagList)data) :
+                    FhirSerializer.SerializeTagListToJsonBytes((TagList)data);
+        
+                req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
+            }
 
             if (tags != null) req.Headers[HttpUtil.CATEGORY] = HttpUtil.BuildCategoryHeader(tags);
 
@@ -596,19 +604,41 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
-        /// Send a batched update to the server
+        /// Send a batched of creates, updates and deletes to the server
         /// </summary>
         /// <param name="batch">The contents of the batch to be sent</param>
         /// <returns>A bundle as returned by the server after it has processed the updates in the batch, or null
         /// if an error occurred.</returns>
-        //public Bundle Batch(Bundle batch)
-        //{
-        //    if (batch == null) throw new ArgumentNullException("batch");
+        public Bundle Transaction(Bundle bundle)
+        {
+            if (bundle == null) throw new ArgumentNullException("bundle");
+            assertEndpoint();
 
-        //    //mailbox, "" and document
-          
-        //}
+            var url = _endpoint.AsRestUrl();
 
+            var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: true);
+            return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
+        }
+
+
+        public void DeliverToDocument(Bundle bundle)
+        {
+            if (bundle == null) throw Error.ArgumentNull("bundle");
+            assertEndpoint();
+
+            var url = _endpoint.AsRestUrl().AddPath("Document");
+
+            if (bundle.GetBundleType() == BundleType.Document)
+            {
+                // Documents are merely "accepted"
+                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: false);
+                doRequest(req, HttpStatusCode.NoContent, () => true );
+            }         
+            else
+            {
+                throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
+            }            
+        }
 
         /// <summary>
         /// Send a Bundle to a path on the server
@@ -619,113 +649,95 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This method differs from Batch, in that it can be used to deliver a Bundle
         /// at the endpoint for messages, documents or binaries, instead of the batched update
         /// REST endpoint.</remarks>
-        //public Bundle DeliverToMailbox(Bundle bundle)
-        //{
-        //    if (bundle == null) throw Error.ArgumentNull("bundle");
-        //    assertEndpoint();
+        public Bundle DeliverToMailbox(Bundle bundle)
+        {
+            if (bundle == null) throw Error.ArgumentNull("bundle");
+            assertEndpoint();
 
-        //    var url = _endpoint.AsRestUrl().AddPath("Mailbox");
+            var url = _endpoint.AsRestUrl().AddPath("Mailbox");
 
-        //    if (bundle.GetBundleType() == BundleType.Document)
-        //    {
-        //        // Documents are merely "accepted"
-        //        var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: true);
-        //        return doRequest(req, HttpStatusCode.NoContent, () => (Bundle)null);
-        //    }
-        //    else if (bundle.GetBundleType() == BundleType.Message)
-        //    {
-        //        // Messages and others (e.g. Queries)
-        //    }
-        //    else
-        //    {
-        //        throw Error.Argument("bundle", "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
-        //    }
-            
-        //}
-
-
-        //public IEnumerable<Tag> GetTags()
-        //{
-        //    if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-
-        //    var rl = _endpoint.Tags();
-
-        //    var req = initializeRequest(rl.Uri, true);
-
-        //    var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
-
-        //    return result.Category;
-        //}
+            if (bundle.GetBundleType() == BundleType.Document)
+            {
+                // Documents are merely "accepted"
+                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: false);
+                return doRequest(req, HttpStatusCode.NoContent, () => (Bundle)null);
+            }
+            else if (bundle.GetBundleType() == BundleType.Message)
+            {
+                // Messages, including Queries, expect a return message
+                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: true);
+                return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
+            }
+            else
+            {
+                throw Error.Argument("bundle", "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
+            }            
+        }
 
 
-        //public IEnumerable<Tag> GetTags(ResourceType type, string id=null, string version=null)
-        //{
-        //    if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-        //    if (version != null && id == null) throw new ArgumentException("Must specify an id if you specify a version");
+        public IEnumerable<Tag> GetTags()
+        {
+            assertEndpoint();
 
-            
-        //    //var rl = new ResourceLocation(Endpoint);
-        //    //rl.Operation = FhirRestOperation.OPERATION_TAGS;
+            var rl = _endpoint.Tags();
 
-        //    RestUrl api;
-        //    string collection = type.GetCollectionName();
-        //    if (id == null)
-        //        api = _endpoint.CollectionTags(collection);
-        //    else 
-        //        api = _endpoint.ResourceTags(collection, id,version);
-            
-        //    //rl.Id = id;
-        //    //rl.VersionId = version;
+            var req = prepareRequest("GET", rl.Uri, null, null, expectBundleResponse: false);
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
 
-        //    var req = initializeRequest(api.Uri, true);
-        //    var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
-        //    return result.Category;
-        //}
+            return result.Category;
+        }
 
 
-  //      public IEnumerable<Tag> AffixTags(IEnumerable<Tag> tags, ResourceType type, string id, string version=null)
-  //      {
-  //          if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-  //          if (id == null) throw new ArgumentNullException("id");
-  //          if (tags == null) throw new ArgumentNullException("tags");
+        public IEnumerable<Tag> GetTags<TResource>(string id = null, string version = null) where TResource : Resource, new()
+        {
+            assertEndpoint();
+            if (version != null && id == null) throw new ArgumentException("Must specify an id if you specify a version");
 
-  //  //        RestUrl rl = _endpoint.ResourceTags(type, id, version);
+            RestUrl api;
+            string collection = typeof(TResource).GetCollectionName();
+            if (id == null)
+                api = _endpoint.CollectionTags(collection);
+            else
+                api = _endpoint.ResourceTags(collection, id, version);
 
-  //          var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
-            
-  ////         var req = initializeRequest(rl.Uri, true);
-  //          req.Method = "POST";
-  //          req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
-  //          writeBody(req, data);
-
-  //          var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
-  //          return result.Category;
-  //      }
+            var req = prepareRequest("GET", api.Uri, null, null, expectBundleResponse: false);
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            return result.Category;
+        }
 
 
-        //public void DeleteTags(IEnumerable<Tag> tags, ResourceType type, string id, string version = null)
-        //{
-        //    if (Endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
-        //    if (id == null) throw new ArgumentNullException("id");
-        //    if (tags == null) throw new ArgumentNullException("tags");
+        public IEnumerable<Tag> AffixTags<TResource>(IEnumerable<Tag> tags, string id, string version=null) where TResource : Resource, new()
+        {
+            if (id == null) throw new ArgumentNullException("id");
+            if (tags == null) throw new ArgumentNullException("tags");
+            assertEndpoint();
 
-        //    var rl = _endpoint.ResourceTags(type, id, version);
-        //    var data = HttpUtil.TagListBody(new TagList(tags), PreferredFormat);
-        //    var req = initializeRequest(rl.Uri, true);
-        //    req.Method = "DELETE";
-        //    req.ContentType = ContentType.BuildContentType(PreferredFormat, false);
-        //    writeBody(req, data);
+            var collection = typeof(TResource).GetCollectionName();
+            var rl = _endpoint.ResourceTags(collection, id, version);
 
-        //    doRequest(req, HttpStatusCode.OK, () => true);
-        //}
+            var req = prepareRequest("POST", rl.Uri, new TagList(tags), null, expectBundleResponse: false); 
+            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            return result.Category;
+        }
+
+
+        public void DeleteTags<TResource>(IEnumerable<Tag> tags, string id, string version = null) where TResource : Resource, new()
+        {
+            if (id == null) throw new ArgumentNullException("id");
+            if (tags == null) throw new ArgumentNullException("tags");
+            assertEndpoint();
+
+            var collection = typeof(TResource).GetCollectionName();
+            var rl = _endpoint.ResourceTags(collection, id, version);
+
+            var req = prepareRequest("DELETE", rl.Uri, new TagList(tags), null, expectBundleResponse: false);
+            doRequest(req, HttpStatusCode.OK, () => true);
+        }
 
         public ResourceFormat PreferredFormat { get; set; }
         public bool UseFormatParam { get; set; }
         
-
-     
-
-
+   
         public ResponseDetails LastResponseDetails { get; private set; }
 
 
@@ -773,11 +785,11 @@ namespace Hl7.Fhir.Rest
 
         private T doRequest<T>(HttpWebRequest req, HttpStatusCode[] success, Func<T> onSuccess)
         {
-            //HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx();
-            var getResponseTask = Task.Factory.FromAsync<WebResponse>(req.BeginGetResponse,
-                req.EndGetResponseNoEx, null); 
+            HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx();
+           // var getResponseTask = Task.Factory.FromAsync<WebResponse>(req.BeginGetResponse,
+          //      req.EndGetResponseNoEx, null); 
 
-            HttpWebResponse response = (HttpWebResponse)(getResponseTask.ConfigureAwait(false).GetAwaiter().GetResult());
+        //   HttpWebResponse response = (HttpWebResponse)(getResponseTask.ConfigureAwait(false).GetAwaiter().GetResult());
 
             LastResponseDetails = ResponseDetails.FromHttpWebResponse(response);
 
