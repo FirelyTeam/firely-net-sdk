@@ -22,9 +22,7 @@ Supported Platforms:
 - Windows Phone 7.5 and 8
 - Portable Class Libraries</description>
     <summary>Enables usage of the 'async' and 'await' keywords from projects targeting .NET Framework 4 (with KB2468871), Silverlight 4 and 5, and Windows Phone 7.5 and 8.</summary>
-    <releaseNotes />
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <language />
     <tags>BCL Microsoft System Async Await Asynchronous</tags>
     <dependencies>
       <dependency id="Microsoft.Bcl" version="1.0.19" />

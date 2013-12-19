@@ -105,7 +105,7 @@
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Rest\QueryParam.cs" />
-    <Compile Include="Rest\ResourceLocationExtensions.cs" />
+    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Support\Search\BoolParamValue.cs" />
     <Compile Include="Support\Search\CombinedParamValue.cs" />
