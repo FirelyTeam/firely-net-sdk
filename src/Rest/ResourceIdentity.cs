@@ -89,9 +89,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static Uri construct(Uri service, IEnumerable<string> components)
+        private static Uri construct(Uri endpoint, IEnumerable<string> components)
         {
-            UriBuilder builder = new UriBuilder(service);
+            UriBuilder builder = new UriBuilder(endpoint);
             string _path = delimit(builder.Path);
             string _components = string.Join("/", components).Trim('/');
             builder.Path = _path + _components;
@@ -99,9 +99,9 @@ namespace Hl7.Fhir.Rest
             return builder.Uri;
         }
 
-        private static Uri construct(Uri service, params string[] components)
+        private static Uri construct(Uri endpoint, params string[] components)
         {
-            return construct(service,(IEnumerable<string>)components);
+            return construct(endpoint,(IEnumerable<string>)components);
         }
 
         private List<string> _components = null;
@@ -127,6 +127,24 @@ namespace Hl7.Fhir.Rest
                     _components = splitPath().ToList();
                 }
                 return _components;
+            }
+        }
+
+       
+        public Uri Endpoint
+        {
+            get
+            {
+                int count = Components.Count;
+                int index = Components.IndexOf(RestOperation.HISTORY);
+                int n = (index > 0) ? 4 : 2;
+                IEnumerable<string> _components = Components.Skip(count - n);
+                string path = string.Join("/", _components).Trim('/');
+                string s = this.ToString();
+                string endpoint = s.Remove(s.LastIndexOf(path));
+                
+                return (endpoint.Length > 0) ? new Uri(endpoint) : null;
+                
             }
         }
 
@@ -198,21 +216,38 @@ namespace Hl7.Fhir.Rest
             }
         }
 
+        
         public ResourceIdentity WithVersion(string version)
-        {           
+        {
+            Uri endpoint = this.Endpoint;
+
+            if (endpoint == null)
+                return ResourceIdentity.Build(this.Collection, this.Id, version);
+            else
+                return ResourceIdentity.Build(this.Endpoint, this.Collection, this.Id, version); 
+            /*
             int index = Components.IndexOf(RestOperation.HISTORY);
 
             if (index == -1)
                 return new ResourceIdentity(construct(this, RestOperation.HISTORY, version));
             else
             {
+                
                 var path = construct(new Uri(getHost()), Components.Take(index).Concat( new string[] { RestOperation.HISTORY, version }));
                 return new ResourceIdentity(path);
             }
+            */
         }
 
         public ResourceIdentity RemoveVersion()
         {
+            Uri endpoint = this.Endpoint;
+
+            if (endpoint == null)
+                return ResourceIdentity.Build(this.Collection, this.Id);
+            else
+                return ResourceIdentity.Build(endpoint, this.Collection, this.Id); 
+            /*
             int index = Components.IndexOf(RestOperation.HISTORY);
 
             if (index == -1)
@@ -222,6 +257,7 @@ namespace Hl7.Fhir.Rest
                 var path = construct(new Uri(getHost()), Components.Take(index));
                 return new ResourceIdentity(path);
             }
+            */
         }
 
         public Uri OperationPath()

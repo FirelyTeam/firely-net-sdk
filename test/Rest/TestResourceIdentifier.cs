@@ -117,22 +117,44 @@ namespace Hl7.Fhir.Test
 
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
+
+            // mh: relativ uri's:
+
+            identity = new ResourceIdentity("organization/3");
+            newIdentity = identity.WithVersion("3141");
+            Assert.AreEqual("3", newIdentity.Id);
+            Assert.AreEqual("3141", newIdentity.VersionId);
+
+            identity = new ResourceIdentity("organization/3/_history/X98");
+            newIdentity = identity.WithVersion("3141");
+            Assert.AreEqual("3", newIdentity.Id);
+            Assert.AreEqual("3141", newIdentity.VersionId);
         }
 
 
         [TestMethod]
         public void TestRelativeUri()
         {
-            var identity = new ResourceIdentity("patient/8");
+            ResourceIdentity identity;
             
+            identity = new ResourceIdentity("patient/8");
             Assert.AreEqual("patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
 
             identity = new ResourceIdentity("patient/8/_history/H30");
+            Assert.AreEqual("patient", identity.Collection);
+            Assert.AreEqual("8", identity.Id);
+            Assert.AreEqual("H30", identity.VersionId);
 
+            identity = new ResourceIdentity(new Uri("patient/8", UriKind.Relative));
+            Assert.AreEqual("patient", identity.Collection);
+            Assert.AreEqual("8", identity.Id);
+
+            identity = new ResourceIdentity(new Uri("patient/8/_history/H30", UriKind.Relative));
             Assert.AreEqual("patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
             Assert.AreEqual("H30", identity.VersionId);
         }
+
     }
 }
