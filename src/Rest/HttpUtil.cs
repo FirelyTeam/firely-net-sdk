@@ -176,21 +176,11 @@ namespace Hl7.Fhir.Rest
             return binary;
         }
 
-        public static ResourceEntry SingleResourceResponse(string body, byte[] data, string contentType,
+
+        internal static ResourceEntry CreateResourceEntry(Resource resource,
             string requestUri = null, string location = null,
             string category = null, string lastModified = null)
         {
-            Resource resource = null;
-
-            if (body != null)
-            {
-                resource = parseBody<Resource>(body, contentType,
-                    b => FhirParser.ParseResourceFromXml(b),
-                    b => FhirParser.ParseResourceFromJson(b));
-            }
-            else
-                resource = MakeBinary(data, contentType);
-
             ResourceEntry result = ResourceEntry.Create(resource);
             string versionIdInRequestUri = null;
 
@@ -221,6 +211,26 @@ namespace Hl7.Fhir.Rest
             result.Title = "A " + resource.GetType().Name + " resource";
 
             return result;
+        }
+
+        internal static ResourceEntry CreateResourceEntry(object data, string contentType,
+            string requestUri = null, string location = null,
+            string category = null, string lastModified = null)
+        {
+            Resource resource = null;
+
+            if(data is string)
+            {
+                resource = parseBody<Resource>((string)data, contentType,
+                    b => FhirParser.ParseResourceFromXml(b),
+                    b => FhirParser.ParseResourceFromJson(b));
+            }
+            else if(data is byte[])
+                resource = MakeBinary((byte[])data, contentType);
+            else
+                throw Error.Argument("data", "Data may be a byte[] (Binary data) or string (resource body)");
+
+            return CreateResourceEntry(resource, requestUri, location, category, lastModified);
         }
 
 

@@ -70,6 +70,7 @@
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Rest\FhirClientTests.cs" />
     <Compile Include="Rest\TestResourceIdentifier.cs" />
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Serialization\BundleTests.cs" />

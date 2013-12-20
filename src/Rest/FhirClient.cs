@@ -41,6 +41,7 @@ using Hl7.Fhir.Support.Search;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Rest;
 using System.Threading.Tasks;
+using System.Threading;
 
 
 
@@ -194,7 +195,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The resource as updated on the server. Throws an exception when the update failed,
         /// in particular may throw an exception when the server returns a 409 when a conflict is detected
         /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
-        public void Update<TResource>(ResourceEntry<TResource> entry, bool versionAware = false)
+        public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool versionAware = false)
                         where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
@@ -208,7 +209,7 @@ namespace Hl7.Fhir.Rest
             var rId = new ResourceIdentity(entry.Id);
             var rVersionId = entry.SelfLink != null ? new ResourceIdentity(entry.SelfLink) : null;
 
-            Update<TResource>(entry.Resource,rId.Id,entry.Tags,versionAware ? rVersionId.Id : null);
+            return Update<TResource>(entry.Resource,rId.Id,entry.Tags,versionAware ? rVersionId.Id : null);
         }
 
 
@@ -221,7 +222,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The resource as updated on the server. Throws an exception when the update failed,
         /// in particular may throw an exception when the server returns a 409 when a conflict is detected
         /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
-        public void Update<TResource>(TResource resource, string id, IEnumerable<Tag> tags, string versionId = null)
+        public ResourceEntry<TResource> Update<TResource>(TResource resource, string id, IEnumerable<Tag> tags, string versionId = null)
                         where TResource : Resource, new()
         {
             if (resource == null) throw Error.ArgumentNull("resource");
@@ -234,7 +235,8 @@ namespace Hl7.Fhir.Rest
             // If a version id is given, post the data to a version-specific url
             if (versionId != null) req.Headers[HttpRequestHeader.ContentLocation] = rId.WithVersion(versionId).ToString();
 
-            doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, () => true);
+            return doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK },
+                () => makeEntryFromHeaders(resource));
         }
 
 
@@ -287,7 +289,7 @@ namespace Hl7.Fhir.Rest
 
             if (tags != null) req.Headers[HttpUtil.CATEGORY] = HttpUtil.BuildCategoryHeader(tags);
 
-            writeBody(req, body);
+            if(body != null) writeBody(req, body);
             return req;
         }
 
@@ -323,15 +325,19 @@ namespace Hl7.Fhir.Rest
         private Stream getRequestStream(HttpWebRequest request)
         {
             Stream requestStream = null;
+            ManualResetEvent getRequestFinished = new ManualResetEvent(false);
+
             AsyncCallback callBack = new AsyncCallback(ar =>
             {
                 var req = (HttpWebRequest)ar.AsyncState;
                 requestStream = req.EndGetRequestStream(ar);
+                getRequestFinished.Set();
             });
 
             var async = request.BeginGetRequestStream(callBack, request);
 
-            async.AsyncWaitHandle.WaitOne();
+            getRequestFinished.WaitOne();
+            //async.AsyncWaitHandle.WaitOne();
 
             return requestStream;
         }
@@ -381,7 +387,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks><para>The returned resource need not be the same as the resources passed as a parameter,
         /// since the server may have updated or changed part of the data because of business rules.</para>
         /// </remarks>
-        public void Create<TResource>(TResource resource, string id=null, IEnumerable<Tag> tags = null) where TResource : Resource, new()
+        public ResourceEntry<TResource> Create<TResource>(TResource resource, string id=null, IEnumerable<Tag> tags = null) where TResource : Resource, new()
         {
             if (resource == null) throw new ArgumentNullException("resource");
             assertEndpoint();
@@ -393,12 +399,12 @@ namespace Hl7.Fhir.Rest
                 // A normal create
                 var rl = _endpoint.ForCollection(collection);
                 var req = prepareRequest("POST", rl.Uri, resource, tags, expectBundleResponse: false);
-                doRequest(req, HttpStatusCode.Created, () => true);
+                return doRequest(req, HttpStatusCode.Created, () => makeEntryFromHeaders(resource));
             }
             else
             {
                 // Given an id, this create turns into an update at a specific resource location
-                Update<TResource>(resource, id, tags);
+                return Update<TResource>(resource, id, tags);
             }
         }
 
@@ -565,7 +571,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Bundle SearchById<TResource>(ResourceType resource, string id, string sort=null, string[] includes=null, int? count=null) where TResource : Resource, new()
+        public Bundle SearchById<TResource>(string id, string sort=null, string[] includes=null, int? count=null) where TResource : Resource, new()
         {
             return doSearch(typeof(TResource).GetCollectionName(), new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes,count);
         }
@@ -748,16 +754,15 @@ namespace Hl7.Fhir.Rest
 
         private ResourceEntry<T> resourceEntryFromResponse<T>() where T : Resource, new()
         {
-            string resourceText = null;
-            byte[] data = null;
+            object data = null;
 
             if (typeof(T).IsAssignableFrom(typeof(Binary)))
                 data = LastResponseDetails.Body;
             else
-                resourceText = LastResponseDetails.BodyAsString();
-
+                data = LastResponseDetails.BodyAsString();
+            
             // Initialize a resource entry from the received data. Note: Location overrides ContentLocation
-            ResourceEntry result = HttpUtil.SingleResourceResponse(resourceText, data,
+            ResourceEntry result = HttpUtil.CreateResourceEntry(data,
                     LastResponseDetails.ContentType, LastResponseDetails.ResponseUri.ToString(),
                     LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
                     LastResponseDetails.Category, LastResponseDetails.LastModified);
@@ -770,6 +775,13 @@ namespace Hl7.Fhir.Rest
                                     result.Resource.GetType().Name, typeof(T).Name));
         }
 
+        private ResourceEntry<T> makeEntryFromHeaders<T>(T resource) where T:Resource, new()
+        {
+            return (ResourceEntry<T>)HttpUtil.CreateResourceEntry(resource,
+                    LastResponseDetails.ResponseUri.ToString(),
+                    LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
+                    LastResponseDetails.Category, LastResponseDetails.LastModified);
+        }
 
         private Bundle bundleFromResponse()
         {
@@ -808,7 +820,7 @@ namespace Hl7.Fhir.Rest
                 }
                 catch
                 {
-                    // failed, too bad.
+                    // failed, too bad, outcome will be null
                 }
 
                 if (outcome != null)

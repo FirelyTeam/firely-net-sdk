@@ -27,7 +27,10 @@ namespace Hl7.Fhir.Rest
             if (id == null) Error.ArgumentNull("id");
             if (!endpoint.IsAbsoluteUri) Error.Argument("endpoint", "endpoint must be an absolute path");
             
-            return new ResourceIdentity(construct(endpoint, collection, id, RestOperation.HISTORY, vid));
+            if(vid != null)
+                return new ResourceIdentity(construct(endpoint, collection, id, RestOperation.HISTORY, vid));
+            else
+                return new ResourceIdentity(construct(endpoint, collection, id));
         }
 
 

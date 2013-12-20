@@ -58,16 +58,23 @@ namespace Hl7.Fhir.Rest
         public static WebResponse GetResponseNoEx(this WebRequest req)
         {
             WebResponse result = null;
+            ManualResetEvent responseReady = new ManualResetEvent(false);
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
                         var request = (WebRequest)ar.AsyncState;
                         result = request.EndGetResponseNoEx(ar);
+                        responseReady.Set();
                 });
 
             var async = req.BeginGetResponse(callback, req);
-            
-            async.AsyncWaitHandle.WaitOne();
+
+            // Not having thread affinity seems to work better with ManualResetEvent
+            // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
+            // unit tests), when EndGetResponse would return null without any error
+            // thrown
+            responseReady.WaitOne();
+            //async.AsyncWaitHandle.WaitOne();
 
             return result;
         }
