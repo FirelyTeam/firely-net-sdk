@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Rest
             {
                 ResourceIdentity reqId = new ResourceIdentity(requestUri);
                 versionIdInRequestUri = reqId.VersionId;
-                result.Id = reqId.RemoveVersion(); 
+                result.Id = reqId.WithoutVersion(); 
             }
 
             if (!String.IsNullOrEmpty(location))

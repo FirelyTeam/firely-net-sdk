@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,32 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
+    //TODO: Add functionality to resolve references between resources in the Bundle (see references.html)
+    //TODO: Add functionality to make relative references absolute and vice versa using fhir-base url
     public static class BundleExtensions
     {
+        public static IEnumerable<BundleEntry> FindEntryByReference(this Bundle bundle, Uri reference)
+        {
+            var id = reference;
+
+            if (!id.IsAbsoluteUri)
+            {
+                if (bundle.Links.Base == null)
+                    throw Error.Argument("reference", "Reference is a relative uri, so it needs a fhir-base link to be able to find entries by id or selflink");
+
+                id = new Uri(bundle.Links.Base, id);
+            }
+
+
+            var byId = bundle.Entries.ById(id);
+            var bySelf = bundle.Entries.BySelfLink(id);
+
+            if(bySelf != null)
+                return byId.Concat(new List<BundleEntry> { bySelf });
+            else
+                return byId;
+        }
+
         /// <summary>
         /// Filter ResourceEntries containing a specific Resource type. No DeletedEntries are returned.
         /// </summary>
@@ -45,6 +70,8 @@ namespace Hl7.Fhir.Model
         /// <returns>A list of BundleEntries with the given id, or an empty list if none were found.</returns>
         public static IEnumerable<BundleEntry> ById(this IEnumerable<BundleEntry> bes, Uri id)
         {
+            if (!id.IsAbsoluteUri) throw Error.Argument("id", "Id must be an absolute uri");
+
             return bes.Where(be => Uri.Equals(be.Id, id));
         }
 
@@ -57,6 +84,8 @@ namespace Hl7.Fhir.Model
         /// <returns>A list of typed ResourceEntries with the given id, or an empty list if none were found.</returns>
         public static IEnumerable<ResourceEntry<T>> ById<T>(this IEnumerable<ResourceEntry<T>> res, Uri id) where T : Resource, new()
         {
+            if (!id.IsAbsoluteUri) throw Error.Argument("id", "Id must be an absolute uri");
+
             return res.Where(re => Uri.Equals(re.Id, id));
         }
 
@@ -68,6 +97,8 @@ namespace Hl7.Fhir.Model
         /// <returns>A list of BundleEntries with the given self-link id, or an empty list if none were found.</returns>
         public static BundleEntry BySelfLink(this IEnumerable<BundleEntry> bes, Uri self)
         {
+            if (!self.IsAbsoluteUri) throw Error.Argument("self", "Must be an absolute uri");
+
             return bes.FirstOrDefault(be => Uri.Equals(be.SelfLink, self));
         }
 
@@ -81,6 +112,8 @@ namespace Hl7.Fhir.Model
         /// the empty list if none were found.</returns>
         public static ResourceEntry<T> BySelfLink<T>(this IEnumerable<ResourceEntry<T>> res, Uri self) where T : Resource, new()
         {
+            if (!self.IsAbsoluteUri) throw Error.Argument("id", "Must be an absolute uri");
+
             return res.FirstOrDefault(re => Uri.Equals(re.SelfLink, self));
         }
 

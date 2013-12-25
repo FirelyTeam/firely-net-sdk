@@ -190,7 +190,15 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        
+
+        public bool HasVersion
+        {
+            get
+            {
+                return VersionId != null;
+            }
+        }
+
         public ResourceIdentity WithVersion(string version)
         {
             Uri endpoint = this.Endpoint;
@@ -213,7 +221,7 @@ namespace Hl7.Fhir.Rest
             */
         }
 
-        public ResourceIdentity RemoveVersion()
+        public ResourceIdentity WithoutVersion()
         {
             Uri endpoint = this.Endpoint;
 
@@ -234,10 +242,13 @@ namespace Hl7.Fhir.Rest
             */
         }
 
-        public Uri OperationPath()
+        public Uri OperationPath
         {
-            // dit maakt de uri altijd relatief
-            return ResourceIdentity.Build(this.Collection, this.Id, this.VersionId);
+            get
+            {
+                // dit maakt de uri altijd relatief
+                return ResourceIdentity.Build(this.Collection, this.Id, this.VersionId);
+            }
         }
     }
 

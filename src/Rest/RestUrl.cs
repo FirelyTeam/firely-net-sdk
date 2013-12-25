@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
+
+    //TODO: Support compartments
+
     internal class RestUrl
     {
         private Uri _endpoint;
