@@ -24,10 +24,5 @@ namespace Hl7.Fhir.Rest
                 throw new ArgumentException(String.Format(
                     "Cannot determine collection name, type {0} is not a resource type", type.Name));
         }
-
-        public static string GetCollectionName(this ResourceType t)
-        {
-            return t.ToString().ToLower();
-        }
     }
 }

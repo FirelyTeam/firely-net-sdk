@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
                 if (entry.Summary != null)
                 {
                     var xelem = XElement.Parse(entry.Summary);
-                    xelem.Name = XNamespace.Get(SerializationUtil.XHTMLNS) + xelem.Name.LocalName;
+                    xelem.Name = XHtml.XHTMLNS + xelem.Name.LocalName;
 
                     result.Add(new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_SUMMARY,
                             new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "xhtml"), xelem));

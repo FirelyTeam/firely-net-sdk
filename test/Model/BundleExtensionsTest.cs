@@ -47,6 +47,7 @@ namespace Hl7.Fhir.Test
 
             Assert.AreEqual(2, b.FindEntryByReference(new Uri("Patient/1", UriKind.Relative)).Count());
             Assert.AreEqual(1, b.FindEntryByReference(new Uri("Patient/1/_history/1", UriKind.Relative)).Count());
+            Assert.AreEqual(2, b.FindEntryByReference(new Uri("http://y.com/Patient/1")).Count());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static readonly XName XHTMLDIV = XNamespace.Get(SerializationUtil.XHTMLNS) + "div";
+        private static readonly XName XHTMLDIV = XHtml.XHTMLNS + "div";
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {

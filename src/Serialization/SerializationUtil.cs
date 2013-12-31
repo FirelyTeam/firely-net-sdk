@@ -46,9 +46,6 @@ namespace Hl7.Fhir.Serialization
     internal class SerializationUtil
     {
         public const string FHIRNS = "http://hl7.org/fhir";
-        public const string XHTMLNS = "http://www.w3.org/1999/xhtml";
-        public const string XMLNS = "http://www.w3.org/2000/xmlns/";
-
         public const string RESTPARAM_FORMAT = "_format";
        
         public const string SEARCH_PARAM_ID = "_id";

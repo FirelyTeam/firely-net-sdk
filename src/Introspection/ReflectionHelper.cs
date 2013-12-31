@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Introspection
         internal static ICollection<T> GetAttributes<T>(MemberInfo member) where T : Attribute
         {
             var attr = Attribute.GetCustomAttributes(member, typeof(T));
-            return (ICollection<T>)attr;
+            return (ICollection<T>)attr.Select(a => (T)a);
         }
 
 
