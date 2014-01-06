@@ -417,9 +417,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle History<TResource>(string id=null, DateTimeOffset? since = null, int? count = null ) where TResource : Resource, new()
+	    public Bundle History<TResource>(string id=null, DateTimeOffset? since = null, int? count = null) where TResource : Resource, new()
         {
-            if (String.IsNullOrEmpty(id)) throw new ArgumentNullException("id");
             assertEndpoint();
             
             var collection = typeof(TResource).GetCollectionName();
