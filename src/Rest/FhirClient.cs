@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Rest
                 api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
             }
 
-            var req = initializeRequest(endpoint, method);
+            var req = initializeRequest(api.Uri, method);
 
             if (!UseFormatParam)
                 req.Accept = ContentType.BuildContentType(PreferredFormat, forBundle: expectBundleResponse);

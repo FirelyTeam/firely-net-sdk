@@ -40,6 +40,19 @@ namespace Hl7.Fhir.Tests
         }
 
 
+        [TestMethod]
+        public void ReadWithFormat()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            client.UseFormatParam = true;
+            client.PreferredFormat = ResourceFormat.Json;
+
+            var loc = client.Read<Location>("1");
+
+            Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
+        }
+
 
         [TestMethod]
         public void Read()

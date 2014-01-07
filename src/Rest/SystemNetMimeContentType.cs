@@ -99,13 +99,13 @@ namespace System.Net.Mime
 
         public string Boundary
         {
-            get { return parameters["boundary"]; }
+            get { return parameters.ContainsKey("boundary") ? parameters["boundary"] : null; }
             set { parameters["boundary"] = value; }
         }
 
         public string CharSet
         {
-            get { return parameters["charset"]; }
+            get { return parameters.ContainsKey("charset") ? parameters["charset"] : null; }
             set { parameters["charset"] = value; }
         }
 
@@ -128,7 +128,7 @@ namespace System.Net.Mime
 
         public string Name
         {
-            get { return parameters["name"]; }
+            get { return parameters.ContainsKey("name") ? parameters["name"] : null; }
             set { parameters["name"] = value; }
         }
 
