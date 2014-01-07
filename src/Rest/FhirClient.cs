@@ -119,21 +119,15 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<Conformance>());
         }
 
-       
+
         public ResourceEntry<TResource> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
         {
             assertEndpoint();
             if (id == null) throw new ArgumentNullException("id");
 
-            ResourceIdentity ri = buildResourceIdentityUrl<TResource>(id, versionId);
+            ResourceIdentity ri = buildResourceIdentityUrl(typeof(TResource).GetCollectionName(), id, versionId);
             return Read<TResource>(ri);
         }
-
-        private void assertEndpoint()
-        {
-            if (_endpoint == null) throw new InvalidOperationException("No service base url was provided when constructing the FhirClient");
-        }
-
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
@@ -153,25 +147,16 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<TResource>());
         }
 
+        private void assertEndpoint()
+        {
+            if (_endpoint == null) throw new InvalidOperationException("No service base url was provided when constructing the FhirClient");
+        }
+      
         private void assertServiceLocation(Uri location, string name)
         {
             if (location == null) return;
 
             if (!_endpoint.IsEndpointFor(location)) throw Error.Argument("Url in {0} is not located on this FhirClient's endpoint", name);
-        }
-
-
-
-        private ResourceIdentity buildResourceIdentityUrl<TResource>(string id, string versionId=null) where TResource : Resource, new()
-        {
-            var collection = typeof(TResource).GetCollectionName();
-            ResourceIdentity ri;
-
-            if (versionId != null)
-                ri = ResourceIdentity.Build(Endpoint, collection, id, versionId);
-            else
-                ri = ResourceIdentity.Build(Endpoint, collection, id);
-            return ri;
         }
 
         private ResourceIdentity buildResourceIdentityUrl(string collection, string id, string versionId=null)
@@ -228,7 +213,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             assertEndpoint();
 
-            var rId = buildResourceIdentityUrl<TResource>(id);
+            var rId = buildResourceIdentityUrl(typeof(TResource).GetCollectionName(), id);
 
             var req = prepareRequest("PUT",rId,resource, tags, expectBundleResponse: false);
 
@@ -356,7 +341,7 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw new ArgumentNullException("id");
             assertEndpoint();
 
-            var url = buildResourceIdentityUrl<TResource>(id);
+            var url = buildResourceIdentityUrl(typeof(TResource).GetCollectionName(),id);
 
             var req = prepareRequest("DELETE", url, null, null, expectBundleResponse: false);
             doRequest(req, HttpStatusCode.NoContent, () => true);
@@ -551,7 +536,12 @@ namespace Hl7.Fhir.Rest
         /// parameters to include resources in the bundle that the returned resources refer to.</remarks>
         public Bundle Search<TResource>(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null) where TResource : Resource, new()
         {                   
-            return doSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes,count);
+            return Search(typeof(TResource).GetCollectionName(), criteria, sort, includes,count);
+        }
+
+        public Bundle Search(string resource, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? count = null)
+        {
+            return doSearch(resource, criteria, sort, includes, count);
         }
 
         public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
@@ -572,9 +562,13 @@ namespace Hl7.Fhir.Rest
         /// returned resource refers to.</remarks>
         public Bundle SearchById<TResource>(string id, string sort=null, string[] includes=null, int? count=null) where TResource : Resource, new()
         {
-            return doSearch(typeof(TResource).GetCollectionName(), new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes,count);
+            return SearchById(typeof(TResource).GetCollectionName(), id, sort, includes, count);
         }
 
+        public Bundle SearchById(string resource, string id, string sort = null, string[] includes = null, int? count = null)
+        {
+            return doSearch(resource, new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes, count);
+        }
 
         /// <summary>
         /// Uses the FHIR paging mechanism to go navigate around a series of paged result Bundles
@@ -753,18 +747,7 @@ namespace Hl7.Fhir.Rest
 
         private ResourceEntry<T> resourceEntryFromResponse<T>() where T : Resource, new()
         {
-            object data = null;
-
-            if (typeof(T).IsAssignableFrom(typeof(Binary)))
-                data = LastResponseDetails.Body;
-            else
-                data = LastResponseDetails.BodyAsString();
-            
-            // Initialize a resource entry from the received data. Note: Location overrides ContentLocation
-            ResourceEntry result = HttpUtil.CreateResourceEntry(data,
-                    LastResponseDetails.ContentType, LastResponseDetails.ResponseUri.ToString(),
-                    LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
-                    LastResponseDetails.Category, LastResponseDetails.LastModified);
+            var result = resourceEntryFromResponse(typeof(T).GetCollectionName());
 
             if (result.Resource is T)
                 return (ResourceEntry<T>)result;
@@ -772,6 +755,25 @@ namespace Hl7.Fhir.Rest
                 throw new FhirOperationException(
                     String.Format("Received a resource of type {0}, expected a {1} resource",
                                     result.Resource.GetType().Name, typeof(T).Name));
+        }
+
+        private ResourceEntry resourceEntryFromResponse(string collection)
+        {
+            
+            object data = null;
+
+            if (collection == "Binary")
+                data = LastResponseDetails.Body;
+            else
+                data = LastResponseDetails.BodyAsString();
+
+            // Initialize a resource entry from the received data. Note: Location overrides ContentLocation
+            ResourceEntry result = HttpUtil.CreateResourceEntry(data,
+                    LastResponseDetails.ContentType, LastResponseDetails.ResponseUri.ToString(),
+                    LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
+                    LastResponseDetails.Category, LastResponseDetails.LastModified);
+
+            return result;
         }
 
         private ResourceEntry<T> makeEntryFromHeaders<T>(T resource) where T:Resource, new()
