@@ -115,6 +115,7 @@
     <Compile Include="Support\Search\StringParamValue.cs" />
     <Compile Include="Support\Search\TokenParamValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Rest\UriParamExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Messages.resx">

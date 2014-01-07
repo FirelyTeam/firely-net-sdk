@@ -9,7 +9,7 @@ namespace Hl7.Fhir.Rest
 
     //TODO: Support compartments
 
-    internal class RestUrl
+    public class RestUrl
     {
         private Uri _endpoint;
         private UriBuilder _builder;
@@ -20,8 +20,7 @@ namespace Hl7.Fhir.Rest
             this._endpoint = endpoint;
             _builder = new UriBuilder(endpoint);
         }
-
-
+        
         public Uri Uri 
         { 
             get

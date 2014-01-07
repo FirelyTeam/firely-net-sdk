@@ -225,18 +225,18 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private HttpWebRequest prepareRequest(string method, Uri endpoint, object data, IEnumerable<Tag> tags, bool expectBundleResponse) 
+        private HttpWebRequest prepareRequest(string method, Uri uri, object data, IEnumerable<Tag> tags, bool expectBundleResponse) 
         {
             byte[] body = null;
 
-            RestUrl api = new RestUrl(endpoint);
-
+            Uri api = uri;
+            
             if (UseFormatParam)
             {
-                api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
+                api = api.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(PreferredFormat));
             }
 
-            var req = initializeRequest(api.Uri, method);
+            var req = initializeRequest(api, method);
 
             if (!UseFormatParam)
                 req.Accept = ContentType.BuildContentType(PreferredFormat, forBundle: expectBundleResponse);
