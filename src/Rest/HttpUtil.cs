@@ -177,29 +177,18 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        internal static ResourceEntry CreateResourceEntry(Resource resource,
-            string requestUri = null, string location = null,
-            string category = null, string lastModified = null)
+        internal static ResourceEntry CreateResourceEntryFromResource(Resource resource,
+            string location, string category = null, string lastModified = null)
         {
             ResourceEntry result = ResourceEntry.Create(resource);
-            string versionIdInRequestUri = null;
-
-            if (!String.IsNullOrEmpty(requestUri))
-            {
-                ResourceIdentity reqId = new ResourceIdentity(requestUri);
-                versionIdInRequestUri = reqId.VersionId;
-                result.Id = reqId.WithoutVersion(); 
-            }
 
             if (!String.IsNullOrEmpty(location))
-                result.SelfLink = new Uri(location, UriKind.Absolute);
-            else
             {
-                // Try to get the SelfLink from the requestUri (might contain specific version id)
-                if (!String.IsNullOrEmpty(versionIdInRequestUri))
-                {
-                    result.SelfLink = new ResourceIdentity(result.Id).WithVersion(versionIdInRequestUri);
-                }
+                ResourceIdentity reqId = new ResourceIdentity(location);
+                result.Id = reqId.WithoutVersion();
+
+                if (reqId.VersionId != null)
+                    result.SelfLink = reqId;
             }
 
             if (!String.IsNullOrEmpty(lastModified))
@@ -213,9 +202,9 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
+
         internal static ResourceEntry CreateResourceEntry(object data, string contentType,
-            string requestUri = null, string location = null,
-            string category = null, string lastModified = null)
+            string location, string category = null, string lastModified = null)
         {
             Resource resource = null;
 
@@ -230,7 +219,7 @@ namespace Hl7.Fhir.Rest
             else
                 throw Error.Argument("data", "Data may be a byte[] (Binary data) or string (resource body)");
 
-            return CreateResourceEntry(resource, requestUri, location, category, lastModified);
+            return CreateResourceEntryFromResource(resource,location, category, lastModified);
         }
 
 

@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Rest
 
             // Initialize a resource entry from the received data. Note: Location overrides ContentLocation
             ResourceEntry result = HttpUtil.CreateResourceEntry(data,
-                    LastResponseDetails.ContentType, LastResponseDetails.ResponseUri.ToString(),
+                    LastResponseDetails.ContentType,
                     LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
                     LastResponseDetails.Category, LastResponseDetails.LastModified);
 
@@ -778,8 +778,7 @@ namespace Hl7.Fhir.Rest
 
         private ResourceEntry<T> makeEntryFromHeaders<T>(T resource) where T:Resource, new()
         {
-            return (ResourceEntry<T>)HttpUtil.CreateResourceEntry(resource,
-                    LastResponseDetails.ResponseUri.ToString(),
+            return (ResourceEntry<T>)HttpUtil.CreateResourceEntryFromResource(resource,
                     LastResponseDetails.Location ?? LastResponseDetails.ContentLocation,
                     LastResponseDetails.Category, LastResponseDetails.LastModified);
         }
