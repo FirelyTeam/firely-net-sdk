@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
 
             return tags.Where(e => Uri.Equals(e.Scheme, scheme));
         }
+
         public static bool UriIsFhirScheme(Uri scheme)
         {
             return
@@ -155,6 +156,7 @@ namespace Hl7.Fhir.Model
                 || Uri.Equals(scheme, Tag.FHIRTAGSCHEME_PROFILE)
                 || Uri.Equals(scheme, Tag.FHIRTAGSCHEME_SECURITY);
         }
+
         public static bool HasFhirScheme(this Tag tag)
         {
             return UriIsFhirScheme(tag.Scheme);
@@ -176,7 +178,7 @@ namespace Hl7.Fhir.Model
         {
             if (tag == null) Error.ArgumentNull("tag");
 
-            return tags.Where(t => t != tag);
+            return tags.Where(t => !Equals(t,tag));
         }
 
     }

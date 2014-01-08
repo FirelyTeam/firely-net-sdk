@@ -283,19 +283,15 @@ namespace Hl7.Fhir.Tests
             client.AffixTags<Location>(tags, "1");
 
             var list = client.GetTags();
-            var x = Tag.Equals(tags.First(), list.First());     // If this is true...
-            Assert.IsTrue(list.Any(t => t == tags.First()));    // Why isn't this? Used to be...
+            Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
             list = client.GetTags<Location>();
-            Assert.IsTrue(list.Any(t => t == tags.First()));
+            Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
             list = client.GetTags<Location>("1", "1");
-            Assert.IsTrue(list.Any(t => t == tags.First()));
+            Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
             client.DeleteTags<Location>(tags, "1", "1");
-
-            list = client.GetTags();
-            Assert.IsFalse(list.Any(t => t == tags.First()));
         }
     }
 }
