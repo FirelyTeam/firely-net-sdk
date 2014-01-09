@@ -9,9 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Hl7.Fhir.Api")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Furore")]
 [assembly: AssemblyProduct("Hl7.Fhir.Api")]
-[assembly: AssemblyCopyright("Copyright © Ewout Kramer 2013")]
+[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -29,4 +28,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.9.4.0")]
 [assembly: AssemblyFileVersion("0.9.4.0")]
 
+#if DEBUG
 [assembly:InternalsVisibleTo("Hl7.Fhir.Test")]
+#endif

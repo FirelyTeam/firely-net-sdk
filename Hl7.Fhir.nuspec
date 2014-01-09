@@ -2,20 +2,21 @@
 <package >
   <metadata>
     <id>Hl7.Fhir</id>
-    <version>0.9.3</version>
+    <version>0.9.4-beta002</version>
     <authors>Ewout Kramer</authors>
     <owners>Hl7 International</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.NET support for using REST-based Hl7 FHIR servers</description>
+    <description>.NET support for using REST-based HL7 FHIR servers</description>
     <releaseNotes>Initial release</releaseNotes>
 	<iconUrl>file://icon-fhir-32.png</iconUrl>
-    <copyright>Copyright 2013</copyright>
+    <copyright>Copyright 2014</copyright>
     <tags>HL7 FHIR</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="5.0.6" />
+      <dependency id="Newtonsoft.Json" version="5.0.8" />
     </dependencies>
   </metadata>
     <files>
-	<file src="bin\Release\Hl7.Fhir.dll" target="lib\net40\" />
+		<file src="lib\Hl7.Fhir.dll" target="lib\portable-net40+sl5+win8\" />
+		<file src="src\bin\Release\Hl7.Fhir.Api.dll" target="lib\portable-net40+sl5+win8\" />
     </files>
 </package>

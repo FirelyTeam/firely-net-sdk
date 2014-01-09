@@ -36,7 +36,7 @@ using System.Collections.Generic;
 
 namespace System.Net.Mime
 {
-    public class ContentType
+    internal class ContentType
     {
         #region Fields
         static Encoding utf8unmarked;

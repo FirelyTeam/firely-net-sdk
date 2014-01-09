@@ -51,11 +51,11 @@ namespace Hl7.Fhir.Rest
     {
         public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
-            { JSON_CONTENT_HEADER, "application/json fhir", "application/fhir+json", "application/fhir json", "application/json" };
+            { JSON_CONTENT_HEADER, "application/fhir+json", "application/json" };
 
         public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
         public static readonly string[] XML_CONTENT_HEADERS = new string[] 
-            { XML_CONTENT_HEADER, "application/xml fhir", "application/fhir+xml", "application/fhir xml", "text/xml", "application/xml",
+            { XML_CONTENT_HEADER, "application/fhir+xml", "text/xml", "application/xml",
                 "text/xml+fhir", ATOM_CONTENT_HEADER};
         
         public const string ATOM_CONTENT_HEADER = "application/atom+xml";

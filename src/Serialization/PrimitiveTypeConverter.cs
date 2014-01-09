@@ -41,14 +41,13 @@ namespace Hl7.Fhir.Serialization
                     // to types in the class model are also supported
                     if (valueType == typeof(byte[]))
                         return System.Convert.ToBase64String((byte[])value);
-                    else if (valueType == typeof(DateTimeOffset))
+                    else if (typeof(DateTimeOffset).IsAssignableFrom(valueType))
                         return XmlConvert.ToString((DateTimeOffset)value, FMT_FULL);
-                    else if (valueType == typeof(Uri))
+                    else if (typeof(Uri).IsAssignableFrom(valueType))
                         return ((Uri)value).ToString();
                     else
                         //Or: use default ToString()? This is more explicit
-                        throw Error.NotSupported("Cannot convert from type {0} to a string", to.Name);
-                    //TODO: enum serialization
+                        throw Error.NotSupported("Cannot convert from type {0} to a string", valueType.Name);
                 }
             }
 

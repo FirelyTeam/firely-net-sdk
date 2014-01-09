@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.Fhir, Version=0.12.2040.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hl7.Fhir, Version=0.12.2127.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Hl7.Fhir.dll</HintPath>
     </Reference>
