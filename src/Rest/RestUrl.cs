@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,25 @@ namespace Hl7.Fhir.Rest
 
     internal class RestUrl
     {
-        private Uri _endpoint;
         private UriBuilder _builder;
         private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
 
-        internal RestUrl(Uri endpoint)
+        public RestUrl(Uri url)
         {
-            this._endpoint = endpoint;
-            _builder = new UriBuilder(endpoint);
+            if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
+
+            _builder = new UriBuilder(url);
+
+            if (!String.IsNullOrEmpty(_builder.Query))
+                _parameters = new List<Tuple<string,string>>( QueryParam.Split(_builder.Query) ); 
         }
-        
+
+
+        public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
+        {
+        }
+
+
         public Uri Uri 
         { 
             get
@@ -47,33 +57,58 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        internal RestUrl AddPath(params string[] components)
+        
+        
+        /// <summary>
+        /// Add additional components to the end of the RestUrl
+        /// </summary>
+        /// <param name="components">one or more path components to add</param>
+        /// <returns>The current RestUrl, so multiple AddPath statements can be combined in a fluent way.</returns>
+        /// <example>If the current path is "http://hl7.org/svc", then adding ("fhir", "Patient") would
+        /// return in a new RestUrl "http://hl7.org/svc/fhir/Patient"</example>
+        public RestUrl AddPath(params string[] components)
         {
             string _components = string.Join("/", components).Trim('/');
             _builder.Path = delimit(_builder.Path)+ _components;
             return this;
         }
 
+        /// <summary>
+        /// Add a query parameter to the RestUrl
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public RestUrl AddParam(string name, string value)
         {
+            if (name == null) throw Error.ArgumentNull("name");
+            if (value == null) throw Error.ArgumentNull("value");
+
             _parameters.Add(Tuple.Create(name, value));
             return this;
         }
 
         /// <summary>
-        /// Make a new ResourceLocation that represents a location after navigating to the specified path
+        /// Returs a new ResourceLocation that represents a location after navigating to the specified path
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         /// <example>If the current path is "http://hl7.org/svc/patient", NavigatingTo("../observation") will 
-        /// result in a ResourceLocation of "http://hl7.org/svc/observation"</example>
+        /// result in a ResourceLocation of "http://hl7.org/svc/observation" whereas if the current path is
+        /// "http://hl7.org/svc/ (note the slash), NavigatingTo("../observation") will 
+        /// result in a ResourceLocation of "http://hl7.org/svc/observation" 
+        /// </example>
         public RestUrl NavigateTo(string path)
         {
+            if (path == null) throw Error.ArgumentNull("path");
+
             return NavigateTo(new Uri(path, UriKind.RelativeOrAbsolute));
         }
 
         public RestUrl NavigateTo(Uri path)
         {
+            if (path == null) throw Error.ArgumentNull("path");
+
             if (path.IsAbsoluteUri)
                 throw new ArgumentException("Can only navigate to relative paths", "path");
 
@@ -84,9 +119,5 @@ namespace Hl7.Fhir.Rest
         {
             return AsString;
         }
-    }
-
-  
-
-    
+    }    
 }

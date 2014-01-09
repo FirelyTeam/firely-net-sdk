@@ -39,15 +39,15 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class QueryParam
+    internal static class QueryParam
     {
         /// <summary>
-        /// Parses the possibly escaped key=value quey parameter into a (key,value) Tuple
+        /// Parses the possibly escaped key=value query parameter into a (key,value) Tuple
         /// </summary>
         /// <param name="param"></param>
         /// <returns>A Tuple<string,string> containing the key and value. Value maybe null if
         /// only the key was specified as a query parameter.</returns>
-        public static Tuple<string, string> Parse(string param)
+        internal static Tuple<string, string> Parse(string param)
         {
             if (param == null) throw new ArgumentNullException("param");
 
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string ToString(string key, string value=null)
+        internal static string ToString(string key, string value=null)
         {
             if (key == null) throw new ArgumentNullException("key");
 
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static string ToString(Tuple<string, string> kv)
+        internal static string ToString(Tuple<string, string> kv)
         {
             if (kv == null) throw new ArgumentNullException("kv");
             if (kv.Item1 == null) throw new ArgumentException("Key in tuple may not be null", "kv");
