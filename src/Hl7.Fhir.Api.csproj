@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
@@ -104,7 +105,6 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Rest\QueryParam.cs" />
     <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Support\Search\BoolParamValue.cs" />
