@@ -7,17 +7,22 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-
-    //TODO: Support compartments
-
-    internal class RestUrl
+    public class RestUrl
     {
         private UriBuilder _builder;
         private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
 
+
+        public RestUrl(RestUrl url) : this(url.Uri)
+        {
+        }
+
         public RestUrl(Uri url)
         {
             if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
+
+            if (url.Scheme != "http")
+                Error.Argument("uri", "RestUrl must be a http url");
 
             _builder = new UriBuilder(url);
 
@@ -86,6 +91,18 @@ namespace Hl7.Fhir.Rest
 
             _parameters.Add(Tuple.Create(name, value));
             return this;
+        }
+
+        public bool IsEndpointFor(Uri other)
+        {
+            return this.Uri.IsBaseOf(other);
+        }
+
+        public bool IsEndpointFor(string other)
+        {
+            var baseUri = new Uri(delimit(this.Uri.ToString()));
+
+            return baseUri.IsBaseOf(new Uri(other,UriKind.RelativeOrAbsolute));
         }
 
         /// <summary>

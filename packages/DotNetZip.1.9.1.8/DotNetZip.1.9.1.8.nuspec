@@ -11,9 +11,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>DotNetZip is an easy-to-use, FAST, FREE class library and toolset for manipulating zip files or folders.</description>
     <summary>DotNetZip is an easy-to-use, FAST, FREE class library and toolset for manipulating zip files or folders.</summary>
-    <releaseNotes />
-    <copyright />
-    <language />
     <tags>zip</tags>
   </metadata>
 </package>

@@ -160,12 +160,12 @@ namespace Hl7.Fhir.Serialization
             return xmlWriterToBytes(xw => BundleXmlSerializer.WriteTo(bundle, xw, summary));
         }
 
-        public static void SerializeBundleEntry(Bundle entry, JsonWriter writer, bool summary = false)
+        public static void SerializeBundleEntry(BundleEntry entry, JsonWriter writer, bool summary = false)
         {
             BundleJsonSerializer.WriteTo(entry, writer, summary);
         }
 
-        public static void SerializeBundleEntry(Bundle entry, XmlWriter writer, bool summary = false)
+        public static void SerializeBundleEntry(BundleEntry entry, XmlWriter writer, bool summary = false)
         {
             BundleXmlSerializer.WriteTo(entry, writer,summary);
         }

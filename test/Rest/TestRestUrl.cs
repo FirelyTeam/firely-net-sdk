@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void CreateFromEndPoint()
         {
-            Endpoint endpoint = new Endpoint("http://localhost/fhir");
+            RestUrl endpoint = new RestUrl("http://localhost/fhir");
             RestUrl resturi;
 
             resturi = endpoint.ForCollection("patient");
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void Query()
         {
-            Endpoint endpoint = new Endpoint("http://localhost/fhir/");
+            RestUrl endpoint = new RestUrl("http://localhost/fhir");
             RestUrl resturi;
             
             resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
@@ -56,6 +56,16 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("http://hl7.org/fhir/Observation/3",rl.ToString());
         }
 
+
+        [TestMethod]
+        public void TestBase()
+        {
+            var u = new RestUrl("http://www.hl7.org/svc");
+
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization"));
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/search?name=eve"));
+            Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/svx/Organization"));
+        }
 
         //[TestMethod]
         //public void ParamManipulation()

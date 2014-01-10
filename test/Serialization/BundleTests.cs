@@ -125,6 +125,23 @@ namespace Hl7.Fhir.Test
 
 
         [TestMethod]
+        public void SerializeAndParseFeedWithEmptyEntries()
+        {
+            Bundle b = new Bundle();
+
+            b.Title = "Updates to resource 233";
+            b.Id = new Uri("urn:uuid:0d0dcca9-23b9-4149-8619-65002224c3");
+
+            var e = new ResourceEntry<Patient>() { Id = new Uri("http://x.org/fhir/Patient/1") };
+            var xml = FhirSerializer.SerializeBundleEntryToXml(e);
+
+            var e2 = FhirParser.ParseBundleEntryFromXml(xml);
+            var xml2 = FhirSerializer.SerializeBundleEntryToXml(e);
+
+            Assert.AreEqual(xml, xml2);
+        }
+
+        [TestMethod]
         public void HandleCrapInBundle()
         {
             formatExceptionOrFail(() => FhirParser.ParseBundleFromJson("Crap!"));

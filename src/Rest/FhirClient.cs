@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Rest
 {
     public class FhirClient
     {
-        private Endpoint _endpoint;
+        private Uri _endpoint;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Rest
         public FhirClient(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
-            _endpoint = new Endpoint(endpoint);
+            _endpoint = endpoint;
             PreferredFormat = ResourceFormat.Xml;
         }
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Rest
         {
             get
             {
-                return _endpoint != null ? _endpoint.Uri : null; 
+                return _endpoint != null ? _endpoint : null; 
             }
         }
 
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Rest
             assertEndpoint();
             assertServiceLocation(location, "location");
 
-            RestUrl url = useOptionsVerb ? _endpoint.AsRestUrl() : new Endpoint(location).WithMetadata();
+            RestUrl url = useOptionsVerb ? new RestUrl(_endpoint) : new RestUrl(_endpoint).WithMetadata();
 
             var req = prepareRequest(useOptionsVerb ? "OPTIONS" : "GET", url.Uri, null, null, expectBundleResponse:false);
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<Conformance>());
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Rest
         {
             if (location == null) return;
 
-            if (!_endpoint.IsEndpointFor(location)) throw Error.Argument("Url in {0} is not located on this FhirClient's endpoint", name);
+            if (!new RestUrl(_endpoint).IsEndpointFor(location)) throw Error.Argument("Url in {0} is not located on this FhirClient's endpoint", name);
         }
 
         private ResourceIdentity buildResourceIdentityUrl(string collection, string id, string versionId=null)
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Rest
             if (id == null)
             {
                 // A normal create
-                var rl = _endpoint.ForCollection(collection);
+                var rl = new RestUrl(_endpoint).ForCollection(collection);
                 var req = prepareRequest("POST", rl.Uri, resource, tags, expectBundleResponse: false);
                 return doRequest(req, HttpStatusCode.Created, () => makeEntryFromHeaders(resource));
             }
@@ -409,8 +409,8 @@ namespace Hl7.Fhir.Rest
             var collection = typeof(TResource).GetCollectionName();
 
             var url = id==null ?
-                _endpoint.CollectionHistory(collection) :
-                _endpoint.ResourceHistory(collection, id);
+                new RestUrl(_endpoint).CollectionHistory(collection) :
+                new RestUrl(_endpoint).ResourceHistory(collection, id);
 
             if (since != null) url.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
             if (count != null) url.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Rest
         {
             if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
 
-            var rl = _endpoint.ServerHistory();
+            var rl = new RestUrl(_endpoint).ServerHistory();
 
             if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
             if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Rest
             if (entry.Id == null) throw new ArgumentException("Entry needs a non-null entry.id to use for validation", "entry");
 
             var id = new ResourceIdentity(entry.Id);
-            var url = _endpoint.Validate(id.Collection, id.Id);
+            var url = new RestUrl(_endpoint).Validate(id.Collection, id.Id);
             return doValidate(url, entry.Resource, entry.Tags);
         }
 
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw new ArgumentNullException("resource");
 
             var collection = typeof(Resource).GetCollectionName();
-            var url = _endpoint.Validate(collection);
+            var url = new RestUrl(_endpoint).Validate(collection);
             return doValidate(url, resource, tags);
         }
 
@@ -497,9 +497,9 @@ namespace Hl7.Fhir.Rest
             if (collection != null)
                 // Since there is confusion between using /resource/?param, /resource?param, use
                 // the /resource/search?param instead
-                url = _endpoint.Search(collection);
+                url = new RestUrl(_endpoint).Search(collection);
             else
-                url = _endpoint.AsRestUrl();
+                url = new RestUrl(_endpoint);
 
             if( count.HasValue )
                 url.AddParam(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
@@ -613,9 +613,7 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw new ArgumentNullException("bundle");
             assertEndpoint();
 
-            var url = _endpoint.AsRestUrl();
-
-            var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: true);
+            var req = prepareRequest("POST", _endpoint, bundle, null, expectBundleResponse: true);
             return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
         }
 
@@ -625,7 +623,7 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw Error.ArgumentNull("bundle");
             assertEndpoint();
 
-            var url = _endpoint.AsRestUrl().AddPath("Document");
+            var url = new RestUrl(_endpoint).AddPath("Document");
 
             if (bundle.GetBundleType() == BundleType.Document)
             {
@@ -653,7 +651,7 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw Error.ArgumentNull("bundle");
             assertEndpoint();
 
-            var url = _endpoint.AsRestUrl().AddPath("Mailbox");
+            var url = new RestUrl(_endpoint).AddPath("Mailbox");
 
             if (bundle.GetBundleType() == BundleType.Document)
             {
@@ -678,7 +676,7 @@ namespace Hl7.Fhir.Rest
         {
             assertEndpoint();
 
-            var rl = _endpoint.Tags();
+            var rl = new RestUrl(_endpoint).Tags();
 
             var req = prepareRequest("GET", rl.Uri, null, null, expectBundleResponse: false);
             var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
@@ -695,9 +693,9 @@ namespace Hl7.Fhir.Rest
             RestUrl api;
             string collection = typeof(TResource).GetCollectionName();
             if (id == null)
-                api = _endpoint.CollectionTags(collection);
+                api = new RestUrl(_endpoint).CollectionTags(collection);
             else
-                api = _endpoint.ResourceTags(collection, id, version);
+                api = new RestUrl(_endpoint).ResourceTags(collection, id, version);
 
             var req = prepareRequest("GET", api.Uri, null, null, expectBundleResponse: false);
             var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
@@ -712,7 +710,7 @@ namespace Hl7.Fhir.Rest
             assertEndpoint();
 
             var collection = typeof(TResource).GetCollectionName();
-            var rl = _endpoint.ResourceTags(collection, id, version);
+            var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
 
             var req = prepareRequest("POST", rl.Uri, new TagList(tags), null, expectBundleResponse: false); 
             var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
@@ -727,7 +725,7 @@ namespace Hl7.Fhir.Rest
             assertEndpoint();
 
             var collection = typeof(TResource).GetCollectionName();
-            var rl = _endpoint.ResourceTags(collection, id, version);
+            var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
 
             var req = prepareRequest("DELETE", rl.Uri, new TagList(tags), null, expectBundleResponse: false);
             doRequest(req, HttpStatusCode.OK, () => true);

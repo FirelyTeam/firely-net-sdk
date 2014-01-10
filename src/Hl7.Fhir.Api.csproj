@@ -45,7 +45,6 @@
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
     <Compile Include="Rest\ContentType.cs" />
-    <Compile Include="Rest\Endpoint.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
@@ -83,7 +82,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\EndpointExtensions.cs" />
+    <Compile Include="Rest\FhirRestOperationExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />

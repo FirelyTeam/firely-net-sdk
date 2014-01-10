@@ -37,6 +37,7 @@ using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.IO;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -192,11 +193,23 @@ namespace Hl7.Fhir.Serialization
                         if (parsed != null)
                             result = ResourceEntry.Create(parsed);
                         else
-                            return null;
+                            throw Error.Format("BundleEntry has a content element without content");
                     }
                     else
-                        throw Error.Format("BundleEntry has empty content: cannot determine Resource type in parser.");
+                    {
+                        result = new ResourceEntry();
 
+                        //// No content, try to figure out the resource type from the id
+                        //ResourceIdentity rid = new ResourceIdentity(id);
+                        //if (rid.Collection != null)
+                        //{
+                        //    //TODO: this won't really work when new subtypes have been installedin ModelInspector for the resources
+                        //    result = ResourceEntry.Create(Type.GetType(rid.Collection));
+                        //}
+                        //else
+                        //    throw Error.Format("BundleEntry has empty content and no id with resource name embedden: cannot determine Resource type in parser.");
+                    }
+                        
                     result.Id = id;
                 }
 
