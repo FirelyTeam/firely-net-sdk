@@ -1,4 +1,6 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -24,6 +26,23 @@ namespace Hl7.Fhir.Serialization
         public const string SEARCH_PARAM_SORT = "_sort";
 
         public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
+
+
+        public static ResourceEntry CreateResourceEntryFromId(Uri id)
+        {
+            // Figure out the resource type from the id
+            ResourceIdentity rid = new ResourceIdentity(id);
+            
+            if (rid.Collection != null)
+            {
+                var inspector = SerializationConfig.Inspector;
+                var classMapping = inspector.FindClassMappingForResource(rid.Collection);
+                return ResourceEntry.Create(classMapping.NativeType);                            
+            }
+            else
+                throw Error.Format("BundleEntry's Id does not have an embedded resource name: cannot determine Resource type in parser.");
+
+        }
 
         public static bool UriHasValue(Uri u)
         {

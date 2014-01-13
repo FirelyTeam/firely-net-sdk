@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization
             FhirSerializer.Serialize(list, new JsonDomFhirWriter(jw));
         }
 
-        public static void SerializeTagList(IList<Tag> list, XmlWriter xw)
+        public static void SerializeTagList(TagList list, XmlWriter xw)
         {
             FhirSerializer.Serialize(list, new XmlFhirWriter(xw));
         }

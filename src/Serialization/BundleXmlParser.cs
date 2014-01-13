@@ -64,6 +64,8 @@ namespace Hl7.Fhir.Serialization
 
                 var internalReader = XmlReader.Create(reader, settings);
                 feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
+                if (feed.Name != XNamespace.Get(ATOMPUB_NS) + "feed")
+                    throw Error.Format("Input data is not an Atom feed");
             }
             catch (Exception exc)
             {
@@ -167,19 +169,9 @@ namespace Hl7.Fhir.Serialization
                     }
                     else
                     {
-                        result = new ResourceEntry();
-
-                        //// No content, try to figure out the resource type from the id
-                        //ResourceIdentity rid = new ResourceIdentity(id);
-                        //if (rid.Collection != null)
-                        //{
-                        //    //TODO: this won't really work when new subtypes have been installedin ModelInspector for the resources
-                        //    result = ResourceEntry.Create(Type.GetType(rid.Collection));
-                        //}
-                        //else
-                        //    throw Error.Format("BundleEntry has empty content and no id with resource name embedden: cannot determine Resource type in parser.");
+                        result = SerializationUtil.CreateResourceEntryFromId(id);
                     }
-                        
+                  
                     result.Id = id;
                 }
 
@@ -201,9 +193,7 @@ namespace Hl7.Fhir.Serialization
                                     .Element(XATOMNS + XATOM_AUTH_NAME));
                     re.AuthorUri = entry.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
                                 SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
-                                    .Element(XATOMNS + XATOM_AUTH_URI));
-
-                    
+                                    .Element(XATOMNS + XATOM_AUTH_URI));                  
                 }
             }
             catch (Exception exc)

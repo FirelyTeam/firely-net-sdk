@@ -779,10 +779,6 @@ namespace Hl7.Fhir.Rest
         private T doRequest<T>(HttpWebRequest req, HttpStatusCode[] success, Func<T> onSuccess)
         {
             HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx();
-           // var getResponseTask = Task.Factory.FromAsync<WebResponse>(req.BeginGetResponse,
-          //      req.EndGetResponseNoEx, null); 
-
-        //   HttpWebResponse response = (HttpWebResponse)(getResponseTask.ConfigureAwait(false).GetAwaiter().GetResult());
 
             LastResponseDetails = ResponseDetails.FromHttpWebResponse(response);
 

@@ -150,6 +150,15 @@ namespace Hl7.Fhir.Test
         }
 
 
+        [TestMethod]
+        public void RefuseNonFeed()
+        {
+            formatExceptionOrFail(() => FhirParser.ParseBundleFromXml("<SomeXml><data /></SomXml>"));
+            formatExceptionOrFail(() => FhirParser.ParseBundleFromJson("{ \"hi\" : \"there\" }"));
+            formatExceptionOrFail(() => FhirParser.ParseBundleFromJson("{ \"resourceType\" : \"Patient\" }"));
+        }
+
+
         private static void formatExceptionOrFail(Action a)
         {
             try
