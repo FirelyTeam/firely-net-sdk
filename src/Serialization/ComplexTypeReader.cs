@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
                 // member and _member. In this case, we will parse the primitive into the Value property
                 // of the complex type
                 if (!mapping.HasPrimitiveValueMember)
-                    throw Error.InvalidOperation("Complex object does not have a value property, yet the reader is at a primitive");
+                    throw Error.Format("Complex object does not have a value property, yet the reader is at a primitive", _current);
 
                 // Simulate this as actually receiving a member "Value" in a normal complex object,
                 // and resume normally
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                 members = new List<Tuple<string, IFhirReader>> { valueMember };
             }
             else
-                throw Error.InvalidOperation("Trying to read a complex object, but reader is not at the start of an object or primitive");
+                throw Error.Format("Trying to read a complex object, but reader is not at the start of an object or primitive", _current);
 
             read(mapping, members, existing);
 
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format(Messages.DeserializeUnknownMember, memberName);
+                        throw Error.Format(Messages.DeserializeUnknownMember, _current, memberName);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }

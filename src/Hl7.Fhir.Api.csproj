@@ -127,7 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EwoutFhirNetApi.snk" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hl7.Fhir">

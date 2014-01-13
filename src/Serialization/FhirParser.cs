@@ -39,12 +39,25 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace Hl7.Fhir.Serialization
 {
     public partial class FhirParser
     {
+        public static bool ProbeIsXml(string data)
+        {
+            Regex xml = new Regex("^<[^>]+>");
+
+            return xml.IsMatch(data.TrimStart());
+        }
+
+        public static bool ProbeIsJson(string data)
+        {
+            return data.TrimStart().StartsWith("{");
+        }
+
         internal static object Parse(IFhirReader reader)
         {
             return new ResourceReader(reader).Deserialize();
@@ -57,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             if (result is T)
                 return (T)result;
             else
-                throw Error.Format("Parsed data is not of given type {0}", typeof(T).Name);
+                throw Error.Format("Parsed data is not of given type {0}", reader, typeof(T).Name);
         }
 
 

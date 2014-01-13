@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 elements = new List<IFhirReader>() { _current };
             }
             else
-                throw Error.InvalidOperation("Expecting to be either at a repeating complex element or an array when parsing a repeating member.");
+                throw Error.Format("Expecting to be either at a repeating complex element or an array when parsing a repeating member.", _current);
 
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                 if(overwriteMode)
                 {
                     if (position >= result.Count)
-                        throw Error.InvalidOperation("The value and extension array are not well-aligned");
+                        throw Error.Format("The value and extension array are not well-aligned", _current);
 
                     // Arrays may contain null values as placeholders
                     if(element.CurrentToken != TokenType.Null)

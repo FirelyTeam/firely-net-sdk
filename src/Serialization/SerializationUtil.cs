@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
                 return ResourceEntry.Create(classMapping.NativeType);                            
             }
             else
-                throw Error.Format("BundleEntry's Id does not have an embedded resource name: cannot determine Resource type in parser.");
+                throw Error.Format("BundleEntry's id '{0}' does not specify the type of resource: cannot determine Resource type in parser.", null, id.ToString());
 
         }
 

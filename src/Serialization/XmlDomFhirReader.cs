@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (XmlException xec)
             {
-                throw Error.Format("Cannot parse xml: " + xec.Message);
+                throw Error.Format("Cannot parse xml: " + xec.Message, null);
             }
 
             setRoot(doc);
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization
 
                 return ((XElement)_current).Name.LocalName;
             else
-                throw Error.Format("Cannot get resource type name: reader not at an element");
+                throw Error.Format("Cannot get resource type name: reader not at an element", this);
         }
 
 
@@ -100,20 +100,20 @@ namespace Hl7.Fhir.Serialization
                                 (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 
                         else
-                            throw Error.Format("Encountered unsupported element: {0}", elem.Name.ToString());
+                            throw Error.Format("Encountered unsupported element: {0}", this, elem.Name.ToString());
                     }
                     else if(node is XComment)
                     {
                         // nothing
                     }
                     else
-                        throw Error.Format("Encountered unexpected element member of type {0}", node.GetType().Name);
+                        throw Error.Format("Encountered unexpected element member of type {0}", this, node.GetType().Name);
                 }
 
                 return result;
             }
             else
-                throw Error.Format("Cannot get members: reader not at an element");
+                throw Error.Format("Cannot get members: reader not at an element", this);
             
         }
 
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Serialization
                 return ((XText)_current).Value;
 
             else
-                throw Error.Format("Parser is not at a primitive value");
+                throw Error.Format("Parser is not at a primitive value", this);
         }
 
         public TokenType CurrentToken
@@ -154,8 +154,14 @@ namespace Hl7.Fhir.Serialization
                 if (_current is XText)
                     return TokenType.String;
                 else
-                    throw Error.Format("Parser cannot handle xml objects of type {0}", _current.GetType().Name);
+                    throw Error.Format("Parser cannot handle xml objects of type {0}", this, _current.GetType().Name);
             }
+        }
+
+
+        public static IPostitionInfo GetLineInfo(XObject obj)
+        {
+            return new XmlDomFhirReader(obj);
         }
 
         public int LineNumber

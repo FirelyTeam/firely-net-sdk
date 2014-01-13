@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Hl7.Fhir.Serialization;
 
 
 namespace Hl7.Fhir.Support
@@ -141,9 +142,17 @@ namespace Hl7.Fhir.Support
         /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static FormatException Format(string messageFormat, params object[] messageArgs)
+        internal static FormatException Format(string messageFormat, IPostitionInfo pos, params object[] messageArgs)
         {
-            return new FormatException(Error.formatMessage(messageFormat, messageArgs));
+            string message;
+
+            if(pos != null)
+                message = String.Format("At line {0}, pos {1}: {2}", pos.LineNumber, pos.LinePosition,
+                        Error.formatMessage(messageFormat, messageArgs));
+            else
+                message = Error.formatMessage(messageFormat, messageArgs);
+
+            return new FormatException(message);
         }
 
         /// <summary>

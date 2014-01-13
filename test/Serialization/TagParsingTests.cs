@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Test
                 FhirParser.ParseTagListFromJson(jsonTagListE2);
                 Assert.Fail();
             }
-            catch (InvalidOperationException) { }
+            catch (FormatException) { }
         }
 
         private static void formatExceptionOrFail(Action a)

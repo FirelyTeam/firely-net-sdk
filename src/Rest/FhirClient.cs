@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public IEnumerable<Tag> AffixTags<TResource>(IEnumerable<Tag> tags, string id, string version=null) where TResource : Resource, new()
+        public void AffixTags<TResource>(IEnumerable<Tag> tags, string id, string version=null) where TResource : Resource, new()
         {
             if (id == null) throw new ArgumentNullException("id");
             if (tags == null) throw new ArgumentNullException("tags");
@@ -697,8 +697,7 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
 
             var req = prepareRequest("POST", rl.Uri, new TagList(tags), null, expectBundleResponse: false); 
-            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
-            return result.Category;
+            doRequest(req, HttpStatusCode.OK, () => true);
         }
 
 
@@ -712,7 +711,7 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
 
             var req = prepareRequest("DELETE", rl.Uri, new TagList(tags), null, expectBundleResponse: false);
-            doRequest(req, HttpStatusCode.OK, () => true);
+            doRequest(req, HttpStatusCode.NoContent, () => true);
         }
 
         public ResourceFormat PreferredFormat { get; set; }

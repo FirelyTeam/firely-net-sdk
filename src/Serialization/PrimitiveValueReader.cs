@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
                 return read(nativeType);
             }
             else
-                throw Error.InvalidOperation("Trying to read a value, but reader is not at the start of a primitive");
+                throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", _current);
         }
 
 
@@ -51,7 +51,15 @@ namespace Hl7.Fhir.Serialization
                     return enumMapping.ParseLiteral((string)primitiveValue);
             }
 
-            return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
+            try
+            {
+                return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
+            }
+            catch (NotSupportedException exc)
+            {
+                // thrown when an unsupported conversion was required
+                throw Error.Format(exc.Message, _current);
+            }
         }
     }
 

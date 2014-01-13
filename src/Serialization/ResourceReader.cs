@@ -33,7 +33,13 @@ namespace Hl7.Fhir.Serialization
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
                 if (mappedType == null)
-                    throw Error.InvalidOperation("Resource is of type {0}, but no class mapping was found for that type", resourceType);
+                {
+                    // Special courtesy case
+                    if (resourceType == "feed" || resourceType == "Bundle")
+                        throw Error.Format("Encountered a feed instead of a resource", _reader);
+                    else
+                        throw Error.Format("Encountered unknown resource type {0}", _reader, resourceType);
+                }
 
                 if (existing == null)
                 {
@@ -52,7 +58,7 @@ namespace Hl7.Fhir.Serialization
                 return cplxReader.Deserialize(mappedType, existing);
             }
             else
-                throw Error.InvalidOperation("Trying to read a resource, but reader is not at the start of an object");
+                throw Error.Format("Trying to read a resource, but reader is not at the start of an object", _reader);
         }
     }
 }

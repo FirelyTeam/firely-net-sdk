@@ -5,7 +5,13 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public interface IFhirReader
+    public interface IPostitionInfo
+    {
+        int LineNumber { get; }
+        int LinePosition { get; }
+    }
+
+    public interface IFhirReader : IPostitionInfo
     {
         string GetResourceTypeName(bool nested);
 
@@ -16,9 +22,6 @@ namespace Hl7.Fhir.Serialization
         object GetPrimitiveValue();
 
         TokenType CurrentToken { get; }
-
-        int LineNumber { get; }
-        int LinePosition { get; }
     }
 
     public enum TokenType

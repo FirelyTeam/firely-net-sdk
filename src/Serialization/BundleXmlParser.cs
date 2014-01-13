@@ -65,11 +65,11 @@ namespace Hl7.Fhir.Serialization
                 var internalReader = XmlReader.Create(reader, settings);
                 feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
                 if (feed.Name != XNamespace.Get(ATOMPUB_NS) + "feed")
-                    throw Error.Format("Input data is not an Atom feed");
+                    throw Error.Format("Input data is not an Atom feed", null);
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while loading feed: " + exc.Message);
+                throw Error.Format("Exception while loading feed: " + exc.Message, null);
             }
 
             Bundle result;
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message);
+                throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message, null);
             }
 
             result.Entries = loadEntries(feed.Elements().Where(elem =>
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while loading entry: " + exc.Message);
+                throw Error.Format("Exception while loading entry: " + exc.Message, null);
             }
 
             return loadEntry(entry);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Serialization
                         if (parsed != null)
                             result = ResourceEntry.Create(parsed);
                         else
-                            throw Error.Format("BundleEntry has a content element without content");
+                            throw Error.Format("BundleEntry has a content element without content", XmlDomFhirReader.GetLineInfo(content));
                     }
                     else
                     {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while reading entry: " + exc.Message);
+                throw Error.Format("Exception while reading entry: " + exc.Message, XmlDomFhirReader.GetLineInfo(entry));
             }
 
             return result;
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Serialization
 
             if (contentType != "text/xml")
             {
-                throw Error.Format("Entry should have contents of type 'text/xml'");
+                throw Error.Format("Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
             }
 
             XElement resource = null;
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch
             {
-                throw Error.Format("Entry <content> node should have a single child: the resource");
+                throw Error.Format("Entry <content> node should have a single child: the resource", XmlDomFhirReader.GetLineInfo(content));
             }
 
             return (Resource)(new ResourceReader(new XmlDomFhirReader(resource)).Deserialize());

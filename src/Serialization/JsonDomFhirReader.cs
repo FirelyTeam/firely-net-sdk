@@ -26,7 +26,14 @@ namespace Hl7.Fhir.Serialization
             reader.DateParseHandling = DateParseHandling.None;
             reader.FloatParseHandling = FloatParseHandling.Decimal;
 
-            _current = JObject.Load(reader);
+            try
+            {
+                _current = JObject.Load(reader);
+            }
+            catch (Exception e)
+            {
+                throw Error.Format("Cannot parse json: " + e.Message, null);
+            }
         }
 
         public TokenType CurrentToken
@@ -43,10 +50,10 @@ namespace Hl7.Fhir.Serialization
                     if(val.Type == JTokenType.String) return TokenType.String;
                     if (val.Type == JTokenType.Null) return TokenType.Null;
 
-                    throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", val.Type);
+                    throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", this, val.Type);
                 }
 
-                throw Error.Format("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", _current.GetType().Name);
+                throw Error.Format("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", this, _current.GetType().Name);
             }
         }
 
@@ -55,13 +62,13 @@ namespace Hl7.Fhir.Serialization
             if (_current is JValue)
                 return ((JValue)_current).Value;
             else
-                throw Error.Format("Tried to read a primitive value while reader is not at a json primitive");
+                throw Error.Format("Tried to read a primitive value while reader is not at a json primitive", this);
         }
 
         public string GetResourceTypeName(bool nested)
         {
             if (CurrentToken != TokenType.Object)
-                throw Error.Format("Need to be at a complex object to determine resource type");
+                throw Error.Format("Need to be at a complex object to determine resource type", this);
 
             var resourceTypeMember = ((JObject)_current)[JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME];
 
@@ -77,10 +84,10 @@ namespace Hl7.Fhir.Serialization
                     }
                 }
 
-                throw Error.Format("resourceType should be a primitive string json value");
+                throw Error.Format("resourceType should be a primitive string json value", this);
             }
 
-            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", 
+            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", this, 
                             JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
         }
 
@@ -94,7 +101,7 @@ namespace Hl7.Fhir.Serialization
             var complex = _current as JObject;
  
             if (complex == null)
-                throw Error.Format("Need to be at a complex object to list child members");
+                throw Error.Format("Need to be at a complex object to list child members", this);
            
             foreach(var member in complex)
             {
@@ -119,12 +126,17 @@ namespace Hl7.Fhir.Serialization
             var array = _current as JArray;
 
             if (array == null)
-                throw Error.Format("Need to be at an array to list elements");
+                throw Error.Format("Need to be at an array to list elements", JsonDomFhirReader.GetLineInfo(_current));
 
             foreach(var element in array)
             {
                 yield return new JsonDomFhirReader(element);
             }
+        }
+
+        public static IPostitionInfo GetLineInfo(JToken obj)
+        {
+            return new JsonDomFhirReader(obj);
         }
 
         public int LineNumber

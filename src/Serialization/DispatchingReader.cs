@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization
             result = _inspector.FindClassMappingForFhirDataType(typeName);
 
             if (result == null)
-                throw Error.InvalidOperation("Encountered polymorph member {0}, which uses unknown datatype {1}", memberName, typeName);
+                throw Error.Format("Encountered polymorph member {0}, which uses unknown datatype {1}", _current, memberName, typeName);
 
             return result;
         }

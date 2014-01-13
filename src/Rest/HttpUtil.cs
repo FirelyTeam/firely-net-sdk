@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Rest
                     result = xmlParser(body);
                     break;
                 default:
-                    throw Error.Format("Cannot decode body: unrecognized content type " + contentType);
+                    throw Error.Format("Cannot decode body: unrecognized content type " + contentType, null);
             }
 
             return result;

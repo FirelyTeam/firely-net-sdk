@@ -28,5 +28,21 @@ namespace Hl7.Fhir.Test.Serialization
             data = FhirSerializer.SerializeResourceToXmlBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
         }
+
+        [TestMethod]
+        public void TestProbing()
+        {
+            Assert.IsFalse(FhirParser.ProbeIsJson("this is nothing"));
+            Assert.IsFalse(FhirParser.ProbeIsJson("  crap { "));
+            Assert.IsFalse(FhirParser.ProbeIsJson("<element/>"));
+            Assert.IsTrue(FhirParser.ProbeIsJson("   { x:5 }"));
+
+            Assert.IsFalse(FhirParser.ProbeIsXml("this is nothing"));
+            Assert.IsFalse(FhirParser.ProbeIsXml("  crap { "));
+            Assert.IsFalse(FhirParser.ProbeIsXml(" < crap  "));
+            Assert.IsFalse(FhirParser.ProbeIsXml("   { x:5 }"));
+            Assert.IsTrue(FhirParser.ProbeIsXml("   <element/>"));
+            Assert.IsTrue(FhirParser.ProbeIsXml("<?xml />"));
+        }
     }
 }
