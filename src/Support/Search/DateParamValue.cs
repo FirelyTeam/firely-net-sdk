@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Support.Search
         }
 
         public DateParamValue(DateTimeOffset value) 
-            : this(PrimitiveTypeConverter.Convert<string>(value))
+            : this(PrimitiveTypeConverter.ConvertTo<string>(value))
         {             
         }
 
         public DateParamValue(ComparisonOperator comparison, DateTimeOffset value) 
-            : this(comparison,PrimitiveTypeConverter.Convert<string>(value))
+            : this(comparison,PrimitiveTypeConverter.ConvertTo<string>(value))
         {
         }
 

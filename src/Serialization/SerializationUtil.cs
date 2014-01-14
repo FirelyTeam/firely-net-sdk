@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization
             string value = StringValueOrNull(elem);
 
             return String.IsNullOrEmpty(value) ? (DateTimeOffset?)null : 
-                PrimitiveTypeConverter.Convert<DateTimeOffset>(value);
+                PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(value);
         }
     }
 }

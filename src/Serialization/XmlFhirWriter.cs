@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
 
             if (xmlFormatHint == XmlSerializationHint.None) xmlFormatHint = XmlSerializationHint.Attribute;
 
-            var valueAsString = PrimitiveTypeConverter.Convert<string>(value);
+            var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
 
             if (xmlFormatHint == XmlSerializationHint.Attribute)
                 xw.WriteAttributeString(_currentMemberName, valueAsString);

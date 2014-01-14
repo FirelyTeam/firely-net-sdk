@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.Fhir, Version=0.12.2127.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hl7.Fhir, Version=0.12.2138.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Hl7.Fhir.dll</HintPath>
     </Reference>
@@ -93,6 +93,7 @@
     <Compile Include="Serialization\TagParsingTests.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="Model\TagExtensionsTest.cs" />
+    <Compile Include="Serialization\ValidationTest.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="patient-example.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

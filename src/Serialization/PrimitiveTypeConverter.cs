@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static T Convert<T>(object value)
+        public static T ConvertTo<T>(this object value)
         {
             return (T)Convert(value,typeof(T));
         }

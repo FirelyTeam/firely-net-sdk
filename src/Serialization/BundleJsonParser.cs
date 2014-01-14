@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (attr == null) return null;
 
-            return PrimitiveTypeConverter.Convert<DateTimeOffset>(attr.Value<string>());
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(attr.Value<string>());
         }
 
         internal static Bundle Load(JsonReader reader)

@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Rest
                 new RestUrl(_endpoint).CollectionHistory(collection) :
                 new RestUrl(_endpoint).ResourceHistory(collection, id);
 
-            if (since != null) url.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
+            if (since != null) url.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
             if (count != null) url.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
 
             return FetchBundle(url.Uri);           
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Rest
 
             var rl = new RestUrl(_endpoint).ServerHistory();
 
-            if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.Convert<string>(since.Value));
+            if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
             if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
 
             return FetchBundle(rl.Uri);

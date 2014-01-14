@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Serialization
             else if (value is decimal)
                 val = new JValue(value);
             else
-                val = new JValue(PrimitiveTypeConverter.Convert<string>(value));
+                val = new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
 
             if (_current is JArray)
                 ((JArray)_current).Add(val);
