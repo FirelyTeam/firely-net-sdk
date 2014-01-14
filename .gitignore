@@ -155,3 +155,5 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 /FhirApi.userprefs
+/src/EwoutFhirNetApi.snk
+*.nupkg

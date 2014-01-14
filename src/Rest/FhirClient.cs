@@ -777,9 +777,10 @@ namespace Hl7.Fhir.Rest
 
         private T doRequest<T>(HttpWebRequest req, HttpStatusCode[] success, Func<T> onSuccess)
         {
-            HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx();
-
-            LastResponseDetails = ResponseDetails.FromHttpWebResponse(response);
+            using (HttpWebResponse response = (HttpWebResponse)req.GetResponseNoEx())
+            {
+                LastResponseDetails = ResponseDetails.FromHttpWebResponse(response);
+            }
 
             if ( success.Contains(LastResponseDetails.Result) ) 
                 return onSuccess();

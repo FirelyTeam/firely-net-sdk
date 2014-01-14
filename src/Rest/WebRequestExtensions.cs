@@ -32,19 +32,23 @@ namespace Hl7.Fhir.Rest
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
-                        var request = (WebRequest)ar.AsyncState;
-                        result = request.EndGetResponseNoEx(ar);
+                        //var request = (WebRequest)ar.AsyncState;
+                        result = req.EndGetResponseNoEx(ar);
                         responseReady.Set();
                 });
 
-            var async = req.BeginGetResponse(callback, req);
+            var async = req.BeginGetResponse(callback, null);
 
-            // Not having thread affinity seems to work better with ManualResetEvent
-            // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
-            // unit tests), when EndGetResponse would return null without any error
-            // thrown
-            responseReady.WaitOne();
-            //async.AsyncWaitHandle.WaitOne();
+            if (!async.IsCompleted)
+            {
+                //async.AsyncWaitHandle.WaitOne();
+                // Not having thread affinity seems to work better with ManualResetEvent
+                // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
+                // unit tests), when EndGetResponse would return null without any error
+                // thrown
+                responseReady.WaitOne();
+                //async.AsyncWaitHandle.WaitOne();
+            }
 
             return result;
         }
