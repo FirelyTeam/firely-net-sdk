@@ -427,10 +427,10 @@ namespace Hl7.Fhir.Rest
         /// Validates whether the contents of the resource would be acceptable as an update
         /// </summary>
         /// <param name="entry">The entry containing the updated Resource to validate</param>
-        /// <returns>null if validation succeeded, otherwise returns OperationOutcome detailing the validation errors.
-        /// If the server returned an error, but did not return an OperationOutcome resource, an exception will be
-        /// thrown.</returns>
-        public OperationOutcome ValidateUpdate<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
+        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
+        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
+        /// failures occur.</returns>
+        public bool TryValidateUpdate<TResource>(ResourceEntry<TResource> entry, out OperationOutcome result) where TResource : Resource, new()
         {
             if (entry == null) throw new ArgumentNullException("entry");
             if (entry.Resource == null) throw new ArgumentException("Entry does not contain a Resource to validate", "entry");
@@ -438,7 +438,9 @@ namespace Hl7.Fhir.Rest
 
             var id = new ResourceIdentity(entry.Id);
             var url = new RestUrl(_endpoint).Validate(id.Collection, id.Id);
-            return doValidate(url, entry.Resource, entry.Tags);
+            result = doValidate(url, entry.Resource, entry.Tags);
+
+            return result == null;
         }
 
 
@@ -460,13 +462,24 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public OperationOutcome ValidateCreate<TResource>(TResource resource, IEnumerable<Tag> tags) where TResource : Resource, new()
+        /// <summary>
+        /// Validates whether the contents of the resource would be acceptable as a create
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="resource">The entry containing the Resource data to use for the validation</param>
+        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
+        /// <param name="tags">Optional list of tags to attach to the resource</param>
+        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
+        /// failures occur.</returns>
+        public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags=null) where TResource : Resource, new()
         {
             if (resource == null) throw new ArgumentNullException("resource");
 
             var collection = typeof(Resource).GetCollectionName();
             var url = new RestUrl(_endpoint).Validate(collection);
-            return doValidate(url, resource, tags);
+
+            result = doValidate(url, resource, tags);
+            return result == null;
         }
 
 

@@ -18,8 +18,8 @@ namespace Hl7.Fhir.Tests
    [TestClass]
     public class FhirClientTests
     {
-        //Uri testEndpoint = new Uri("http://fhir.furore.com/fhir");
-        Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         //Uri testEndpoint = new Uri("https://api.fhir.me");
 
         [TestMethod]

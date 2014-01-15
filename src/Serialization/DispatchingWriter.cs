@@ -37,7 +37,11 @@ namespace Hl7.Fhir.Serialization
                 _current.WriteStartArray();
 
                 foreach (var element in elements)
+                {
+                    if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements", null);
+
                     write(prop, element, mode);
+                }
 
                 _current.WriteEndArray();
             }
