@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Model
         private const string TAG_TERM_DOCUMENT = "http://hl7.org/fhir/tag/document";
         private const string TAG_TERM_MESSAGE = "http://hl7.org/fhir/tag/message";
 
-        public static void SetTextTag(this BundleEntry entry, string text, string mimeType = "text/plain")
+        public static void SetTextTag(this BundleEntry entry, string text)
         {
             var result = new List<Tag>();
 
@@ -34,22 +34,19 @@ namespace Hl7.Fhir.Model
             result.RemoveAll(t => Equals(t.Scheme,Tag.FHIRTAGSCHEME_GENERAL) &&
                     (t.Term != null && t.Term.StartsWith(TAG_TERM_TEXT)));
 
-            result.Add(new Tag(TAG_TERM_TEXT + mimeType, Tag.FHIRTAGSCHEME_GENERAL, text));
+            result.Add(new Tag(TAG_TERM_TEXT + Uri.EscapeUriString(text), Tag.FHIRTAGSCHEME_GENERAL, text));
 
             entry.Tags = result;
         }
 
-        public static string GetTextTag(this BundleEntry entry, out string mimeType)
+        public static string GetTextTag(this BundleEntry entry)
         {
-            mimeType = null;
-
             var textTag = entry.Tags.FilterByScheme(Tag.FHIRTAGSCHEME_GENERAL).
                 Where(t => t.Term.StartsWith(TAG_TERM_TEXT)).SingleOrDefault();
 
             if (textTag == null) return null;
 
-            mimeType = textTag.Term.Substring(TAG_TERM_TEXT.Length);
-            return textTag.Label;
+            return Uri.UnescapeDataString(textTag.Term.Substring(TAG_TERM_TEXT.Length));
         }
 
         private static readonly Tag MESSAGE_TAG = new Tag(TAG_TERM_MESSAGE, Tag.FHIRTAGSCHEME_GENERAL);

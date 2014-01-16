@@ -157,3 +157,4 @@ $RECYCLE.BIN/
 /FhirApi.userprefs
 /src/EwoutFhirNetApi.snk
 *.nupkg
+/packages/repositories.config

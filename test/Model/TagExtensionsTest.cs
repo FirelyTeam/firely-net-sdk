@@ -15,14 +15,14 @@ namespace Hl7.Fhir.Test
         public void TextTagHandling()
         {
             var r = new ResourceEntry<Patient>();
+            var text = "<b>Bold! Eeuww  some /\\ url unfriendly stuff !@#$%^& //</b>";
 
-            r.SetTextTag("<b>Bold!</b>", "text/xml");
+            r.SetTextTag(text);
 
             string mime;
-            var text = r.GetTextTag(out mime);
+            var text2 = r.GetTextTag();
 
-            Assert.AreEqual("<b>Bold!</b>", text);
-            Assert.AreEqual("text/xml", mime);
+            Assert.AreEqual(text, text2);
         }
 
         [TestMethod]
@@ -87,7 +87,6 @@ namespace Hl7.Fhir.Test
 
             IList<Tag> tl2 = new List<Tag>();
             tl2.Add(new Tag("http://nu.nl", Tag.FHIRTAGSCHEME_GENERAL));
-            tl2.Add(new Tag("http://nu.nl", (string)null));
             tl2.Add(new Tag("http://nooit.nl", Tag.FHIRTAGSCHEME_GENERAL));
 
             var result = tl.Exclude(tl2);

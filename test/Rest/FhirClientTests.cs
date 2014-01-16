@@ -18,7 +18,10 @@ namespace Hl7.Fhir.Tests
    [TestClass]
     public class FhirClientTests
     {
-        Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+     
+    //    Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        //Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+        Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         //Uri testEndpoint = new Uri("https://api.fhir.me");
 
@@ -31,7 +34,7 @@ namespace Hl7.Fhir.Tests
             var c = entry.Resource;
 
             Assert.IsNotNull(c);
-            Assert.AreEqual("Reference Server", c.Software.Name);
+            Assert.AreEqual("Spark.Service", c.Software.Name);
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, c.Rest[0].Mode.Value);
             Assert.AreEqual(HttpStatusCode.OK, client.LastResponseDetails.Result);
 
@@ -64,8 +67,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 
             string version = new ResourceIdentity(loc.SelfLink).VersionId;
-            Assert.AreEqual("1", version);
-
+            Assert.IsNotNull(version);
             string id = new ResourceIdentity(loc.Id).Id;
             Assert.AreEqual("1", id);
 
@@ -281,17 +283,18 @@ namespace Hl7.Fhir.Tests
             var tags = new List<Tag>() { new Tag("http://readtag.nu.nl", Tag.FHIRTAGSCHEME_GENERAL, "readTagTest") };
 
             client.AffixTags<Location>(tags, "1");
-
+            var affixedEntry = client.Read<Location>("1");
+            var version = new ResourceIdentity(affixedEntry.SelfLink).VersionId;
             var list = client.GetTags();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
             list = client.GetTags<Location>();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            list = client.GetTags<Location>("1", "1");
+            list = client.GetTags<Location>("1", version);
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            client.DeleteTags<Location>(tags, "1", "1");
+            client.DeleteTags<Location>(tags, "1", version);
         }
     }
 }

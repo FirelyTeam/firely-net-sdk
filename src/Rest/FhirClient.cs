@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Rest
             var url = new RestUrl(_endpoint).Validate(id.Collection, id.Id);
             result = doValidate(url, entry.Resource, entry.Tags);
 
-            return result == null;
+            return result == null || !result.Success();
         }
 
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Rest
             var url = new RestUrl(_endpoint).Validate(collection);
 
             result = doValidate(url, resource, tags);
-            return result == null;
+            return result == null || !result.Success();
         }
 
 
@@ -654,7 +654,8 @@ namespace Hl7.Fhir.Rest
             {
                 // Documents are merely "accepted"
                 var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: false);
-                return doRequest(req, HttpStatusCode.NoContent, () => (Bundle)null);
+                //return doRequest(req, HttpStatusCode.NoContent, () => (Bundle)null);
+                return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
             }
             else if (bundle.GetBundleType() == BundleType.Message)
             {
