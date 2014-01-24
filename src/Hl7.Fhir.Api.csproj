@@ -130,12 +130,15 @@
     <None Include="EwoutFhirNetApi.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Hl7.Fhir">
-      <HintPath>..\lib\Hl7.Fhir.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SVN\FHIR\build\implementations\csharp\Hl7.Fhir.Portable40.csproj">
+      <Project>{3ca811d7-19a7-43ac-a403-1f35e4ec2bfc}</Project>
+      <Name>Hl7.Fhir.Portable40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

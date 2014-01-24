@@ -32,6 +32,19 @@ namespace Hl7.Fhir.Rest
             PreferredFormat = ResourceFormat.Xml;
         }
 
+
+        /// <summary>
+        /// Contact the endpoint's Conformance statement to configure the client
+        /// to  the capabilities of the server
+        /// </summary>
+        public void Configure()
+        {
+            // Set preferred serialization format
+            throw new NotImplementedException();
+        }
+        
+
+
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints.
@@ -70,23 +83,9 @@ namespace Hl7.Fhir.Rest
         {
             assertEndpoint();
 
-            return Conformance(Endpoint, useOptionsVerb);
-        }
-
-
-        /// <summary>
-        /// Get a conformance statement for the system
-        /// </summary>
-        /// <param name="useOptionsVerb">If true, uses the Http OPTIONS verb to get the conformance, otherwise uses the /metadata endpoint</param>
-        /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public ResourceEntry<Conformance> Conformance(Uri location, bool useOptionsVerb = false)
-        {
-            assertEndpoint();
-            assertServiceLocation(location, "location");
-
             RestUrl url = useOptionsVerb ? new RestUrl(_endpoint) : new RestUrl(_endpoint).WithMetadata();
 
-            var req = prepareRequest(useOptionsVerb ? "OPTIONS" : "GET", url.Uri, null, null, expectBundleResponse:false);
+            var req = prepareRequest(useOptionsVerb ? "OPTIONS" : "GET", url.Uri, null, null, expectBundleResponse: false);
             return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<Conformance>());
         }
 
@@ -108,6 +107,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of resource to fetch</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist</returns>
+        //TODO: Make sure you allow relative urls here
         public ResourceEntry<TResource> Read<TResource>(Uri location) where TResource : Resource, new()
         {
             if (location == null) throw new ArgumentNullException("location");
