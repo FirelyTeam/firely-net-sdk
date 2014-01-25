@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92CC9186-0A21-4E06-B11F-907584FBFD81}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release45|AnyCPU'">
+    <OutputPath>bin\Release45\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\BundleExtensions.cs" />
+    <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Rest\BundleExtensions.cs" />
+    <Compile Include="Rest\ContentType.cs" />
+    <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirOperationException.cs" />
+    <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\ResponseDetails.cs" />
+    <Compile Include="Rest\WebRequestExtensions.cs" />
+    <Compile Include="Introspection\ClassMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\BundleJsonParser.cs" />
+    <Compile Include="Serialization\BundleJsonSerializer.cs" />
+    <Compile Include="Serialization\BundleXmlParser.cs" />
+    <Compile Include="Serialization\BundleXmlSerializer.cs" />
+    <Compile Include="Serialization\ComplexTypeWriter.cs" />
+    <Compile Include="Serialization\ComplexTypeReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\DefaultModelFactory.cs" />
+    <Compile Include="Serialization\DispatchingWriter.cs" />
+    <Compile Include="Serialization\DispatchingReader.cs" />
+    <Compile Include="Introspection\EnumMapping.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Serialization\FhirParser.cs" />
+    <Compile Include="Serialization\FhirSerializer.cs" />
+    <Compile Include="Serialization\IFhirReader.cs" />
+    <Compile Include="Serialization\IFhirWriter.cs" />
+    <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\PrimitiveValueWriter.cs" />
+    <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TagListParser.cs" />
+    <Compile Include="Serialization\TagListSerializer.cs" />
+    <Compile Include="Serialization\XmlDomFhirReader.cs" />
+    <Compile Include="Serialization\JsonDomFhirReader.cs" />
+    <Compile Include="Serialization\ResourceWriter.cs" />
+    <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Rest\RestUrl.cs" />
+    <Compile Include="Rest\FhirRestOperationExtensions.cs" />
+    <Compile Include="Support\Logging.cs" />
+    <Compile Include="Serialization\ModelFactoryList.cs" />
+    <Compile Include="Introspection\ModelInspector.cs" />
+    <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
+    <Compile Include="Serialization\PrimitiveValueReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Introspection\PropertyMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Introspection\ReflectionHelper.cs" />
+    <Compile Include="Serialization\RepeatingElementReader.cs" />
+    <Compile Include="Serialization\ResourceReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\SerializationConfig.cs" />
+    <Compile Include="Serialization\SerializationUtil.cs" />
+    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
+    <Compile Include="Rest\RestOperation.cs" />
+    <Compile Include="Support\Search\BoolParamValue.cs" />
+    <Compile Include="Support\Search\CombinedParamValue.cs" />
+    <Compile Include="Support\Search\DateParamValue.cs" />
+    <Compile Include="Support\Search\IntegerParamValue.cs" />
+    <Compile Include="Support\Search\ReferenceParamValue.cs" />
+    <Compile Include="Support\Search\SearchParam.cs" />
+    <Compile Include="Support\Search\SearchParamValue.cs" />
+    <Compile Include="Support\Search\StringParamValue.cs" />
+    <Compile Include="Support\Search\TokenParamValue.cs" />
+    <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Rest\UriParamExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Hl7.Fhir.Api.Properties</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.csproj">
+      <Project>{3ca811d7-19a7-43ac-a403-1f35e4ec2bfc}</Project>
+      <Name>Hl7.Fhir.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
