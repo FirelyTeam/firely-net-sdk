@@ -21,6 +21,8 @@ This library provides:
 * Xml and Json parsers and serializers
 * A REST client for working with FHIR-compliant servers
 
+Over the coming months, we'll be adding handling of ValueSets and Profile validation.
+
 ### Get Started
 Get started by reading the [online documentation](docu-index.html), downloading the [NuGet package][2] or getting [the sourcecode][3]
 
