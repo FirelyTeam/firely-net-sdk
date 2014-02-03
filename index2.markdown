@@ -1,5 +1,6 @@
 ---
-title: fhir-net-api
+layout: default
+title: Dit is de titel
 ---
 
 This is the support API's for working with the HL7 FHIR standard on the .NET platform. The project provides 
