@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -632,6 +632,195 @@ namespace Hl7.Fhir.Model
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Profile.ElementComponent> Element { get; set; }
+            
+            /// <summary>
+            /// Search params defined
+            /// </summary>
+            [FhirElement("searchParam", Order=90)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Profile.ProfileStructureSearchParamComponent> SearchParam { get; set; }
+            
+        }
+        
+        
+        /// <summary>
+        /// null
+        /// </summary>
+        [FhirType("ProfileStructureSearchParamComponent")]
+        [DataContract]
+        public partial class ProfileStructureSearchParamComponent : Hl7.Fhir.Model.Element
+        {
+            /// <summary>
+            /// Name of search parameter
+            /// </summary>
+            [FhirElement("name", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
+            /// number | date | string | token | reference | composite | quantity
+            /// </summary>
+            [FhirElement("type", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code TypeElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Hl7.Fhir.Model.Code(value);
+                }
+            }
+            
+            /// <summary>
+            /// Contents and meaning of search parameter
+            /// </summary>
+            [FhirElement("documentation", Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Documentation
+            {
+                get { return DocumentationElement != null ? DocumentationElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DocumentationElement = null; 
+                    else
+                      DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
+            /// XPath that extracts the parameter set
+            /// </summary>
+            [FhirElement("xpath", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString XpathElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Xpath
+            {
+                get { return XpathElement != null ? XpathElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      XpathElement = null; 
+                    else
+                      XpathElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
+            /// Types of resource (if a resource reference)
+            /// </summary>
+            [FhirElement("target", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Code> TargetElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Target
+            {
+                get { return TargetElement != null ? TargetElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      TargetElement = null; 
+                    else
+                      TargetElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                }
+            }
+            
+        }
+        
+        
+        /// <summary>
+        /// null
+        /// </summary>
+        [FhirType("ProfileQueryComponent")]
+        [DataContract]
+        public partial class ProfileQueryComponent : Hl7.Fhir.Model.Element
+        {
+            /// <summary>
+            /// Special named queries (_query=)
+            /// </summary>
+            [FhirElement("name", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
+            /// Describes the named query
+            /// </summary>
+            [FhirElement("documentation", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Documentation
+            {
+                get { return DocumentationElement != null ? DocumentationElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DocumentationElement = null; 
+                    else
+                      DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
+            /// Parameter for the named query
+            /// </summary>
+            [FhirElement("parameter", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Profile.ProfileStructureSearchParamComponent> Parameter { get; set; }
             
         }
         
@@ -1528,6 +1717,14 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Profile.ProfileExtensionDefnComponent> ExtensionDefn { get; set; }
+        
+        /// <summary>
+        /// Definition of a named query
+        /// </summary>
+        [FhirElement("query", Order=220)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Profile.ProfileQueryComponent> Query { get; set; }
         
     }
     

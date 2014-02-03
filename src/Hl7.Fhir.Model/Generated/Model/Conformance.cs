@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -183,6 +183,8 @@ namespace Hl7.Fhir.Model
             Reference, // A reference to another resource.
             [EnumLiteral("composite")]
             Composite, // A composite search parameter that combines a search on two values together.
+            [EnumLiteral("quantity")]
+            Quantity, // A search parameter that searches on a quantity.
         }
         
         /// <summary>
@@ -233,10 +235,31 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Describes the named query
+            /// Where query is defined
             /// </summary>
-            [FhirElement("documentation", Order=50)]
+            [FhirElement("definition", Order=50)]
             [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri DefinitionElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public System.Uri Definition
+            {
+                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DefinitionElement = null; 
+                    else
+                      DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                }
+            }
+            
+            /// <summary>
+            /// Additional usage guidance
+            /// </summary>
+            [FhirElement("documentation", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
             
@@ -257,7 +280,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Parameter for the named query
             /// </summary>
-            [FhirElement("parameter", Order=60)]
+            [FhirElement("parameter", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> Parameter { get; set; }
@@ -1143,28 +1166,28 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Source of definition
+            /// Source of definition for parameter
             /// </summary>
-            [FhirElement("source", Order=50)]
+            [FhirElement("definition", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SourceElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri DefinitionElement { get; set; }
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public System.Uri Source
+            public System.Uri Definition
             {
-                get { return SourceElement != null ? SourceElement.Value : null; }
+                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      SourceElement = null; 
+                      DefinitionElement = null; 
                     else
-                      SourceElement = new Hl7.Fhir.Model.FhirUri(value);
+                      DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
                 }
             }
             
             /// <summary>
-            /// number | date | string | token | reference | composite
+            /// number | date | string | token | reference | composite | quantity
             /// </summary>
             [FhirElement("type", Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -1186,10 +1209,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Contents and meaning of search parameter
+            /// Server-specific usage
             /// </summary>
             [FhirElement("documentation", Order=70)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
             
@@ -1208,30 +1230,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// XPath that extracts the parameter set
-            /// </summary>
-            [FhirElement("xpath", Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString XpathElement { get; set; }
-            
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Xpath
-            {
-                get { return XpathElement != null ? XpathElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      XpathElement = null; 
-                    else
-                      XpathElement = new Hl7.Fhir.Model.FhirString(value);
-                }
-            }
-            
-            /// <summary>
             /// Types of resource (if a resource reference)
             /// </summary>
-            [FhirElement("target", Order=90)]
+            [FhirElement("target", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Code> TargetElement { get; set; }
@@ -1253,7 +1254,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Chained names supported
             /// </summary>
-            [FhirElement("chain", Order=100)]
+            [FhirElement("chain", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> ChainElement { get; set; }

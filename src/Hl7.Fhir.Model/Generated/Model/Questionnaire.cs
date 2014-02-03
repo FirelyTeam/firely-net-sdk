@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -222,37 +222,16 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Whether the contents of this group have a meaningful order
-            /// </summary>
-            [FhirElement("ordered", Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean OrderedElement { get; set; }
-            
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Ordered
-            {
-                get { return OrderedElement != null ? OrderedElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      OrderedElement = null; 
-                    else
-                      OrderedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                }
-            }
-            
-            /// <summary>
             /// The subject this group's answers are about
             /// </summary>
-            [FhirElement("subject", Order=80)]
+            [FhirElement("subject", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
             
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", Order=90)]
+            [FhirElement("group", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group { get; set; }
@@ -260,7 +239,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", Order=100)]
+            [FhirElement("question", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question { get; set; }

@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Simple observations
+    /// Measurements and simple assertions
     /// </summary>
     [FhirType("Observation", IsResource=true)]
     [DataContract]
@@ -90,6 +90,28 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Codes specifying how two observations are related
+        /// </summary>
+        [FhirEnumeration("ObservationRelationshipType")]
+        public enum ObservationRelationshipType
+        {
+            [EnumLiteral("has-component")]
+            HasComponent, // The target observation is a component of this observation (e.g. Systolic and Diastolic Blood Pressure).
+            [EnumLiteral("has-member")]
+            HasMember, // This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            [EnumLiteral("derived-from")]
+            DerivedFrom, // The target observation is part of the information from which this observation value is derived (e.g. calculated anion gap, Apgar score).
+            [EnumLiteral("sequel-to")]
+            SequelTo, // This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            [EnumLiteral("replaces")]
+            Replaces, // This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            [EnumLiteral("qualified-by")]
+            QualifiedBy, // The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure).
+            [EnumLiteral("interfered-by")]
+            InterferedBy, // The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+        }
+        
+        /// <summary>
         /// null
         /// </summary>
         [FhirType("ObservationReferenceRangeComponent")]
@@ -123,6 +145,45 @@ namespace Hl7.Fhir.Model
             [FhirElement("age", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Range Age { get; set; }
+            
+        }
+        
+        
+        /// <summary>
+        /// null
+        /// </summary>
+        [FhirType("ObservationRelatedComponent")]
+        [DataContract]
+        public partial class ObservationRelatedComponent : Hl7.Fhir.Model.Element
+        {
+            /// <summary>
+            /// has-component | has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// </summary>
+            [FhirElement("type", Order=40)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
+                }
+            }
+            
+            /// <summary>
+            /// Observation that is related to this one
+            /// </summary>
+            [FhirElement("target", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Target { get; set; }
             
         }
         
@@ -294,6 +355,14 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange { get; set; }
+        
+        /// <summary>
+        /// Observations related to this observation
+        /// </summary>
+        [FhirElement("related", Order=220)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related { get; set; }
         
     }
     

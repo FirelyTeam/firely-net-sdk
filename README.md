@@ -1,26 +1,23 @@
-fhir-net-api
-============
+This is the support API for working with the DSTU version of [HL7 FHIR][1] on the .NET platform. The API deals with the HTTP and wire format, so you can write code like this to manipulate a patient's data: 
 
-This is the support API's for working with the HL7 FHIR standard on the .NET platform. The project provides 
-additional functionality beyond those in the HL7.Fhir.Model library provided at the FHIR website 
-(http://www.hl7.org/fhir)
+```
+	var client = new FhirClient("http://spark.furore.com/fhir");
+
+	var pat = client.Read<Patient>("1");
+	pat.Resource.Name.Add(HumanName.ForFamily("Kramer")
+    	 .WithGiven("Ewout"));
+
+	client.Update<Patient>(pat);
+```
 
 This library provides:
-* Xml & Json Parsers and serializers for the FHIR object model
-* Profile validation functionality
-* ValueSet support
-* ... more to come
+* Class models for working with the FHIR data model using POCO's
+* Xml and Json parsers and serializers
+* A REST client for working with FHIR-compliant servers
 
-Note: the parsers and serializers cover the functionality found originally in the HL7.Fhir.Model libraries 
-provided on the FHIR website, but are totally rewritten to support profiled FHIR resources. Parsers and 
-serializers are no longer generated, but use a run-time discovery mechanism so new resources and extensions
-can be added.
+### Get Started ###
+Get started by reading the [online documentation][3] or downloading the [NuGet package][2] 
 
-The current status currently pretty alpha, but this library will support all functionality required for the
-january 2014 HL7 WGM Connectathon in San Antonio and is kept compatible with the following servers:
-
-* Furore's (Ewout) - http://spark.furore.com
-* Health Intersections (Grahame) - http://hl7connect.healthintersections.com.au/svc/fhir/
-* SMART Platforms (Josh) - https://api.fhir.me
-
-
+[1]: http://www.hl7.org/fhir
+[2]: http://www.nuget.org/packages/Hl7.Fhir
+[3]: http://http://ewoutkramer.github.io/fhir-net-api

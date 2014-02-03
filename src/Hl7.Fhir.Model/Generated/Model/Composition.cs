@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -89,30 +89,51 @@ namespace Hl7.Fhir.Model
         public partial class SectionComponent : Hl7.Fhir.Model.Element
         {
             /// <summary>
+            /// Label for section
+            /// </summary>
+            [FhirElement("title", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString TitleElement { get; set; }
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Title
+            {
+                get { return TitleElement != null ? TitleElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TitleElement = null; 
+                    else
+                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                }
+            }
+            
+            /// <summary>
             /// Classification of section (recommended)
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
             
             /// <summary>
             /// If section different to composition
             /// </summary>
-            [FhirElement("subject", Order=50)]
+            [FhirElement("subject", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
             
             /// <summary>
             /// The actual data for the section
             /// </summary>
-            [FhirElement("content", Order=60)]
+            [FhirElement("content", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Content { get; set; }
             
             /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", Order=70)]
+            [FhirElement("section", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section { get; set; }
@@ -223,22 +244,22 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition editing time
         /// </summary>
-        [FhirElement("instant", Order=80)]
+        [FhirElement("date", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Instant InstantElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public DateTimeOffset? Instant
+        public string Date
         {
-            get { return InstantElement != null ? InstantElement.Value : null; }
+            get { return DateElement != null ? DateElement.Value : null; }
             set
             {
                 if(value == null)
-                  InstantElement = null; 
+                  DateElement = null; 
                 else
-                  InstantElement = new Hl7.Fhir.Model.Instant(value);
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
             }
         }
         

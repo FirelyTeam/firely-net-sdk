@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,42 +47,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class SecurityEvent : Hl7.Fhir.Model.Resource
     {
-        /// <summary>
-        /// Indicator for type of action performed during the event that generated the audit.
-        /// </summary>
-        [FhirEnumeration("SecurityEventAction")]
-        public enum SecurityEventAction
-        {
-            [EnumLiteral("C")]
-            C, // Create a new database object, such as Placing an Order.
-            [EnumLiteral("R")]
-            R, // Display or print data, such as a Doctor Census.
-            [EnumLiteral("U")]
-            U, // Update data, such as Revise Patient Information.
-            [EnumLiteral("D")]
-            D, // Delete items, such as a doctor master file record.
-            [EnumLiteral("E")]
-            E, // Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
-        }
-        
-        /// <summary>
-        /// The type of network access point that originated the audit event
-        /// </summary>
-        [FhirEnumeration("SecurityEventParticipantNetworkType")]
-        public enum SecurityEventParticipantNetworkType
-        {
-            [EnumLiteral("1")]
-            N1, // Machine Name, including DNS name.
-            [EnumLiteral("2")]
-            N2, // IP Address.
-            [EnumLiteral("3")]
-            N3, // Telephone Number.
-            [EnumLiteral("4")]
-            N4, // Email address.
-            [EnumLiteral("5")]
-            N5, // URI (User directory, HTTP-PUT, ftp, etc.).
-        }
-        
         /// <summary>
         /// Code representing the functional application role of Participant Object being audited
         /// </summary>
@@ -140,6 +104,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Indicator for type of action performed during the event that generated the audit.
+        /// </summary>
+        [FhirEnumeration("SecurityEventAction")]
+        public enum SecurityEventAction
+        {
+            [EnumLiteral("C")]
+            C, // Create a new database object, such as Placing an Order.
+            [EnumLiteral("R")]
+            R, // Display or print data, such as a Doctor Census.
+            [EnumLiteral("U")]
+            U, // Update data, such as Revise Patient Information.
+            [EnumLiteral("D")]
+            D, // Delete items, such as a doctor master file record.
+            [EnumLiteral("E")]
+            E, // Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
+        }
+        
+        /// <summary>
         /// Code for the participant object type being audited
         /// </summary>
         [FhirEnumeration("SecurityEventObjectType")]
@@ -191,6 +173,24 @@ namespace Hl7.Fhir.Model
             N14, // Logical deletion.
             [EnumLiteral("15")]
             N15, // Permanent erasure / Physical destruction.
+        }
+        
+        /// <summary>
+        /// The type of network access point that originated the audit event
+        /// </summary>
+        [FhirEnumeration("SecurityEventParticipantNetworkType")]
+        public enum SecurityEventParticipantNetworkType
+        {
+            [EnumLiteral("1")]
+            N1, // Machine Name, including DNS name.
+            [EnumLiteral("2")]
+            N2, // IP Address.
+            [EnumLiteral("3")]
+            N3, // Telephone Number.
+            [EnumLiteral("4")]
+            N4, // Email address.
+            [EnumLiteral("5")]
+            N5, // URI (User directory, HTTP-PUT, ftp, etc.).
         }
         
         /// <summary>
