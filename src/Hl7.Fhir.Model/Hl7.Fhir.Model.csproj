@@ -92,9 +92,6 @@
     <Compile Include="Generated\Model\AdverseReaction.cs" />
     <Compile Include="Generated\Model\Alert.cs" />
     <Compile Include="Generated\Model\AllergyIntolerance.cs" />
-    <Compile Include="Generated\Model\Appointment.cs" />
-    <Compile Include="Generated\Model\AppointmentResponse.cs" />
-    <Compile Include="Generated\Model\Availability.cs" />
     <Compile Include="Generated\Model\CarePlan.cs" />
     <Compile Include="Generated\Model\Composition.cs" />
     <Compile Include="Generated\Model\ConceptMap.cs" />
@@ -134,10 +131,8 @@
     <Compile Include="Generated\Model\Provenance.cs" />
     <Compile Include="Generated\Model\Query.cs" />
     <Compile Include="Generated\Model\Questionnaire.cs" />
-    <Compile Include="Generated\Model\Referral.cs" />
     <Compile Include="Generated\Model\RelatedPerson.cs" />
     <Compile Include="Generated\Model\SecurityEvent.cs" />
-    <Compile Include="Generated\Model\Slot.cs" />
     <Compile Include="Generated\Model\Specimen.cs" />
     <Compile Include="Generated\Model\Substance.cs" />
     <Compile Include="Generated\Model\Supply.cs" />

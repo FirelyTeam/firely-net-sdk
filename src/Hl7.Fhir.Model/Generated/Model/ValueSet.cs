@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -48,25 +48,7 @@ namespace Hl7.Fhir.Model
     public partial class ValueSet : Hl7.Fhir.Model.Resource
     {
         /// <summary>
-        /// The way in which the code is selected
-        /// </summary>
-        [FhirEnumeration("CodeSelectionMode")]
-        public enum CodeSelectionMode
-        {
-            [EnumLiteral("code")]
-            Code, // Only this code is selected.
-            [EnumLiteral("children")]
-            Children, // Only the immediate children (codes with a is-a relationship) are selected, but not this code itself.
-            [EnumLiteral("descendants")]
-            Descendants, // All descendants of this code are selected, but not this code itself.
-            [EnumLiteral("all")]
-            All, // This code and any descendants are selected.
-            [EnumLiteral("system")]
-            System, // All codes from the specified code system.
-        }
-        
-        /// <summary>
-        /// The lifecycle status of a Value Set or Comcept Map
+        /// The lifecycle status of a Value Set or Concept Map
         /// </summary>
         [FhirEnumeration("ValueSetStatus")]
         public enum ValueSetStatus

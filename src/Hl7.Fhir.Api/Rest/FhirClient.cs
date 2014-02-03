@@ -27,8 +27,15 @@ namespace Hl7.Fhir.Rest
         public FhirClient(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
+            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
+
             _endpoint = endpoint;
             PreferredFormat = ResourceFormat.Xml;
+        }
+
+        public FhirClient(string endpoint)
+            : this(new Uri(endpoint))
+        {
         }
 
 
@@ -36,13 +43,12 @@ namespace Hl7.Fhir.Rest
         /// Contact the endpoint's Conformance statement to configure the client
         /// to  the capabilities of the server
         /// </summary>
-        public void Configure()
-        {
-            // Set preferred serialization format
-            throw new NotImplementedException();
-        }
+        //public void Configure()
+        //{
+        //    // Set preferred serialization format
+        //    throw new NotImplementedException();
+        //}
         
-
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters

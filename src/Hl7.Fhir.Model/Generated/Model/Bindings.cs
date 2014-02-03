@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -98,12 +98,6 @@ namespace Hl7.Fhir.Model
         Alert, // The Alert resource
         [EnumLiteral("AllergyIntolerance")]
         AllergyIntolerance, // The AllergyIntolerance resource
-        [EnumLiteral("Appointment")]
-        Appointment, // The Appointment resource
-        [EnumLiteral("AppointmentResponse")]
-        AppointmentResponse, // The AppointmentResponse resource
-        [EnumLiteral("Availability")]
-        Availability, // The Availability resource
         [EnumLiteral("CarePlan")]
         CarePlan, // The CarePlan resource
         [EnumLiteral("Composition")]
@@ -182,14 +176,10 @@ namespace Hl7.Fhir.Model
         Query, // The Query resource
         [EnumLiteral("Questionnaire")]
         Questionnaire, // The Questionnaire resource
-        [EnumLiteral("Referral")]
-        Referral, // The Referral resource
         [EnumLiteral("RelatedPerson")]
         RelatedPerson, // The RelatedPerson resource
         [EnumLiteral("SecurityEvent")]
         SecurityEvent, // The SecurityEvent resource
-        [EnumLiteral("Slot")]
-        Slot, // The Slot resource
         [EnumLiteral("Specimen")]
         Specimen, // The Specimen resource
         [EnumLiteral("Substance")]

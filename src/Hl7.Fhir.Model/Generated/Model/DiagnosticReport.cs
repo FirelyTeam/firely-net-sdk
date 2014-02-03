@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Jan 24, 2014 09:44-0600 for FHIR v0.12
+// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -111,50 +111,17 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// null
+        /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirType("ResultGroupComponent")]
-        [DataContract]
-        public partial class ResultGroupComponent : Hl7.Fhir.Model.Element
-        {
-            /// <summary>
-            /// Name/Code for this group of results
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Name { get; set; }
-            
-            /// <summary>
-            /// Specimen details for this group
-            /// </summary>
-            [FhirElement("specimen", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Specimen { get; set; }
-            
-            /// <summary>
-            /// Nested Report Group
-            /// </summary>
-            [FhirElement("group", Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.DiagnosticReport.ResultGroupComponent> Group { get; set; }
-            
-            /// <summary>
-            /// An atomic data result
-            /// </summary>
-            [FhirElement("result", Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Result { get; set; }
-            
-        }
-        
+        [FhirElement("name", Order=70)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Name { get; set; }
         
         /// <summary>
         /// registered | partial | final | corrected +
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement { get; set; }
@@ -176,7 +143,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was released
         /// </summary>
-        [FhirElement("issued", Order=80)]
+        [FhirElement("issued", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement { get; set; }
@@ -198,7 +165,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
@@ -206,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", Order=100)]
+        [FhirElement("performer", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer { get; set; }
@@ -214,14 +181,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", Order=110)]
+        [FhirElement("identifier", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier { get; set; }
         
         /// <summary>
         /// What was requested
         /// </summary>
-        [FhirElement("requestDetail", Order=120)]
+        [FhirElement("requestDetail", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> RequestDetail { get; set; }
@@ -229,31 +196,39 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Biochemistry, Hematology etc.
         /// </summary>
-        [FhirElement("serviceCategory", Order=130)]
+        [FhirElement("serviceCategory", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory { get; set; }
         
         /// <summary>
         /// Physiologically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("diagnostic", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("diagnostic", Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Diagnostic { get; set; }
         
         /// <summary>
-        /// Results grouped by specimen/kind/category
+        /// Specimens this report is based on
         /// </summary>
-        [FhirElement("results", Order=150)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("specimen", Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.DiagnosticReport.ResultGroupComponent Results { get; set; }
+        public List<Hl7.Fhir.Model.ResourceReference> Specimen { get; set; }
+        
+        /// <summary>
+        /// Observations - simple, or complex nested groups
+        /// </summary>
+        [FhirElement("result", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Result { get; set; }
         
         /// <summary>
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
-        [FhirElement("imagingStudy", Order=160)]
+        [FhirElement("imagingStudy", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy { get; set; }
@@ -261,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", Order=170)]
+        [FhirElement("image", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> Image { get; set; }
@@ -269,7 +244,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical Interpretation of test results
         /// </summary>
-        [FhirElement("conclusion", Order=180)]
+        [FhirElement("conclusion", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ConclusionElement { get; set; }
         
@@ -290,7 +265,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes for the conclusion
         /// </summary>
-        [FhirElement("codedDiagnosis", Order=190)]
+        [FhirElement("codedDiagnosis", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis { get; set; }
@@ -298,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entire Report as issued
         /// </summary>
-        [FhirElement("presentedForm", Order=200)]
+        [FhirElement("presentedForm", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> PresentedForm { get; set; }
