@@ -22,7 +22,7 @@ This library provides:
 * A REST client for working with FHIR-compliant servers
 
 ### Get Started
-Get started by reading the [online documentation](docu-main.html), downloading the [NuGet package][2] or getting [the sourcecode][3]
+Get started by reading the [online documentation](docu-index.html), downloading the [NuGet package][2] or getting [the sourcecode][3]
 
 [1]: http://www.hl7.org/fhir
 [2]: http://www.nuget.org/packages/Hl7.Fhir
