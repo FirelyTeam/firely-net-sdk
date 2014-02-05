@@ -59,8 +59,11 @@
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
+    <Compile Include="Rest\FhirBundleRequest.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\FhirResourceRequest.cs" />
+    <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\ResponseDetails.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">

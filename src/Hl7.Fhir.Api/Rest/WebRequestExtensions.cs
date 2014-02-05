@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -9,6 +10,34 @@ namespace Hl7.Fhir.Rest
 {
     public static class WebRequestExtensions
     {
+        public static void WriteBody(this WebRequest request, byte[] data)
+        {
+            Stream outs = getRequestStream(request);
+
+            outs.Write(data, 0, (int)data.Length);
+            outs.Flush();
+        }
+
+        private static Stream getRequestStream(WebRequest request)
+        {
+            Stream requestStream = null;
+            ManualResetEvent getRequestFinished = new ManualResetEvent(false);
+
+            AsyncCallback callBack = new AsyncCallback(ar =>
+            {
+                var req = (HttpWebRequest)ar.AsyncState;
+                requestStream = req.EndGetRequestStream(ar);
+                getRequestFinished.Set();
+            });
+
+            var async = request.BeginGetRequestStream(callBack, request);
+
+            getRequestFinished.WaitOne();
+            //async.AsyncWaitHandle.WaitOne();
+
+            return requestStream;
+        }
+
 
         public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
         {
