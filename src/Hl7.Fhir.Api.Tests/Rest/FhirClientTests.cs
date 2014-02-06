@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(HttpStatusCode.OK, client.LastResponseDetails.Result);
 
             // Does't currently work on Grahame's server
-            //Assert.AreEqual(ContentType.XML_CONTENT_HEADER, client.LastResponseDetails.ContentType.ToLower());
+            Assert.AreEqual(ContentType.XML_CONTENT_HEADER, client.LastResponseDetails.ContentType.ToLower());
         }
 
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests
             client.UseFormatParam = true;
             client.PreferredFormat = ResourceFormat.Json;
 
-            var loc = client.Read<Location>("1");
+            var loc = client.Read(new Uri("Patient/1"));
 
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
         }
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>("1");
+            var loc = client.Read<Location>(new Uri("Location/1"));
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                var random = client.Read<Location>("45qq54");
+                var random = client.Read(new Uri("45qq54"));
                 Assert.Fail();
             }
             catch (FhirOperationException)
@@ -81,19 +81,32 @@ namespace Hl7.Fhir.Tests
                 Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.NotFound);
             }
 
-            //Currently fails on Grahame's server
-            //var loc2 = client.Read<Location>("1", version);
-            //Assert.IsNotNull(loc2);
-            //Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
-            //                FhirSerializer.SerializeBundleEntryToJson(loc2));
+            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location","1", version));
+            Assert.IsNotNull(loc2);
+            Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
+                            FhirSerializer.SerializeBundleEntryToJson(loc2));
 
-            //var loc3 = client.Read<Location>(loc.SelfLink);
-            //Assert.IsNotNull(loc3);
-            //Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
-            //                FhirSerializer.SerializeBundleEntryToJson(loc3));
-
+            var loc3 = client.Read<Location>(loc.SelfLink);
+            Assert.IsNotNull(loc3);
+            Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
+                            FhirSerializer.SerializeBundleEntryToJson(loc3));        
         }
 
+
+        [TestMethod]
+        public void ReadRelative()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            var loc = client.Read<Location>(new Uri("Patient/1"));
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
+
+            var ri = ResourceIdentity.Build(testEndpoint, "Patient", "1");
+            loc = client.Read<Location>(ri);
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
+        }
 
         [TestMethod]
         public void Search()
@@ -105,7 +118,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count() > 10, "Test should use testdata with more than 10 reports");
 
-            result = client.Search<DiagnosticReport>(count: 10);
+            result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count <= 10);
 
@@ -142,7 +155,7 @@ namespace Hl7.Fhir.Tests
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var result = client.Search<DiagnosticReport>(count: 10);
+            var result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count <= 10);
 
@@ -161,12 +174,11 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(firstId, prevId);
 
             // Forward, then backwards
-            // Does not work on Grahame's server yet
-            //Assert.IsNotNull(client.Continue(result,PageDirection.Next));
-            //result = client.Continue(result, PageDirection.Previous);
-            //Assert.IsNotNull(result);
-            //prevId = result.Entries.First().Id;
-            //Assert.AreEqual(firstId, prevId);
+            Assert.IsNotNull(client.Continue(result, PageDirection.Next));
+            result = client.Continue(result, PageDirection.Previous);
+            Assert.IsNotNull(result);
+            prevId = result.Entries.First().Id;
+            Assert.AreEqual(firstId, prevId);
         }
 
 
@@ -212,7 +224,8 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                fe = client.Read<Organization>(new ResourceIdentity(fe.Id).Id);
+                // Get most recent version
+                fe = client.Read<Organization>(new ResourceIdentity(fe.Id));
                 Assert.Fail();
             }
             catch
@@ -282,19 +295,21 @@ namespace Hl7.Fhir.Tests
 
             var tags = new List<Tag>() { new Tag("http://readtag.nu.nl", Tag.FHIRTAGSCHEME_GENERAL, "readTagTest") };
 
-            client.AffixTags<Location>(tags, "1");
-            var affixedEntry = client.Read<Location>("1");
-            var version = new ResourceIdentity(affixedEntry.SelfLink).VersionId;
-            var list = client.GetTags();
+            var ri = ResourceIdentity.Build("Location", "1");
+
+            client.AffixTags(ri,tags);
+            var affixedEntry = client.Read(ri);
+            var list = client.WholeSystemTags();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            list = client.GetTags<Location>();
+            list = client.TypeTags<Location>();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            list = client.GetTags<Location>("1", version);
+            list = client.Tags(affixedEntry.SelfLink);
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            client.DeleteTags<Location>(tags, "1", version);
+            client.DeleteTags(affixedEntry.SelfLink,tags);
+            //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         }
     }
 }

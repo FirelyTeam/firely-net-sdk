@@ -159,6 +159,7 @@
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
     <Compile Include="Model\ModelInfo.cs" />
+    <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceEntry.cs" />
     <Compile Include="Model\ResourceReference.cs" />

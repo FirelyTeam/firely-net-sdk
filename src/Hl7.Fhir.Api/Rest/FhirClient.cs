@@ -38,6 +38,10 @@ namespace Hl7.Fhir.Rest
         {
         }
 
+        public ResourceFormat PreferredFormat { get; set; }
+        public bool UseFormatParam { get; set; }
+
+        public FhirResponse LastResponseDetails { get; private set; }
 
         /// <summary>
         /// Contact the endpoint's Conformance statement to configure the client
@@ -63,19 +67,15 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private Uri getRequestLocation(Uri location=null)
+        private Uri makeAbsolute(Uri location=null)
         {
-            // Verify whether the client is properly initalized,
-            if (_endpoint == null) throw new InvalidOperationException("No service base url was provided when constructing the FhirClient");
-
             // If called without a location, just return the base endpoint
             if (location == null) return Endpoint;
-
 
             // If the location is absolute, verify whether it is within the endpoint
             if (location.IsAbsoluteUri)
             {
-                if (!new RestUrl(_endpoint).IsEndpointFor(location)) 
+                if (!new RestUrl(Endpoint).IsEndpointFor(location)) 
                     throw Error.Argument("location", "Url is not located on this FhirClient's endpoint");
             }
             else
@@ -86,20 +86,6 @@ namespace Hl7.Fhir.Rest
         }
 
 
-
-        /// <summary>
-        /// Fetches a bundle from a FHIR resource endpoint. 
-        /// </summary>
-        /// <param name="location">The url of the endpoint which returns a Bundle</param>
-        /// <returns>The Bundle as received by performing a GET on the endpoint. This operation will throw an exception
-        /// if the operation does not result in a HttpStatus OK.</returns>
-        internal Bundle FetchBundle(Uri location)
-        {
-            var req = new FhirRequest(getRequestLocation(location), "GET");
-            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle()); 
-        }
-
-
         /// <summary>
         /// Get a conformance statement for the system
         /// </summary>
@@ -107,9 +93,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
         public ResourceEntry<Conformance> Conformance(bool useOptionsVerb = false)
         {
-            var location = getRequestLocation();
-
-            RestUrl url = useOptionsVerb ? new RestUrl(location) : new RestUrl(location).WithMetadata();
+            RestUrl url = useOptionsVerb ? new RestUrl(Endpoint) : new RestUrl(Endpoint).WithMetadata();
 
             var req = new FhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<Conformance>());
@@ -129,6 +113,8 @@ namespace Hl7.Fhir.Rest
         /// </remarks>
         public ResourceEntry<TResource> Create<TResource>(TResource resource, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
         {
+            if (resource == null) throw Error.ArgumentNull("resource");
+
             return internalCreate<TResource>(resource, tags, null, refresh);
         }
 
@@ -137,7 +123,7 @@ namespace Hl7.Fhir.Rest
         /// Create a resource with a given id on the FHIR endpoint
         /// </summary>
         /// <param name="resource">The resource instance to create</param>
-        /// <param name="id">Optional. A client-assigned id for the newly created resource.</param>
+        /// <param name="id">Optional. A client-assigned logical id for the newly created resource.</param>
         /// <param name="tags">Optional. List of Tags to add to the created instance.</param>
         /// <param name="refresh">Optional. When true, fetches the newly created resource from the server.</param>
         /// <returns>A ResourceEntry containing the metadata (id, selflink) associated with the resource as created on the server, or an exception if the create failed.</returns>
@@ -147,6 +133,7 @@ namespace Hl7.Fhir.Rest
         /// </remarks>
         public ResourceEntry<TResource> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
         {
+            if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id", "Must supply a client-assigned id");
 
             return internalCreate<TResource>(resource, tags, id, refresh);
@@ -155,27 +142,30 @@ namespace Hl7.Fhir.Rest
 
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            assertEndpoint();
-
             var collection = typeof(TResource).GetCollectionName();
+            FhirRequest req = null;
 
             if (id == null)
             {
                 // A normal create
-                var rl = new RestUrl(_endpoint).ForCollection(collection);
-                var req = prepareRequest("POST", rl.Uri, resource, tags, expectBundleResponse: false);
-                var entry = doRequest(req, HttpStatusCode.Created, () => makeEntryFromHeaders<TResource>());
-
-                // If asked for it, immediately get the contents *we just posted*, so use the actually created version
-                if (refresh) entry = Refresh(entry, versionSpecific: true);
-                return entry;
+                var rl = new RestUrl(Endpoint).ForCollection(collection);
+                req = new FhirRequest(rl.Uri, "POST");
             }
             else
             {
-                // Given an id, this create turns into an update at a specific resource location
-                return Update<TResource>(resource, id, tags, refresh: refresh);
+                // A create at a specific id => PUT to that address
+                var ri = ResourceIdentity.Build(Endpoint, collection, id);
+                req = new FhirRequest(ri, "PUT");
             }
+
+            req.SetBody(resource, PreferredFormat);
+            if(tags != null) req.SetTagsInHeader(tags);
+            var entry = doRequest(req, id == null ? HttpStatusCode.OK : HttpStatusCode.Created, resp => resp.BodyAsEntry<TResource>());
+
+            // If asked for it, immediately get the contents *we just posted*, so use the actually created version
+            if (refresh) entry = Refresh(entry, versionSpecific: true);
+            return entry;
+
         }
 
         /// <summary>
@@ -193,7 +183,6 @@ namespace Hl7.Fhir.Rest
         internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
-            assertEndpoint();
 
             if (!versionSpecific)
                 return Read<TResource>(entry.Id);
@@ -209,179 +198,233 @@ namespace Hl7.Fhir.Rest
         /// Resource url.</param>
         /// <typeparam name="TResource">The type of resource to read</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
-        /// if the resource has been deleted or does not exist</returns>
+        /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
+        /// url, it must reference an address within the endpoint.</returns>
         public ResourceEntry<TResource> Read<TResource>(Uri location) where TResource : Resource, new()
         {
-            if (location == null) throw new ArgumentNullException("location");
-            assertEndpoint();
-            assertServiceLocation(location, "location");
+            if (location == null) throw Error.ArgumentNull("location");
 
-            var req = prepareRequest("GET", location, null, null, expectBundleResponse: false);
-            return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse<TResource>());
+            var req = new FhirRequest(makeAbsolute(location));                
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
         }
 
 
+        /// <summary>
+        /// Reads a resource from a FHIR resource endpoint.
+        /// </summary>
+        /// <param name="endpoint">The url of the Resource to fetch. This can be a Resource id url or a version-specific
+        /// Resource url.</param>
+        /// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
+        /// object, must be cast to the correct Resource type to access its properties.
+        /// The specified may be relative or absolute, if it is an abolute
+        /// url, it must reference an address within the endpoint.</returns>
         public ResourceEntry Read(Uri location)
         {
-            if (location == null) throw new ArgumentNullException("location");
-            assertEndpoint();
-            assertServiceLocation(location, "location");
+            if (location == null) throw Error.ArgumentNull("location");
 
-            var req = prepareRequest("GET", location, null, null, expectBundleResponse: false);
+            var collection = getCollectionFromLocation(location);
 
-            var rl = new ResourceIdentity(location);
-
-            return doRequest(req, HttpStatusCode.OK, () => resourceEntryFromResponse(rl.Collection));
+            var req = new FhirRequest(makeAbsolute(location));
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry(collection));
         }
 
 
-        public ResourceEntry<TResource> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
+        private static string getCollectionFromLocation(Uri location)
         {
-            assertEndpoint();
-            if (id == null) throw new ArgumentNullException("id");
+            var collection = new ResourceIdentity(location).Collection;
+            if (collection == null) throw Error.Argument("location", "Must be a FHIR REST url containing the resource type in its path");
 
-            var ri = ResourceIdentity.Build(typeof(TResource).GetCollectionName(), id, versionId);
-            return Read<TResource>(ri);
+            return collection;
         }
 
+        private static string getIdFromLocation(Uri location)
+        {
+            var id = new ResourceIdentity(location).Id;
+            if (id == null) throw Error.Argument("location", "Must be a FHIR REST url containing the logical id in its path");
+
+            return id;
+        }
+
+
+        ///// <summary>
+        ///// Fetches a typed resource, given its id and optionally its version.
+        ///// </summary>
+        ///// <param name="id">Id of the Resource to fetch.</param>
+        ///// <param name="versionId">Optional. The version of the Resource to fetch.</param>
+        ///// <typeparam name="TResource">The type of resource to read</typeparam>
+        ///// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
+        ///// if the resource has been deleted or does not exist.</returns>
+        //public ResourceEntry<TResource> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
+        //{
+        //    if (id == null) throw new ArgumentNullException("id");
+
+        //    var ri = ResourceIdentity.Build(Endpoint,typeof(TResource).GetCollectionName(), id, versionId);
+        //    return Read<TResource>(ri);
+        //}
 
 
         /// <summary>
         /// Update (or create) a resource at a given endpoint
         /// </summary>
         /// <param name="entry">A ResourceEntry containing the resource to update</param>
-        /// <param name="versionAware">Whether or not version aware update is used.</param>
+        /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
         /// <returns>The resource as updated on the server. Throws an exception when the update failed,
-        /// in particular may throw an exception when the server returns a 409 when a conflict is detected
-        /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
-        public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool versionAware = false, bool refresh=false)
+        /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
+        /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
+        /// requires version-aware updates.</returns>
+        public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool refresh=false)
                         where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
             if (entry.Id == null) throw Error.Argument("entry","Entry needs a non-null entry.id to send the update to");
 
-            assertEndpoint();
-            assertServiceLocation(entry.SelfLink, "entry.SelfLink");
-            if (versionAware && entry.SelfLink == null) throw Error.Argument("entry", "When requesting version-aware updates, Entry.SelfLink may not be null.");
+            var req = new FhirRequest(entry.Id, "PUT");
+            req.SetBody(entry.Resource,PreferredFormat);
+            if(entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
-            var rId = new ResourceIdentity(entry.Id);
-            var rVersionId = entry.SelfLink != null ? new ResourceIdentity(entry.SelfLink) : null;
+            // Always supply the version we are updating if we have one. Servers may require this.
+            if (entry.SelfLink != null) req.SetContentLocation(entry.SelfLink);
 
-            return Update<TResource>(entry.Resource, rId.Id, entry.Tags, versionAware ? rVersionId.Id : null, refresh);
-        }
-
-
-        /// <summary>
-        /// Update (or create) a resource at a given endpoint
-        /// </summary>
-        /// <param name="entry">A ResourceEntry containing the resource to update</param>
-        /// <param name="versionAware">Whether or not version aware update is used.</param>
-        /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
-        /// <returns>The resource as updated on the server. Throws an exception when the update failed,
-        /// in particular may throw an exception when the server returns a 409 when a conflict is detected
-        /// while using version-aware updates or 412 if the server requires version-aware updates.</returns>
-        public ResourceEntry<TResource> Update<TResource>(TResource resource, string id, IEnumerable<Tag> tags, string versionId = null, bool refresh = false)
-                        where TResource : Resource, new()
-        {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            assertEndpoint();
-
-            var rId = ResourceIdentity.Build(typeof(TResource).GetCollectionName(), id);
-
-            var req = prepareRequest("PUT",rId,resource, tags, expectBundleResponse: false);
-
-            // If a version id is given, post the data to a version-specific url
-            if (versionId != null) req.Headers[HttpRequestHeader.ContentLocation] = rId.WithVersion(versionId).ToString();
-
-            var entry = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK },
-                () => makeEntryFromHeaders<TResource>());
+            // This might be an update of a resource that doesn't yet exist, so accept a status Created too
+            var updated = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, resp => resp.BodyAsEntry<TResource>());
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
-            if (!refresh) entry = Refresh(entry, versionSpecific: true);
+            if (refresh) updated = Refresh(updated, versionSpecific: true);
 
-            return entry;
+            return updated;
         }
 
      
- 
         /// <summary>
-        /// Delete a resource at the given endpoint
+        /// Delete a resource at the given endpoint.
         /// </summary>
-        /// <param name="id">endpoint of the resource to delete</param>
-        /// <typeparam name="TResource">The type of the resource to delete</typeparam>
-        /// <returns>Returns normally if delete succeeded, throws an exception otherwise, though this might
+        /// <param name="location">endpoint of the resource to delete</param>
+        /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public void Delete<TResource>(string id) where TResource : Resource, new()
+        public void Delete(Uri location)
         {
-            if (id == null) throw new ArgumentNullException("id");
-            assertEndpoint();
+            if (location == null) throw Error.ArgumentNull("location");
 
-            var url = ResourceIdentity.Build(typeof(TResource).GetCollectionName(),id);
-
-            var req = prepareRequest("DELETE", url, null, null, expectBundleResponse: false);
-            doRequest(req, HttpStatusCode.NoContent, () => true);
+            var req = new FhirRequest(makeAbsolute(location), "DELETE");
+            doRequest(req, HttpStatusCode.NoContent, resp => true);
         }
 
+
+
+        /// <summary>
+        /// Delete a resource represented by the entry
+        /// </summary>
+        /// <param name="entry">Entry containing the id of the resource to delete</param>
+        /// <returns>Throws an exception when the delete failed, though this might
+        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
+        /// already deleted).</returns>
         public void Delete(ResourceEntry entry)
         {
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            ResourceIdentity ri = new ResourceIdentity(entry.Id);
-
-            var url = ResourceIdentity.Build(ri.Collection, ri.Id);
-
-            var req = prepareRequest("DELETE", url, null, null, expectBundleResponse: false);
-            doRequest(req, HttpStatusCode.NoContent, () => true);
+            Delete(entry.Id);
         }
 
      
 
         /// <summary>
-        /// Retrieve the version history for a specific resource instance
+        /// Retrieve the version history for a specific resource type
         /// </summary>
-        /// <param name="id">The id of the resource to get the history for</param>
         /// <param name="since">Optional. Returns only changes after the given date</param>
-        /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle History<TResource>(string id=null, DateTimeOffset? since = null, int? count = null) where TResource : Resource, new()
-        {
-            assertEndpoint();
-            
+	    public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null) where TResource : Resource, new()
+        {          
             var collection = typeof(TResource).GetCollectionName();
 
-            var url = id==null ?
-                new RestUrl(_endpoint).CollectionHistory(collection) :
-                new RestUrl(_endpoint).ResourceHistory(collection, id);
-
-            if (since != null) url.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
-            if (count != null) url.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
-
-            return FetchBundle(url.Uri);           
+            return internalHistory(collection, null, since, pageSize);
         }
 
 
         /// <summary>
-        /// Retrieve the version history of any resource on the server
+        /// Retrieve the version history for a resource at a given location
         /// </summary>
+        /// <param name="location">The address of the resource to get the history for</param>
         /// <param name="since">Optional. Returns only changes after the given date</param>
-        /// <param name="count">Optional. Asks server to limit the number of entries returned</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? count = null)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null)
         {
-            if (_endpoint == null) throw new InvalidOperationException("Endpoint must be provided using either the Endpoint property or the FhirClient constructor");
+            if (location == null) throw Error.ArgumentNull("location");
 
-            var rl = new RestUrl(_endpoint).ServerHistory();
+            var collection = getCollectionFromLocation(location);
+            var id = getIdFromLocation(location);
 
-            if (since != null) rl.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
-            if (count != null) rl.AddParam(HttpUtil.HISTORY_PARAM_COUNT, count.ToString());
+            return internalHistory(collection, id, since, pageSize);
+        }
 
-            return FetchBundle(rl.Uri);
+
+        /// <summary>
+        /// Retrieve the version history for a resource in a ResourceEntry
+        /// </summary>
+        /// <param name="entry">The ResourceEntry representing the Resource to get the history for</param>
+        /// <param name="since">Optional. Returns only changes after the given date</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <returns>A bundle with the history for the indicated instance, may contain both 
+        /// ResourceEntries and DeletedEntries.</returns>
+        public Bundle History(BundleEntry entry, DateTimeOffset? since = null, int? pageSize = null)
+        {
+            if (entry == null) throw Error.ArgumentNull("entry");
+
+            return History(entry.Id, since, pageSize);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full version history of the server
+        /// </summary>
+        /// <param name="since">Optional. Returns only changes after the given date</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <returns>A bundle with the history for the indicated instance, may contain both 
+        /// ResourceEntries and DeletedEntries.</returns>
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null)
+        {
+            return internalHistory(null, null, since, pageSize);
+        }
+
+
+        private Bundle internalHistory(string collection = null, string id = null, DateTimeOffset? since = null, int? pageSize = null)
+        {
+            RestUrl location = null;
+
+            if(collection == null)
+                location = new RestUrl(Endpoint).ServerHistory();
+            else
+            {
+                location = (id == null) ?
+                    new RestUrl(_endpoint).CollectionHistory(collection) :
+                    new RestUrl(_endpoint).ResourceHistory(collection, id);
+            }
+
+            if (since != null) location = location.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
+            if (pageSize != null) location = location.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.ToString());
+
+            return fetchBundle(location.Uri);
+        }
+
+
+        /// <summary>
+        /// Fetches a bundle from a FHIR resource endpoint. 
+        /// </summary>
+        /// <param name="location">The url of the endpoint which returns a Bundle</param>
+        /// <returns>The Bundle as received by performing a GET on the endpoint. This operation will throw an exception
+        /// if the operation does not result in a HttpStatus OK.</returns>
+        private Bundle fetchBundle(Uri location)
+        {
+            var req = new FhirRequest(makeAbsolute(location), "GET");
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
 
@@ -394,25 +437,49 @@ namespace Hl7.Fhir.Rest
         /// failures occur.</returns>
         public bool TryValidateUpdate<TResource>(ResourceEntry<TResource> entry, out OperationOutcome result) where TResource : Resource, new()
         {
-            if (entry == null) throw new ArgumentNullException("entry");
-            if (entry.Resource == null) throw new ArgumentException("Entry does not contain a Resource to validate", "entry");
-            if (entry.Id == null) throw new ArgumentException("Entry needs a non-null entry.id to use for validation", "entry");
+            if (entry == null) throw Error.ArgumentNull("entry");
+            if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to validate");
+            if (entry.Id == null) throw Error.Argument("enry", "Entry needs a non-null entry.id to use for validation");
 
             var id = new ResourceIdentity(entry.Id);
-            var url = new RestUrl(_endpoint).Validate(id.Collection, id.Id);
-            result = doValidate(url, entry.Resource, entry.Tags);
+            var url = new RestUrl(Endpoint).Validate(id.Collection, id.Id);
+            result = doValidate(url.Uri, entry.Resource, entry.Tags);
 
             return result == null || !result.Success();
         }
 
 
-        private OperationOutcome doValidate(RestUrl url, object data, IEnumerable<Tag> tags)
+        /// <summary>
+        /// Validates whether the contents of the resource would be acceptable as a create
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="resource">The entry containing the Resource data to use for the validation</param>
+        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
+        /// <param name="tags">Optional list of tags to attach to the resource</param>
+        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
+        /// failures occur.</returns>
+        public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags = null) where TResource : Resource, new()
         {
-            var req = prepareRequest("POST", url.Uri, data, tags, expectBundleResponse: false);
+            if (resource == null) throw new ArgumentNullException("resource");
+
+            var collection = typeof(Resource).GetCollectionName();
+            var url = new RestUrl(_endpoint).Validate(collection);
+
+            result = doValidate(url.Uri, resource, tags);
+            return result == null || !result.Success();
+        }
+
+
+        private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Tag> tags)
+        {
+            var req = new FhirRequest(url, "POST");
+
+            req.SetBody(data, PreferredFormat);
+            if(tags != null) req.SetTagsInHeader(tags);
 
             try
             {
-                doRequest(req, HttpStatusCode.OK, () => true);
+                doRequest(req, HttpStatusCode.OK, resp => true);
                 return null;
             }
             catch (FhirOperationException foe)
@@ -424,44 +491,88 @@ namespace Hl7.Fhir.Rest
             }
         }
 
+               
+        
         /// <summary>
-        /// Validates whether the contents of the resource would be acceptable as a create
+        /// Search for Resources of a certain type that match the given criteria
         /// </summary>
-        /// <typeparam name="TResource"></typeparam>
-        /// <param name="resource">The entry containing the Resource data to use for the validation</param>
-        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
-        /// <param name="tags">Optional list of tags to attach to the resource</param>
-        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
-        /// failures occur.</returns>
-        public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags=null) where TResource : Resource, new()
+        /// <param name="criteria">Optional. The search parameters to filter the resources on</param>
+        /// <param name="sort">Optional. The element to sort on</param>
+        /// <param name="includes">Optional. A list of include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <typeparam name="TResource">The type of resource to list</typeparam>
+        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+        /// of all resources of the given Resource type</remarks>
+        public Bundle Search<TResource>(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        {                   
+            return internalSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes,pageSize);
+        }
+
+        /// <summary>
+        /// Search for Resources of a certain type that match the given criteria
+        /// </summary>
+        /// <param name="resource">The type of resource to search for</param>
+        /// <param name="criteria">Optional. The search parameters to filter the resources on</param>
+        /// <param name="sort">Optional. The element to sort on</param>
+        /// <param name="includes">Optional. A list of include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <typeparam name="TResource">The type of resource to list</typeparam>
+        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        /// <remarks>Except for 'resource', all parameters are optional, leaving all parameters empty will return an unfiltered 
+        /// list of all resources of the given Resource type</remarks>
+        public Bundle Search(string resource, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
+            if (resource == null) throw Error.ArgumentNull("resource");
 
-            var collection = typeof(Resource).GetCollectionName();
-            var url = new RestUrl(_endpoint).Validate(collection);
+            return internalSearch(resource, criteria, sort, includes, pageSize);
+        }
 
-            result = doValidate(url, resource, tags);
-            return result == null || !result.Success();
+        public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? pageSize = null)
+        {
+            return internalSearch(null, criteria,sort,includes,pageSize);
+        }
+
+        /// <summary>
+        /// Search for resources based on a resource's id.
+        /// </summary>
+        /// <param name="id">The id of the resource to search for</param>
+        /// <param name="includes">Zero or more include paths</param>
+        /// <typeparam name="TResource">The type of resource to search for</typeparam>
+        /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
+        /// Bundle if the resource wasn't found.</returns>
+        /// <remarks>This operation is similar to Read, but additionally,
+        /// it is possible to specify include parameters to include resources in the bundle that the
+        /// returned resource refers to.</remarks>
+        public Bundle SearchById<TResource>(string id, string sort=null, string[] includes=null, int? pageSize=null) where TResource : Resource, new()
+        {
+            if (id == null) throw Error.ArgumentNull("id");
+
+            return SearchById(typeof(TResource).GetCollectionName(), id, sort, includes, pageSize);
+        }
+
+        public Bundle SearchById(string resource, string id, string sort = null, string[] includes = null, int? pageSize = null)
+        {
+            if (resource == null) throw Error.ArgumentNull("resource");
+            if (id == null) throw Error.ArgumentNull("id");
+
+            return internalSearch(resource, new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes, pageSize);
         }
 
 
-               
-        
-        private Bundle doSearch(string collection=null, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? count = null)
+        private Bundle internalSearch(string collection = null, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
-            assertEndpoint();
-
             RestUrl url = null;
 
             if (collection != null)
                 // Since there is confusion between using /resource/?param, /resource?param, use
                 // the /resource/search?param instead
-                url = new RestUrl(_endpoint).Search(collection);
+                url = new RestUrl(Endpoint).Search(collection);
             else
-                url = new RestUrl(_endpoint);
+                url = new RestUrl(Endpoint);
 
-            if( count.HasValue )
-                url.AddParam(HttpUtil.SEARCH_PARAM_COUNT, count.Value.ToString());
+            if (pageSize.HasValue)
+                url.AddParam(HttpUtil.SEARCH_PARAM_COUNT, pageSize.Value.ToString());
 
             if (sort != null)
                 url.AddParam(HttpUtil.SEARCH_PARAM_SORT, sort);
@@ -478,56 +589,10 @@ namespace Hl7.Fhir.Rest
                     url.AddParam(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
             }
 
-            return FetchBundle(url.Uri);
+            return fetchBundle(url.Uri);
         }
 
 
-        /// <summary>
-        /// Search for Resources at a given endpoint
-        /// </summary>
-        /// <param name="endpoint">The endpoint where the search request is sent.</param>
-        /// <param name="count">The maximum number of resources to return</param>
-        /// <param name="includes">Zero or more include paths</param>
-        /// <typeparam name="TResource">The type of resource to list</typeparam>
-        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-        /// <remarks>The endpoint may be a FHIR server for server-wide search or a collection endpoint 
-        /// (i.e. /patient) for searching within a certain type of resources. This operation supports include 
-        /// parameters to include resources in the bundle that the returned resources refer to.</remarks>
-        public Bundle Search<TResource>(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null) where TResource : Resource, new()
-        {                   
-            return Search(typeof(TResource).GetCollectionName(), criteria, sort, includes,count);
-        }
-
-        public Bundle Search(string resource, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? count = null)
-        {
-            return doSearch(resource, criteria, sort, includes, count);
-        }
-
-        public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? count = null)
-        {
-            return doSearch(null, criteria,sort,includes,count);
-        }
-
-        /// <summary>
-        /// Search for resources based on a resource's id.
-        /// </summary>
-        /// <param name="id">The id of the resource to search for</param>
-        /// <param name="includes">Zero or more include paths</param>
-        /// <typeparam name="TResource">The type of resource to search for</typeparam>
-        /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
-        /// Bundle if the resource wasn't found.</returns>
-        /// <remarks>This operation is similar to Read, but additionally,
-        /// it is possible to specify include parameters to include resources in the bundle that the
-        /// returned resource refers to.</remarks>
-        public Bundle SearchById<TResource>(string id, string sort=null, string[] includes=null, int? count=null) where TResource : Resource, new()
-        {
-            return SearchById(typeof(TResource).GetCollectionName(), id, sort, includes, count);
-        }
-
-        public Bundle SearchById(string resource, string id, string sort = null, string[] includes = null, int? count = null)
-        {
-            return doSearch(resource, new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes, count);
-        }
 
         /// <summary>
         /// Uses the FHIR paging mechanism to go navigate around a series of paged result Bundles
@@ -538,6 +603,7 @@ namespace Hl7.Fhir.Rest
         /// the server did not have more results in that direction.</returns>
         public Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next)
         {
+            if (current == null) throw Error.ArgumentNull("current");
             if (current.Links == null) return null;
 
             Uri continueAt = null;
@@ -555,147 +621,186 @@ namespace Hl7.Fhir.Rest
             }
 
             if (continueAt != null)
-                return FetchBundle(continueAt);
+                return fetchBundle(continueAt);
             else
                 return null;
         }
 
 
         /// <summary>
-        /// Send a batched of creates, updates and deletes to the server
+        /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
-        /// <param name="batch">The contents of the batch to be sent</param>
-        /// <returns>A bundle as returned by the server after it has processed the updates in the batch, or null
+        /// <param name="bundle">The bundled creates, updates and delted</param>
+        /// <returns>A bundle as returned by the server after it has processed the transaction, or null
         /// if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
         {
             if (bundle == null) throw new ArgumentNullException("bundle");
-            assertEndpoint();
 
-            var req = prepareRequest("POST", _endpoint, bundle, null, expectBundleResponse: true);
-            return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
+            var req = new FhirRequest(Endpoint, "POST");
+            req.SetBody(bundle, PreferredFormat);
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
-
-        public void DeliverToDocument(Bundle bundle)
-        {
-            if (bundle == null) throw Error.ArgumentNull("bundle");
-            assertEndpoint();
-
-            var url = new RestUrl(_endpoint).AddPath("Document");
-
-            if (bundle.GetBundleType() == BundleType.Document)
-            {
-                // Documents are merely "accepted"
-                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: false);
-                doRequest(req, HttpStatusCode.NoContent, () => true );
-            }         
-            else
-            {
-                throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
-            }            
-        }
 
         /// <summary>
-        /// Send a Bundle to a path on the server
+        /// Send a document bundle
         /// </summary>
-        /// <param name="bundle">The contents of the Bundle to be sent</param>
-        /// <param name="path">A path on the server to send the Bundle to</param>
-        /// <returns>True if the bundle was successfully delivered, false otherwise</returns>
-        /// <remarks>This method differs from Batch, in that it can be used to deliver a Bundle
-        /// at the endpoint for messages, documents or binaries, instead of the batched update
-        /// REST endpoint.</remarks>
+        /// <param name="bundle">A bundle containing a Document</param>
+        /// <remarks>The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.</remarks>
+        public void Document(Bundle bundle)
+        {
+            if (bundle == null) throw Error.ArgumentNull("bundle");
+            if(bundle.GetBundleType() != BundleType.Document)
+                throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
+
+            var url = new RestUrl(Endpoint).ToDocument();
+
+            // Documents are merely "accepted"
+            var req = new FhirRequest(url.Uri, "POST");
+            req.SetBody(bundle, PreferredFormat);
+            doRequest(req, HttpStatusCode.NoContent, resp => true );
+        }
+
+
+        /// <summary>
+        /// Send a Document or Message bundle to a server's Mailbox
+        /// </summary>
+        /// <param name="bundle">The Document or Message be sent</param>
+        /// <returns>A return message as a Bundle</returns>
+        /// <remarks>The bundle must declare it is a Document or Message, use Bundle.SetBundleType() to do so.</remarks>       
         public Bundle DeliverToMailbox(Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull("bundle");
-            assertEndpoint();
-
-            var url = new RestUrl(_endpoint).AddPath("Mailbox");
-
-            if (bundle.GetBundleType() == BundleType.Document)
-            {
-                // Documents are merely "accepted"
-                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: false);
-                //return doRequest(req, HttpStatusCode.NoContent, () => (Bundle)null);
-                return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
-            }
-            else if (bundle.GetBundleType() == BundleType.Message)
-            {
-                // Messages, including Queries, expect a return message
-                var req = prepareRequest("POST", url.Uri, bundle, null, expectBundleResponse: true);
-                return doRequest(req, HttpStatusCode.OK, () => bundleFromResponse());
-            }
-            else
-            {
+            if( bundle.GetBundleType() != BundleType.Document && bundle.GetBundleType() != BundleType.Message)
                 throw Error.Argument("bundle", "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
-            }            
+
+            var url = new RestUrl(_endpoint).ToMailbox();
+
+            var req = new FhirRequest(url.Uri, "POST");
+            req.SetBody(bundle, PreferredFormat);
+
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
 
-        public IEnumerable<Tag> GetTags()
+        /// <summary>
+        /// Get all tags known by the FHIR server
+        /// </summary>
+        /// <returns>A list of Tags</returns>
+        public IEnumerable<Tag> WholeSystemTags()
         {
-            assertEndpoint();
-
-            var rl = new RestUrl(_endpoint).Tags();
-
-            var req = prepareRequest("GET", rl.Uri, null, null, expectBundleResponse: false);
-            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
-
-            return result.Category;
+            return internalGetTags(null, null, null);
         }
 
 
-        public IEnumerable<Tag> GetTags<TResource>(string id = null, string version = null) where TResource : Resource, new()
+        /// <summary>
+        /// Get all tags known by the FHIR server for a given resource type
+        /// </summary>
+        /// <returns>A list of all Tags present on the server</returns>
+        public IEnumerable<Tag> TypeTags<TResource>() where TResource : Resource, new()
         {
-            assertEndpoint();
-            if (version != null && id == null) throw new ArgumentException("Must specify an id if you specify a version");
+            return internalGetTags(typeof(TResource).GetCollectionName(), null, null);
+        }
 
-            RestUrl api;
-            string collection = typeof(TResource).GetCollectionName();
-            if (id == null)
-                api = new RestUrl(_endpoint).CollectionTags(collection);
+
+        /// <summary>
+        /// Get all tags known by the FHIR server for a given resource type
+        /// </summary>
+        /// <returns>A list of Tags occuring for the given resource type</returns>
+        public IEnumerable<Tag> TypeTags(string type)
+        {
+            if (type == null) throw Error.ArgumentNull("type");
+
+            return internalGetTags(type, null, null);
+        }
+
+
+        /// <summary>
+        /// Get the tags for a resource (or resource version) at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to get the tags for. This can be a Resource id url or a version-specific
+        /// Resource url.</param>
+        /// <returns>A list of Tags for the resource instance</returns>
+        public IEnumerable<Tag> Tags(Uri location)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+
+            var collection = getCollectionFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
+
+            return internalGetTags(collection, id, version);
+        }
+
+
+        private IEnumerable<Tag> internalGetTags(string collection, string id, string version)
+        {
+            RestUrl location = null;
+
+            if(collection == null)
+                location = location.ServerTags();
             else
-                api = new RestUrl(_endpoint).ResourceTags(collection, id, version);
+            {
+                if(id == null)
+                    location = location.CollectionTags(collection);
+                else
+                    location = location.ResourceTags(collection,id,version);
+            }
 
-            var req = prepareRequest("GET", api.Uri, null, null, expectBundleResponse: false);
-            var result = doRequest(req, HttpStatusCode.OK, () => tagListFromResponse());
+            var req = new FhirRequest(location.Uri, "GET");
+            var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
             return result.Category;
         }
 
 
-        public void AffixTags<TResource>(IEnumerable<Tag> tags, string id, string version=null) where TResource : Resource, new()
+        /// <summary>
+        /// Add one or more tags to a resource at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific
+        /// <param name="tags"></param>
+        /// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
+        public void AffixTags(Uri location, IEnumerable<Tag> tags)
         {
-            if (id == null) throw new ArgumentNullException("id");
-            if (tags == null) throw new ArgumentNullException("tags");
-            assertEndpoint();
+            if (location == null) throw Error.ArgumentNull("location");
+            if (tags == null) throw Error.ArgumentNull("tags");
 
-            var collection = typeof(TResource).GetCollectionName();
-            var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
+            var collection = getCollectionFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
 
-            var req = prepareRequest("POST", rl.Uri, new TagList(tags), null, expectBundleResponse: false); 
-            doRequest(req, HttpStatusCode.OK, () => true);
+            var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
+
+            var req = new FhirRequest(rl.Uri,"POST");
+            req.SetBody(new TagList(tags), PreferredFormat);
+            
+            doRequest(req, HttpStatusCode.OK, resp => true);
         }
 
 
-
-        public void DeleteTags<TResource>(IEnumerable<Tag> tags, string id, string version = null) where TResource : Resource, new()
+        /// <summary>
+        /// Remove one or more tags from a resource at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific
+        /// <param name="tags"></param>
+        /// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
+        public void DeleteTags(Uri location, IEnumerable<Tag> tags)
         {
-            if (id == null) throw new ArgumentNullException("id");
-            if (tags == null) throw new ArgumentNullException("tags");
-            assertEndpoint();
+            if (location == null) throw Error.ArgumentNull("location");
+            if (tags == null) throw Error.ArgumentNull("tags");
 
-            var collection = typeof(TResource).GetCollectionName();
-            var rl = new RestUrl(_endpoint).ResourceTags(collection, id, version);
+            var collection = getCollectionFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
 
-            var req = prepareRequest("DELETE", rl.Uri, new TagList(tags), null, expectBundleResponse: false);
-            doRequest(req, HttpStatusCode.NoContent, () => true);
+            var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
+
+            var req = new FhirRequest(rl.Uri, "POST");
+            req.SetBody(new TagList(tags), PreferredFormat);
+
+            doRequest(req, HttpStatusCode.OK, resp => true);
         }
 
-        public ResourceFormat PreferredFormat { get; set; }
-        public bool UseFormatParam { get; set; }
-        
-   
-        public FhirResponse LastResponseDetails { get; private set; }
 
         private T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess)
         {
@@ -703,8 +808,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse,T> onSuccess)
+        private T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse,T> onSuccess)
         {
+            request.UseFormatParameter = this.UseFormatParam;
             var response = request.GetResponse(PreferredFormat);
 
             if (success.Contains(response.Result))

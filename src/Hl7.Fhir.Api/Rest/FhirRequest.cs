@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Rest
         private byte[] _body = null;
         private string _contentType = null;
         private string _categoryHeader = null;
+        private string _contentLocation = null;
 
         public void SetBody(Resource resource, ResourceFormat format)
         {
@@ -79,6 +80,10 @@ namespace Hl7.Fhir.Rest
             _categoryHeader = HttpUtil.BuildCategoryHeader(tags);            
         }
 
+        public void SetContentLocation(Uri location)
+        {
+            _contentLocation = location.ToString();
+        }
 
         public FhirResponse GetResponse(ResourceFormat? acceptFormat)
         {
@@ -96,6 +101,7 @@ namespace Hl7.Fhir.Rest
             {
                 request.WriteBody(_body);
                 request.ContentType = _contentType;
+                if(_contentLocation != null) request.Headers[HttpRequestHeader.ContentLocation] = _contentLocation;
             }
 
             if(_categoryHeader != null) request.Headers[HttpUtil.CATEGORY] = _categoryHeader;

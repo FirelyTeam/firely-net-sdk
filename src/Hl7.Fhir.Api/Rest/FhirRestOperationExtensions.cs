@@ -52,7 +52,18 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(collection, RestOperation.SEARCH);
         }
 
-        public static RestUrl Tags(this RestUrl url)
+        public static RestUrl ToMailbox(this RestUrl url)
+        {
+            return new RestUrl(url).AddPath(RestOperation.MAILBOX);
+        }
+
+        public static RestUrl ToDocument(this RestUrl url)
+        {
+            return new RestUrl(url).AddPath(RestOperation.DOCUMENT);
+        }
+
+
+        public static RestUrl ServerTags(this RestUrl url)
         {
             return new RestUrl(url).AddPath(RestOperation.TAGS);
         }
@@ -69,5 +80,14 @@ namespace Hl7.Fhir.Rest
             else
                 return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
         }
+
+        public static RestUrl DeleteResourceTags(this RestUrl url, string collection, string id, string vid = null)
+        {
+            if (vid == null)
+                return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS, RestOperation.DELETE);
+            else
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS, RestOperation.DELETE);
+        }
+
     }
 }

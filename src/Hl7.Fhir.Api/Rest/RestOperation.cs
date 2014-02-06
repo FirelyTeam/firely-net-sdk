@@ -12,5 +12,10 @@ namespace Hl7.Fhir.Rest
         public const string SEARCH = "_search";
         public const string VALIDATE = "_validate";
         public const string TAGS = "_tags";
+        public const string DELETE = "_delete";
+
+        public const string MAILBOX = "Mailbox";
+        public const string DOCUMENT = "Document";
+
     }
 }
