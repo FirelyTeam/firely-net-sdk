@@ -37,22 +37,20 @@ var newEntry = client.Refresh(oldEntry);
 This call will go to the server and fetch the latest version and metadata of the Resource as pointed to by the `Id` property in the ResourceEntry passed as the parameter.
 
 ### Getting an existing Resource
-There are two ways to retrieve an existing Resource from a FHIR endpoint:
-* by means of its web address (url) - you may have a previously stored a reference to a Resource, or you have found its address in the ResourceReference to another Resource (e.g. `Observation.subject.reference`). 
-* using its logical id and version number. You don't have an actual url, but have a resource's logical id (as found normally found in the url) and optionally its version identifier.
+To read the data for a given Resource instance from a server, you'll need it's web address (url). You may have previously stored this reference, or you have found its address in a ResourceReference (e.g. `Observation.subject.reference`).
 
 The `Read` operation on the FhirClient has two overloads to covers both cases. Furthermore, it accepts both relative paths and absolute paths (as long as they are within the endpoint passed to the constructor of the FhirClient). As with the other operations, Read returns a typed ResourceEntry rather than the Resource itself:
 
 ``` csharp
 // Read the current version of a Resource
-var patEntryA = client.Read<Patient>("http://spark.furore.com/fhir/Patient/31");
-var patEntryA = client.Read<Patient>("Patient/31");
-var patEntryA = client.Read<Patient>("31");
+var location = new Uri("http://spark.furore.com/fhir/Patient/31");
+var patEntryA = client.Read<Patient>(location);
+var patEntryA = client.Read<Patient>(new Uri("Patient/31"));
 
 // Read a specific version of a Resource
-var patEntryB = client.Read<Patient>("http://spark.furore.com/fhir/Patient/32/_history/4");
-var patEntryB = client.Read<Patient>("Patient/32/_history/4");
-var patEntryB = client.Read<Patient>("32", "4");
+var locationB = new Uri("http://spark.furore.com/fhir/Patient/32/_history/4");
+var patEntryB = client.Read<Patient>(locationB);
+var patEntryB = client.Read<Patient>(new Uri("Patient/32/_history/4"));
 ```
 
 Note that Read can be used to get the most recent version of a Resource as well as a specific version, and thus covers the two 'logical' REST operations `read` and `vread`.
@@ -61,7 +59,7 @@ Note that Read can be used to get the most recent version of a Resource as well 
 Once you have retrieved a Resource, you may edit its contents and send it back to the server. This is done using the `Update` operation. It takes the ResourceEntry previously retrieved as a parameter:
 
 ```csharp
-var patEntry = client.Read<Patient>("31");
+var patEntryA = client.Read<Patient>(location);
 // Add a name to the patient, and update
 patEntry.Resource.Name.Add(HumanName.ForFamily("Kramer").WithGiven("Ewout"));
 client.Update(patEntry);
@@ -70,12 +68,14 @@ client.Update(patEntry);
 There's always a change that between retrieving the resource and sending an update, someone else has updated the resource as well. Servers supporting version-aware updates may refuse your update in this case and return a HTTP status code 409 (Conflict), which causes the `Update` operation to throw a `FhirOperationException` with the same status code.  
 
 ### Deleting a Resource
-The `Delete` operation on the FhirClient deletes a resource from the server. It is up to the server to decide whether the resource is actually removed from storage, or whether previous version are still available for retrieval. The `Delete` operation has multiple overloads to allow you to delete based on an id, url or a ResourceEntry:
+The `Delete` operation on the FhirClient deletes a resource from the server. It is up to the server to decide whether the resource is actually removed from storage, or whether previous version are still available for retrieval. The `Delete` operation has multiple overloads to allow you to delete based on an url or a ResourceEntry:
 
 ```csharp
+var location = new Uri("http://spark.furore.com/fhir/Patient/34");
+client.Delete(location);
+
+// You may also delete based on an existing ResourceEntry
 client.Delete(patEntry);
-client.Delete<Patient>("34");
-client.Delete("http://spark.furore.com/fhir/Patient/34");
 ```
 
 The `Delete` operation will fail and throw a `FhirOperationException` if the Resource was already deleted or if the Resource did not exist before deletion. 
