@@ -8,9 +8,19 @@ namespace Hl7.Fhir.Search
 {
     public class Criterium
     {
+        public const string MISSINGMODIF = "missing";
+        public const string MISSINGTRUE = "true";
+        public const string MISSINGFALSE = "false";
+
         public string ParamName { get; set; }
 
-        public Operator Type { get; set; }
+        private Operator _type = Operator.EQ;
+        public Operator Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
+
         public string Modifier { get; set; }
 
         public Expression Operand { get; set; }
@@ -21,12 +31,85 @@ namespace Hl7.Fhir.Search
             if (key == null) throw Error.ArgumentNull("key");
             if (value == null) throw Error.ArgumentNull("value");
 
-            var compVal = findComparator(value);
+            string modifier = null;
+            Operator type = Operator.EQ;
 
-            var comp = compVal.Item1;
-            var expression = compVal.Item2;
+            // First, find modifiers
+            var lIndex = key.LastIndexOf(':');
 
-            return new Criterium() { ParamName = key, Type = comp, Operand = new UntypedValue(expression) };
+            if (lIndex != -1)
+            {
+                modifier = key.Substring(lIndex+1);
+                key = key.Substring(0,lIndex);
+            }
+
+            // :missing modifier is actually not a real modifier and is turned into
+            // either a ISNULL or NOTNULL operator
+            if (modifier == MISSINGMODIF)
+            {
+                modifier = null;
+
+                if (value == MISSINGTRUE)
+                    type = Operator.ISNULL;
+                else if (value == MISSINGFALSE)
+                    type = Operator.NOTNULL;
+                else
+                    throw Error.Argument("value", "For the :missing modifier, only values 'true' and 'false' are allowed");
+
+                value = null;
+            }
+
+            // else see if the value starts with a comparator
+            else
+            {
+                var compVal = findComparator(value);
+
+                type = compVal.Item1;
+                value = compVal.Item2;
+            }
+
+            // Construct the new criterium based on the parsed values
+            return new Criterium() 
+            {   
+                ParamName = key, Type = type, Modifier = modifier, 
+                Operand = value != null ? new UntypedValue(value) :null 
+            };
+        }
+
+
+        public string BuildKey()
+        {
+            var result = ParamName;
+
+            // Turn ISNULL and NOTNULL operators into the :missing modifier
+            if (Type == Operator.ISNULL || Type == Operator.NOTNULL) return result + ":missing";
+
+            if (!String.IsNullOrEmpty(Modifier)) result = result + ":" + Modifier;
+
+            return result;
+        }
+
+        public string BuildValue()
+        {
+            // Turn ISNULL and NOTNULL operators into either true/or false to match the :missing modifier
+            if (Type == Operator.ISNULL) return "true";
+            if (Type == Operator.NOTNULL) return "false";
+
+
+            string value = Operand.ToString();
+
+            // Add comparator if we have one
+            switch (Type)
+            {
+                case Operator.APPROX: return "~" + value;
+                case Operator.EQ: return value;
+                case Operator.GT: return ">" + value;
+                case Operator.GTE: return ">=" + value;
+                case Operator.LT: return "<" + value;
+                case Operator.LTE: return "<=" + value;
+                default:
+                    throw Error.NotImplemented("Operator of type '{0}' is not supported",Type.ToString());
+            }
         }
 
         private static Tuple<Operator, string> findComparator(string value)

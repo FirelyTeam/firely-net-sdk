@@ -20,19 +20,60 @@ namespace Hl7.Fhir.Tests
         {
             var crit = Criterium.Parse("paramX", "18");
             Assert.AreEqual("paramX", crit.ParamName);
+            Assert.IsNull(crit.Modifier);
             Assert.AreEqual("18", crit.Operand.ToString());
             Assert.AreEqual(Operator.EQ, crit.Type);
 
             crit = Criterium.Parse("paramX", ">18");
             Assert.AreEqual("paramX", crit.ParamName);
+            Assert.IsNull(crit.Modifier);
             Assert.AreEqual("18", crit.Operand.ToString());
             Assert.AreEqual(Operator.GT, crit.Type);
 
-            crit = Criterium.Parse("paramX", "~18");
+            crit = Criterium.Parse("paramX:modif1", "~18");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.AreEqual("18", crit.Operand.ToString());
+            Assert.AreEqual("modif1", crit.Modifier);
             Assert.AreEqual(Operator.APPROX, crit.Type);
+
+            crit = Criterium.Parse("paramX:missing", "true");
+            Assert.AreEqual("paramX", crit.ParamName);
+            Assert.IsNull(crit.Operand);
+            Assert.IsNull(crit.Modifier);
+            Assert.AreEqual(Operator.ISNULL, crit.Type);
+
+            crit = Criterium.Parse("paramX:missing", "false");
+            Assert.AreEqual("paramX", crit.ParamName);
+            Assert.IsNull(crit.Operand);
+            Assert.IsNull(crit.Modifier);
+            Assert.AreEqual(Operator.NOTNULL, crit.Type);
         }
+
+
+        [TestMethod]
+        public void SerializeCriterium()
+        {
+            var crit = new Criterium
+            {  ParamName = "paramX", Modifier = "modif1", Operand = new NumberValue(18), Type = Operator.GTE };
+            Assert.AreEqual("paramX:modif1", crit.BuildKey());
+            Assert.AreEqual(">=18", crit.BuildValue());
+
+            crit = new Criterium
+            { ParamName = "paramX", Operand = new NumberValue(18) };
+            Assert.AreEqual("paramX", crit.BuildKey());
+            Assert.AreEqual("18", crit.BuildValue());
+
+            crit = new Criterium
+            { ParamName = "paramX",Type = Operator.ISNULL };
+            Assert.AreEqual("paramX:missing", crit.BuildKey());
+            Assert.AreEqual("true", crit.BuildValue());
+
+            crit = new Criterium
+            { ParamName = "paramX", Type = Operator.NOTNULL };
+            Assert.AreEqual("paramX:missing", crit.BuildKey());
+            Assert.AreEqual("false", crit.BuildValue());
+        }
+
 
         [TestMethod]
         public void HandleNumberParam()
@@ -67,6 +108,24 @@ namespace Hl7.Fhir.Tests
 
 
         [TestMethod]
+        public void HandleStringParam()
+        {
+            var p1 = new StringValue("Hello, world");
+            Assert.AreEqual(@"Hello\, world", p1.ToString());
+
+            var p2 = new StringValue("Pay $300|Pay $100|");
+            Assert.AreEqual(@"Pay \$300\|Pay \$100\|", p2.ToString());
+
+            var p3 = StringValue.Parse(@"Pay \$300\|Pay \$100\|");
+            Assert.AreEqual("Pay $300|Pay $100|", p3.Value);
+
+            var crit = Criterium.Parse("paramX", @"Hello\, world");
+            var p4 = ((UntypedValue)crit.Operand).AsStringValue();
+            Assert.AreEqual("Hello, world", p4.Value);
+        }
+
+
+        [TestMethod]
         public void HandleTokenParam()
         {
             var p1 = new TokenValue("NOK", "http://somewhere.nl/codes");
@@ -75,39 +134,87 @@ namespace Hl7.Fhir.Tests
             var p2 = new TokenValue("y|n", "http://some|where.nl/codes");
             Assert.AreEqual(@"http://some\|where.nl/codes|y\|n", p2.ToString());
 
-            var p3 = new TokenValue("NOK", withNamespace: false);
+            var p3 = new TokenValue("NOK", matchAnyNamespace: true);
             Assert.AreEqual("NOK", p3.ToString());
 
-            var p4 = new TokenValue("NOK", withNamespace: true);
+            var p4 = new TokenValue("NOK", matchAnyNamespace: false);
             Assert.AreEqual("|NOK", p4.ToString());
 
-            //var p4 = TokenParamValue.FromQueryValue("http://somewhere.nl/codes!NOK");
-            //Assert.AreEqual("http://somewhere.nl/codes", p4.Namespace);
-            //Assert.AreEqual("NOK", p4.Value);
-            //Assert.IsTrue(p4.NamespaceSensitive);
+            var p5 = TokenValue.Parse("http://somewhere.nl/codes|NOK");
+            Assert.AreEqual("http://somewhere.nl/codes", p5.Namespace);
+            Assert.AreEqual("NOK", p5.Value);
+            Assert.IsFalse(p4.AnyNamespace);
 
-            //var p5 = TokenParamValue.FromQueryValue("!NOK");
-            //Assert.AreEqual(null, p5.Namespace);
-            //Assert.AreEqual("NOK", p5.Value);
-            //Assert.IsTrue(p5.NamespaceSensitive);
+            var p6 = TokenValue.Parse(@"http://some\|where.nl/codes|y\|n");
+            Assert.AreEqual(@"http://some|where.nl/codes", p6.Namespace);
+            Assert.AreEqual("y|n", p6.Value);
+            Assert.IsFalse(p6.AnyNamespace);
 
-            //var p6 = TokenParamValue.FromQueryValue("NOK");
-            //Assert.AreEqual(null, p6.Namespace);
-            //Assert.AreEqual("NOK", p6.Value);
-            //Assert.IsFalse(p6.NamespaceSensitive);
+            var p7 = TokenValue.Parse("|NOK");
+            Assert.AreEqual(null, p7.Namespace);
+            Assert.AreEqual("NOK", p7.Value);
+            Assert.IsFalse(p7.AnyNamespace);
+
+            var p8 = TokenValue.Parse("NOK");
+            Assert.AreEqual(null, p8.Namespace);
+            Assert.AreEqual("NOK", p8.Value);
+            Assert.IsTrue(p8.AnyNamespace);
+
+            var crit = Criterium.Parse("paramX", @"|NOK");
+            var p9 = ((UntypedValue)crit.Operand).AsTokenValue();
+            Assert.AreEqual("NOK", p9.Value);
+            Assert.IsFalse(p9.AnyNamespace);
         }
 
 
-        //[TestMethod]
-        //public void HandleReferenceParam()
-        //{
-        //    var p1 = new ReferenceParamValue("patient", "2");
-        //    Assert.AreEqual("patient/2", p1.QueryValue);
+        [TestMethod]
+        public void HandleQuantityParam()
+        {
+            var p1 = new QuantityValue(3.141M, "http://unitsofmeasure.org", "mg");
+            Assert.AreEqual("3.141|http://unitsofmeasure.org|mg", p1.ToString());
 
-        //    var p2 = ReferenceParamValue.FromQueryValue("organization/34");
-        //    Assert.AreEqual("34", p2.Id);
-        //    Assert.AreEqual("organization", p2.ResourceType);
-        //}
+            var p2 = new QuantityValue(3.141M, "mg");
+            Assert.AreEqual("3.141||mg", p2.ToString());
+
+            var p3 = new QuantityValue(3.141M, "http://system.com/id$4", "$/d");
+            Assert.AreEqual(@"3.141|http://system.com/id\$4|\$/d", p3.ToString());
+
+            var p4 = QuantityValue.Parse("3.141|http://unitsofmeasure.org|mg");
+            Assert.AreEqual(3.141M, p4.Number);
+            Assert.AreEqual("http://unitsofmeasure.org", p4.Namespace);
+            Assert.AreEqual("mg", p4.Unit);
+
+            var p5 = QuantityValue.Parse("3.141||mg");
+            Assert.AreEqual(3.141M, p5.Number);
+            Assert.IsNull(p5.Namespace);
+            Assert.AreEqual("mg", p5.Unit);
+
+            var p6 = QuantityValue.Parse(@"3.141|http://system.com/id\$4|\$/d");
+            Assert.AreEqual(3.141M, p6.Number);
+            Assert.AreEqual("http://system.com/id$4",p6.Namespace);
+            Assert.AreEqual("$/d", p6.Unit);
+
+            var crit = Criterium.Parse("paramX", @"3.14||mg");
+            var p7 = ((UntypedValue)crit.Operand).AsQuantityValue();
+            Assert.AreEqual(3.14M, p7.Number);
+            Assert.IsNull(p7.Namespace);
+            Assert.AreEqual("mg", p7.Unit);
+        }
+
+
+        [TestMethod]
+        public void HandleReferenceParam()
+        {
+            var p1 = new ReferenceValue("2");
+            Assert.AreEqual("2", p1.Value);
+
+            var p2 = new ReferenceValue("http://server.org/fhir/Patient/1");
+            Assert.AreEqual("http://server.org/fhir/Patient/1", p2.Value);
+
+            var crit = Criterium.Parse("paramX", @"http://server.org/\$4/fhir/Patient/1");
+            var p3 = ((UntypedValue)crit.Operand).AsReferenceValue();
+            Assert.AreEqual("http://server.org/$4/fhir/Patient/1", p3.Value);
+        }
 
 
         //[TestMethod]

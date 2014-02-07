@@ -8,32 +8,31 @@ using System.Net;
 using System.Text;
 
 namespace Hl7.Fhir.Search
-{
-   
+{  
     public class TokenValue : Expression
     {
         public string Namespace { get; private set; }
 
         public string Value { get; private set; }
 
-        public bool WithNamespace { get; private set; }
+        public bool AnyNamespace { get; private set; }
 
-        public TokenValue(string value, bool withNamespace = false)
+        public TokenValue(string value, bool matchAnyNamespace)
         {
             Value = value;
-            WithNamespace = withNamespace;
+            AnyNamespace = matchAnyNamespace;
         }
 
         public TokenValue(string value, string ns)
         {
             Value = value;
-            WithNamespace = true;
+            AnyNamespace = false;
             Namespace = ns;
         }
 
         public override string ToString()
         {
-            if (WithNamespace)
+            if (!AnyNamespace)
             {
                 var ns = Namespace ?? String.Empty;
                 return StringValue.EscapeString(ns) + "|" +
@@ -60,13 +59,13 @@ namespace Hl7.Fhir.Search
                     throw new FormatException("Token query parameters should at least specify a value after the '|'");
                 
                 if (pair[0] == String.Empty)
-                    return new TokenValue(pair[1], withNamespace: true);
+                    return new TokenValue(pair[1], matchAnyNamespace: false );
                 else
                     return new TokenValue(pair[1], pair[0]);
             }
             else
             {
-                return new TokenValue(pair[0], withNamespace: false);
+                return new TokenValue(pair[0], matchAnyNamespace: true);
             }            
         }     
     }

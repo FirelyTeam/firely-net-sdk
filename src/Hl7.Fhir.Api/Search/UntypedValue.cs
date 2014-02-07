@@ -43,9 +43,14 @@ namespace Hl7.Fhir.Search
             return TokenValue.Parse(Value);
         }
 
-        //public ReferenceParamValue AsReferenceValue()
-        //{
-        //    return ReferenceParamValue.FromQueryValue(Value);
-        //}
+        public QuantityValue AsQuantityValue()
+        {
+            return QuantityValue.Parse(Value);
+        }
+
+        public ReferenceValue AsReferenceValue()
+        {
+            return ReferenceValue.Parse(Value);
+        }
     }
 }
