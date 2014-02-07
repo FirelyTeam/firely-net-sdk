@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
-using Hl7.Fhir.Model;
 using System.Net;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Support.Search;
 using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Search;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests
@@ -132,13 +132,12 @@ namespace Hl7.Fhir.Tests
                         includes: new string[] { "DiagnosticReport.subject" });
             Assert.IsNotNull(result);
 
-            // Doesn't currently work on Grahames server           
-            //Assert.AreEqual(2, result.Entries.Count);  // should have subject too
+            Assert.AreEqual(2, result.Entries.Count);  // should have subject too
 
-            //Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-            //            typeof(DiagnosticReport).GetCollectionName()));
-            //Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-            //            typeof(Patient).GetCollectionName()));
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(DiagnosticReport).GetCollectionName()));
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(Patient).GetCollectionName()));
 
             result = client.Search<Patient>(new SearchParam[] 
                 {

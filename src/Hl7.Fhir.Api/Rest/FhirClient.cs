@@ -8,7 +8,7 @@ using Hl7.Fhir.Support;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using Hl7.Fhir.Support.Search;
+using Hl7.Fhir.Search;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Rest;
 using System.Threading;
@@ -504,9 +504,9 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
-        {                   
-            return internalSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes,pageSize);
+        public Bundle Search<TResource>(SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        {
+            return internalSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes, pageSize);
         }
 
         /// <summary>
@@ -528,9 +528,9 @@ namespace Hl7.Fhir.Rest
             return internalSearch(resource, criteria, sort, includes, pageSize);
         }
 
-        public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort=null, string[] includes = null, int? pageSize = null)
+        public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
-            return internalSearch(null, criteria,sort,includes,pageSize);
+            return internalSearch(null, criteria, sort, includes, pageSize);
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Bundle SearchById<TResource>(string id, string sort=null, string[] includes=null, int? pageSize=null) where TResource : Resource, new()
+        public Bundle SearchById<TResource>(string id, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
             if (id == null) throw Error.ArgumentNull("id");
 
@@ -591,7 +591,6 @@ namespace Hl7.Fhir.Rest
 
             return fetchBundle(url.Uri);
         }
-
 
 
         /// <summary>

@@ -38,34 +38,22 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Hl7.Fhir.Support.Search
+namespace Hl7.Fhir.Search
 {
-    public class StringParamValue : SearchParamValue
+    public class ChainedParamValue : ParamValue
     {
-        public string Value { get; internal set; }
+        public SearchParam Value { get; internal set; }
 
-        public StringParamValue(string value)
+        public ChainedParamValue(SearchParam value)
         {
             Value = value;
         }
-
-
-        internal static StringParamValue FromQueryValue(string queryValue)
-        {
-            if(!queryValue.StartsWith("\""))
-                throw new ArgumentException("String query parameters should start with a double quote \"");
-            if(!queryValue.EndsWith("\""))
-                throw new ArgumentException("String query parameters should end with a double quote \"");
-
-            return new StringParamValue(queryValue.Substring(1, queryValue.Length - 2));
-        }
-
 
         internal override string QueryValue
         {
             get
             {
-                return "\"" + Value + "\"";
+                throw new InvalidOperationException("Internal logic error: A ChainedParamValue has no renderable QueryValue");
             }
         }
     }

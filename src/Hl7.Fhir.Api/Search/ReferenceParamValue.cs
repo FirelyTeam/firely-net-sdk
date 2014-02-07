@@ -38,9 +38,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Hl7.Fhir.Support.Search
+namespace Hl7.Fhir.Search
 {
-    public class ReferenceParamValue : SearchParamValue
+    public class ReferenceParamValue : ParamValue
     {
         public string Id { get; internal set; }
 

@@ -11,12 +11,12 @@ namespace Hl7.Fhir.Rest
         public static Uri AddParam(this Uri uri, string name, params string[] values)
         {
             UriBuilder builder = new UriBuilder(uri);
-            ICollection<Tuple<string, string>> paramlist = RestUrl.SplitParams(builder.Query).ToList();
+            ICollection<Tuple<string, string>> paramlist = HttpUtil.SplitParams(builder.Query).ToList();
 
             foreach (string value in values)
                 paramlist.Add(new Tuple<string, string>(name, value));
 
-            builder.Query = RestUrl.JoinParams(paramlist);
+            builder.Query = HttpUtil.JoinParams(paramlist);
              
             return builder.Uri;
         }
