@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Search
 {  
-    public class TokenValue : Expression
+    public class TokenValue : ValueExpression
     {
         public string Namespace { get; private set; }
 

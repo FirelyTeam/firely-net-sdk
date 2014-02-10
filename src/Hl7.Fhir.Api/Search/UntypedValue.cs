@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Search
 {
-    public class UntypedValue : Expression
+    public class UntypedValue : ValueExpression
     {
         public string Value { get; private set; }
 

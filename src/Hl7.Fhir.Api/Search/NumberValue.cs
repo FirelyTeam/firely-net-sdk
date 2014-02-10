@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Search
 {
-    public class NumberValue : Expression
+    public class NumberValue : ValueExpression
     {
         public Decimal Value { get; private set; }
      

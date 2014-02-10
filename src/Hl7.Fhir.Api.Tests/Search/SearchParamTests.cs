@@ -51,6 +51,47 @@ namespace Hl7.Fhir.Tests
 
 
         [TestMethod]
+        public void ParseChain()
+        {
+            var crit = Criterium.Parse("par1:type1.par2.par3:text", "hoi");
+            Assert.IsTrue(crit.Type == Operator.CHAIN);
+            Assert.AreEqual("type1", crit.Modifier);
+            Assert.IsTrue(crit.Operand is Criterium);
+
+            crit = crit.Operand as Criterium;
+            Assert.IsTrue(crit.Type == Operator.CHAIN);
+            Assert.AreEqual(null, crit.Modifier);
+            Assert.IsTrue(crit.Operand is Criterium);
+
+            crit = crit.Operand as Criterium;
+            Assert.IsTrue(crit.Type == Operator.EQ);
+            Assert.AreEqual("text", crit.Modifier);
+            Assert.IsTrue(crit.Operand is UntypedValue);            
+        }
+
+        [TestMethod]
+        public void SerializeChain()
+        {
+            var crit = new Criterium
+            {
+                ParamName = "par1",
+                Modifier = "type1",
+                Type = Operator.CHAIN,
+                Operand =
+                    new Criterium
+                    {
+                        ParamName = "par2",
+                        Type = Operator.CHAIN,
+                        Operand =
+                            new Criterium { ParamName = "par3", Modifier = "text", Type = Operator.EQ, Operand = new StringValue("hoi") }
+                    }
+            };
+
+            Assert.AreEqual("par1:type1.par2.par3:text", crit.BuildKey());
+            Assert.AreEqual("hoi", crit.BuildValue());
+        }
+
+        [TestMethod]
         public void SerializeCriterium()
         {
             var crit = new Criterium
@@ -201,7 +242,6 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("mg", p7.Unit);
         }
 
-
         [TestMethod]
         public void HandleReferenceParam()
         {
@@ -216,28 +256,18 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("http://server.org/$4/fhir/Patient/1", p3.Value);
         }
 
+        [TestMethod]
+        public void HandleMultiValueParam()
+        {
+            var p1 = new MultiValue(new ValueExpression[] { new StringValue("hello, world!"), new NumberValue(18.4M) });
+            Assert.AreEqual(@"hello\, world!,18.4", p1.ToString());
 
-        //[TestMethod]
-        //public void HandleStringParam()
-        //{
-        //    var p1 = new StringParamValue("patient");
-        //    Assert.AreEqual("\"patient\"", p1.QueryValue);
+            var p2 = MultiValue.Parse(@"hello\, world!,18.4");
+            Assert.AreEqual(2, p2.Value.Length);
+            Assert.AreEqual("hello, world!", ((UntypedValue)p2.Value[0]).AsStringValue().Value);
+            Assert.AreEqual(18.4M, ((UntypedValue)p2.Value[1]).AsNumberValue().Value);
+        }
 
-        //    var p2 = StringParamValue.FromQueryValue("\"organization\"");
-        //    Assert.AreEqual("organization", p2.Value);
-        //}
-
-
-
-
-
-        //[TestMethod]
-        //public void HandleUntypedParam()
-        //{
-        //    var p1 = new UntypedParamValue("<=18");
-        //    Assert.AreEqual("<=18", p1.Value);
-        //    Assert.AreEqual(18, p1.AsIntegerParam().Value);
-        //}
 
 
         //[TestMethod]

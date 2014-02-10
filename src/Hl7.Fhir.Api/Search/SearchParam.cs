@@ -126,54 +126,6 @@ namespace Hl7.Fhir.Search
         //}
 
 
-        //private static SearchParam fromPathAndValue(IEnumerable<Tuple<string, string>> path, string qryValue)
-        //{
-        //    var first = path.First();
-        //    var name = first.Item1;
-        //    var modifier = first.Item2;
-
-        //    // If this is a chained search, unfold the chain first
-        //    if (path.Count() > 1)
-        //    {
-        //        return new SearchParam(name, modifier,
-        //            new ChainedParamValue(fromPathAndValue(path.Skip(1), qryValue)));
-        //    }
-
-        //    //TODO: Don't split on , within strings
-        //    var qryValues = qryValue.Split(',');
-
-        //    var values = qryValues.Select(s => new UntypedValue(s));
-
-        //    return new SearchParam(name, modifier, values);
-        //}
-
-
-        //private static Tuple<string, string> pathPartToTuple(string pathPart)
-        //{
-        //    var pair = pathPart.Split(':');
-
-        //    string name = pair[0];
-        //    string modifier = pair.Length == 2 ? pair[1] : null;
-
-        //    return Tuple.Create(name, modifier);
-        //}
-
-
-        //private static readonly char[] PATHSEPARATOR = new char[] { '.' };
-
-        //public static SearchParam FromQueryKeyAndValue(string qryKey, string qryValue)
-        //{
-        //    if (qryKey == null) throw Error.ArgumentNull("qryKey");
-        //    if (qryValue == null) throw Error.ArgumentNull("qryValue");
-
-        //    // First, split up the parameter path
-        //    var parts = qryKey.Split(PATHSEPARATOR, StringSplitOptions.RemoveEmptyEntries)
-        //                    .Select(s => pathPartToTuple(s));
-
-        //    if (parts.Count() == 0) throw Error.Argument("qryKey", "Supplied an empty search parameter name");
-        //    return fromPathAndValue(parts, qryValue);
-        //}
-
         internal string QueryKey { get { throw new NotImplementedException(); } }
         internal string QueryValue { get { throw new NotImplementedException(); } }
 

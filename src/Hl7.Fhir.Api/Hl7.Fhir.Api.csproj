@@ -69,6 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Search\Criterium.cs" />
+    <Compile Include="Search\MultiValue.cs" />
     <Compile Include="Search\Expression.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
     <Compile Include="Search\SearchParam.cs" />

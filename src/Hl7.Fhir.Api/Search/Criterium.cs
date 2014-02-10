@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Search
 {
-    public class Criterium
+    public class Criterium : Expression
     {
         public const string MISSINGMODIF = "missing";
         public const string MISSINGTRUE = "true";
@@ -25,27 +25,38 @@ namespace Hl7.Fhir.Search
 
         public Expression Operand { get; set; }
 
+        private const char CHAINSEPARATOR = '.';
+        private const char MODIFIERSEPARATOR = ':';
+        
 
-        public static Criterium Parse(string key, string value)
+        private static Tuple<string, string> pathToKeyModifTuple(string pathPart)
         {
-            if (key == null) throw Error.ArgumentNull("key");
-            if (value == null) throw Error.ArgumentNull("value");
+            var pair = pathPart.Split(MODIFIERSEPARATOR);
 
-            string modifier = null;
-            Operator type = Operator.EQ;
+            string name = pair[0];
+            string modifier = pair.Length == 2 ? pair[1] : null;
 
-            // First, find modifiers
-            var lIndex = key.LastIndexOf(':');
+            return Tuple.Create(name, modifier);
+        }
 
-            if (lIndex != -1)
+        private static Criterium fromPathTuples(IEnumerable<Tuple<string, string>> path, string value)
+        {
+            var first = path.First();
+            var name = first.Item1;
+            var modifier = first.Item2;
+            var type = Operator.EQ;
+            Expression operand = null;
+
+            // If this is a chained search, unfold the chain first
+            if (path.Count() > 1)
             {
-                modifier = key.Substring(lIndex+1);
-                key = key.Substring(0,lIndex);
+                type = Operator.CHAIN;
+                operand = fromPathTuples(path.Skip(1), value);
             }
 
             // :missing modifier is actually not a real modifier and is turned into
             // either a ISNULL or NOTNULL operator
-            if (modifier == MISSINGMODIF)
+            else if (modifier == MISSINGMODIF)
             {
                 modifier = null;
 
@@ -56,37 +67,89 @@ namespace Hl7.Fhir.Search
                 else
                     throw Error.Argument("value", "For the :missing modifier, only values 'true' and 'false' are allowed");
 
-                value = null;
+                operand = null;
             }
 
             // else see if the value starts with a comparator
             else
-            {
+            {                
                 var compVal = findComparator(value);
 
                 type = compVal.Item1;
                 value = compVal.Item2;
+
+                if(value == null) throw new FormatException("Value is empty");
+
+                // Parse the value. If there's > 1, we are using the IN operator, unless
+                // the input already specifies another comparison, which would be illegal
+                operand = MultiValue.Parse(value);
+
+                if (((MultiValue)operand).Value.Length > 1)
+                {
+                    if (type != Operator.EQ)
+                        throw new InvalidOperationException("Multiple values cannot be used in combination with a comparison operator");
+                    type = Operator.IN;
+                }
             }
 
             // Construct the new criterium based on the parsed values
-            return new Criterium() 
-            {   
-                ParamName = key, Type = type, Modifier = modifier, 
-                Operand = value != null ? new UntypedValue(value) :null 
+            return new Criterium()
+            {
+                ParamName = name,
+                Type = type,
+                Modifier = modifier,
+                Operand = operand
             };
         }
 
-
-        public string BuildKey()
+        public static Criterium Parse(string text)
         {
+            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
+
+            var eqPos = text.IndexOf('=');
+            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
+
+            var key = text.Substring(0,eqPos);
+            var value = text.Substring(eqPos + 1); 
+
+            if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull("key");
+            if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
+
+            // Split chained parts (if any) into name + modifier tuples
+            var chainPath = key.Split(new char[] { CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => pathToKeyModifTuple(s));
+
+            if (chainPath.Count() == 0) throw Error.Argument("key", "Supplied an empty search parameter name or chain");
+
+            return fromPathTuples(chainPath, value);
+        }
+
+
+        public override string ToString()
+        {
+            // Turn ISNULL and NOTNULL operators into the :missing modifier
+            if (Type == Operator.ISNULL || Type == Operator.NOTNULL) 
+                return ParamName + ":missing";
+
             var result = ParamName;
 
-            // Turn ISNULL and NOTNULL operators into the :missing modifier
-            if (Type == Operator.ISNULL || Type == Operator.NOTNULL) return result + ":missing";
+            if (!String.IsNullOrEmpty(Modifier)) result += MODIFIERSEPARATOR + Modifier;
 
-            if (!String.IsNullOrEmpty(Modifier)) result = result + ":" + Modifier;
+            if (Type == Operator.CHAIN)
+            {
+                if (Operand is Criterium)
+                    return result + CHAINSEPARATOR + Operand.ToString();
+                else
+                    throw new FormatException("Chain operation must have a Criterium as operand");
+            }
+            else
+            {
+                if (Operand is ValueExpression)
+                    return result + "=" + Operand.ToString();
+                else
+                    throw new FormatException("Chain operation must have a Criterium as operand");
 
-            return result;
+            }
         }
 
         public string BuildValue()
@@ -95,20 +158,32 @@ namespace Hl7.Fhir.Search
             if (Type == Operator.ISNULL) return "true";
             if (Type == Operator.NOTNULL) return "false";
 
+            if(Operand == null) throw new InvalidOperationException("Criterium does not have an operand");
 
-            string value = Operand.ToString();
-
-            // Add comparator if we have one
-            switch (Type)
+            if (Type == Operator.CHAIN)
             {
-                case Operator.APPROX: return "~" + value;
-                case Operator.EQ: return value;
-                case Operator.GT: return ">" + value;
-                case Operator.GTE: return ">=" + value;
-                case Operator.LT: return "<" + value;
-                case Operator.LTE: return "<=" + value;
-                default:
-                    throw Error.NotImplemented("Operator of type '{0}' is not supported",Type.ToString());
+                if (Operand is Criterium)
+                    return ((Criterium)Operand).BuildValue();
+                else
+                    throw new InvalidOperationException("Chain operation must have a Criterium as operand");
+            }
+            else
+            {
+                string value = Operand.ToString();
+
+                // Add comparator if we have one
+                switch (Type)
+                {
+                    case Operator.APPROX: return "~" + value;
+                    case Operator.EQ: return value;
+                    case Operator.IN: return value;
+                    case Operator.GT: return ">" + value;
+                    case Operator.GTE: return ">=" + value;
+                    case Operator.LT: return "<" + value;
+                    case Operator.LTE: return "<=" + value;
+                    default:
+                        throw Error.NotImplemented("Operator of type '{0}' is not supported", Type.ToString());
+                }
             }
         }
 
@@ -148,6 +223,6 @@ namespace Hl7.Fhir.Search
         ISNULL, // has no value
         NOTNULL, // has value
         IN,      // equals one of a set of values
-        REFERS   // refers to resource(s)
+        CHAIN    // chain to subexpression
     }  
 }
