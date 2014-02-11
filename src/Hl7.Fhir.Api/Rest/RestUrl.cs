@@ -93,6 +93,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public RestUrl AddParam(Tuple<string, string> keyValue)
+        {
+            if (keyValue == null) throw Error.ArgumentNull("keyValue");
+
+            return AddParam(keyValue.Item1, keyValue.Item2);
+        }
+
         public bool IsEndpointFor(Uri other)
         {
             return IsEndpointFor(other.ToString());

@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle Search<TResource>(Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
             return internalSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes, pageSize);
         }
@@ -521,14 +521,14 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>Except for 'resource', all parameters are optional, leaving all parameters empty will return an unfiltered 
         /// list of all resources of the given Resource type</remarks>
-        public Bundle Search(string resource, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+        public Bundle Search(string resource, Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
             return internalSearch(resource, criteria, sort, includes, pageSize);
         }
 
-        public Bundle WholeSystemSearch(SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+        public Bundle WholeSystemSearch(Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
             return internalSearch(null, criteria, sort, includes, pageSize);
         }
@@ -556,11 +556,11 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
-            return internalSearch(resource, new SearchParam[] { new SearchParam(HttpUtil.SEARCH_PARAM_ID, id) }, sort, includes, pageSize);
+            return internalSearch(resource, new Criterium[] { Criterium.Parse(HttpUtil.SEARCH_PARAM_ID + "=" + id) }, sort, includes, pageSize);
         }
 
 
-        private Bundle internalSearch(string collection = null, SearchParam[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+        private Bundle internalSearch(string collection = null, Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
         {
             RestUrl url = null;
 
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Rest
             if (criteria != null)
             {
                 foreach (var criterium in criteria)
-                    url.AddParam(criterium.QueryKey, criterium.QueryValue);
+                    url.AddParam(HttpUtil.SplitKeyValue(criterium.ToString()));
             }
 
             if (includes != null)
@@ -591,6 +591,8 @@ namespace Hl7.Fhir.Rest
 
             return fetchBundle(url.Uri);
         }
+
+
 
 
         /// <summary>

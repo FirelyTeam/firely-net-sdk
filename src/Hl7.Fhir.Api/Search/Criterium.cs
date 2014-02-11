@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Search
 
         private const char CHAINSEPARATOR = '.';
         private const char MODIFIERSEPARATOR = ':';
-        
+
 
         private static Tuple<string, string> pathToKeyModifTuple(string pathPart)
         {
@@ -82,13 +82,19 @@ namespace Hl7.Fhir.Search
 
                 // Parse the value. If there's > 1, we are using the IN operator, unless
                 // the input already specifies another comparison, which would be illegal
-                operand = MultiValue.Parse(value);
+                var values = ChoiceValue.Parse(value);
 
-                if (((MultiValue)operand).Value.Length > 1)
+                if (values.Choices.Length > 1)
                 {
                     if (type != Operator.EQ)
                         throw new InvalidOperationException("Multiple values cannot be used in combination with a comparison operator");
                     type = Operator.IN;
+                    operand = values;
+                }
+                else
+                {
+                    // Not really a multi value, just a single ValueExpression
+                    operand = values.Choices[0];
                 }
             }
 
@@ -102,16 +108,9 @@ namespace Hl7.Fhir.Search
             };
         }
 
-        public static Criterium Parse(string text)
+
+        public static Criterium Parse(string key, string value)
         {
-            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
-
-            var eqPos = text.IndexOf('=');
-            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
-
-            var key = text.Substring(0,eqPos);
-            var value = text.Substring(eqPos + 1); 
-
             if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull("key");
             if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
 
@@ -124,16 +123,29 @@ namespace Hl7.Fhir.Search
             return fromPathTuples(chainPath, value);
         }
 
+        public static Criterium Parse(string text)
+        {
+            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
+
+            var eqPos = text.IndexOf('=');
+            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
+
+            var key = text.Substring(0,eqPos);
+            var value = text.Substring(eqPos + 1);
+
+            return Parse(key, value);
+        }
+
 
         public override string ToString()
         {
-            // Turn ISNULL and NOTNULL operators into the :missing modifier
-            if (Type == Operator.ISNULL || Type == Operator.NOTNULL) 
-                return ParamName + ":missing";
-
             var result = ParamName;
 
-            if (!String.IsNullOrEmpty(Modifier)) result += MODIFIERSEPARATOR + Modifier;
+            // Turn ISNULL and NOTNULL operators into the :missing modifier
+            if (Type == Operator.ISNULL || Type == Operator.NOTNULL)
+                result += MODIFIERSEPARATOR + MISSINGMODIF;
+            else
+                if (!String.IsNullOrEmpty(Modifier)) result += MODIFIERSEPARATOR + Modifier;
 
             if (Type == Operator.CHAIN)
             {
@@ -144,46 +156,34 @@ namespace Hl7.Fhir.Search
             }
             else
             {
-                if (Operand is ValueExpression)
-                    return result + "=" + Operand.ToString();
-                else
-                    throw new FormatException("Chain operation must have a Criterium as operand");
-
+                return result + "=" + buildValue();
             }
         }
 
-        public string BuildValue()
+
+        private string buildValue()
         {
             // Turn ISNULL and NOTNULL operators into either true/or false to match the :missing modifier
             if (Type == Operator.ISNULL) return "true";
             if (Type == Operator.NOTNULL) return "false";
 
             if(Operand == null) throw new InvalidOperationException("Criterium does not have an operand");
+            if(!(Operand is ValueExpression)) throw new FormatException("Expected a ValueExpression as operand");
 
-            if (Type == Operator.CHAIN)
-            {
-                if (Operand is Criterium)
-                    return ((Criterium)Operand).BuildValue();
-                else
-                    throw new InvalidOperationException("Chain operation must have a Criterium as operand");
-            }
-            else
-            {
-                string value = Operand.ToString();
+            string value = Operand.ToString();
 
-                // Add comparator if we have one
-                switch (Type)
-                {
-                    case Operator.APPROX: return "~" + value;
-                    case Operator.EQ: return value;
-                    case Operator.IN: return value;
-                    case Operator.GT: return ">" + value;
-                    case Operator.GTE: return ">=" + value;
-                    case Operator.LT: return "<" + value;
-                    case Operator.LTE: return "<=" + value;
-                    default:
-                        throw Error.NotImplemented("Operator of type '{0}' is not supported", Type.ToString());
-                }
+            // Add comparator if we have one
+            switch (Type)
+            {
+                case Operator.APPROX: return "~" + value;
+                case Operator.EQ: return value;
+                case Operator.IN: return value;
+                case Operator.GT: return ">" + value;
+                case Operator.GTE: return ">=" + value;
+                case Operator.LT: return "<" + value;
+                case Operator.LTE: return "<=" + value;
+                default:
+                    throw Error.NotImplemented("Operator of type '{0}' is not supported", Type.ToString());
             }
         }
 

@@ -18,31 +18,31 @@ namespace Hl7.Fhir.Tests
         [TestMethod]
         public void ParseCriterium()
         {
-            var crit = Criterium.Parse("paramX", "18");
+            var crit = Criterium.Parse("paramX=18");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.IsNull(crit.Modifier);
             Assert.AreEqual("18", crit.Operand.ToString());
             Assert.AreEqual(Operator.EQ, crit.Type);
 
-            crit = Criterium.Parse("paramX", ">18");
+            crit = Criterium.Parse("paramX=>18");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.IsNull(crit.Modifier);
             Assert.AreEqual("18", crit.Operand.ToString());
             Assert.AreEqual(Operator.GT, crit.Type);
 
-            crit = Criterium.Parse("paramX:modif1", "~18");
+            crit = Criterium.Parse("paramX:modif1=~18");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.AreEqual("18", crit.Operand.ToString());
             Assert.AreEqual("modif1", crit.Modifier);
             Assert.AreEqual(Operator.APPROX, crit.Type);
 
-            crit = Criterium.Parse("paramX:missing", "true");
+            crit = Criterium.Parse("paramX:missing=true");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.IsNull(crit.Operand);
             Assert.IsNull(crit.Modifier);
             Assert.AreEqual(Operator.ISNULL, crit.Type);
 
-            crit = Criterium.Parse("paramX:missing", "false");
+            crit = Criterium.Parse("paramX:missing=false");
             Assert.AreEqual("paramX", crit.ParamName);
             Assert.IsNull(crit.Operand);
             Assert.IsNull(crit.Modifier);
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Tests
         [TestMethod]
         public void ParseChain()
         {
-            var crit = Criterium.Parse("par1:type1.par2.par3:text", "hoi");
+            var crit = Criterium.Parse("par1:type1.par2.par3:text=hoi");
             Assert.IsTrue(crit.Type == Operator.CHAIN);
             Assert.AreEqual("type1", crit.Modifier);
             Assert.IsTrue(crit.Operand is Criterium);
@@ -87,32 +87,28 @@ namespace Hl7.Fhir.Tests
                     }
             };
 
-            Assert.AreEqual("par1:type1.par2.par3:text", crit.BuildKey());
-            Assert.AreEqual("hoi", crit.BuildValue());
+            Assert.AreEqual("par1:type1.par2.par3:text=hoi", crit.ToString());
         }
+
 
         [TestMethod]
         public void SerializeCriterium()
         {
             var crit = new Criterium
             {  ParamName = "paramX", Modifier = "modif1", Operand = new NumberValue(18), Type = Operator.GTE };
-            Assert.AreEqual("paramX:modif1", crit.BuildKey());
-            Assert.AreEqual(">=18", crit.BuildValue());
+            Assert.AreEqual("paramX:modif1=>=18", crit.ToString());
 
             crit = new Criterium
             { ParamName = "paramX", Operand = new NumberValue(18) };
-            Assert.AreEqual("paramX", crit.BuildKey());
-            Assert.AreEqual("18", crit.BuildValue());
+            Assert.AreEqual("paramX=18", crit.ToString());
 
             crit = new Criterium
             { ParamName = "paramX",Type = Operator.ISNULL };
-            Assert.AreEqual("paramX:missing", crit.BuildKey());
-            Assert.AreEqual("true", crit.BuildValue());
+            Assert.AreEqual("paramX:missing=true", crit.ToString());
 
             crit = new Criterium
             { ParamName = "paramX", Type = Operator.NOTNULL };
-            Assert.AreEqual("paramX:missing", crit.BuildKey());
-            Assert.AreEqual("false", crit.BuildValue());
+            Assert.AreEqual("paramX:missing=false", crit.ToString());
         }
 
 
@@ -128,7 +124,7 @@ namespace Hl7.Fhir.Tests
             var p3 = NumberValue.Parse("18.00");
             Assert.AreEqual(18.00M, p3.Value);
 
-            var crit = Criterium.Parse("paramX", "18.34");
+            var crit = Criterium.Parse("paramX=18.34");
             var p4 = ((UntypedValue)crit.Operand).AsNumberValue();
             Assert.AreEqual(18.34M, p4.Value);
         }
@@ -142,7 +138,7 @@ namespace Hl7.Fhir.Tests
             var p2 = DateValue.Parse("1972-11-30T18:45:36");
             Assert.AreEqual("1972-11-30T18:45:36", p2.ToString());
 
-            var crit = Criterium.Parse("paramX", "1972-11-30");
+            var crit = Criterium.Parse("paramX=1972-11-30");
             var p3 = ((UntypedValue)crit.Operand).AsDateValue();
             Assert.AreEqual("1972-11-30", p3.Value);
         }
@@ -160,7 +156,7 @@ namespace Hl7.Fhir.Tests
             var p3 = StringValue.Parse(@"Pay \$300\|Pay \$100\|");
             Assert.AreEqual("Pay $300|Pay $100|", p3.Value);
 
-            var crit = Criterium.Parse("paramX", @"Hello\, world");
+            var crit = Criterium.Parse(@"paramX=Hello\, world");
             var p4 = ((UntypedValue)crit.Operand).AsStringValue();
             Assert.AreEqual("Hello, world", p4.Value);
         }
@@ -201,7 +197,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("NOK", p8.Value);
             Assert.IsTrue(p8.AnyNamespace);
 
-            var crit = Criterium.Parse("paramX", @"|NOK");
+            var crit = Criterium.Parse("paramX=|NOK");
             var p9 = ((UntypedValue)crit.Operand).AsTokenValue();
             Assert.AreEqual("NOK", p9.Value);
             Assert.IsFalse(p9.AnyNamespace);
@@ -235,7 +231,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("http://system.com/id$4",p6.Namespace);
             Assert.AreEqual("$/d", p6.Unit);
 
-            var crit = Criterium.Parse("paramX", @"3.14||mg");
+            var crit = Criterium.Parse("paramX=3.14||mg");
             var p7 = ((UntypedValue)crit.Operand).AsQuantityValue();
             Assert.AreEqual(3.14M, p7.Number);
             Assert.IsNull(p7.Namespace);
@@ -251,7 +247,7 @@ namespace Hl7.Fhir.Tests
             var p2 = new ReferenceValue("http://server.org/fhir/Patient/1");
             Assert.AreEqual("http://server.org/fhir/Patient/1", p2.Value);
 
-            var crit = Criterium.Parse("paramX", @"http://server.org/\$4/fhir/Patient/1");
+            var crit = Criterium.Parse(@"paramX=http://server.org/\$4/fhir/Patient/1");
             var p3 = ((UntypedValue)crit.Operand).AsReferenceValue();
             Assert.AreEqual("http://server.org/$4/fhir/Patient/1", p3.Value);
         }
@@ -259,13 +255,31 @@ namespace Hl7.Fhir.Tests
         [TestMethod]
         public void HandleMultiValueParam()
         {
-            var p1 = new MultiValue(new ValueExpression[] { new StringValue("hello, world!"), new NumberValue(18.4M) });
+            var p1 = new ChoiceValue(new ValueExpression[] { new StringValue("hello, world!"), new NumberValue(18.4M) });
             Assert.AreEqual(@"hello\, world!,18.4", p1.ToString());
 
-            var p2 = MultiValue.Parse(@"hello\, world!,18.4");
-            Assert.AreEqual(2, p2.Value.Length);
-            Assert.AreEqual("hello, world!", ((UntypedValue)p2.Value[0]).AsStringValue().Value);
-            Assert.AreEqual(18.4M, ((UntypedValue)p2.Value[1]).AsNumberValue().Value);
+            var p2 = ChoiceValue.Parse(@"hello\, world!,18.4");
+            Assert.AreEqual(2, p2.Choices.Length);
+            Assert.AreEqual("hello, world!", ((UntypedValue)p2.Choices[0]).AsStringValue().Value);
+            Assert.AreEqual(18.4M, ((UntypedValue)p2.Choices[1]).AsNumberValue().Value);
+        }
+
+        [TestMethod]
+        public void HandleComposites()
+        {
+            var pX = new CompositeValue(new ValueExpression[] { new StringValue("hello, world!"), new NumberValue(14.8M) });
+            var pY = new TokenValue("NOK", "http://somesuch.org");
+            var p1 = new ChoiceValue(new ValueExpression[] { pX, pY });
+            Assert.AreEqual(@"hello\, world!$14.8,http://somesuch.org|NOK", p1.ToString());
+
+            var crit1 = ChoiceValue.Parse(@"hello\, world$14.8,http://somesuch.org|NOK");
+            Assert.AreEqual(2, crit1.Choices.Length);
+            Assert.IsTrue(crit1.Choices[0] is CompositeValue);
+            var comp1 = crit1.Choices[0] as CompositeValue;
+            Assert.AreEqual(2, comp1.Components.Length);
+            Assert.AreEqual("hello, world", ((UntypedValue)comp1.Components[0]).AsStringValue().Value);
+            Assert.AreEqual(14.8M, ((UntypedValue)comp1.Components[1]).AsNumberValue().Value);
+            Assert.AreEqual("http://somesuch.org|NOK", ((UntypedValue)crit1.Choices[1]).AsTokenValue().ToString());
         }
 
 

@@ -69,10 +69,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Search\Criterium.cs" />
-    <Compile Include="Search\MultiValue.cs" />
+    <Compile Include="Search\CompositeValue.cs" />
+    <Compile Include="Search\ChoiceValue.cs" />
     <Compile Include="Search\Expression.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
-    <Compile Include="Search\SearchParam.cs" />
     <Compile Include="Search\QuantityValue.cs" />
     <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\BundleJsonParser.cs" />

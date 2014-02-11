@@ -139,10 +139,10 @@ namespace Hl7.Fhir.Tests
             Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
                         typeof(Patient).GetCollectionName()));
 
-            result = client.Search<Patient>(new SearchParam[] 
+            result = client.Search<Patient>(new Criterium[] 
                 {
-                    new SearchParam("name", "Everywoman"),
-                    new SearchParam("name", "Eve") 
+                    Criterium.Parse("name", "Everywoman"),
+                    Criterium.Parse("name", "Eve") 
                 });
 
             Assert.IsNotNull(result);
