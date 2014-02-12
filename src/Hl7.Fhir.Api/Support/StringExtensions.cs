@@ -44,6 +44,6 @@ namespace Hl7.Fhir.Support
             result.Add(word);
 
             return result.ToArray<string>();
-        }	
+        }
     }
 }

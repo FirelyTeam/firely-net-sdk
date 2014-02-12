@@ -146,10 +146,12 @@
     <Compile Include="Generated\Model\Money.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\Query.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />

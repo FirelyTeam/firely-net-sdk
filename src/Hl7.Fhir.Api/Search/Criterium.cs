@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +27,60 @@ namespace Hl7.Fhir.Search
 
         public Expression Operand { get; set; }
 
-        private const char CHAINSEPARATOR = '.';
-        private const char MODIFIERSEPARATOR = ':';
+        public static Criterium Parse(string key, string value)
+        {
+            if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull("key");
+            if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
 
+            // Split chained parts (if any) into name + modifier tuples
+            var chainPath = key.Split(new char[] { Query.SEARCH_CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => pathToKeyModifTuple(s));
+
+            if (chainPath.Count() == 0) throw Error.Argument("key", "Supplied an empty search parameter name or chain");
+
+            return fromPathTuples(chainPath, value);
+        }
+
+        public static Criterium Parse(string text)
+        {
+            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
+
+            var eqPos = text.IndexOf('=');
+            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
+
+            var key = text.Substring(0,eqPos);
+            var value = text.Substring(eqPos + 1);
+
+            return Parse(key, value);
+        }
+
+
+        public override string ToString()
+        {
+            var result = ParamName;
+
+            // Turn ISNULL and NOTNULL operators into the :missing modifier
+            if (Type == Operator.ISNULL || Type == Operator.NOTNULL)
+                result += Query.SEARCH_MODIFIERSEPARATOR + MISSINGMODIF;
+            else
+                if (!String.IsNullOrEmpty(Modifier)) result += Query.SEARCH_MODIFIERSEPARATOR + Modifier;
+
+            if (Type == Operator.CHAIN)
+            {
+                if (Operand is Criterium)
+                    return result + Query.SEARCH_CHAINSEPARATOR + Operand.ToString();
+                else
+                    throw new FormatException("Chain operation must have a Criterium as operand");
+            }
+            else
+            {
+                return result + "=" + buildValue();
+            }
+        }
 
         private static Tuple<string, string> pathToKeyModifTuple(string pathPart)
         {
-            var pair = pathPart.Split(MODIFIERSEPARATOR);
+            var pair = pathPart.Split(Query.SEARCH_MODIFIERSEPARATOR);
 
             string name = pair[0];
             string modifier = pair.Length == 2 ? pair[1] : null;
@@ -72,13 +121,13 @@ namespace Hl7.Fhir.Search
 
             // else see if the value starts with a comparator
             else
-            {                
+            {
                 var compVal = findComparator(value);
 
                 type = compVal.Item1;
                 value = compVal.Item2;
 
-                if(value == null) throw new FormatException("Value is empty");
+                if (value == null) throw new FormatException("Value is empty");
 
                 // Parse the value. If there's > 1, we are using the IN operator, unless
                 // the input already specifies another comparison, which would be illegal
@@ -106,58 +155,6 @@ namespace Hl7.Fhir.Search
                 Modifier = modifier,
                 Operand = operand
             };
-        }
-
-
-        public static Criterium Parse(string key, string value)
-        {
-            if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull("key");
-            if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
-
-            // Split chained parts (if any) into name + modifier tuples
-            var chainPath = key.Split(new char[] { CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(s => pathToKeyModifTuple(s));
-
-            if (chainPath.Count() == 0) throw Error.Argument("key", "Supplied an empty search parameter name or chain");
-
-            return fromPathTuples(chainPath, value);
-        }
-
-        public static Criterium Parse(string text)
-        {
-            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
-
-            var eqPos = text.IndexOf('=');
-            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
-
-            var key = text.Substring(0,eqPos);
-            var value = text.Substring(eqPos + 1);
-
-            return Parse(key, value);
-        }
-
-
-        public override string ToString()
-        {
-            var result = ParamName;
-
-            // Turn ISNULL and NOTNULL operators into the :missing modifier
-            if (Type == Operator.ISNULL || Type == Operator.NOTNULL)
-                result += MODIFIERSEPARATOR + MISSINGMODIF;
-            else
-                if (!String.IsNullOrEmpty(Modifier)) result += MODIFIERSEPARATOR + Modifier;
-
-            if (Type == Operator.CHAIN)
-            {
-                if (Operand is Criterium)
-                    return result + CHAINSEPARATOR + Operand.ToString();
-                else
-                    throw new FormatException("Chain operation must have a Criterium as operand");
-            }
-            else
-            {
-                return result + "=" + buildValue();
-            }
         }
 
 

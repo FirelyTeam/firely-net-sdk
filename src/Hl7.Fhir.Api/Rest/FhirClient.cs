@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
-            return internalSearch(resource, new Criterium[] { Criterium.Parse(HttpUtil.SEARCH_PARAM_ID + "=" + id) }, sort, includes, pageSize);
+            return internalSearch(resource, new Criterium[] { Criterium.Parse(Query.SEARCH_PARAM_ID + "=" + id) }, sort, includes, pageSize);
         }
 
 
@@ -572,10 +572,10 @@ namespace Hl7.Fhir.Rest
                 url = new RestUrl(Endpoint);
 
             if (pageSize.HasValue)
-                url.AddParam(HttpUtil.SEARCH_PARAM_COUNT, pageSize.Value.ToString());
+                url.AddParam(Query.SEARCH_PARAM_COUNT, pageSize.Value.ToString());
 
             if (sort != null)
-                url.AddParam(HttpUtil.SEARCH_PARAM_SORT, sort);
+                url.AddParam(Query.SEARCH_PARAM_SORT, sort);
 
             if (criteria != null)
             {
@@ -586,13 +586,11 @@ namespace Hl7.Fhir.Rest
             if (includes != null)
             {
                 foreach (string includeParam in includes)
-                    url.AddParam(HttpUtil.SEARCH_PARAM_INCLUDE, includeParam);
+                    url.AddParam(Query.SEARCH_PARAM_INCLUDE, includeParam);
             }
 
             return fetchBundle(url.Uri);
         }
-
-
 
 
         /// <summary>

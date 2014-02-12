@@ -83,6 +83,7 @@
     <Compile Include="Rest\TestResourceIdentifier.cs" />
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Search\ExpressionTests.cs" />
+    <Compile Include="Search\QueryExtensionTests.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />

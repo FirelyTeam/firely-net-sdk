@@ -72,6 +72,7 @@
     <Compile Include="Search\CompositeValue.cs" />
     <Compile Include="Search\ChoiceValue.cs" />
     <Compile Include="Search\Expression.cs" />
+    <Compile Include="Search\QueryExtensions.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
     <Compile Include="Search\QuantityValue.cs" />
     <Compile Include="Search\UntypedValue.cs" />

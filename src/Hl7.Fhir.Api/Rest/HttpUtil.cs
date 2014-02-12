@@ -25,12 +25,9 @@ namespace Hl7.Fhir.Rest
 
         public const string RESTPARAM_FORMAT = "_format";
 
-        public const string SEARCH_PARAM_ID = "_id";
-        public const string SEARCH_PARAM_COUNT = "_count";
-        public const string SEARCH_PARAM_INCLUDE = "_include";
+      
         public const string HISTORY_PARAM_SINCE = "_since";
-        public const string SEARCH_PARAM_SORT = "_sort";
-        public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
+        public const string HISTORY_PARAM_COUNT = Query.SEARCH_PARAM_COUNT;
 
         public static byte[] ReadAllFromStream(Stream s, int contentLength)
         {
