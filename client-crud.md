@@ -51,7 +51,15 @@ var patEntryA = client.Read<Patient>(new Uri("Patient/31"));
 var locationB = new Uri("http://spark.furore.com/fhir/Patient/32/_history/4");
 var patEntryB = client.Read<Patient>(locationB);
 var patEntryB = client.Read<Patient>(new Uri("Patient/32/_history/4"));
+
 ```
+
+`Read` only takes urls as parameters, so if you have the resource name and it's Id as distinct data variables, use `ResourceIdentity`:
+
+```csharp
+var patEntryA = client.Read<Patient>(ResourceIdentity.Build("Patient","31"));
+```
+
 
 Note that Read can be used to get the most recent version of a Resource as well as a specific version, and thus covers the two 'logical' REST operations `read` and `vread`.
 

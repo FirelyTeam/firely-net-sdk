@@ -18,7 +18,11 @@ entry.Id = ResourceIdentity.Build(base,"Patient", "213");
 entry.SelfLink = ResourceIdentity.Build(base,"Patient","213","2");
 ```
 
-These ``Build()`` methods return a new ``ResourceIdentity`` with the given logical id and version id. Note that `ResourceIdentity` is a subclass of the standard .NET ``Uri`` class, so it can directly be assigned to entry's `Id` and `SelfLink` properties.
+These ``Build()`` methods return a new ``ResourceIdentity`` with the given logical id and version id. Note that `ResourceIdentity` is a subclass of the standard .NET ``Uri`` class, so it can directly be assigned to entry's `Id` and `SelfLink` properties. Note that you do not need to specify a base url, and produce relative resource references instead:
+
+```csharp
+client.Read<Patient>(ResourceIdentity.Build("Patient","31"));
+```
 
 Conversely, to extract this information from an existing url:
 
