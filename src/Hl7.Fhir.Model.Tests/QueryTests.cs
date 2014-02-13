@@ -12,22 +12,23 @@ namespace HL7.Fhir.Tests
     public class QueryTests
     {
         [TestMethod]
-        public void AddParameter()
+        public void ManipulateParameters()
         {
             var q = new Query();
      
             q.AddParameter("testX", "someVal");
             q.AddParameter("testX", "someVal2");
-            q.AddParameter("testY", "someVal3");
+            q.AddParameter("testXY", "someVal3");
 
             var vals = q.GetValues("testX");
             Assert.AreEqual(2, vals.Count());
             Assert.AreEqual("someVal", vals.First());
             Assert.AreEqual("someVal2", vals.Skip(1).First());
-            Assert.AreEqual("someVal3", q.GetSingleValue("testY"));
+            Assert.AreEqual("someVal3", q.GetSingleValue("testXY"));
 
-            q.RemoveParameter("testY");
-            Assert.IsNull(q.GetSingleValue("testY"));
+            q.RemoveParameter("testXY");
+            Assert.IsNull(q.GetSingleValue("testXY"));
+            Assert.AreEqual(2, q.GetValues("testX").Count());
         }
 
 
@@ -37,6 +38,7 @@ namespace HL7.Fhir.Tests
             var q = new Query();
 
             q.QueryName = "special";
+            q.ResourceType = "Patient";
             q.Count = 31;
             q.Summary = true;
             q.Sort = Tuple.Create("sorted", SortOrder.Descending);
@@ -44,6 +46,7 @@ namespace HL7.Fhir.Tests
             q.Include.Add("Observation.subject");
 
             Assert.AreEqual("special", q.QueryName);
+            Assert.AreEqual("Patient", q.ResourceType);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(true, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort);
@@ -52,6 +55,7 @@ namespace HL7.Fhir.Tests
             Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
 
             q.QueryName = "special2";
+            q.ResourceType = "Observation";
             q.Count = 32;
             q.Summary = false;
             q.Sort = Tuple.Create("sorted2", SortOrder.Ascending);
@@ -60,6 +64,7 @@ namespace HL7.Fhir.Tests
             q.Include.Add("Observation.subject2");
 
             Assert.AreEqual("special2", q.QueryName);
+            Assert.AreEqual("Observation", q.ResourceType);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(false, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort);

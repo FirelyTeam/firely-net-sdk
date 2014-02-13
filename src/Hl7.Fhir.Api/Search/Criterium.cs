@@ -45,13 +45,11 @@ namespace Hl7.Fhir.Search
         {
             if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
 
-            var eqPos = text.IndexOf('=');
-            if(eqPos == -1) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
+            var keyVal = text.SplitLeft('=');
 
-            var key = text.Substring(0,eqPos);
-            var value = text.Substring(eqPos + 1);
+            if(keyVal.Item2 == null) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
 
-            return Parse(key, value);
+            return Parse(keyVal.Item1, keyVal.Item2);
         }
 
 

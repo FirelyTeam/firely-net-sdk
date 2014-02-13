@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Rest;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -89,15 +90,25 @@ namespace Hl7.Fhir.Rest
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
 
-            _parameters.Add(Tuple.Create(name, value));
-            return this;
+            return AddParam(Tuple.Create(name,value));
         }
 
         public RestUrl AddParam(Tuple<string, string> keyValue)
         {
             if (keyValue == null) throw Error.ArgumentNull("keyValue");
 
-            return AddParam(keyValue.Item1, keyValue.Item2);
+            _parameters.Add(keyValue);
+
+            return this;
+        }
+
+        public RestUrl AddParams(IEnumerable<Tuple<string, string>> keyValues)
+        {
+            if (keyValues == null) throw Error.ArgumentNull("keyValues");
+
+            _parameters.AddRange(keyValues);
+
+            return this;
         }
 
         public bool IsEndpointFor(Uri other)
@@ -148,6 +159,6 @@ namespace Hl7.Fhir.Rest
         public override string ToString()
         {
             return AsString;
-        }    
+        }
     }    
 }

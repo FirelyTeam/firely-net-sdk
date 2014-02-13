@@ -85,7 +85,8 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Gets or sets the special _query search parameter
+        /// Gets or sets the special _query search parameter which asks the server to run a 
+        /// specific named query instead of the standard FHIR search.
         /// </summary>
         public string QueryName
         {
@@ -102,13 +103,38 @@ namespace Hl7.Fhir.Model
 
 
         /// <summary>
-        /// Gets or sets the special _count search parameter
+        /// Gets or sets the special _type parameter, which limits the search to resources
+        /// of a specific type. 
         /// </summary>
-        public int Count
+        /// <remarks>If this parameter is null, the search will be a non-restricted search
+        /// across all resources.</remarks>
+        public string ResourceType
         {
             get
             {
-                return Int32.Parse(GetSingleValue(Query.SEARCH_PARAM_COUNT));
+                return GetSingleValue(Query.SEARCH_PARAM_TYPE);
+            }
+            set
+            {
+                RemoveParameter(Query.SEARCH_PARAM_TYPE);
+                AddParameter(Query.SEARCH_PARAM_TYPE, value);
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the special _count search parameter, which limits the number
+        /// of mathes returned per page in the pages search result
+        /// </summary>
+        /// <remark>The number of resources returned from the search may exceed this
+        /// parameter, since additional _included resources for the matches are returned
+        /// as well</remark>
+        public int? Count
+        {
+            get
+            {
+                var count = GetSingleValue(Query.SEARCH_PARAM_COUNT);                
+                return count != null ? Int32.Parse(count) : (int?)null;
             }
             set
             {
@@ -117,8 +143,11 @@ namespace Hl7.Fhir.Model
             }
         }
 
+
         /// <summary>
-        /// Gets or sets the special _summary search parameter
+        /// Gets or sets the special _summary search parameter. If set to true,
+        /// the server will not return all elements in each matching resource, but just
+        /// the most important ones.
         /// </summary>
         public bool Summary
         {
@@ -135,25 +164,25 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Gets or sets the ordering modifier on _sort parameter (name,order)
+        /// Gets or sets the _sort parameter, to modify the sort order of the search result.
+        /// Uses a tuple (name, sortorder).
         /// </summary>
-        /// <value>A tuple with two items (name,sort order).</value>
         public Tuple<string,SortOrder> Sort
         {
             get
             {
-                var ext = Parameter.SingleOrDefault(Query.SEARCH_PARAM_SORT, ignoreModifier: true);
+                var ext = Parameter.SingleOrDefault(Query.SEARCH_PARAM_SORT);
                 if (ext == null) return null;
 
-                var key = ExtractParamKey(ext.Url);
+                var key = ExtractParamKey(ext);
                 var sort = key.EndsWith(Query.SEARCH_MODIF_DESCENDING) ? SortOrder.Descending : SortOrder.Ascending;
-                var name = GetParamValue(ext);
+                var name = ExtractParamValue(ext);
 
                 return Tuple.Create(name, sort);
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_SORT, ignoreModifier:true);
+                RemoveParameter(Query.SEARCH_PARAM_SORT);
 
                 var modif = value.Item2 == SortOrder.Ascending? 
                     Query.SEARCH_MODIF_ASCENDING : Query.SEARCH_MODIF_DESCENDING;
@@ -164,6 +193,10 @@ namespace Hl7.Fhir.Model
         }
 
 
+        /// <summary>
+        /// Returns a modifiable collection of _include parameters. These are used to include
+        /// resources in the search result that the matched resources refer to.
+        /// </summary>
         public ICollection<string> Include
         {
             get
@@ -172,6 +205,11 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        /// <summary>
+        /// Add a parameter with a given key and value.
+        /// </summary>
+        /// <param name="key">The name of the parameter, possibly including the modifier</param>
+        /// <param name="value">The string representation of the parameter value</param>
         public void AddParameter(string key, string value)
         {
             if (key == null) throw new ArgumentNullException("key");
@@ -182,37 +220,65 @@ namespace Hl7.Fhir.Model
             Parameter.Add(BuildParamExtension(key,value));
         }
 
-        public void RemoveParameter(string key, bool ignoreModifier = false)
+        /// <summary>
+        /// Remove a parameter with a given name.
+        /// </summary>
+        /// <param name="key">The name of the parameter, possibly including the modifier</param>
+        /// <remarks><para>If the key includes a modifier, only that parameter will be removed. If
+        /// the key is just a parameter name, all parameters with that name will be removed, regardless
+        /// of modifiers attached to it.</para><para>No exception is thrown when the parameters were not found and nothing was removed.</para></remarks>
+        public void RemoveParameter(string key)
         {
             if (key == null) throw new ArgumentNullException("key");
 
             if (Parameter == null) return;
-            Parameter.RemoveAll( ParamsExtensions.MatchParam(key,ignoreModifier) );
+            Parameter.RemoveAll( ParamsExtensions.MatchParam(key) );
         }
 
+        /// <summary>
+        /// Searches for a parameter with the given name, and returns the
+        /// value of the parameter, if a single result was found.
+        /// </summary>
+        /// <param name="key">The name of the parameter, possibly including the modifier</param>
+        /// <returns>The value of the parameter with the given name. Will throw an 
+        /// exception if multiple parameters with the given name exist.</returns>
+        /// <remarks>If the key includes a modifier, the search will be for a parameter with the
+        /// given modifier, otherwise any parameter with the given name will be matched.</remarks>
         public string GetSingleValue(string key)
         {
             if (key == null) throw new ArgumentNullException("key");
-
             if (Parameter == null) return null;
 
-            var extension = Parameter.SingleOrDefault(key, ignoreModifier: false);
-            return GetParamValue(extension);
+            var extension = Parameter.SingleOrDefault(key);
+            return ExtractParamValue(extension);
         }
 
 
+        /// <summary>
+        /// Searches for all parameter with the given name, and returns a list
+        /// with the values of those parameters.
+        /// </summary>
+        /// <param name="key">The name of the parameter, possibly including the modifier</param>
+        /// <returns>A list of values of the parameters with the given name.</returns>
+        /// <remarks>If the key includes a modifier, the search will be for parameters with the
+        /// given modifier, otherwise any parameter with the given name will be matched.</remarks>
         public IEnumerable<string> GetValues(string key)
         {
             if (key == null) throw new ArgumentNullException("key");
-
             if (Parameter == null) return null;
 
-            var extension = Parameter.Where(key, ignoreModifier: false);
-
-            return extension.Select(ext => GetParamValue(ext));
+            var extension = Parameter.Where(key);
+            return extension.Select(ext => ExtractParamValue(ext));
         }
 
 
+        /// <summary>
+        /// Build an Extension instance with an Url indicating a
+        /// FHIR search parameter and a ValueString set to the given value.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static Extension BuildParamExtension(string key, string value)
         {
             if (key == null) throw new ArgumentNullException("key");
@@ -222,13 +288,18 @@ namespace Hl7.Fhir.Model
         }
 
 
-        internal static string GetParamValue(Extension extension)
+        public static string ExtractParamValue(Extension extension)
         {
             var element = extension != null ? extension.Value as FhirString : null;
             var value = element != null ? element.Value : null;
             return value;
         }
 
+        /// <summary>
+        /// Constructs an Url indicating a FHIR search parameter
+        /// </summary>
+        /// <param name="paramKey"></param>
+        /// <returns></returns>
         public static Uri BuildParamUri(string paramKey)
         {
             if (paramKey == null) throw new ArgumentNullException("paramName");
@@ -238,11 +309,18 @@ namespace Hl7.Fhir.Model
 
         private const string PARAMETERURLANDFRAGMENT = PARAMETERURL + "#";
 
-        public static string ExtractParamKey(Uri paramUri)
+        /// <summary>
+        /// Given a Extension containing a FHIR search parameter, returns the
+        /// name (and possibly modifier) of the parameter
+        /// </summary>
+        /// <param name="paramExt">An Extension containing a FHIR search parameter</param>
+        /// <returns>The name of the parameter, possibly including a modifier</returns>
+        public static string ExtractParamKey(Extension paramExt)
         {
-            if (paramUri == null) return null;
+            if (paramExt == null) throw new ArgumentNullException("paramExt");
+            if (paramExt.Url == null) throw new ArgumentException("Extension.url cannot be null", "paramExt");
 
-            var uriString = paramUri.ToString();
+            var uriString = paramExt.Url.ToString();
 
             if (uriString.StartsWith(PARAMETERURLANDFRAGMENT))
                 return uriString.Remove(0,PARAMETERURLANDFRAGMENT.Length);
@@ -258,13 +336,12 @@ namespace Hl7.Fhir.Model
     }
 
 
-    // Tuple<modifier,value>
     internal class IncludeCollection : ICollection<string>
     {
         public IncludeCollection(List<Extension> wrapped)
         {
             Wrapped = wrapped;
-            _matcher = ParamsExtensions.MatchParam(Query.SEARCH_PARAM_INCLUDE,ignoreModifier:false);
+            _matcher = ParamsExtensions.MatchParam(Query.SEARCH_PARAM_INCLUDE);
         }
 
         public List<Extension> Wrapped { get; private set; }
@@ -283,12 +360,12 @@ namespace Hl7.Fhir.Model
 
         public bool Contains(string item)
         {
-            return Wrapped.Any(ext => _matcher(ext) && Query.GetParamValue(ext) == item);
+            return Wrapped.Any(ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
         }
 
         public void CopyTo(string[] array, int arrayIndex)
         {
-            Wrapped.FindAll(_matcher).Select(ext => Query.GetParamValue(ext))
+            Wrapped.FindAll(_matcher).Select(ext => Query.ExtractParamValue(ext))
                 .ToArray<string>().CopyTo(array, arrayIndex);
         }
 
@@ -304,7 +381,7 @@ namespace Hl7.Fhir.Model
 
         public bool Remove(string item)
         {
-            var found = Wrapped.FirstOrDefault( ext => _matcher(ext) && Query.GetParamValue(ext) == item);
+            var found = Wrapped.FirstOrDefault( ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
             if(found == null) return false;
 
             return Wrapped.Remove(found);
@@ -312,7 +389,7 @@ namespace Hl7.Fhir.Model
 
         public IEnumerator<string> GetEnumerator()
         {
-            return Wrapped.FindAll(_matcher).Select(ext => Query.GetParamValue(ext)).GetEnumerator();
+            return Wrapped.FindAll(_matcher).Select(ext => Query.ExtractParamValue(ext)).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -325,31 +402,41 @@ namespace Hl7.Fhir.Model
 
     public static class ParamsExtensions
     {
-        public static IEnumerable<Extension> Where(this IEnumerable<Extension> pars, string key, bool ignoreModifier)
+        public static IEnumerable<Extension> Where(this IEnumerable<Extension> pars, string key)
         {
-            var match = MatchParam(key, ignoreModifier);
+            var match = MatchParam(key);
             return pars.Where( par => match(par) );
         }
 
-        public static Extension SingleOrDefault(this IEnumerable<Extension> pars, string key, bool ignoreModifier)
+        public static Extension SingleOrDefault(this IEnumerable<Extension> pars, string key)
         {
-            var match = MatchParam(key, ignoreModifier);
+            var match = MatchParam(key);
             return pars.SingleOrDefault(par => match(par));
         }
 
-        public static Extension Single(this IEnumerable<Extension> pars, string key, bool ignoreModifier)
+        public static Extension Single(this IEnumerable<Extension> pars, string key)
         {
-            var match = MatchParam(key, ignoreModifier);
+            var match = MatchParam(key);
             return pars.Single(par => match(par));
         }
 
-        internal static Predicate<Extension> MatchParam(string key, bool ignoreModifier)
+        internal static Predicate<Extension> MatchParam(string key)
         {
             var param = Query.BuildParamUri(key).ToString();
-            var paramWithModifier = Query.BuildParamUri(key).ToString() + Query.SEARCH_MODIFIERSEPARATOR;
 
-            return (Extension ext) => ext.Url.ToString() == param ||
-                (ignoreModifier && ext.Url.ToString().StartsWith(paramWithModifier));
+            if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR))
+            {
+                return (Extension ext) => ext.Url.ToString() == param;
+            }
+            else
+            {
+                // Add a modifier separator to the end if there's no modifier,
+                // this way we can assure we don't match just a prefix 
+                // (e.g. a param _querySpecial when looking for_query)
+                var paramWithSep = Query.BuildParamUri(key + Query.SEARCH_MODIFIERSEPARATOR).ToString();
+                return (Extension ext) => ext.Url.ToString().StartsWith(paramWithSep) ||
+                                (ext.Url.ToString() == param);
+            }
         }
     }
 }

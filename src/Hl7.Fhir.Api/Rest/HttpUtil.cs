@@ -49,30 +49,7 @@ namespace Hl7.Fhir.Rest
 
             return buffer.ToArray();
         }
-     
-
-        public static Tuple<string,string> SplitKeyValue(string text)
-        {
-            if(text == null) throw Error.ArgumentNull(text);
-
-            string key;
-            string value;
-
-            var eqPos = text.IndexOf('=');
-            if (eqPos == -1)
-            {
-                key = text;
-                value = null;
-            }
-            else
-            {
-                key = text.Substring(0, eqPos);
-                value = text.Substring(eqPos + 1);
-            }
-
-            return Tuple.Create(key, value);
-        }
-
+          
 
         public static ICollection<Tag> ParseCategoryHeader(string value)
         {

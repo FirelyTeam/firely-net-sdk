@@ -491,47 +491,73 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-               
+
+
+        /// <summary>
+        /// Search for Resources based on criteria specified in a Query resource
+        /// </summary>
+        /// <param name="q">The Query resource containing the search parameters</param>
+        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        public Bundle Search(Query q)
+        {
+            RestUrl url = new RestUrl(Endpoint);
+            url = url.Search(q);
+
+            return fetchBundle(url.Uri);
+        }
+
         
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
         /// </summary>
-        /// <param name="criteria">Optional. The search parameters to filter the resources on</param>
-        /// <param name="sort">Optional. The element to sort on</param>
+        /// <param name="criteria">Optional. The search parameters to filter the resources on. Each
+        /// given string is a combined key/value pair (separated by '=')</param>
         /// <param name="includes">Optional. A list of include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <typeparam name="TResource">The type of resource to list</typeparam>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
-            return internalSearch(typeof(TResource).GetCollectionName(), criteria, sort, includes, pageSize);
+            return Search(typeof(TResource).GetCollectionName(), criteria, includes, pageSize);
         }
+
 
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
         /// </summary>
         /// <param name="resource">The type of resource to search for</param>
-        /// <param name="criteria">Optional. The search parameters to filter the resources on</param>
-        /// <param name="sort">Optional. The element to sort on</param>
+        /// <param name="criteria">Optional. The search parameters to filter the resources on. Each
+        /// given string is a combined key/value pair (separated by '=')</param>
         /// <param name="includes">Optional. A list of include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
-        /// <typeparam name="TResource">The type of resource to list</typeparam>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-        /// <remarks>Except for 'resource', all parameters are optional, leaving all parameters empty will return an unfiltered 
-        /// list of all resources of the given Resource type</remarks>
-        public Bundle Search(string resource, Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+        /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+        /// of all resources of the given Resource type</remarks>
+        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
-            return internalSearch(resource, criteria, sort, includes, pageSize);
+            return Search(toQuery(resource, criteria, includes, pageSize));
         }
 
-        public Bundle WholeSystemSearch(Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+
+        /// <summary>
+        /// Search for Resources across the whol server that match the given criteria
+        /// </summary>
+        /// <param name="criteria">Optional. The search parameters to filter the resources on. Each
+        /// given string is a combined key/value pair (separated by '=')</param>
+        /// <param name="includes">Optional. A list of include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+        /// of all resources of the given Resource type</remarks>
+        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
-            return internalSearch(null, criteria, sort, includes, pageSize);
+            return Search(toQuery(null, criteria, includes, pageSize));
         }
+
 
         /// <summary>
         /// Search for resources based on a resource's id.
@@ -544,53 +570,57 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Bundle SearchById<TResource>(string id, string sort = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle SearchById<TResource>(string id, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
             if (id == null) throw Error.ArgumentNull("id");
 
-            return SearchById(typeof(TResource).GetCollectionName(), id, sort, includes, pageSize);
+            return SearchById(typeof(TResource).GetCollectionName(), id, includes, pageSize);
         }
 
-        public Bundle SearchById(string resource, string id, string sort = null, string[] includes = null, int? pageSize = null)
+
+        /// <summary>
+        /// Search for resources based on a resource's id.
+        /// </summary>
+        /// <param name="resource">The type of resource to search for</param>
+        /// <param name="id">The id of the resource to search for</param>
+        /// <param name="includes">Zero or more include paths</param>
+        /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
+        /// Bundle if the resource wasn't found.</returns>
+        /// <remarks>This operation is similar to Read, but additionally,
+        /// it is possible to specify include parameters to include resources in the bundle that the
+        /// returned resource refers to.</remarks>
+        public Bundle SearchById(string resource, string id, string[] includes = null, int? pageSize = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
-            return internalSearch(resource, new Criterium[] { Criterium.Parse(Query.SEARCH_PARAM_ID + "=" + id) }, sort, includes, pageSize);
+            string criterium = Query.SEARCH_PARAM_ID + "=" + id;
+            return Search(toQuery(resource, new string[] { criterium }, includes, pageSize));
         }
 
 
-        private Bundle internalSearch(string collection = null, Criterium[] criteria = null, string sort = null, string[] includes = null, int? pageSize = null)
+        private Query toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
-            RestUrl url = null;
+            Query q = new Query
+            {
+                ResourceType = collection,
+                Count = pageSize
+            };
 
-            if (collection != null)
-                // Since there is confusion between using /resource/?param, /resource?param, use
-                // the /resource/search?param instead
-                url = new RestUrl(Endpoint).Search(collection);
-            else
-                url = new RestUrl(Endpoint);
-
-            if (pageSize.HasValue)
-                url.AddParam(Query.SEARCH_PARAM_COUNT, pageSize.Value.ToString());
-
-            if (sort != null)
-                url.AddParam(Query.SEARCH_PARAM_SORT, sort);
+            if (includes != null)
+                foreach (var inc in includes) q.Include.Add(inc);
 
             if (criteria != null)
             {
-                foreach (var criterium in criteria)
-                    url.AddParam(HttpUtil.SplitKeyValue(criterium.ToString()));
+                foreach (var crit in criteria)
+                {
+                    var keyVal = crit.SplitLeft('=');
+                    q.AddParameter(keyVal.Item1,keyVal.Item2);
+                }
             }
-
-            if (includes != null)
-            {
-                foreach (string includeParam in includes)
-                    url.AddParam(Query.SEARCH_PARAM_INCLUDE, includeParam);
-            }
-
-            return fetchBundle(url.Uri);
+            return q;
         }
+
 
 
         /// <summary>

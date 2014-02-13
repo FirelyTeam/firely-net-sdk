@@ -103,7 +103,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\FhirRestOperationExtensions.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />

@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Search
 
             foreach (var criterium in criteria)
             {
-                var keyValue = HttpUtil.SplitKeyValue(criterium.ToString());
+                var keyValue = criterium.ToString().SplitLeft('=');
                 qry.AddParameter(keyValue.Item1, keyValue.Item2);
             }
 
@@ -71,29 +71,7 @@ namespace Hl7.Fhir.Search
         //{
             
         //}
-
-        public static void ExtractCriteria(this Query qry, out ICollection<Criterium> criteria )
-        {
-            throw new NotImplementedException();
-        }
-        
-        //private static bool isCriteriaParam(Uri paramUri)
-        //{
-        //    if (paramUri == null) return false;
-
-        //    var paramName = ExtractParamName(paramUri);
-
-        //    var modifIndex = paramName.IndexOf(HttpUtil.SEARCH_MODIFIERSEPARATOR);
-        //    if (modifIndex != -1)
-        //        paramName = paramName.Substring(0, modifIndex);
-
-        //    if (!String.IsNullOrEmpty(paramName))
-        //        return !paramName.StartsWith("_") ||
-        //               HttpUtil.CORE_SEARCH_CRITERIA.Contains(paramName);
-
-        //    return false;
-        //}
-
+    
     }
 
 

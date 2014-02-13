@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Support
 {
     public static class StringExtensions
     {
-        public static string[] SplitNotInQuotes(this string value, char separator)
+        internal static string[] SplitNotInQuotes(this string value, char separator)
         {
             var parts = Regex.Split(value, separator + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
                                 .Select(s => s.Trim());
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Support
             return parts.ToArray<string>();
         }
 
-        public static string[] SplitNotEscaped(this string value, char separator)
+        internal static string[] SplitNotEscaped(this string value, char separator)
         {
             String word = String.Empty;
             List<String> result = new List<string>();
@@ -44,6 +44,21 @@ namespace Hl7.Fhir.Support
             result.Add(word);
 
             return result.ToArray<string>();
+        }
+
+        internal static Tuple<string,string> SplitLeft(this string text, char separator)
+        {
+            var pos = text.IndexOf(separator);
+
+            if (pos == -1)
+                return Tuple.Create(text, (string)null);     // Nothing to split
+            else
+            {
+                var key = text.Substring(0, pos);
+                var value = text.Substring(pos + 1);
+
+                return Tuple.Create(key, value);
+            }
         }
     }
 }

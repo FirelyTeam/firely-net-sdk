@@ -89,8 +89,10 @@ namespace Hl7.Fhir.Rest
         {
             bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
 
-            var location = needsFormatParam ? _location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value))
-                                : _location;
+            var location = new RestUrl(_location);
+
+            if(needsFormatParam)
+                location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
 
             var request = createRequest(location.ToString(), _method);
 
