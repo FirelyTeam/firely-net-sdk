@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Rest
             };
 
             if (includes != null)
-                foreach (var inc in includes) q.Include.Add(inc);
+                foreach (var inc in includes) q.Includes.Add(inc);
 
             if (criteria != null)
             {

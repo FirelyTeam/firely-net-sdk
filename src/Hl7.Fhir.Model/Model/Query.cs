@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var ext = Parameter.SingleOrDefault(Query.SEARCH_PARAM_SORT);
+                var ext = Parameter.SingleWithName(Query.SEARCH_PARAM_SORT);
                 if (ext == null) return null;
 
                 var key = ExtractParamKey(ext);
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         /// Returns a modifiable collection of _include parameters. These are used to include
         /// resources in the search result that the matched resources refer to.
         /// </summary>
-        public ICollection<string> Include
+        public ICollection<string> Includes
         {
             get
             {
@@ -210,7 +210,8 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="key">The name of the parameter, possibly including the modifier</param>
         /// <param name="value">The string representation of the parameter value</param>
-        public void AddParameter(string key, string value)
+        /// <returns>this (Query), so you can chain AddParameter calls</returns>
+        public Query AddParameter(string key, string value)
         {
             if (key == null) throw new ArgumentNullException("key");
             if (value == null) throw new ArgumentNullException("value");
@@ -218,7 +219,10 @@ namespace Hl7.Fhir.Model
             if (Parameter == null) Parameter = new List<Extension>();
 
             Parameter.Add(BuildParamExtension(key,value));
+
+            return this;
         }
+
 
         /// <summary>
         /// Remove a parameter with a given name.
@@ -249,7 +253,7 @@ namespace Hl7.Fhir.Model
             if (key == null) throw new ArgumentNullException("key");
             if (Parameter == null) return null;
 
-            var extension = Parameter.SingleOrDefault(key);
+            var extension = Parameter.SingleWithName(key);
             return ExtractParamValue(extension);
         }
 
@@ -267,7 +271,7 @@ namespace Hl7.Fhir.Model
             if (key == null) throw new ArgumentNullException("key");
             if (Parameter == null) return null;
 
-            var extension = Parameter.Where(key);
+            var extension = Parameter.WithName(key);
             return extension.Select(ext => ExtractParamValue(ext));
         }
 
@@ -402,22 +406,16 @@ namespace Hl7.Fhir.Model
 
     public static class ParamsExtensions
     {
-        public static IEnumerable<Extension> Where(this IEnumerable<Extension> pars, string key)
+        public static IEnumerable<Extension> WithName(this IEnumerable<Extension> pars, string key)
         {
             var match = MatchParam(key);
             return pars.Where( par => match(par) );
         }
 
-        public static Extension SingleOrDefault(this IEnumerable<Extension> pars, string key)
+        public static Extension SingleWithName(this IEnumerable<Extension> pars, string key)
         {
             var match = MatchParam(key);
             return pars.SingleOrDefault(par => match(par));
-        }
-
-        public static Extension Single(this IEnumerable<Extension> pars, string key)
-        {
-            var match = MatchParam(key);
-            return pars.Single(par => match(par));
         }
 
         internal static Predicate<Extension> MatchParam(string key)

@@ -12,36 +12,46 @@ namespace Hl7.Fhir.Test.Search
     [TestClass]
     public class QueryExtensionTests
     {
-        //[TestMethod]
-        //public void ManageSearchResult()
-        //{
-        //    var q = new Query();
-        //    q.OrderBy("adsfadf").LimitPageSizeTo(20);
+        [TestMethod]
+        public void ManageSearchResult()
+        {
+            var q = new Query()
+                .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
+                .SummaryOnly().Include("Patient.managingOrganization")
+                .LimitTo(20);
 
-        //    Assert.AreEqual(1, q.Parameter.Count(ext => ext.Url.ToString().Contains("_sort")));
-        //    Assert.AreEqual(1, q.GetParameter("_sort:desc").Count());
+            Assert.AreEqual("Patient", q.ResourceType);
+            
+            var p = q.Parameter.SingleWithName("name");
+            Assert.AreEqual("name:exact", Query.ExtractParamKey(p));
+            Assert.AreEqual("ewout", Query.ExtractParamValue(p));
 
-        //}
+            var o = q.Sort;
+            Assert.AreEqual("birthDate", o.Item1);
+            Assert.AreEqual(SortOrder.Descending, o.Item2);
 
-        //[TestMethod]
-        //public void ReapplySingleParam()
-        //{
-        //    var q = new Query();
-        //    q.Custom("mySearch").OrderBy("adsfadf").OrderBy("q", Hl7.Fhir.Search.SortOrder.Descending)
-        //            .LimitPageSizeTo(10).LimitPageSizeTo(20).Custom("miSearch");
+            Assert.IsTrue(q.Summary);
+            Assert.IsTrue(q.Includes.Contains("Patient.managingOrganization"));
+            Assert.AreEqual(20,q.Count);
+        }
 
-        //    Assert.AreEqual(1, q.Parameter.Count(ext => ext.Url.ToString().Contains("_sort")));
-        //    Assert.AreEqual(1, q.GetParameter("_sort:desc").Count());
+        [TestMethod]
+        public void ReapplySingleParam()
+        {
+            var q = new Query()
+                .Custom("mySearch").OrderBy("adsfadf").OrderBy("q", SortOrder.Descending)
+                    .LimitTo(10).LimitTo(20).Custom("miSearch").SummaryOnly().SummaryOnly(false);
 
-        //    Assert.AreEqual(1, q.Parameter.Count(ext => ext.Url.ToString().Contains("_count")));
-        //    Assert.AreEqual(20, q.GetSingleParameter("_count"));
+            Assert.AreEqual("miSearch", q.QueryName);
+            Assert.IsFalse(q.Summary);
 
-        //    Assert.AreEqual(1, q.Parameter.Count(ext => ext.Url.ToString().Contains("_query")));
-        //    Assert.AreEqual("miSearch", q.GetSingleParameter("_query"));
-        //}
+            var o = q.Sort;
+            Assert.AreEqual("q", o.Item1);
+            Assert.AreEqual(SortOrder.Descending, o.Item2);
 
+            Assert.AreEqual(20, q.Count);
 
-       
-        
+            Assert.IsFalse(q.Summary);
+        }   
     }
 }

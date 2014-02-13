@@ -9,35 +9,53 @@ using System.Text;
 namespace Hl7.Fhir.Search
 {
     public static class QueryExtensions
-    {     
-        /// <summary>
-        /// Add one or more search parameters to query on
-        /// </summary>
-        /// <param name="qry"></param>
-        /// <param name="criteria"></param>
-        public static Query Where(this Query qry, IEnumerable<Criterium> criteria)
+    {
+        public static Query Include(this Query qry, string path)
         {
-            if (criteria == null) throw Error.ArgumentNull("criteria");
+            qry.Includes.Add(path);
 
-            foreach (var criterium in criteria)
-            {
-                var keyValue = criterium.ToString().SplitLeft('=');
-                qry.AddParameter(keyValue.Item1, keyValue.Item2);
-            }
-
-            // Just for chaining calls
             return qry;
         }
 
-        public static Query Where(this Query qry, params Criterium[] criteria)
+        public static Query For(this Query qry, string resourceName)
         {
-            if (criteria == null) throw Error.ArgumentNull("criteria");
+            qry.ResourceType = resourceName;
 
-            qry.Where((IEnumerable<Criterium>)criteria);
-
-            // Just for chaining calls
+            
             return qry;
         }
+
+        public static Query Where(this Query qry, string criterium)
+        {
+            var keyVal = criterium.SplitLeft('=');
+            qry.AddParameter(keyVal.Item1, keyVal.Item2);
+
+            return qry;
+        }
+
+        //public static Query Where(this Query qry, IEnumerable<Criterium> criteria)
+        //{
+        //    if (criteria == null) throw Error.ArgumentNull("criteria");
+
+        //    foreach (var criterium in criteria)
+        //    {
+        //        var keyValue = criterium.ToString().SplitLeft('=');
+        //        qry.AddParameter(keyValue.Item1, keyValue.Item2);
+        //    }
+
+        //    // Just for chaining calls
+        //    return qry;
+        //}
+
+        //public static Query Where(this Query qry, params Criterium[] criteria)
+        //{
+        //    if (criteria == null) throw Error.ArgumentNull("criteria");
+
+        //    qry.Where((IEnumerable<Criterium>)criteria);
+
+        //    // Just for chaining calls
+        //    return qry;
+        //}
 
         public static Query Custom(this Query qry, string customQueryName)
         {
@@ -55,7 +73,7 @@ namespace Hl7.Fhir.Search
             return qry;
         }
 
-        public static Query LimitPageSizeTo(this Query qry, int count)
+        public static Query LimitTo(this Query qry, int count)
         {
             qry.Count = count;
             return qry;
@@ -73,8 +91,4 @@ namespace Hl7.Fhir.Search
         //}
     
     }
-
-
-
-
 }

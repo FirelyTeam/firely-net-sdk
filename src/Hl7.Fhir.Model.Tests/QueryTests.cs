@@ -42,37 +42,37 @@ namespace HL7.Fhir.Tests
             q.Count = 31;
             q.Summary = true;
             q.Sort = Tuple.Create("sorted", SortOrder.Descending);
-            q.Include.Add("Patient.name");
-            q.Include.Add("Observation.subject");
+            q.Includes.Add("Patient.name");
+            q.Includes.Add("Observation.subject");
 
             Assert.AreEqual("special", q.QueryName);
             Assert.AreEqual("Patient", q.ResourceType);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(true, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort);
-            Assert.AreEqual(2, q.Include.Count);
-            Assert.AreEqual("Patient.name", q.Include.First());
-            Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
+            Assert.AreEqual(2, q.Includes.Count);
+            Assert.AreEqual("Patient.name", q.Includes.First());
+            Assert.AreEqual("Observation.subject", q.Includes.Skip(1).First());
 
             q.QueryName = "special2";
             q.ResourceType = "Observation";
             q.Count = 32;
             q.Summary = false;
             q.Sort = Tuple.Create("sorted2", SortOrder.Ascending);
-            q.Include.Add("Patient.name2");
-            q.Include.Remove("Patient.name");
-            q.Include.Add("Observation.subject2");
+            q.Includes.Add("Patient.name2");
+            q.Includes.Remove("Patient.name");
+            q.Includes.Add("Observation.subject2");
 
             Assert.AreEqual("special2", q.QueryName);
             Assert.AreEqual("Observation", q.ResourceType);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(false, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort);
-            Assert.AreEqual(3, q.Include.Count);
-            Assert.IsTrue(q.Include.Contains("Patient.name2"));
-            Assert.IsFalse(q.Include.Contains("Patient.name"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject2"));           
+            Assert.AreEqual(3, q.Includes.Count);
+            Assert.IsTrue(q.Includes.Contains("Patient.name2"));
+            Assert.IsFalse(q.Includes.Contains("Patient.name"));
+            Assert.IsTrue(q.Includes.Contains("Observation.subject"));
+            Assert.IsTrue(q.Includes.Contains("Observation.subject2"));           
         }
     }
 }
