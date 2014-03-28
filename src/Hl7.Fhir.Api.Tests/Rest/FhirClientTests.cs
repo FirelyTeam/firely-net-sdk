@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Tests
     public class FhirClientTests
     {
      
-        Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
-        //Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-      //  Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
-        //Uri testEndpoint = new Uri("https://api.fhir.me");
+		//Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+		//Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+		//Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+		Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+		//Uri testEndpoint = new Uri("https://api.fhir.me");
 
         [TestMethod]
         public void FetchConformance()
@@ -34,12 +34,12 @@ namespace Hl7.Fhir.Tests
             var c = entry.Resource;
 
             Assert.IsNotNull(c);
-            Assert.AreEqual("Spark.Service", c.Software.Name);
+            // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, c.Rest[0].Mode.Value);
             Assert.AreEqual(HttpStatusCode.OK, client.LastResponseDetails.Result);
 
             // Does't currently work on Grahame's server
-            //Assert.AreEqual(ContentType.XML_CONTENT_HEADER, client.LastResponseDetails.ContentType.ToLower());
+            Assert.AreEqual(ContentType.XML_CONTENT_HEADER, client.LastResponseDetails.ContentType.ToLower());
         }
 
 
@@ -162,11 +162,11 @@ namespace Hl7.Fhir.Tests
 
             // Forward, then backwards
             // Does not work on Grahame's server yet
-            //Assert.IsNotNull(client.Continue(result,PageDirection.Next));
-            //result = client.Continue(result, PageDirection.Previous);
-            //Assert.IsNotNull(result);
-            //prevId = result.Entries.First().Id;
-            //Assert.AreEqual(firstId, prevId);
+			//Assert.IsNotNull(client.Continue(result,PageDirection.Next));
+			//result = client.Continue(result, PageDirection.Previous);
+			//Assert.IsNotNull(result);
+			//prevId = result.Entries.First().Id;
+			//Assert.AreEqual(firstId, prevId);
         }
 
 
