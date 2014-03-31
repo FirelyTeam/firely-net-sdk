@@ -30,11 +30,13 @@
 
 
 
+using Hl7.Fhir.Introspection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -80,7 +82,7 @@ namespace Hl7.Fhir.Model
 
         public Query()
         {
-            Id = "urn:uuid" + Guid.NewGuid();
+            Identifier = new Uri("urn:uuid:" + Guid.NewGuid());
             Parameter = new List<Extension>();
         }
 
@@ -88,6 +90,8 @@ namespace Hl7.Fhir.Model
         /// Gets or sets the special _query search parameter which asks the server to run a 
         /// specific named query instead of the standard FHIR search.
         /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public string QueryName
         {
             get
@@ -108,6 +112,8 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <remarks>If this parameter is null, the search will be a non-restricted search
         /// across all resources.</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public string ResourceType
         {
             get
@@ -129,6 +135,8 @@ namespace Hl7.Fhir.Model
         /// <remark>The number of resources returned from the search may exceed this
         /// parameter, since additional _included resources for the matches are returned
         /// as well</remark>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public int? Count
         {
             get
@@ -149,6 +157,8 @@ namespace Hl7.Fhir.Model
         /// the server will not return all elements in each matching resource, but just
         /// the most important ones.
         /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public bool Summary
         {
             get
@@ -167,6 +177,8 @@ namespace Hl7.Fhir.Model
         /// Gets or sets the _sort parameter, to modify the sort order of the search result.
         /// Uses a tuple (name, sortorder).
         /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public Tuple<string,SortOrder> Sort
         {
             get
@@ -197,6 +209,8 @@ namespace Hl7.Fhir.Model
         /// Returns a modifiable collection of _include parameters. These are used to include
         /// resources in the search result that the matched resources refer to.
         /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public ICollection<string> Includes
         {
             get

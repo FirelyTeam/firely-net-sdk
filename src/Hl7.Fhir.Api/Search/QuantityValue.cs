@@ -52,12 +52,12 @@ namespace Hl7.Fhir.Search
                 throw new FormatException("Quantity needs to specify a number");
                 
             var number = triple[0].ConvertTo<Decimal>();
-            var ns = triple[1] != String.Empty ? triple[1] : null;
+            var ns = triple[1] != String.Empty ? StringValue.UnescapeString(triple[1]) : null;
 
             if (triple[2] == String.Empty)
                 throw new FormatException("Quantity needs to specify a unit");
 
-            var unit = triple[2];
+            var unit = StringValue.UnescapeString(triple[2]);
  
             return new QuantityValue(number,ns,unit);
         }     

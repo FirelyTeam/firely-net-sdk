@@ -53,19 +53,23 @@ namespace Hl7.Fhir.Search
 
             bool hasNamespace = pair.Length == 2;
 
+            string pair0 = StringValue.UnescapeString(pair[0]);
+
             if (hasNamespace)
             {
                 if(pair[1] == String.Empty)
                     throw new FormatException("Token query parameters should at least specify a value after the '|'");
-                
-                if (pair[0] == String.Empty)
-                    return new TokenValue(pair[1], matchAnyNamespace: false );
+
+                string pair1 = StringValue.UnescapeString(pair[1]);
+
+                if (pair0 == String.Empty)
+                    return new TokenValue(pair1, matchAnyNamespace: false );
                 else
-                    return new TokenValue(pair[1], pair[0]);
+                    return new TokenValue(pair1, pair0);
             }
             else
             {
-                return new TokenValue(pair[0], matchAnyNamespace: true);
+                return new TokenValue(pair0, matchAnyNamespace: true);
             }            
         }     
     }

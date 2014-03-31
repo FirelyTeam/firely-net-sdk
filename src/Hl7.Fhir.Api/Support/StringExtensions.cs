@@ -24,21 +24,26 @@ namespace Hl7.Fhir.Support
 
             for (int i = 0; i < value.Length; i++)
             {
-                if (value[i] == '\\' && !seenEscape)
+                if (value[i] == '\\')
                 {
                     seenEscape = true;
                     continue;
                 }
-                else if (value[i] == separator && !seenEscape)
+               
+                if (value[i] == separator && !seenEscape)
                 {
                     result.Add(word);
                     word = String.Empty;
+                    continue;
                 }
-                else
+
+                if (seenEscape)
                 {
-                    word += value[i];
+                    word += '\\';
                     seenEscape = false;
                 }
+
+                word += value[i];
             }
 
             result.Add(word);

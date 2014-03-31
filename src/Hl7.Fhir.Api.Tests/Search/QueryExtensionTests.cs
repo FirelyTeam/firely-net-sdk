@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Search;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace Hl7.Fhir.Test.Search
                 .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
                 .SummaryOnly().Include("Patient.managingOrganization")
                 .LimitTo(20);
+
+            var x = FhirSerializer.SerializeResourceToXml(q);
+            Console.WriteLine(x);
 
             Assert.AreEqual("Patient", q.ResourceType);
             

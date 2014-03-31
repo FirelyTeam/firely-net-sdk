@@ -72,7 +72,7 @@ namespace HL7.Fhir.Tests
             Assert.IsTrue(q.Includes.Contains("Patient.name2"));
             Assert.IsFalse(q.Includes.Contains("Patient.name"));
             Assert.IsTrue(q.Includes.Contains("Observation.subject"));
-            Assert.IsTrue(q.Includes.Contains("Observation.subject2"));           
+            Assert.IsTrue(q.Includes.Contains("Observation.subject2"));
         }
     }
 }

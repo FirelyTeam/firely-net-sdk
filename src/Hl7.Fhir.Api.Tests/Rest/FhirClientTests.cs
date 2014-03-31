@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Tests
     public class FhirClientTests
     {
      
-        Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
-        //Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-      //  Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+     //   Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+       // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         //Uri testEndpoint = new Uri("https://api.fhir.me");
 
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>(new Uri("Location/1"));
+            var loc = client.Read<Location>("Location/1");
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 

@@ -208,6 +208,20 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
         }
 
+        /// <summary>
+        /// Fetches a typed resource from a FHIR resource endpoint.
+        /// </summary>
+        /// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+        /// Resource url.</param>
+        /// <typeparam name="TResource">The type of resource to read</typeparam>
+        /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
+        /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
+        /// url, it must reference an address within the endpoint.</returns>
+        public ResourceEntry<TResource> Read<TResource>(string location) where TResource : Resource, new()
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
+        }
 
         /// <summary>
         /// Reads a resource from a FHIR resource endpoint.
@@ -228,6 +242,20 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry(collection));
         }
 
+        /// <summary>
+        /// Reads a resource from a FHIR resource endpoint.
+        /// </summary>
+        /// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+        /// Resource url.</param>
+        /// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
+        /// object, must be cast to the correct Resource type to access its properties.
+        /// The specified may be relative or absolute, if it is an abolute
+        /// url, it must reference an address within the endpoint.</returns>
+        public ResourceEntry Read(string location)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            return Read(new Uri(location, UriKind.RelativeOrAbsolute));
+        }
 
         private static string getCollectionFromLocation(Uri location)
         {
@@ -297,6 +325,8 @@ namespace Hl7.Fhir.Rest
         }
 
      
+        // TODO: Have Update() without generic params.
+
         /// <summary>
         /// Delete a resource at the given endpoint.
         /// </summary>
@@ -345,6 +375,9 @@ namespace Hl7.Fhir.Rest
 
             return internalHistory(collection, null, since, pageSize);
         }
+
+
+        //TODO: History without generics
 
 
         /// <summary>
@@ -841,6 +874,8 @@ namespace Hl7.Fhir.Rest
         {
             request.UseFormatParameter = this.UseFormatParam;
             var response = request.GetResponse(PreferredFormat);
+
+            LastResponseDetails = response;
 
             if (success.Contains(response.Result))
                 return onSuccess(response);

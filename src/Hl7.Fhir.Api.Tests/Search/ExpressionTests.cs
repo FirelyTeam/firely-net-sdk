@@ -9,6 +9,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Hl7.Fhir.Search;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Tests
 {
@@ -237,6 +238,39 @@ namespace Hl7.Fhir.Tests
             Assert.IsNull(p7.Namespace);
             Assert.AreEqual("mg", p7.Unit);
         }
+
+
+        [TestMethod]
+        public void SplitNotEscaped()
+        {
+            var res = "hallo".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { "hallo" });
+
+            res = "part1$part2".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { "part1", "part2" });
+
+            res = "part1$".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { "part1", String.Empty });
+
+            res = "$part2".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { String.Empty,"part2" });
+
+            res = "$".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { String.Empty, String.Empty });
+
+            res = "a$$c".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { "a", String.Empty, "c" });
+
+            res = @"p\@rt1$p\@rt2".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { @"p\@rt1", @"p\@rt2" });
+
+            res = @"mes\$age1$mes\$age2".SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { @"mes\$age1", @"mes\$age2" });
+
+            res = String.Empty.SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { String.Empty });
+        }
+
 
         [TestMethod]
         public void HandleReferenceParam()

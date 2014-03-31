@@ -133,7 +133,6 @@
     <Compile Include="Search\StringValue.cs" />
     <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
-    <Compile Include="Rest\UriParamExtensions.cs" />
     <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
