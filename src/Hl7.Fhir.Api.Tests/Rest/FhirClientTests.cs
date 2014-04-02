@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Tests
     public class FhirClientTests
     {
      
-     //   Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
-       //Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-       Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
-        //Uri testEndpoint = new Uri("https://api.fhir.me");
+        Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+        // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+        // Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        // Uri testEndpoint = new Uri("https://api.fhir.me");
 
         [TestMethod]
         public void FetchConformance()
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests
             client.UseFormatParam = true;
             client.PreferredFormat = ResourceFormat.Json;
 
-            var loc = client.Read(new Uri("Patient/1"));
+            var loc = client.Read("Patient/1");
 
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
         }
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                var random = client.Read(new Uri("Gibberish/45qq54", UriKind.Relative));
+                var random = client.Read(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
             catch (FhirOperationException)
@@ -98,11 +98,11 @@ namespace Hl7.Fhir.Tests
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>(new Uri("Patient/1"));
+            var loc = client.Read<Location>(new Uri("Location/1", UriKind.Relative));
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
 
-            var ri = ResourceIdentity.Build(testEndpoint, "Patient", "1");
+            var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
             loc = client.Read<Location>(ri);
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Tests
             FhirClient client = new FhirClient(testEndpoint);
             var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
 
-            var fe = client.Create<Organization>(furore, tags:tags);
+            var fe = client.Create<Organization>(furore, tags:tags, refresh: true);
 
             Assert.IsNotNull(furore);
             Assert.IsNotNull(fe);
@@ -204,16 +204,16 @@ namespace Hl7.Fhir.Tests
 
             fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
 
-            var fe2 = client.Update(fe);
-
+            var fe2 = client.Update(fe, true);
+             
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
 
             //TODO: Fix this bug (Issue #11 in Github)
-            //Assert.IsNotNull(fe2.Tags);
-            //Assert.AreEqual(1, fe2.Tags.Count());
-            //Assert.AreEqual(fe2.Tags.First(), tags[0]);
+            Assert.IsNotNull(fe2.Tags);
+            Assert.AreEqual(1, fe2.Tags.Count());
+            Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
             client.Delete(fe2);
 
@@ -283,17 +283,17 @@ namespace Hl7.Fhir.Tests
         //}
 
 
-        [TestMethod]
+        [TestMethod] 
         public void ReadTags()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
             var tags = new List<Tag>() { new Tag("http://readtag.nu.nl", Tag.FHIRTAGSCHEME_GENERAL, "readTagTest") };
+            var identity = ResourceIdentity.Build("Location", "1");
 
-            var ri = ResourceIdentity.Build("Location", "1");
+            client.AffixTags(identity, tags);
 
-            client.AffixTags(ri,tags);
-            var affixedEntry = client.Read(ri);
+            var affixedEntry = client.Read(identity);
             var list = client.WholeSystemTags();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Tests
             list = client.Tags(affixedEntry.SelfLink);
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            client.DeleteTags(affixedEntry.SelfLink,tags);
+            client.DeleteTags(affixedEntry.SelfLink, tags);
             //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         }
     }
