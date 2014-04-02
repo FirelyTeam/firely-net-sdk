@@ -17,14 +17,22 @@ namespace Hl7.Fhir.Test
     [TestClass]
     public class BundleTests
     {
+        private const string testmap = @"c:\temp\";
+
+        [TestInitialize]
+        public void Init()
+        {
+            Directory.CreateDirectory(testmap);
+        }
+
         [TestMethod]
         public void SerializeBundleXml()
         {
             Bundle b = createTestBundle();
             var actual = FhirSerializer.SerializeBundleToXml(b);
 
-            File.WriteAllText("c:\\temp\\bundleE.xml", testBundleAsXml);
-            File.WriteAllText("c:\\temp\\bundleA.xml", actual);
+            File.WriteAllText(testmap+"bundleE.xml", testBundleAsXml);
+            File.WriteAllText(testmap+"bundleA.xml", actual);
 
             Assert.AreEqual(testBundleAsXml, actual);
         }
@@ -36,8 +44,8 @@ namespace Hl7.Fhir.Test
             var actual = FhirSerializer.SerializeBundleEntryToXml(re);
             actual = cleanupXml(actual);
 
-            File.WriteAllText("c:\\temp\\rentryE.xml", testResourceEntryAsXml);
-            File.WriteAllText("c:\\temp\\rentryA.xml", actual);
+            File.WriteAllText(testmap+"rentryE.xml", testResourceEntryAsXml);
+            File.WriteAllText(testmap+"rentryA.xml", actual);
 
             Assert.AreEqual(testResourceEntryAsXml, actual);
         }
@@ -49,8 +57,8 @@ namespace Hl7.Fhir.Test
             var actual = FhirSerializer.SerializeBundleEntryToXml(re);
             actual = cleanupXml(actual);
 
-            File.WriteAllText("c:\\temp\\dentryE.xml", testDeletedEntryAsXml);
-            File.WriteAllText("c:\\temp\\dentryA.xml", actual);
+            File.WriteAllText(testmap+"dentryE.xml", testDeletedEntryAsXml);
+            File.WriteAllText(testmap+"dentryA.xml", actual);
 
             Assert.AreEqual(testDeletedEntryAsXml, actual);
         }
@@ -62,8 +70,8 @@ namespace Hl7.Fhir.Test
             var actual = FhirSerializer.SerializeBundleEntryToXml(re);
             actual = cleanupXml(actual);
 
-            File.WriteAllText("c:\\temp\\bentryE.xml", testBinaryEntryAsXml);
-            File.WriteAllText("c:\\temp\\bentryA.xml", actual);
+            File.WriteAllText(testmap + "bentryE.xml", testBinaryEntryAsXml);
+            File.WriteAllText(testmap + "bentryA.xml", actual);
 
             Assert.AreEqual(testBinaryEntryAsXml, actual);
         }
@@ -74,8 +82,8 @@ namespace Hl7.Fhir.Test
             var re = createTestResourceEntry();
             var actual = FhirSerializer.SerializeBundleEntryToJson(re);
 
-            File.WriteAllText("c:\\temp\\rentryE.json", testResourceEntryAsJson);
-            File.WriteAllText("c:\\temp\\rentryA.json", actual);
+            File.WriteAllText(testmap + "rentryE.json", testResourceEntryAsJson);
+            File.WriteAllText(testmap + "rentryA.json", actual);
 
             Assert.AreEqual(testResourceEntryAsJson, actual);
         }
@@ -86,8 +94,8 @@ namespace Hl7.Fhir.Test
             var re = createTestDeletedEntry();
             var actual = FhirSerializer.SerializeBundleEntryToJson(re);
 
-            File.WriteAllText("c:\\temp\\dentryE.json", testDeletedEntryAsJson);
-            File.WriteAllText("c:\\temp\\dentryA.json", actual);
+            File.WriteAllText(testmap + "dentryE.json", testDeletedEntryAsJson);
+            File.WriteAllText(testmap + "dentryA.json", actual);
 
             Assert.AreEqual(testDeletedEntryAsJson, actual);
         }
@@ -97,9 +105,9 @@ namespace Hl7.Fhir.Test
         {
             var re = createTestBinaryEntry();
             var actual = FhirSerializer.SerializeBundleEntryToJson(re);
- 
-            File.WriteAllText("c:\\temp\\bentryE.json", testBinaryEntryAsJson);
-            File.WriteAllText("c:\\temp\\bentryA.json", actual);
+
+            File.WriteAllText(testmap + "bentryE.json", testBinaryEntryAsJson);
+            File.WriteAllText(testmap + "bentryA.json", actual);
 
             Assert.AreEqual(testBinaryEntryAsJson, actual);
         }
@@ -117,8 +125,8 @@ namespace Hl7.Fhir.Test
             Bundle b = createTestBundle();
             var actual = FhirSerializer.SerializeBundleToJson(b);
 
-            File.WriteAllText("c:\\temp\\bundleE.json", testBundleAsJson);
-            File.WriteAllText("c:\\temp\\bundleA.json", actual);
+            File.WriteAllText(testmap + "bundleE.json", testBundleAsJson);
+            File.WriteAllText(testmap + "bundleA.json", actual);
 
             Assert.AreEqual(testBundleAsJson, actual);
         }

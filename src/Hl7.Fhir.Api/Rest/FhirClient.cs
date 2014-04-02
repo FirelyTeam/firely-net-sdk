@@ -75,12 +75,15 @@ namespace Hl7.Fhir.Rest
             // If the location is absolute, verify whether it is within the endpoint
             if (location.IsAbsoluteUri)
             {
-                if (!new RestUrl(Endpoint).IsEndpointFor(location)) 
+                if (!new RestUrl(Endpoint).IsEndpointFor(location))
                     throw Error.Argument("location", "Url is not located on this FhirClient's endpoint");
             }
             else
+            {
                 // Else, make location absolute within the endpoint
-                location = new Uri(Endpoint, location);
+                //location = new Uri(Endpoint, location);
+                location = new RestUrl(Endpoint).AddPath(location).Uri;
+            }
 
             return location;
         }
@@ -139,7 +142,6 @@ namespace Hl7.Fhir.Rest
             return internalCreate<TResource>(resource, tags, id, refresh);
         }
 
-
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
         {
             var collection = typeof(TResource).GetCollectionName();
@@ -160,7 +162,11 @@ namespace Hl7.Fhir.Rest
 
             req.SetBody(resource, PreferredFormat);
             if(tags != null) req.SetTagsInHeader(tags);
-            var entry = doRequest(req, id == null ? HttpStatusCode.OK : HttpStatusCode.Created, resp => resp.BodyAsEntry<TResource>());
+            FhirResponse response = doRequest(req, id == null ? HttpStatusCode.Created : HttpStatusCode.OK, r => r);
+
+            ResourceEntry<TResource> entry = (ResourceEntry<TResource>) ResourceEntry.Create(resource);
+            entry.Links.SelfLink = new ResourceIdentity(response.Location);
+
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) entry = Refresh(entry, versionSpecific: true);
@@ -204,7 +210,8 @@ namespace Hl7.Fhir.Rest
         {
             if (location == null) throw Error.ArgumentNull("location");
 
-            var req = new FhirRequest(makeAbsolute(location));                
+            var req = new FhirRequest(makeAbsolute(location));  
+            
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
         }
 
@@ -290,7 +297,6 @@ namespace Hl7.Fhir.Rest
         //    return Read<TResource>(ri);
         //}
 
-
         /// <summary>
         /// Update (or create) a resource at a given endpoint
         /// </summary>
@@ -316,7 +322,9 @@ namespace Hl7.Fhir.Rest
             if (entry.SelfLink != null) req.SetContentLocation(entry.SelfLink);
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
-            var updated = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, resp => resp.BodyAsEntry<TResource>());
+            FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
+            var updated = new ResourceEntry<TResource>();
+            updated.Links.SelfLink = new ResourceIdentity(response.Location);
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) updated = Refresh(updated, versionSpecific: true);
@@ -798,7 +806,7 @@ namespace Hl7.Fhir.Rest
 
         private IEnumerable<Tag> internalGetTags(string collection, string id, string version)
         {
-            RestUrl location = null;
+            RestUrl location = new RestUrl(this.Endpoint);
 
             if(collection == null)
                 location = location.ServerTags();

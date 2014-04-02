@@ -13,11 +13,9 @@ namespace Hl7.Fhir.Rest
         private UriBuilder _builder;
         private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
 
-
         public RestUrl(RestUrl url) : this(url.Uri)
         {
         }
-
         public RestUrl(Uri url)
         {
             if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
@@ -30,12 +28,9 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(_builder.Query))
                 _parameters = new List<Tuple<string,string>>( HttpUtil.SplitParams(_builder.Query) ); 
         }
-
-
         public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
         {
         }
-
 
         public Uri Uri 
         { 
@@ -54,7 +49,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
         private static string delimit(string path)
         {
             return path.EndsWith(@"/") ? path : path + @"/";
@@ -63,7 +57,6 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        
         
         /// <summary>
         /// Add additional components to the end of the RestUrl
@@ -77,6 +70,15 @@ namespace Hl7.Fhir.Rest
             string _components = string.Join("/", components).Trim('/');
             _builder.Path = delimit(_builder.Path)+ _components;
             return this;
+        }
+
+        public RestUrl AddPath(Uri uri)
+        {
+            if (!uri.IsAbsoluteUri)
+            {
+                return AddPath(uri.ToString());
+            }
+            else throw new ArgumentException("An absolute path cannot be added to a rest URL.");
         }
 
         /// <summary>
