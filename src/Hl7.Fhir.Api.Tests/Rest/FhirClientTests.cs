@@ -20,8 +20,8 @@ namespace Hl7.Fhir.Tests
     {
      
      //   Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
-        Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-       // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+       //Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+       Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         //Uri testEndpoint = new Uri("https://api.fhir.me");
 
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                var random = client.Read(new Uri("45qq54"));
+                var random = client.Read(new Uri("Gibberish/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
             catch (FhirOperationException)
