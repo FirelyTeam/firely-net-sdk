@@ -23,15 +23,21 @@ namespace Hl7.Fhir.Rest
 
         /// <summary>
         /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
         public FhirClient(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
+
+            if (!endpoint.OriginalString.EndsWith("/"))
+                endpoint = new Uri(endpoint.OriginalString + "/");
+
             if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
 
             _endpoint = endpoint;
             PreferredFormat = ResourceFormat.Xml;
         }
+
 
         public FhirClient(string endpoint)
             : this(new Uri(endpoint))
