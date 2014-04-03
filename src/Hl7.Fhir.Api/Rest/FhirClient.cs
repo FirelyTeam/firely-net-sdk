@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Rest
             var req = new FhirRequest(rl.Uri, "POST");
             req.SetBody(new TagList(tags), PreferredFormat);
 
-            doRequest(req, HttpStatusCode.OK, resp => true);
+            doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
         }
 
 
