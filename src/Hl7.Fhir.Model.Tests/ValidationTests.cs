@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
+using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Tests
 {
@@ -17,7 +18,8 @@ namespace Hl7.Fhir.Tests
         {
             Id id = new Id("az23");
 
-            Validator.ValidateObject(id, new ValidationContext(id), true);
+            FhirValidator.Validate(id);
+            FhirValidator.Validate(id,true);        // recursive checking shouldnt matter
 
             id = new Id("!notgood!");
             validateErrorOrFail(id);
@@ -30,17 +32,19 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        private void validateErrorOrFail(object instance)
+        private void validateErrorOrFail(object instance, bool recurse=false)
         {
             try
             {
                 // should throw error
-                Validator.ValidateObject(instance, new ValidationContext(instance), true);
+                FhirValidator.Validate(instance, recurse);
                 Assert.Fail();
             }
-            catch (ValidationException) { }
+            catch (ValidationException exc) 
+            { 
+            }
         }
-
+     
         [TestMethod]
         public void OIDandUUIDUrls()
         {
@@ -68,20 +72,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(Uri.Equals(new Uri("http://nu.nl"), new Uri("http://nu.nl")));
         }
 
-
-        [TestMethod]
-        public void ValidateResourceWithIncorrectChildElement()
-        {
-            FhirDateTime dt = new FhirDateTime();
-            dt.Value = "Ewout Kramer";
-
-            Observation o = new Observation { Applies = dt };
-            DiagnosticReport rep = new DiagnosticReport();
-            rep.Contained = new List<Resource> { o };
-
-            validateErrorOrFail(rep);
-        }
-
+   
 
         [TestMethod]
         public void TestAllowedChoices()
@@ -89,8 +80,9 @@ namespace Hl7.Fhir.Tests
             Patient p = new Patient();
 
             p.Deceased = new FhirBoolean(true);
-            Validator.ValidateObject(p, new ValidationContext(p), true);
+            FhirValidator.Validate(p);
 
+            // Deceased can either be boolean or dateTime, not FhirUri
             p.Deceased = new FhirUri();
             validateErrorOrFail(p);
         }
@@ -100,18 +92,18 @@ namespace Hl7.Fhir.Tests
         public void TestCardinality()
         {
             OperationOutcome oo = new OperationOutcome();
-            validateErrorOrFail(oo);
+            validateErrorOrFail(oo,true);
 
             oo.Issue = new List<OperationOutcome.OperationOutcomeIssueComponent>();
-            validateErrorOrFail(oo);
+            validateErrorOrFail(oo,true);
 
             var issue = new OperationOutcome.OperationOutcomeIssueComponent();
 
             oo.Issue.Add(issue);
-            validateErrorOrFail(oo);
+            validateErrorOrFail(oo,true);
 
             issue.Severity = OperationOutcome.IssueSeverity.Information;
-            Validator.ValidateObject(issue, new ValidationContext(issue), true);
+            FhirValidator.Validate(oo, true);
         }
 
         [TestMethod]
@@ -125,6 +117,20 @@ namespace Hl7.Fhir.Tests
         }
 
         [TestMethod]
+        public void ContainedResourcesAreValidatedToo()
+        {
+            Patient p = new Patient();
+            // Deceased can either be boolean or dateTime, not FhirUri
+            p.Deceased = new FhirUri();
+
+            var pr = new Patient();
+            pr.Contained = new List<Resource> { p };
+
+            validateErrorOrFail(pr,true);
+            FhirValidator.Validate(pr);
+        }
+
+        [TestMethod]
         public void TestContainedConstraints()
         {
             var pat = new Patient();
@@ -132,16 +138,68 @@ namespace Hl7.Fhir.Tests
             pat.Contained = new List<Resource> { patn } ;
             patn.Contained = new List<Resource> { new Patient() };
 
+            // Contained resources should not themselves contain resources
             validateErrorOrFail(pat);
 
             patn.Contained = null;
             Validator.ValidateObject(pat, new ValidationContext(pat), true);
 
             patn.Text = new Narrative();
-            patn.Text.Div = "<div />";
+            patn.Text.Div = "<div>Narrative in contained resource</div>";
 
+            // Contained resources should not contain narrative
             validateErrorOrFail(pat);
         }
+
+        [TestMethod]
+        public void ValidateResourceWithIncorrectChildElement()
+        {
+            // First create an incomplete encounter (class not supplied)
+            var enc = new Encounter();
+            enc.Status = Encounter.EncounterState.Planned;
+            validateErrorOrFail(enc);
+            validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
+
+            enc.Class = Encounter.EncounterClass.Ambulatory;
+
+            // Now, it should work
+            FhirValidator.Validate(enc);
+            FhirValidator.Validate(enc, true);  // recursive checking shouldnt matter
+
+            // Hide an incorrect datetime deep into the Encounter
+            FhirDateTime dt = new FhirDateTime();
+            dt.Value = "Ewout Kramer";  // clearly, a wrong datetime
+
+            enc.Hospitalization = new Encounter.EncounterHospitalizationComponent();
+            enc.Hospitalization.Period = new Period() { StartElement = dt };
+
+            // When we do not validate recursively, we should still be ok
+            FhirValidator.Validate(enc);
+
+            // When we recurse, this should fail
+            validateErrorOrFail(enc, true);
+        }
+
+        [TestMethod]
+        public void ValidateEntry()
+        {
+            var pe = new ResourceEntry<Patient>(new Uri("http://www.nu.nl/fhir/Patient/1"), DateTimeOffset.Now, new Patient());
+            Assert.IsNotNull(pe.Id);
+            Assert.IsNotNull(pe.Title);
+            Assert.IsNotNull(pe.LastUpdated);
+            Assert.IsNotNull(pe.Resource);
+            FhirValidator.Validate(pe);
+
+            var b = new Bundle("A test feed", DateTimeOffset.Now);
+            b.AuthorName = "Ewout";
+
+            Assert.IsNotNull(pe.Id);
+            Assert.IsNotNull(pe.Title);
+            Assert.IsNotNull(pe.LastUpdated);
+            b.Entries.Add(pe);
+            FhirValidator.Validate(b);
+        }
+
 
 
         [TestMethod]

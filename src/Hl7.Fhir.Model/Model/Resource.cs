@@ -48,7 +48,9 @@ namespace Hl7.Fhir.Model
             // TODO: Contained resources share the same internal id resolution space as the parent
             // resource -> verify id uniqueness
             var result = new List<ValidationResult>();
-          
+
+            // Validate specific invariants for contained items. The content of the contained
+            // items is validated by the "normal" validation triggered by the FhirElement attribute
             if (Contained != null)
             {
                 foreach (var contained in Contained)
@@ -58,7 +60,6 @@ namespace Hl7.Fhir.Model
 
                     if (contained.Text != null)
                         result.Add(new ValidationResult("Contained resources should not contain narrative"));
-
                 }
             }
 

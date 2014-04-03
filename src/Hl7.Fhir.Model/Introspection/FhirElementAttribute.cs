@@ -63,31 +63,46 @@ namespace Hl7.Fhir.Introspection
 
         public int Order { get; set; }
 
+
+        // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
+        // FhirElement while validating. This allows us to extend validation into each FhirElement,
+        // while normally, the .NET validation will only validate one level, but will not recurse
+        // into each element. This is controllable by the SetValidateRecursively extension of the
+        // ValidationContext
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if(validationContext == null) throw new ArgumentNullException("validationContext");
+
             if (value == null) return ValidationResult.Success;
+
+            // If we should not validate 'value's elements, return immediately
+            if (!validationContext.ValidateRecursively()) return ValidationResult.Success;
 
             IEnumerable list = value as IEnumerable;
             var result = new List<ValidationResult>();
 
+            // If value is an enumerated type, validate all elements of the list
             if (list != null)
             {
                 foreach (var element in list)
                 {
                     if (element != null)
                     {
-                        var context = ValidationContextFactory.Create(element, null);
-                        Validator.TryValidateObject(element, context, result, true);
+                        validateElement(element, validationContext, result);
                     }
                 }
             }
             else
             {
-                var context = ValidationContextFactory.Create(value, null);
-                Validator.TryValidateObject(value, context, result, true);
+                validateElement(value, validationContext, result);
             }
 
             return result.FirstOrDefault();                
+        }
+
+        private static void validateElement(object value, ValidationContext validationContext, List<ValidationResult> result)
+        {
+            FhirValidator.TryValidate(value, result, validationContext.ValidateRecursively());
         }
     }
 }

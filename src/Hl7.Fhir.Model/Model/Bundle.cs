@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
                     if (!feedHasAuthor && entry is ResourceEntry && String.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
                         result.Add(new ValidationResult("Bundle's author and Entry author cannot both be empty"));
 
-                    Validator.TryValidateObject(entry, ValidationContextFactory.Create(entry, null), result, true);
+                    FhirValidator.TryValidate(entry, result, validationContext.ValidateRecursively());
                 }
             }
 

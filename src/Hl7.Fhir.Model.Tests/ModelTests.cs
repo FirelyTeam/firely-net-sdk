@@ -36,27 +36,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
         }
 
-        [TestMethod]
-        public void ConstructEntry()
-        {
-            var pe = new ResourceEntry<Patient>(new Uri("http://www.nu.nl/fhir/Patient/1"), DateTimeOffset.Now, new Patient());
-            Assert.IsNotNull(pe.Id);
-            Assert.IsNotNull(pe.Title);
-            Assert.IsNotNull(pe.LastUpdated);
-            Assert.IsNotNull(pe.Resource);
-            ModelValidator.Validate(pe);
-
-            var b = new Bundle("A test feed", DateTimeOffset.Now);
-            b.AuthorName = "Ewout";
-
-            Assert.IsNotNull(pe.Id);
-            Assert.IsNotNull(pe.Title);
-            Assert.IsNotNull(pe.LastUpdated);
-            b.Entries.Add(pe);
-            ModelValidator.Validate(b);
-        }
-
-
+       
 
         [TestMethod]
         public void SimpleValueSupport()

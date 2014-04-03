@@ -156,8 +156,8 @@ namespace Hl7.Fhir.Model
 
             //if (Resource == null)
             //    result.Add(new ValidationResult("Entry must contain Resource data, Content may not be null"));
-            if( Resource != null) 
-                Validator.TryValidateObject(this.Resource, ValidationContextFactory.Create(this.Resource, null), result, true);
+            if (Resource != null)
+                FhirValidator.TryValidate(this.Resource, result, validationContext.ValidateRecursively());
 
             return result;
         }

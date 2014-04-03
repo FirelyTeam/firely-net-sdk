@@ -14,38 +14,6 @@ namespace Hl7.Fhir.Tests
     public class TagTests
     {
         [TestMethod]
-        public void TagValidation()
-        {
-            //Tag t = new Tag(null, (string)null, null); 
-            
-            //try
-            //{
-            //    // should throw error
-            //    Validator.ValidateObject(t, new ValidationContext(t), true);
-            //    Assert.Fail();
-            //}
-            //catch (ValidationException) { }
-
-            //TagList l = new TagList();
-
-            //try
-            //{
-            //    // should throw error               
-            //    l.Category.Add(t);
-            //    Validator.ValidateObject(l, new ValidationContext(l), true);
-            //    Assert.Fail();
-            //}
-            //catch (ValidationException) { }
-
-            //l.Category.Clear();
-
-            //l.Category.Add(new Tag("someterm", Tag.FHIRTAGSCHEME_GENERAL, "hi!"));
-
-            //Validator.ValidateObject(l, new ValidationContext(l), true);
-        }
-
-  
-        [TestMethod]
         public void TagEquality()
         {
             var t1 = new Tag("dog","http://nu.nl/tag");

@@ -185,11 +185,12 @@
     <Compile Include="Validation\InstantPatternAttribute.cs" />
     <Compile Include="Validation\InvokeIValidatableObjectAttribute.cs" />
     <Compile Include="Validation\IValidatableObject.cs" />
+    <Compile Include="Validation\FhirValidator.cs" />
     <Compile Include="Validation\NarrativeXhtmlPatternAttribute.cs" />
     <Compile Include="Validation\OidPatternAttribute.cs" />
-    <Compile Include="Validation\ModelValidator.cs" />
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
+    <Compile Include="Validation\ValidationContextExtensions.cs" />
     <Compile Include="Validation\ValidationContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
