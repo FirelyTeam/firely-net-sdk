@@ -2,7 +2,7 @@ This is the support API for working with the DSTU version of [HL7 FHIR][1] on th
 
 	var client = new FhirClient("http://spark.furore.com/fhir");
 
-	var pat = client.Read<Patient>(new Uri("Patient/1"));
+	var pat = client.Read<Patient>("Patient/1");
 	pat.Resource.Name.Add(HumanName.ForFamily("Kramer")
     	 .WithGiven("Ewout"));
 

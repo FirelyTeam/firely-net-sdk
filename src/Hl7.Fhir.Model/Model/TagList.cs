@@ -42,7 +42,7 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Model
 {
     [FhirType(IsResource=true)]
-    public class TagList : Hl7.Fhir.Validation.IValidatableObject
+    public class TagList
     {
         public TagList()
         {
@@ -77,9 +77,12 @@ namespace Hl7.Fhir.Model
         public static readonly Uri FHIRTAGSCHEME_PROFILE = new Uri(FHIRTAGNS + "/profile", UriKind.Absolute);
         public static readonly Uri FHIRTAGSCHEME_SECURITY = new Uri(FHIRTAGNS + "/security", UriKind.Absolute);
 
+        [Required]
         public string Term { get; private set; }
-        public string Label { get; private set; }
+        [Required]
         public Uri Scheme { get; private set; }
+        public string Label { get; private set; }
+
 
         public Tag()
         {

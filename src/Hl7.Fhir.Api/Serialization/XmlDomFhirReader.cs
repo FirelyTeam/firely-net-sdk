@@ -75,10 +75,18 @@ namespace Hl7.Fhir.Serialization
                 var result = new List<Tuple<string, IFhirReader>>();
 
                 // First, any attributes
-                result.AddRange(rootElem.Attributes()
-                    .Where(xattr => xattr.Name.LocalName != "xmlns")
-                    .Select(xattr => Tuple.Create(xattr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(xattr))));
+                foreach(var attr in rootElem.Attributes()) //.Where(xattr => xattr.Name.LocalName != "xmlns"))
+                {
+                    if (attr.Name == XName.Get("xmlns", "")) continue;      // skip xmlns declarations
+                    if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesInRoot ) continue;   // skip xmlns:xsi declaration
+                    if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesInRoot) continue;     // skip schemaLocation
 
+                    if (attr.Name.NamespaceName == "")
+                        result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));
+                    else
+                        throw Error.Format("Encountered unsupported attribute {0}", this, attr.Name);
+                }
+                
                 foreach(var node in rootElem.Nodes())
                 {
                     if(node is XText)
@@ -100,7 +108,7 @@ namespace Hl7.Fhir.Serialization
                                 (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 
                         else
-                            throw Error.Format("Encountered unsupported element: {0}", this, elem.Name.ToString());
+                            throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'", this, elem.Name.LocalName, elem.Name.NamespaceName);
                     }
                     else if(node is XComment)
                     {

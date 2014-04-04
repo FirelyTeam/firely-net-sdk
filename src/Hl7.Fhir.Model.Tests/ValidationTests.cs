@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Tests
             validateErrorOrFail(pat);
 
             patn.Contained = null;
-            Validator.ValidateObject(pat, new ValidationContext(pat), true);
+            FhirValidator.Validate(pat);
 
             patn.Text = new Narrative();
             patn.Text.Div = "<div>Narrative in contained resource</div>";
@@ -213,26 +213,26 @@ namespace Hl7.Fhir.Tests
             validateErrorOrFail(e);
             e.LastUpdated = DateTimeOffset.Now;
             e.Resource = new Patient();
-            Validator.ValidateObject(e, new ValidationContext(e), true);
+            FhirValidator.Validate(e);
 
             // Checks nested errors on resource content?
             e.Resource = new Patient { Deceased = new FhirUri() };
-            validateErrorOrFail(e);
+            validateErrorOrFail(e, true);
 
             e.Resource = new Patient();
 
-            var f = new Bundle() { Title = "Some feed title" };
-            f.Id = new Uri("http://someserver.org/fhir/feed/@1424234232342");
+            var bundle = new Bundle() { Title = "Some feed title" };
+            bundle.Id = new Uri("http://someserver.org/fhir/feed/@1424234232342");
 
             // Validates mandatory fields?
-            validateErrorOrFail(f);
-            f.LastUpdated = DateTimeOffset.Now;
-            Validator.ValidateObject(f, new ValidationContext(f), true);
+            validateErrorOrFail(bundle);
+            bundle.LastUpdated = DateTimeOffset.Now;
+            FhirValidator.Validate(bundle);
 
             // Checks nested errors on nested bundle element?
-            f.Entries.Add(e);
+            bundle.Entries.Add(e);
             e.Id = null;
-            validateErrorOrFail(f);
+            validateErrorOrFail(bundle,true);
         }
     }
 }

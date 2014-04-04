@@ -82,8 +82,10 @@ namespace Hl7.Fhir.Model
     {
         public Resource Resource { get; set; }
 
+        [Required(AllowEmptyStrings=false)]
         public string Title { get; set; }
 
+        [Required]
         public DateTimeOffset? LastUpdated { get; set; }
         public DateTimeOffset? Published { get; set; }
         public string AuthorName { get; set; }
@@ -148,15 +150,9 @@ namespace Hl7.Fhir.Model
             var result = new List<ValidationResult>();
             result.AddRange(base.Validate(validationContext));
 
-            if (String.IsNullOrWhiteSpace(Title))
-                result.Add(new ValidationResult("Entry must contain a title"));
-
-            if (LastUpdated == null)
-                result.Add(new ValidationResult("Entry must have an updated date"));
-
             //if (Resource == null)
             //    result.Add(new ValidationResult("Entry must contain Resource data, Content may not be null"));
-            if (Resource != null)
+            if (Resource != null && validationContext.ValidateRecursively())
                 FhirValidator.TryValidate(this.Resource, result, validationContext.ValidateRecursively());
 
             return result;

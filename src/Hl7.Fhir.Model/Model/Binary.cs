@@ -48,10 +48,10 @@ namespace Hl7.Fhir.Model
             result.AddRange(base.Validate(validationContext));
 
             if (Content == null)
-                result.Add(new ValidationResult("Entry must contain (possibly 0-length) data in Content element"));
+                result.Add(new ValidationResult("Entry must contain (possibly 0-length) data in Content element", FhirValidator.SingleMemberName("Content")));
 
             if (ContentType == null)
-                result.Add(new ValidationResult("Entry must contain a ContentType"));
+                result.Add(new ValidationResult("Entry must contain a ContentType", FhirValidator.SingleMemberName("ContentType")));
 
             return result;
         }

@@ -49,6 +49,7 @@ namespace Hl7.Fhir.Model
             Tags = new List<Tag>();
         }
 
+        [Required]
         public Uri Id { get; set; }
         public UriLinkList Links { get; set; }
         public ICollection<Tag> Tags { get; set; }
@@ -69,19 +70,16 @@ namespace Hl7.Fhir.Model
         {
             var result = new List<ValidationResult>();
 
-            if (!Bundle.UriHasValue(Id))
-                result.Add(new ValidationResult("Entry must have an id"));
-            else
-                if (!Id.IsAbsoluteUri)
-                    result.Add(new ValidationResult("Entry id must be an absolute URI"));
+            if (Id != null && !Id.IsAbsoluteUri)
+                result.Add(new ValidationResult("Entry id must be an absolute URI", FhirValidator.SingleMemberName("Id")));
 
             if (Bundle.UriHasValue(SelfLink) && !SelfLink.IsAbsoluteUri)
-                result.Add(new ValidationResult("Entry selflink must be an absolute URI"));
+                result.Add(new ValidationResult("Entry selflink must be an absolute URI", FhirValidator.SingleMemberName("SelfLink")));
 
             if (Links.FirstLink != null || Links.LastLink != null || Links.PreviousLink != null || Links.NextLink != null)
-                result.Add(new ValidationResult("Paging links can only be used on feeds, not entries"));
+                result.Add(new ValidationResult("Paging links can only be used on feeds, not entries", FhirValidator.SingleMemberName("Links")));
 
-            if (Tags != null)
+            if (Tags != null && validationContext.ValidateRecursively())
                 result.AddRange(new TagList(Tags).Validate(validationContext));
 
             return result;

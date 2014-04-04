@@ -9,76 +9,94 @@ namespace Hl7.Fhir.Validation
 {
     public class FhirValidator
     {
-        public static void Validate(object resource, bool recurse = false)
+        public static void Validate(object value, bool recurse = false)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
-            Validator.ValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), true);
+            if (value == null) throw new ArgumentNullException("value");
+        //    assertSupportedInstanceType(value);
+
+            Validator.ValidateObject(value, ValidationContextFactory.Create(value, null, recurse), true);
         }
 
-        public static bool TryValidate(object resource, ICollection<ValidationResult> validationResults = null, bool recurse = false)
+        public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
+            if (value == null) throw new ArgumentNullException("value");
+          // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), results, true);
+            return Validator.TryValidateObject(value, ValidationContextFactory.Create(value, null, recurse), results, true);
         }
 
 
-        public static void Validate(Resource resource, bool recurse = false)
+        private static void assertSupportedInstanceType(object value)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
-            Validator.ValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), true);
+            if (value is Resource || value is Element || value is Bundle || value is ResourceEntry)
+                return;
+
+            else
+                throw new ArgumentException("Validation works on the basic FHIR types, not on '" + value.GetType().Name + "'");
         }
 
-        public static bool TryValidate(Resource resource, ICollection<ValidationResult> validationResults=null, bool recurse = false)
+
+        internal static IEnumerable<string> SingleMemberName(string name)
         {
-            if(resource == null) throw new ArgumentNullException("resource");
-
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), results, true);
+            return new string[] { name };
         }
 
-        public static void Validate(Element element, bool recurse = false)
-        {
-            if (element == null) throw new ArgumentNullException("element");
-            Validator.ValidateObject(element, ValidationContextFactory.Create(element, null, recurse), true);
-        }
+        //public static void Validate(Resource resource, bool recurse = false)
+        //{
+        //    if (resource == null) throw new ArgumentNullException("resource");
+        //    Validator.ValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), true);
+        //}
 
-        public static bool TryValidate(Element element, ICollection<ValidationResult> validationResults = null, bool recurse = false)
-        {
-            if (element == null) throw new ArgumentNullException("element");
+        //public static bool TryValidate(Resource resource, ICollection<ValidationResult> validationResults=null, bool recurse = false)
+        //{
+        //    if(resource == null) throw new ArgumentNullException("resource");
 
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(element, ValidationContextFactory.Create(element, null, recurse), results, true);
-        }
+        //    var results = validationResults ?? new List<ValidationResult>();
+        //    return Validator.TryValidateObject(resource, ValidationContextFactory.Create(resource, null, recurse), results, true);
+        //}
 
-        public static void Validate(ResourceEntry entry, bool recurse = false)
-        {
-            if (entry == null) throw new ArgumentNullException("entry");
-            Validator.ValidateObject(entry, ValidationContextFactory.Create(entry, null, recurse), true);
-        }
+        //public static void Validate(Element element, bool recurse = false)
+        //{
+        //    if (element == null) throw new ArgumentNullException("element");
+        //    Validator.ValidateObject(element, ValidationContextFactory.Create(element, null, recurse), true);
+        //}
 
-        public static bool TryValidate(ResourceEntry entry, ICollection<ValidationResult> validationResults = null, bool recurse = false)
-        {
-            if (entry == null) throw new ArgumentNullException("entry");
+        //public static bool TryValidate(Element element, ICollection<ValidationResult> validationResults = null, bool recurse = false)
+        //{
+        //    if (element == null) throw new ArgumentNullException("element");
 
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(entry, ValidationContextFactory.Create(entry, null, recurse), results, true);
-        }
+        //    var results = validationResults ?? new List<ValidationResult>();
+        //    return Validator.TryValidateObject(element, ValidationContextFactory.Create(element, null, recurse), results, true);
+        //}
 
-        public static void Validate(Bundle bundle, bool recurse = false)
-        {
-            if (bundle == null) throw new ArgumentNullException("bundle");
-            Validator.ValidateObject(bundle, ValidationContextFactory.Create(bundle, null, recurse), true);
-        }
+        //public static void Validate(ResourceEntry entry, bool recurse = false)
+        //{
+        //    if (entry == null) throw new ArgumentNullException("entry");
+        //    Validator.ValidateObject(entry, ValidationContextFactory.Create(entry, null, recurse), true);
+        //}
 
-        public static bool TryValidate(Bundle bundle, ICollection<ValidationResult> validationResults = null, bool recurse = false)
-        {
-            if (bundle == null) throw new ArgumentNullException("bundle");
+        //public static bool TryValidate(ResourceEntry entry, ICollection<ValidationResult> validationResults = null, bool recurse = false)
+        //{
+        //    if (entry == null) throw new ArgumentNullException("entry");
 
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(bundle, ValidationContextFactory.Create(bundle, null, recurse), results, true);
-        }
+        //    var results = validationResults ?? new List<ValidationResult>();
+        //    return Validator.TryValidateObject(entry, ValidationContextFactory.Create(entry, null, recurse), results, true);
+        //}
+
+        //public static void Validate(Bundle bundle, bool recurse = false)
+        //{
+        //    if (bundle == null) throw new ArgumentNullException("bundle");
+        //    Validator.ValidateObject(bundle, ValidationContextFactory.Create(bundle, null, recurse), true);
+        //}
+
+        //public static bool TryValidate(Bundle bundle, ICollection<ValidationResult> validationResults = null, bool recurse = false)
+        //{
+        //    if (bundle == null) throw new ArgumentNullException("bundle");
+
+        //    var results = validationResults ?? new List<ValidationResult>();
+        //    return Validator.TryValidateObject(bundle, ValidationContextFactory.Create(bundle, null, recurse), results, true);
+        //}
     }
 
 }

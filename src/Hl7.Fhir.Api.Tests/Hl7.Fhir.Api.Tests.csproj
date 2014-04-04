@@ -99,6 +99,7 @@
     <Compile Include="Serialization\TagParsingTests.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="Model\TagExtensionsTest.cs" />
+    <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="ValidatePatient.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
