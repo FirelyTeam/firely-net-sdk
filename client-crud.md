@@ -45,12 +45,12 @@ The `Read` operation on the FhirClient has two overloads to covers both cases. F
 // Read the current version of a Resource
 var location = new Uri("http://spark.furore.com/fhir/Patient/31");
 var patEntryA = client.Read<Patient>(location);
-var patEntryA = client.Read<Patient>(new Uri("Patient/31"));
+var patEntryA = client.Read<Patient>("Patient/31");
 
 // Read a specific version of a Resource
 var locationB = new Uri("http://spark.furore.com/fhir/Patient/32/_history/4");
 var patEntryB = client.Read<Patient>(locationB);
-var patEntryB = client.Read<Patient>(new Uri("Patient/32/_history/4"));
+var patEntryB = client.Read<Patient>("Patient/32/_history/4");
 
 ```
 
