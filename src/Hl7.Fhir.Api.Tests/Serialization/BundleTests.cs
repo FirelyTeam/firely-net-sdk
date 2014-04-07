@@ -133,6 +133,27 @@ namespace Hl7.Fhir.Test
 
 
         [TestMethod]
+        public void SerializationDoesNotEmitXmlHeader()
+        {
+            Bundle b = createTestBundle();
+            var actual = FhirSerializer.SerializeBundleToXml(b);
+            Assert.IsFalse(actual.StartsWith("<?xml"));
+
+            var data = FhirSerializer.SerializeBundleToXmlBytes(b);
+            actual = System.Text.Encoding.UTF8.GetString(data);
+            Assert.IsFalse(actual.StartsWith("<?xml"));
+
+
+            Patient p = new Patient();
+            actual = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsFalse(actual.StartsWith("<?xml"));
+
+            data = FhirSerializer.SerializeResourceToXmlBytes(p);
+            actual = System.Text.Encoding.UTF8.GetString(data);
+            Assert.IsFalse(actual.StartsWith("<?xml"));
+        }
+
+        [TestMethod]
         public void SerializeAndParseFeedWithEmptyEntries()
         {
             Bundle b = new Bundle();

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Tests
                 FhirValidator.Validate(instance, recurse);
                 Assert.Fail();
             }
-            catch (ValidationException exc) 
+            catch (ValidationException) 
             { 
             }
         }

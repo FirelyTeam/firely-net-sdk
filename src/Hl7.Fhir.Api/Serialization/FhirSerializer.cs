@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Serialization
         private static byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();
-            XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false) };
+            XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true };
             XmlWriter xw = XmlWriter.Create(stream, settings);
 
             serializer(xw);
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Serialization
         private static string xmlWriterToString(Action<XmlWriter> serializer)
         {
             StringBuilder sb = new StringBuilder();
-            XmlWriter xw = XmlWriter.Create(sb);
+            XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true });
 
             serializer(xw);
 

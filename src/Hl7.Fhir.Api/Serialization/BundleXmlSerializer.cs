@@ -41,8 +41,9 @@ namespace Hl7.Fhir.Serialization
             foreach (var entry in bundle.Entries)
                 root.Add(createEntry(entry, summary));
 
-            var result = new XDocument(root);
-            result.WriteTo(writer);
+            root.WriteTo(writer);
+            //var result = new XDocument(root);
+            //result.WriteTo(writer);
         }
 
 

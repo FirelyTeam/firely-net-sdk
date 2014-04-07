@@ -78,8 +78,8 @@ namespace Hl7.Fhir.Serialization
                 foreach(var attr in rootElem.Attributes()) //.Where(xattr => xattr.Name.LocalName != "xmlns"))
                 {
                     if (attr.Name == XName.Get("xmlns", "")) continue;      // skip xmlns declarations
-                    if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesInRoot ) continue;   // skip xmlns:xsi declaration
-                    if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesInRoot) continue;     // skip schemaLocation
+                    if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
+                    if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;     // skip schemaLocation
 
                     if (attr.Name.NamespaceName == "")
                         result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));

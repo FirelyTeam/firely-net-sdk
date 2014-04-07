@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
+using System.IO;
 
 namespace Hl7.Fhir.Test.Serialization
 {
@@ -35,15 +36,82 @@ namespace Hl7.Fhir.Test.Serialization
 
             FhirParser.ParseResourceFromXml(xml);
 
-            SerializationConfig.EnforceNoXsiAttributesInRoot = true;
+            SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
 
             try
             {
                 FhirParser.ParseResourceFromXml(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
-            catch (FormatException fe)
+            catch (FormatException)
             {
+            }
+        }
+
+
+        [TestMethod]
+        public void EdgeCaseRoundtrip()
+        {
+            Stream xmlExample = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.xml");
+            string xml = new StreamReader(xmlExample).ReadToEnd();
+            Stream jsonExample = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.json");
+            string json = new StreamReader(jsonExample).ReadToEnd();
+
+            var poco = FhirParser.ParseResourceFromXml(xml);
+            Assert.IsNotNull(poco);
+            var output = FhirSerializer.SerializeResourceToXml(poco);
+            Assert.IsNotNull(output);
+            XmlAssert.AreSame(xml, output);
+
+            poco = FhirParser.ParseResourceFromJson(json);
+            Assert.IsNotNull(poco);
+            output = FhirSerializer.SerializeResourceToJson(poco);
+            Assert.IsNotNull(output);
+            JsonAssert.AreSame(json, output);
+        }
+
+
+        // TODO: Unfortunately, this is currently too much work to validate. See comments on the bottom of
+        // https://github.com/ewoutkramer/fhir-net-api/issues/20
+        [TestMethod, Ignore]
+        public void CatchArrayWithNull()
+        {
+            var json = @"{
+                'resourceType': 'Profile',
+                'identifier': 'oh1394156991825',
+                'name': 'a new profile',
+                'publisher': 'Orion Health',
+                'description': 'xcv',
+                'status': 'draft',
+                'experimental': true,
+                'date': '2014-03-07T14:49:51+13:00',
+                'requirements': 'cxv',
+                'extensionDefn': [{
+                    'code': 'test1',
+                    'contextType': 'resource',
+                    'context': [null],
+                    'definition': {
+                        'short': 'should change - and again',
+                        'formal': '',
+                        'min': '0',
+                        'max': '1',
+                        'type': [{'code': 'date'}],
+                        'isModifier': false,
+                        'binding': {
+                            'name': 'ValueSet1',
+                            'referenceResource': {'reference': 'http://spark.furore.com/fhir/ValueSet/3216371'}
+                        }
+                    },
+                    }]}";
+
+            try
+            {
+                var prof = FhirParser.ParseResourceFromJson(json);
+                Assert.Fail("Should have failed parsing");
+            }
+            catch (FormatException)
+            {
+
             }
         }
     }
