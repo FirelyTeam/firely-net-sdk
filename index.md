@@ -22,7 +22,10 @@ This library provides:
 * Validation functionality for instances created with the model classes
 * A REST client for working with FHIR-compliant servers
 
-Over the coming months, we'll be adding handling of ValueSets and Profile validation.
+We'll soon be adding handling of ValueSets and Profile validation.
+
+### What's new?
+The FHIR client is still under development. Check out [what's new](whats-new.html) in this latest release.
 
 ### Get Started
 Get started by reading the [online documentation](docu-index.html), downloading the [NuGet package][2] or getting [the sourcecode][3].
