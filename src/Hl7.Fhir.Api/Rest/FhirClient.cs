@@ -72,7 +72,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
         private Uri makeAbsolute(Uri location=null)
         {
             // If called without a location, just return the base endpoint
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Rest
             return location;
         }
 
-
         /// <summary>
         /// Get a conformance statement for the system
         /// </summary>
@@ -107,7 +105,6 @@ namespace Hl7.Fhir.Rest
             var req = new FhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<Conformance>());
         }
-
 
         /// <summary>
         /// Create a resource on a FHIR endpoint
@@ -126,7 +123,6 @@ namespace Hl7.Fhir.Rest
 
             return internalCreate<TResource>(resource, tags, null, refresh);
         }
-
 
         /// <summary>
         /// Create a resource with a given id on the FHIR endpoint
@@ -191,7 +187,6 @@ namespace Hl7.Fhir.Rest
             return Refresh<TResource>(entry, false);                
         }
 
-
         internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
@@ -201,7 +196,6 @@ namespace Hl7.Fhir.Rest
             else
                 return Read<TResource>(entry.SelfLink);
         }
-
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
@@ -356,7 +350,11 @@ namespace Hl7.Fhir.Rest
             doRequest(req, HttpStatusCode.NoContent, resp => true);
         }
 
-
+        public void Delete(string location)
+        {
+            Uri uri = new Uri(location, UriKind.Relative);
+            Delete(uri);
+        }
 
         /// <summary>
         /// Delete a resource represented by the entry
@@ -373,8 +371,6 @@ namespace Hl7.Fhir.Rest
             Delete(entry.Id);
         }
 
-     
-
         /// <summary>
         /// Retrieve the version history for a specific resource type
         /// </summary>
@@ -389,10 +385,6 @@ namespace Hl7.Fhir.Rest
 
             return internalHistory(collection, null, since, pageSize);
         }
-
-
-        //TODO: History without generics
-
 
         /// <summary>
         /// Retrieve the version history for a resource at a given location
@@ -412,7 +404,6 @@ namespace Hl7.Fhir.Rest
             return internalHistory(collection, id, since, pageSize);
         }
 
-
         /// <summary>
         /// Retrieve the version history for a resource in a ResourceEntry
         /// </summary>
@@ -428,7 +419,6 @@ namespace Hl7.Fhir.Rest
             return History(entry.Id, since, pageSize);
         }
 
-
         /// <summary>
         /// Retrieve the full version history of the server
         /// </summary>
@@ -440,7 +430,6 @@ namespace Hl7.Fhir.Rest
         {
             return internalHistory(null, null, since, pageSize);
         }
-
 
         private Bundle internalHistory(string collection = null, string id = null, DateTimeOffset? since = null, int? pageSize = null)
         {
@@ -461,7 +450,6 @@ namespace Hl7.Fhir.Rest
             return fetchBundle(location.Uri);
         }
 
-
         /// <summary>
         /// Fetches a bundle from a FHIR resource endpoint. 
         /// </summary>
@@ -473,7 +461,6 @@ namespace Hl7.Fhir.Rest
             var req = new FhirRequest(makeAbsolute(location), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
-
 
         /// <summary>
         /// Validates whether the contents of the resource would be acceptable as an update
@@ -495,7 +482,6 @@ namespace Hl7.Fhir.Rest
             return result == null || !result.Success();
         }
 
-
         /// <summary>
         /// Validates whether the contents of the resource would be acceptable as a create
         /// </summary>
@@ -515,7 +501,6 @@ namespace Hl7.Fhir.Rest
             result = doValidate(url.Uri, resource, tags);
             return result == null || !result.Success();
         }
-
 
         private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Tag> tags)
         {
@@ -538,8 +523,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
-
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
         /// </summary>
@@ -552,7 +535,6 @@ namespace Hl7.Fhir.Rest
 
             return fetchBundle(url.Uri);
         }
-
         
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -569,7 +551,6 @@ namespace Hl7.Fhir.Rest
         {
             return Search(typeof(TResource).GetCollectionName(), criteria, includes, pageSize);
         }
-
 
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -589,7 +570,6 @@ namespace Hl7.Fhir.Rest
             return Search(toQuery(resource, criteria, includes, pageSize));
         }
 
-
         /// <summary>
         /// Search for Resources across the whol server that match the given criteria
         /// </summary>
@@ -604,7 +584,6 @@ namespace Hl7.Fhir.Rest
         {
             return Search(toQuery(null, criteria, includes, pageSize));
         }
-
 
         /// <summary>
         /// Search for resources based on a resource's id.
@@ -623,7 +602,6 @@ namespace Hl7.Fhir.Rest
 
             return SearchById(typeof(TResource).GetCollectionName(), id, includes, pageSize);
         }
-
 
         /// <summary>
         /// Search for resources based on a resource's id.
@@ -644,7 +622,6 @@ namespace Hl7.Fhir.Rest
             string criterium = Query.SEARCH_PARAM_ID + "=" + id;
             return Search(toQuery(resource, new string[] { criterium }, includes, pageSize));
         }
-
 
         private Query toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
@@ -667,8 +644,6 @@ namespace Hl7.Fhir.Rest
             }
             return q;
         }
-
-
 
         /// <summary>
         /// Uses the FHIR paging mechanism to go navigate around a series of paged result Bundles
@@ -702,7 +677,6 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-
         /// <summary>
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
@@ -717,7 +691,6 @@ namespace Hl7.Fhir.Rest
             req.SetBody(bundle, PreferredFormat);
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
-
 
         /// <summary>
         /// Send a document bundle
@@ -737,7 +710,6 @@ namespace Hl7.Fhir.Rest
             req.SetBody(bundle, PreferredFormat);
             doRequest(req, HttpStatusCode.NoContent, resp => true );
         }
-
 
         /// <summary>
         /// Send a Document or Message bundle to a server's Mailbox
@@ -759,7 +731,6 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
-
         /// <summary>
         /// Get all tags known by the FHIR server
         /// </summary>
@@ -769,7 +740,6 @@ namespace Hl7.Fhir.Rest
             return internalGetTags(null, null, null);
         }
 
-
         /// <summary>
         /// Get all tags known by the FHIR server for a given resource type
         /// </summary>
@@ -778,7 +748,6 @@ namespace Hl7.Fhir.Rest
         {
             return internalGetTags(typeof(TResource).GetCollectionName(), null, null);
         }
-
 
         /// <summary>
         /// Get all tags known by the FHIR server for a given resource type
@@ -790,7 +759,6 @@ namespace Hl7.Fhir.Rest
 
             return internalGetTags(type, null, null);
         }
-
 
         /// <summary>
         /// Get the tags for a resource (or resource version) at a given location
@@ -809,6 +777,17 @@ namespace Hl7.Fhir.Rest
             return internalGetTags(collection, id, version);
         }
 
+        public IEnumerable<Tag> Tags(string location)
+        {
+            var identity = new ResourceIdentity(location);
+            return internalGetTags(identity.Collection, identity.Id, identity.VersionId);
+        }
+
+        public IEnumerable<Tag> Tags<TResource>(string id, string vid = null)
+        {
+            string collection = ModelInfo.GetResourceNameForType(typeof(TResource));
+            return internalGetTags(collection, id, vid);
+        }
 
         private IEnumerable<Tag> internalGetTags(string collection, string id, string version)
         {
@@ -821,14 +800,13 @@ namespace Hl7.Fhir.Rest
                 if(id == null)
                     location = location.CollectionTags(collection);
                 else
-                    location = location.ResourceTags(collection,id,version);
+                    location = location.ResourceTags(collection, id, version);
             }
 
             var req = new FhirRequest(location.Uri, "GET");
             var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
             return result.Category;
         }
-
 
         /// <summary>
         /// Add one or more tags to a resource at a given location
@@ -853,7 +831,6 @@ namespace Hl7.Fhir.Rest
             doRequest(req, HttpStatusCode.OK, resp => true);
         }
 
-
         /// <summary>
         /// Remove one or more tags from a resource at a given location
         /// </summary>
@@ -877,12 +854,10 @@ namespace Hl7.Fhir.Rest
             doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
         }
 
-
         private T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess)
         {
             return doRequest<T>(request, new HttpStatusCode[] { success }, onSuccess);
         }
-
 
         private T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse,T> onSuccess)
         {
@@ -928,6 +903,5 @@ namespace Hl7.Fhir.Rest
         Next,
         Last
     }
-
 
 }
