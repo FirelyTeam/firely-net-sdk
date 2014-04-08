@@ -234,5 +234,21 @@ namespace Hl7.Fhir.Tests
             e.Id = null;
             validateErrorOrFail(bundle,true);
         }
+
+
+        [TestMethod]
+        public void TestXhtmlValidation()
+        {
+            var p = new Patient();
+
+            p.Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated  };
+            FhirValidator.Validate(p,true);
+
+            p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";
+            validateErrorOrFail(p,true);
+
+            p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><img onmouseover='bigImg(this)' src='smiley.gif' alt='Smiley' /></div>";
+            validateErrorOrFail(p,true);
+        }
     }
 }
