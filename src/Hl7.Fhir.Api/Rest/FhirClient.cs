@@ -281,29 +281,16 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        ///// <summary>
-        ///// Fetches a typed resource, given its id and optionally its version.
-        ///// </summary>
-        ///// <param name="id">Id of the Resource to fetch.</param>
-        ///// <param name="versionId">Optional. The version of the Resource to fetch.</param>
-        ///// <typeparam name="TResource">The type of resource to read</typeparam>
-        ///// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
-        ///// if the resource has been deleted or does not exist.</returns>
-        //public ResourceEntry<TResource> Read<TResource>(string id, string versionId=null) where TResource : Resource, new()
-        //{
-        //    if (id == null) throw new ArgumentNullException("id");
-
-        //    var ri = ResourceIdentity.Build(Endpoint,typeof(TResource).GetCollectionName(), id, versionId);
-        //    return Read<TResource>(ri);
-        //}
-
         /// <summary>
         /// Update (or create) a resource at a given endpoint
         /// </summary>
         /// <param name="entry">A ResourceEntry containing the resource to update</param>
         /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
-        /// <returns>The resource as updated on the server. Throws an exception when the update failed,
+        /// <returns>If refresh=true, 
+        /// this function will return a ResourceEntry with all newly created data from the server. Otherwise
+        /// the returned result will only contain a SelfLink if the update was actually a create.
+        /// Throws an exception when the update failed,
         /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
@@ -324,7 +311,7 @@ namespace Hl7.Fhir.Rest
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
             var updated = new ResourceEntry<TResource>();
-            updated.Links.SelfLink = new ResourceIdentity(response.Location);
+            if(response.Location != null) updated.Links.SelfLink = new ResourceIdentity(response.Location);
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) updated = Refresh(updated, versionSpecific: true);

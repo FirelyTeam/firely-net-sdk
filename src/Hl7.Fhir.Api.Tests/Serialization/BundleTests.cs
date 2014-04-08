@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Test
 
         private static string markupXml(string xml)
         {
-            xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?>" + xml;
+//            xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?>" + xml;
             xml = xml.Replace("<entry", "<entry xmlns=\"http://www.w3.org/2005/Atom\"");
             return xml;
         }
@@ -324,7 +324,8 @@ namespace Hl7.Fhir.Test
            @"Binary content (mediatype application/x-test)</div></summary></entry>";
 
         private static string testBundleAsXml =
-           @"<?xml version=""1.0"" encoding=""utf-16""?><feed xmlns=""http://www.w3.org/2005/Atom"">" +
+        //   @"<?xml version=""1.0"" encoding=""utf-16""?>" +
+           @"<feed xmlns=""http://www.w3.org/2005/Atom"">" +
            @"<title type=""text"">Updates to resource 233</title>" +
            @"<id>urn:uuid:0d0dcca9-23b9-4149-8619-65002224c3</id><updated>2012-11-02T14:17:21Z</updated>" +
            @"<author><name>Ewout Kramer</name></author>" +
