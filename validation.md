@@ -33,7 +33,9 @@ Currently, the `FhirValidator` will validate the following aspects of the FHIR d
 * Regex patterns of the primitives code, date, dateTime, id, instant, oid, uri, uuid.
 * Allowed types for a choice element (value[x]).
 * Whether Narrative is actually valid HTML
+* Catches active content in XHTML in Narrative
 * Rules about nesting of Contained resources.
+
 
 Notable rules not yet validated:
 
