@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines whether the ResourceReference is a reference to a contained resource (i.e. the reference value starts with an Url anchor ('#'))
         /// </summary>
+        [NotMapped]
         public bool IsContainedReference
         {
             get
