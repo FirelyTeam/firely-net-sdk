@@ -1,5 +1,12 @@
-﻿/*
-  Copyright (c) 2011-2013, HL7, Inc.
+using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Runtime.Serialization;
+
+/*
+  Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -28,53 +35,18 @@
 
 */
 
-
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-namespace Hl7.Fhir.Support.Search
+namespace Hl7.Fhir.Model
 {
-    public class ReferenceParamValue : SearchParamValue
+    public partial class Extension
     {
-        public string Id { get; internal set; }
-
-        public string ResourceType { get; internal set; }
-     
-        public ReferenceParamValue(string type, string id)
+        public Extension()
         {
-            Id = id;
-            ResourceType = type;
         }
 
-       
-        internal static ReferenceParamValue FromQueryValue(string queryValue)
-        {     
-            if(String.IsNullOrEmpty(queryValue)) throw new ArgumentException("Reference query parameter cannot have an empty value", "queryValue");
-
-            string[] pair = queryValue.Split('/');
-
-            if (pair.Length < 2)
-                throw new FormatException("A reference query parameter must specify both a resource type and an id.");
-
-            // Only first '/' is relevant, concatenate the rest
-            if (pair.Length > 2) pair[1] = String.Join("/", pair.Skip(1));
-
-            return new ReferenceParamValue(pair[0], pair[1]);
-        }
-
-
-        internal override string QueryValue
+        public Extension(Uri url, Element value)
         {
-            get
-            {
-                return ResourceType + "/" + Id;
-            }
+            this.Url = url;
+            this.Value = value;
         }
-    }
+    }       
 }

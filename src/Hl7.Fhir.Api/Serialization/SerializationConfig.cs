@@ -15,6 +15,8 @@ namespace Hl7.Fhir.Serialization
 
         public static bool AcceptUnknownMembers { get; set; }
 
+        public static bool EnforceNoXsiAttributesOnRoot { get; set; }
+
         private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
 
         private static Lazy<ModelInspector> createDefaultModelInspector()

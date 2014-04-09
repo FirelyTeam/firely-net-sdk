@@ -43,8 +43,13 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
+        [Required(AllowEmptyStrings=false)]
         public string Title { get; set; }
+
+        [Required]
         public DateTimeOffset? LastUpdated { get; set; }
+
+        [Required(AllowEmptyStrings=false)]
         public Uri Id { get; set; }
         public UriLinkList Links { get; set; }
         public IList<Tag> Tags { get; set; }
@@ -82,31 +87,34 @@ namespace Hl7.Fhir.Model
         {
             var result = new List<ValidationResult>();
 
-            if (String.IsNullOrWhiteSpace(Title))
-                result.Add(new ValidationResult("Feed must contain a title"));
+            //if (String.IsNullOrWhiteSpace(Title))
+            //    result.Add(new ValidationResult("Feed must contain a title", FhirValidator.SingleMemberName("Title"));
 
-            if (!UriHasValue(Id))
-                result.Add(new ValidationResult("Feed must have an id"));
-            else
-                if (!Id.IsAbsoluteUri)
-                    result.Add(new ValidationResult("Feed id must be an absolute URI"));
+            //if (!UriHasValue(Id))
+            //    result.Add(new ValidationResult("Feed must have an id"));
+            //else
+            //    if (!Id.IsAbsoluteUri)
+            //        result.Add(new ValidationResult("Feed id must be an absolute URI"));
 
-            if (LastUpdated == null)
-                result.Add(new ValidationResult("Feed must have a updated date"));
+            if (Id != null && !Id.IsAbsoluteUri)
+                result.Add(FhirValidator.BuildResult(validationContext, "Feed id must be an absolute URI"));
+
+            //if (LastUpdated == null)
+            //    result.Add(new ValidationResult("Feed must have a updated date"));
 
             if (Links.SearchLink != null)
-                result.Add(new ValidationResult("Links with rel='search' can only be used on feed entries"));
+                result.Add(FhirValidator.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
 
             bool feedHasAuthor = !String.IsNullOrEmpty(this.AuthorName);
 
-            if (Entries != null)
+            if (Entries != null && validationContext.ValidateRecursively())
             {
                 foreach (var entry in Entries.Where(e => e != null))
                 {
                     if (!feedHasAuthor && entry is ResourceEntry && String.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
-                        result.Add(new ValidationResult("Bundle's author and Entry author cannot both be empty"));
+                        result.Add(FhirValidator.BuildResult(validationContext, "Bundle's author and Entry author cannot both be empty"));
 
-                    Validator.TryValidateObject(entry, ValidationContextFactory.Create(entry, null), result, true);
+                    FhirValidator.TryValidate(entry, result, validationContext.ValidateRecursively());
                 }
             }
 

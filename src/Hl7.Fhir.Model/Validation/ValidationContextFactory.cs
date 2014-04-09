@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Validation
     // See http://stackoverflow.com/questions/12762071/why-in-portable-library-classes-i-cant-instantiate-a-validationcontext-and-how
     public static class ValidationContextFactory
     {
-        public static ValidationContext Create(object instance, IDictionary<object,object> items)
+        public static ValidationContext Create(object instance, IDictionary<object,object> items, bool recurse = false)
         {
             ValidationContext result = null;
 
@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Validation
             {
                 result = (ValidationContext)Activator.CreateInstance(typeof(ValidationContext),
                     new object[] { instance, null, items });
+
+                result.SetValidateRecursively(recurse);
             }
             catch (InvalidOperationException)
             {

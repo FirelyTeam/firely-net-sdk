@@ -38,9 +38,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>EwoutFhirNetApi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -61,11 +68,21 @@
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
-    <Compile Include="Rest\ResponseDetails.cs" />
+    <Compile Include="Rest\FhirRequest.cs" />
+    <Compile Include="Rest\FhirResponse.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Search\Criterium.cs" />
+    <Compile Include="Search\CompositeValue.cs" />
+    <Compile Include="Search\ChoiceValue.cs" />
+    <Compile Include="Search\CriteriumBuilder.cs" />
+    <Compile Include="Search\Expression.cs" />
+    <Compile Include="Search\QueryExtensions.cs" />
+    <Compile Include="Search\ReferenceValue.cs" />
+    <Compile Include="Search\QuantityValue.cs" />
+    <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\BundleJsonParser.cs" />
     <Compile Include="Serialization\BundleJsonSerializer.cs" />
     <Compile Include="Serialization\BundleXmlParser.cs" />
@@ -93,7 +110,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\FhirRestOperationExtensions.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
@@ -117,17 +134,12 @@
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
-    <Compile Include="Support\Search\BoolParamValue.cs" />
-    <Compile Include="Support\Search\CombinedParamValue.cs" />
-    <Compile Include="Support\Search\DateParamValue.cs" />
-    <Compile Include="Support\Search\IntegerParamValue.cs" />
-    <Compile Include="Support\Search\ReferenceParamValue.cs" />
-    <Compile Include="Support\Search\SearchParam.cs" />
-    <Compile Include="Support\Search\SearchParamValue.cs" />
-    <Compile Include="Support\Search\StringParamValue.cs" />
-    <Compile Include="Support\Search\TokenParamValue.cs" />
+    <Compile Include="Search\DateValue.cs" />
+    <Compile Include="Search\NumberValue.cs" />
+    <Compile Include="Search\StringValue.cs" />
+    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
-    <Compile Include="Rest\UriParamExtensions.cs" />
+    <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Messages.resx">
@@ -143,6 +155,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="EwoutFhirNetApi.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

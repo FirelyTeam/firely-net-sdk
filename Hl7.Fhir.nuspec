@@ -2,21 +2,21 @@
 <package >
   <metadata>
     <id>Hl7.Fhir</id>
-    <version>0.9.4</version>
-    <authors>Ewout Kramer</authors>
-    <owners>Hl7 International</owners>
+    <version>0.9.5-alpha1</version>
+    <authors>Ewout Kramer (e.kramer@furore.com)</authors>
+    <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.NET support for using REST-based HL7 FHIR servers</description>
-    <releaseNotes>Initial release</releaseNotes>
-	<iconUrl>file://icon-fhir-32.png</iconUrl>
+    <description>.NET support for using REST-based HL7 FHIR servers. Supports FHIR DSTU1 (0.8).</description>
+    <releaseNotes>DSTU1 (0.8) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+	<iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
     <copyright>Copyright 2014</copyright>
     <tags>HL7 FHIR</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="5.0.8" />
+      <dependency id="Newtonsoft.Json" version="6.0.2" />
     </dependencies>
   </metadata>
     <files>
-		<file src="lib\Hl7.Fhir.dll" target="lib\portable-net40+sl5+win8\" />
-		<file src="src\bin\Release\Hl7.Fhir.Api.dll" target="lib\portable-net40+sl5+win8\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Hl7.Fhir.Model.dll" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Hl7.Fhir.Api.dll" target="lib\net40" />
     </files>
 </package>

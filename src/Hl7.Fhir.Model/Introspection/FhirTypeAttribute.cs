@@ -60,15 +60,5 @@ namespace Hl7.Fhir.Introspection
         public string Profile { get; set; }
 
         public bool IsResource { get; set; }
-
-        //protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        //{
-        //    var validatable = value as Hl7.Fhir.Validation.IValidatableObject;
-
-        //    if (validatable != null)
-        //        return validatable.Validate(validationContext).FirstOrDefault();
-        //    else
-        //        return null;
-        //}
     }
 }

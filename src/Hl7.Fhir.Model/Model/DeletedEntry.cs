@@ -52,6 +52,7 @@ namespace Hl7.Fhir.Model
             When = when;
         }
 
+        [Required(ErrorMessage="A DeletedEntry must have a non-null deletion time (When)")]
         public DateTimeOffset? When { get; set; }
 
         public override string Summary
@@ -67,9 +68,6 @@ namespace Hl7.Fhir.Model
         {
             var result = new List<ValidationResult>();
             result.AddRange(base.Validate(validationContext));
-
-            if (When == null)
-                result.Add(new ValidationResult("A DeletedEntry must have a non-null deletion time (When)"));
 
             if (!result.Any()) result.Add(ValidationResult.Success);
 

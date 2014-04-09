@@ -42,9 +42,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>EwoutFhirNetApi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -145,10 +152,12 @@
     <Compile Include="Generated\Model\Money.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\Query.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
@@ -159,6 +168,7 @@
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
     <Compile Include="Model\ModelInfo.cs" />
+    <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceEntry.cs" />
     <Compile Include="Model\ResourceReference.cs" />
@@ -181,15 +191,20 @@
     <Compile Include="Validation\InstantPatternAttribute.cs" />
     <Compile Include="Validation\InvokeIValidatableObjectAttribute.cs" />
     <Compile Include="Validation\IValidatableObject.cs" />
+    <Compile Include="Validation\FhirValidator.cs" />
     <Compile Include="Validation\NarrativeXhtmlPatternAttribute.cs" />
     <Compile Include="Validation\OidPatternAttribute.cs" />
-    <Compile Include="Validation\ModelValidator.cs" />
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
+    <Compile Include="Validation\ValidationContextExtensions.cs" />
     <Compile Include="Validation\ValidationContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Model\fhir-xhtml1-strict.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="EwoutFhirNetApi.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

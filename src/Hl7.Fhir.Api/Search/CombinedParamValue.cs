@@ -38,33 +38,44 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Hl7.Fhir.Support.Search
+namespace Hl7.Fhir.Search
 {
-    public class BoolParamValue : SearchParamValue
+    public class CombinedParamValue : ParamValue
     {
-        public bool Value { get; internal set; }
+        public IEnumerable<ParamValue> Values { get; internal set; }
 
-        public BoolParamValue(bool value)
+        public CombinedParamValue( params ParamValue[] parameters) : this((IEnumerable<ParamValue>)parameters)
+        {           
+        }
+
+        public CombinedParamValue( IEnumerable<ParamValue> parameters)
         {
-            Value = value;
+            if (parameters.Any(par => par is CombinedParamValue))
+                throw new ArgumentException("Combined parameters can only combine atomic-value parameters, not nested combined parameters");
+
+            Values = parameters;
         }
 
 
-        internal static BoolParamValue FromQueryValue(string queryValue)
+        internal static CombinedParamValue FromQueryValue(string queryValue)
         {
-            if (queryValue == "true")
-                return new BoolParamValue(true);
-            else if(queryValue == "false")
-                return new BoolParamValue(false);
-            else
-                throw new FormatException("Boolean query parameters should be either true or false");
+            var vals = queryValue.Split('$');
+
+            var pars = vals.Select(s=> new UntypedValue(s));
+
+            return new CombinedParamValue(pars);
         }
 
-        internal override string QueryValue
+        internal override string QueryValue 
         {
             get
             {
-                return Value ? "true" : "false";
+                var result = Values.Aggregate<ParamValue,string>(String.Empty, (s,par) => s += par.QueryValue + "$");
+
+                // Remove last $ we added, that's just the separator
+                if (result != String.Empty) result = result.Substring(0, result.Length - 1);
+
+                return result;
             }
         }
     }

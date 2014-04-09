@@ -4,28 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
-using Hl7.Fhir.Model;
 using System.Net;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Support.Search;
 using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Search;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests
 {
-   [TestClass]
+    [TestClass]
     public class FhirClientTests
-    {
-     
-		//Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
-		//Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-		//Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-		Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
-		//Uri testEndpoint = new Uri("https://api.fhir.me");
+    {    
+        // Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+         Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        // Uri testEndpoint = new Uri("https://api.fhir.me");
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void FetchConformance()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -43,7 +42,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void ReadWithFormat()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -51,18 +50,18 @@ namespace Hl7.Fhir.Tests
             client.UseFormatParam = true;
             client.PreferredFormat = ResourceFormat.Json;
 
-            var loc = client.Read<Location>("1");
+            var loc = client.Read("Patient/1");
 
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void Read()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>("1");
+            var loc = client.Read<Location>("Location/1");
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 
@@ -73,7 +72,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                var random = client.Read<Location>("45qq54");
+                var random = client.Read(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
             catch (FhirOperationException)
@@ -81,21 +80,34 @@ namespace Hl7.Fhir.Tests
                 Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.NotFound);
             }
 
-            //Currently fails on Grahame's server
-            //var loc2 = client.Read<Location>("1", version);
-            //Assert.IsNotNull(loc2);
-            //Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
-            //                FhirSerializer.SerializeBundleEntryToJson(loc2));
+            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location","1", version));
+            Assert.IsNotNull(loc2);
+            Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
+                            FhirSerializer.SerializeBundleEntryToJson(loc2));
 
-            //var loc3 = client.Read<Location>(loc.SelfLink);
-            //Assert.IsNotNull(loc3);
-            //Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
-            //                FhirSerializer.SerializeBundleEntryToJson(loc3));
-
+            var loc3 = client.Read<Location>(loc.SelfLink);
+            Assert.IsNotNull(loc3);
+            Assert.AreEqual(FhirSerializer.SerializeBundleEntryToJson(loc),
+                            FhirSerializer.SerializeBundleEntryToJson(loc3));        
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
+        public void ReadRelative()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            var loc = client.Read<Location>(new Uri("Location/1", UriKind.Relative));
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
+
+            var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+            loc = client.Read<Location>(ri);
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
+        }
+
+        [TestMethod, TestCategory("FhirClient")]
         public void Search()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -105,7 +117,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count() > 10, "Test should use testdata with more than 10 reports");
 
-            result = client.Search<DiagnosticReport>(count: 10);
+            result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count <= 10);
 
@@ -119,30 +131,26 @@ namespace Hl7.Fhir.Tests
                         includes: new string[] { "DiagnosticReport.subject" });
             Assert.IsNotNull(result);
 
-            // Doesn't currently work on Grahames server           
-            //Assert.AreEqual(2, result.Entries.Count);  // should have subject too
+            Assert.AreEqual(2, result.Entries.Count);  // should have subject too
 
-            //Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-            //            typeof(DiagnosticReport).GetCollectionName()));
-            //Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-            //            typeof(Patient).GetCollectionName()));
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(DiagnosticReport).GetCollectionName()));
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(Patient).GetCollectionName()));
 
-            result = client.Search<Patient>(new SearchParam[] 
-                {
-                    new SearchParam("name", "Everywoman"),
-                    new SearchParam("name", "Eve") 
-                });
+            result = client.Search<Patient>(new string[] { "name=Everywoman", "name=Eve" });
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count > 0);
         }
 
-        [TestMethod]
+
+        [TestMethod, TestCategory("FhirClient")]
         public void Paging()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var result = client.Search<DiagnosticReport>(count: 10);
+            var result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entries.Count <= 10);
 
@@ -161,19 +169,19 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(firstId, prevId);
 
             // Forward, then backwards
-            // Does not work on Grahame's server yet
-			//Assert.IsNotNull(client.Continue(result,PageDirection.Next));
-			//result = client.Continue(result, PageDirection.Previous);
-			//Assert.IsNotNull(result);
-			//prevId = result.Entries.First().Id;
-			//Assert.AreEqual(firstId, prevId);
+            result = client.Continue(result, PageDirection.Next);
+            Assert.IsNotNull(result);
+            result = client.Continue(result, PageDirection.Previous);
+            Assert.IsNotNull(result);
+            prevId = result.Entries.First().Id;
+            Assert.AreEqual(firstId, prevId);
         }
 
 
 
-        //private Uri createdTestOrganization = null;
+        private Uri createdTestOrganizationUrl = null;
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void CreateEditDelete()
         {
             var furore = new Organization
@@ -186,33 +194,33 @@ namespace Hl7.Fhir.Tests
             FhirClient client = new FhirClient(testEndpoint);
             var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
 
-            var fe = client.Create<Organization>(furore, tags:tags);
+            var fe = client.Create<Organization>(furore, tags:tags, refresh: true);
 
             Assert.IsNotNull(furore);
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
             Assert.IsNotNull(fe.SelfLink);
             Assert.AreNotEqual(fe.Id, fe.SelfLink);
-          //  createdTestOrganization = fe.Id;
+            createdTestOrganizationUrl = fe.Id;
 
             fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
 
-            var fe2 = client.Update(fe);
-
+            var fe2 = client.Update(fe, refresh: true);
+             
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
 
-            //TODO: Fix this bug (Issue #11 in Github)
-            //Assert.IsNotNull(fe2.Tags);
-            //Assert.AreEqual(1, fe2.Tags.Count());
-            //Assert.AreEqual(fe2.Tags.First(), tags[0]);
+            Assert.IsNotNull(fe2.Tags);
+            Assert.AreEqual(1, fe2.Tags.Count());
+            Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
             client.Delete(fe2);
 
             try
             {
-                fe = client.Read<Organization>(new ResourceIdentity(fe.Id).Id);
+                // Get most recent version
+                fe = client.Read<Organization>(new ResourceIdentity(fe.Id));
                 Assert.Fail();
             }
             catch
@@ -222,79 +230,62 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        //[TestMethod]
-        //public void History()
-        //{
-        //    DateTimeOffset now = DateTimeOffset.Now;
+        [TestMethod, TestCategory("FhirClient")]
+        public void History()
+        {
+            DateTimeOffset now = DateTimeOffset.Now;
 
-        //    CreateEditDelete();
+            CreateEditDelete();
 
-        //    FhirClient client = new FhirClient(testEndpoint);
-        //    Bundle history = client.History(createdTestOrganization);
-        //    Assert.IsNotNull(history);
-        //    Assert.AreEqual(3, history.Entries.Count());
-        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+            FhirClient client = new FhirClient(testEndpoint);
+            Bundle history = client.History(createdTestOrganizationUrl);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(3, history.Entries.Count());
+            Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+            Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
 
-        //    // Now, assume no one is quick enough to insert something between now and the next
-        //    // tests....
+            // Now, assume no one is quick enough to insert something between now and the next
+            // tests....
 
-        //    history = client.History<Organization>(now);
-        //    Assert.IsNotNull(history);
-        //    Assert.AreEqual(3, history.Entries.Count());
-        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+            history = client.TypeHistory<Organization>(now);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(3, history.Entries.Count());
+            Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+            Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
 
-        //    history = client.History(now);
-        //    Assert.IsNotNull(history);
-        //    Assert.AreEqual(3, history.Entries.Count());
-        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
-        //}
-
-
-        //[TestMethod]
-        //public void ParseForPPT()
-        //{
-        //    ErrorList errors = new ErrorList();
-
-        //    // Create a file-based reader for Xml
-        //    XmlReader xr = XmlReader.Create(
-        //        new StreamReader(@"publish\observation-example.xml"));
-
-        //    // Create a file-based reader for Xml
-        //    var obs = (Observation)FhirParser.ParseResource(xr, errors);
-
-        //    // Modify some fields of the observation
-        //    obs.Status = ObservationStatus.Amended;
-        //    obs.Value = new Quantity() { Value = 40, Units = "g" };
-
-        //    // Serialize the in-memory observation to Json
-        //    var jsonText = FhirSerializer.SerializeResourceToJson(obs);
-
-        //}
+            //EK: Our server can't yet do this
+            //history = client.WholeSystemHistory(now);
+            //Assert.IsNotNull(history);
+            //Assert.AreEqual(3, history.Entries.Count());
+            //Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+            //Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+        }
 
 
-        [TestMethod]
+
+
+        [TestMethod, TestCategory("FhirClient")]
         public void ReadTags()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
             var tags = new List<Tag>() { new Tag("http://readtag.nu.nl", Tag.FHIRTAGSCHEME_GENERAL, "readTagTest") };
+            var identity = ResourceIdentity.Build("Location", "1");
 
-            client.AffixTags<Location>(tags, "1");
-            var affixedEntry = client.Read<Location>("1");
-            var version = new ResourceIdentity(affixedEntry.SelfLink).VersionId;
-            var list = client.GetTags();
+            client.AffixTags(identity, tags);
+
+            var affixedEntry = client.Read(identity);
+            var list = client.WholeSystemTags();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            list = client.GetTags<Location>();
+            list = client.TypeTags<Location>();
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            list = client.GetTags<Location>("1", version);
+            list = client.Tags(affixedEntry.SelfLink);
             Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
 
-            client.DeleteTags<Location>(tags, "1", version);
+            client.DeleteTags(affixedEntry.SelfLink, tags);
+            //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         }
     }
 }

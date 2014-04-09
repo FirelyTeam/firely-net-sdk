@@ -159,3 +159,5 @@ $RECYCLE.BIN/
 /src/EwoutFhirNetApi.snk
 *.nupkg
 /packages/repositories.config
+src/Hl7.Fhir.Api/EwoutFhirNetApi.snk
+src/Hl7.Fhir.Model/EwoutFhirNetApi.snk

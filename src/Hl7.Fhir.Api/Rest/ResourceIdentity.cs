@@ -80,12 +80,6 @@ namespace Hl7.Fhir.Rest
 
         private List<string> _components = null;
 
-        private string getHost()
-        {
-            return this.GetComponents(UriComponents.Scheme | UriComponents.UserInfo |
-                            UriComponents.Host | UriComponents.Port, UriFormat.SafeUnescaped);
-        }
-
         private IEnumerable<string> splitPath()
         {
             string path = (this.IsAbsoluteUri) ? this.LocalPath : this.ToString();
@@ -105,6 +99,9 @@ namespace Hl7.Fhir.Rest
         }
 
        
+        /// <summary>
+        /// This is the FHIR service endpoint where the resource is located.
+        /// </summary>
         public Uri Endpoint
         {
             get
@@ -191,6 +188,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        /// <summary>
+        /// Indicates whether this ResourceIdentity is version-specific (has a _history part)
+        /// </summary>
         public bool HasVersion
         {
             get
@@ -199,6 +199,11 @@ namespace Hl7.Fhir.Rest
             }
         }
 
+        /// <summary>
+        /// Returns a new ResourceIdentity made specific for the given version
+        /// </summary>
+        /// <param name="version">The version to add to the ResourceIdentity (part after the _history/)</param>
+        /// <returns></returns>
         public ResourceIdentity WithVersion(string version)
         {
             Uri endpoint = this.Endpoint;
@@ -221,6 +226,10 @@ namespace Hl7.Fhir.Rest
             */
         }
 
+        /// <summary>
+        /// Turns a version-specific ResourceIdentity into a non-version-specific ResourceIdentity
+        /// </summary>
+        /// <returns></returns>
         public ResourceIdentity WithoutVersion()
         {
             Uri endpoint = this.Endpoint;
@@ -242,6 +251,10 @@ namespace Hl7.Fhir.Rest
             */
         }
 
+
+        /// <summary>
+        /// Returns a Uri that is a relative version of the ResourceIdentity
+        /// </summary>
         public Uri OperationPath
         {
             get

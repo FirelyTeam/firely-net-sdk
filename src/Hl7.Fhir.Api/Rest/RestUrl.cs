@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Rest;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,9 @@ namespace Hl7.Fhir.Rest
         private UriBuilder _builder;
         private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
 
-
         public RestUrl(RestUrl url) : this(url.Uri)
         {
         }
-
         public RestUrl(Uri url)
         {
             if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
@@ -27,20 +26,17 @@ namespace Hl7.Fhir.Rest
             _builder = new UriBuilder(url);
 
             if (!String.IsNullOrEmpty(_builder.Query))
-                _parameters = new List<Tuple<string,string>>( SplitParams(_builder.Query) ); 
+                _parameters = new List<Tuple<string,string>>( HttpUtil.SplitParams(_builder.Query) ); 
         }
-
-
         public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
         {
         }
-
 
         public Uri Uri 
         { 
             get
             {
-                _builder.Query = JoinParams(_parameters);
+                _builder.Query = HttpUtil.JoinParams(_parameters);
                 return _builder.Uri;
             } 
         }
@@ -53,7 +49,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
         private static string delimit(string path)
         {
             return path.EndsWith(@"/") ? path : path + @"/";
@@ -62,7 +57,6 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        
         
         /// <summary>
         /// Add additional components to the end of the RestUrl
@@ -78,6 +72,15 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public RestUrl AddPath(Uri uri)
+        {
+            if (!uri.IsAbsoluteUri)
+            {
+                return AddPath(uri.ToString());
+            }
+            else throw new ArgumentException("An absolute path cannot be added to a rest URL.");
+        }
+
         /// <summary>
         /// Add a query parameter to the RestUrl
         /// </summary>
@@ -89,7 +92,24 @@ namespace Hl7.Fhir.Rest
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
 
-            _parameters.Add(Tuple.Create(name, value));
+            return AddParam(Tuple.Create(name,value));
+        }
+
+        public RestUrl AddParam(Tuple<string, string> keyValue)
+        {
+            if (keyValue == null) throw Error.ArgumentNull("keyValue");
+
+            _parameters.Add(keyValue);
+
+            return this;
+        }
+
+        public RestUrl AddParams(IEnumerable<Tuple<string, string>> keyValues)
+        {
+            if (keyValues == null) throw Error.ArgumentNull("keyValues");
+
+            _parameters.AddRange(keyValues);
+
             return this;
         }
 
@@ -142,92 +162,5 @@ namespace Hl7.Fhir.Rest
         {
             return AsString;
         }
-
-        /// <summary>
-        /// Parses the possibly escaped key=value query parameter into a (key,value) Tuple
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns>A Tuple<string,string> containing the key and value. Value maybe null if
-        /// only the key was specified as a query parameter.</returns>
-        internal static Tuple<string, string> SplitParam(string param)
-        {
-            if (param == null) throw new ArgumentNullException("param");
-
-            string[] pair = param.Split('=');
-
-            var key = Uri.UnescapeDataString(pair[0]);
-            var value = pair.Length >= 2 ? String.Join("?", pair.Skip(1)) : null;
-            if (value != null) value = Uri.UnescapeDataString(value);
-
-            return new Tuple<string, string>(key, value);
-        }
-
-        public static IEnumerable<Tuple<string, string>> SplitParams(string query)
-        {
-            if (query == null) throw new ArgumentNullException("query");
-
-            var result = new List<Tuple<string, string>>();
-
-            if (query == String.Empty) return result;
-
-            var q = query.TrimStart('?');
-
-            var querySegments = q.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var segment in querySegments)
-            {
-                var kv = SplitParam(segment);
-                result.Add(kv);
-            }
-
-            return result;
-        }
-
-
-        /// <summary>
-        /// Converts a key,value pair into a query parameters, escaping the key and value
-        /// of necessary.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        internal static string MakeParam(string key, string value = null)
-        {
-            if (key == null) throw new ArgumentNullException("key");
-
-            var result = Uri.EscapeDataString(key);
-
-            if (value != null)
-                result += "=" + Uri.EscapeDataString(value);
-
-            return result;
-        }
-
-
-        internal static string JoinParam(Tuple<string, string> kv)
-        {
-            if (kv == null) throw new ArgumentNullException("kv");
-            if (kv.Item1 == null) throw new ArgumentException("Key in tuple may not be null", "kv");
-
-            return MakeParam(kv.Item1, kv.Item2);
-        }
-
-        /// <summary>
-        /// Builds a query string based on a set of key,value pairs
-        /// </summary>
-        /// <param name="pars"></param>
-        /// <returns></returns>
-        public static string JoinParams(IEnumerable<Tuple<string, string>> pars)
-        {
-            StringBuilder result = new StringBuilder();
-
-            foreach (var kv in pars)
-            {
-                result.Append(JoinParam(kv));
-                result.Append("&");
-            }
-
-            return result.ToString().TrimEnd('&');
-        }    
     }    
 }

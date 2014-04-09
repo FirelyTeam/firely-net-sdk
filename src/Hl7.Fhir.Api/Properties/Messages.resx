@@ -121,21 +121,21 @@
     <value>The argument '{0}' is null or empty.</value>
   </data>
   <data name="CanOnlyDeserializeResourceAndComplex" xml:space="preserve">
-    <value>Can only deserialize resources and complex model classes, not {0}</value>
+    <value>Can only deserialize resources and complex model classes, not '{0}'</value>
   </data>
   <data name="CanOnlyDeserializeTypedCollections" xml:space="preserve">
-    <value>Can only deserialize typed collections: type {0} is neither an array, nor does it implement IEnumerable&lt;T&gt;</value>
+    <value>Can only deserialize typed collections: type '{0}' is neither an array, nor does it implement IEnumerable&lt;T&gt;</value>
   </data>
   <data name="DataToDeserializeNull" xml:space="preserve">
     <value>No data to deserialize (data is null)</value>
   </data>
   <data name="DeserializeUnknownMember" xml:space="preserve">
-    <value>Encountered unknown member {0} while deserializing</value>
+    <value>Encountered unknown member '{0}' while deserializing</value>
   </data>
   <data name="FactoryCreationFailed" xml:space="preserve">
     <value>Factory failed to create object</value>
   </data>
   <data name="NoSuchClassFactory" xml:space="preserve">
-    <value>No ModelClassFactory registered to handle type {0}</value>
+    <value>No ModelClassFactory registered to handle type '{0}'</value>
   </data>
 </root>
