@@ -32,30 +32,29 @@ namespace Hl7.Fhir.Validation
             {
                 foreach (var item in list)
                 {
-                    result = validateValue(item);
+                    result = validateValue(item, validationContext);
                     if (result != ValidationResult.Success) break;
                 }
             }
             else
             {
-                result = validateValue(value);
+                result = validateValue(value, validationContext);
             }
 
             return result;
         }
 
-        private ValidationResult validateValue(object item)
+        private ValidationResult validateValue(object item, ValidationContext context)
         {
             if (item != null)
             {
 #if PORTABLE45
 				if (!Types.Any(type => type.GetTypeInfo().IsAssignableFrom(item.GetType().GetTypeInfo())))
-					return new ValidationResult(String.Format("Value is of type {0}, which is not an allowed choice", item.GetType()));
 #else
                 if (!Types.Any(type => type.IsAssignableFrom(item.GetType())))
-                    return new ValidationResult(String.Format("Value is of type {0}, which is not an allowed choice", item.GetType()));
 #endif
-			}
+                    return FhirValidator.BuildResult(context, "Value is of type {0}, which is not an allowed choice", item.GetType());
+            }
 
             return ValidationResult.Success;
         }

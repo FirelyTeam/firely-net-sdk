@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
             if (UuidPatternAttribute.IsValid((string)value))
                 return ValidationResult.Success;
             else
-                return new ValidationResult("Not a correctly formatted Uuid");
+                return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Uuid", (string)value);
         }
 
         public static bool IsValid(string value)

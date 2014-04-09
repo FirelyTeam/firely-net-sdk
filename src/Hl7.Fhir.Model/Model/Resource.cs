@@ -56,10 +56,10 @@ namespace Hl7.Fhir.Model
                 foreach (var contained in Contained)
                 {
                     if (contained.Contained != null && contained.Contained.Any())
-                        result.Add(new ValidationResult("Contained resources cannot contain nested contained resources", FhirValidator.SingleMemberName("Contained")));
+                        result.Add(FhirValidator.BuildResult(validationContext, "Contained resources cannot contain nested contained resources"));
 
                     if (contained.Text != null)
-                        result.Add(new ValidationResult("Contained resources should not contain narrative", FhirValidator.SingleMemberName("Contained")));
+                        result.Add(FhirValidator.BuildResult(validationContext, "Contained resources should not contain narrative"));
                 }
             }
 

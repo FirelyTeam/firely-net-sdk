@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        private void validateErrorOrFail(object instance, bool recurse=false)
+        private void validateErrorOrFail(object instance, bool recurse=false, string membername=null)
         {
             try
             {
@@ -40,8 +40,10 @@ namespace Hl7.Fhir.Tests
                 FhirValidator.Validate(instance, recurse);
                 Assert.Fail();
             }
-            catch (ValidationException) 
-            { 
+            catch (ValidationException ve) 
+            {
+                if (membername != null)
+                    Assert.IsTrue(ve.ValidationResult.MemberNames.Contains(membername));
             }
         }
      
@@ -157,7 +159,7 @@ namespace Hl7.Fhir.Tests
             // First create an incomplete encounter (class not supplied)
             var enc = new Encounter();
             enc.Status = Encounter.EncounterState.Planned;
-            validateErrorOrFail(enc);
+            validateErrorOrFail(enc, membername: "ClassElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
             enc.Class = Encounter.EncounterClass.Ambulatory;
@@ -177,7 +179,7 @@ namespace Hl7.Fhir.Tests
             FhirValidator.Validate(enc);
 
             // When we recurse, this should fail
-            validateErrorOrFail(enc, true);
+            validateErrorOrFail(enc, true, membername: "Value");
         }
 
         [TestMethod]

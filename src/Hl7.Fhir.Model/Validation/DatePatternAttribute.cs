@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
             if (Regex.IsMatch(value as string, "^" + Date.PATTERN + "$", RegexOptions.Singleline))
                 return ValidationResult.Success;
             else
-                return new ValidationResult("Not a correctly formatted Date");
+                return FhirValidator.BuildResult(validationContext, "Not a correctly formatted Date");
         }
     }
 }

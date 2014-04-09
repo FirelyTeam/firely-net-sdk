@@ -24,9 +24,9 @@ namespace Hl7.Fhir.Validation
                 var uris = uri.ToString();
                 
                 if (uris.StartsWith("urn:oid:") && !OidPatternAttribute.IsValid(uris))
-                    return new ValidationResult(String.Format("Uri uses an urn:oid scheme, but the oid {0} is incorrect", uris));
+                    return FhirValidator.BuildResult(validationContext, "Uri uses an urn:oid scheme, but the oid {0} is incorrect", uris);
                 else if (uris.StartsWith("urn:uuid:") && !UuidPatternAttribute.IsValid(uris))
-                    return new ValidationResult(String.Format("Uri uses an urn:uuid schema, but the uuid {0} is incorrect", uris));
+                    return FhirValidator.BuildResult(validationContext, "Uri uses an urn:uuid schema, but the uuid {0} is incorrect", uris);
             }
 
             return ValidationResult.Success;

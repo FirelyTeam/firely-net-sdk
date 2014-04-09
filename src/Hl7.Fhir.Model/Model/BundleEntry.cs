@@ -71,16 +71,16 @@ namespace Hl7.Fhir.Model
             var result = new List<ValidationResult>();
 
             if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(new ValidationResult("Entry id must be an absolute URI", FhirValidator.SingleMemberName("Id")));
+                result.Add(FhirValidator.BuildResult(validationContext, "Entry id must be an absolute URI"));
 
             if (Bundle.UriHasValue(SelfLink) && !SelfLink.IsAbsoluteUri)
-                result.Add(new ValidationResult("Entry selflink must be an absolute URI", FhirValidator.SingleMemberName("SelfLink")));
+                result.Add(FhirValidator.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
             if (Links.FirstLink != null || Links.LastLink != null || Links.PreviousLink != null || Links.NextLink != null)
-                result.Add(new ValidationResult("Paging links can only be used on feeds, not entries", FhirValidator.SingleMemberName("Links")));
+                result.Add(FhirValidator.BuildResult(validationContext, "Paging links can only be used on feeds, not entries"));
 
             if (Tags != null && validationContext.ValidateRecursively())
-                result.AddRange(new TagList(Tags).Validate(validationContext));
+                FhirValidator.TryValidate(Tags,result,true);
 
             return result;
         }

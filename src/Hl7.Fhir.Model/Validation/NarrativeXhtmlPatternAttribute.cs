@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(Exception e)
             {
-                return new ValidationResult("Xml can not be parsed or is not valid: " + e.Message);
+                return FhirValidator.BuildResult(validationContext, "Xml can not be parsed or is not valid: " + e.Message);
             }
         }
     }
