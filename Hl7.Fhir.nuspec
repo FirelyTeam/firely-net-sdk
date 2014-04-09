@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Hl7.Fhir</id>
-    <version>0.9.5-alpha1</version>
+    <version>0.9.5</version>
     <authors>Ewout Kramer (e.kramer@furore.com)</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

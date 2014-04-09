@@ -204,18 +204,23 @@ namespace Hl7.Fhir.Tests
             createdTestOrganizationUrl = fe.Id;
 
             fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
-
             var fe2 = client.Update(fe, refresh: true);
-             
+            
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
+            Assert.AreEqual(2, fe2.Resource.Identifier.Count);
 
             Assert.IsNotNull(fe2.Tags);
             Assert.AreEqual(1, fe2.Tags.Count());
             Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
-            client.Delete(fe2);
+            fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
+            var fe3 = client.Update(fe2.Id, fe.Resource, refresh: true);
+            Assert.IsNotNull(fe3);
+            Assert.AreEqual(3, fe3.Resource.Identifier.Count);
+
+            client.Delete(fe3);
 
             try
             {

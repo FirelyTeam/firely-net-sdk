@@ -317,6 +317,58 @@ namespace Hl7.Fhir.Rest
             return updated;
         }
              
+
+
+        /// <summary>
+        /// Update (or create) a resource at a given endpoint
+        /// </summary>
+        /// <param name="location">The location where the resource must be posted</param>
+        /// <param name="data">The resource to send as an update</param>
+        /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
+        /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
+        /// <returns>If refresh=true, this function will return a ResourceEntry with all newly created data from the server. 
+        /// Otherwise
+        /// the returned result will only contain a SelfLink if the update was actually a create.
+        /// Throws an exception when the update failed,
+        /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
+        /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
+        /// requires version-aware updates.</returns>
+        public ResourceEntry<TResource> Update<TResource>(Uri location, TResource data, bool refresh = false)
+            where TResource : Resource, new()
+        {
+            if(location == null) Error.ArgumentNull("location");
+            if(data == null) Error.ArgumentNull("data");
+
+            ResourceEntry<TResource> entry = new ResourceEntry<TResource>(makeAbsolute(location), DateTimeOffset.Now, data);
+
+            return Update(entry, refresh);
+        }
+
+
+        /// <summary>
+        /// Update (or create) a resource at a given endpoint
+        /// </summary>
+        /// <param name="location">The location where the resource must be posted</param>
+        /// <param name="data">The resource to send as an update</param>
+        /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
+        /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
+        /// <returns>If refresh=true, this function will return a ResourceEntry with all newly created data from the server. 
+        /// Otherwise
+        /// the returned result will only contain a SelfLink if the update was actually a create.
+        /// Throws an exception when the update failed,
+        /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
+        /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
+        /// requires version-aware updates.</returns>
+        public ResourceEntry<TResource> Update<TResource>(string location, TResource data, bool refresh = false)
+            where TResource : Resource, new()
+        {
+            if (location == null) Error.ArgumentNull("location");
+            if (data == null) Error.ArgumentNull("data");
+
+            return Update<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), data, refresh);
+
+        }
+
         // TODO: Have Update() without generic params.
 
         /// <summary>
