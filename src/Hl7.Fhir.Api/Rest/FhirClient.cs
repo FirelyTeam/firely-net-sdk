@@ -58,7 +58,6 @@ namespace Hl7.Fhir.Rest
         //    // Set preferred serialization format
         //    throw new NotImplementedException();
         //}
-        
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
@@ -164,16 +163,15 @@ namespace Hl7.Fhir.Rest
 
             req.SetBody(resource, PreferredFormat);
             if(tags != null) req.SetTagsInHeader(tags);
-            FhirResponse response = doRequest(req, id == null ? HttpStatusCode.Created : HttpStatusCode.OK, r => r);
+            FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
             ResourceEntry<TResource> entry = (ResourceEntry<TResource>) ResourceEntry.Create(resource);
             entry.Links.SelfLink = new ResourceIdentity(response.Location);
-
+            entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) entry = Refresh(entry, versionSpecific: true);
             return entry;
-
         }
 
         /// <summary>
@@ -318,8 +316,7 @@ namespace Hl7.Fhir.Rest
 
             return updated;
         }
-
-     
+             
         // TODO: Have Update() without generic params.
 
         /// <summary>
@@ -389,6 +386,14 @@ namespace Hl7.Fhir.Rest
             var id = getIdFromLocation(location);
 
             return internalHistory(collection, id, since, pageSize);
+        }
+
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            Uri uri = new Uri(location, UriKind.Relative);
+
+            return History(uri, since, pageSize);
         }
 
         /// <summary>

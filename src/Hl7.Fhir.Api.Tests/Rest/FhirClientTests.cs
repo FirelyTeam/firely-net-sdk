@@ -15,17 +15,17 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests
 {
-    [TestClass]
+   [TestClass]
     public class FhirClientTests
     {
      
         // Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-         Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+        // Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void FetchConformance()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void ReadWithFormat()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void Read()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void ReadRelative()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void Search()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -145,8 +145,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(result.Entries.Count > 0);
         }
 
-
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void Paging()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -180,9 +179,9 @@ namespace Hl7.Fhir.Tests
 
 
 
-        private Uri createdTestOrganizationUrl = null;
+        //private Uri createdTestOrganization = null;
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod]
         public void CreateEditDelete()
         {
             var furore = new Organization
@@ -202,16 +201,17 @@ namespace Hl7.Fhir.Tests
             Assert.IsNotNull(fe.Id);
             Assert.IsNotNull(fe.SelfLink);
             Assert.AreNotEqual(fe.Id, fe.SelfLink);
-            createdTestOrganizationUrl = fe.Id;
+          //  createdTestOrganization = fe.Id;
 
             fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
 
-            var fe2 = client.Update(fe, refresh: true);
+            var fe2 = client.Update(fe, true);
              
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
 
+            //TODO: Fix this bug (Issue #11 in Github)
             Assert.IsNotNull(fe2.Tags);
             Assert.AreEqual(1, fe2.Tags.Count());
             Assert.AreEqual(fe2.Tags.First(), tags[0]);
@@ -231,41 +231,60 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
-        public void History()
-        {
-            DateTimeOffset now = DateTimeOffset.Now;
+        //[TestMethod]
+        //public void History()
+        //{
+        //    DateTimeOffset now = DateTimeOffset.Now;
 
-            CreateEditDelete();
+        //    CreateEditDelete();
 
-            FhirClient client = new FhirClient(testEndpoint);
-            Bundle history = client.History(createdTestOrganizationUrl);
-            Assert.IsNotNull(history);
-            Assert.AreEqual(3, history.Entries.Count());
-            Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-            Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+        //    FhirClient client = new FhirClient(testEndpoint);
+        //    Bundle history = client.History(createdTestOrganization);
+        //    Assert.IsNotNull(history);
+        //    Assert.AreEqual(3, history.Entries.Count());
+        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
 
-            // Now, assume no one is quick enough to insert something between now and the next
-            // tests....
+        //    // Now, assume no one is quick enough to insert something between now and the next
+        //    // tests....
 
-            history = client.TypeHistory<Organization>(now);
-            Assert.IsNotNull(history);
-            Assert.AreEqual(3, history.Entries.Count());
-            Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-            Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+        //    history = client.History<Organization>(now);
+        //    Assert.IsNotNull(history);
+        //    Assert.AreEqual(3, history.Entries.Count());
+        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
 
-            //EK: Our server can't yet do this
-            //history = client.WholeSystemHistory(now);
-            //Assert.IsNotNull(history);
-            //Assert.AreEqual(3, history.Entries.Count());
-            //Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
-            //Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
-        }
-
+        //    history = client.History(now);
+        //    Assert.IsNotNull(history);
+        //    Assert.AreEqual(3, history.Entries.Count());
+        //    Assert.AreEqual(2, history.Entries.Where(entry => entry is ResourceEntry).Count());
+        //    Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
+        //}
 
 
+        //[TestMethod]
+        //public void ParseForPPT()
+        //{
+        //    ErrorList errors = new ErrorList();
 
-        [TestMethod, TestCategory("FhirClient")]
+        //    // Create a file-based reader for Xml
+        //    XmlReader xr = XmlReader.Create(
+        //        new StreamReader(@"publish\observation-example.xml"));
+
+        //    // Create a file-based reader for Xml
+        //    var obs = (Observation)FhirParser.ParseResource(xr, errors);
+
+        //    // Modify some fields of the observation
+        //    obs.Status = ObservationStatus.Amended;
+        //    obs.Value = new Quantity() { Value = 40, Units = "g" };
+
+        //    // Serialize the in-memory observation to Json
+        //    var jsonText = FhirSerializer.SerializeResourceToJson(obs);
+
+        //}
+
+
+        [TestMethod] 
         public void ReadTags()
         {
             FhirClient client = new FhirClient(testEndpoint);
