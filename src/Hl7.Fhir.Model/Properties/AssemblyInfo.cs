@@ -17,8 +17,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
+#if DEBUG
 [assembly: InternalsVisibleTo("HL7.Fhir.Tests")]
+#endif
+
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("0.12.2206")]
-[assembly: AssemblyFileVersion("0.12.2206")]
+[assembly: AssemblyVersion("0.9.5.2325")]
+[assembly: AssemblyFileVersion("0.9.5.2325")]
