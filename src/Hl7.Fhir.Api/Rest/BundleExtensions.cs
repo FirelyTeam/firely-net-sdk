@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
             try
             {
                 bundle.Entries = new List<BundleEntry>();
-                var xml = FhirSerializer.SerializeBundleToXml(bundle);
+                var xml = FhirSerializer.SerializeBundleToXml(bundle, summary:false);
                 result = FhirParser.ParseBundleFromXml(xml);
             }
             catch

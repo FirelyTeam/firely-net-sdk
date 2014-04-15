@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,14 +45,19 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Coding")]
     [DataContract]
-    public partial class Coding : Hl7.Fhir.Model.Element
+    public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Identity of the terminology system
         /// </summary>
-        [FhirElement("system", Order=40)]
+        [FhirElement("system", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
+        public Hl7.Fhir.Model.FhirUri SystemElement
+        {
+            get { return _SystemElement; }
+            set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+        }
+        private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -65,15 +70,21 @@ namespace Hl7.Fhir.Model
                   SystemElement = null; 
                 else
                   SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("System");
             }
         }
         
         /// <summary>
         /// Version of the system - if relevant
         /// </summary>
-        [FhirElement("version", Order=50)]
+        [FhirElement("version", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString VersionElement
+        {
+            get { return _VersionElement; }
+            set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _VersionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -86,15 +97,21 @@ namespace Hl7.Fhir.Model
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Version");
             }
         }
         
         /// <summary>
         /// Symbol in syntax defined by the system
         /// </summary>
-        [FhirElement("code", Order=60)]
+        [FhirElement("code", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.Code CodeElement { get; set; }
+        public Hl7.Fhir.Model.Code CodeElement
+        {
+            get { return _CodeElement; }
+            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+        }
+        private Hl7.Fhir.Model.Code _CodeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -107,15 +124,21 @@ namespace Hl7.Fhir.Model
                   CodeElement = null; 
                 else
                   CodeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Code");
             }
         }
         
         /// <summary>
         /// Representation defined by the system
         /// </summary>
-        [FhirElement("display", Order=70)]
+        [FhirElement("display", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DisplayElement
+        {
+            get { return _DisplayElement; }
+            set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DisplayElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -128,15 +151,21 @@ namespace Hl7.Fhir.Model
                   DisplayElement = null; 
                 else
                   DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Display");
             }
         }
         
         /// <summary>
         /// If this code was chosen directly by the user
         /// </summary>
-        [FhirElement("primary", Order=80)]
+        [FhirElement("primary", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean PrimaryElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean PrimaryElement
+        {
+            get { return _PrimaryElement; }
+            set { _PrimaryElement = value; OnPropertyChanged("PrimaryElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _PrimaryElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -149,15 +178,22 @@ namespace Hl7.Fhir.Model
                   PrimaryElement = null; 
                 else
                   PrimaryElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Primary");
             }
         }
         
         /// <summary>
         /// Set this coding was chosen from
         /// </summary>
-        [FhirElement("valueSet", Order=90)]
+        [FhirElement("valueSet", InSummary=true, Order=90)]
+        [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ValueSet { get; set; }
+        public Hl7.Fhir.Model.ResourceReference ValueSet
+        {
+            get { return _ValueSet; }
+            set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _ValueSet;
         
     }
     

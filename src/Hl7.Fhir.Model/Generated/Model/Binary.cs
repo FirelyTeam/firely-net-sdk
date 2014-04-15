@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Binary", IsResource=true)]
     [DataContract]
-    public partial class Binary : Hl7.Fhir.Model.Resource
+    public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Binary contents
@@ -53,7 +53,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("content", XmlSerialization=XmlSerializationHint.TextNode, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public byte[] Content { get; set; }
+        public byte[] Content
+        {
+            get { return _Content; }
+            set { _Content = value; OnPropertyChanged("Content"); }
+        }
+        private byte[] _Content;
         
         /// <summary>
         /// Media type of contents
@@ -61,7 +66,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("contentType", XmlSerialization=XmlSerializationHint.Attribute, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public string ContentType { get; set; }
+        public string ContentType
+        {
+            get { return _ContentType; }
+            set { _ContentType = value; OnPropertyChanged("ContentType"); }
+        }
+        private string _ContentType;
         
     }
     

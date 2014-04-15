@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("OperationOutcome", IsResource=true)]
     [DataContract]
-    public partial class OperationOutcome : Hl7.Fhir.Model.Resource
+    public partial class OperationOutcome : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// A coded expression of the type of issue
@@ -128,15 +128,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("OperationOutcomeIssueComponent")]
         [DataContract]
-        public partial class OperationOutcomeIssueComponent : Hl7.Fhir.Model.Element
+        public partial class OperationOutcomeIssueComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// fatal | error | warning | information
             /// </summary>
-            [FhirElement("severity", Order=40)]
+            [FhirElement("severity", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement { get; set; }
+            public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement
+            {
+                get { return _SeverityElement; }
+                set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
+            }
+            private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -149,22 +154,33 @@ namespace Hl7.Fhir.Model
                       SeverityElement = null; 
                     else
                       SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
+                    OnPropertyChanged("Severity");
                 }
             }
             
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("type", Order=50)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Type { get; set; }
+            public Hl7.Fhir.Model.Coding Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
             /// Additional description of the issue
             /// </summary>
-            [FhirElement("details", Order=60)]
+            [FhirElement("details", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DetailsElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DetailsElement
+            {
+                get { return _DetailsElement; }
+                set { _DetailsElement = value; OnPropertyChanged("DetailsElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DetailsElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -177,16 +193,22 @@ namespace Hl7.Fhir.Model
                       DetailsElement = null; 
                     else
                       DetailsElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Details");
                 }
             }
             
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", Order=70)]
+            [FhirElement("location", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> LocationElement { get; set; }
+            public List<Hl7.Fhir.Model.FhirString> LocationElement
+            {
+                get { return _LocationElement; }
+                set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
+            }
+            private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -199,6 +221,7 @@ namespace Hl7.Fhir.Model
                       LocationElement = null; 
                     else
                       LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("Location");
                 }
             }
             
@@ -211,7 +234,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("issue", Order=70)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> Issue { get; set; }
+        public List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> Issue
+        {
+            get { return _Issue; }
+            set { _Issue = value; OnPropertyChanged("Issue"); }
+        }
+        private List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> _Issue;
         
     }
     

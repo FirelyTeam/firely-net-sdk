@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,29 +45,40 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Substance", IsResource=true)]
     [DataContract]
-    public partial class Substance : Hl7.Fhir.Model.Resource
+    public partial class Substance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// null
         /// </summary>
         [FhirType("SubstanceIngredientComponent")]
         [DataContract]
-        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.Element
+        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Optional amount (concentration)
             /// </summary>
-            [FhirElement("quantity", Order=40)]
+            [FhirElement("quantity", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Quantity { get; set; }
+            public Hl7.Fhir.Model.Ratio Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            private Hl7.Fhir.Model.Ratio _Quantity;
             
             /// <summary>
             /// A component of the substance
             /// </summary>
-            [FhirElement("substance", Order=50)]
+            [FhirElement("substance", InSummary=true, Order=50)]
+            [References("Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Substance { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Substance
+            {
+                get { return _Substance; }
+                set { _Substance = value; OnPropertyChanged("Substance"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Substance;
             
         }
         
@@ -77,21 +88,31 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("SubstanceInstanceComponent")]
         [DataContract]
-        public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.Element
+        public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Identifier of the package/container
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier { get; set; }
+            public Hl7.Fhir.Model.Identifier Identifier
+            {
+                get { return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// When no longer valid to use
             /// </summary>
-            [FhirElement("expiry", Order=50)]
+            [FhirElement("expiry", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime ExpiryElement { get; set; }
+            public Hl7.Fhir.Model.FhirDateTime ExpiryElement
+            {
+                get { return _ExpiryElement; }
+                set { _ExpiryElement = value; OnPropertyChanged("ExpiryElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDateTime _ExpiryElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -104,15 +125,21 @@ namespace Hl7.Fhir.Model
                       ExpiryElement = null; 
                     else
                       ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("Expiry");
                 }
             }
             
             /// <summary>
             /// Amount of substance in the package
             /// </summary>
-            [FhirElement("quantity", Order=60)]
+            [FhirElement("quantity", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity { get; set; }
+            public Hl7.Fhir.Model.Quantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
         }
         
@@ -123,14 +150,24 @@ namespace Hl7.Fhir.Model
         [FhirElement("type", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
         [FhirElement("description", Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DescriptionElement
+        {
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -143,6 +180,7 @@ namespace Hl7.Fhir.Model
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
             }
         }
         
@@ -151,7 +189,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("instance", Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance { get; set; }
+        public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
+        {
+            get { return _Instance; }
+            set { _Instance = value; OnPropertyChanged("Instance"); }
+        }
+        private Hl7.Fhir.Model.Substance.SubstanceInstanceComponent _Instance;
         
         /// <summary>
         /// Composition information about the substance
@@ -159,7 +202,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("ingredient", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient { get; set; }
+        public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
+        {
+            get { return _Ingredient; }
+            set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
+        }
+        private List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> _Ingredient;
         
     }
     

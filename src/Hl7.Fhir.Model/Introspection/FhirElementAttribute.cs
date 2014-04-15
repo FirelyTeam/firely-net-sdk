@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Introspection
 
         public int Order { get; set; }
 
+        public bool InSummary { get; set; }
 
         // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
         // FhirElement while validating. This allows us to extend validation into each FhirElement,

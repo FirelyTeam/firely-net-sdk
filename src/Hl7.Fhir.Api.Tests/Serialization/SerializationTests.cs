@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Test.Serialization
 {
@@ -44,5 +45,23 @@ namespace Hl7.Fhir.Test.Serialization
             Assert.IsTrue(FhirParser.ProbeIsXml("   <element/>"));
             Assert.IsTrue(FhirParser.ProbeIsXml("<?xml />"));
         }
+
+        [TestMethod]
+        public void TestSummary()
+        {
+            var p = new Patient();
+
+            p.BirthDate = "1972-11-30";     // present in both summary and full
+            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+
+            var full = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsTrue(full.Contains("<birthDate"));
+            Assert.IsTrue(full.Contains("<photo"));
+
+            var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
+            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.IsFalse(summ.Contains("<photo"));
+        }
+
     }
 }

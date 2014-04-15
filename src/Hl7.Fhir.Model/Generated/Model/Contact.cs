@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Contact")]
     [DataContract]
-    public partial class Contact : Hl7.Fhir.Model.Element
+    public partial class Contact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Telecommunications form for contact
@@ -84,9 +84,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// phone | fax | email | url
         /// </summary>
-        [FhirElement("system", Order=40)]
+        [FhirElement("system", InSummary=true, Order=40)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Contact.ContactSystem> SystemElement { get; set; }
+        public Code<Hl7.Fhir.Model.Contact.ContactSystem> SystemElement
+        {
+            get { return _SystemElement; }
+            set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Contact.ContactSystem> _SystemElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -99,15 +104,21 @@ namespace Hl7.Fhir.Model
                   SystemElement = null; 
                 else
                   SystemElement = new Code<Hl7.Fhir.Model.Contact.ContactSystem>(value);
+                OnPropertyChanged("System");
             }
         }
         
         /// <summary>
         /// The actual contact details
         /// </summary>
-        [FhirElement("value", Order=50)]
+        [FhirElement("value", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString ValueElement { get; set; }
+        public Hl7.Fhir.Model.FhirString ValueElement
+        {
+            get { return _ValueElement; }
+            set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _ValueElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -120,15 +131,21 @@ namespace Hl7.Fhir.Model
                   ValueElement = null; 
                 else
                   ValueElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Value");
             }
         }
         
         /// <summary>
         /// home | work | temp | old | mobile - purpose of this address
         /// </summary>
-        [FhirElement("use", Order=60)]
+        [FhirElement("use", InSummary=true, Order=60)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Contact.ContactUse> UseElement { get; set; }
+        public Code<Hl7.Fhir.Model.Contact.ContactUse> UseElement
+        {
+            get { return _UseElement; }
+            set { _UseElement = value; OnPropertyChanged("UseElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Contact.ContactUse> _UseElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -141,15 +158,21 @@ namespace Hl7.Fhir.Model
                   UseElement = null; 
                 else
                   UseElement = new Code<Hl7.Fhir.Model.Contact.ContactUse>(value);
+                OnPropertyChanged("Use");
             }
         }
         
         /// <summary>
         /// Time period when the contact was/is in use
         /// </summary>
-        [FhirElement("period", Order=70)]
+        [FhirElement("period", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.Period Period { get; set; }
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        private Hl7.Fhir.Model.Period _Period;
         
     }
     

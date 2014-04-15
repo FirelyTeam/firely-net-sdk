@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Schedule")]
     [DataContract]
-    public partial class Schedule : Hl7.Fhir.Model.Element
+    public partial class Schedule : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// A unit of time (units from UCUM)
@@ -102,14 +102,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ScheduleRepeatComponent")]
         [DataContract]
-        public partial class ScheduleRepeatComponent : Hl7.Fhir.Model.Element
+        public partial class ScheduleRepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Event occurs frequency times per duration
             /// </summary>
-            [FhirElement("frequency", Order=40)]
+            [FhirElement("frequency", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer FrequencyElement { get; set; }
+            public Hl7.Fhir.Model.Integer FrequencyElement
+            {
+                get { return _FrequencyElement; }
+                set { _FrequencyElement = value; OnPropertyChanged("FrequencyElement"); }
+            }
+            private Hl7.Fhir.Model.Integer _FrequencyElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -122,15 +127,21 @@ namespace Hl7.Fhir.Model
                       FrequencyElement = null; 
                     else
                       FrequencyElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Frequency");
                 }
             }
             
             /// <summary>
             /// HS | WAKE | AC | ACM | ACD | ACV | PC | PCM | PCD | PCV - common life events
             /// </summary>
-            [FhirElement("when", Order=50)]
+            [FhirElement("when", InSummary=true, Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Schedule.EventTiming> WhenElement { get; set; }
+            public Code<Hl7.Fhir.Model.Schedule.EventTiming> WhenElement
+            {
+                get { return _WhenElement; }
+                set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Schedule.EventTiming> _WhenElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -143,16 +154,22 @@ namespace Hl7.Fhir.Model
                       WhenElement = null; 
                     else
                       WhenElement = new Code<Hl7.Fhir.Model.Schedule.EventTiming>(value);
+                    OnPropertyChanged("When");
                 }
             }
             
             /// <summary>
             /// Repeating or event-related duration
             /// </summary>
-            [FhirElement("duration", Order=60)]
+            [FhirElement("duration", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal DurationElement { get; set; }
+            public Hl7.Fhir.Model.FhirDecimal DurationElement
+            {
+                get { return _DurationElement; }
+                set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDecimal _DurationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -165,16 +182,22 @@ namespace Hl7.Fhir.Model
                       DurationElement = null; 
                     else
                       DurationElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Duration");
                 }
             }
             
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("units", Order=70)]
+            [FhirElement("units", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Schedule.UnitsOfTime> UnitsElement { get; set; }
+            public Code<Hl7.Fhir.Model.Schedule.UnitsOfTime> UnitsElement
+            {
+                get { return _UnitsElement; }
+                set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Schedule.UnitsOfTime> _UnitsElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -187,15 +210,21 @@ namespace Hl7.Fhir.Model
                       UnitsElement = null; 
                     else
                       UnitsElement = new Code<Hl7.Fhir.Model.Schedule.UnitsOfTime>(value);
+                    OnPropertyChanged("Units");
                 }
             }
             
             /// <summary>
             /// Number of times to repeat
             /// </summary>
-            [FhirElement("count", Order=80)]
+            [FhirElement("count", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer CountElement { get; set; }
+            public Hl7.Fhir.Model.Integer CountElement
+            {
+                get { return _CountElement; }
+                set { _CountElement = value; OnPropertyChanged("CountElement"); }
+            }
+            private Hl7.Fhir.Model.Integer _CountElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -208,15 +237,21 @@ namespace Hl7.Fhir.Model
                       CountElement = null; 
                     else
                       CountElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Count");
                 }
             }
             
             /// <summary>
             /// When to stop repeats
             /// </summary>
-            [FhirElement("end", Order=90)]
+            [FhirElement("end", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime EndElement { get; set; }
+            public Hl7.Fhir.Model.FhirDateTime EndElement
+            {
+                get { return _EndElement; }
+                set { _EndElement = value; OnPropertyChanged("EndElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDateTime _EndElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -229,6 +264,7 @@ namespace Hl7.Fhir.Model
                       EndElement = null; 
                     else
                       EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("End");
                 }
             }
             
@@ -238,17 +274,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the event occurs
         /// </summary>
-        [FhirElement("event", Order=40)]
+        [FhirElement("event", InSummary=true, Order=40)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Period> Event { get; set; }
+        public List<Hl7.Fhir.Model.Period> Event
+        {
+            get { return _Event; }
+            set { _Event = value; OnPropertyChanged("Event"); }
+        }
+        private List<Hl7.Fhir.Model.Period> _Event;
         
         /// <summary>
         /// Only if there is none or one event
         /// </summary>
-        [FhirElement("repeat", Order=50)]
+        [FhirElement("repeat", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.Schedule.ScheduleRepeatComponent Repeat { get; set; }
+        public Hl7.Fhir.Model.Schedule.ScheduleRepeatComponent Repeat
+        {
+            get { return _Repeat; }
+            set { _Repeat = value; OnPropertyChanged("Repeat"); }
+        }
+        private Hl7.Fhir.Model.Schedule.ScheduleRepeatComponent _Repeat;
         
     }
     

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MessageHeader", IsResource=true)]
     [DataContract]
-    public partial class MessageHeader : Hl7.Fhir.Model.Resource
+    public partial class MessageHeader : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// The kind of response to a message
@@ -66,14 +66,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MessageDestinationComponent")]
         [DataContract]
-        public partial class MessageDestinationComponent : Hl7.Fhir.Model.Element
+        public partial class MessageDestinationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -86,23 +91,35 @@ namespace Hl7.Fhir.Model
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
             /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("target", Order=50)]
+            [FhirElement("target", InSummary=true, Order=50)]
+            [References("Device")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Target { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// Actual destination address or id
             /// </summary>
-            [FhirElement("endpoint", Order=60)]
+            [FhirElement("endpoint", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri EndpointElement
+            {
+                get { return _EndpointElement; }
+                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -115,6 +132,7 @@ namespace Hl7.Fhir.Model
                       EndpointElement = null; 
                     else
                       EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Endpoint");
                 }
             }
             
@@ -126,14 +144,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MessageSourceComponent")]
         [DataContract]
-        public partial class MessageSourceComponent : Hl7.Fhir.Model.Element
+        public partial class MessageSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -146,16 +169,22 @@ namespace Hl7.Fhir.Model
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
             /// Name of software running the system
             /// </summary>
-            [FhirElement("software", Order=50)]
+            [FhirElement("software", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString SoftwareElement { get; set; }
+            public Hl7.Fhir.Model.FhirString SoftwareElement
+            {
+                get { return _SoftwareElement; }
+                set { _SoftwareElement = value; OnPropertyChanged("SoftwareElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _SoftwareElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -168,15 +197,21 @@ namespace Hl7.Fhir.Model
                       SoftwareElement = null; 
                     else
                       SoftwareElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Software");
                 }
             }
             
             /// <summary>
             /// Version of software running
             /// </summary>
-            [FhirElement("version", Order=60)]
+            [FhirElement("version", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString VersionElement
+            {
+                get { return _VersionElement; }
+                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _VersionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -189,23 +224,34 @@ namespace Hl7.Fhir.Model
                       VersionElement = null; 
                     else
                       VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Version");
                 }
             }
             
             /// <summary>
             /// Human contact for problems
             /// </summary>
-            [FhirElement("contact", Order=70)]
+            [FhirElement("contact", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Contact Contact { get; set; }
+            public Hl7.Fhir.Model.Contact Contact
+            {
+                get { return _Contact; }
+                set { _Contact = value; OnPropertyChanged("Contact"); }
+            }
+            private Hl7.Fhir.Model.Contact _Contact;
             
             /// <summary>
             /// Actual message source address or id
             /// </summary>
-            [FhirElement("endpoint", Order=80)]
+            [FhirElement("endpoint", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri EndpointElement
+            {
+                get { return _EndpointElement; }
+                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -218,6 +264,7 @@ namespace Hl7.Fhir.Model
                       EndpointElement = null; 
                     else
                       EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Endpoint");
                 }
             }
             
@@ -229,15 +276,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MessageHeaderResponseComponent")]
         [DataContract]
-        public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.Element
+        public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Id of original message
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Id IdentifierElement { get; set; }
+            public Hl7.Fhir.Model.Id IdentifierElement
+            {
+                get { return _IdentifierElement; }
+                set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+            }
+            private Hl7.Fhir.Model.Id _IdentifierElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -250,16 +302,22 @@ namespace Hl7.Fhir.Model
                       IdentifierElement = null; 
                     else
                       IdentifierElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("Identifier");
                 }
             }
             
             /// <summary>
             /// ok | transient-error | fatal-error
             /// </summary>
-            [FhirElement("code", Order=50)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement { get; set; }
+            public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.MessageHeader.ResponseType> _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -272,15 +330,22 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// Specific list of hints/warnings/errors
             /// </summary>
-            [FhirElement("details", Order=60)]
+            [FhirElement("details", InSummary=true, Order=60)]
+            [References("OperationOutcome")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Details { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Details
+            {
+                get { return _Details; }
+                set { _Details = value; OnPropertyChanged("Details"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Details;
             
         }
         
@@ -291,7 +356,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("identifier", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Id IdentifierElement { get; set; }
+        public Hl7.Fhir.Model.Id IdentifierElement
+        {
+            get { return _IdentifierElement; }
+            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+        }
+        private Hl7.Fhir.Model.Id _IdentifierElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -304,6 +374,7 @@ namespace Hl7.Fhir.Model
                   IdentifierElement = null; 
                 else
                   IdentifierElement = new Hl7.Fhir.Model.Id(value);
+                OnPropertyChanged("Identifier");
             }
         }
         
@@ -313,7 +384,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("timestamp", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Instant TimestampElement { get; set; }
+        public Hl7.Fhir.Model.Instant TimestampElement
+        {
+            get { return _TimestampElement; }
+            set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
+        }
+        private Hl7.Fhir.Model.Instant _TimestampElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -326,6 +402,7 @@ namespace Hl7.Fhir.Model
                   TimestampElement = null; 
                 else
                   TimestampElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Timestamp");
             }
         }
         
@@ -335,14 +412,24 @@ namespace Hl7.Fhir.Model
         [FhirElement("event", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Event { get; set; }
+        public Hl7.Fhir.Model.Coding Event
+        {
+            get { return _Event; }
+            set { _Event = value; OnPropertyChanged("Event"); }
+        }
+        private Hl7.Fhir.Model.Coding _Event;
         
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
         [FhirElement("response", Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response { get; set; }
+        public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response
+        {
+            get { return _Response; }
+            set { _Response = value; OnPropertyChanged("Response"); }
+        }
+        private Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent _Response;
         
         /// <summary>
         /// Message Source Application
@@ -350,7 +437,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("source", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source { get; set; }
+        public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
+        {
+            get { return _Source; }
+            set { _Source = value; OnPropertyChanged("Source"); }
+        }
+        private Hl7.Fhir.Model.MessageHeader.MessageSourceComponent _Source;
         
         /// <summary>
         /// Message Destination Application(s)
@@ -358,50 +450,90 @@ namespace Hl7.Fhir.Model
         [FhirElement("destination", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination { get; set; }
+        public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
+        {
+            get { return _Destination; }
+            set { _Destination = value; OnPropertyChanged("Destination"); }
+        }
+        private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
         
         /// <summary>
         /// The source of the data entry
         /// </summary>
         [FhirElement("enterer", Order=130)]
+        [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Enterer { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Enterer
+        {
+            get { return _Enterer; }
+            set { _Enterer = value; OnPropertyChanged("Enterer"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// The source of the decision
         /// </summary>
         [FhirElement("author", Order=140)]
+        [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Intended "real-world" recipient for the data
         /// </summary>
         [FhirElement("receiver", Order=150)]
+        [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Receiver { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Receiver
+        {
+            get { return _Receiver; }
+            set { _Receiver = value; OnPropertyChanged("Receiver"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Receiver;
         
         /// <summary>
         /// Final responsibility for event
         /// </summary>
         [FhirElement("responsible", Order=160)]
+        [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Responsible { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Responsible
+        {
+            get { return _Responsible; }
+            set { _Responsible = value; OnPropertyChanged("Responsible"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Responsible;
         
         /// <summary>
         /// Cause of event
         /// </summary>
         [FhirElement("reason", Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Reason { get; set; }
+        public Hl7.Fhir.Model.CodeableConcept Reason
+        {
+            get { return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
+        }
+        private Hl7.Fhir.Model.CodeableConcept _Reason;
         
         /// <summary>
         /// The actual content of the message
         /// </summary>
         [FhirElement("data", Order=180)]
+        [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Data { get; set; }
+        public List<Hl7.Fhir.Model.ResourceReference> Data
+        {
+            get { return _Data; }
+            set { _Data = value; OnPropertyChanged("Data"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Data;
         
     }
     

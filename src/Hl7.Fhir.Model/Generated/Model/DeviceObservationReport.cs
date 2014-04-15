@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,29 +45,39 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DeviceObservationReport", IsResource=true)]
     [DataContract]
-    public partial class DeviceObservationReport : Hl7.Fhir.Model.Resource
+    public partial class DeviceObservationReport : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// null
         /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceComponent")]
         [DataContract]
-        public partial class DeviceObservationReportVirtualDeviceComponent : Hl7.Fhir.Model.Element
+        public partial class DeviceObservationReportVirtualDeviceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Describes the compartment
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Groups related data items
             /// </summary>
-            [FhirElement("channel", Order=50)]
+            [FhirElement("channel", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> Channel { get; set; }
+            public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> Channel
+            {
+                get { return _Channel; }
+                set { _Channel = value; OnPropertyChanged("Channel"); }
+            }
+            private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> _Channel;
             
         }
         
@@ -77,15 +87,21 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceChannelMetricComponent")]
         [DataContract]
-        public partial class DeviceObservationReportVirtualDeviceChannelMetricComponent : Hl7.Fhir.Model.Element
+        public partial class DeviceObservationReportVirtualDeviceChannelMetricComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// The data for the metric
             /// </summary>
-            [FhirElement("observation", Order=40)]
+            [FhirElement("observation", InSummary=true, Order=40)]
+            [References("Observation")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Observation { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Observation
+            {
+                get { return _Observation; }
+                set { _Observation = value; OnPropertyChanged("Observation"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Observation;
             
         }
         
@@ -95,22 +111,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceChannelComponent")]
         [DataContract]
-        public partial class DeviceObservationReportVirtualDeviceChannelComponent : Hl7.Fhir.Model.Element
+        public partial class DeviceObservationReportVirtualDeviceChannelComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Describes the channel
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Piece of data reported by device
             /// </summary>
-            [FhirElement("metric", Order=50)]
+            [FhirElement("metric", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> Metric { get; set; }
+            public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> Metric
+            {
+                get { return _Metric; }
+                set { _Metric = value; OnPropertyChanged("Metric"); }
+            }
+            private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> _Metric;
             
         }
         
@@ -121,7 +147,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("instant", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Instant InstantElement { get; set; }
+        public Hl7.Fhir.Model.Instant InstantElement
+        {
+            get { return _InstantElement; }
+            set { _InstantElement = value; OnPropertyChanged("InstantElement"); }
+        }
+        private Hl7.Fhir.Model.Instant _InstantElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -134,6 +165,7 @@ namespace Hl7.Fhir.Model
                   InstantElement = null; 
                 else
                   InstantElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Instant");
             }
         }
         
@@ -142,22 +174,39 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("identifier", Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier { get; set; }
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Identifies/describes where the data came from
         /// </summary>
         [FhirElement("source", Order=90)]
+        [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Source { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Source
+        {
+            get { return _Source; }
+            set { _Source = value; OnPropertyChanged("Source"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// Subject of the measurement
         /// </summary>
         [FhirElement("subject", Order=100)]
+        [References("Patient","Device","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// A medical-related subsystem of a medical device
@@ -165,7 +214,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("virtualDevice", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> VirtualDevice { get; set; }
+        public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> VirtualDevice
+        {
+            get { return _VirtualDevice; }
+            set { _VirtualDevice = value; OnPropertyChanged("VirtualDevice"); }
+        }
+        private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> _VirtualDevice;
         
     }
     

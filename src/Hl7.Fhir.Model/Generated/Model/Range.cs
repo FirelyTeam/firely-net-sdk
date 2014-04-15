@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,21 +45,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Range")]
     [DataContract]
-    public partial class Range : Hl7.Fhir.Model.Element
+    public partial class Range : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Low limit
         /// </summary>
-        [FhirElement("low", Order=40)]
+        [FhirElement("low", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Low { get; set; }
+        public Hl7.Fhir.Model.Quantity Low
+        {
+            get { return _Low; }
+            set { _Low = value; OnPropertyChanged("Low"); }
+        }
+        private Hl7.Fhir.Model.Quantity _Low;
         
         /// <summary>
         /// High limit
         /// </summary>
-        [FhirElement("high", Order=50)]
+        [FhirElement("high", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity High { get; set; }
+        public Hl7.Fhir.Model.Quantity High
+        {
+            get { return _High; }
+            set { _High = value; OnPropertyChanged("High"); }
+        }
+        private Hl7.Fhir.Model.Quantity _High;
         
     }
     

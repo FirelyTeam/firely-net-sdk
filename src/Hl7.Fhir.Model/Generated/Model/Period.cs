@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,14 +45,19 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Period")]
     [DataContract]
-    public partial class Period : Hl7.Fhir.Model.Element
+    public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Starting time with inclusive boundary
         /// </summary>
-        [FhirElement("start", Order=40)]
+        [FhirElement("start", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime StartElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime StartElement
+        {
+            get { return _StartElement; }
+            set { _StartElement = value; OnPropertyChanged("StartElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _StartElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -65,15 +70,21 @@ namespace Hl7.Fhir.Model
                   StartElement = null; 
                 else
                   StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Start");
             }
         }
         
         /// <summary>
         /// End time with inclusive boundary, if not ongoing
         /// </summary>
-        [FhirElement("end", Order=50)]
+        [FhirElement("end", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime EndElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime EndElement
+        {
+            get { return _EndElement; }
+            set { _EndElement = value; OnPropertyChanged("EndElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _EndElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -86,6 +97,7 @@ namespace Hl7.Fhir.Model
                   EndElement = null; 
                 else
                   EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("End");
             }
         }
         

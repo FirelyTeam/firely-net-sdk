@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,15 +45,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Attachment")]
     [DataContract]
-    public partial class Attachment : Hl7.Fhir.Model.Element
+    public partial class Attachment : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Mime type of the content, with charset etc.
         /// </summary>
-        [FhirElement("contentType", Order=40)]
+        [FhirElement("contentType", InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code ContentTypeElement { get; set; }
+        public Hl7.Fhir.Model.Code ContentTypeElement
+        {
+            get { return _ContentTypeElement; }
+            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+        }
+        private Hl7.Fhir.Model.Code _ContentTypeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -66,15 +71,21 @@ namespace Hl7.Fhir.Model
                   ContentTypeElement = null; 
                 else
                   ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("ContentType");
             }
         }
         
         /// <summary>
         /// Human language of the content (BCP-47)
         /// </summary>
-        [FhirElement("language", Order=50)]
+        [FhirElement("language", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.Code LanguageElement { get; set; }
+        public Hl7.Fhir.Model.Code LanguageElement
+        {
+            get { return _LanguageElement; }
+            set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+        }
+        private Hl7.Fhir.Model.Code _LanguageElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -87,15 +98,21 @@ namespace Hl7.Fhir.Model
                   LanguageElement = null; 
                 else
                   LanguageElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Language");
             }
         }
         
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", Order=60)]
+        [FhirElement("data", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.Base64Binary DataElement { get; set; }
+        public Hl7.Fhir.Model.Base64Binary DataElement
+        {
+            get { return _DataElement; }
+            set { _DataElement = value; OnPropertyChanged("DataElement"); }
+        }
+        private Hl7.Fhir.Model.Base64Binary _DataElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -108,15 +125,21 @@ namespace Hl7.Fhir.Model
                   DataElement = null; 
                 else
                   DataElement = new Hl7.Fhir.Model.Base64Binary(value);
+                OnPropertyChanged("Data");
             }
         }
         
         /// <summary>
         /// Uri where the data can be found
         /// </summary>
-        [FhirElement("url", Order=70)]
+        [FhirElement("url", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
+        public Hl7.Fhir.Model.FhirUri UrlElement
+        {
+            get { return _UrlElement; }
+            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+        }
+        private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -129,15 +152,21 @@ namespace Hl7.Fhir.Model
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Url");
             }
         }
         
         /// <summary>
         /// Number of bytes of content (if url provided)
         /// </summary>
-        [FhirElement("size", Order=80)]
+        [FhirElement("size", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer SizeElement { get; set; }
+        public Hl7.Fhir.Model.Integer SizeElement
+        {
+            get { return _SizeElement; }
+            set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
+        }
+        private Hl7.Fhir.Model.Integer _SizeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -150,15 +179,21 @@ namespace Hl7.Fhir.Model
                   SizeElement = null; 
                 else
                   SizeElement = new Hl7.Fhir.Model.Integer(value);
+                OnPropertyChanged("Size");
             }
         }
         
         /// <summary>
         /// Hash of the data (sha-1, base64ed )
         /// </summary>
-        [FhirElement("hash", Order=90)]
+        [FhirElement("hash", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.Base64Binary HashElement { get; set; }
+        public Hl7.Fhir.Model.Base64Binary HashElement
+        {
+            get { return _HashElement; }
+            set { _HashElement = value; OnPropertyChanged("HashElement"); }
+        }
+        private Hl7.Fhir.Model.Base64Binary _HashElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -171,15 +206,21 @@ namespace Hl7.Fhir.Model
                   HashElement = null; 
                 else
                   HashElement = new Hl7.Fhir.Model.Base64Binary(value);
+                OnPropertyChanged("Hash");
             }
         }
         
         /// <summary>
         /// Label to display in place of the data
         /// </summary>
-        [FhirElement("title", Order=100)]
+        [FhirElement("title", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString TitleElement { get; set; }
+        public Hl7.Fhir.Model.FhirString TitleElement
+        {
+            get { return _TitleElement; }
+            set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _TitleElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -192,6 +233,7 @@ namespace Hl7.Fhir.Model
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Title");
             }
         }
         

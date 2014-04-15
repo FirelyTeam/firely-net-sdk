@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("uuid")]
     [DataContract]
-    public partial class Uuid : Hl7.Fhir.Model.Element
+    public partial class Uuid : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         // Must conform to the pattern "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
         public const string PATTERN = @"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
@@ -60,10 +60,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, Order=40)]
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
         [UuidPattern]
         [DataMember]
-        public string Value { get; set; }
+        public string Value
+        {
+            get { return _Value; }
+            set { _Value = value; OnPropertyChanged("Value"); }
+        }
+        private string _Value;
         
     }
     

@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(object instance, bool contained = false)
+        public void Serialize(object instance, bool summary, bool contained = false)
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
             _writer.WriteStartRootObject(mapping.Name,contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
-            complexSerializer.Serialize(mapping, instance);
+            complexSerializer.Serialize(mapping, instance, summary);
 
             _writer.WriteEndRootObject(contained);
         }

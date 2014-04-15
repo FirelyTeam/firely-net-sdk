@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Medication", IsResource=true)]
     [DataContract]
-    public partial class Medication : Hl7.Fhir.Model.Resource
+    public partial class Medication : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Whether the medication is a product or a package
@@ -64,22 +64,33 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MedicationPackageContentComponent")]
         [DataContract]
-        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element
+        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// A product in the package
             /// </summary>
-            [FhirElement("item", Order=40)]
+            [FhirElement("item", InSummary=true, Order=40)]
+            [References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// How many are in the package?
             /// </summary>
-            [FhirElement("amount", Order=50)]
+            [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Amount { get; set; }
+            public Hl7.Fhir.Model.Quantity Amount
+            {
+                get { return _Amount; }
+                set { _Amount = value; OnPropertyChanged("Amount"); }
+            }
+            private Hl7.Fhir.Model.Quantity _Amount;
             
         }
         
@@ -89,22 +100,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MedicationPackageComponent")]
         [DataContract]
-        public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element
+        public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// E.g. box, vial, blister-pack
             /// </summary>
-            [FhirElement("container", Order=40)]
+            [FhirElement("container", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Container { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Container
+            {
+                get { return _Container; }
+                set { _Container = value; OnPropertyChanged("Container"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Container;
             
             /// <summary>
             /// What is  in the package?
             /// </summary>
-            [FhirElement("content", Order=50)]
+            [FhirElement("content", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content { get; set; }
+            public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
+            {
+                get { return _Content; }
+                set { _Content = value; OnPropertyChanged("Content"); }
+            }
+            private List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> _Content;
             
         }
         
@@ -114,22 +135,33 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MedicationProductIngredientComponent")]
         [DataContract]
-        public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element
+        public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// The product contained
             /// </summary>
-            [FhirElement("item", Order=40)]
+            [FhirElement("item", InSummary=true, Order=40)]
+            [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// How much ingredient in product
             /// </summary>
-            [FhirElement("amount", Order=50)]
+            [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Amount { get; set; }
+            public Hl7.Fhir.Model.Ratio Amount
+            {
+                get { return _Amount; }
+                set { _Amount = value; OnPropertyChanged("Amount"); }
+            }
+            private Hl7.Fhir.Model.Ratio _Amount;
             
         }
         
@@ -139,22 +171,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("MedicationProductComponent")]
         [DataContract]
-        public partial class MedicationProductComponent : Hl7.Fhir.Model.Element
+        public partial class MedicationProductComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// powder | tablets | carton +
             /// </summary>
-            [FhirElement("form", Order=40)]
+            [FhirElement("form", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Form { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Form
+            {
+                get { return _Form; }
+                set { _Form = value; OnPropertyChanged("Form"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Form;
             
             /// <summary>
             /// Active or inactive ingredient
             /// </summary>
-            [FhirElement("ingredient", Order=50)]
+            [FhirElement("ingredient", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient { get; set; }
+            public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
+            {
+                get { return _Ingredient; }
+                set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
+            }
+            private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
             
         }
         
@@ -162,9 +204,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Common / Commercial name
         /// </summary>
-        [FhirElement("name", Order=70)]
+        [FhirElement("name", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+        public Hl7.Fhir.Model.FhirString NameElement
+        {
+            get { return _NameElement; }
+            set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _NameElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -177,22 +224,33 @@ namespace Hl7.Fhir.Model
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Name");
             }
         }
         
         /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", Order=80)]
+        [FhirElement("code", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", Order=90)]
+        [FhirElement("isBrand", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean IsBrandElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean IsBrandElement
+        {
+            get { return _IsBrandElement; }
+            set { _IsBrandElement = value; OnPropertyChanged("IsBrandElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _IsBrandElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -205,22 +263,34 @@ namespace Hl7.Fhir.Model
                   IsBrandElement = null; 
                 else
                   IsBrandElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("IsBrand");
             }
         }
         
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", Order=100)]
+        [FhirElement("manufacturer", InSummary=true, Order=100)]
+        [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Manufacturer { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Manufacturer
+        {
+            get { return _Manufacturer; }
+            set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
         /// product | package
         /// </summary>
-        [FhirElement("kind", Order=110)]
+        [FhirElement("kind", InSummary=true, Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement { get; set; }
+        public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
+        {
+            get { return _KindElement; }
+            set { _KindElement = value; OnPropertyChanged("KindElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Medication.MedicationKind> _KindElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -233,6 +303,7 @@ namespace Hl7.Fhir.Model
                   KindElement = null; 
                 else
                   KindElement = new Code<Hl7.Fhir.Model.Medication.MedicationKind>(value);
+                OnPropertyChanged("Kind");
             }
         }
         
@@ -241,14 +312,24 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("product", Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.Medication.MedicationProductComponent Product { get; set; }
+        public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
+        {
+            get { return _Product; }
+            set { _Product = value; OnPropertyChanged("Product"); }
+        }
+        private Hl7.Fhir.Model.Medication.MedicationProductComponent _Product;
         
         /// <summary>
         /// Details about packaged medications
         /// </summary>
         [FhirElement("package", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package { get; set; }
+        public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
+        {
+            get { return _Package; }
+            set { _Package = value; OnPropertyChanged("Package"); }
+        }
+        private Hl7.Fhir.Model.Medication.MedicationPackageComponent _Package;
         
     }
     

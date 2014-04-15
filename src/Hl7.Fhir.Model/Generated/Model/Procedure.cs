@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Procedure", IsResource=true)]
     [DataContract]
-    public partial class Procedure : Hl7.Fhir.Model.Resource
+    public partial class Procedure : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// The nature of the relationship with this procedure
@@ -64,14 +64,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ProcedureRelatedItemComponent")]
         [DataContract]
-        public partial class ProcedureRelatedItemComponent : Hl7.Fhir.Model.Element
+        public partial class ProcedureRelatedItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// caused-by | because-of
             /// </summary>
-            [FhirElement("type", Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> TypeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> _TypeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -84,15 +89,22 @@ namespace Hl7.Fhir.Model
                       TypeElement = null; 
                     else
                       TypeElement = new Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType>(value);
+                    OnPropertyChanged("Type");
                 }
             }
             
             /// <summary>
             /// The related item - e.g. a procedure
             /// </summary>
-            [FhirElement("target", Order=50)]
+            [FhirElement("target", InSummary=true, Order=50)]
+            [References("AdverseReaction","AllergyIntolerance","CarePlan","Condition","DeviceObservationReport","DiagnosticReport","FamilyHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationPrescription","MedicationStatement","Observation","Procedure")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Target { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
         }
         
@@ -102,21 +114,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ProcedurePerformerComponent")]
         [DataContract]
-        public partial class ProcedurePerformerComponent : Hl7.Fhir.Model.Element
+        public partial class ProcedurePerformerComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// The reference to the practitioner
             /// </summary>
-            [FhirElement("person", Order=40)]
+            [FhirElement("person", InSummary=true, Order=40)]
+            [References("Practitioner")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Person { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Person
+            {
+                get { return _Person; }
+                set { _Person = value; OnPropertyChanged("Person"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Person;
             
             /// <summary>
             /// The role the person was in
             /// </summary>
-            [FhirElement("role", Order=50)]
+            [FhirElement("role", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Role { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Role;
             
         }
         
@@ -124,71 +147,118 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this procedure
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Who procedure was performed on
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", InSummary=true, Order=80)]
+        [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Identification of the procedure
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// Precise location details
         /// </summary>
-        [FhirElement("bodySite", Order=100)]
+        [FhirElement("bodySite", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> BodySite { get; set; }
+        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        {
+            get { return _BodySite; }
+            set { _BodySite = value; OnPropertyChanged("BodySite"); }
+        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
         /// Reason procedure performed
         /// </summary>
-        [FhirElement("indication", Order=110)]
+        [FhirElement("indication", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Indication { get; set; }
+        public List<Hl7.Fhir.Model.CodeableConcept> Indication
+        {
+            get { return _Indication; }
+            set { _Indication = value; OnPropertyChanged("Indication"); }
+        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
         /// The people who performed the procedure
         /// </summary>
-        [FhirElement("performer", Order=120)]
+        [FhirElement("performer", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> Performer { get; set; }
+        public List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> Performer
+        {
+            get { return _Performer; }
+            set { _Performer = value; OnPropertyChanged("Performer"); }
+        }
+        private List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> _Performer;
         
         /// <summary>
         /// The date the procedure was performed
         /// </summary>
-        [FhirElement("date", Order=130)]
+        [FhirElement("date", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Period Date { get; set; }
+        public Hl7.Fhir.Model.Period Date
+        {
+            get { return _Date; }
+            set { _Date = value; OnPropertyChanged("Date"); }
+        }
+        private Hl7.Fhir.Model.Period _Date;
         
         /// <summary>
         /// The encounter when procedure performed
         /// </summary>
-        [FhirElement("encounter", Order=140)]
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// What was result of procedure?
         /// </summary>
-        [FhirElement("outcome", Order=150)]
+        [FhirElement("outcome", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString OutcomeElement { get; set; }
+        public Hl7.Fhir.Model.FhirString OutcomeElement
+        {
+            get { return _OutcomeElement; }
+            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _OutcomeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -201,6 +271,7 @@ namespace Hl7.Fhir.Model
                   OutcomeElement = null; 
                 else
                   OutcomeElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Outcome");
             }
         }
         
@@ -208,9 +279,15 @@ namespace Hl7.Fhir.Model
         /// Any report that results from the procedure
         /// </summary>
         [FhirElement("report", Order=160)]
+        [References("DiagnosticReport")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Report { get; set; }
+        public List<Hl7.Fhir.Model.ResourceReference> Report
+        {
+            get { return _Report; }
+            set { _Report = value; OnPropertyChanged("Report"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Report;
         
         /// <summary>
         /// Complication following the procedure
@@ -218,14 +295,24 @@ namespace Hl7.Fhir.Model
         [FhirElement("complication", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Complication { get; set; }
+        public List<Hl7.Fhir.Model.CodeableConcept> Complication
+        {
+            get { return _Complication; }
+            set { _Complication = value; OnPropertyChanged("Complication"); }
+        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _Complication;
         
         /// <summary>
         /// Instructions for follow up
         /// </summary>
         [FhirElement("followUp", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString FollowUpElement { get; set; }
+        public Hl7.Fhir.Model.FhirString FollowUpElement
+        {
+            get { return _FollowUpElement; }
+            set { _FollowUpElement = value; OnPropertyChanged("FollowUpElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _FollowUpElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -238,6 +325,7 @@ namespace Hl7.Fhir.Model
                   FollowUpElement = null; 
                 else
                   FollowUpElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("FollowUp");
             }
         }
         
@@ -247,14 +335,24 @@ namespace Hl7.Fhir.Model
         [FhirElement("relatedItem", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent> RelatedItem { get; set; }
+        public List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent> RelatedItem
+        {
+            get { return _RelatedItem; }
+            set { _RelatedItem = value; OnPropertyChanged("RelatedItem"); }
+        }
+        private List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent> _RelatedItem;
         
         /// <summary>
         /// Additional information about procedure
         /// </summary>
         [FhirElement("notes", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NotesElement { get; set; }
+        public Hl7.Fhir.Model.FhirString NotesElement
+        {
+            get { return _NotesElement; }
+            set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _NotesElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -267,6 +365,7 @@ namespace Hl7.Fhir.Model
                   NotesElement = null; 
                 else
                   NotesElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Notes");
             }
         }
         

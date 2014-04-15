@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("OrderResponse", IsResource=true)]
     [DataContract]
-    public partial class OrderResponse : Hl7.Fhir.Model.Resource
+    public partial class OrderResponse : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// The status of the response to an order
@@ -79,22 +79,38 @@ namespace Hl7.Fhir.Model
         [FhirElement("identifier", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The order that this is a response to
         /// </summary>
         [FhirElement("request", Order=80)]
+        [References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Request { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Request
+        {
+            get { return _Request; }
+            set { _Request = value; OnPropertyChanged("Request"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
         /// When the response was made
         /// </summary>
         [FhirElement("date", Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -107,6 +123,7 @@ namespace Hl7.Fhir.Model
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
             }
         }
         
@@ -114,8 +131,14 @@ namespace Hl7.Fhir.Model
         /// Who made the response
         /// </summary>
         [FhirElement("who", Order=100)]
+        [References("Practitioner","Organization","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Who { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Who
+        {
+            get { return _Who; }
+            set { _Who = value; OnPropertyChanged("Who"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
         /// If required by policy
@@ -123,7 +146,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("authority", Order=110, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Authority { get; set; }
+        public Hl7.Fhir.Model.Element Authority
+        {
+            get { return _Authority; }
+            set { _Authority = value; OnPropertyChanged("Authority"); }
+        }
+        private Hl7.Fhir.Model.Element _Authority;
         
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
@@ -131,7 +159,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("code", Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> CodeElement { get; set; }
+        public Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> CodeElement
+        {
+            get { return _CodeElement; }
+            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+        }
+        private Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> _CodeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -144,6 +177,7 @@ namespace Hl7.Fhir.Model
                   CodeElement = null; 
                 else
                   CodeElement = new Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus>(value);
+                OnPropertyChanged("Code");
             }
         }
         
@@ -152,7 +186,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("description", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DescriptionElement
+        {
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -165,6 +204,7 @@ namespace Hl7.Fhir.Model
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
             }
         }
         
@@ -172,9 +212,15 @@ namespace Hl7.Fhir.Model
         /// Details of the outcome of performing the order
         /// </summary>
         [FhirElement("fulfillment", Order=140)]
+        [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Fulfillment { get; set; }
+        public List<Hl7.Fhir.Model.ResourceReference> Fulfillment
+        {
+            get { return _Fulfillment; }
+            set { _Fulfillment = value; OnPropertyChanged("Fulfillment"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Fulfillment;
         
     }
     

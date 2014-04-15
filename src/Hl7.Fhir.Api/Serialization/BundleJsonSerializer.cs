@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Serialization
         {
             JsonDomFhirWriter writer = new JsonDomFhirWriter();
             ResourceWriter w = new ResourceWriter(writer);
-            w.Serialize(resource);
+            w.Serialize(resource, summary);
 
             return writer.Result;
         }

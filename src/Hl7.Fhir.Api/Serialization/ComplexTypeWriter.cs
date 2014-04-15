@@ -33,24 +33,24 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        internal void Serialize(ClassMapping mapping, object instance, SerializationMode mode = SerializationMode.AllMembers)
+        internal void Serialize(ClassMapping mapping, object instance, bool summary, SerializationMode mode = SerializationMode.AllMembers)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
             _current.WriteStartComplexContent();
 
-            // Emit members that need xml attributes first (to facilitate stream writer API)
+            // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
-                write(mapping, instance, prop, mode);
+                if(!summary || prop.InSummary) write(mapping, instance, summary, prop, mode);
 
             // Then emit the rest
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
-                write(mapping, instance, prop, mode);
+                if (!summary || prop.InSummary) write(mapping, instance, summary, prop, mode);
 
             _current.WriteEndComplexContent();
         }
 
-        private void write(ClassMapping mapping, object instance, PropertyMapping prop, SerializationMode mode)
+        private void write(ClassMapping mapping, object instance, bool summary, PropertyMapping prop, SerializationMode mode)
         {
             // Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
             // or only the other members (Extension, Id etc in primitive Fhir datatypes)
@@ -79,14 +79,14 @@ namespace Hl7.Fhir.Serialization
                 // Now, if our writer does not use dual properties for primitive values + rest (xml),
                 // or this is a complex property without value element, serialize data normally
                 if(!_current.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
-                    writer.Serialize(prop, value, SerializationMode.AllMembers);
+                    writer.Serialize(prop, value, summary, SerializationMode.AllMembers);
                 else
                 {
                     // else split up between two properties, name and _name
-                    writer.Serialize(prop,value, SerializationMode.ValueElement);
+                    writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
                     _current.WriteEndProperty();
                     _current.WriteStartProperty("_" + memberName);
-                    writer.Serialize(prop, value, SerializationMode.NonValueElements);
+                    writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
                 }
 
                 _current.WriteEndProperty();

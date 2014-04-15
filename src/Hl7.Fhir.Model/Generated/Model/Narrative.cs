@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Narrative")]
     [DataContract]
-    public partial class Narrative : Hl7.Fhir.Model.Element
+    public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// The status of a resource narrative
@@ -66,10 +66,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// generated | extensions | additional
         /// </summary>
-        [FhirElement("status", Order=40)]
+        [FhirElement("status", InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement { get; set; }
+        public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -82,17 +87,23 @@ namespace Hl7.Fhir.Model
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
         /// Limited xhtml content
         /// </summary>
-        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, Order=50)]
+        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]
         [DataMember]
-        public string Div { get; set; }
+        public string Div
+        {
+            get { return _Div; }
+            set { _Div = value; OnPropertyChanged("Div"); }
+        }
+        private string _Div;
         
     }
     

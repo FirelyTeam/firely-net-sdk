@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Conformance", IsResource=true)]
     [DataContract]
-    public partial class Conformance : Hl7.Fhir.Model.Resource
+    public partial class Conformance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Whether the application produces or consumes documents
@@ -210,15 +210,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestQueryComponent")]
         [DataContract]
-        public partial class ConformanceRestQueryComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestQueryComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Special named queries (_query=)
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -231,16 +236,22 @@ namespace Hl7.Fhir.Model
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
             /// Where query is defined
             /// </summary>
-            [FhirElement("definition", Order=50)]
+            [FhirElement("definition", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri DefinitionElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri DefinitionElement
+            {
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _DefinitionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -253,15 +264,21 @@ namespace Hl7.Fhir.Model
                       DefinitionElement = null; 
                     else
                       DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Definition");
                 }
             }
             
             /// <summary>
             /// Additional usage guidance
             /// </summary>
-            [FhirElement("documentation", Order=60)]
+            [FhirElement("documentation", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -274,16 +291,22 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
             /// <summary>
             /// Parameter for the named query
             /// </summary>
-            [FhirElement("parameter", Order=70)]
+            [FhirElement("parameter", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> Parameter { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> Parameter
+            {
+                get { return _Parameter; }
+                set { _Parameter = value; OnPropertyChanged("Parameter"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> _Parameter;
             
         }
         
@@ -293,15 +316,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestComponent")]
         [DataContract]
-        public partial class ConformanceRestComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// client | server
             /// </summary>
-            [FhirElement("mode", Order=40)]
+            [FhirElement("mode", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode> ModeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode> _ModeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -314,15 +342,21 @@ namespace Hl7.Fhir.Model
                       ModeElement = null; 
                     else
                       ModeElement = new Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode>(value);
+                    OnPropertyChanged("Mode");
                 }
             }
             
             /// <summary>
             /// General description of implementation
             /// </summary>
-            [FhirElement("documentation", Order=50)]
+            [FhirElement("documentation", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -335,47 +369,73 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
             /// <summary>
             /// Information about security of implementation
             /// </summary>
-            [FhirElement("security", Order=60)]
+            [FhirElement("security", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent Security { get; set; }
+            public Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent Security
+            {
+                get { return _Security; }
+                set { _Security = value; OnPropertyChanged("Security"); }
+            }
+            private Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent _Security;
             
             /// <summary>
             /// Resource served on the REST interface
             /// </summary>
-            [FhirElement("resource", Order=70)]
+            [FhirElement("resource", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent> Resource { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent> Resource
+            {
+                get { return _Resource; }
+                set { _Resource = value; OnPropertyChanged("Resource"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent> _Resource;
             
             /// <summary>
             /// What operations are supported?
             /// </summary>
-            [FhirElement("operation", Order=80)]
+            [FhirElement("operation", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> Operation { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> Operation
+            {
+                get { return _Operation; }
+                set { _Operation = value; OnPropertyChanged("Operation"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> _Operation;
             
             /// <summary>
             /// Definition of a named query
             /// </summary>
-            [FhirElement("query", Order=90)]
+            [FhirElement("query", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestQueryComponent> Query { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestQueryComponent> Query
+            {
+                get { return _Query; }
+                set { _Query = value; OnPropertyChanged("Query"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestQueryComponent> _Query;
             
             /// <summary>
             /// How documents are accepted in /Mailbox
             /// </summary>
-            [FhirElement("documentMailbox", Order=100)]
+            [FhirElement("documentMailbox", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> DocumentMailboxElement { get; set; }
+            public List<Hl7.Fhir.Model.FhirUri> DocumentMailboxElement
+            {
+                get { return _DocumentMailboxElement; }
+                set { _DocumentMailboxElement = value; OnPropertyChanged("DocumentMailboxElement"); }
+            }
+            private List<Hl7.Fhir.Model.FhirUri> _DocumentMailboxElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -388,6 +448,7 @@ namespace Hl7.Fhir.Model
                       DocumentMailboxElement = null; 
                     else
                       DocumentMailboxElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    OnPropertyChanged("DocumentMailbox");
                 }
             }
             
@@ -399,15 +460,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceSoftwareComponent")]
         [DataContract]
-        public partial class ConformanceSoftwareComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceSoftwareComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// A name the software is known by
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -420,15 +486,21 @@ namespace Hl7.Fhir.Model
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
             /// Version covered by this statement
             /// </summary>
-            [FhirElement("version", Order=50)]
+            [FhirElement("version", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString VersionElement
+            {
+                get { return _VersionElement; }
+                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _VersionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -441,15 +513,21 @@ namespace Hl7.Fhir.Model
                       VersionElement = null; 
                     else
                       VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Version");
                 }
             }
             
             /// <summary>
             /// Date this version released
             /// </summary>
-            [FhirElement("releaseDate", Order=60)]
+            [FhirElement("releaseDate", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime ReleaseDateElement { get; set; }
+            public Hl7.Fhir.Model.FhirDateTime ReleaseDateElement
+            {
+                get { return _ReleaseDateElement; }
+                set { _ReleaseDateElement = value; OnPropertyChanged("ReleaseDateElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDateTime _ReleaseDateElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -462,6 +540,7 @@ namespace Hl7.Fhir.Model
                       ReleaseDateElement = null; 
                     else
                       ReleaseDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("ReleaseDate");
                 }
             }
             
@@ -473,14 +552,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceMessagingComponent")]
         [DataContract]
-        public partial class ConformanceMessagingComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceMessagingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Actual endpoint being described
             /// </summary>
-            [FhirElement("endpoint", Order=40)]
+            [FhirElement("endpoint", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri EndpointElement
+            {
+                get { return _EndpointElement; }
+                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -493,15 +577,21 @@ namespace Hl7.Fhir.Model
                       EndpointElement = null; 
                     else
                       EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Endpoint");
                 }
             }
             
             /// <summary>
             /// Reliable Message Cache Length
             /// </summary>
-            [FhirElement("reliableCache", Order=50)]
+            [FhirElement("reliableCache", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer ReliableCacheElement { get; set; }
+            public Hl7.Fhir.Model.Integer ReliableCacheElement
+            {
+                get { return _ReliableCacheElement; }
+                set { _ReliableCacheElement = value; OnPropertyChanged("ReliableCacheElement"); }
+            }
+            private Hl7.Fhir.Model.Integer _ReliableCacheElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -514,15 +604,21 @@ namespace Hl7.Fhir.Model
                       ReliableCacheElement = null; 
                     else
                       ReliableCacheElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("ReliableCache");
                 }
             }
             
             /// <summary>
             /// Messaging interface behavior details
             /// </summary>
-            [FhirElement("documentation", Order=60)]
+            [FhirElement("documentation", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -535,16 +631,22 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
             /// <summary>
             /// Declare support for this event
             /// </summary>
-            [FhirElement("event", Order=70)]
+            [FhirElement("event", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent> Event { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent> Event
+            {
+                get { return _Event; }
+                set { _Event = value; OnPropertyChanged("Event"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent> _Event;
             
         }
         
@@ -554,15 +656,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceDocumentComponent")]
         [DataContract]
-        public partial class ConformanceDocumentComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceDocumentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// producer | consumer
             /// </summary>
-            [FhirElement("mode", Order=40)]
+            [FhirElement("mode", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.DocumentMode> ModeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.DocumentMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.DocumentMode> _ModeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -575,15 +682,21 @@ namespace Hl7.Fhir.Model
                       ModeElement = null; 
                     else
                       ModeElement = new Code<Hl7.Fhir.Model.Conformance.DocumentMode>(value);
+                    OnPropertyChanged("Mode");
                 }
             }
             
             /// <summary>
             /// Description of document support
             /// </summary>
-            [FhirElement("documentation", Order=50)]
+            [FhirElement("documentation", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -596,16 +709,23 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
             /// <summary>
             /// Constraint on a resource used in the document
             /// </summary>
-            [FhirElement("profile", Order=60)]
+            [FhirElement("profile", InSummary=true, Order=60)]
+            [References("Profile")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Profile { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Profile
+            {
+                get { return _Profile; }
+                set { _Profile = value; OnPropertyChanged("Profile"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Profile;
             
         }
         
@@ -615,15 +735,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestResourceComponent")]
         [DataContract]
-        public partial class ConformanceRestResourceComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestResourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// A resource type that is supported
             /// </summary>
-            [FhirElement("type", Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code TypeElement { get; set; }
+            public Hl7.Fhir.Model.Code TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _TypeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -636,30 +761,47 @@ namespace Hl7.Fhir.Model
                       TypeElement = null; 
                     else
                       TypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Type");
                 }
             }
             
             /// <summary>
             /// What structural features are supported
             /// </summary>
-            [FhirElement("profile", Order=50)]
+            [FhirElement("profile", InSummary=true, Order=50)]
+            [References("Profile")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Profile { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Profile
+            {
+                get { return _Profile; }
+                set { _Profile = value; OnPropertyChanged("Profile"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Profile;
             
             /// <summary>
             /// What operations are supported?
             /// </summary>
-            [FhirElement("operation", Order=60)]
+            [FhirElement("operation", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceOperationComponent> Operation { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceOperationComponent> Operation
+            {
+                get { return _Operation; }
+                set { _Operation = value; OnPropertyChanged("Operation"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceOperationComponent> _Operation;
             
             /// <summary>
             /// Whether vRead can return past versions
             /// </summary>
-            [FhirElement("readHistory", Order=70)]
+            [FhirElement("readHistory", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean ReadHistoryElement { get; set; }
+            public Hl7.Fhir.Model.FhirBoolean ReadHistoryElement
+            {
+                get { return _ReadHistoryElement; }
+                set { _ReadHistoryElement = value; OnPropertyChanged("ReadHistoryElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _ReadHistoryElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -672,15 +814,21 @@ namespace Hl7.Fhir.Model
                       ReadHistoryElement = null; 
                     else
                       ReadHistoryElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ReadHistory");
                 }
             }
             
             /// <summary>
             /// If allows/uses update to a new location
             /// </summary>
-            [FhirElement("updateCreate", Order=80)]
+            [FhirElement("updateCreate", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean UpdateCreateElement { get; set; }
+            public Hl7.Fhir.Model.FhirBoolean UpdateCreateElement
+            {
+                get { return _UpdateCreateElement; }
+                set { _UpdateCreateElement = value; OnPropertyChanged("UpdateCreateElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _UpdateCreateElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -693,16 +841,22 @@ namespace Hl7.Fhir.Model
                       UpdateCreateElement = null; 
                     else
                       UpdateCreateElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("UpdateCreate");
                 }
             }
             
             /// <summary>
             /// _include values supported by the server
             /// </summary>
-            [FhirElement("searchInclude", Order=90)]
+            [FhirElement("searchInclude", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement { get; set; }
+            public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement
+            {
+                get { return _SearchIncludeElement; }
+                set { _SearchIncludeElement = value; OnPropertyChanged("SearchIncludeElement"); }
+            }
+            private List<Hl7.Fhir.Model.FhirString> _SearchIncludeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -715,16 +869,22 @@ namespace Hl7.Fhir.Model
                       SearchIncludeElement = null; 
                     else
                       SearchIncludeElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("SearchInclude");
                 }
             }
             
             /// <summary>
             /// Additional search params defined
             /// </summary>
-            [FhirElement("searchParam", Order=100)]
+            [FhirElement("searchParam", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam
+            {
+                get { return _SearchParam; }
+                set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> _SearchParam;
             
         }
         
@@ -734,15 +894,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceImplementationComponent")]
         [DataContract]
-        public partial class ConformanceImplementationComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceImplementationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Describes this specific instance
             /// </summary>
-            [FhirElement("description", Order=40)]
+            [FhirElement("description", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -755,15 +920,21 @@ namespace Hl7.Fhir.Model
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
                 }
             }
             
             /// <summary>
             /// Base URL for the installation
             /// </summary>
-            [FhirElement("url", Order=50)]
+            [FhirElement("url", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri UrlElement
+            {
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -776,6 +947,7 @@ namespace Hl7.Fhir.Model
                       UrlElement = null; 
                     else
                       UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
                 }
             }
             
@@ -787,15 +959,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestResourceOperationComponent")]
         [DataContract]
-        public partial class ConformanceRestResourceOperationComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestResourceOperationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// read | vread | update | delete | history-instance | validate | history-type | create | search-type
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.RestfulOperationType> CodeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.RestfulOperationType> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.RestfulOperationType> _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -808,15 +985,21 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new Code<Hl7.Fhir.Model.Conformance.RestfulOperationType>(value);
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// Anything special about operation behavior
             /// </summary>
-            [FhirElement("documentation", Order=50)]
+            [FhirElement("documentation", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -829,6 +1012,7 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
@@ -840,22 +1024,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceMessagingEventComponent")]
         [DataContract]
-        public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Event type
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Code { get; set; }
+            public Hl7.Fhir.Model.Coding Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
             /// Consequence | Currency | Notification
             /// </summary>
-            [FhirElement("category", Order=50)]
+            [FhirElement("category", InSummary=true, Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.MessageSignificanceCategory> CategoryElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.MessageSignificanceCategory> CategoryElement
+            {
+                get { return _CategoryElement; }
+                set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.MessageSignificanceCategory> _CategoryElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -868,16 +1062,22 @@ namespace Hl7.Fhir.Model
                       CategoryElement = null; 
                     else
                       CategoryElement = new Code<Hl7.Fhir.Model.Conformance.MessageSignificanceCategory>(value);
+                    OnPropertyChanged("Category");
                 }
             }
             
             /// <summary>
             /// sender | receiver
             /// </summary>
-            [FhirElement("mode", Order=60)]
+            [FhirElement("mode", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.ConformanceEventMode> ModeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.ConformanceEventMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.ConformanceEventMode> _ModeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -890,24 +1090,35 @@ namespace Hl7.Fhir.Model
                       ModeElement = null; 
                     else
                       ModeElement = new Code<Hl7.Fhir.Model.Conformance.ConformanceEventMode>(value);
+                    OnPropertyChanged("Mode");
                 }
             }
             
             /// <summary>
             /// http | ftp | mllp +
             /// </summary>
-            [FhirElement("protocol", Order=70)]
+            [FhirElement("protocol", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Protocol { get; set; }
+            public List<Hl7.Fhir.Model.Coding> Protocol
+            {
+                get { return _Protocol; }
+                set { _Protocol = value; OnPropertyChanged("Protocol"); }
+            }
+            private List<Hl7.Fhir.Model.Coding> _Protocol;
             
             /// <summary>
             /// Resource that's focus of message
             /// </summary>
-            [FhirElement("focus", Order=80)]
+            [FhirElement("focus", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code FocusElement { get; set; }
+            public Hl7.Fhir.Model.Code FocusElement
+            {
+                get { return _FocusElement; }
+                set { _FocusElement = value; OnPropertyChanged("FocusElement"); }
+            }
+            private Hl7.Fhir.Model.Code _FocusElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -920,31 +1131,49 @@ namespace Hl7.Fhir.Model
                       FocusElement = null; 
                     else
                       FocusElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Focus");
                 }
             }
             
             /// <summary>
             /// Profile that describes the request
             /// </summary>
-            [FhirElement("request", Order=90)]
+            [FhirElement("request", InSummary=true, Order=90)]
+            [References("Profile")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Request { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Request
+            {
+                get { return _Request; }
+                set { _Request = value; OnPropertyChanged("Request"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Request;
             
             /// <summary>
             /// Profile that describes the response
             /// </summary>
-            [FhirElement("response", Order=100)]
+            [FhirElement("response", InSummary=true, Order=100)]
+            [References("Profile")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Response { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Response
+            {
+                get { return _Response; }
+                set { _Response = value; OnPropertyChanged("Response"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Response;
             
             /// <summary>
             /// Endpoint-specific event documentation
             /// </summary>
-            [FhirElement("documentation", Order=110)]
+            [FhirElement("documentation", InSummary=true, Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -957,6 +1186,7 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
@@ -968,14 +1198,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestSecurityComponent")]
         [DataContract]
-        public partial class ConformanceRestSecurityComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestSecurityComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Adds CORS Headers (http://enable-cors.org/)
             /// </summary>
-            [FhirElement("cors", Order=40)]
+            [FhirElement("cors", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean CorsElement { get; set; }
+            public Hl7.Fhir.Model.FhirBoolean CorsElement
+            {
+                get { return _CorsElement; }
+                set { _CorsElement = value; OnPropertyChanged("CorsElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _CorsElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -988,23 +1223,34 @@ namespace Hl7.Fhir.Model
                       CorsElement = null; 
                     else
                       CorsElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Cors");
                 }
             }
             
             /// <summary>
             /// OAuth | OAuth2 | NTLM | Basic | Kerberos
             /// </summary>
-            [FhirElement("service", Order=50)]
+            [FhirElement("service", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Service { get; set; }
+            public List<Hl7.Fhir.Model.CodeableConcept> Service
+            {
+                get { return _Service; }
+                set { _Service = value; OnPropertyChanged("Service"); }
+            }
+            private List<Hl7.Fhir.Model.CodeableConcept> _Service;
             
             /// <summary>
             /// General description of how security works
             /// </summary>
-            [FhirElement("description", Order=60)]
+            [FhirElement("description", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1017,16 +1263,22 @@ namespace Hl7.Fhir.Model
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
                 }
             }
             
             /// <summary>
             /// Certificates associated with security profiles
             /// </summary>
-            [FhirElement("certificate", Order=70)]
+            [FhirElement("certificate", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent> Certificate { get; set; }
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent> Certificate
+            {
+                get { return _Certificate; }
+                set { _Certificate = value; OnPropertyChanged("Certificate"); }
+            }
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent> _Certificate;
             
         }
         
@@ -1036,14 +1288,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestSecurityCertificateComponent")]
         [DataContract]
-        public partial class ConformanceRestSecurityCertificateComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestSecurityCertificateComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Mime type for certificate
             /// </summary>
-            [FhirElement("type", Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Code TypeElement { get; set; }
+            public Hl7.Fhir.Model.Code TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _TypeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1056,15 +1313,21 @@ namespace Hl7.Fhir.Model
                       TypeElement = null; 
                     else
                       TypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Type");
                 }
             }
             
             /// <summary>
             /// Actual certificate
             /// </summary>
-            [FhirElement("blob", Order=50)]
+            [FhirElement("blob", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Base64Binary BlobElement { get; set; }
+            public Hl7.Fhir.Model.Base64Binary BlobElement
+            {
+                get { return _BlobElement; }
+                set { _BlobElement = value; OnPropertyChanged("BlobElement"); }
+            }
+            private Hl7.Fhir.Model.Base64Binary _BlobElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1077,6 +1340,7 @@ namespace Hl7.Fhir.Model
                       BlobElement = null; 
                     else
                       BlobElement = new Hl7.Fhir.Model.Base64Binary(value);
+                    OnPropertyChanged("Blob");
                 }
             }
             
@@ -1088,15 +1352,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestOperationComponent")]
         [DataContract]
-        public partial class ConformanceRestOperationComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestOperationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// transaction | search-system | history-system
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.RestfulOperationSystem> CodeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.RestfulOperationSystem> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.RestfulOperationSystem> _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1109,15 +1378,21 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new Code<Hl7.Fhir.Model.Conformance.RestfulOperationSystem>(value);
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// Anything special about operation behavior
             /// </summary>
-            [FhirElement("documentation", Order=50)]
+            [FhirElement("documentation", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1130,6 +1405,7 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
@@ -1141,15 +1417,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConformanceRestResourceSearchParamComponent")]
         [DataContract]
-        public partial class ConformanceRestResourceSearchParamComponent : Hl7.Fhir.Model.Element
+        public partial class ConformanceRestResourceSearchParamComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Name of search parameter
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1162,15 +1443,21 @@ namespace Hl7.Fhir.Model
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
             /// Source of definition for parameter
             /// </summary>
-            [FhirElement("definition", Order=50)]
+            [FhirElement("definition", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri DefinitionElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri DefinitionElement
+            {
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _DefinitionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1183,16 +1470,22 @@ namespace Hl7.Fhir.Model
                       DefinitionElement = null; 
                     else
                       DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Definition");
                 }
             }
             
             /// <summary>
             /// number | date | string | token | reference | composite | quantity
             /// </summary>
-            [FhirElement("type", Order=60)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.SearchParamType> TypeElement { get; set; }
+            public Code<Hl7.Fhir.Model.Conformance.SearchParamType> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Conformance.SearchParamType> _TypeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1205,15 +1498,21 @@ namespace Hl7.Fhir.Model
                       TypeElement = null; 
                     else
                       TypeElement = new Code<Hl7.Fhir.Model.Conformance.SearchParamType>(value);
+                    OnPropertyChanged("Type");
                 }
             }
             
             /// <summary>
             /// Server-specific usage
             /// </summary>
-            [FhirElement("documentation", Order=70)]
+            [FhirElement("documentation", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1226,16 +1525,22 @@ namespace Hl7.Fhir.Model
                       DocumentationElement = null; 
                     else
                       DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
                 }
             }
             
             /// <summary>
             /// Types of resource (if a resource reference)
             /// </summary>
-            [FhirElement("target", Order=80)]
+            [FhirElement("target", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Code> TargetElement { get; set; }
+            public List<Hl7.Fhir.Model.Code> TargetElement
+            {
+                get { return _TargetElement; }
+                set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
+            }
+            private List<Hl7.Fhir.Model.Code> _TargetElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1248,16 +1553,22 @@ namespace Hl7.Fhir.Model
                       TargetElement = null; 
                     else
                       TargetElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                    OnPropertyChanged("Target");
                 }
             }
             
             /// <summary>
             /// Chained names supported
             /// </summary>
-            [FhirElement("chain", Order=90)]
+            [FhirElement("chain", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> ChainElement { get; set; }
+            public List<Hl7.Fhir.Model.FhirString> ChainElement
+            {
+                get { return _ChainElement; }
+                set { _ChainElement = value; OnPropertyChanged("ChainElement"); }
+            }
+            private List<Hl7.Fhir.Model.FhirString> _ChainElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -1270,6 +1581,7 @@ namespace Hl7.Fhir.Model
                       ChainElement = null; 
                     else
                       ChainElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("Chain");
                 }
             }
             
@@ -1279,9 +1591,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this statement
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString IdentifierElement { get; set; }
+        public Hl7.Fhir.Model.FhirString IdentifierElement
+        {
+            get { return _IdentifierElement; }
+            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1294,15 +1611,21 @@ namespace Hl7.Fhir.Model
                   IdentifierElement = null; 
                 else
                   IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Identifier");
             }
         }
         
         /// <summary>
         /// Logical id for this version of the statement
         /// </summary>
-        [FhirElement("version", Order=80)]
+        [FhirElement("version", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString VersionElement
+        {
+            get { return _VersionElement; }
+            set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _VersionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1315,15 +1638,21 @@ namespace Hl7.Fhir.Model
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Version");
             }
         }
         
         /// <summary>
         /// Informal name for this conformance statement
         /// </summary>
-        [FhirElement("name", Order=90)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+        public Hl7.Fhir.Model.FhirString NameElement
+        {
+            get { return _NameElement; }
+            set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _NameElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1336,16 +1665,22 @@ namespace Hl7.Fhir.Model
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Name");
             }
         }
         
         /// <summary>
         /// Publishing Organization
         /// </summary>
-        [FhirElement("publisher", Order=100)]
+        [FhirElement("publisher", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString PublisherElement { get; set; }
+        public Hl7.Fhir.Model.FhirString PublisherElement
+        {
+            get { return _PublisherElement; }
+            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1358,23 +1693,34 @@ namespace Hl7.Fhir.Model
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Publisher");
             }
         }
         
         /// <summary>
         /// Contacts for Organization
         /// </summary>
-        [FhirElement("telecom", Order=110)]
+        [FhirElement("telecom", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contact> Telecom { get; set; }
+        public List<Hl7.Fhir.Model.Contact> Telecom
+        {
+            get { return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+        }
+        private List<Hl7.Fhir.Model.Contact> _Telecom;
         
         /// <summary>
         /// Human description of the conformance statement
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", InSummary=true, Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DescriptionElement
+        {
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1387,15 +1733,21 @@ namespace Hl7.Fhir.Model
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
             }
         }
         
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> StatusElement { get; set; }
+        public Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> _StatusElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1408,15 +1760,21 @@ namespace Hl7.Fhir.Model
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
+        {
+            get { return _ExperimentalElement; }
+            set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1429,16 +1787,22 @@ namespace Hl7.Fhir.Model
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Experimental");
             }
         }
         
         /// <summary>
         /// Publication Date
         /// </summary>
-        [FhirElement("date", Order=150)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1451,30 +1815,46 @@ namespace Hl7.Fhir.Model
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
             }
         }
         
         /// <summary>
         /// Software that is covered by this conformance statement
         /// </summary>
-        [FhirElement("software", Order=160)]
+        [FhirElement("software", InSummary=true, Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent Software { get; set; }
+        public Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent Software
+        {
+            get { return _Software; }
+            set { _Software = value; OnPropertyChanged("Software"); }
+        }
+        private Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent _Software;
         
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
-        [FhirElement("implementation", Order=170)]
+        [FhirElement("implementation", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent Implementation { get; set; }
+        public Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent Implementation
+        {
+            get { return _Implementation; }
+            set { _Implementation = value; OnPropertyChanged("Implementation"); }
+        }
+        private Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent _Implementation;
         
         /// <summary>
         /// FHIR Version
         /// </summary>
-        [FhirElement("fhirVersion", Order=180)]
+        [FhirElement("fhirVersion", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Id FhirVersionElement { get; set; }
+        public Hl7.Fhir.Model.Id FhirVersionElement
+        {
+            get { return _FhirVersionElement; }
+            set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
+        }
+        private Hl7.Fhir.Model.Id _FhirVersionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1487,16 +1867,22 @@ namespace Hl7.Fhir.Model
                   FhirVersionElement = null; 
                 else
                   FhirVersionElement = new Hl7.Fhir.Model.Id(value);
+                OnPropertyChanged("FhirVersion");
             }
         }
         
         /// <summary>
         /// True if application accepts unknown elements
         /// </summary>
-        [FhirElement("acceptUnknown", Order=190)]
+        [FhirElement("acceptUnknown", InSummary=true, Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean AcceptUnknownElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean AcceptUnknownElement
+        {
+            get { return _AcceptUnknownElement; }
+            set { _AcceptUnknownElement = value; OnPropertyChanged("AcceptUnknownElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _AcceptUnknownElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1509,6 +1895,7 @@ namespace Hl7.Fhir.Model
                   AcceptUnknownElement = null; 
                 else
                   AcceptUnknownElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("AcceptUnknown");
             }
         }
         
@@ -1518,7 +1905,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("format", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Code> FormatElement { get; set; }
+        public List<Hl7.Fhir.Model.Code> FormatElement
+        {
+            get { return _FormatElement; }
+            set { _FormatElement = value; OnPropertyChanged("FormatElement"); }
+        }
+        private List<Hl7.Fhir.Model.Code> _FormatElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -1531,6 +1923,7 @@ namespace Hl7.Fhir.Model
                   FormatElement = null; 
                 else
                   FormatElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                OnPropertyChanged("Format");
             }
         }
         
@@ -1538,9 +1931,15 @@ namespace Hl7.Fhir.Model
         /// Profiles supported by the system
         /// </summary>
         [FhirElement("profile", Order=210)]
+        [References("Profile")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Profile { get; set; }
+        public List<Hl7.Fhir.Model.ResourceReference> Profile
+        {
+            get { return _Profile; }
+            set { _Profile = value; OnPropertyChanged("Profile"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
         /// If the endpoint is a RESTful one
@@ -1548,7 +1947,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("rest", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> Rest { get; set; }
+        public List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> Rest
+        {
+            get { return _Rest; }
+            set { _Rest = value; OnPropertyChanged("Rest"); }
+        }
+        private List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> _Rest;
         
         /// <summary>
         /// If messaging is supported
@@ -1556,7 +1960,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("messaging", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> Messaging { get; set; }
+        public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> Messaging
+        {
+            get { return _Messaging; }
+            set { _Messaging = value; OnPropertyChanged("Messaging"); }
+        }
+        private List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> _Messaging;
         
         /// <summary>
         /// Document definition
@@ -1564,7 +1973,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("document", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> Document { get; set; }
+        public List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> Document
+        {
+            get { return _Document; }
+            set { _Document = value; OnPropertyChanged("Document"); }
+        }
+        private List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> _Document;
         
     }
     

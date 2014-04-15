@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ValueSet", IsResource=true)]
     [DataContract]
-    public partial class ValueSet : Hl7.Fhir.Model.Resource
+    public partial class ValueSet : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// The lifecycle status of a Value Set or Concept Map
@@ -86,15 +86,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ValueSetDefineComponent")]
         [DataContract]
-        public partial class ValueSetDefineComponent : Hl7.Fhir.Model.Element
+        public partial class ValueSetDefineComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// URI to identify the code system
             /// </summary>
-            [FhirElement("system", Order=40)]
+            [FhirElement("system", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri SystemElement
+            {
+                get { return _SystemElement; }
+                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -107,15 +112,21 @@ namespace Hl7.Fhir.Model
                       SystemElement = null; 
                     else
                       SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("System");
                 }
             }
             
             /// <summary>
             /// Version of this system
             /// </summary>
-            [FhirElement("version", Order=50)]
+            [FhirElement("version", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString VersionElement
+            {
+                get { return _VersionElement; }
+                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _VersionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -128,15 +139,21 @@ namespace Hl7.Fhir.Model
                       VersionElement = null; 
                     else
                       VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Version");
                 }
             }
             
             /// <summary>
             /// If code comparison is case sensitive
             /// </summary>
-            [FhirElement("caseSensitive", Order=60)]
+            [FhirElement("caseSensitive", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement { get; set; }
+            public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement
+            {
+                get { return _CaseSensitiveElement; }
+                set { _CaseSensitiveElement = value; OnPropertyChanged("CaseSensitiveElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _CaseSensitiveElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -149,16 +166,22 @@ namespace Hl7.Fhir.Model
                       CaseSensitiveElement = null; 
                     else
                       CaseSensitiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("CaseSensitive");
                 }
             }
             
             /// <summary>
             /// Concepts in the code system
             /// </summary>
-            [FhirElement("concept", Order=70)]
+            [FhirElement("concept", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> Concept { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> Concept
+            {
+                get { return _Concept; }
+                set { _Concept = value; OnPropertyChanged("Concept"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> _Concept;
             
         }
         
@@ -168,14 +191,19 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ValueSetExpansionContainsComponent")]
         [DataContract]
-        public partial class ValueSetExpansionContainsComponent : Hl7.Fhir.Model.Element
+        public partial class ValueSetExpansionContainsComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// System value for the code
             /// </summary>
-            [FhirElement("system", Order=40)]
+            [FhirElement("system", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri SystemElement
+            {
+                get { return _SystemElement; }
+                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -188,15 +216,21 @@ namespace Hl7.Fhir.Model
                       SystemElement = null; 
                     else
                       SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("System");
                 }
             }
             
             /// <summary>
             /// Code - if blank, this is not a choosable code
             /// </summary>
-            [FhirElement("code", Order=50)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Code CodeElement { get; set; }
+            public Hl7.Fhir.Model.Code CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -209,15 +243,21 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// User display for the concept
             /// </summary>
-            [FhirElement("display", Order=60)]
+            [FhirElement("display", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DisplayElement
+            {
+                get { return _DisplayElement; }
+                set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -230,16 +270,22 @@ namespace Hl7.Fhir.Model
                       DisplayElement = null; 
                     else
                       DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Display");
                 }
             }
             
             /// <summary>
             /// Codes contained in this concept
             /// </summary>
-            [FhirElement("contains", Order=70)]
+            [FhirElement("contains", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains
+            {
+                get { return _Contains; }
+                set { _Contains = value; OnPropertyChanged("Contains"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
             
         }
         
@@ -249,15 +295,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConceptSetComponent")]
         [DataContract]
-        public partial class ConceptSetComponent : Hl7.Fhir.Model.Element
+        public partial class ConceptSetComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// The system the codes come from
             /// </summary>
-            [FhirElement("system", Order=40)]
+            [FhirElement("system", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
+            public Hl7.Fhir.Model.FhirUri SystemElement
+            {
+                get { return _SystemElement; }
+                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -270,15 +321,21 @@ namespace Hl7.Fhir.Model
                       SystemElement = null; 
                     else
                       SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("System");
                 }
             }
             
             /// <summary>
             /// Specific version of the code system referred to
             /// </summary>
-            [FhirElement("version", Order=50)]
+            [FhirElement("version", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString VersionElement
+            {
+                get { return _VersionElement; }
+                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _VersionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -291,16 +348,22 @@ namespace Hl7.Fhir.Model
                       VersionElement = null; 
                     else
                       VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Version");
                 }
             }
             
             /// <summary>
             /// Code or concept from system
             /// </summary>
-            [FhirElement("code", Order=60)]
+            [FhirElement("code", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Code> CodeElement { get; set; }
+            public List<Hl7.Fhir.Model.Code> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private List<Hl7.Fhir.Model.Code> _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -313,16 +376,22 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// Select codes/concepts by their properties (including relationships)
             /// </summary>
-            [FhirElement("filter", Order=70)]
+            [FhirElement("filter", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ConceptSetFilterComponent> Filter { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ConceptSetFilterComponent> Filter
+            {
+                get { return _Filter; }
+                set { _Filter = value; OnPropertyChanged("Filter"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ConceptSetFilterComponent> _Filter;
             
         }
         
@@ -332,15 +401,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ConceptSetFilterComponent")]
         [DataContract]
-        public partial class ConceptSetFilterComponent : Hl7.Fhir.Model.Element
+        public partial class ConceptSetFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// A property defined by the code system
             /// </summary>
-            [FhirElement("property", Order=40)]
+            [FhirElement("property", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code PropertyElement { get; set; }
+            public Hl7.Fhir.Model.Code PropertyElement
+            {
+                get { return _PropertyElement; }
+                set { _PropertyElement = value; OnPropertyChanged("PropertyElement"); }
+            }
+            private Hl7.Fhir.Model.Code _PropertyElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -353,16 +427,22 @@ namespace Hl7.Fhir.Model
                       PropertyElement = null; 
                     else
                       PropertyElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Property");
                 }
             }
             
             /// <summary>
             /// = | is-a | is-not-a | regex | in | not in
             /// </summary>
-            [FhirElement("op", Order=50)]
+            [FhirElement("op", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ValueSet.FilterOperator> OpElement { get; set; }
+            public Code<Hl7.Fhir.Model.ValueSet.FilterOperator> OpElement
+            {
+                get { return _OpElement; }
+                set { _OpElement = value; OnPropertyChanged("OpElement"); }
+            }
+            private Code<Hl7.Fhir.Model.ValueSet.FilterOperator> _OpElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -375,16 +455,22 @@ namespace Hl7.Fhir.Model
                       OpElement = null; 
                     else
                       OpElement = new Code<Hl7.Fhir.Model.ValueSet.FilterOperator>(value);
+                    OnPropertyChanged("Op");
                 }
             }
             
             /// <summary>
             /// Code from the system, or regex criteria
             /// </summary>
-            [FhirElement("value", Order=60)]
+            [FhirElement("value", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code ValueElement { get; set; }
+            public Hl7.Fhir.Model.Code ValueElement
+            {
+                get { return _ValueElement; }
+                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+            }
+            private Hl7.Fhir.Model.Code _ValueElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -397,6 +483,7 @@ namespace Hl7.Fhir.Model
                       ValueElement = null; 
                     else
                       ValueElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Value");
                 }
             }
             
@@ -408,15 +495,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ValueSetComposeComponent")]
         [DataContract]
-        public partial class ValueSetComposeComponent : Hl7.Fhir.Model.Element
+        public partial class ValueSetComposeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Import the contents of another value set
             /// </summary>
-            [FhirElement("import", Order=40)]
+            [FhirElement("import", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> ImportElement { get; set; }
+            public List<Hl7.Fhir.Model.FhirUri> ImportElement
+            {
+                get { return _ImportElement; }
+                set { _ImportElement = value; OnPropertyChanged("ImportElement"); }
+            }
+            private List<Hl7.Fhir.Model.FhirUri> _ImportElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -429,24 +521,35 @@ namespace Hl7.Fhir.Model
                       ImportElement = null; 
                     else
                       ImportElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    OnPropertyChanged("Import");
                 }
             }
             
             /// <summary>
             /// Include one or more codes from a code system
             /// </summary>
-            [FhirElement("include", Order=50)]
+            [FhirElement("include", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Include { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Include
+            {
+                get { return _Include; }
+                set { _Include = value; OnPropertyChanged("Include"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Include;
             
             /// <summary>
             /// Explicitly exclude codes
             /// </summary>
-            [FhirElement("exclude", Order=60)]
+            [FhirElement("exclude", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Exclude { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Exclude
+            {
+                get { return _Exclude; }
+                set { _Exclude = value; OnPropertyChanged("Exclude"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Exclude;
             
         }
         
@@ -456,15 +559,20 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ValueSetDefineConceptComponent")]
         [DataContract]
-        public partial class ValueSetDefineConceptComponent : Hl7.Fhir.Model.Element
+        public partial class ValueSetDefineConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Code that identifies concept
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code CodeElement { get; set; }
+            public Hl7.Fhir.Model.Code CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _CodeElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -477,15 +585,21 @@ namespace Hl7.Fhir.Model
                       CodeElement = null; 
                     else
                       CodeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Code");
                 }
             }
             
             /// <summary>
             /// If this code is not for use as a real concept
             /// </summary>
-            [FhirElement("abstract", Order=50)]
+            [FhirElement("abstract", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean AbstractElement { get; set; }
+            public Hl7.Fhir.Model.FhirBoolean AbstractElement
+            {
+                get { return _AbstractElement; }
+                set { _AbstractElement = value; OnPropertyChanged("AbstractElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _AbstractElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -498,15 +612,21 @@ namespace Hl7.Fhir.Model
                       AbstractElement = null; 
                     else
                       AbstractElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Abstract");
                 }
             }
             
             /// <summary>
             /// Text to Display to the user
             /// </summary>
-            [FhirElement("display", Order=60)]
+            [FhirElement("display", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DisplayElement
+            {
+                get { return _DisplayElement; }
+                set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -519,15 +639,21 @@ namespace Hl7.Fhir.Model
                       DisplayElement = null; 
                     else
                       DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Display");
                 }
             }
             
             /// <summary>
             /// Formal Definition
             /// </summary>
-            [FhirElement("definition", Order=70)]
+            [FhirElement("definition", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DefinitionElement { get; set; }
+            public Hl7.Fhir.Model.FhirString DefinitionElement
+            {
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DefinitionElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -540,16 +666,22 @@ namespace Hl7.Fhir.Model
                       DefinitionElement = null; 
                     else
                       DefinitionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Definition");
                 }
             }
             
             /// <summary>
             /// Child Concepts (is-a / contains)
             /// </summary>
-            [FhirElement("concept", Order=80)]
+            [FhirElement("concept", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> Concept { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> Concept
+            {
+                get { return _Concept; }
+                set { _Concept = value; OnPropertyChanged("Concept"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> _Concept;
             
         }
         
@@ -559,22 +691,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("ValueSetExpansionComponent")]
         [DataContract]
-        public partial class ValueSetExpansionComponent : Hl7.Fhir.Model.Element
+        public partial class ValueSetExpansionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Uniquely identifies this expansion
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier { get; set; }
+            public Hl7.Fhir.Model.Identifier Identifier
+            {
+                get { return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Time valueset expansion happened
             /// </summary>
-            [FhirElement("timestamp", Order=50)]
+            [FhirElement("timestamp", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Instant TimestampElement { get; set; }
+            public Hl7.Fhir.Model.Instant TimestampElement
+            {
+                get { return _TimestampElement; }
+                set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
+            }
+            private Hl7.Fhir.Model.Instant _TimestampElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -587,16 +729,22 @@ namespace Hl7.Fhir.Model
                       TimestampElement = null; 
                     else
                       TimestampElement = new Hl7.Fhir.Model.Instant(value);
+                    OnPropertyChanged("Timestamp");
                 }
             }
             
             /// <summary>
             /// Codes in the value set
             /// </summary>
-            [FhirElement("contains", Order=60)]
+            [FhirElement("contains", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains { get; set; }
+            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains
+            {
+                get { return _Contains; }
+                set { _Contains = value; OnPropertyChanged("Contains"); }
+            }
+            private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
             
         }
         
@@ -604,9 +752,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this value set
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString IdentifierElement { get; set; }
+        public Hl7.Fhir.Model.FhirString IdentifierElement
+        {
+            get { return _IdentifierElement; }
+            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -619,15 +772,21 @@ namespace Hl7.Fhir.Model
                   IdentifierElement = null; 
                 else
                   IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Identifier");
             }
         }
         
         /// <summary>
         /// Logical id for this version of the value set
         /// </summary>
-        [FhirElement("version", Order=80)]
+        [FhirElement("version", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString VersionElement
+        {
+            get { return _VersionElement; }
+            set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _VersionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -640,16 +799,22 @@ namespace Hl7.Fhir.Model
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Version");
             }
         }
         
         /// <summary>
         /// Informal name for this value set
         /// </summary>
-        [FhirElement("name", Order=90)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement { get; set; }
+        public Hl7.Fhir.Model.FhirString NameElement
+        {
+            get { return _NameElement; }
+            set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _NameElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -662,15 +827,21 @@ namespace Hl7.Fhir.Model
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Name");
             }
         }
         
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", Order=100)]
+        [FhirElement("publisher", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString PublisherElement { get; set; }
+        public Hl7.Fhir.Model.FhirString PublisherElement
+        {
+            get { return _PublisherElement; }
+            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -683,24 +854,35 @@ namespace Hl7.Fhir.Model
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Publisher");
             }
         }
         
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", Order=110)]
+        [FhirElement("telecom", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contact> Telecom { get; set; }
+        public List<Hl7.Fhir.Model.Contact> Telecom
+        {
+            get { return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+        }
+        private List<Hl7.Fhir.Model.Contact> _Telecom;
         
         /// <summary>
         /// Human language description of the value set
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DescriptionElement
+        {
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -713,6 +895,7 @@ namespace Hl7.Fhir.Model
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
             }
         }
         
@@ -721,7 +904,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("copyright", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CopyrightElement { get; set; }
+        public Hl7.Fhir.Model.FhirString CopyrightElement
+        {
+            get { return _CopyrightElement; }
+            set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -734,16 +922,22 @@ namespace Hl7.Fhir.Model
                   CopyrightElement = null; 
                 else
                   CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Copyright");
             }
         }
         
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", Order=140)]
+        [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> StatusElement { get; set; }
+        public Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        private Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> _StatusElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -756,15 +950,21 @@ namespace Hl7.Fhir.Model
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", Order=150)]
+        [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
+        {
+            get { return _ExperimentalElement; }
+            set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -777,6 +977,7 @@ namespace Hl7.Fhir.Model
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Experimental");
             }
         }
         
@@ -785,7 +986,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("extensible", Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExtensibleElement { get; set; }
+        public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
+        {
+            get { return _ExtensibleElement; }
+            set { _ExtensibleElement = value; OnPropertyChanged("ExtensibleElement"); }
+        }
+        private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -798,15 +1004,21 @@ namespace Hl7.Fhir.Model
                   ExtensibleElement = null; 
                 else
                   ExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Extensible");
             }
         }
         
         /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", Order=170)]
+        [FhirElement("date", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -819,29 +1031,45 @@ namespace Hl7.Fhir.Model
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
             }
         }
         
         /// <summary>
         /// When value set defines its own codes
         /// </summary>
-        [FhirElement("define", Order=180)]
+        [FhirElement("define", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent Define { get; set; }
+        public Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent Define
+        {
+            get { return _Define; }
+            set { _Define = value; OnPropertyChanged("Define"); }
+        }
+        private Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent _Define;
         
         /// <summary>
         /// When value set includes codes from elsewhere
         /// </summary>
         [FhirElement("compose", Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent Compose { get; set; }
+        public Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent Compose
+        {
+            get { return _Compose; }
+            set { _Compose = value; OnPropertyChanged("Compose"); }
+        }
+        private Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent _Compose;
         
         /// <summary>
         /// When value set is an expansion
         /// </summary>
         [FhirElement("expansion", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent Expansion { get; set; }
+        public Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent Expansion
+        {
+            get { return _Expansion; }
+            set { _Expansion = value; OnPropertyChanged("Expansion"); }
+        }
+        private Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent _Expansion;
         
     }
     

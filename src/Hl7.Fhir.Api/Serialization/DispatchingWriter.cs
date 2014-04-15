@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        internal void Serialize(PropertyMapping prop, object instance, ComplexTypeWriter.SerializationMode mode)
+        internal void Serialize(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
@@ -40,16 +40,16 @@ namespace Hl7.Fhir.Serialization
                 {
                     if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements", null);
 
-                    write(prop, element, mode);
+                    write(prop, element, summary, mode);
                 }
 
                 _current.WriteEndArray();
             }
             else
-                write(prop, instance, mode);
+                write(prop, instance, summary, mode);
         }
 
-        private void write(PropertyMapping prop, object instance, ComplexTypeWriter.SerializationMode mode)
+        private void write(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
         {
             // If this is a primitive type, no classmappings and reflection is involved,
             // just serialize the primitive to the writer
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization
             if (prop.Choice == ChoiceType.ResourceChoice)
             {
                 var writer = new ResourceWriter(_current);
-                writer.Serialize(instance, contained: true);
+                writer.Serialize(instance, summary, contained: true);
                 return;
             }
 
@@ -74,12 +74,12 @@ namespace Hl7.Fhir.Serialization
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
                 var cplxWriter = new ComplexTypeWriter(_current);
-                cplxWriter.Serialize(mapping, instance, mode);
+                cplxWriter.Serialize(mapping, instance, summary, mode);
             }
             else
             {
                 object value = mapping.PrimitiveValueProperty.GetValue(instance);
-                write(mapping.PrimitiveValueProperty, value, ComplexTypeWriter.SerializationMode.AllMembers);
+                write(mapping.PrimitiveValueProperty, value, summary, ComplexTypeWriter.SerializationMode.AllMembers);
             }
         }
     }

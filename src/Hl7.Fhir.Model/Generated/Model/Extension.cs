@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,24 +45,34 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Extension")]
     [DataContract]
-    public partial class Extension : Hl7.Fhir.Model.Element
+    public partial class Extension : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// identifies the meaning of the extension
         /// </summary>
-        [FhirElement("url", XmlSerialization=XmlSerializationHint.Attribute, Order=40)]
+        [FhirElement("url", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
         [UriPattern]
         [DataMember]
-        public System.Uri Url { get; set; }
+        public System.Uri Url
+        {
+            get { return _Url; }
+            set { _Url = value; OnPropertyChanged("Url"); }
+        }
+        private System.Uri _Url;
         
         /// <summary>
         /// Value of extension
         /// </summary>
-        [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Value { get; set; }
+        public Hl7.Fhir.Model.Element Value
+        {
+            get { return _Value; }
+            set { _Value = value; OnPropertyChanged("Value"); }
+        }
+        private Hl7.Fhir.Model.Element _Value;
         
     }
     

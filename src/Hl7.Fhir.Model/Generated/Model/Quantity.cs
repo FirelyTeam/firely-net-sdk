@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Quantity")]
     [DataContract]
-    public partial class Quantity : Hl7.Fhir.Model.Element
+    public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// How the Quantity should be understood and represented
@@ -66,9 +66,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Numerical value (with implicit precision)
         /// </summary>
-        [FhirElement("value", Order=40)]
+        [FhirElement("value", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDecimal ValueElement { get; set; }
+        public Hl7.Fhir.Model.FhirDecimal ValueElement
+        {
+            get { return _ValueElement; }
+            set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDecimal _ValueElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -81,15 +86,21 @@ namespace Hl7.Fhir.Model
                   ValueElement = null; 
                 else
                   ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                OnPropertyChanged("Value");
             }
         }
         
         /// <summary>
         /// < | <= | >= | > - how to understand the value
         /// </summary>
-        [FhirElement("comparator", Order=50)]
+        [FhirElement("comparator", InSummary=true, Order=50)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> ComparatorElement { get; set; }
+        public Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> ComparatorElement
+        {
+            get { return _ComparatorElement; }
+            set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> _ComparatorElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -102,15 +113,21 @@ namespace Hl7.Fhir.Model
                   ComparatorElement = null; 
                 else
                   ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>(value);
+                OnPropertyChanged("Comparator");
             }
         }
         
         /// <summary>
         /// Unit representation
         /// </summary>
-        [FhirElement("units", Order=60)]
+        [FhirElement("units", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString UnitsElement { get; set; }
+        public Hl7.Fhir.Model.FhirString UnitsElement
+        {
+            get { return _UnitsElement; }
+            set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _UnitsElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -123,15 +140,21 @@ namespace Hl7.Fhir.Model
                   UnitsElement = null; 
                 else
                   UnitsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Units");
             }
         }
         
         /// <summary>
         /// System that defines coded unit form
         /// </summary>
-        [FhirElement("system", Order=70)]
+        [FhirElement("system", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
+        public Hl7.Fhir.Model.FhirUri SystemElement
+        {
+            get { return _SystemElement; }
+            set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+        }
+        private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -144,15 +167,21 @@ namespace Hl7.Fhir.Model
                   SystemElement = null; 
                 else
                   SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("System");
             }
         }
         
         /// <summary>
         /// Coded form of the unit
         /// </summary>
-        [FhirElement("code", Order=80)]
+        [FhirElement("code", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.Code CodeElement { get; set; }
+        public Hl7.Fhir.Model.Code CodeElement
+        {
+            get { return _CodeElement; }
+            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+        }
+        private Hl7.Fhir.Model.Code _CodeElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -165,6 +194,7 @@ namespace Hl7.Fhir.Model
                   CodeElement = null; 
                 else
                   CodeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Code");
             }
         }
         

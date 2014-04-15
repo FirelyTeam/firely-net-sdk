@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,14 +45,19 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ResourceReference")]
     [DataContract]
-    public partial class ResourceReference : Hl7.Fhir.Model.Element
+    public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Relative, internal or absolute URL reference
         /// </summary>
-        [FhirElement("reference", Order=40)]
+        [FhirElement("reference", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString ReferenceElement { get; set; }
+        public Hl7.Fhir.Model.FhirString ReferenceElement
+        {
+            get { return _ReferenceElement; }
+            set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _ReferenceElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -65,15 +70,21 @@ namespace Hl7.Fhir.Model
                   ReferenceElement = null; 
                 else
                   ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Reference");
             }
         }
         
         /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", Order=50)]
+        [FhirElement("display", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
+        public Hl7.Fhir.Model.FhirString DisplayElement
+        {
+            get { return _DisplayElement; }
+            set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _DisplayElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -86,6 +97,7 @@ namespace Hl7.Fhir.Model
                   DisplayElement = null; 
                 else
                   DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Display");
             }
         }
         

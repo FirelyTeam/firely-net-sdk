@@ -43,8 +43,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 _body = format == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeResourceToXmlBytes(resource) :
-                    FhirSerializer.SerializeResourceToJsonBytes(resource);
+                    FhirSerializer.SerializeResourceToXmlBytes(resource, summary: false) :
+                    FhirSerializer.SerializeResourceToJsonBytes(resource, summary: false);
 
                 _contentType = ContentType.BuildContentType(format, forBundle: false);
             }
@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw Error.ArgumentNull("bundle");
 
             _body = format == ResourceFormat.Xml ?
-            FhirSerializer.SerializeBundleToXmlBytes(bundle) :
-            FhirSerializer.SerializeBundleToJsonBytes(bundle);
+                FhirSerializer.SerializeBundleToXmlBytes(bundle, summary: false) :
+                FhirSerializer.SerializeBundleToJsonBytes(bundle, summary: false);
 
             _contentType = ContentType.BuildContentType(format, forBundle: true);
         }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Questionnaire", IsResource=true)]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.Resource
+    public partial class Questionnaire : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Lifecycle status of the questionnaire
@@ -72,21 +72,31 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("QuestionComponent")]
         [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.Element
+        public partial class QuestionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Code or name of the question
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Name { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Name
+            {
+                get { return _Name; }
+                set { _Name = value; OnPropertyChanged("Name"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Name;
             
             /// <summary>
             /// Text of the question as it is shown to the user
             /// </summary>
-            [FhirElement("text", Order=50)]
+            [FhirElement("text", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString TextElement { get; set; }
+            public Hl7.Fhir.Model.FhirString TextElement
+            {
+                get { return _TextElement; }
+                set { _TextElement = value; OnPropertyChanged("TextElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _TextElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -99,46 +109,73 @@ namespace Hl7.Fhir.Model
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Text");
                 }
             }
             
             /// <summary>
             /// Single-valued answer to the question
             /// </summary>
-            [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("answer", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Answer { get; set; }
+            public Hl7.Fhir.Model.Element Answer
+            {
+                get { return _Answer; }
+                set { _Answer = value; OnPropertyChanged("Answer"); }
+            }
+            private Hl7.Fhir.Model.Element _Answer;
             
             /// <summary>
             /// Selected options
             /// </summary>
-            [FhirElement("choice", Order=70)]
+            [FhirElement("choice", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Choice { get; set; }
+            public List<Hl7.Fhir.Model.Coding> Choice
+            {
+                get { return _Choice; }
+                set { _Choice = value; OnPropertyChanged("Choice"); }
+            }
+            private List<Hl7.Fhir.Model.Coding> _Choice;
             
             /// <summary>
             /// Valueset containing the possible options
             /// </summary>
-            [FhirElement("options", Order=80)]
+            [FhirElement("options", InSummary=true, Order=80)]
+            [References("ValueSet")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Options { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Options
+            {
+                get { return _Options; }
+                set { _Options = value; OnPropertyChanged("Options"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Options;
             
             /// <summary>
             /// Structured answer
             /// </summary>
-            [FhirElement("data", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("data", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Data { get; set; }
+            public Hl7.Fhir.Model.Element Data
+            {
+                get { return _Data; }
+                set { _Data = value; OnPropertyChanged("Data"); }
+            }
+            private Hl7.Fhir.Model.Element _Data;
             
             /// <summary>
             /// Remarks about the answer given
             /// </summary>
-            [FhirElement("remarks", Order=100)]
+            [FhirElement("remarks", InSummary=true, Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString RemarksElement { get; set; }
+            public Hl7.Fhir.Model.FhirString RemarksElement
+            {
+                get { return _RemarksElement; }
+                set { _RemarksElement = value; OnPropertyChanged("RemarksElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _RemarksElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -151,16 +188,22 @@ namespace Hl7.Fhir.Model
                       RemarksElement = null; 
                     else
                       RemarksElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Remarks");
                 }
             }
             
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", Order=110)]
+            [FhirElement("group", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group { get; set; }
+            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
+            {
+                get { return _Group; }
+                set { _Group = value; OnPropertyChanged("Group"); }
+            }
+            private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
             
         }
         
@@ -170,21 +213,31 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.Element
+        public partial class GroupComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
             /// Code or name of the section on a questionnaire
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Name { get; set; }
+            public Hl7.Fhir.Model.CodeableConcept Name
+            {
+                get { return _Name; }
+                set { _Name = value; OnPropertyChanged("Name"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _Name;
             
             /// <summary>
             /// Text that is displayed above the contents of the group
             /// </summary>
-            [FhirElement("header", Order=50)]
+            [FhirElement("header", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString HeaderElement { get; set; }
+            public Hl7.Fhir.Model.FhirString HeaderElement
+            {
+                get { return _HeaderElement; }
+                set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _HeaderElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -197,15 +250,21 @@ namespace Hl7.Fhir.Model
                       HeaderElement = null; 
                     else
                       HeaderElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Header");
                 }
             }
             
             /// <summary>
             /// Additional text for the group
             /// </summary>
-            [FhirElement("text", Order=60)]
+            [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString TextElement { get; set; }
+            public Hl7.Fhir.Model.FhirString TextElement
+            {
+                get { return _TextElement; }
+                set { _TextElement = value; OnPropertyChanged("TextElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _TextElement;
             
             [NotMapped]
             [IgnoreDataMemberAttribute]
@@ -218,31 +277,48 @@ namespace Hl7.Fhir.Model
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Text");
                 }
             }
             
             /// <summary>
             /// The subject this group's answers are about
             /// </summary>
-            [FhirElement("subject", Order=70)]
+            [FhirElement("subject", InSummary=true, Order=70)]
+            [References()]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
+            public Hl7.Fhir.Model.ResourceReference Subject
+            {
+                get { return _Subject; }
+                set { _Subject = value; OnPropertyChanged("Subject"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", Order=80)]
+            [FhirElement("group", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group { get; set; }
+            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
+            {
+                get { return _Group; }
+                set { _Group = value; OnPropertyChanged("Group"); }
+            }
+            private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
             
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", Order=90)]
+            [FhirElement("question", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question { get; set; }
+            public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question
+            {
+                get { return _Question; }
+                set { _Question = value; OnPropertyChanged("Question"); }
+            }
+            private List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> _Question;
             
         }
         
@@ -250,10 +326,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | published | retired | in progress | completed | amended
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> StatusElement { get; set; }
+        public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        private Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> _StatusElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -266,16 +347,22 @@ namespace Hl7.Fhir.Model
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("authored", Order=80)]
+        [FhirElement("authored", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime AuthoredElement { get; set; }
+        public Hl7.Fhir.Model.FhirDateTime AuthoredElement
+        {
+            get { return _AuthoredElement; }
+            set { _AuthoredElement = value; OnPropertyChanged("AuthoredElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
         
         [NotMapped]
         [IgnoreDataMemberAttribute]
@@ -288,58 +375,98 @@ namespace Hl7.Fhir.Model
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Authored");
             }
         }
         
         /// <summary>
         /// The subject of the questions
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", InSummary=true, Order=90)]
+        [References("Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Person who received and recorded the answers
         /// </summary>
-        [FhirElement("author", Order=100)]
+        [FhirElement("author", InSummary=true, Order=100)]
+        [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// The person who answered the questions
         /// </summary>
-        [FhirElement("source", Order=110)]
+        [FhirElement("source", InSummary=true, Order=110)]
+        [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Source { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Source
+        {
+            get { return _Source; }
+            set { _Source = value; OnPropertyChanged("Source"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// Name/code for a predefined list of questions
         /// </summary>
-        [FhirElement("name", Order=120)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Name { get; set; }
+        public Hl7.Fhir.Model.CodeableConcept Name
+        {
+            get { return _Name; }
+            set { _Name = value; OnPropertyChanged("Name"); }
+        }
+        private Hl7.Fhir.Model.CodeableConcept _Name;
         
         /// <summary>
         /// External Ids for this questionnaire
         /// </summary>
-        [FhirElement("identifier", Order=130)]
+        [FhirElement("identifier", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Primary encounter during which the answers were collected
         /// </summary>
-        [FhirElement("encounter", Order=140)]
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter { get; set; }
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Grouped questions
         /// </summary>
         [FhirElement("group", Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Questionnaire.GroupComponent Group { get; set; }
+        public Hl7.Fhir.Model.Questionnaire.GroupComponent Group
+        {
+            get { return _Group; }
+            set { _Group = value; OnPropertyChanged("Group"); }
+        }
+        private Hl7.Fhir.Model.Questionnaire.GroupComponent _Group;
         
     }
     

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 3, 2014 11:56+0100 for FHIR v0.80
+// Generated on Tue, Apr 15, 2014 17:48+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     /// Basetype for all composite-typed elements
     /// </summary>
     [DataContract]
-    public abstract partial class Element
+    public abstract partial class Element : System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
         /// Additional Content defined by implementations
@@ -52,7 +52,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("extension", Order=10)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Extension> Extension { get; set; }
+        public List<Hl7.Fhir.Model.Extension> Extension
+        {
+            get { return _Extension; }
+            set { _Extension = value; OnPropertyChanged("Extension"); }
+        }
+        private List<Hl7.Fhir.Model.Extension> _Extension;
         
         /// <summary>
         /// Extensions that cannot be ignored
@@ -60,16 +65,32 @@ namespace Hl7.Fhir.Model
         [FhirElement("modifierExtension", Order=20)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Extension> ModifierExtension { get; set; }
+        public List<Hl7.Fhir.Model.Extension> ModifierExtension
+        {
+            get { return _ModifierExtension; }
+            set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+        }
+        private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
         
         /// <summary>
         /// Local id for element
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, Order=30)]
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
         [IdPattern]
         [DataMember]
-        public string Id { get; set; }
+        public string Id
+        {
+            get { return _Id; }
+            set { _Id = value; OnPropertyChanged("Id"); }
+        }
+        private string _Id;
         
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(String property)
+        {
+            if (PropertyChanged != null)
+            	PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
+        }
     }
     
 }
