@@ -152,6 +152,7 @@
     <Compile Include="Generated\Model\Money.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
