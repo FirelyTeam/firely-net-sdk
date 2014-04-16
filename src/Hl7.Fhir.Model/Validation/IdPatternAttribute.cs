@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Validation
             if (IsValidValue(value as string))
                 return ValidationResult.Success;
             else
-                return FhirValidator.BuildResult(validationContext, "Not a correctly formatted Id");
+                return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Id", value as string);
         }
     }
 }

@@ -28,9 +28,7 @@ namespace Hl7.Fhir.Validation
             if (IsValidValue(value as string))
                 return ValidationResult.Success;
             else
-                return FhirValidator.BuildResult(validationContext, "Not a correctly formatted DateTime");
-
-
+                return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted DateTime", value as string);
         }
     }
 }

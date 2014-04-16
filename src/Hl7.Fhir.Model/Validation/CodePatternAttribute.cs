@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
             if (Regex.IsMatch(value as string, "^" + Code.PATTERN + "$", RegexOptions.Singleline))
                 return ValidationResult.Success;
             else
-                return FhirValidator.BuildResult(validationContext, "Not a correctly formatted Code");
+				return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Code", value as string);
         }
     }
 }
