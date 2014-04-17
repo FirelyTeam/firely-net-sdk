@@ -3,7 +3,15 @@ layout: default
 title: What's new?
 ---
 
-### Since 0.9.4
+### In 0.10.0
+* The Model classes now implements INotifyPropertyChanged
+* FhirSerializer supports writing just the summary view of resources
+* Model elements of type ResourceReference now have an additional ReferencesAttribute (metadata) that indicates the resource names a reference can point to
+* ModelInfo now has information telling you which FHIR primitive types map to which .NET Model types (this only used to work for complex datatypes and resources before)
+* We now support both .NET 4.0 and Portable Class Libraries 4.5
+* Models are up-to-date with FHIR 0.8, DSTU build 2375
+
+### In 0.9.5
 This release brings the .NET FHIR library up-to-date with the FHIR DSTU (0.8) version. Additionally, some major changes have been carried out:
 
 * There is now *some* documentation
