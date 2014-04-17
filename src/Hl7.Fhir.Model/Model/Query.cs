@@ -436,8 +436,9 @@ namespace Hl7.Fhir.Model
         {
             var param = Query.BuildParamUri(key).ToString();
 
-            if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR))
-            {
+			// PCL does not have an overload on this routine that takes a char, only string
+			if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR.ToString()))
+			{
                 return (Extension ext) => ext.Url.ToString() == param;
             }
             else

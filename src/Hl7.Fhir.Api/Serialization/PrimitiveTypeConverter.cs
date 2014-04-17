@@ -141,9 +141,29 @@ namespace Hl7.Fhir.Serialization
 
         public static bool CanConvert(Type type)
         {
-            if (Type.GetTypeCode(type) != TypeCode.Object) return true;
+#if PORTABLE45
+			// We support all primitive .NET types in the serializer
+			if (type == typeof(Boolean)
+				|| type == typeof(Byte)
+				|| type == typeof(char)
+				|| type == typeof(DateTime)
+				|| type == typeof(Decimal)
+				|| type == typeof(double)
+				|| type == typeof(short)
+				|| type == typeof(int)
+				|| type == typeof(long)
+				|| type == typeof(sbyte)
+				|| type == typeof(float)
+				|| type == typeof(ushort)
+				|| type == typeof(uint)
+				|| type == typeof(ulong))
+				return true;
 
-            // And some specific complex native types
+#else
+            if (Type.GetTypeCode(type) != TypeCode.Object) return true;
+#endif
+
+			// And some specific complex native types
             if (type == typeof(byte[]) ||
                  type == typeof(string) ||
                  type == typeof(DateTimeOffset) ||

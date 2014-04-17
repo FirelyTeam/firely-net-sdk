@@ -29,14 +29,27 @@ namespace Hl7.Fhir.Introspection
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
 
+#if PORTABLE45
+			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
+#else
             if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
+#endif
 
-            foreach (Type type in assembly.GetExportedTypes())
+#if PORTABLE45
+			IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+#else
+			Type[] exportedTypes = assembly.GetExportedTypes();
+#endif
+			foreach (Type type in exportedTypes)
             {
                 // Don't import types marked with [NotMapped]
+#if PORTABLE45
+				if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
+#else
                 if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
+#endif
 
-                if (type.IsEnum)
+				if (type.IsEnum())
                 {
                     // Map an enumeration
                     if (EnumMapping.IsMappableEnum(type))
@@ -123,7 +136,7 @@ namespace Hl7.Fhir.Introspection
         public EnumMapping FindEnumMappingByType(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
-            if (!type.IsEnum) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
+            if (!type.IsEnum()) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
 
             EnumMapping entry = null;
 

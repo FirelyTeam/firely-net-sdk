@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -9,62 +9,87 @@
     <ProjectGuid>{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir</RootNamespace>
-    <AssemblyName>Hl7.Fhir</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile46</TargetFrameworkProfile>
+    <RootNamespace>Hl7.Fhir.Api</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Portable45Api</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug45|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug45\</OutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\portable45\</OutputPath>
+    <OutputPath>bin\Release45\</OutputPath>
     <DefineConstants>TRACE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release45|AnyCPU'">
-    <OutputPath>bin\Release45\</OutputPath>
-    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>3016, 3015</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Properties\Messages45.Designer.cs">
+      <DependentUpon>Messages45.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Properties\MessagesRemapping.cs" />
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
-    <Compile Include="Rest\ResponseDetails.cs" />
-    <Compile Include="Rest\SystemNetMimeContentType.cs" />
+    <Compile Include="Rest\FhirRequest.cs" />
+    <Compile Include="Rest\FhirResponse.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Search\Criterium.cs" />
+    <Compile Include="Search\CompositeValue.cs" />
+    <Compile Include="Search\ChoiceValue.cs" />
+    <Compile Include="Search\CriteriumBuilder.cs" />
+    <Compile Include="Search\Expression.cs" />
+    <Compile Include="Search\QueryExtensions.cs" />
+    <Compile Include="Search\ReferenceValue.cs" />
+    <Compile Include="Search\QuantityValue.cs" />
+    <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\BundleJsonParser.cs" />
     <Compile Include="Serialization\BundleJsonSerializer.cs" />
     <Compile Include="Serialization\BundleXmlParser.cs" />
@@ -92,18 +117,13 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\FhirRestOperationExtensions.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
     <Compile Include="Serialization\PrimitiveValueReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
     <Compile Include="Introspection\PropertyMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,26 +136,12 @@
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
-    <Compile Include="Support\Search\BoolParamValue.cs" />
-    <Compile Include="Support\Search\CombinedParamValue.cs" />
-    <Compile Include="Support\Search\DateParamValue.cs" />
-    <Compile Include="Support\Search\IntegerParamValue.cs" />
-    <Compile Include="Support\Search\ReferenceParamValue.cs" />
-    <Compile Include="Support\Search\SearchParam.cs" />
-    <Compile Include="Support\Search\SearchParamValue.cs" />
-    <Compile Include="Support\Search\StringParamValue.cs" />
-    <Compile Include="Support\Search\TokenParamValue.cs" />
+    <Compile Include="Search\DateValue.cs" />
+    <Compile Include="Search\NumberValue.cs" />
+    <Compile Include="Search\StringValue.cs" />
+    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
-    <Compile Include="Rest\UriParamExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.Portable45.csproj">
@@ -143,7 +149,24 @@
       <Name>Hl7.Fhir.Model.Portable45</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="EwoutFhirNetApi.snk" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Messages45.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages45.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

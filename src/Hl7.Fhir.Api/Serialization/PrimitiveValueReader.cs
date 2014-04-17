@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization
         {
             object primitiveValue = _current.GetPrimitiveValue();
             
-            if (nativeType.IsEnum && primitiveValue.GetType() == typeof(string))
+            if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {
                 var enumMapping = _inspector.FindEnumMappingByType(nativeType);
 

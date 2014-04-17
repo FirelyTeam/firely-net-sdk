@@ -21,14 +21,18 @@ namespace Hl7.Fhir.Serialization
 
         private static Lazy<ModelInspector> createDefaultModelInspector()
         {
-            return new Lazy<ModelInspector>(() =>
+			return new Lazy<ModelInspector>(() =>
                 {
                     var result = new ModelInspector();
-                    result.Import(typeof(Resource).Assembly);
-                    return result;
-                });
+#if PORTABLE45
+                    result.Import(typeof(Resource).GetTypeInfo().Assembly);
+#else
+				result.Import(typeof(Resource).Assembly);
+#endif
+                return result;
+			});
 
-        }
+		}
 
         internal static ModelInspector Inspector 
         { 
@@ -50,7 +54,7 @@ namespace Hl7.Fhir.Serialization
 
         public static void AddModelType(Type type)
         {
-            if (type.IsEnum)
+            if (type.IsEnum())
                 Inspector.ImportEnum(type);
             else
                 Inspector.ImportType(type);

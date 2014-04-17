@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var nativeType = value.GetType();
 
-                if (nativeType.IsEnum)
+                if (nativeType.IsEnum())
                 {
                     var enumMapping = _inspector.FindEnumMappingByType(nativeType);
 

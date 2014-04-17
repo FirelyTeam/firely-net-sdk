@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
 {
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Introspection
         public static EnumMapping Create(Type enumType)
         {
             if (enumType == null) throw Error.ArgumentNull("enumType");
-            if (!enumType.IsEnum) throw Error.Argument("enumType", "Type {0} is not an enumerated type", enumType.Name);
+            if (!enumType.IsEnum()) throw Error.Argument("enumType", "Type {0} is not an enumerated type", enumType.Name);
 
             var result = new EnumMapping();
 
@@ -68,7 +69,7 @@ namespace Hl7.Fhir.Introspection
 
         public static bool IsMappableEnum(Type t)
         {
-            return t.IsEnum && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
+            return t.IsEnum() && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
         }
 
 

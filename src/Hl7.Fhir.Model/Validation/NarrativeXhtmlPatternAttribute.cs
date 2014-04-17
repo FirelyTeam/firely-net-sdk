@@ -15,6 +15,7 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class NarrativeXhtmlPatternAttribute : ValidationAttribute
     {
+#if !PORTABLE45
         private static Lazy<XmlSchemaSet> schemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
 
         private static XmlSchemaSet compileXhtmlSchema()
@@ -25,8 +26,9 @@ namespace Hl7.Fhir.Validation
 
             return schemas;
         }
+#endif
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
 
             if (value == null) return ValidationResult.Success;
@@ -35,16 +37,21 @@ namespace Hl7.Fhir.Validation
                 throw new ArgumentException("CodePatternAttribute can only be applied to string properties");
 
             try
-            {
+			{
+				// There is currently no validation in the portable .net
+				// for the XDocument validation, would need to scan for
+				// another implementation to cover this
+#if !PORTABLE45
                 var doc = XDocument.Parse(value as string);
                 doc.Validate(schemaSet.Value, null, false);
+#endif
 
-                return ValidationResult.Success;
+				return ValidationResult.Success;
             }
             catch(Exception e)
             {
                 return FhirValidator.BuildResult(validationContext, "Xml can not be parsed or is not valid: " + e.Message);
             }
         }
-    }
+	}
 }

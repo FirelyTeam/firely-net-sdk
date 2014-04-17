@@ -7,7 +7,6 @@ using System.IO;
 
 using Hl7.Fhir.Introspection;
 using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model

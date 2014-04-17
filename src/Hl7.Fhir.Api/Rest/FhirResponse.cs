@@ -55,7 +55,11 @@ namespace Hl7.Fhir.Rest
         {
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-                return new System.Net.Mime.ContentType(response.ContentType).MediaType;
+#if PORTABLE45
+				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
+#else
+				return new System.Net.Mime.ContentType(response.ContentType).MediaType;
+#endif
             }
             else
                 return null;
@@ -67,8 +71,12 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-                var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
-          
+#if PORTABLE45
+				var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
+#else
+				var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
+#endif
+
                 if(!String.IsNullOrEmpty(charset))
                     result = Encoding.GetEncoding(charset);
             }
@@ -148,7 +156,7 @@ namespace Hl7.Fhir.Rest
 
             ResourceEntry result = ResourceEntry.Create(resource);
 
-            var location = Location ?? ContentLocation;
+            var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
 
             if (!String.IsNullOrEmpty(location))
             {

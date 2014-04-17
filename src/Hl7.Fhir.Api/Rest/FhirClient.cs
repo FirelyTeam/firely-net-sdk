@@ -169,6 +169,12 @@ namespace Hl7.Fhir.Rest
             entry.Links.SelfLink = new ResourceIdentity(response.Location);
             entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
 
+			if (!String.IsNullOrEmpty(response.LastModified))
+				entry.LastUpdated = DateTimeOffset.Parse(response.LastModified);
+
+			if (!String.IsNullOrEmpty(response.Category))
+				entry.Tags = HttpUtil.ParseCategoryHeader(response.Category);
+
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) entry = Refresh(entry, versionSpecific: true);
             return entry;
@@ -309,7 +315,27 @@ namespace Hl7.Fhir.Rest
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
             var updated = new ResourceEntry<TResource>();
-            if(response.Location != null) updated.Links.SelfLink = new ResourceIdentity(response.Location);
+			var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
+
+			if (!String.IsNullOrEmpty(location))
+			{
+				ResourceIdentity reqId = new ResourceIdentity(location);
+
+				// Set the id to the location, without the version specific part
+				updated.Id = reqId.WithoutVersion();
+
+				// If the content location has version information, set to SelfLink to it
+				if (reqId.VersionId != null)
+					updated.SelfLink = reqId;
+			}
+
+			if (!String.IsNullOrEmpty(response.LastModified))
+				updated.LastUpdated = DateTimeOffset.Parse(response.LastModified);
+
+			if (!String.IsNullOrEmpty(response.Category))
+				updated.Tags = HttpUtil.ParseCategoryHeader(response.Category);
+
+			updated.Title = entry.Title;
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
             if (refresh) updated = Refresh(updated, versionSpecific: true);
@@ -932,10 +958,23 @@ namespace Hl7.Fhir.Rest
                         outcome = OperationOutcome.ForMessage(body);
                 }
 
-                if (outcome != null)
-                    throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
-                else
-                    throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
+				if (outcome != null)
+				{
+#if DEBUG
+					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+					System.Diagnostics.Debug.WriteLine(outcome.Text);
+					foreach (var issue in outcome.Issue)
+					{
+						System.Diagnostics.Debug.WriteLine("	" + issue.Details);
+					}
+					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+#endif
+					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
+				}
+				else
+				{
+					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
+				}
             }
         }      
     }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -10,43 +10,36 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir</RootNamespace>
-    <AssemblyName>Hl7.Fhir</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile46</TargetFrameworkProfile>
+    <AssemblyName>Hl7.Fhir.Portable45</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug45|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PORTABLE45X</DefineConstants>
+    <OutputPath>bin\Debug45\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\portable45\</OutputPath>
-    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release45|AnyCPU'">
     <OutputPath>bin\Release45\</OutputPath>
     <DefineConstants>TRACE;PORTABLE45</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>3016, 3015</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>3016, 3015</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +81,6 @@
     <Compile Include="Generated\Model\AdverseReaction.cs" />
     <Compile Include="Generated\Model\Alert.cs" />
     <Compile Include="Generated\Model\AllergyIntolerance.cs" />
-    <Compile Include="Generated\Model\Appointment.cs" />
-    <Compile Include="Generated\Model\AppointmentResponse.cs" />
-    <Compile Include="Generated\Model\Availability.cs" />
     <Compile Include="Generated\Model\CarePlan.cs" />
     <Compile Include="Generated\Model\Composition.cs" />
     <Compile Include="Generated\Model\ConceptMap.cs" />
@@ -130,10 +120,8 @@
     <Compile Include="Generated\Model\Provenance.cs" />
     <Compile Include="Generated\Model\Query.cs" />
     <Compile Include="Generated\Model\Questionnaire.cs" />
-    <Compile Include="Generated\Model\Referral.cs" />
     <Compile Include="Generated\Model\RelatedPerson.cs" />
     <Compile Include="Generated\Model\SecurityEvent.cs" />
-    <Compile Include="Generated\Model\Slot.cs" />
     <Compile Include="Generated\Model\Specimen.cs" />
     <Compile Include="Generated\Model\Substance.cs" />
     <Compile Include="Generated\Model\Supply.cs" />
@@ -146,10 +134,13 @@
     <Compile Include="Generated\Model\Money.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\ReferencesAttribute.cs" />
+    <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\Query.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
@@ -160,6 +151,7 @@
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
     <Compile Include="Model\ModelInfo.cs" />
+    <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceEntry.cs" />
     <Compile Include="Model\ResourceReference.cs" />
@@ -182,12 +174,21 @@
     <Compile Include="Validation\InstantPatternAttribute.cs" />
     <Compile Include="Validation\InvokeIValidatableObjectAttribute.cs" />
     <Compile Include="Validation\IValidatableObject.cs" />
+    <Compile Include="Validation\FhirValidator.cs" />
     <Compile Include="Validation\NarrativeXhtmlPatternAttribute.cs" />
     <Compile Include="Validation\OidPatternAttribute.cs" />
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
+    <Compile Include="Validation\ValidationContextExtensions.cs" />
     <Compile Include="Validation\ValidationContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Model\fhir-xhtml1-strict.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="EwoutFhirNetApi.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Reflection;
 
 namespace Hl7.Fhir.Rest
 {
@@ -126,16 +127,27 @@ namespace Hl7.Fhir.Rest
             var agent = ".NET FhirClient for FHIR " + Model.ModelInfo.Version;
             request.Method = method;
 
-            try
-            {
+			try
+			{
+#if PORTABLE45
+				System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
+#else
                 System.Reflection.PropertyInfo prop = request.GetType().GetProperty("UserAgent");
+#endif
 
-                if (prop != null) prop.SetValue(request, agent, null);
-            }
-            catch (Exception)
-            {
-                // platform does not support UserAgent property...too bad
-            }
+				if (prop != null) prop.SetValue(request, agent, null);
+			}
+			catch (Exception)
+			{
+				// platform does not support UserAgent property...too bad
+				try
+				{
+					request.Headers[HttpRequestHeader.UserAgent] = agent;
+				}
+				catch (ArgumentException)
+				{
+				}
+			}
 
             return request;
         }

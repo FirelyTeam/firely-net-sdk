@@ -46,7 +46,11 @@ namespace Hl7.Fhir.Introspection
 
             PropertyMapping result = new PropertyMapping();
 
-            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#if PORTABLE45
+			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#else
+			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#endif
        
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
@@ -87,7 +91,11 @@ namespace Hl7.Fhir.Introspection
 
         private static string determinePropertyName(PropertyInfo prop)
         {
-            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#if PORTABLE45
+			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#else
+			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#endif
 
             if(elementAttr != null && elementAttr.Name != null)
                 return elementAttr.Name;
@@ -113,7 +121,11 @@ namespace Hl7.Fhir.Introspection
 
         private static bool isPrimitiveValueElement(PropertyInfo prop)
         {
-            var valueElementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#if PORTABLE45
+			var valueElementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#else
+			var valueElementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+#endif
             var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
             if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
@@ -174,7 +186,7 @@ namespace Hl7.Fhir.Introspection
             if (ReflectionHelper.IsNullableType(type))
                 type = ReflectionHelper.GetNullableArgument(type);
 
-            return type.IsEnum ||
+            return type.IsEnum() ||
                     PrimitiveTypeConverter.CanConvert(type);
         }
 

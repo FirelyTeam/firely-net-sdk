@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -41,8 +42,12 @@ namespace Hl7.Fhir.Serialization
             // If type is a typed collection (but not an array), and the type
             // is not a concrete collection type, but an interface, create a new List of
             // the given type.
+#if PORTABLE45
+			if (ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.GetTypeInfo().IsInterface)
+#else
             if(ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.IsInterface)
-            {
+#endif
+			{
                 var elementType = ReflectionHelper.GetCollectionItemType(typeToCreate);
                 typeToCreate = typeof(List<>).MakeGenericType(elementType);
             }
