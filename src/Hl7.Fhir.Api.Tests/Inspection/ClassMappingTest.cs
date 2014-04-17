@@ -7,7 +7,11 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Test.Inspection
 {
     [TestClass]
-    public class ClassMappingTest
+#if PORTABLE45
+	public class PortableClassMappingTest
+#else
+	public class ClassMappingTest
+#endif
     {
         [TestMethod]
         public void TestResourceMappingCreation()

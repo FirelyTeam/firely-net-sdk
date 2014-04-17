@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Introspection
         internal static ConstructorInfo GetDefaultPublicConstructor(Type t)
         {
 #if PORTABLE45
-            return t.GetTypeInfo().DeclaredConstructors.FirstOrDefault(s => s.GetParameters().Length == 0);
+            return t.GetTypeInfo().DeclaredConstructors.FirstOrDefault(s => s.GetParameters().Length == 0 && s.IsPublic && !s.IsStatic);
 #else
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Introspection
 		internal static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {
 #if PORTABLE45
-			var attr = member.GetCustomAttributes<T>();
+			var attr = member.GetCustomAttribute<T>();
 #else
             var attr = Attribute.GetCustomAttribute(member, typeof(T));
 #endif

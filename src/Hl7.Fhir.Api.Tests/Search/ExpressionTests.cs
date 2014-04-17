@@ -14,7 +14,11 @@ using Hl7.Fhir.Support;
 namespace Hl7.Fhir.Tests
 {
     [TestClass]
-    public class SearchParamTests
+#if PORTABLE45
+	public class PortableSearchParamTests
+#else
+	public class SearchParamTests
+#endif
     {
         [TestMethod]
         public void ParseCriterium()

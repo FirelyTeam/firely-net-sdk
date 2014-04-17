@@ -15,7 +15,11 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-    public class BundleTests
+#if PORTABLE45
+	public class PortableBundleTests
+#else
+	public class BundleTests
+#endif
     {
 		private const string TempFileLocation = "c:\\temp\\";
 

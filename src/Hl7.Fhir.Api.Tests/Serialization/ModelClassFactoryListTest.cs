@@ -6,7 +6,11 @@ namespace Hl7.Fhir.Test.Serialization
 {
    
     [TestClass]
-    public class ClassFactoryListTest
+#if PORTABLE45
+	public class PortableClassFactoryListTest
+#else
+	public class ClassFactoryListTest
+#endif
     {
         [TestMethod]
         public void FindModelClassFactory()

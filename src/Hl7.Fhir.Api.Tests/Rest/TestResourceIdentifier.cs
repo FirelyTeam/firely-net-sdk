@@ -5,7 +5,11 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-    public class TestResourceIdentifier
+#if PORTABLE45
+	public class PortableTestResourceIdentifier
+#else
+	public class TestResourceIdentifier
+#endif
     {
         [TestMethod]
         public void TestResourceIdentity()

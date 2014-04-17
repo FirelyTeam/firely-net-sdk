@@ -16,13 +16,23 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Tests
 {
     [TestClass]
-    public class FhirClientTests
+#if PORTABLE45
+	public class PortableFhirClientTests
+#else
+	public class FhirClientTests
+#endif
     {    
         Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint.OriginalString);
+		}
 
         [TestMethod, TestCategory("FhirClient")]
         public void FetchConformance()

@@ -17,7 +17,11 @@ using Ionic.Zip;
 namespace Hl7.Fhir.Tests
 {
     [TestClass]
-    public class RoundtripTest
+#if PORTABLE45
+	public class PortableRoundtripTest
+#else
+	public class RoundtripTest
+#endif
     {    
         [TestMethod]
         public void FullRoundtripOfAllExamples()

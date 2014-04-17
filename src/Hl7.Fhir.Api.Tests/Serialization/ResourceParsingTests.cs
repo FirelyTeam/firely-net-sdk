@@ -6,7 +6,11 @@ using System.IO;
 namespace Hl7.Fhir.Test.Serialization
 {
     [TestClass]
-    public class ResourceParsingTests
+#if PORTABLE45
+	public class PortableResourceParsingTests
+#else
+	public class ResourceParsingTests
+#endif
     {
         [TestMethod]
         //public void AcceptXsiStuffOnRoot()

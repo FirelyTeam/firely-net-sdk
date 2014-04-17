@@ -6,7 +6,11 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Test.Serialization
 {
     [TestClass]
-    public class ConversionTest
+#if PORTABLE45
+	public class PortableConversionTest
+#else
+	public class ConversionTest
+#endif
     {
         [TestMethod]
         public void TestStringToBinary()

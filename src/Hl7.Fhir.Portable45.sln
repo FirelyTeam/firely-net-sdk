@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model", "Hl7.Fhir.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Tests", "Hl7.Fhir.Model.Tests\Hl7.Fhir.Model.Tests.csproj", "{6739C236-29D9-4B70-BB70-B96794FCAB34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Portable45.Tests", "Hl7.Fhir.Model.Tests\Hl7.Fhir.Model.Portable45.Tests.csproj", "{32318CBB-8CCA-4D2B-8318-2116BC5E452F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api.Portable45.Tests", "Hl7.Fhir.Api.Tests\Hl7.Fhir.Api.Portable45.Tests.csproj", "{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,12 @@ Global
 		{6739C236-29D9-4B70-BB70-B96794FCAB34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6739C236-29D9-4B70-BB70-B96794FCAB34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6739C236-29D9-4B70-BB70-B96794FCAB34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32318CBB-8CCA-4D2B-8318-2116BC5E452F}.Debug|Any CPU.ActiveCfg = Debug45|Any CPU
+		{32318CBB-8CCA-4D2B-8318-2116BC5E452F}.Debug|Any CPU.Build.0 = Debug45|Any CPU
+		{32318CBB-8CCA-4D2B-8318-2116BC5E452F}.Release|Any CPU.ActiveCfg = Release45|Any CPU
+		{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}.Debug|Any CPU.ActiveCfg = Debug45|Any CPU
+		{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}.Debug|Any CPU.Build.0 = Debug45|Any CPU
+		{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}.Release|Any CPU.ActiveCfg = Release45|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

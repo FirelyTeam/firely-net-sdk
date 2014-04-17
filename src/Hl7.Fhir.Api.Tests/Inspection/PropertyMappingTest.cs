@@ -9,7 +9,11 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Test.Inspection
 {
     [TestClass]
-    public class ModelInspectorMembersTest
+#if PORTABLE45
+	public class PortableModelInspectorMembersTest
+#else
+	public class ModelInspectorMembersTest
+#endif
     {
         [TestMethod]
         public void TestPrimitiveDataTypeMapping()

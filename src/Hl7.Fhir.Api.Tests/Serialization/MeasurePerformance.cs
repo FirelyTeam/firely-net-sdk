@@ -10,7 +10,11 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Test.Serialization
 {
     [TestClass]
-    public class MeasurePerformance
+#if PORTABLE45
+	public class PortableMeasurePerformance
+#else
+	public class MeasurePerformance
+#endif
     {
         [TestMethod]
         public void RunPerfTest()
