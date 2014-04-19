@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Rest
                 if (foe.Outcome != null)
                     return foe.Outcome;
                 else
-                    throw foe;
+                    throw; // no need to include foe, framework does this and preserves the stack location (CA2200)
             }
         }
 

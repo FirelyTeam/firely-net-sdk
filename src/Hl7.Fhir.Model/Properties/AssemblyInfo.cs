@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
+[assembly: ComVisible(false)]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("HL7.Fhir.Tests")]
