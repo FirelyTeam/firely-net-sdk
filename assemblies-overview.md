@@ -21,6 +21,8 @@ Native .NET 4.5 Assemblies:
 
 Only the top 2 assemblies are currently distributed in the NuGet "FHIR" package, so this package is all you need to get started, unless you want to have the source code on [GitHub]. 
 
+Both assemblies are distributed in the NuGet "FHIR" package, so this package is all you need to get started, unless you want to have the source code on [GitHub]. 
+
 [FHIR website]: http://www.hl7.org/fhir
 [GitHub]: http://www.github.com/ewoutkramer/fhir-net-api
 

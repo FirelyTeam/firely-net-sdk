@@ -30,5 +30,3 @@ This release brings the .NET FHIR library up-to-date with the FHIR DSTU (0.8) ve
 
 ### Before
 Is history. If you really want, you can read the SVN and Git logs.
-
-  
