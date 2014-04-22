@@ -144,7 +144,9 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     var content = entry[BundleXmlParser.XATOM_CONTENT];
+
                     var id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
+                    if (id == null) throw Error.Format("BundleEntry found without an id", null);
 
                     if (content != null)
                     {

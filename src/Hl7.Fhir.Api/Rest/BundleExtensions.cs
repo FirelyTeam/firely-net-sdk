@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest
                 if (entry is ResourceEntry)
                 {
                     var newEntry = client.Read(entry.Id);
-                    if (entry.Links.Related != null) newEntry.Links.Related = entry.Links.Related;
+                    if (entry.Links.Alternate != null) newEntry.Links.Alternate = entry.Links.Alternate;
                     result.Entries.Add(newEntry);
                 }
                 else if (entry is DeletedEntry)

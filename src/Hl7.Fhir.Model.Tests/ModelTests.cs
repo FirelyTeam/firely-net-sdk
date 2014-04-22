@@ -95,7 +95,39 @@ namespace Hl7.Fhir.Tests
 
         }
 
-      
+
+        [TestMethod]
+        public void RecognizeContainedReference()
+        {
+            var rref = new ResourceReference() { Reference = "#patient2223432" };
+
+            Assert.IsTrue(rref.IsContainedReference);
+
+            rref.Reference = "http://somehwere.nl/Patient/1";
+            Assert.IsFalse(rref.IsContainedReference);
+
+            rref.Reference = "Patient/1";
+            Assert.IsFalse(rref.IsContainedReference);
+        }
+
+
+        [TestMethod]
+        public void FindContainedResource()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient();
+
+            pat.Contained = new List<Resource> { cPat1, cPat2 };
+
+            var rref = new ResourceReference() { Reference = "#pat2" };
+
+            Assert.IsNotNull(pat.FindContainedResource(rref));
+            Assert.IsNotNull(pat.FindContainedResource(rref.Url));
+            
+            rref.Reference = "#pat3";
+            Assert.IsNull(pat.FindContainedResource(rref));
+        }
 
         [TestMethod]
         public void TypedResourceEntry()

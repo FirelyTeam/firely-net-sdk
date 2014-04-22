@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        private void validateErrorOrFail(object instance, bool recurse=false)
+        private void validateErrorOrFail(object instance, bool recurse=false, string membername=null)
         {
             try
             {
@@ -40,8 +40,10 @@ namespace Hl7.Fhir.Tests
                 FhirValidator.Validate(instance, recurse);
                 Assert.Fail();
             }
-            catch (ValidationException exc) 
-            { 
+            catch (ValidationException ve) 
+            {
+                if (membername != null)
+                    Assert.IsTrue(ve.ValidationResult.MemberNames.Contains(membername));
             }
         }
      
@@ -157,7 +159,7 @@ namespace Hl7.Fhir.Tests
             // First create an incomplete encounter (class not supplied)
             var enc = new Encounter();
             enc.Status = Encounter.EncounterState.Planned;
-            validateErrorOrFail(enc);
+            validateErrorOrFail(enc, membername: "ClassElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
             enc.Class = Encounter.EncounterClass.Ambulatory;
@@ -177,7 +179,7 @@ namespace Hl7.Fhir.Tests
             FhirValidator.Validate(enc);
 
             // When we recurse, this should fail
-            validateErrorOrFail(enc, true);
+            validateErrorOrFail(enc, true, membername: "Value");
         }
 
         [TestMethod]
@@ -233,6 +235,22 @@ namespace Hl7.Fhir.Tests
             bundle.Entries.Add(e);
             e.Id = null;
             validateErrorOrFail(bundle,true);
+        }
+
+
+        [TestMethod]
+        public void TestXhtmlValidation()
+        {
+            var p = new Patient();
+
+            p.Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated  };
+            FhirValidator.Validate(p,true);
+
+            p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";
+            validateErrorOrFail(p,true);
+
+            p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><img onmouseover='bigImg(this)' src='smiley.gif' alt='Smiley' /></div>";
+            validateErrorOrFail(p,true);
         }
     }
 }

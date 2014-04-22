@@ -42,6 +42,22 @@ namespace Hl7.Fhir.Validation
             return new string[] { name };
         }
 
+
+        internal static ValidationResult BuildResult(ValidationContext context, string message, params object[] messageArgs)
+        {
+            var resultMessage = String.Format(message, messageArgs);
+
+            if(context.MemberName != null)
+                return new ValidationResult(resultMessage, SingleMemberName(context.MemberName));
+            else
+                return new ValidationResult(resultMessage);
+        }
+
+        //internal static ValidationResult BuildResult(ValidationContext context, string message)
+        //{
+        //    return BuildResult(context, message, null);
+        //}
+
         //public static void Validate(Resource resource, bool recurse = false)
         //{
         //    if (resource == null) throw new ArgumentNullException("resource");

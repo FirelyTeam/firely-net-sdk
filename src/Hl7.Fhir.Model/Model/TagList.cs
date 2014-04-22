@@ -54,22 +54,13 @@ namespace Hl7.Fhir.Model
             this.Category = new List<Tag>(tags);
         }
 
+        [FhirElement("category")]
         public List<Tag> Category { get; set; }
-
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-
-            foreach (var tag in Category)
-                result.AddRange(tag.Validate(validationContext));
-
-            return result;
-        }
     }
 
+
     [FhirType]
-    public class Tag : Hl7.Fhir.Validation.IValidatableObject
+    public class Tag
     {
         private const string FHIRTAGNS = "http://hl7.org/fhir/tag";
         
@@ -105,21 +96,7 @@ namespace Hl7.Fhir.Model
         {
         }
 
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-
-            if (Scheme == null)
-                result.Add(new ValidationResult("Tag scheme cannot be null"));
-
-            if (Term == null)
-                result.Add(new ValidationResult("Tag term cannot be null"));
-
-            return result;
-        }
-
-
+     
         public override bool Equals(object obj)
         {
             // Check for null values and compare run-time types.

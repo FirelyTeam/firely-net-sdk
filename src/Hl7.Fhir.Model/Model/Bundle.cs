@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Model
             //        result.Add(new ValidationResult("Feed id must be an absolute URI"));
 
             if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(new ValidationResult("Feed id must be an absolute URI", FhirValidator.SingleMemberName("Id")));
+                result.Add(FhirValidator.BuildResult(validationContext, "Feed id must be an absolute URI"));
 
             //if (LastUpdated == null)
             //    result.Add(new ValidationResult("Feed must have a updated date"));
 
             if (Links.SearchLink != null)
-                result.Add(new ValidationResult("Links with rel='search' can only be used on feed entries", FhirValidator.SingleMemberName("Links")));
+                result.Add(FhirValidator.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
 
             bool feedHasAuthor = !String.IsNullOrEmpty(this.AuthorName);
 
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
                 foreach (var entry in Entries.Where(e => e != null))
                 {
                     if (!feedHasAuthor && entry is ResourceEntry && String.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
-                        result.Add(new ValidationResult("Bundle's author and Entry author cannot both be empty", FhirValidator.SingleMemberName("Entries")));
+                        result.Add(FhirValidator.BuildResult(validationContext, "Bundle's author and Entry author cannot both be empty"));
 
                     FhirValidator.TryValidate(entry, result, validationContext.ValidateRecursively());
                 }

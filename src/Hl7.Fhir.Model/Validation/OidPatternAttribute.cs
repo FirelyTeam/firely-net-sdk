@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
             if (OidPatternAttribute.IsValid((string)value))
                 return ValidationResult.Success;
             else
-                return new ValidationResult("Not a correctly formatted Oid");
+                return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Oid", (string)value);
         }
 
         public static bool IsValid(string value)
