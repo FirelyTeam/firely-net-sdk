@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Search
                 if (Operand is Criterium)
                     return result + Query.SEARCH_CHAINSEPARATOR + Operand.ToString();
                 else
-                    throw new FormatException("Chain operation must have a Criterium as operand");
+					return result + Query.SEARCH_CHAINSEPARATOR + " ** INVALID CHAIN OPERATION ** Chain operation must have a Criterium as operand";
             }
             else
             {
