@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir.Api</RootNamespace>
-    <AssemblyName>Hl7.Fhir.Portable45Api</AssemblyName>
+    <AssemblyName>Hl7.Fhir.Api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -63,6 +63,7 @@
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Profiles\Compiler.cs" />
     <Compile Include="Properties\Messages45.Designer.cs">
       <DependentUpon>Messages45.resx</DependentUpon>
       <DesignTime>True</DesignTime>

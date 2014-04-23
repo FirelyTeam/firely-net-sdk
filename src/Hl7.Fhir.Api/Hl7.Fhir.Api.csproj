@@ -53,6 +53,7 @@
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Profiles\Compiler.cs" />
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
