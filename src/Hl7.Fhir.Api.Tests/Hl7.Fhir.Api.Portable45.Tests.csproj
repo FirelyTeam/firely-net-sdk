@@ -95,10 +95,12 @@
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Search\ExpressionTests.cs" />
     <Compile Include="Search\QueryExtensionTests.cs" />
+    <Compile Include="Search\QueryTests.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Inspection\EnumMappingTest.cs" />
+    <Compile Include="Serialization\FhirParserTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Inspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
