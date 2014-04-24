@@ -17,7 +17,13 @@ namespace Hl7.Fhir.Search
             return qry;
         }
 
-        public static Query For(this Query qry, string resourceName)
+		public static Query For<TResource>(this Query qry)
+		{
+			qry.ResourceType = typeof(TResource).GetCollectionName();
+			return qry;
+		}
+		
+		public static Query For(this Query qry, string resourceName)
         {
             qry.ResourceType = resourceName;
 

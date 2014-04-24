@@ -25,7 +25,8 @@ namespace Hl7.Fhir.Rest
 
         public byte[] Body { get; set; }
 
-        public HttpWebResponse Response { get; set; }
+		// Can't hold onto this as it gets disposed pretty quick.
+        //public HttpWebResponse Response { get; set; }
 
         public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
         {
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Rest
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
                     Category = response.Headers[HttpUtil.CATEGORY],
                     Body = readBody(response),
-                    Response = response
+                    // Response = response
                 };
         }
 
