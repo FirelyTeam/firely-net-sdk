@@ -117,6 +117,22 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("Den Burg", loc.Resource.Address.City);            
         }
 
+#if PORTABLE45
+		[TestMethod, TestCategory("FhirClient")]
+		public void ReadRelativeAsync()
+		{
+			FhirClient client = new FhirClient(testEndpoint);
+
+			var loc = client.ReadAsync<Location>(new Uri("Location/1", UriKind.Relative)).Result;
+			Assert.IsNotNull(loc);
+			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
+
+			var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+			loc = client.ReadAsync<Location>(ri).Result;
+			Assert.IsNotNull(loc);
+			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
+		}
+#endif
         [TestMethod, TestCategory("FhirClient")]
         public void Search()
         {

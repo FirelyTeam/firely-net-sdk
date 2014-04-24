@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
@@ -23,6 +24,11 @@ namespace Hl7.Fhir.Rest
             _location = location;
             _method = method;
         }
+
+#if PORTABLE45
+		public string Method { get { return _method; } }
+		public Uri Location { get { return _location; } }
+#endif
 
         private Uri _location;
         private string _method = "GET";
@@ -88,12 +94,16 @@ namespace Hl7.Fhir.Rest
 
         public FhirResponse GetResponse(ResourceFormat? acceptFormat)
         {
-            bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
+			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
 
             var location = new RestUrl(_location);
 
             if(needsFormatParam)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
+
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine("{0}: {1}", _method, location.ToString());
+#endif
 
             var request = createRequest(location.ToString(), _method);
 
@@ -120,6 +130,40 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
+#if PORTABLE45
+		public async Task<WebResponse> GetResponseAsync(ResourceFormat? acceptFormat)
+		{
+			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
+
+			var location = new RestUrl(_location);
+
+			if (needsFormatParam)
+				location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
+
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine("(async) {0}: {1}", _method, location.ToString());
+#endif
+
+			HttpWebRequest request = createRequest(location.ToString(), _method);
+
+			if (acceptFormat != null && !UseFormatParameter)
+				request.Accept = ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
+
+			if (_categoryHeader != null) 
+				request.Headers[HttpUtil.CATEGORY] = _categoryHeader;
+
+			if (_body != null)
+			{
+				request.ContentType = _contentType;
+				if (_contentLocation != null) 
+					request.Headers[HttpRequestHeader.ContentLocation] = _contentLocation;
+				await request.WriteBodyAsync(_body);
+			}
+
+			// Make sure the caller disposes the HttpResponse gets disposed...
+			return await request.GetResponseAsync();
+		}
+#endif
 
         private HttpWebRequest createRequest(string location, string method)
         {
@@ -151,7 +195,5 @@ namespace Hl7.Fhir.Rest
 
             return request;
         }
-
-
     }
 }

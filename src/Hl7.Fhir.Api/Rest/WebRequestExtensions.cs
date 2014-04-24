@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
@@ -33,13 +34,31 @@ namespace Hl7.Fhir.Rest
             var async = request.BeginGetRequestStream(callBack, request);
 
             getRequestFinished.WaitOne();
-            //async.AsyncWaitHandle.WaitOne();
 
             return requestStream;
         }
 
+#if PORTABLE45
+        internal static async Task WriteBodyAsync(this HttpWebRequest request, byte[] data)
+        {
+            Stream outs = await getRequestStreamAsync(request);
+            await outs.WriteAsync(data, 0, (int)data.Length);
+            outs.Flush();
+			outs.Dispose();
+        }
+	
+		private static Task<Stream> getRequestStreamAsync(HttpWebRequest request)
+		{
+			return request.GetRequestStreamAsync();
+		}
 
-        public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
+		//public static Task<WebResponse> GetResponseAsync(this HttpWebRequest req)
+		//{
+		//	return req.GetResponseAsync();
+		//}
+#endif
+
+		public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
         {
             try
             {
