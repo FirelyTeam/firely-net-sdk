@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ValueSetStatus")]
         public enum ValueSetStatus
         {
+            /// <summary>
+            /// This valueset is still under development.
+            /// </summary>
             [EnumLiteral("draft")]
-            Draft, // This valueset is still under development.
+            Draft,
+            /// <summary>
+            /// This valueset is ready for normal use.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // This valueset is ready for normal use.
+            Active,
+            /// <summary>
+            /// This valueset has been withdrawn or superceded and should no longer be used.
+            /// </summary>
             [EnumLiteral("retired")]
-            Retired, // This valueset has been withdrawn or superceded and should no longer be used.
+            Retired,
         }
         
         /// <summary>
@@ -67,23 +76,38 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("FilterOperator")]
         public enum FilterOperator
         {
+            /// <summary>
+            /// The property value has the concept specified by the value.
+            /// </summary>
             [EnumLiteral("=")]
-            Equal, // The property value has the concept specified by the value.
+            Equal,
+            /// <summary>
+            /// The property value has a concept that has an is-a relationship with the value.
+            /// </summary>
             [EnumLiteral("is-a")]
-            IsA, // The property value has a concept that has an is-a relationship with the value.
+            IsA,
+            /// <summary>
+            /// The property value has a concept that does not have an is-a relationship with the value.
+            /// </summary>
             [EnumLiteral("is-not-a")]
-            IsNotA, // The property value has a concept that does not have an is-a relationship with the value.
+            IsNotA,
+            /// <summary>
+            /// The property value representation matches the regex specified in the value.
+            /// </summary>
             [EnumLiteral("regex")]
-            Regex, // The property value representation matches the regex specified in the value.
+            Regex,
+            /// <summary>
+            /// The property value is in the set of codes or concepts identified by the value.
+            /// </summary>
             [EnumLiteral("in")]
-            In, // The property value is in the set of codes or concepts identified by the value.
+            In,
+            /// <summary>
+            /// The property value is not in the set of codes or concepts identified by the value.
+            /// </summary>
             [EnumLiteral("not in")]
-            NotIn, // The property value is not in the set of codes or concepts identified by the value.
+            NotIn,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ValueSetDefineComponent")]
         [DataContract]
         public partial class ValueSetDefineComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -101,6 +125,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// URI to identify the code system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -128,6 +156,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
+            /// <summary>
+            /// Version of this system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
@@ -155,6 +187,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _CaseSensitiveElement;
             
+            /// <summary>
+            /// If code comparison is case sensitive
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? CaseSensitive
@@ -186,9 +222,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ValueSetExpansionContainsComponent")]
         [DataContract]
         public partial class ValueSetExpansionContainsComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -205,6 +238,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// System value for the code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -232,6 +269,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Code - if blank, this is not a choosable code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -259,6 +300,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
+            /// <summary>
+            /// User display for the concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
@@ -290,9 +335,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConceptSetComponent")]
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -310,6 +352,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// The system the codes come from
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -337,6 +383,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
+            /// <summary>
+            /// Specific version of the code system referred to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
@@ -365,6 +415,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.Code> _CodeElement;
             
+            /// <summary>
+            /// Code or concept from system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Code
@@ -396,9 +450,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConceptSetFilterComponent")]
         [DataContract]
         public partial class ConceptSetFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -416,6 +467,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _PropertyElement;
             
+            /// <summary>
+            /// A property defined by the code system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Property
@@ -444,6 +499,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.ValueSet.FilterOperator> _OpElement;
             
+            /// <summary>
+            /// = | is-a | is-not-a | regex | in | not in
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ValueSet.FilterOperator? Op
@@ -472,6 +531,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _ValueElement;
             
+            /// <summary>
+            /// Code from the system, or regex criteria
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Value
@@ -490,9 +553,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ValueSetComposeComponent")]
         [DataContract]
         public partial class ValueSetComposeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -510,6 +570,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirUri> _ImportElement;
             
+            /// <summary>
+            /// Import the contents of another value set
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<System.Uri> Import
@@ -554,9 +618,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ValueSetDefineConceptComponent")]
         [DataContract]
         public partial class ValueSetDefineConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -574,6 +635,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Code that identifies concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -601,6 +666,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _AbstractElement;
             
+            /// <summary>
+            /// If this code is not for use as a real concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Abstract
@@ -628,6 +697,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
+            /// <summary>
+            /// Text to Display to the user
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
@@ -655,6 +728,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DefinitionElement;
             
+            /// <summary>
+            /// Formal Definition
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Definition
@@ -686,9 +763,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ValueSetExpansionComponent")]
         [DataContract]
         public partial class ValueSetExpansionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -718,6 +792,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Instant _TimestampElement;
             
+            /// <summary>
+            /// Time valueset expansion happened
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public DateTimeOffset? Timestamp
@@ -761,6 +839,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
+        /// <summary>
+        /// Logical id to reference this value set
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Identifier
@@ -788,6 +870,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
+        /// <summary>
+        /// Logical id for this version of the value set
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
@@ -816,6 +902,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Informal name for this value set
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -843,6 +933,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
+        /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
@@ -884,6 +978,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Human language description of the value set
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
@@ -911,6 +1009,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
+        /// <summary>
+        /// About the value set or its content
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Copyright
@@ -939,6 +1041,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> _StatusElement;
         
+        /// <summary>
+        /// draft | active | retired
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ValueSet.ValueSetStatus? Status
@@ -966,6 +1072,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
@@ -993,6 +1103,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
         
+        /// <summary>
+        /// Whether this is intended to be used with an extensible binding
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Extensible
@@ -1020,6 +1134,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Date for given status
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date

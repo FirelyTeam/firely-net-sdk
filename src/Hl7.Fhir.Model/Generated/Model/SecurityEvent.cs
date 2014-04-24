@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,54 +53,126 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventObjectRole")]
         public enum SecurityEventObjectRole
         {
+            /// <summary>
+            /// This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal.
+            /// </summary>
             [EnumLiteral("1")]
-            N1, // This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal.
+            N1,
+            /// <summary>
+            /// This is a location identified as related to the event.  This is usually the location where the event took place.  Note that for shipping, the usual events are arrival at a location or departure from a location.
+            /// </summary>
             [EnumLiteral("2")]
-            N2, // This is a location identified as related to the event.  This is usually the location where the event took place.  Note that for shipping, the usual events are arrival at a location or departure from a location.
+            N2,
+            /// <summary>
+            /// This object is any kind of persistent document created as a result of the event.  This could be a paper report, film, electronic report, DICOM Study, etc.  Issues related to medical records life cycle management are conveyed elsewhere.
+            /// </summary>
             [EnumLiteral("3")]
-            N3, // This object is any kind of persistent document created as a result of the event.  This could be a paper report, film, electronic report, DICOM Study, etc.  Issues related to medical records life cycle management are conveyed elsewhere.
+            N3,
+            /// <summary>
+            /// A logical object related to the event.  (Deprecated).
+            /// </summary>
             [EnumLiteral("4")]
-            N4, // A logical object related to the event.  (Deprecated).
+            N4,
+            /// <summary>
+            /// This is any configurable file used to control creation of documents.  Examples include the objects maintained by the HL7 Master File transactions, Value Sets, etc.
+            /// </summary>
             [EnumLiteral("5")]
-            N5, // This is any configurable file used to control creation of documents.  Examples include the objects maintained by the HL7 Master File transactions, Value Sets, etc.
+            N5,
+            /// <summary>
+            /// A human participant not otherwise identified by some other category.
+            /// </summary>
             [EnumLiteral("6")]
-            N6, // A human participant not otherwise identified by some other category.
+            N6,
+            /// <summary>
+            /// (deprecated).
+            /// </summary>
             [EnumLiteral("7")]
-            N7, // (deprecated).
+            N7,
+            /// <summary>
+            /// Typically a licensed person who is providing or performing care related to the event, generally a physician.   The key distinction between doctor and practitioner is with regards to their role, not the licensing.  The doctor is the human who actually performed the work.  The practitioner is the human or organization that is responsible for the work.
+            /// </summary>
             [EnumLiteral("8")]
-            N8, // Typically a licensed person who is providing or performing care related to the event, generally a physician.   The key distinction between doctor and practitioner is with regards to their role, not the licensing.  The doctor is the human who actually performed the work.  The practitioner is the human or organization that is responsible for the work.
+            N8,
+            /// <summary>
+            /// A person or system that is being notified as part of the event.  This is relevant in situations where automated systems provide notifications to other parties when an event took place.
+            /// </summary>
             [EnumLiteral("9")]
-            N9, // A person or system that is being notified as part of the event.  This is relevant in situations where automated systems provide notifications to other parties when an event took place.
+            N9,
+            /// <summary>
+            /// Insurance company, or any other organization who accepts responsibility for paying for the healthcare event.
+            /// </summary>
             [EnumLiteral("10")]
-            N10, // Insurance company, or any other organization who accepts responsibility for paying for the healthcare event.
+            N10,
+            /// <summary>
+            /// A person or active system object involved in the event with a security role.
+            /// </summary>
             [EnumLiteral("11")]
-            N11, // A person or active system object involved in the event with a security role.
+            N11,
+            /// <summary>
+            /// A person or system object involved in the event with the authority to modify security roles of other objects.
+            /// </summary>
             [EnumLiteral("12")]
-            N12, // A person or system object involved in the event with the authority to modify security roles of other objects.
+            N12,
+            /// <summary>
+            /// A passive object, such as a role table, that is relevant to the event.
+            /// </summary>
             [EnumLiteral("13")]
-            N13, // A passive object, such as a role table, that is relevant to the event.
+            N13,
+            /// <summary>
+            /// (deprecated)  Relevant to certain RBAC security methodologies.
+            /// </summary>
             [EnumLiteral("14")]
-            N14, // (deprecated)  Relevant to certain RBAC security methodologies.
+            N14,
+            /// <summary>
+            /// Any person or organization responsible for providing care.  This encompasses all forms of care, licensed or otherwise, and all sorts of teams and care groups. Note, the distinction between practitioners and the doctor that actually provided the care to the patient.
+            /// </summary>
             [EnumLiteral("15")]
-            N15, // Any person or organization responsible for providing care.  This encompasses all forms of care, licensed or otherwise, and all sorts of teams and care groups. Note, the distinction between practitioners and the doctor that actually provided the care to the patient.
+            N15,
+            /// <summary>
+            /// The source or destination for data transfer, when it does not match some other role.
+            /// </summary>
             [EnumLiteral("16")]
-            N16, // The source or destination for data transfer, when it does not match some other role.
+            N16,
+            /// <summary>
+            /// A source or destination for data transfer, that acts as an archive, database, or similar role.
+            /// </summary>
             [EnumLiteral("17")]
-            N17, // A source or destination for data transfer, that acts as an archive, database, or similar role.
+            N17,
+            /// <summary>
+            /// An object that holds schedule information.  This could be an appointment book, availability information, etc.
+            /// </summary>
             [EnumLiteral("18")]
-            N18, // An object that holds schedule information.  This could be an appointment book, availability information, etc.
+            N18,
+            /// <summary>
+            /// An organization or person that is the recipient of services.  This could be an organization that is buying services for a patient, or a person that is buying services for an animal.
+            /// </summary>
             [EnumLiteral("19")]
-            N19, // An organization or person that is the recipient of services.  This could be an organization that is buying services for a patient, or a person that is buying services for an animal.
+            N19,
+            /// <summary>
+            /// An order, task, work item, procedure step, or other description of work to be performed.  E.g., a particular instance of an MPPS.
+            /// </summary>
             [EnumLiteral("20")]
-            N20, // An order, task, work item, procedure step, or other description of work to be performed.  E.g., a particular instance of an MPPS.
+            N20,
+            /// <summary>
+            /// A list of jobs or a system that provides lists of jobs.  E.g., an MWL SCP.
+            /// </summary>
             [EnumLiteral("21")]
-            N21, // A list of jobs or a system that provides lists of jobs.  E.g., an MWL SCP.
+            N21,
+            /// <summary>
+            /// (Deprecated).
+            /// </summary>
             [EnumLiteral("22")]
-            N22, // (Deprecated).
+            N22,
+            /// <summary>
+            /// An object that specifies or controls the routing or delivery of items.  For example, a distribution list is the routing criteria for mail.  The items delivered may be documents, jobs, or other objects.
+            /// </summary>
             [EnumLiteral("23")]
-            N23, // An object that specifies or controls the routing or delivery of items.  For example, a distribution list is the routing criteria for mail.  The items delivered may be documents, jobs, or other objects.
+            N23,
+            /// <summary>
+            /// The contents of a query.  This is used to capture the contents of any kind of query.  For security surveillance purposes knowing the queries being made is very important.
+            /// </summary>
             [EnumLiteral("24")]
-            N24, // The contents of a query.  This is used to capture the contents of any kind of query.  For security surveillance purposes knowing the queries being made is very important.
+            N24,
         }
         
         /// <summary>
@@ -109,16 +181,31 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventAction")]
         public enum SecurityEventAction
         {
+            /// <summary>
+            /// Create a new database object, such as Placing an Order.
+            /// </summary>
             [EnumLiteral("C")]
-            C, // Create a new database object, such as Placing an Order.
+            C,
+            /// <summary>
+            /// Display or print data, such as a Doctor Census.
+            /// </summary>
             [EnumLiteral("R")]
-            R, // Display or print data, such as a Doctor Census.
+            R,
+            /// <summary>
+            /// Update data, such as Revise Patient Information.
+            /// </summary>
             [EnumLiteral("U")]
-            U, // Update data, such as Revise Patient Information.
+            U,
+            /// <summary>
+            /// Delete items, such as a doctor master file record.
+            /// </summary>
             [EnumLiteral("D")]
-            D, // Delete items, such as a doctor master file record.
+            D,
+            /// <summary>
+            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
+            /// </summary>
             [EnumLiteral("E")]
-            E, // Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
+            E,
         }
         
         /// <summary>
@@ -127,14 +214,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventObjectType")]
         public enum SecurityEventObjectType
         {
+            /// <summary>
+            /// Person.
+            /// </summary>
             [EnumLiteral("1")]
-            N1, // Person.
+            N1,
+            /// <summary>
+            /// System Object.
+            /// </summary>
             [EnumLiteral("2")]
-            N2, // System Object.
+            N2,
+            /// <summary>
+            /// Organization.
+            /// </summary>
             [EnumLiteral("3")]
-            N3, // Organization.
+            N3,
+            /// <summary>
+            /// Other.
+            /// </summary>
             [EnumLiteral("4")]
-            N4, // Other.
+            N4,
         }
         
         /// <summary>
@@ -143,36 +242,81 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventObjectLifecycle")]
         public enum SecurityEventObjectLifecycle
         {
+            /// <summary>
+            /// Origination / Creation.
+            /// </summary>
             [EnumLiteral("1")]
-            N1, // Origination / Creation.
+            N1,
+            /// <summary>
+            /// Import / Copy from original.
+            /// </summary>
             [EnumLiteral("2")]
-            N2, // Import / Copy from original.
+            N2,
+            /// <summary>
+            /// Amendment.
+            /// </summary>
             [EnumLiteral("3")]
-            N3, // Amendment.
+            N3,
+            /// <summary>
+            /// Verification.
+            /// </summary>
             [EnumLiteral("4")]
-            N4, // Verification.
+            N4,
+            /// <summary>
+            /// Translation.
+            /// </summary>
             [EnumLiteral("5")]
-            N5, // Translation.
+            N5,
+            /// <summary>
+            /// Access / Use.
+            /// </summary>
             [EnumLiteral("6")]
-            N6, // Access / Use.
+            N6,
+            /// <summary>
+            /// De-identification.
+            /// </summary>
             [EnumLiteral("7")]
-            N7, // De-identification.
+            N7,
+            /// <summary>
+            /// Aggregation, summarization, derivation.
+            /// </summary>
             [EnumLiteral("8")]
-            N8, // Aggregation, summarization, derivation.
+            N8,
+            /// <summary>
+            /// Report.
+            /// </summary>
             [EnumLiteral("9")]
-            N9, // Report.
+            N9,
+            /// <summary>
+            /// Export / Copy to target.
+            /// </summary>
             [EnumLiteral("10")]
-            N10, // Export / Copy to target.
+            N10,
+            /// <summary>
+            /// Disclosure.
+            /// </summary>
             [EnumLiteral("11")]
-            N11, // Disclosure.
+            N11,
+            /// <summary>
+            /// Receipt of disclosure.
+            /// </summary>
             [EnumLiteral("12")]
-            N12, // Receipt of disclosure.
+            N12,
+            /// <summary>
+            /// Archiving.
+            /// </summary>
             [EnumLiteral("13")]
-            N13, // Archiving.
+            N13,
+            /// <summary>
+            /// Logical deletion.
+            /// </summary>
             [EnumLiteral("14")]
-            N14, // Logical deletion.
+            N14,
+            /// <summary>
+            /// Permanent erasure / Physical destruction.
+            /// </summary>
             [EnumLiteral("15")]
-            N15, // Permanent erasure / Physical destruction.
+            N15,
         }
         
         /// <summary>
@@ -181,16 +325,31 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventParticipantNetworkType")]
         public enum SecurityEventParticipantNetworkType
         {
+            /// <summary>
+            /// Machine Name, including DNS name.
+            /// </summary>
             [EnumLiteral("1")]
-            N1, // Machine Name, including DNS name.
+            N1,
+            /// <summary>
+            /// IP Address.
+            /// </summary>
             [EnumLiteral("2")]
-            N2, // IP Address.
+            N2,
+            /// <summary>
+            /// Telephone Number.
+            /// </summary>
             [EnumLiteral("3")]
-            N3, // Telephone Number.
+            N3,
+            /// <summary>
+            /// Email address.
+            /// </summary>
             [EnumLiteral("4")]
-            N4, // Email address.
+            N4,
+            /// <summary>
+            /// URI (User directory, HTTP-PUT, ftp, etc.).
+            /// </summary>
             [EnumLiteral("5")]
-            N5, // URI (User directory, HTTP-PUT, ftp, etc.).
+            N5,
         }
         
         /// <summary>
@@ -199,19 +358,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SecurityEventOutcome")]
         public enum SecurityEventOutcome
         {
+            /// <summary>
+            /// The operation completed successfully (whether with warnings or not).
+            /// </summary>
             [EnumLiteral("0")]
-            N0, // The operation completed successfully (whether with warnings or not).
+            N0,
+            /// <summary>
+            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
+            /// </summary>
             [EnumLiteral("4")]
-            N4, // The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
+            N4,
+            /// <summary>
+            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
+            /// </summary>
             [EnumLiteral("8")]
-            N8, // The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
+            N8,
+            /// <summary>
+            /// An error of such magnitude occurred that the system is not longer available for use (i.e. the system died).
+            /// </summary>
             [EnumLiteral("12")]
-            N12, // An error of such magnitude occurred that the system is not longer available for use (i.e. the system died).
+            N12,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventObjectDetailComponent")]
         [DataContract]
         public partial class SecurityEventObjectDetailComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -229,6 +397,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
+            /// <summary>
+            /// Name of the property
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -257,6 +429,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Base64Binary _ValueElement;
             
+            /// <summary>
+            /// Property value
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] Value
@@ -275,9 +451,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventObjectComponent")]
         [DataContract]
         public partial class SecurityEventObjectComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -319,6 +492,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType> _TypeElement;
             
+            /// <summary>
+            /// Object type being audited
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType? Type
@@ -346,6 +523,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole> _RoleElement;
             
+            /// <summary>
+            /// Functional application role of Object
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole? Role
@@ -373,6 +554,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle> _LifecycleElement;
             
+            /// <summary>
+            /// Life-cycle stage for the object
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle? Lifecycle
@@ -412,6 +597,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Instance-specific descriptor for Object
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -439,6 +628,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Descriptive text
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -466,6 +659,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Base64Binary _QueryElement;
             
+            /// <summary>
+            /// Actual query for object
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] Query
@@ -497,9 +694,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventSourceComponent")]
         [DataContract]
         public partial class SecurityEventSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -516,6 +710,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _SiteElement;
             
+            /// <summary>
+            /// Logical source location within the enterprise
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Site
@@ -544,6 +742,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _IdentifierElement;
             
+            /// <summary>
+            /// The id of source where event originated
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identifier
@@ -575,9 +777,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventEventComponent")]
         [DataContract]
         public partial class SecurityEventEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -620,6 +819,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventAction> _ActionElement;
             
+            /// <summary>
+            /// Type of action performed during the event
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventAction? Action
@@ -648,6 +851,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Instant _DateTimeElement;
             
+            /// <summary>
+            /// Time when the event occurred on source
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public DateTimeOffset? DateTime
@@ -675,6 +882,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome> _OutcomeElement;
             
+            /// <summary>
+            /// Whether the event succeeded or failed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome? Outcome
@@ -702,6 +913,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _OutcomeDescElement;
             
+            /// <summary>
+            /// Description of the event outcome
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string OutcomeDesc
@@ -720,9 +935,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventParticipantNetworkComponent")]
         [DataContract]
         public partial class SecurityEventParticipantNetworkComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -739,6 +951,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _IdentifierElement;
             
+            /// <summary>
+            /// Identifier for the network access point of the user device
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identifier
@@ -766,6 +982,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType> _TypeElement;
             
+            /// <summary>
+            /// The type of network access point
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType? Type
@@ -784,9 +1004,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SecurityEventParticipantComponent")]
         [DataContract]
         public partial class SecurityEventParticipantComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -829,6 +1046,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _UserIdElement;
             
+            /// <summary>
+            /// Unique identifier for the user
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string UserId
@@ -856,6 +1077,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _AltIdElement;
             
+            /// <summary>
+            /// Alternative User id e.g. authentication
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AltId
@@ -883,6 +1108,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Human-meaningful name for the user
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -911,6 +1140,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _RequestorElement;
             
+            /// <summary>
+            /// Whether user is initiator
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Requestor

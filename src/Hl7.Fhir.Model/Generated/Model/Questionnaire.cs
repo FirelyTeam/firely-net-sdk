@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,38 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("QuestionnaireStatus")]
         public enum QuestionnaireStatus
         {
+            /// <summary>
+            /// This Questionnaire is used as a template but the template is not ready for use or publication.
+            /// </summary>
             [EnumLiteral("draft")]
-            Draft, // This Questionnaire is used as a template but the template is not ready for use or publication.
+            Draft,
+            /// <summary>
+            /// This Questionnaire is used as a template, is published and ready for use.
+            /// </summary>
             [EnumLiteral("published")]
-            Published, // This Questionnaire is used as a template, is published and ready for use.
+            Published,
+            /// <summary>
+            /// This Questionnaire is used as a template but should no longer be used for new Questionnaires.
+            /// </summary>
             [EnumLiteral("retired")]
-            Retired, // This Questionnaire is used as a template but should no longer be used for new Questionnaires.
+            Retired,
+            /// <summary>
+            /// This Questionnaire has been filled out with answers, but changes or additions are still expected to be made to it.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // This Questionnaire has been filled out with answers, but changes or additions are still expected to be made to it.
+            InProgress,
+            /// <summary>
+            /// This Questionnaire has been filled out with answers, and the current content is regarded as definitive.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // This Questionnaire has been filled out with answers, and the current content is regarded as definitive.
+            Completed,
+            /// <summary>
+            /// This Questionnaire has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
+            /// </summary>
             [EnumLiteral("amended")]
-            Amended, // This Questionnaire has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
+            Amended,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("QuestionComponent")]
         [DataContract]
         public partial class QuestionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -98,6 +113,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TextElement;
             
+            /// <summary>
+            /// Text of the question as it is shown to the user
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
@@ -177,6 +196,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _RemarksElement;
             
+            /// <summary>
+            /// Remarks about the answer given
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Remarks
@@ -208,9 +231,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -239,6 +259,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _HeaderElement;
             
+            /// <summary>
+            /// Text that is displayed above the contents of the group
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Header
@@ -266,6 +290,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TextElement;
             
+            /// <summary>
+            /// Additional text for the group
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
@@ -336,6 +364,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> _StatusElement;
         
+        /// <summary>
+        /// draft | published | retired | in progress | completed | amended
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus? Status
@@ -364,6 +396,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
         
+        /// <summary>
+        /// Date this version was authored
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Authored

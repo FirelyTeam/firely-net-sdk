@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("NarrativeStatus")]
         public enum NarrativeStatus
         {
+            /// <summary>
+            /// The contents of the narrative are entirely generated from the structured data in the resource.
+            /// </summary>
             [EnumLiteral("generated")]
-            Generated, // The contents of the narrative are entirely generated from the structured data in the resource.
+            Generated,
+            /// <summary>
+            /// The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions.
+            /// </summary>
             [EnumLiteral("extensions")]
-            Extensions, // The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions.
+            Extensions,
+            /// <summary>
+            /// The contents of the narrative contain additional information not found in the structured data.
+            /// </summary>
             [EnumLiteral("additional")]
-            Additional, // The contents of the narrative contain additional information not found in the structured data.
+            Additional,
+            /// <summary>
+            /// the contents of the narrative are some equivalent of "No human-readable text provided for this resource".
+            /// </summary>
             [EnumLiteral("empty")]
-            Empty, // the contents of the narrative are some equivalent of "No human-readable text provided for this resource".
+            Empty,
         }
         
         /// <summary>
@@ -76,6 +88,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
         
+        /// <summary>
+        /// generated | extensions | additional
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status

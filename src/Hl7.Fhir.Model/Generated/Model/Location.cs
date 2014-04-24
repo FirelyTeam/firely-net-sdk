@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("LocationStatus")]
         public enum LocationStatus
         {
+            /// <summary>
+            /// The location is operational.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // The location is operational.
+            Active,
+            /// <summary>
+            /// The location is temporarily closed.
+            /// </summary>
             [EnumLiteral("suspended")]
-            Suspended, // The location is temporarily closed.
+            Suspended,
+            /// <summary>
+            /// The location is no longer used.
+            /// </summary>
             [EnumLiteral("inactive")]
-            Inactive, // The location is no longer used.
+            Inactive,
         }
         
         /// <summary>
@@ -67,15 +76,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("LocationMode")]
         public enum LocationMode
         {
+            /// <summary>
+            /// The Location resource represents a specific instance of a Location.
+            /// </summary>
             [EnumLiteral("instance")]
-            Instance, // The Location resource represents a specific instance of a Location.
+            Instance,
+            /// <summary>
+            /// The Location represents a class of Locations.
+            /// </summary>
             [EnumLiteral("kind")]
-            Kind, // The Location represents a class of Locations.
+            Kind,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("LocationPositionComponent")]
         [DataContract]
         public partial class LocationPositionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -93,6 +105,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDecimal _LongitudeElement;
             
+            /// <summary>
+            /// Longitude as expressed in KML
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Longitude
@@ -121,6 +137,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDecimal _LatitudeElement;
             
+            /// <summary>
+            /// Latitude as expressed in KML
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Latitude
@@ -148,6 +168,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDecimal _AltitudeElement;
             
+            /// <summary>
+            /// Altitude as expressed in KML
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Altitude
@@ -190,6 +214,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Name of the location as used by humans
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -217,6 +245,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Description of the Location, which helps in finding or referencing the place
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
@@ -318,6 +350,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Location.LocationStatus> _StatusElement;
         
+        /// <summary>
+        /// active | suspended | inactive
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Location.LocationStatus? Status
@@ -358,6 +394,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Location.LocationMode> _ModeElement;
         
+        /// <summary>
+        /// instance | kind
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Location.LocationMode? Mode

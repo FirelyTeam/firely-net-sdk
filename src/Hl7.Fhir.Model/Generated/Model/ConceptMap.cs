@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,29 +53,53 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConceptMapEquivalence")]
         public enum ConceptMapEquivalence
         {
+            /// <summary>
+            /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical).
+            /// </summary>
             [EnumLiteral("equal")]
-            Equal, // The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical).
+            Equal,
+            /// <summary>
+            /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
+            /// </summary>
             [EnumLiteral("equivalent")]
-            Equivalent, // The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
+            Equivalent,
+            /// <summary>
+            /// The target mapping is wider in meaning than the source concept.
+            /// </summary>
             [EnumLiteral("wider")]
-            Wider, // The target mapping is wider in meaning than the source concept.
+            Wider,
+            /// <summary>
+            /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
+            /// </summary>
             [EnumLiteral("subsumes")]
-            Subsumes, // The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
+            Subsumes,
+            /// <summary>
+            /// The target mapping is narrower in meaning that the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
+            /// </summary>
             [EnumLiteral("narrower")]
-            Narrower, // The target mapping is narrower in meaning that the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
+            Narrower,
+            /// <summary>
+            /// The target mapping specialises the meaning of the source concept (e.g. the target is-a source).
+            /// </summary>
             [EnumLiteral("specialises")]
-            Specialises, // The target mapping specialises the meaning of the source concept (e.g. the target is-a source).
+            Specialises,
+            /// <summary>
+            /// The target mapping overlaps with the source concept, but both source and target cover additional meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
+            /// </summary>
             [EnumLiteral("inexact")]
-            Inexact, // The target mapping overlaps with the source concept, but both source and target cover additional meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
+            Inexact,
+            /// <summary>
+            /// There is no match for this concept in the destination concept system.
+            /// </summary>
             [EnumLiteral("unmatched")]
-            Unmatched, // There is no match for this concept in the destination concept system.
+            Unmatched,
+            /// <summary>
+            /// This is an explicit assertion that there is no mapping between the source and target concept.
+            /// </summary>
             [EnumLiteral("disjoint")]
-            Disjoint, // This is an explicit assertion that there is no mapping between the source and target concept.
+            Disjoint,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConceptMapConceptMapComponent")]
         [DataContract]
         public partial class ConceptMapConceptMapComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -92,6 +116,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// System of the target
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -119,6 +147,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Code that identifies the target concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -147,6 +179,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> _EquivalenceElement;
             
+            /// <summary>
+            /// equal | equivalent | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence? Equivalence
@@ -174,6 +210,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
+            /// <summary>
+            /// Description of status/issues in mapping
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comments
@@ -205,9 +245,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("OtherConceptComponent")]
         [DataContract]
         public partial class OtherConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -225,6 +262,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _ConceptElement;
             
+            /// <summary>
+            /// Reference to element/field/valueset provides the context
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Concept
@@ -253,6 +294,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// System for a concept in the referenced concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -281,6 +326,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Code for a concept in the referenced concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -299,9 +348,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConceptMapConceptComponent")]
         [DataContract]
         public partial class ConceptMapConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -319,6 +365,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
+            /// <summary>
+            /// System that defines the concept being mapped
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri System
@@ -346,6 +396,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Identifies concept being mapped
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -402,6 +456,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
+        /// <summary>
+        /// Logical id to reference this concept map
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Identifier
@@ -429,6 +487,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
+        /// <summary>
+        /// Logical id for this version of the concept map
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
@@ -457,6 +519,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Informal name for this concept map
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -484,6 +550,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
+        /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
@@ -524,6 +594,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Human language description of the concept map
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
@@ -551,6 +625,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
+        /// <summary>
+        /// About the concept map or its content
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Copyright
@@ -579,6 +657,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Code _StatusElement;
         
+        /// <summary>
+        /// draft | active | retired
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Status
@@ -606,6 +688,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
@@ -633,6 +719,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Date for given status
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date

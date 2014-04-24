@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ReactionSeverity")]
         public enum ReactionSeverity
         {
+            /// <summary>
+            /// Severe complications arose due to the reaction.
+            /// </summary>
             [EnumLiteral("severe")]
-            Severe, // Severe complications arose due to the reaction.
+            Severe,
+            /// <summary>
+            /// Serious inconvenience to the subject.
+            /// </summary>
             [EnumLiteral("serious")]
-            Serious, // Serious inconvenience to the subject.
+            Serious,
+            /// <summary>
+            /// Moderate inconvenience to the subject.
+            /// </summary>
             [EnumLiteral("moderate")]
-            Moderate, // Moderate inconvenience to the subject.
+            Moderate,
+            /// <summary>
+            /// Minor inconvenience to the subject.
+            /// </summary>
             [EnumLiteral("minor")]
-            Minor, // Minor inconvenience to the subject.
+            Minor,
         }
         
         /// <summary>
@@ -69,12 +81,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ExposureType")]
         public enum ExposureType
         {
+            /// <summary>
+            /// Drug Administration.
+            /// </summary>
             [EnumLiteral("drugadmin")]
-            Drugadmin, // Drug Administration.
+            Drugadmin,
+            /// <summary>
+            /// Immunization.
+            /// </summary>
             [EnumLiteral("immuniz")]
-            Immuniz, // Immunization.
+            Immuniz,
+            /// <summary>
+            /// In the same area as the substance.
+            /// </summary>
             [EnumLiteral("coincidental")]
-            Coincidental, // In the same area as the substance.
+            Coincidental,
         }
         
         /// <summary>
@@ -83,19 +104,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CausalityExpectation")]
         public enum CausalityExpectation
         {
+            /// <summary>
+            /// Likely that this specific exposure caused the reaction.
+            /// </summary>
             [EnumLiteral("likely")]
-            Likely, // Likely that this specific exposure caused the reaction.
+            Likely,
+            /// <summary>
+            /// Unlikely that this specific exposure caused the reaction - the exposure is being linked to for information purposes.
+            /// </summary>
             [EnumLiteral("unlikely")]
-            Unlikely, // Unlikely that this specific exposure caused the reaction - the exposure is being linked to for information purposes.
+            Unlikely,
+            /// <summary>
+            /// It has been confirmed that this exposure was one of the causes of the reaction.
+            /// </summary>
             [EnumLiteral("confirmed")]
-            Confirmed, // It has been confirmed that this exposure was one of the causes of the reaction.
+            Confirmed,
+            /// <summary>
+            /// It is unknown whether this exposure had anything to do with the reaction.
+            /// </summary>
             [EnumLiteral("unknown")]
-            Unknown, // It is unknown whether this exposure had anything to do with the reaction.
+            Unknown,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("AdverseReactionSymptomComponent")]
         [DataContract]
         public partial class AdverseReactionSymptomComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -125,6 +155,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity> _SeverityElement;
             
+            /// <summary>
+            /// severe | serious | moderate | minor
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AdverseReaction.ReactionSeverity? Severity
@@ -143,9 +177,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("AdverseReactionExposureComponent")]
         [DataContract]
         public partial class AdverseReactionExposureComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -162,6 +193,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
+            /// <summary>
+            /// When the exposure occurred
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
@@ -189,6 +224,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.AdverseReaction.ExposureType> _TypeElement;
             
+            /// <summary>
+            /// drugadmin | immuniz | coincidental
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AdverseReaction.ExposureType? Type
@@ -216,6 +255,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation> _CausalityExpectationElement;
             
+            /// <summary>
+            /// likely | unlikely | confirmed | unknown
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AdverseReaction.CausalityExpectation? CausalityExpectation
@@ -272,6 +315,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// When the reaction occurred
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -314,6 +361,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _DidNotOccurFlagElement;
         
+        /// <summary>
+        /// Indicates lack of reaction
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? DidNotOccurFlag

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MediaType")]
         public enum MediaType
         {
+            /// <summary>
+            /// The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents.
+            /// </summary>
             [EnumLiteral("photo")]
-            Photo, // The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents.
+            Photo,
+            /// <summary>
+            /// The media consists of a series of frames that capture a moving image.
+            /// </summary>
             [EnumLiteral("video")]
-            Video, // The media consists of a series of frames that capture a moving image.
+            Video,
+            /// <summary>
+            /// The media consists of a sound recording.
+            /// </summary>
             [EnumLiteral("audio")]
-            Audio, // The media consists of a sound recording.
+            Audio,
         }
         
         /// <summary>
@@ -74,6 +83,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Media.MediaType> _TypeElement;
         
+        /// <summary>
+        /// photo | video | audio
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Media.MediaType? Type
@@ -126,6 +139,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
         
+        /// <summary>
+        /// When the media was taken/recorded (end)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateTime
@@ -191,6 +208,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DeviceNameElement;
         
+        /// <summary>
+        /// Name of the device/manufacturer
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DeviceName
@@ -218,6 +239,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _HeightElement;
         
+        /// <summary>
+        /// Height of the image in pixels(photo/video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Height
@@ -245,6 +270,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _WidthElement;
         
+        /// <summary>
+        /// Width of the image in pixels (photo/video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Width
@@ -261,7 +290,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Number of frames if > 1 (photo)
+        /// Number of frames if &gt; 1 (photo)
         /// </summary>
         [FhirElement("frames", InSummary=true, Order=170)]
         [DataMember]
@@ -272,6 +301,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _FramesElement;
         
+        /// <summary>
+        /// Number of frames if &gt; 1 (photo)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Frames
@@ -299,6 +332,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _LengthElement;
         
+        /// <summary>
+        /// Length in seconds (audio / video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Length

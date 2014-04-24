@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,6 +85,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ManufacturerElement;
         
+        /// <summary>
+        /// Name of device manufacturer
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Manufacturer
@@ -112,6 +116,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ModelElement;
         
+        /// <summary>
+        /// Model id assigned by the manufacturer
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Model
@@ -139,6 +147,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
+        /// <summary>
+        /// Version number (i.e. software)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
@@ -166,6 +178,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Date _ExpiryElement;
         
+        /// <summary>
+        /// Date of expiry of this device (if applicable)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Expiry
@@ -193,6 +209,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _UdiElement;
         
+        /// <summary>
+        /// FDA Mandated Unique Device Identifier
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Udi
@@ -220,6 +240,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _LotNumberElement;
         
+        /// <summary>
+        /// Lot number of manufacture
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LotNumber
@@ -299,6 +323,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
+        /// <summary>
+        /// Network address to contact device
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri Url

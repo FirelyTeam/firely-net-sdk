@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,17 +53,23 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ResponseType")]
         public enum ResponseType
         {
+            /// <summary>
+            /// The message was accepted and processed without error.
+            /// </summary>
             [EnumLiteral("ok")]
-            Ok, // The message was accepted and processed without error.
+            Ok,
+            /// <summary>
+            /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
+            /// </summary>
             [EnumLiteral("transient-error")]
-            TransientError, // Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
+            TransientError,
+            /// <summary>
+            /// The message was rejected because of some content in it. There is no point in re-sending without change. The response narrative SHALL describe what the issue is.
+            /// </summary>
             [EnumLiteral("fatal-error")]
-            FatalError, // The message was rejected because of some content in it. There is no point in re-sending without change. The response narrative SHALL describe what the issue is.
+            FatalError,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MessageDestinationComponent")]
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -80,6 +86,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name of system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -121,6 +131,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
+            /// <summary>
+            /// Actual destination address or id
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Endpoint
@@ -139,9 +153,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MessageSourceComponent")]
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -158,6 +169,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name of system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -186,6 +201,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _SoftwareElement;
             
+            /// <summary>
+            /// Name of software running the system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Software
@@ -213,6 +232,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
+            /// <summary>
+            /// Version of software running
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
@@ -253,6 +276,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
+            /// <summary>
+            /// Actual message source address or id
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Endpoint
@@ -271,9 +298,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MessageHeaderResponseComponent")]
         [DataContract]
         public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -291,6 +315,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Id _IdentifierElement;
             
+            /// <summary>
+            /// Id of original message
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identifier
@@ -319,6 +347,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.MessageHeader.ResponseType> _CodeElement;
             
+            /// <summary>
+            /// ok | transient-error | fatal-error
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
@@ -363,6 +395,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Id _IdentifierElement;
         
+        /// <summary>
+        /// Id of this message
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Identifier
@@ -391,6 +427,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Instant _TimestampElement;
         
+        /// <summary>
+        /// Time that the message was sent
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Timestamp

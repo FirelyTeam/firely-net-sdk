@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,24 +53,51 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("OrderOutcomeStatus")]
         public enum OrderOutcomeStatus
         {
+            /// <summary>
+            /// The order is known, but no processing has occurred at this time.
+            /// </summary>
             [EnumLiteral("pending")]
-            Pending, // The order is known, but no processing has occurred at this time.
+            Pending,
+            /// <summary>
+            /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review).
+            /// </summary>
             [EnumLiteral("review")]
-            Review, // The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review).
+            Review,
+            /// <summary>
+            /// The order was rejected because of a workflow/business logic reason.
+            /// </summary>
             [EnumLiteral("rejected")]
-            Rejected, // The order was rejected because of a workflow/business logic reason.
+            Rejected,
+            /// <summary>
+            /// The order was unable to be processed because of a technical error (i.e. unexpected error).
+            /// </summary>
             [EnumLiteral("error")]
-            Error, // The order was unable to be processed because of a technical error (i.e. unexpected error).
+            Error,
+            /// <summary>
+            /// The order has been accepted, and work is in progress.
+            /// </summary>
             [EnumLiteral("accepted")]
-            Accepted, // The order has been accepted, and work is in progress.
+            Accepted,
+            /// <summary>
+            /// Processing the order was halted at the initiators request.
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // Processing the order was halted at the initiators request.
+            Cancelled,
+            /// <summary>
+            /// The order has been cancelled and replaced by another.
+            /// </summary>
             [EnumLiteral("replaced")]
-            Replaced, // The order has been cancelled and replaced by another.
+            Replaced,
+            /// <summary>
+            /// Processing the order was stopped because of some workflow/business logic reason.
+            /// </summary>
             [EnumLiteral("aborted")]
-            Aborted, // Processing the order was stopped because of some workflow/business logic reason.
+            Aborted,
+            /// <summary>
+            /// The order has been completed.
+            /// </summary>
             [EnumLiteral("complete")]
-            Complete, // The order has been completed.
+            Complete,
         }
         
         /// <summary>
@@ -112,6 +139,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// When the response was made
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -166,6 +197,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> _CodeElement;
         
+        /// <summary>
+        /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus? Code
@@ -193,6 +228,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Additional description of the response
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description

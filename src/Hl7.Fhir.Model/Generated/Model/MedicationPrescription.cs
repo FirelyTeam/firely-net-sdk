@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,38 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MedicationPrescriptionStatus")]
         public enum MedicationPrescriptionStatus
         {
+            /// <summary>
+            /// The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
+            Active,
+            /// <summary>
+            /// Actions implied by the prescription have been temporarily halted, but are expected to continue later.  May also be called "suspended".
+            /// </summary>
             [EnumLiteral("on hold")]
-            OnHold, // Actions implied by the prescription have been temporarily halted, but are expected to continue later.  May also be called "suspended".
+            OnHold,
+            /// <summary>
+            /// All actions that are implied by the prescription have occurred (this will rarely be made explicit).
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // All actions that are implied by the prescription have occurred (this will rarely be made explicit).
+            Completed,
+            /// <summary>
+            /// The prescription was entered in error and therefore nullified.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The prescription was entered in error and therefore nullified.
+            EnteredInError,
+            /// <summary>
+            /// Actions implied by the prescription have been permanently halted, before all of them occurred.
+            /// </summary>
             [EnumLiteral("stopped")]
-            Stopped, // Actions implied by the prescription have been permanently halted, before all of them occurred.
+            Stopped,
+            /// <summary>
+            /// The prescription was replaced by a newer one, which encompasses all the information in the previous one.
+            /// </summary>
             [EnumLiteral("superceded")]
-            Superceded, // The prescription was replaced by a newer one, which encompasses all the information in the previous one.
+            Superceded,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationPrescriptionDosageInstructionComponent")]
         [DataContract]
         public partial class MedicationPrescriptionDosageInstructionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -86,6 +101,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TextElement;
             
+            /// <summary>
+            /// Dosage instructions expressed as text
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
@@ -214,9 +233,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationPrescriptionSubstitutionComponent")]
         [DataContract]
         public partial class MedicationPrescriptionSubstitutionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -249,9 +265,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationPrescriptionDispenseComponent")]
         [DataContract]
         public partial class MedicationPrescriptionDispenseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -293,6 +306,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _NumberOfRepeatsAllowedElement;
             
+            /// <summary>
+            /// # of refills authorized
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfRepeatsAllowed
@@ -360,6 +377,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateWrittenElement;
         
+        /// <summary>
+        /// When prescription was authorized
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateWritten
@@ -387,6 +408,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionStatus> _StatusElement;
         
+        /// <summary>
+        /// active | on hold | completed | entered in error | stopped | superceded
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionStatus? Status

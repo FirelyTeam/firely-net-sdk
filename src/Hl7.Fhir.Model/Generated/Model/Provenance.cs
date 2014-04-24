@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,19 +53,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ProvenanceEntityRole")]
         public enum ProvenanceEntityRole
         {
+            /// <summary>
+            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
+            /// </summary>
             [EnumLiteral("derivation")]
-            Derivation, // A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
+            Derivation,
+            /// <summary>
+            /// A derivation for which the resulting entity is a revised version of some original.
+            /// </summary>
             [EnumLiteral("revision")]
-            Revision, // A derivation for which the resulting entity is a revised version of some original.
+            Revision,
+            /// <summary>
+            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
+            /// </summary>
             [EnumLiteral("quotation")]
-            Quotation, // The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
+            Quotation,
+            /// <summary>
+            /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
+            /// </summary>
             [EnumLiteral("source")]
-            Source, // A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
+            Source,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProvenanceAgentComponent")]
         [DataContract]
         public partial class ProvenanceAgentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -109,6 +118,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _ReferenceElement;
             
+            /// <summary>
+            /// Identity of agent (urn or url)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Reference
@@ -136,6 +149,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
+            /// <summary>
+            /// Human description of participant
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
@@ -154,9 +171,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProvenanceEntityComponent")]
         [DataContract]
         public partial class ProvenanceEntityComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -174,6 +188,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> _RoleElement;
             
+            /// <summary>
+            /// derivation | revision | quotation | source
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Provenance.ProvenanceEntityRole? Role
@@ -215,6 +233,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _ReferenceElement;
             
+            /// <summary>
+            /// Identity of participant (urn or url)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Reference
@@ -242,6 +264,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
+            /// <summary>
+            /// Human description of participant
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
@@ -311,6 +337,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Instant _RecordedElement;
         
+        /// <summary>
+        /// When the activity was recorded / updated
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Recorded
@@ -364,6 +394,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirUri> _PolicyElement;
         
+        /// <summary>
+        /// Policy or plan the activity was defined by
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<System.Uri> Policy
@@ -417,6 +451,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _IntegritySignatureElement;
         
+        /// <summary>
+        /// Base64 signature (DigSig) - integrity check
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string IntegritySignature

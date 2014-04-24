@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("IdentifierUse")]
         public enum IdentifierUse
         {
+            /// <summary>
+            /// the identifier recommended for display and use in real-world interactions.
+            /// </summary>
             [EnumLiteral("usual")]
-            Usual, // the identifier recommended for display and use in real-world interactions.
+            Usual,
+            /// <summary>
+            /// the identifier considered to be most trusted for the identification of this item.
+            /// </summary>
             [EnumLiteral("official")]
-            Official, // the identifier considered to be most trusted for the identification of this item.
+            Official,
+            /// <summary>
+            /// A temporary identifier.
+            /// </summary>
             [EnumLiteral("temp")]
-            Temp, // A temporary identifier.
+            Temp,
+            /// <summary>
+            /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
+            /// </summary>
             [EnumLiteral("secondary")]
-            Secondary, // An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
+            Secondary,
         }
         
         /// <summary>
@@ -75,6 +87,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
         
+        /// <summary>
+        /// usual | official | temp | secondary (If known)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Identifier.IdentifierUse? Use
@@ -102,6 +118,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _LabelElement;
         
+        /// <summary>
+        /// Description of identifier
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Label
@@ -129,6 +149,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
+        /// <summary>
+        /// The namespace for the identifier
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri System
@@ -156,6 +180,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ValueElement;
         
+        /// <summary>
+        /// The value that is unique
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Value

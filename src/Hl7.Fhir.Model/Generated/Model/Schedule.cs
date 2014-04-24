@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,20 +53,41 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("UnitsOfTime")]
         public enum UnitsOfTime
         {
+            /// <summary>
+            /// second.
+            /// </summary>
             [EnumLiteral("s")]
-            S, // second.
+            S,
+            /// <summary>
+            /// minute.
+            /// </summary>
             [EnumLiteral("min")]
-            Min, // minute.
+            Min,
+            /// <summary>
+            /// hour.
+            /// </summary>
             [EnumLiteral("h")]
-            H, // hour.
+            H,
+            /// <summary>
+            /// day.
+            /// </summary>
             [EnumLiteral("d")]
-            D, // day.
+            D,
+            /// <summary>
+            /// week.
+            /// </summary>
             [EnumLiteral("wk")]
-            Wk, // week.
+            Wk,
+            /// <summary>
+            /// month.
+            /// </summary>
             [EnumLiteral("mo")]
-            Mo, // month.
+            Mo,
+            /// <summary>
+            /// year.
+            /// </summary>
             [EnumLiteral("a")]
-            A, // year.
+            A,
         }
         
         /// <summary>
@@ -75,31 +96,58 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("EventTiming")]
         public enum EventTiming
         {
+            /// <summary>
+            /// event occurs [duration] before the hour of sleep (or trying to).
+            /// </summary>
             [EnumLiteral("HS")]
-            HS, // event occurs [duration] before the hour of sleep (or trying to).
+            HS,
+            /// <summary>
+            /// event occurs [duration] after waking.
+            /// </summary>
             [EnumLiteral("WAKE")]
-            WAKE, // event occurs [duration] after waking.
+            WAKE,
+            /// <summary>
+            /// event occurs [duration] before a meal (from the Latin ante cibus).
+            /// </summary>
             [EnumLiteral("AC")]
-            AC, // event occurs [duration] before a meal (from the Latin ante cibus).
+            AC,
+            /// <summary>
+            /// event occurs [duration] before breakfast (from the Latin ante cibus matutinus).
+            /// </summary>
             [EnumLiteral("ACM")]
-            ACM, // event occurs [duration] before breakfast (from the Latin ante cibus matutinus).
+            ACM,
+            /// <summary>
+            /// event occurs [duration] before lunch (from the Latin ante cibus diurnus).
+            /// </summary>
             [EnumLiteral("ACD")]
-            ACD, // event occurs [duration] before lunch (from the Latin ante cibus diurnus).
+            ACD,
+            /// <summary>
+            /// event occurs [duration] before dinner (from the Latin ante cibus vespertinus).
+            /// </summary>
             [EnumLiteral("ACV")]
-            ACV, // event occurs [duration] before dinner (from the Latin ante cibus vespertinus).
+            ACV,
+            /// <summary>
+            /// event occurs [duration] after a meal (from the Latin post cibus).
+            /// </summary>
             [EnumLiteral("PC")]
-            PC, // event occurs [duration] after a meal (from the Latin post cibus).
+            PC,
+            /// <summary>
+            /// event occurs [duration] after breakfast (from the Latin post cibus matutinus).
+            /// </summary>
             [EnumLiteral("PCM")]
-            PCM, // event occurs [duration] after breakfast (from the Latin post cibus matutinus).
+            PCM,
+            /// <summary>
+            /// event occurs [duration] after lunch (from the Latin post cibus diurnus).
+            /// </summary>
             [EnumLiteral("PCD")]
-            PCD, // event occurs [duration] after lunch (from the Latin post cibus diurnus).
+            PCD,
+            /// <summary>
+            /// event occurs [duration] after dinner (from the Latin post cibus vespertinus).
+            /// </summary>
             [EnumLiteral("PCV")]
-            PCV, // event occurs [duration] after dinner (from the Latin post cibus vespertinus).
+            PCV,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ScheduleRepeatComponent")]
         [DataContract]
         public partial class ScheduleRepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -116,6 +164,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _FrequencyElement;
             
+            /// <summary>
+            /// Event occurs frequency times per duration
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Frequency
@@ -143,6 +195,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Schedule.EventTiming> _WhenElement;
             
+            /// <summary>
+            /// HS | WAKE | AC | ACM | ACD | ACV | PC | PCM | PCD | PCV - common life events
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Schedule.EventTiming? When
@@ -171,6 +227,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDecimal _DurationElement;
             
+            /// <summary>
+            /// Repeating or event-related duration
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Duration
@@ -199,6 +259,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Schedule.UnitsOfTime> _UnitsElement;
             
+            /// <summary>
+            /// s | min | h | d | wk | mo | a - unit of time (UCUM)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Schedule.UnitsOfTime? Units
@@ -226,6 +290,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _CountElement;
             
+            /// <summary>
+            /// Number of times to repeat
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Count
@@ -253,6 +321,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _EndElement;
             
+            /// <summary>
+            /// When to stop repeats
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string End

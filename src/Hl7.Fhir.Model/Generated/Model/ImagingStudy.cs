@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -133,14 +133,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("InstanceAvailability")]
         public enum InstanceAvailability
         {
+            /// <summary>
+            /// Resources are immediately available,.
+            /// </summary>
             [EnumLiteral("ONLINE")]
-            ONLINE, // Resources are immediately available,.
+            ONLINE,
+            /// <summary>
+            /// Resources need to be retrieved by manual intervention.
+            /// </summary>
             [EnumLiteral("OFFLINE")]
-            OFFLINE, // Resources need to be retrieved by manual intervention.
+            OFFLINE,
+            /// <summary>
+            /// Resources need to be retrieved from relatively slow media.
+            /// </summary>
             [EnumLiteral("NEARLINE")]
-            NEARLINE, // Resources need to be retrieved from relatively slow media.
+            NEARLINE,
+            /// <summary>
+            /// Resources cannot be retrieved.
+            /// </summary>
             [EnumLiteral("UNAVAILABLE")]
-            UNAVAILABLE, // Resources cannot be retrieved.
+            UNAVAILABLE,
         }
         
         /// <summary>
@@ -257,9 +269,6 @@ namespace Hl7.Fhir.Model
             XC,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImagingStudySeriesComponent")]
         [DataContract]
         public partial class ImagingStudySeriesComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -276,6 +285,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _NumberElement;
             
+            /// <summary>
+            /// Number of this series in overall sequence (0020,0011)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Number
@@ -304,6 +317,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.ImagingStudy.Modality> _ModalityElement;
             
+            /// <summary>
+            /// The modality of the instances in the series (0008,0060)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ImagingStudy.Modality? Modality
@@ -332,6 +349,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Oid _UidElement;
             
+            /// <summary>
+            /// Formal identifier for this series (0020,000E)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uid
@@ -359,6 +380,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// A description of the series (0008,103E)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -387,6 +412,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
             
+            /// <summary>
+            /// Number of Series Related Instances (0020,1209)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfInstances
@@ -414,6 +443,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
             
+            /// <summary>
+            /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
@@ -430,7 +463,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Retrieve URI (0008,1115 > 0008,1190)
+            /// Retrieve URI (0008,1115 &gt; 0008,1190)
             /// </summary>
             [FhirElement("url", InSummary=true, Order=100)]
             [DataMember]
@@ -441,6 +474,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
+            /// <summary>
+            /// Retrieve URI (0008,1115 &gt; 0008,1190)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Url
@@ -480,6 +517,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
             
+            /// <summary>
+            /// When the series started
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DateTime
@@ -511,9 +552,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImagingStudySeriesInstanceComponent")]
         [DataContract]
         public partial class ImagingStudySeriesInstanceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -530,6 +568,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _NumberElement;
             
+            /// <summary>
+            /// The number of this instance in the series (0020,0013)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Number
@@ -558,6 +600,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Oid _UidElement;
             
+            /// <summary>
+            /// Formal identifier for this instance (0008,0018)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uid
@@ -586,6 +632,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Oid _SopclassElement;
             
+            /// <summary>
+            /// DICOM class type (0008,0016)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Sopclass
@@ -613,6 +663,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
+            /// <summary>
+            /// Type of instance (image etc) (0004,1430)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -629,7 +683,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008)
+            /// Description (0070,0080 | 0040,A043 &gt; 0008,0104 | 0042,0010 | 0008,0008)
             /// </summary>
             [FhirElement("title", InSummary=true, Order=80)]
             [DataMember]
@@ -640,6 +694,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
+            /// <summary>
+            /// Description (0070,0080 | 0040,A043 &gt; 0008,0104 | 0042,0010 | 0008,0008)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Title
@@ -656,7 +714,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// WADO-RS service where instance is available  (0008,1199 > 0008,1190)
+            /// WADO-RS service where instance is available  (0008,1199 &gt; 0008,1190)
             /// </summary>
             [FhirElement("url", InSummary=true, Order=90)]
             [DataMember]
@@ -667,6 +725,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
+            /// <summary>
+            /// WADO-RS service where instance is available  (0008,1199 &gt; 0008,1190)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Url
@@ -710,6 +772,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
         
+        /// <summary>
+        /// When the study was performed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateTime
@@ -752,6 +818,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Oid _UidElement;
         
+        /// <summary>
+        /// Formal identifier for the study (0020,000D)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Uid
@@ -819,6 +889,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>> _Modality_Element;
         
+        /// <summary>
+        /// All series.modality if actual acquisition modalities
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ImagingStudy.ImagingModality?> Modality_
@@ -859,6 +933,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
         
+        /// <summary>
+        /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
@@ -886,6 +964,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
+        /// <summary>
+        /// Retrieve URI (0008,1190)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri Url
@@ -914,6 +996,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _NumberOfSeriesElement;
         
+        /// <summary>
+        /// Number of Study Related Series (0020,1206)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? NumberOfSeries
@@ -942,6 +1028,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
         
+        /// <summary>
+        /// Number of Study Related Instances (0020,1208)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? NumberOfInstances
@@ -969,6 +1059,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ClinicalInformationElement;
         
+        /// <summary>
+        /// Diagnoses etc with request (0040,1002)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ClinicalInformation
@@ -1022,6 +1116,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Institution-generated description (0008,1030)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,9 +47,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ImmunizationRecommendation : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationRecommendationRecommendationDateCriterionComponent")]
         [DataContract]
         public partial class ImmunizationRecommendationRecommendationDateCriterionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -80,6 +77,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _ValueElement;
             
+            /// <summary>
+            /// Recommended date
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Value
@@ -98,9 +99,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationRecommendationRecommendationProtocolComponent")]
         [DataContract]
         public partial class ImmunizationRecommendationRecommendationProtocolComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -117,6 +115,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _DoseSequenceElement;
             
+            /// <summary>
+            /// Number of dose within sequence
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DoseSequence
@@ -144,6 +146,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Protocol details
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -184,6 +190,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _SeriesElement;
             
+            /// <summary>
+            /// Name of vaccination series
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Series
@@ -202,9 +212,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationRecommendationRecommendationComponent")]
         [DataContract]
         public partial class ImmunizationRecommendationRecommendationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -222,6 +229,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
+            /// <summary>
+            /// Date recommendation created
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
@@ -262,6 +273,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _DoseNumberElement;
             
+            /// <summary>
+            /// Recommended dose number
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DoseNumber

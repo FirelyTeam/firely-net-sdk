@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,15 +53,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ProcedureRelationshipType")]
         public enum ProcedureRelationshipType
         {
+            /// <summary>
+            /// This procedure had to be performed because of the related one.
+            /// </summary>
             [EnumLiteral("caused-by")]
-            CausedBy, // This procedure had to be performed because of the related one.
+            CausedBy,
+            /// <summary>
+            /// This procedure caused the related one to be performed.
+            /// </summary>
             [EnumLiteral("because-of")]
-            BecauseOf, // This procedure caused the related one to be performed.
+            BecauseOf,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProcedureRelatedItemComponent")]
         [DataContract]
         public partial class ProcedureRelatedItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -78,6 +81,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> _TypeElement;
             
+            /// <summary>
+            /// caused-by | because-of
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Procedure.ProcedureRelationshipType? Type
@@ -109,9 +116,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProcedurePerformerComponent")]
         [DataContract]
         public partial class ProcedurePerformerComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -260,6 +264,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _OutcomeElement;
         
+        /// <summary>
+        /// What was result of procedure?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Outcome
@@ -314,6 +322,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _FollowUpElement;
         
+        /// <summary>
+        /// Instructions for follow up
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string FollowUp
@@ -354,6 +366,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
+        /// <summary>
+        /// Additional information about procedure
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Notes

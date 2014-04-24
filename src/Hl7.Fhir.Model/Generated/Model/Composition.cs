@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,16 +53,31 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CompositionStatus")]
         public enum CompositionStatus
         {
+            /// <summary>
+            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
+            /// </summary>
             [EnumLiteral("preliminary")]
-            Preliminary, // This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
+            Preliminary,
+            /// <summary>
+            /// The composition or document is complete and verified by an appropriate person, and no further work is planned.
+            /// </summary>
             [EnumLiteral("final")]
-            Final, // The composition or document is complete and verified by an appropriate person, and no further work is planned.
+            Final,
+            /// <summary>
+            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person. The modifications added new information to the composition or document, but did not revise existing content.
+            /// </summary>
             [EnumLiteral("appended")]
-            Appended, // The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person. The modifications added new information to the composition or document, but did not revise existing content.
+            Appended,
+            /// <summary>
+            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person.
+            /// </summary>
             [EnumLiteral("amended")]
-            Amended, // The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person.
+            Amended,
+            /// <summary>
+            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
+            EnteredInError,
         }
         
         /// <summary>
@@ -71,19 +86,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CompositionAttestationMode")]
         public enum CompositionAttestationMode
         {
+            /// <summary>
+            /// The person authenticated the content in their personal capacity.
+            /// </summary>
             [EnumLiteral("personal")]
-            Personal, // The person authenticated the content in their personal capacity.
+            Personal,
+            /// <summary>
+            /// The person authenticated the content in their professional capacity.
+            /// </summary>
             [EnumLiteral("professional")]
-            Professional, // The person authenticated the content in their professional capacity.
+            Professional,
+            /// <summary>
+            /// The person authenticated the content and accepted legal responsibility for its content.
+            /// </summary>
             [EnumLiteral("legal")]
-            Legal, // The person authenticated the content and accepted legal responsibility for its content.
+            Legal,
+            /// <summary>
+            /// The organization authenticated the content as consistent with their policies and procedures.
+            /// </summary>
             [EnumLiteral("official")]
-            Official, // The organization authenticated the content as consistent with their policies and procedures.
+            Official,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SectionComponent")]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -100,6 +124,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
+            /// <summary>
+            /// Label for section
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Title
@@ -169,9 +197,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CompositionEventComponent")]
         [DataContract]
         public partial class CompositionEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -218,9 +243,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CompositionAttesterComponent")]
         [DataContract]
         public partial class CompositionAttesterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -238,6 +260,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> _ModeElement;
             
+            /// <summary>
+            /// personal | professional | legal | official
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode?> Mode
@@ -265,6 +291,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _TimeElement;
             
+            /// <summary>
+            /// When composition attested
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Time
@@ -321,6 +351,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Composition editing time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -373,6 +407,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
+        /// <summary>
+        /// Human Readable name/title
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
@@ -401,6 +439,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Composition.CompositionStatus> _StatusElement;
         
+        /// <summary>
+        /// preliminary | final | appended | amended | entered in error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Composition.CompositionStatus? Status

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,10 +53,16 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("DocumentMode")]
         public enum DocumentMode
         {
+            /// <summary>
+            /// The application produces documents of the specified type.
+            /// </summary>
             [EnumLiteral("producer")]
-            Producer, // The application produces documents of the specified type.
+            Producer,
+            /// <summary>
+            /// The application consumes documents of the specified type.
+            /// </summary>
             [EnumLiteral("consumer")]
-            Consumer, // The application consumes documents of the specified type.
+            Consumer,
         }
         
         /// <summary>
@@ -65,10 +71,16 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("RestfulConformanceMode")]
         public enum RestfulConformanceMode
         {
+            /// <summary>
+            /// The application acts as a server for this resource.
+            /// </summary>
             [EnumLiteral("client")]
-            Client, // The application acts as a server for this resource.
+            Client,
+            /// <summary>
+            /// The application acts as a client for this resource.
+            /// </summary>
             [EnumLiteral("server")]
-            Server, // The application acts as a client for this resource.
+            Server,
         }
         
         /// <summary>
@@ -77,12 +89,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MessageTransport")]
         public enum MessageTransport
         {
+            /// <summary>
+            /// The application sends or receives messages using HTTP POST (may be over http or https).
+            /// </summary>
             [EnumLiteral("http")]
-            Http, // The application sends or receives messages using HTTP POST (may be over http or https).
+            Http,
+            /// <summary>
+            /// The application sends or receives messages using File Transfer Protocol.
+            /// </summary>
             [EnumLiteral("ftp")]
-            Ftp, // The application sends or receives messages using File Transfer Protocol.
+            Ftp,
+            /// <summary>
+            /// The application sends or receivers messages using HL7's Minimal Lower Level Protocol.
+            /// </summary>
             [EnumLiteral("mllp")]
-            Mllp, // The application sends or receivers messages using HL7's Minimal Lower Level Protocol.
+            Mllp,
         }
         
         /// <summary>
@@ -91,10 +112,16 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConformanceEventMode")]
         public enum ConformanceEventMode
         {
+            /// <summary>
+            /// The application sends requests and receives responses.
+            /// </summary>
             [EnumLiteral("sender")]
-            Sender, // The application sends requests and receives responses.
+            Sender,
+            /// <summary>
+            /// The application receives requests and sends responses.
+            /// </summary>
             [EnumLiteral("receiver")]
-            Receiver, // The application receives requests and sends responses.
+            Receiver,
         }
         
         /// <summary>
@@ -103,12 +130,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MessageSignificanceCategory")]
         public enum MessageSignificanceCategory
         {
+            /// <summary>
+            /// The message represents/requests a change that should not be processed more than once. E.g. Making a booking for an appointment.
+            /// </summary>
             [EnumLiteral("Consequence")]
-            Consequence, // The message represents/requests a change that should not be processed more than once. E.g. Making a booking for an appointment.
+            Consequence,
+            /// <summary>
+            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+            /// </summary>
             [EnumLiteral("Currency")]
-            Currency, // The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+            Currency,
+            /// <summary>
+            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+            /// </summary>
             [EnumLiteral("Notification")]
-            Notification, // The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+            Notification,
         }
         
         /// <summary>
@@ -143,12 +179,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConformanceStatementStatus")]
         public enum ConformanceStatementStatus
         {
+            /// <summary>
+            /// This conformance statement is still under development.
+            /// </summary>
             [EnumLiteral("draft")]
-            Draft, // This conformance statement is still under development.
+            Draft,
+            /// <summary>
+            /// This conformance statement is ready for use in production systems.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // This conformance statement is ready for use in production systems.
+            Active,
+            /// <summary>
+            /// This conformance statement has been withdrawn or superceded and should no longer be used.
+            /// </summary>
             [EnumLiteral("retired")]
-            Retired, // This conformance statement has been withdrawn or superceded and should no longer be used.
+            Retired,
         }
         
         /// <summary>
@@ -171,20 +216,41 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SearchParamType")]
         public enum SearchParamType
         {
+            /// <summary>
+            /// Search parameter SHALL be a number (a whole number, or a decimal).
+            /// </summary>
             [EnumLiteral("number")]
-            Number, // Search parameter SHALL be a number (a whole number, or a decimal).
+            Number,
+            /// <summary>
+            /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
+            /// </summary>
             [EnumLiteral("date")]
-            Date, // Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
+            Date,
+            /// <summary>
+            /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
+            /// </summary>
             [EnumLiteral("string")]
-            String, // Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
+            String,
+            /// <summary>
+            /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
+            /// </summary>
             [EnumLiteral("token")]
-            Token, // Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
+            Token,
+            /// <summary>
+            /// A reference to another resource.
+            /// </summary>
             [EnumLiteral("reference")]
-            Reference, // A reference to another resource.
+            Reference,
+            /// <summary>
+            /// A composite search parameter that combines a search on two values together.
+            /// </summary>
             [EnumLiteral("composite")]
-            Composite, // A composite search parameter that combines a search on two values together.
+            Composite,
+            /// <summary>
+            /// A search parameter that searches on a quantity.
+            /// </summary>
             [EnumLiteral("quantity")]
-            Quantity, // A search parameter that searches on a quantity.
+            Quantity,
         }
         
         /// <summary>
@@ -193,21 +259,33 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("RestfulSecurityService")]
         public enum RestfulSecurityService
         {
+            /// <summary>
+            /// OAuth (see oauth.net).
+            /// </summary>
             [EnumLiteral("OAuth")]
-            OAuth, // OAuth (see oauth.net).
+            OAuth,
+            /// <summary>
+            /// OAuth version 2 (see oauth.net).
+            /// </summary>
             [EnumLiteral("OAuth2")]
-            OAuth2, // OAuth version 2 (see oauth.net).
+            OAuth2,
+            /// <summary>
+            /// Microsoft NTLM Authentication.
+            /// </summary>
             [EnumLiteral("NTLM")]
-            NTLM, // Microsoft NTLM Authentication.
+            NTLM,
+            /// <summary>
+            /// Basic authentication defined in HTTP specification.
+            /// </summary>
             [EnumLiteral("Basic")]
-            Basic, // Basic authentication defined in HTTP specification.
+            Basic,
+            /// <summary>
+            /// see http://www.ietf.org/rfc/rfc4120.txt.
+            /// </summary>
             [EnumLiteral("Kerberos")]
-            Kerberos, // see http://www.ietf.org/rfc/rfc4120.txt.
+            Kerberos,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestQueryComponent")]
         [DataContract]
         public partial class ConformanceRestQueryComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -225,6 +303,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Special named queries (_query=)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -253,6 +335,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _DefinitionElement;
             
+            /// <summary>
+            /// Where query is defined
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Definition
@@ -280,6 +366,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Additional usage guidance
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -311,9 +401,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestComponent")]
         [DataContract]
         public partial class ConformanceRestComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -331,6 +418,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode> _ModeElement;
             
+            /// <summary>
+            /// client | server
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.RestfulConformanceMode? Mode
@@ -358,6 +449,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// General description of implementation
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -437,6 +532,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirUri> _DocumentMailboxElement;
             
+            /// <summary>
+            /// How documents are accepted in /Mailbox
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<System.Uri> DocumentMailbox
@@ -455,9 +554,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceSoftwareComponent")]
         [DataContract]
         public partial class ConformanceSoftwareComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -475,6 +571,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// A name the software is known by
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -502,6 +602,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
+            /// <summary>
+            /// Version covered by this statement
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
@@ -529,6 +633,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _ReleaseDateElement;
             
+            /// <summary>
+            /// Date this version released
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReleaseDate
@@ -547,9 +655,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceMessagingComponent")]
         [DataContract]
         public partial class ConformanceMessagingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -566,6 +671,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
+            /// <summary>
+            /// Actual endpoint being described
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Endpoint
@@ -593,6 +702,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _ReliableCacheElement;
             
+            /// <summary>
+            /// Reliable Message Cache Length
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? ReliableCache
@@ -620,6 +733,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Messaging interface behavior details
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -651,9 +768,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceDocumentComponent")]
         [DataContract]
         public partial class ConformanceDocumentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -671,6 +785,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.DocumentMode> _ModeElement;
             
+            /// <summary>
+            /// producer | consumer
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.DocumentMode? Mode
@@ -698,6 +816,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Description of document support
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -730,9 +852,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestResourceComponent")]
         [DataContract]
         public partial class ConformanceRestResourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -750,6 +869,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _TypeElement;
             
+            /// <summary>
+            /// A resource type that is supported
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -803,6 +926,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _ReadHistoryElement;
             
+            /// <summary>
+            /// Whether vRead can return past versions
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? ReadHistory
@@ -830,6 +957,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _UpdateCreateElement;
             
+            /// <summary>
+            /// If allows/uses update to a new location
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? UpdateCreate
@@ -858,6 +989,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _SearchIncludeElement;
             
+            /// <summary>
+            /// _include values supported by the server
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> SearchInclude
@@ -889,9 +1024,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceImplementationComponent")]
         [DataContract]
         public partial class ConformanceImplementationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -909,6 +1041,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Describes this specific instance
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -936,6 +1072,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
+            /// <summary>
+            /// Base URL for the installation
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Url
@@ -954,9 +1094,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestResourceOperationComponent")]
         [DataContract]
         public partial class ConformanceRestResourceOperationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -974,6 +1111,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.RestfulOperationType> _CodeElement;
             
+            /// <summary>
+            /// read | vread | update | delete | history-instance | validate | history-type | create | search-type
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.RestfulOperationType? Code
@@ -1001,6 +1142,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Anything special about operation behavior
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -1019,9 +1164,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceMessagingEventComponent")]
         [DataContract]
         public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1051,6 +1193,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.MessageSignificanceCategory> _CategoryElement;
             
+            /// <summary>
+            /// Consequence | Currency | Notification
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.MessageSignificanceCategory? Category
@@ -1079,6 +1225,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.ConformanceEventMode> _ModeElement;
             
+            /// <summary>
+            /// sender | receiver
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.ConformanceEventMode? Mode
@@ -1120,6 +1270,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _FocusElement;
             
+            /// <summary>
+            /// Resource that's focus of message
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Focus
@@ -1175,6 +1329,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Endpoint-specific event documentation
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -1193,9 +1351,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestSecurityComponent")]
         [DataContract]
         public partial class ConformanceRestSecurityComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1212,6 +1367,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _CorsElement;
             
+            /// <summary>
+            /// Adds CORS Headers (http://enable-cors.org/)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Cors
@@ -1252,6 +1411,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// General description of how security works
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -1283,9 +1446,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestSecurityCertificateComponent")]
         [DataContract]
         public partial class ConformanceRestSecurityCertificateComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1302,6 +1462,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _TypeElement;
             
+            /// <summary>
+            /// Mime type for certificate
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -1329,6 +1493,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Base64Binary _BlobElement;
             
+            /// <summary>
+            /// Actual certificate
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] Blob
@@ -1347,9 +1515,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestOperationComponent")]
         [DataContract]
         public partial class ConformanceRestOperationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1367,6 +1532,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.RestfulOperationSystem> _CodeElement;
             
+            /// <summary>
+            /// transaction | search-system | history-system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.RestfulOperationSystem? Code
@@ -1394,6 +1563,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Anything special about operation behavior
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -1412,9 +1585,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConformanceRestResourceSearchParamComponent")]
         [DataContract]
         public partial class ConformanceRestResourceSearchParamComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1432,6 +1602,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name of search parameter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -1459,6 +1633,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _DefinitionElement;
             
+            /// <summary>
+            /// Source of definition for parameter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Definition
@@ -1487,6 +1665,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Conformance.SearchParamType> _TypeElement;
             
+            /// <summary>
+            /// number | date | string | token | reference | composite | quantity
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Conformance.SearchParamType? Type
@@ -1514,6 +1696,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Server-specific usage
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -1542,6 +1728,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.Code> _TargetElement;
             
+            /// <summary>
+            /// Types of resource (if a resource reference)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Target
@@ -1570,6 +1760,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _ChainElement;
             
+            /// <summary>
+            /// Chained names supported
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Chain
@@ -1600,6 +1794,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
+        /// <summary>
+        /// Logical id to reference this statement
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Identifier
@@ -1627,6 +1825,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
+        /// <summary>
+        /// Logical id for this version of the statement
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
@@ -1654,6 +1856,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Informal name for this conformance statement
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -1682,6 +1888,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
+        /// <summary>
+        /// Publishing Organization
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
@@ -1722,6 +1932,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Human description of the conformance statement
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
@@ -1749,6 +1963,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> _StatusElement;
         
+        /// <summary>
+        /// draft | active | retired
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Conformance.ConformanceStatementStatus? Status
@@ -1776,6 +1994,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
@@ -1804,6 +2026,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Publication Date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -1856,6 +2082,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Id _FhirVersionElement;
         
+        /// <summary>
+        /// FHIR Version
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string FhirVersion
@@ -1884,6 +2114,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _AcceptUnknownElement;
         
+        /// <summary>
+        /// True if application accepts unknown elements
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? AcceptUnknown
@@ -1912,6 +2146,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.Code> _FormatElement;
         
+        /// <summary>
+        /// formats supported (xml | json | mime type)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Format

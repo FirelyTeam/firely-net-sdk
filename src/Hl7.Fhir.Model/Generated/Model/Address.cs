@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("AddressUse")]
         public enum AddressUse
         {
+            /// <summary>
+            /// A communication address at a home.
+            /// </summary>
             [EnumLiteral("home")]
-            Home, // A communication address at a home.
+            Home,
+            /// <summary>
+            /// An office address. First choice for business related contacts during business hours.
+            /// </summary>
             [EnumLiteral("work")]
-            Work, // An office address. First choice for business related contacts during business hours.
+            Work,
+            /// <summary>
+            /// A temporary address. The period can provide more detailed information.
+            /// </summary>
             [EnumLiteral("temp")]
-            Temp, // A temporary address. The period can provide more detailed information.
+            Temp,
+            /// <summary>
+            /// This address is no longer in use (or was never correct, but retained for records).
+            /// </summary>
             [EnumLiteral("old")]
-            Old, // This address is no longer in use (or was never correct, but retained for records).
+            Old,
         }
         
         /// <summary>
@@ -75,6 +87,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
         
+        /// <summary>
+        /// home | work | temp | old - purpose of this address
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Address.AddressUse? Use
@@ -102,6 +118,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _TextElement;
         
+        /// <summary>
+        /// Text representation of the address
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text
@@ -118,7 +138,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Street name, number, direction & P.O. Box etc
+        /// Street name, number, direction &amp; P.O. Box etc
         /// </summary>
         [FhirElement("line", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
@@ -130,6 +150,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirString> _LineElement;
         
+        /// <summary>
+        /// Street name, number, direction &amp; P.O. Box etc
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Line
@@ -157,6 +181,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _CityElement;
         
+        /// <summary>
+        /// Name of city, town etc.
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string City
@@ -184,6 +212,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _StateElement;
         
+        /// <summary>
+        /// Sub-unit of country (abreviations ok)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string State
@@ -211,6 +243,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ZipElement;
         
+        /// <summary>
+        /// Postal code for area
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Zip
@@ -238,6 +274,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _CountryElement;
         
+        /// <summary>
+        /// Country (can be ISO 3166 3 letter code)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Country

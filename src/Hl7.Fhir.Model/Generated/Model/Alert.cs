@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("AlertStatus")]
         public enum AlertStatus
         {
+            /// <summary>
+            /// A current alert that should be displayed to a user. A system may use the category to determine which roles should view the alert.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // A current alert that should be displayed to a user. A system may use the category to determine which roles should view the alert.
+            Active,
+            /// <summary>
+            /// The alert does not need to be displayed any more.
+            /// </summary>
             [EnumLiteral("inactive")]
-            Inactive, // The alert does not need to be displayed any more.
+            Inactive,
+            /// <summary>
+            /// The alert was added in error, and should no longer be displayed.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The alert was added in error, and should no longer be displayed.
+            EnteredInError,
         }
         
         /// <summary>
@@ -99,6 +108,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Alert.AlertStatus> _StatusElement;
         
+        /// <summary>
+        /// active | inactive | entered in error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Alert.AlertStatus? Status
@@ -154,6 +167,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
+        /// <summary>
+        /// Text of alert
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Note

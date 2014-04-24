@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,20 +53,41 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ObservationReliability")]
         public enum ObservationReliability
         {
+            /// <summary>
+            /// The result has no reliability concerns.
+            /// </summary>
             [EnumLiteral("ok")]
-            Ok, // The result has no reliability concerns.
+            Ok,
+            /// <summary>
+            /// An early estimate of value; measurement is still occurring.
+            /// </summary>
             [EnumLiteral("ongoing")]
-            Ongoing, // An early estimate of value; measurement is still occurring.
+            Ongoing,
+            /// <summary>
+            /// An early estimate of value; processing is still occurring.
+            /// </summary>
             [EnumLiteral("early")]
-            Early, // An early estimate of value; processing is still occurring.
+            Early,
+            /// <summary>
+            /// The observation value should be treated with care.
+            /// </summary>
             [EnumLiteral("questionable")]
-            Questionable, // The observation value should be treated with care.
+            Questionable,
+            /// <summary>
+            /// The result has been generated while calibration is occurring.
+            /// </summary>
             [EnumLiteral("calibrating")]
-            Calibrating, // The result has been generated while calibration is occurring.
+            Calibrating,
+            /// <summary>
+            /// The observation could not be completed because of an error.
+            /// </summary>
             [EnumLiteral("error")]
-            Error, // The observation could not be completed because of an error.
+            Error,
+            /// <summary>
+            /// No observation value was available.
+            /// </summary>
             [EnumLiteral("unknown")]
-            Unknown, // No observation value was available.
+            Unknown,
         }
         
         /// <summary>
@@ -75,18 +96,36 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ObservationStatus")]
         public enum ObservationStatus
         {
+            /// <summary>
+            /// The existence of the observation is registered, but there is no result yet available.
+            /// </summary>
             [EnumLiteral("registered")]
-            Registered, // The existence of the observation is registered, but there is no result yet available.
+            Registered,
+            /// <summary>
+            /// This is an initial or interim observation: data may be incomplete or unverified.
+            /// </summary>
             [EnumLiteral("preliminary")]
-            Preliminary, // This is an initial or interim observation: data may be incomplete or unverified.
+            Preliminary,
+            /// <summary>
+            /// The observation is complete and verified by an authorized person.
+            /// </summary>
             [EnumLiteral("final")]
-            Final, // The observation is complete and verified by an authorized person.
+            Final,
+            /// <summary>
+            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// </summary>
             [EnumLiteral("amended")]
-            Amended, // The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            Amended,
+            /// <summary>
+            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            Cancelled,
+            /// <summary>
+            /// The observation has been withdrawn following previous Final release.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The observation has been withdrawn following previous Final release.
+            EnteredInError,
         }
         
         /// <summary>
@@ -95,25 +134,43 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ObservationRelationshipType")]
         public enum ObservationRelationshipType
         {
+            /// <summary>
+            /// The target observation is a component of this observation (e.g. Systolic and Diastolic Blood Pressure).
+            /// </summary>
             [EnumLiteral("has-component")]
-            HasComponent, // The target observation is a component of this observation (e.g. Systolic and Diastolic Blood Pressure).
+            HasComponent,
+            /// <summary>
+            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            /// </summary>
             [EnumLiteral("has-member")]
-            HasMember, // This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            HasMember,
+            /// <summary>
+            /// The target observation is part of the information from which this observation value is derived (e.g. calculated anion gap, Apgar score).
+            /// </summary>
             [EnumLiteral("derived-from")]
-            DerivedFrom, // The target observation is part of the information from which this observation value is derived (e.g. calculated anion gap, Apgar score).
+            DerivedFrom,
+            /// <summary>
+            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            /// </summary>
             [EnumLiteral("sequel-to")]
-            SequelTo, // This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            SequelTo,
+            /// <summary>
+            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            /// </summary>
             [EnumLiteral("replaces")]
-            Replaces, // This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            Replaces,
+            /// <summary>
+            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure).
+            /// </summary>
             [EnumLiteral("qualified-by")]
-            QualifiedBy, // The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure).
+            QualifiedBy,
+            /// <summary>
+            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+            /// </summary>
             [EnumLiteral("interfered-by")]
-            InterferedBy, // The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+            InterferedBy,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ObservationReferenceRangeComponent")]
         [DataContract]
         public partial class ObservationReferenceRangeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -169,9 +226,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ObservationRelatedComponent")]
         [DataContract]
         public partial class ObservationRelatedComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -188,6 +242,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
             
+            /// <summary>
+            /// has-component | has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
@@ -270,6 +328,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _CommentsElement;
         
+        /// <summary>
+        /// Comments about result
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comments
@@ -310,6 +372,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Instant _IssuedElement;
         
+        /// <summary>
+        /// Date/Time this was made available
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Issued
@@ -338,6 +404,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
         
+        /// <summary>
+        /// registered | preliminary | final | amended +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Observation.ObservationStatus? Status
@@ -366,6 +436,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Observation.ObservationReliability> _ReliabilityElement;
         
+        /// <summary>
+        /// ok | ongoing | early | questionable | calibrating | error +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Observation.ObservationReliability? Reliability

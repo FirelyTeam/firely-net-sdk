@@ -44,11 +44,16 @@ namespace Hl7.Fhir.Model
             public string Description { get; set; }
             public Conformance.SearchParamType Type { get; set; }
 
-            // If Type == ParamType.Composite, this array contains 
-            // the list of search parameters this param is a combination of
+            /// <summary>
+            /// If this search parameter is a Composite, this array contains 
+            /// the list of search parameters the param is a combination of
+            /// </summary>
             public string[] CompositeParams { get; set; }
 
-            // The list of elements the search parameter searches on
+            /// <summary>
+            /// One or more paths into the Resource instance that the search parameter 
+            /// uses 
+            /// </summary>
             public string[] Path { get; set; }
         }
 

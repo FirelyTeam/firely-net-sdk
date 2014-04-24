@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,27 +53,48 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("DiagnosticReportStatus")]
         public enum DiagnosticReportStatus
         {
+            /// <summary>
+            /// The existence of the report is registered, but there is nothing yet available.
+            /// </summary>
             [EnumLiteral("registered")]
-            Registered, // The existence of the report is registered, but there is nothing yet available.
+            Registered,
+            /// <summary>
+            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            /// </summary>
             [EnumLiteral("partial")]
-            Partial, // This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            Partial,
+            /// <summary>
+            /// The report is complete and verified by an authorized person.
+            /// </summary>
             [EnumLiteral("final")]
-            Final, // The report is complete and verified by an authorized person.
+            Final,
+            /// <summary>
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// </summary>
             [EnumLiteral("corrected")]
-            Corrected, // The report has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            Corrected,
+            /// <summary>
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person, and data has been changed.
+            /// </summary>
             [EnumLiteral("amended")]
-            Amended, // The report has been modified subsequent to being Final, and is complete and verified by an authorized person, and data has been changed.
+            Amended,
+            /// <summary>
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            /// </summary>
             [EnumLiteral("appended")]
-            Appended, // The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            Appended,
+            /// <summary>
+            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            Cancelled,
+            /// <summary>
+            /// The report has been withdrawn following previous Final release.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The report has been withdrawn following previous Final release.
+            EnteredInError,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DiagnosticReportImageComponent")]
         [DataContract]
         public partial class DiagnosticReportImageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -90,6 +111,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _CommentElement;
             
+            /// <summary>
+            /// Comment about the image (e.g. explanation)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
@@ -148,6 +173,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> _StatusElement;
         
+        /// <summary>
+        /// registered | partial | final | corrected +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus? Status
@@ -176,6 +205,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
         
+        /// <summary>
+        /// Date this version was released
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Issued
@@ -338,6 +371,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ConclusionElement;
         
+        /// <summary>
+        /// Clinical Interpretation of test results
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Conclusion

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,24 +53,51 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("DiagnosticOrderStatus")]
         public enum DiagnosticOrderStatus
         {
+            /// <summary>
+            /// The request has been placed.
+            /// </summary>
             [EnumLiteral("requested")]
-            Requested, // The request has been placed.
+            Requested,
+            /// <summary>
+            /// The receiving system has received the order, but not yet decided whether it will be performed.
+            /// </summary>
             [EnumLiteral("received")]
-            Received, // The receiving system has received the order, but not yet decided whether it will be performed.
+            Received,
+            /// <summary>
+            /// The receiving system has accepted the order, but work has not yet commenced.
+            /// </summary>
             [EnumLiteral("accepted")]
-            Accepted, // The receiving system has accepted the order, but work has not yet commenced.
+            Accepted,
+            /// <summary>
+            /// The work to fulfill the order is happening.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // The work to fulfill the order is happening.
+            InProgress,
+            /// <summary>
+            /// The work is complete, and the outcomes are being reviewed for approval.
+            /// </summary>
             [EnumLiteral("review")]
-            Review, // The work is complete, and the outcomes are being reviewed for approval.
+            Review,
+            /// <summary>
+            /// The work has been complete, the report(s) released, and no further work is planned.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // The work has been complete, the report(s) released, and no further work is planned.
+            Completed,
+            /// <summary>
+            /// The request has been held by originating system/user request.
+            /// </summary>
             [EnumLiteral("suspended")]
-            Suspended, // The request has been held by originating system/user request.
+            Suspended,
+            /// <summary>
+            /// The receiving system has declined to fulfill the request.
+            /// </summary>
             [EnumLiteral("rejected")]
-            Rejected, // The receiving system has declined to fulfill the request.
+            Rejected,
+            /// <summary>
+            /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
+            /// </summary>
             [EnumLiteral("failed")]
-            Failed, // The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
+            Failed,
         }
         
         /// <summary>
@@ -79,19 +106,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("DiagnosticOrderPriority")]
         public enum DiagnosticOrderPriority
         {
+            /// <summary>
+            /// The order has a normal priority.
+            /// </summary>
             [EnumLiteral("routine")]
-            Routine, // The order has a normal priority.
+            Routine,
+            /// <summary>
+            /// The order should be urgently.
+            /// </summary>
             [EnumLiteral("urgent")]
-            Urgent, // The order should be urgently.
+            Urgent,
+            /// <summary>
+            /// The order is time-critical.
+            /// </summary>
             [EnumLiteral("stat")]
-            Stat, // The order is time-critical.
+            Stat,
+            /// <summary>
+            /// The order should be acted on as soon as possible.
+            /// </summary>
             [EnumLiteral("asap")]
-            Asap, // The order should be acted on as soon as possible.
+            Asap,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DiagnosticOrderItemComponent")]
         [DataContract]
         public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -147,6 +183,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
+            /// <summary>
+            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
@@ -178,9 +218,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DiagnosticOrderEventComponent")]
         [DataContract]
         public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -198,6 +235,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
+            /// <summary>
+            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
@@ -238,6 +279,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
             
+            /// <summary>
+            /// The date at which the event happened
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DateTime
@@ -334,6 +379,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ClinicalNotesElement;
         
+        /// <summary>
+        /// Explanation/Justification for test
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ClinicalNotes
@@ -375,6 +424,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
         
+        /// <summary>
+        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
@@ -402,6 +455,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> _PriorityElement;
         
+        /// <summary>
+        /// routine | urgent | stat | asap
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority? Priority

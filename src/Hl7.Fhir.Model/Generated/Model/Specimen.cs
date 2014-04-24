@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,15 +53,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("HierarchicalRelationshipType")]
         public enum HierarchicalRelationshipType
         {
+            /// <summary>
+            /// The target resource is the parent of the focal specimen resource.
+            /// </summary>
             [EnumLiteral("parent")]
-            Parent, // The target resource is the parent of the focal specimen resource.
+            Parent,
+            /// <summary>
+            /// The target resource is the child of the focal specimen resource.
+            /// </summary>
             [EnumLiteral("child")]
-            Child, // The target resource is the child of the focal specimen resource.
+            Child,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SpecimenCollectionComponent")]
         [DataContract]
         public partial class SpecimenCollectionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -92,6 +95,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _CommentElement;
             
+            /// <summary>
+            /// Collector comments
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Comment
@@ -159,9 +166,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SpecimenSourceComponent")]
         [DataContract]
         public partial class SpecimenSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -179,6 +183,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> _RelationshipElement;
             
+            /// <summary>
+            /// parent | child
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType? Relationship
@@ -211,9 +219,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SpecimenTreatmentComponent")]
         [DataContract]
         public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -230,6 +235,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Textual description of procedure
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -274,9 +283,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SpecimenContainerComponent")]
         [DataContract]
         public partial class SpecimenContainerComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -306,6 +312,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Textual description of the container
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -449,6 +459,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _ReceivedTimeElement;
         
+        /// <summary>
+        /// The time when specimen was received for processing
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ReceivedTime

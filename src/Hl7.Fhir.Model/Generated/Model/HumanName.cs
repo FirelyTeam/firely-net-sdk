@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,20 +53,41 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("NameUse")]
         public enum NameUse
         {
+            /// <summary>
+            /// Known as/conventional/the one you normally use.
+            /// </summary>
             [EnumLiteral("usual")]
-            Usual, // Known as/conventional/the one you normally use.
+            Usual,
+            /// <summary>
+            /// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
+            /// </summary>
             [EnumLiteral("official")]
-            Official, // The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
+            Official,
+            /// <summary>
+            /// A temporary name. Name.period can provide more detailed information. This may also be used for temporary names assigned at birth or in emergency situations.
+            /// </summary>
             [EnumLiteral("temp")]
-            Temp, // A temporary name. Name.period can provide more detailed information. This may also be used for temporary names assigned at birth or in emergency situations.
+            Temp,
+            /// <summary>
+            /// A name that is used to address the person in an informal manner, but is not part of their formal or usual name.
+            /// </summary>
             [EnumLiteral("nickname")]
-            Nickname, // A name that is used to address the person in an informal manner, but is not part of their formal or usual name.
+            Nickname,
+            /// <summary>
+            /// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons).
+            /// </summary>
             [EnumLiteral("anonymous")]
-            Anonymous, // Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons).
+            Anonymous,
+            /// <summary>
+            /// This name is no longer in use (or was never correct, but retained for records).
+            /// </summary>
             [EnumLiteral("old")]
-            Old, // This name is no longer in use (or was never correct, but retained for records).
+            Old,
+            /// <summary>
+            /// A name used prior to marriage. Marriage naming customs vary greatly around the world. This name use is for use by applications that collect and store "maiden" names. Though the concept of maiden name is often gender specific, the use of this term is not gender specific. The use of this term does not imply any particular history for a person's name, nor should the maiden name be determined algorithmically.
+            /// </summary>
             [EnumLiteral("maiden")]
-            Maiden, // A name used prior to marriage. Marriage naming customs vary greatly around the world. This name use is for use by applications that collect and store "maiden" names. Though the concept of maiden name is often gender specific, the use of this term is not gender specific. The use of this term does not imply any particular history for a person's name, nor should the maiden name be determined algorithmically.
+            Maiden,
         }
         
         /// <summary>
@@ -81,6 +102,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.HumanName.NameUse> _UseElement;
         
+        /// <summary>
+        /// usual | official | temp | nickname | anonymous | old | maiden
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.HumanName.NameUse? Use
@@ -108,6 +133,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _TextElement;
         
+        /// <summary>
+        /// Text representation of the full name
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text
@@ -136,6 +165,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
         
+        /// <summary>
+        /// Family name (often called 'Surname')
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Family
@@ -164,6 +197,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirString> _GivenElement;
         
+        /// <summary>
+        /// Given names (not always 'first'). Includes middle names
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Given
@@ -192,6 +229,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirString> _PrefixElement;
         
+        /// <summary>
+        /// Parts that come before the name
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Prefix
@@ -220,6 +261,10 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.FhirString> _SuffixElement;
         
+        /// <summary>
+        /// Parts that come after the name
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Suffix

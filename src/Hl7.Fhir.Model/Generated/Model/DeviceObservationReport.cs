@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,9 +47,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class DeviceObservationReport : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceComponent")]
         [DataContract]
         public partial class DeviceObservationReportVirtualDeviceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -82,9 +79,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceChannelMetricComponent")]
         [DataContract]
         public partial class DeviceObservationReportVirtualDeviceChannelMetricComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -106,9 +100,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("DeviceObservationReportVirtualDeviceChannelComponent")]
         [DataContract]
         public partial class DeviceObservationReportVirtualDeviceChannelComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -154,6 +145,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Instant _InstantElement;
         
+        /// <summary>
+        /// When the data values are reported
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Instant

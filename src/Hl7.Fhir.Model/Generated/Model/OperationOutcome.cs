@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,58 +53,136 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("IssueType")]
         public enum IssueType
         {
+            /// <summary>
+            /// Content invalid against Specification or Profile.
+            /// </summary>
             [EnumLiteral("invalid")]
-            Invalid, // Content invalid against Specification or Profile.
+            Invalid,
+            /// <summary>
+            /// content structural issue.
+            /// </summary>
             [EnumLiteral("structure")]
-            Structure, // content structural issue.
+            Structure,
+            /// <summary>
+            /// required element missing.
+            /// </summary>
             [EnumLiteral("required")]
-            Required, // required element missing.
+            Required,
+            /// <summary>
+            /// element value invalid.
+            /// </summary>
             [EnumLiteral("value")]
-            Value, // element value invalid.
+            Value,
+            /// <summary>
+            /// schematron rule.
+            /// </summary>
             [EnumLiteral("invariant")]
-            Invariant, // schematron rule.
+            Invariant,
+            /// <summary>
+            /// authorization/permissions issue.
+            /// </summary>
             [EnumLiteral("security")]
-            Security, // authorization/permissions issue.
+            Security,
+            /// <summary>
+            /// the client needs to initiate the authentication process ().
+            /// </summary>
             [EnumLiteral("login")]
-            Login, // the client needs to initiate the authentication process ().
+            Login,
+            /// <summary>
+            /// user/system not able to be authenticated.
+            /// </summary>
             [EnumLiteral("unknown")]
-            Unknown, // user/system not able to be authenticated.
+            Unknown,
+            /// <summary>
+            /// user session expired.
+            /// </summary>
             [EnumLiteral("expired")]
-            Expired, // user session expired.
+            Expired,
+            /// <summary>
+            /// user rights failure.
+            /// </summary>
             [EnumLiteral("forbidden")]
-            Forbidden, // user rights failure.
+            Forbidden,
+            /// <summary>
+            /// processing issues.
+            /// </summary>
             [EnumLiteral("processing")]
-            Processing, // processing issues.
+            Processing,
+            /// <summary>
+            /// resource not supported.
+            /// </summary>
             [EnumLiteral("not-supported")]
-            NotSupported, // resource not supported.
+            NotSupported,
+            /// <summary>
+            /// duplicate resource.
+            /// </summary>
             [EnumLiteral("duplicate")]
-            Duplicate, // duplicate resource.
+            Duplicate,
+            /// <summary>
+            /// reference not found.
+            /// </summary>
             [EnumLiteral("not-found")]
-            NotFound, // reference not found.
+            NotFound,
+            /// <summary>
+            /// existing content too long.
+            /// </summary>
             [EnumLiteral("too-long")]
-            TooLong, // existing content too long.
+            TooLong,
+            /// <summary>
+            /// code could not be understood.
+            /// </summary>
             [EnumLiteral("code-unknown")]
-            CodeUnknown, // code could not be understood.
+            CodeUnknown,
+            /// <summary>
+            /// extension not recognized.
+            /// </summary>
             [EnumLiteral("extension")]
-            Extension, // extension not recognized.
+            Extension,
+            /// <summary>
+            /// operation denied to protect server resources.
+            /// </summary>
             [EnumLiteral("too-costly")]
-            TooCostly, // operation denied to protect server resources.
+            TooCostly,
+            /// <summary>
+            /// content failed to pass some business rule.
+            /// </summary>
             [EnumLiteral("business-rule")]
-            BusinessRule, // content failed to pass some business rule.
+            BusinessRule,
+            /// <summary>
+            /// content could not be accepted because of an edit conflict (i.e. version aware updates).
+            /// </summary>
             [EnumLiteral("conflict")]
-            Conflict, // content could not be accepted because of an edit conflict (i.e. version aware updates).
+            Conflict,
+            /// <summary>
+            /// transient processing issues.
+            /// </summary>
             [EnumLiteral("transient")]
-            Transient, // transient processing issues.
+            Transient,
+            /// <summary>
+            /// resource/record locking failure.
+            /// </summary>
             [EnumLiteral("lock-error")]
-            LockError, // resource/record locking failure.
+            LockError,
+            /// <summary>
+            /// persistent store unavailable.
+            /// </summary>
             [EnumLiteral("no-store")]
-            NoStore, // persistent store unavailable.
+            NoStore,
+            /// <summary>
+            /// unexpected internal error.
+            /// </summary>
             [EnumLiteral("exception")]
-            Exception, // unexpected internal error.
+            Exception,
+            /// <summary>
+            /// internal timeout.
+            /// </summary>
             [EnumLiteral("timeout")]
-            Timeout, // internal timeout.
+            Timeout,
+            /// <summary>
+            /// The system is not prepared to handle this request due to load management.
+            /// </summary>
             [EnumLiteral("throttled")]
-            Throttled, // The system is not prepared to handle this request due to load management.
+            Throttled,
         }
         
         /// <summary>
@@ -113,19 +191,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("IssueSeverity")]
         public enum IssueSeverity
         {
+            /// <summary>
+            /// The issue caused the action to fail, and no further checking could be performed.
+            /// </summary>
             [EnumLiteral("fatal")]
-            Fatal, // The issue caused the action to fail, and no further checking could be performed.
+            Fatal,
+            /// <summary>
+            /// The issue is sufficiently important to cause the action to fail.
+            /// </summary>
             [EnumLiteral("error")]
-            Error, // The issue is sufficiently important to cause the action to fail.
+            Error,
+            /// <summary>
+            /// The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired.
+            /// </summary>
             [EnumLiteral("warning")]
-            Warning, // The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired.
+            Warning,
+            /// <summary>
+            /// The issue has no relation to the degree of success of the action.
+            /// </summary>
             [EnumLiteral("information")]
-            Information, // The issue has no relation to the degree of success of the action.
+            Information,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("OperationOutcomeIssueComponent")]
         [DataContract]
         public partial class OperationOutcomeIssueComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -143,6 +230,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
             
+            /// <summary>
+            /// fatal | error | warning | information
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.OperationOutcome.IssueSeverity? Severity
@@ -182,6 +273,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
+            /// <summary>
+            /// Additional description of the issue
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Details
@@ -210,6 +305,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
+            /// <summary>
+            /// XPath of element(s) related to issue
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Location

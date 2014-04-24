@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,17 +53,23 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ListMode")]
         public enum ListMode
         {
+            /// <summary>
+            /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes.
+            /// </summary>
             [EnumLiteral("working")]
-            Working, // This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes.
+            Working,
+            /// <summary>
+            /// This list was prepared as a snapshot. It should not be assumed to be current.
+            /// </summary>
             [EnumLiteral("snapshot")]
-            Snapshot, // This list was prepared as a snapshot. It should not be assumed to be current.
+            Snapshot,
+            /// <summary>
+            /// The list is prepared as a statement of changes that have been made or recommended.
+            /// </summary>
             [EnumLiteral("changes")]
-            Changes, // The list is prepared as a statement of changes that have been made or recommended.
+            Changes,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ListEntryComponent")]
         [DataContract]
         public partial class ListEntryComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -93,6 +99,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _DeletedElement;
             
+            /// <summary>
+            /// If this item is actually marked as deleted
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Deleted
@@ -120,6 +130,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
+            /// <summary>
+            /// When item added to list
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
@@ -215,6 +229,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// When the list was prepared
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -242,6 +260,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _OrderedElement;
         
+        /// <summary>
+        /// Whether items in the list have a meaningful order
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Ordered
@@ -270,6 +292,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.List.ListMode> _ModeElement;
         
+        /// <summary>
+        /// working | snapshot | changes
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.List.ListMode? Mode

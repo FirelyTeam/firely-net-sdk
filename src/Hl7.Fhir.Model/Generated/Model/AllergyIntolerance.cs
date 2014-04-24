@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SensitivityStatus")]
         public enum SensitivityStatus
         {
+            /// <summary>
+            /// A suspected sensitivity to a substance.
+            /// </summary>
             [EnumLiteral("suspected")]
-            Suspected, // A suspected sensitivity to a substance.
+            Suspected,
+            /// <summary>
+            /// The sensitivity has been confirmed and is active.
+            /// </summary>
             [EnumLiteral("confirmed")]
-            Confirmed, // The sensitivity has been confirmed and is active.
+            Confirmed,
+            /// <summary>
+            /// The sensitivity has been shown to never have existed.
+            /// </summary>
             [EnumLiteral("refuted")]
-            Refuted, // The sensitivity has been shown to never have existed.
+            Refuted,
+            /// <summary>
+            /// The sensitivity used to exist but no longer does.
+            /// </summary>
             [EnumLiteral("resolved")]
-            Resolved, // The sensitivity used to exist but no longer does.
+            Resolved,
         }
         
         /// <summary>
@@ -69,14 +81,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("Criticality")]
         public enum Criticality
         {
+            /// <summary>
+            /// Likely to result in death if re-exposed.
+            /// </summary>
             [EnumLiteral("fatal")]
-            Fatal, // Likely to result in death if re-exposed.
+            Fatal,
+            /// <summary>
+            /// Likely to result in reactions that will need to be treated if re-exposed.
+            /// </summary>
             [EnumLiteral("high")]
-            High, // Likely to result in reactions that will need to be treated if re-exposed.
+            High,
+            /// <summary>
+            /// Likely to result in reactions that will inconvenience the subject.
+            /// </summary>
             [EnumLiteral("medium")]
-            Medium, // Likely to result in reactions that will inconvenience the subject.
+            Medium,
+            /// <summary>
+            /// Not likely to result in any inconveniences for the subject.
+            /// </summary>
             [EnumLiteral("low")]
-            Low, // Not likely to result in any inconveniences for the subject.
+            Low,
         }
         
         /// <summary>
@@ -85,12 +109,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SensitivityType")]
         public enum SensitivityType
         {
+            /// <summary>
+            /// Allergic Reaction.
+            /// </summary>
             [EnumLiteral("allergy")]
-            Allergy, // Allergic Reaction.
+            Allergy,
+            /// <summary>
+            /// Non-Allergic Reaction.
+            /// </summary>
             [EnumLiteral("intolerance")]
-            Intolerance, // Non-Allergic Reaction.
+            Intolerance,
+            /// <summary>
+            /// Unknown type.
+            /// </summary>
             [EnumLiteral("unknown")]
-            Unknown, // Unknown type.
+            Unknown,
         }
         
         /// <summary>
@@ -118,6 +151,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality> _Criticality_Element;
         
+        /// <summary>
+        /// fatal | high | medium | low
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.Criticality? Criticality_
@@ -146,6 +183,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType> _SensitivityType_Element;
         
+        /// <summary>
+        /// allergy | intolerance | unknown
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.SensitivityType? SensitivityType_
@@ -173,6 +214,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
         
+        /// <summary>
+        /// When recorded
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RecordedDate
@@ -201,6 +246,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus> _StatusElement;
         
+        /// <summary>
+        /// suspected | confirmed | refuted | resolved
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus? Status

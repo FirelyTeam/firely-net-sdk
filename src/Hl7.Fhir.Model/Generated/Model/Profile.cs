@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("BindingConformance")]
         public enum BindingConformance
         {
+            /// <summary>
+            /// Only codes in the specified set are allowed.  If the binding is extensible, other codes may be used for concepts not covered by the bound set of codes.
+            /// </summary>
             [EnumLiteral("required")]
-            Required, // Only codes in the specified set are allowed.  If the binding is extensible, other codes may be used for concepts not covered by the bound set of codes.
+            Required,
+            /// <summary>
+            /// For greater interoperability, implementers are strongly encouraged to use the bound set of codes, however alternate codes may be used in derived profiles and implementations if necessary without being considered non-conformant.
+            /// </summary>
             [EnumLiteral("preferred")]
-            Preferred, // For greater interoperability, implementers are strongly encouraged to use the bound set of codes, however alternate codes may be used in derived profiles and implementations if necessary without being considered non-conformant.
+            Preferred,
+            /// <summary>
+            /// The codes in the set are an example to illustrate the meaning of the field. There is no particular preference for its use nor any assertion that the provided values are sufficient to meet implementation needs.
+            /// </summary>
             [EnumLiteral("example")]
-            Example, // The codes in the set are an example to illustrate the meaning of the field. There is no particular preference for its use nor any assertion that the provided values are sufficient to meet implementation needs.
+            Example,
         }
         
         /// <summary>
@@ -67,10 +76,16 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConstraintSeverity")]
         public enum ConstraintSeverity
         {
+            /// <summary>
+            /// If the constraint is violated, the resource is not conformant.
+            /// </summary>
             [EnumLiteral("error")]
-            Error, // If the constraint is violated, the resource is not conformant.
+            Error,
+            /// <summary>
+            /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
+            /// </summary>
             [EnumLiteral("warning")]
-            Warning, // If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
+            Warning,
         }
         
         /// <summary>
@@ -79,12 +94,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ResourceProfileStatus")]
         public enum ResourceProfileStatus
         {
+            /// <summary>
+            /// This profile is still under development.
+            /// </summary>
             [EnumLiteral("draft")]
-            Draft, // This profile is still under development.
+            Draft,
+            /// <summary>
+            /// This profile is ready for normal use.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // This profile is ready for normal use.
+            Active,
+            /// <summary>
+            /// This profile has been deprecated, withdrawn or superseded and should no longer be used.
+            /// </summary>
             [EnumLiteral("retired")]
-            Retired, // This profile has been deprecated, withdrawn or superseded and should no longer be used.
+            Retired,
         }
         
         /// <summary>
@@ -93,8 +117,11 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("PropertyRepresentation")]
         public enum PropertyRepresentation
         {
+            /// <summary>
+            /// In XML, this property is represented as an attribute not an element.
+            /// </summary>
             [EnumLiteral("xmlAttr")]
-            XmlAttr, // In XML, this property is represented as an attribute not an element.
+            XmlAttr,
         }
         
         /// <summary>
@@ -103,12 +130,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("AggregationMode")]
         public enum AggregationMode
         {
+            /// <summary>
+            /// The reference is a local reference to a contained resource.
+            /// </summary>
             [EnumLiteral("contained")]
-            Contained, // The reference is a local reference to a contained resource.
+            Contained,
+            /// <summary>
+            /// The reference to to a resource that has to be resolved externally to the resource that includes the reference.
+            /// </summary>
             [EnumLiteral("referenced")]
-            Referenced, // The reference to to a resource that has to be resolved externally to the resource that includes the reference.
+            Referenced,
+            /// <summary>
+            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
+            /// </summary>
             [EnumLiteral("bundled")]
-            Bundled, // The resource the reference points to will be found in the same bundle as the resource that includes the reference.
+            Bundled,
         }
         
         /// <summary>
@@ -117,14 +153,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ExtensionContext")]
         public enum ExtensionContext
         {
+            /// <summary>
+            /// The context is all elements matching a particular resource element path.
+            /// </summary>
             [EnumLiteral("resource")]
-            Resource, // The context is all elements matching a particular resource element path.
+            Resource,
+            /// <summary>
+            /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
+            /// </summary>
             [EnumLiteral("datatype")]
-            Datatype, // The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
+            Datatype,
+            /// <summary>
+            /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used.
+            /// </summary>
             [EnumLiteral("mapping")]
-            Mapping, // The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used.
+            Mapping,
+            /// <summary>
+            /// The context is a particular extension from a particular profile.  Expressed as uri#name, where uri identifies the profile and #name identifies the extension code.
+            /// </summary>
             [EnumLiteral("extension")]
-            Extension, // The context is a particular extension from a particular profile.  Expressed as uri#name, where uri identifies the profile and #name identifies the extension code.
+            Extension,
         }
         
         /// <summary>
@@ -133,17 +181,23 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SlicingRules")]
         public enum SlicingRules
         {
+            /// <summary>
+            /// No additional content is allowed other than that described by the slices in this profile.
+            /// </summary>
             [EnumLiteral("closed")]
-            Closed, // No additional content is allowed other than that described by the slices in this profile.
+            Closed,
+            /// <summary>
+            /// Additional content is allowed anywhere in the list.
+            /// </summary>
             [EnumLiteral("open")]
-            Open, // Additional content is allowed anywhere in the list.
+            Open,
+            /// <summary>
+            /// Additional content is allowed, but only at the end of the list.
+            /// </summary>
             [EnumLiteral("openAtEnd")]
-            OpenAtEnd, // Additional content is allowed, but only at the end of the list.
+            OpenAtEnd,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementDefinitionComponent")]
         [DataContract]
         public partial class ElementDefinitionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -161,6 +215,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _ShortElement;
             
+            /// <summary>
+            /// Concise definition for xml presentation
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Short
@@ -189,6 +247,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _FormalElement;
             
+            /// <summary>
+            /// Full formal definition in human language
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Formal
@@ -216,6 +278,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
+            /// <summary>
+            /// Comments about the use of this element
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comments
@@ -243,6 +309,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _RequirementsElement;
             
+            /// <summary>
+            /// Why is this needed?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Requirements
@@ -271,6 +341,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _SynonymElement;
             
+            /// <summary>
+            /// Other names
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Synonym
@@ -299,6 +373,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _MinElement;
             
+            /// <summary>
+            /// Minimum Cardinality
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Min
@@ -327,6 +405,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _MaxElement;
             
+            /// <summary>
+            /// Maximum Cardinality (a number or *)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Max
@@ -367,6 +449,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameReferenceElement;
             
+            /// <summary>
+            /// To another element constraint (by element.name)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string NameReference
@@ -420,6 +506,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _MaxLengthElement;
             
+            /// <summary>
+            /// Length for strings
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? MaxLength
@@ -448,6 +538,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.Id> _ConditionElement;
             
+            /// <summary>
+            /// Reference to invariant about presence
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Condition
@@ -488,6 +582,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _MustSupportElement;
             
+            /// <summary>
+            /// If the element must supported
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? MustSupport
@@ -516,6 +614,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _IsModifierElement;
             
+            /// <summary>
+            /// If this modifies the meaning of other elements
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? IsModifier
@@ -559,9 +661,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementSlicingComponent")]
         [DataContract]
         public partial class ElementSlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -579,6 +678,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Id _DiscriminatorElement;
             
+            /// <summary>
+            /// Element that used to distinguish the slices
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Discriminator
@@ -607,6 +710,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _OrderedElement;
             
+            /// <summary>
+            /// If elements must be in same order as slices
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Ordered
@@ -635,6 +742,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Profile.SlicingRules> _RulesElement;
             
+            /// <summary>
+            /// closed | open | openAtEnd
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Profile.SlicingRules? Rules
@@ -653,9 +764,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProfileStructureComponent")]
         [DataContract]
         public partial class ProfileStructureComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -673,6 +781,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _TypeElement;
             
+            /// <summary>
+            /// The Resource or Data Type being described
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -700,6 +812,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name for this particular structure (reference target)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -727,6 +843,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _PublishElement;
             
+            /// <summary>
+            /// This definition is published (i.e. for validation)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Publish
@@ -754,6 +874,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _PurposeElement;
             
+            /// <summary>
+            /// Human summary: why describe this resource?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Purpose
@@ -798,9 +922,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProfileStructureSearchParamComponent")]
         [DataContract]
         public partial class ProfileStructureSearchParamComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -818,6 +939,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name of search parameter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -846,6 +971,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _TypeElement;
             
+            /// <summary>
+            /// number | date | string | token | reference | composite | quantity
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
@@ -874,6 +1003,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Contents and meaning of search parameter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -901,6 +1034,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _XpathElement;
             
+            /// <summary>
+            /// XPath that extracts the parameter set
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Xpath
@@ -929,6 +1066,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.Code> _TargetElement;
             
+            /// <summary>
+            /// Types of resource (if a resource reference)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Target
@@ -947,9 +1088,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProfileQueryComponent")]
         [DataContract]
         public partial class ProfileQueryComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -967,6 +1105,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Special named queries (_query=)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -995,6 +1137,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
+            /// <summary>
+            /// Describes the named query
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
@@ -1026,9 +1172,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("TypeRefComponent")]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1046,6 +1189,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Name of Data type or Resource
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -1073,6 +1220,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _ProfileElement;
             
+            /// <summary>
+            /// Profile.structure to apply
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Profile
@@ -1101,6 +1252,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Code<Hl7.Fhir.Model.Profile.AggregationMode>> _AggregationElement;
             
+            /// <summary>
+            /// contained | referenced | bundled - how aggregated
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.Profile.AggregationMode?> Aggregation
@@ -1119,9 +1274,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProfileMappingComponent")]
         [DataContract]
         public partial class ProfileMappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1139,6 +1291,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Id _IdentityElement;
             
+            /// <summary>
+            /// Internal id when this mapping is used
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identity
@@ -1166,6 +1322,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _UriElement;
             
+            /// <summary>
+            /// Identifies what this mapping refers to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Uri
@@ -1193,6 +1353,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Names what this mapping refers to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -1220,6 +1384,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
+            /// <summary>
+            /// Versions, Issues, Scope limitations etc
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comments
@@ -1238,9 +1406,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementDefinitionMappingComponent")]
         [DataContract]
         public partial class ElementDefinitionMappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1258,6 +1423,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Id _IdentityElement;
             
+            /// <summary>
+            /// Reference to mapping declaration
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identity
@@ -1286,6 +1455,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _MapElement;
             
+            /// <summary>
+            /// Details of the mapping
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Map
@@ -1304,9 +1477,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementDefinitionBindingComponent")]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1324,6 +1494,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Descriptive Name
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -1352,6 +1526,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _IsExtensibleElement;
             
+            /// <summary>
+            /// Can additional codes be used?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? IsExtensible
@@ -1379,6 +1557,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Profile.BindingConformance> _ConformanceElement;
             
+            /// <summary>
+            /// required | preferred | example
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Profile.BindingConformance? Conformance
@@ -1406,6 +1588,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Human explanation of the value set
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -1437,9 +1623,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementDefinitionConstraintComponent")]
         [DataContract]
         public partial class ElementDefinitionConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1457,6 +1640,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Id _KeyElement;
             
+            /// <summary>
+            /// Target of 'condition' reference above
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Key
@@ -1484,6 +1671,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Short human label
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -1512,6 +1703,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Profile.ConstraintSeverity> _SeverityElement;
             
+            /// <summary>
+            /// error | warning
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Profile.ConstraintSeverity? Severity
@@ -1540,6 +1735,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _HumanElement;
             
+            /// <summary>
+            /// Human description of constraint
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Human
@@ -1568,6 +1767,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _XpathElement;
             
+            /// <summary>
+            /// XPath expression of constraint
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Xpath
@@ -1586,9 +1789,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ElementComponent")]
         [DataContract]
         public partial class ElementComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1606,6 +1806,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _PathElement;
             
+            /// <summary>
+            /// The path of the element (see the formal definitions)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Path
@@ -1634,6 +1838,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Code<Hl7.Fhir.Model.Profile.PropertyRepresentation>> _RepresentationElement;
             
+            /// <summary>
+            /// How this element is represented in instances
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.Profile.PropertyRepresentation?> Representation
@@ -1661,6 +1869,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NameElement;
             
+            /// <summary>
+            /// Name for this particular element definition (reference target)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
@@ -1703,9 +1915,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ProfileExtensionDefnComponent")]
         [DataContract]
         public partial class ProfileExtensionDefnComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1723,6 +1932,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Code _CodeElement;
             
+            /// <summary>
+            /// Identifies the extension in this profile
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
@@ -1750,6 +1963,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
+            /// <summary>
+            /// Use this name when displaying the value
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
@@ -1778,6 +1995,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Profile.ExtensionContext> _ContextTypeElement;
             
+            /// <summary>
+            /// resource | datatype | mapping | extension
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Profile.ExtensionContext? ContextType
@@ -1806,6 +2027,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.FhirString> _ContextElement;
             
+            /// <summary>
+            /// Where the extension can be used in instances
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Context
@@ -1849,6 +2074,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _IdentifierElement;
         
+        /// <summary>
+        /// Logical id to reference this profile
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Identifier
@@ -1876,6 +2105,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
+        /// <summary>
+        /// Logical id for this version of the profile
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
@@ -1904,6 +2137,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Informal name for this profile
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -1931,6 +2168,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
+        /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
@@ -1971,6 +2212,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
+        /// <summary>
+        /// Natural language description of the profile
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
@@ -2012,6 +2257,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Profile.ResourceProfileStatus> _StatusElement;
         
+        /// <summary>
+        /// draft | active | retired
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Profile.ResourceProfileStatus? Status
@@ -2039,6 +2288,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
@@ -2066,6 +2319,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Date for this version of the profile
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -2093,6 +2350,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
+        /// <summary>
+        /// Scope and Usage this profile is for
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Requirements
@@ -2120,6 +2381,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Id _FhirVersionElement;
         
+        /// <summary>
+        /// FHIR Version this profile targets
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string FhirVersion

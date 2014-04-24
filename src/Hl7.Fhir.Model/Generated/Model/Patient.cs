@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,17 +53,23 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("LinkType")]
         public enum LinkType
         {
+            /// <summary>
+            /// The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains the link.
+            /// </summary>
             [EnumLiteral("replace")]
-            Replace, // The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains the link.
+            Replace,
+            /// <summary>
+            /// The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
+            /// </summary>
             [EnumLiteral("refer")]
-            Refer, // The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
+            Refer,
+            /// <summary>
+            /// The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
+            /// </summary>
             [EnumLiteral("seealso")]
-            Seealso, // The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
+            Seealso,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -146,9 +152,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("AnimalComponent")]
         [DataContract]
         public partial class AnimalComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -193,9 +196,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("PatientLinkComponent")]
         [DataContract]
         public partial class PatientLinkComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -227,6 +227,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
             
+            /// <summary>
+            /// replace | refer | seealso - type of link
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Patient.LinkType? Type
@@ -308,6 +312,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
         
+        /// <summary>
+        /// The date and time of birth for the individual
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string BirthDate
@@ -477,6 +485,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
+        /// <summary>
+        /// Whether this patient's record is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SupplyDispenseStatus")]
         public enum SupplyDispenseStatus
         {
+            /// <summary>
+            /// Supply has been requested, but not dispensed.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // Supply has been requested, but not dispensed.
+            InProgress,
+            /// <summary>
+            /// Supply is part of a pharmacy order and has been dispensed.
+            /// </summary>
             [EnumLiteral("dispensed")]
-            Dispensed, // Supply is part of a pharmacy order and has been dispensed.
+            Dispensed,
+            /// <summary>
+            /// Dispensing was not completed.
+            /// </summary>
             [EnumLiteral("abandoned")]
-            Abandoned, // Dispensing was not completed.
+            Abandoned,
         }
         
         /// <summary>
@@ -67,21 +76,33 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("SupplyStatus")]
         public enum SupplyStatus
         {
+            /// <summary>
+            /// Supply has been requested, but not dispensed.
+            /// </summary>
             [EnumLiteral("requested")]
-            Requested, // Supply has been requested, but not dispensed.
+            Requested,
+            /// <summary>
+            /// Supply is part of a pharmacy order and has been dispensed.
+            /// </summary>
             [EnumLiteral("dispensed")]
-            Dispensed, // Supply is part of a pharmacy order and has been dispensed.
+            Dispensed,
+            /// <summary>
+            /// Supply has been received by the requestor.
+            /// </summary>
             [EnumLiteral("received")]
-            Received, // Supply has been received by the requestor.
+            Received,
+            /// <summary>
+            /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
+            /// </summary>
             [EnumLiteral("failed")]
-            Failed, // The supply will not be completed because the supplier was unable or unwilling to supply the item.
+            Failed,
+            /// <summary>
+            /// The orderer of the supply cancelled the request.
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The orderer of the supply cancelled the request.
+            Cancelled,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("SupplyDispenseComponent")]
         [DataContract]
         public partial class SupplyDispenseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -110,6 +131,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> _StatusElement;
             
+            /// <summary>
+            /// in progress | dispensed | abandoned
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Supply.SupplyDispenseStatus? Status
@@ -265,6 +290,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Supply.SupplyStatus> _StatusElement;
         
+        /// <summary>
+        /// requested | dispensed | received | failed | cancelled
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Supply.SupplyStatus? Status

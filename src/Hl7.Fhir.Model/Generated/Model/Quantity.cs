@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("QuantityCompararator")]
         public enum QuantityCompararator
         {
+            /// <summary>
+            /// The actual value is less than the given value.
+            /// </summary>
             [EnumLiteral("<")]
-            LessThan, // The actual value is less than the given value.
+            LessThan,
+            /// <summary>
+            /// The actual value is less than or equal to the given value.
+            /// </summary>
             [EnumLiteral("<=")]
-            LessOrEqual, // The actual value is less than or equal to the given value.
+            LessOrEqual,
+            /// <summary>
+            /// The actual value is greater than or equal to the given value.
+            /// </summary>
             [EnumLiteral(">=")]
-            GreaterOrEqual, // The actual value is greater than or equal to the given value.
+            GreaterOrEqual,
+            /// <summary>
+            /// The actual value is greater than the given value.
+            /// </summary>
             [EnumLiteral(">")]
-            GreaterThan, // The actual value is greater than the given value.
+            GreaterThan,
         }
         
         /// <summary>
@@ -75,6 +87,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDecimal _ValueElement;
         
+        /// <summary>
+        /// Numerical value (with implicit precision)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Value
@@ -91,7 +107,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// < | <= | >= | > - how to understand the value
+        /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
         /// </summary>
         [FhirElement("comparator", InSummary=true, Order=50)]
         [DataMember]
@@ -102,6 +118,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> _ComparatorElement;
         
+        /// <summary>
+        /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Quantity.QuantityCompararator? Comparator
@@ -129,6 +149,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _UnitsElement;
         
+        /// <summary>
+        /// Unit representation
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Units
@@ -156,6 +180,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
+        /// <summary>
+        /// System that defines coded unit form
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri System
@@ -183,6 +211,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Code _CodeElement;
         
+        /// <summary>
+        /// Coded form of the unit
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Code

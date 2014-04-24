@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -73,6 +73,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDecimal _PeriodElement;
         
+        /// <summary>
+        /// Number of milliseconds between samples
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Period
@@ -100,6 +104,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDecimal _FactorElement;
         
+        /// <summary>
+        /// Multiply data by this before adding to origin
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Factor
@@ -127,6 +135,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDecimal _LowerLimitElement;
         
+        /// <summary>
+        /// Lower limit of detection
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? LowerLimit
@@ -154,6 +166,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDecimal _UpperLimitElement;
         
+        /// <summary>
+        /// Upper limit of detection
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? UpperLimit
@@ -182,6 +198,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _DimensionsElement;
         
+        /// <summary>
+        /// Number of sample points at each time point
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Dimensions
@@ -210,6 +230,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _DataElement;
         
+        /// <summary>
+        /// Decimal values with spaces, or "E" | "U" | "L"
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Data

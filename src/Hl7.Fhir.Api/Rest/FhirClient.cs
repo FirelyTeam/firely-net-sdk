@@ -52,16 +52,6 @@ namespace Hl7.Fhir.Rest
         public FhirResponse LastResponseDetails { get; private set; }
 
         /// <summary>
-        /// Contact the endpoint's Conformance statement to configure the client
-        /// to  the capabilities of the server
-        /// </summary>
-        //public void Configure()
-        //{
-        //    // Set preferred serialization format
-        //    throw new NotImplementedException();
-        //}
-
-        /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints.
         /// </summary>
@@ -206,7 +196,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
         /// </summary>
-        /// <param name="endpoint">The url of the Resource to fetch. This can be a Resource id url or a version-specific
+        /// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
         /// Resource url.</param>
         /// <typeparam name="TResource">The type of resource to read</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
@@ -224,7 +214,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
         /// </summary>
-        /// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+        /// <param name="location">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
         /// Resource url.</param>
         /// <typeparam name="TResource">The type of resource to read</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
@@ -239,7 +229,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Reads a resource from a FHIR resource endpoint.
         /// </summary>
-        /// <param name="endpoint">The url of the Resource to fetch. This can be a Resource id url or a version-specific
+        /// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
         /// Resource url.</param>
         /// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
         /// object, must be cast to the correct Resource type to access its properties.
@@ -258,7 +248,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Reads a resource from a FHIR resource endpoint.
         /// </summary>
-        /// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+        /// <param name="location">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
         /// Resource url.</param>
         /// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
         /// object, must be cast to the correct Resource type to access its properties.
@@ -658,6 +648,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="id">The id of the resource to search for</param>
         /// <param name="includes">Zero or more include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <typeparam name="TResource">The type of resource to search for</typeparam>
         /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
         /// Bundle if the resource wasn't found.</returns>
@@ -677,6 +668,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resource">The type of resource to search for</param>
         /// <param name="id">The id of the resource to search for</param>
         /// <param name="includes">Zero or more include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
         /// Bundle if the resource wasn't found.</returns>
         /// <remarks>This operation is similar to Read, but additionally,
@@ -879,9 +871,10 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Add one or more tags to a resource at a given location
         /// </summary>
-        /// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific
-        /// <param name="tags"></param>
-        /// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
+        /// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific</param>
+        /// <param name="tags">List of tags to add to the resource</param>
+        /// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does 
+        /// not create a new version.</remarks>
         public void AffixTags(Uri location, IEnumerable<Tag> tags)
         {
             if (location == null) throw Error.ArgumentNull("location");
@@ -902,9 +895,10 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Remove one or more tags from a resource at a given location
         /// </summary>
-        /// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific
-        /// <param name="tags"></param>
-        /// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
+        /// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific</param>
+        /// <param name="tags">List of tags to delete</param>
+        /// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, 
+        /// so does not create a new version.</remarks>
         public void DeleteTags(Uri location, IEnumerable<Tag> tags)
         {
             if (location == null) throw Error.ArgumentNull("location");
@@ -1093,7 +1087,7 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Fetches a typed resource from a FHIR resource endpoint.
 		/// </summary>
-		/// <param name="endpoint">The url of the Resource to fetch. This can be a Resource id url or a version-specific
+		/// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
 		/// Resource url.</param>
 		/// <typeparam name="TResource">The type of resource to read</typeparam>
 		/// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
@@ -1111,7 +1105,7 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Fetches a typed resource from a FHIR resource endpoint.
 		/// </summary>
-		/// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+		/// <param name="location">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
 		/// Resource url.</param>
 		/// <typeparam name="TResource">The type of resource to read</typeparam>
 		/// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
@@ -1126,7 +1120,7 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Reads a resource from a FHIR resource endpoint.
 		/// </summary>
-		/// <param name="endpoint">The url of the Resource to fetch. This can be a Resource id url or a version-specific
+		/// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
 		/// Resource url.</param>
 		/// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
 		/// object, must be cast to the correct Resource type to access its properties.
@@ -1145,7 +1139,7 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Reads a resource from a FHIR resource endpoint.
 		/// </summary>
-		/// <param name="endpoint">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
+		/// <param name="location">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
 		/// Resource url.</param>
 		/// <returns>The requested resource as an untyped ResourceEntry. The ResourceEntry.Resource, which is of type
 		/// object, must be cast to the correct Resource type to access its properties.
@@ -1420,7 +1414,6 @@ namespace Hl7.Fhir.Rest
 		/// Validates whether the contents of the resource would be acceptable as an update
 		/// </summary>
 		/// <param name="entry">The entry containing the updated Resource to validate</param>
-		/// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
 		/// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
 		/// failures occur.</returns>
 		public async Task<ValidateAsyncResult> TryValidateUpdateAsync<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
@@ -1441,7 +1434,6 @@ namespace Hl7.Fhir.Rest
 		/// </summary>
 		/// <typeparam name="TResource"></typeparam>
 		/// <param name="resource">The entry containing the Resource data to use for the validation</param>
-		/// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
 		/// <param name="tags">Optional list of tags to attach to the resource</param>
 		/// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
 		/// failures occur.</returns>
@@ -1545,6 +1537,7 @@ namespace Hl7.Fhir.Rest
 		/// </summary>
 		/// <param name="id">The id of the resource to search for</param>
 		/// <param name="includes">Zero or more include paths</param>
+        /// <param name="pageSize">Optional maximum on the number of results returned by the server</param>
 		/// <typeparam name="TResource">The type of resource to search for</typeparam>
 		/// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
 		/// Bundle if the resource wasn't found.</returns>
@@ -1564,6 +1557,7 @@ namespace Hl7.Fhir.Rest
 		/// <param name="resource">The type of resource to search for</param>
 		/// <param name="id">The id of the resource to search for</param>
 		/// <param name="includes">Zero or more include paths</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
 		/// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
 		/// Bundle if the resource wasn't found.</returns>
 		/// <remarks>This operation is similar to Read, but additionally,
@@ -1744,7 +1738,7 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Add one or more tags to a resource at a given location
 		/// </summary>
-		/// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific
+		/// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific url</param>
 		/// <param name="tags"></param>
 		/// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
 		public Task AffixTagsAsync(Uri location, IEnumerable<Tag> tags)
@@ -1767,9 +1761,10 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Remove one or more tags from a resource at a given location
 		/// </summary>
-		/// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific
-		/// <param name="tags"></param>
-		/// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
+		/// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific</param>
+		/// <param name="tags">List of tags to be removed</param>
+		/// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, 
+        /// so does not create a new version.</remarks>
 		public Task DeleteTagsAsync(Uri location, IEnumerable<Tag> tags)
 		{
 			if (location == null) throw Error.ArgumentNull("location");

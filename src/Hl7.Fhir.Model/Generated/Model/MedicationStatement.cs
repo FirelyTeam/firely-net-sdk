@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,9 +47,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class MedicationStatement : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationStatementDosageComponent")]
         [DataContract]
         public partial class MedicationStatementDosageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -192,6 +189,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _WasNotGivenElement;
         
+        /// <summary>
+        /// True if medication is/was not being taken
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? WasNotGiven

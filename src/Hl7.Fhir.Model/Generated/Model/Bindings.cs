@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,22 +46,46 @@ namespace Hl7.Fhir.Model
     [FhirEnumeration("DataAbsentReason")]
     public enum DataAbsentReason
     {
+        /// <summary>
+        /// The value is not known
+        /// </summary>
         [EnumLiteral("unknown")]
-        Unknown, // The value is not known
+        Unknown,
+        /// <summary>
+        /// The source human does not know the value
+        /// </summary>
         [EnumLiteral("asked")]
-        Asked, // The source human does not know the value
+        Asked,
+        /// <summary>
+        /// There is reason to expect (from the workflow) that the value may become known
+        /// </summary>
         [EnumLiteral("temp")]
-        Temp, // There is reason to expect (from the workflow) that the value may become known
+        Temp,
+        /// <summary>
+        /// The workflow didn't lead to this value being known
+        /// </summary>
         [EnumLiteral("notasked")]
-        Notasked, // The workflow didn't lead to this value being known
+        Notasked,
+        /// <summary>
+        /// The information is not available due to security, privacy or related reasons
+        /// </summary>
         [EnumLiteral("masked")]
-        Masked, // The information is not available due to security, privacy or related reasons
+        Masked,
+        /// <summary>
+        /// The source system wasn't capable of supporting this element
+        /// </summary>
         [EnumLiteral("unsupported")]
-        Unsupported, // The source system wasn't capable of supporting this element
+        Unsupported,
+        /// <summary>
+        /// The content of the data is represented in the resource narrative
+        /// </summary>
         [EnumLiteral("astext")]
-        Astext, // The content of the data is represented in the resource narrative
+        Astext,
+        /// <summary>
+        /// Some system or workflow process error means that the information is not available
+        /// </summary>
         [EnumLiteral("error")]
-        Error, // Some system or workflow process error means that the information is not available
+        Error,
     }
     
     /// <summary>
@@ -70,18 +94,36 @@ namespace Hl7.Fhir.Model
     [FhirEnumeration("SpecialValues")]
     public enum SpecialValues
     {
+        /// <summary>
+        /// Boolean true
+        /// </summary>
         [EnumLiteral("true")]
-        True, // Boolean true
+        True,
+        /// <summary>
+        /// Boolean false
+        /// </summary>
         [EnumLiteral("false")]
-        False, // Boolean false
+        False,
+        /// <summary>
+        /// The content is greater than zero, but too small to be quantified
+        /// </summary>
         [EnumLiteral("trace")]
-        Trace, // The content is greater than zero, but too small to be quantified
+        Trace,
+        /// <summary>
+        /// The specific quantity is not known, but is known to be non-zero and is not specified because it makes up the bulk of the material
+        /// </summary>
         [EnumLiteral("sufficient")]
-        Sufficient, // The specific quantity is not known, but is known to be non-zero and is not specified because it makes up the bulk of the material
+        Sufficient,
+        /// <summary>
+        /// The value is no longer available
+        /// </summary>
         [EnumLiteral("withdrawn")]
-        Withdrawn, // The value is no longer available
+        Withdrawn,
+        /// <summary>
+        /// The are no known applicable values in this context
+        /// </summary>
         [EnumLiteral("nil known")]
-        NilKnown, // The are no known applicable values in this context
+        NilKnown,
     }
     
     /// <summary>
@@ -90,106 +132,256 @@ namespace Hl7.Fhir.Model
     [FhirEnumeration("ResourceType")]
     public enum ResourceType
     {
+        /// <summary>
+        /// The Resource resource
+        /// </summary>
         [EnumLiteral("Resource")]
-        Resource, // The Resource resource
+        Resource,
+        /// <summary>
+        /// The AdverseReaction resource
+        /// </summary>
         [EnumLiteral("AdverseReaction")]
-        AdverseReaction, // The AdverseReaction resource
+        AdverseReaction,
+        /// <summary>
+        /// The Alert resource
+        /// </summary>
         [EnumLiteral("Alert")]
-        Alert, // The Alert resource
+        Alert,
+        /// <summary>
+        /// The AllergyIntolerance resource
+        /// </summary>
         [EnumLiteral("AllergyIntolerance")]
-        AllergyIntolerance, // The AllergyIntolerance resource
+        AllergyIntolerance,
+        /// <summary>
+        /// The CarePlan resource
+        /// </summary>
         [EnumLiteral("CarePlan")]
-        CarePlan, // The CarePlan resource
+        CarePlan,
+        /// <summary>
+        /// The Composition resource
+        /// </summary>
         [EnumLiteral("Composition")]
-        Composition, // The Composition resource
+        Composition,
+        /// <summary>
+        /// The ConceptMap resource
+        /// </summary>
         [EnumLiteral("ConceptMap")]
-        ConceptMap, // The ConceptMap resource
+        ConceptMap,
+        /// <summary>
+        /// The Condition resource
+        /// </summary>
         [EnumLiteral("Condition")]
-        Condition, // The Condition resource
+        Condition,
+        /// <summary>
+        /// The Conformance resource
+        /// </summary>
         [EnumLiteral("Conformance")]
-        Conformance, // The Conformance resource
+        Conformance,
+        /// <summary>
+        /// The Device resource
+        /// </summary>
         [EnumLiteral("Device")]
-        Device, // The Device resource
+        Device,
+        /// <summary>
+        /// The DeviceObservationReport resource
+        /// </summary>
         [EnumLiteral("DeviceObservationReport")]
-        DeviceObservationReport, // The DeviceObservationReport resource
+        DeviceObservationReport,
+        /// <summary>
+        /// The DiagnosticOrder resource
+        /// </summary>
         [EnumLiteral("DiagnosticOrder")]
-        DiagnosticOrder, // The DiagnosticOrder resource
+        DiagnosticOrder,
+        /// <summary>
+        /// The DiagnosticReport resource
+        /// </summary>
         [EnumLiteral("DiagnosticReport")]
-        DiagnosticReport, // The DiagnosticReport resource
+        DiagnosticReport,
+        /// <summary>
+        /// The DocumentManifest resource
+        /// </summary>
         [EnumLiteral("DocumentManifest")]
-        DocumentManifest, // The DocumentManifest resource
+        DocumentManifest,
+        /// <summary>
+        /// The DocumentReference resource
+        /// </summary>
         [EnumLiteral("DocumentReference")]
-        DocumentReference, // The DocumentReference resource
+        DocumentReference,
+        /// <summary>
+        /// The Encounter resource
+        /// </summary>
         [EnumLiteral("Encounter")]
-        Encounter, // The Encounter resource
+        Encounter,
+        /// <summary>
+        /// The FamilyHistory resource
+        /// </summary>
         [EnumLiteral("FamilyHistory")]
-        FamilyHistory, // The FamilyHistory resource
+        FamilyHistory,
+        /// <summary>
+        /// The Group resource
+        /// </summary>
         [EnumLiteral("Group")]
-        Group, // The Group resource
+        Group,
+        /// <summary>
+        /// The ImagingStudy resource
+        /// </summary>
         [EnumLiteral("ImagingStudy")]
-        ImagingStudy, // The ImagingStudy resource
+        ImagingStudy,
+        /// <summary>
+        /// The Immunization resource
+        /// </summary>
         [EnumLiteral("Immunization")]
-        Immunization, // The Immunization resource
+        Immunization,
+        /// <summary>
+        /// The ImmunizationRecommendation resource
+        /// </summary>
         [EnumLiteral("ImmunizationRecommendation")]
-        ImmunizationRecommendation, // The ImmunizationRecommendation resource
+        ImmunizationRecommendation,
+        /// <summary>
+        /// The List resource
+        /// </summary>
         [EnumLiteral("List")]
-        List, // The List resource
+        List,
+        /// <summary>
+        /// The Location resource
+        /// </summary>
         [EnumLiteral("Location")]
-        Location, // The Location resource
+        Location,
+        /// <summary>
+        /// The Media resource
+        /// </summary>
         [EnumLiteral("Media")]
-        Media, // The Media resource
+        Media,
+        /// <summary>
+        /// The Medication resource
+        /// </summary>
         [EnumLiteral("Medication")]
-        Medication, // The Medication resource
+        Medication,
+        /// <summary>
+        /// The MedicationAdministration resource
+        /// </summary>
         [EnumLiteral("MedicationAdministration")]
-        MedicationAdministration, // The MedicationAdministration resource
+        MedicationAdministration,
+        /// <summary>
+        /// The MedicationDispense resource
+        /// </summary>
         [EnumLiteral("MedicationDispense")]
-        MedicationDispense, // The MedicationDispense resource
+        MedicationDispense,
+        /// <summary>
+        /// The MedicationPrescription resource
+        /// </summary>
         [EnumLiteral("MedicationPrescription")]
-        MedicationPrescription, // The MedicationPrescription resource
+        MedicationPrescription,
+        /// <summary>
+        /// The MedicationStatement resource
+        /// </summary>
         [EnumLiteral("MedicationStatement")]
-        MedicationStatement, // The MedicationStatement resource
+        MedicationStatement,
+        /// <summary>
+        /// The MessageHeader resource
+        /// </summary>
         [EnumLiteral("MessageHeader")]
-        MessageHeader, // The MessageHeader resource
+        MessageHeader,
+        /// <summary>
+        /// The Observation resource
+        /// </summary>
         [EnumLiteral("Observation")]
-        Observation, // The Observation resource
+        Observation,
+        /// <summary>
+        /// The OperationOutcome resource
+        /// </summary>
         [EnumLiteral("OperationOutcome")]
-        OperationOutcome, // The OperationOutcome resource
+        OperationOutcome,
+        /// <summary>
+        /// The Order resource
+        /// </summary>
         [EnumLiteral("Order")]
-        Order, // The Order resource
+        Order,
+        /// <summary>
+        /// The OrderResponse resource
+        /// </summary>
         [EnumLiteral("OrderResponse")]
-        OrderResponse, // The OrderResponse resource
+        OrderResponse,
+        /// <summary>
+        /// The Organization resource
+        /// </summary>
         [EnumLiteral("Organization")]
-        Organization, // The Organization resource
+        Organization,
+        /// <summary>
+        /// The Other resource
+        /// </summary>
         [EnumLiteral("Other")]
-        Other, // The Other resource
+        Other,
+        /// <summary>
+        /// The Patient resource
+        /// </summary>
         [EnumLiteral("Patient")]
-        Patient, // The Patient resource
+        Patient,
+        /// <summary>
+        /// The Practitioner resource
+        /// </summary>
         [EnumLiteral("Practitioner")]
-        Practitioner, // The Practitioner resource
+        Practitioner,
+        /// <summary>
+        /// The Procedure resource
+        /// </summary>
         [EnumLiteral("Procedure")]
-        Procedure, // The Procedure resource
+        Procedure,
+        /// <summary>
+        /// The Profile resource
+        /// </summary>
         [EnumLiteral("Profile")]
-        Profile, // The Profile resource
+        Profile,
+        /// <summary>
+        /// The Provenance resource
+        /// </summary>
         [EnumLiteral("Provenance")]
-        Provenance, // The Provenance resource
+        Provenance,
+        /// <summary>
+        /// The Query resource
+        /// </summary>
         [EnumLiteral("Query")]
-        Query, // The Query resource
+        Query,
+        /// <summary>
+        /// The Questionnaire resource
+        /// </summary>
         [EnumLiteral("Questionnaire")]
-        Questionnaire, // The Questionnaire resource
+        Questionnaire,
+        /// <summary>
+        /// The RelatedPerson resource
+        /// </summary>
         [EnumLiteral("RelatedPerson")]
-        RelatedPerson, // The RelatedPerson resource
+        RelatedPerson,
+        /// <summary>
+        /// The SecurityEvent resource
+        /// </summary>
         [EnumLiteral("SecurityEvent")]
-        SecurityEvent, // The SecurityEvent resource
+        SecurityEvent,
+        /// <summary>
+        /// The Specimen resource
+        /// </summary>
         [EnumLiteral("Specimen")]
-        Specimen, // The Specimen resource
+        Specimen,
+        /// <summary>
+        /// The Substance resource
+        /// </summary>
         [EnumLiteral("Substance")]
-        Substance, // The Substance resource
+        Substance,
+        /// <summary>
+        /// The Supply resource
+        /// </summary>
         [EnumLiteral("Supply")]
-        Supply, // The Supply resource
+        Supply,
+        /// <summary>
+        /// The ValueSet resource
+        /// </summary>
         [EnumLiteral("ValueSet")]
-        ValueSet, // The ValueSet resource
+        ValueSet,
+        /// <summary>
+        /// The Binary resource
+        /// </summary>
         [EnumLiteral("Binary")]
-        Binary, // The Binary resource
+        Binary,
     }
     
 }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConditionStatus")]
         public enum ConditionStatus
         {
+            /// <summary>
+            /// This is a tentative diagnosis - still a candidate that is under consideration.
+            /// </summary>
             [EnumLiteral("provisional")]
-            Provisional, // This is a tentative diagnosis - still a candidate that is under consideration.
+            Provisional,
+            /// <summary>
+            /// The patient is being treated on the basis that this is the condition, but it is still not confirmed.
+            /// </summary>
             [EnumLiteral("working")]
-            Working, // The patient is being treated on the basis that this is the condition, but it is still not confirmed.
+            Working,
+            /// <summary>
+            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            /// </summary>
             [EnumLiteral("confirmed")]
-            Confirmed, // There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            Confirmed,
+            /// <summary>
+            /// This condition has been ruled out by diagnostic and clinical evidence.
+            /// </summary>
             [EnumLiteral("refuted")]
-            Refuted, // This condition has been ruled out by diagnostic and clinical evidence.
+            Refuted,
         }
         
         /// <summary>
@@ -69,15 +81,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ConditionRelationshipType")]
         public enum ConditionRelationshipType
         {
+            /// <summary>
+            /// this condition follows the identified condition/procedure/substance and is a consequence of it.
+            /// </summary>
             [EnumLiteral("due-to")]
-            DueTo, // this condition follows the identified condition/procedure/substance and is a consequence of it.
+            DueTo,
+            /// <summary>
+            /// this condition follows the identified condition/procedure/substance, but it is not known whether they are causually linked.
+            /// </summary>
             [EnumLiteral("following")]
-            Following, // this condition follows the identified condition/procedure/substance, but it is not known whether they are causually linked.
+            Following,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConditionRelatedItemComponent")]
         [DataContract]
         public partial class ConditionRelatedItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -95,6 +110,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> _TypeElement;
             
+            /// <summary>
+            /// due-to | following
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Condition.ConditionRelationshipType? Type
@@ -138,9 +157,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConditionEvidenceComponent")]
         [DataContract]
         public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -174,9 +190,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConditionStageComponent")]
         [DataContract]
         public partial class ConditionStageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -210,9 +223,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ConditionLocationComponent")]
         [DataContract]
         public partial class ConditionLocationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -241,6 +251,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DetailElement;
             
+            /// <summary>
+            /// Precise location details
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Detail
@@ -324,6 +338,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Date _DateAssertedElement;
         
+        /// <summary>
+        /// When first detected/suspected/entered
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateAsserted
@@ -377,6 +395,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Condition.ConditionStatus> _StatusElement;
         
+        /// <summary>
+        /// provisional | working | confirmed | refuted
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Condition.ConditionStatus? Status
@@ -505,6 +527,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
+        /// <summary>
+        /// Additional information about the Condition
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Notes

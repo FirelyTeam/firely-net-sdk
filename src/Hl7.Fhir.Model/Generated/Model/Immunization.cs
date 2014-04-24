@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,9 +47,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Immunization : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationVaccinationProtocolComponent")]
         [DataContract]
         public partial class ImmunizationVaccinationProtocolComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -67,6 +64,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _DoseSequenceElement;
             
+            /// <summary>
+            /// What dose number within series?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DoseSequence
@@ -94,6 +95,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// Details of vaccine protocol
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -134,6 +139,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _SeriesElement;
             
+            /// <summary>
+            /// Name of vaccine series
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Series
@@ -161,6 +170,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _SeriesDosesElement;
             
+            /// <summary>
+            /// Recommended number of doses for immunity
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? SeriesDoses
@@ -217,9 +230,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationExplanationComponent")]
         [DataContract]
         public partial class ImmunizationExplanationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -253,9 +263,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("ImmunizationReactionComponent")]
         [DataContract]
         public partial class ImmunizationReactionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -272,6 +279,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
+            /// <summary>
+            /// When did reaction start?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
@@ -312,6 +323,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
             
+            /// <summary>
+            /// Was reaction self-reported?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Reported
@@ -356,6 +371,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
+        /// <summary>
+        /// Vaccination administration date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
@@ -411,6 +430,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _RefusedIndicatorElement;
         
+        /// <summary>
+        /// Was immunization refused?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? RefusedIndicator
@@ -439,6 +462,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
         
+        /// <summary>
+        /// Is this a self-reported record?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Reported
@@ -518,6 +545,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _LotNumberElement;
         
+        /// <summary>
+        /// Vaccine lot number
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LotNumber
@@ -545,6 +576,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Date _ExpirationDateElement;
         
+        /// <summary>
+        /// Vaccine expiration date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ExpirationDate

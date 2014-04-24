@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,22 +53,46 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("EncounterClass")]
         public enum EncounterClass
         {
+            /// <summary>
+            /// An encounter during which the patient is hospitalized and stays overnight.
+            /// </summary>
             [EnumLiteral("inpatient")]
-            Inpatient, // An encounter during which the patient is hospitalized and stays overnight.
+            Inpatient,
+            /// <summary>
+            /// An encounter during which the patient is not hospitalized overnight.
+            /// </summary>
             [EnumLiteral("outpatient")]
-            Outpatient, // An encounter during which the patient is not hospitalized overnight.
+            Outpatient,
+            /// <summary>
+            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
+            /// </summary>
             [EnumLiteral("ambulatory")]
-            Ambulatory, // An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
+            Ambulatory,
+            /// <summary>
+            /// An encounter where the patient needs urgent care.
+            /// </summary>
             [EnumLiteral("emergency")]
-            Emergency, // An encounter where the patient needs urgent care.
+            Emergency,
+            /// <summary>
+            /// An encounter where the practitioner visits the patient at his/her home.
+            /// </summary>
             [EnumLiteral("home")]
-            Home, // An encounter where the practitioner visits the patient at his/her home.
+            Home,
+            /// <summary>
+            /// An encounter taking place outside the regular environment for giving care.
+            /// </summary>
             [EnumLiteral("field")]
-            Field, // An encounter taking place outside the regular environment for giving care.
+            Field,
+            /// <summary>
+            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
+            /// </summary>
             [EnumLiteral("daytime")]
-            Daytime, // An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
+            Daytime,
+            /// <summary>
+            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
+            /// </summary>
             [EnumLiteral("virtual")]
-            Virtual, // An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
+            Virtual,
         }
         
         /// <summary>
@@ -77,21 +101,33 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("EncounterState")]
         public enum EncounterState
         {
+            /// <summary>
+            /// The Encounter has not yet started.
+            /// </summary>
             [EnumLiteral("planned")]
-            Planned, // The Encounter has not yet started.
+            Planned,
+            /// <summary>
+            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
+            InProgress,
+            /// <summary>
+            /// The Encounter has begun, but the patient is temporarily on leave.
+            /// </summary>
             [EnumLiteral("onleave")]
-            Onleave, // The Encounter has begun, but the patient is temporarily on leave.
+            Onleave,
+            /// <summary>
+            /// The Encounter has ended.
+            /// </summary>
             [EnumLiteral("finished")]
-            Finished, // The Encounter has ended.
+            Finished,
+            /// <summary>
+            /// The Encounter has ended before it has begun.
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The Encounter has ended before it has begun.
+            Cancelled,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("EncounterHospitalizationComponent")]
         [DataContract]
         public partial class EncounterHospitalizationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -246,6 +282,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _ReAdmissionElement;
             
+            /// <summary>
+            /// Is this hospitalization a readmission?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? ReAdmission
@@ -264,9 +304,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("EncounterHospitalizationAccomodationComponent")]
         [DataContract]
         public partial class EncounterHospitalizationAccomodationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -299,9 +336,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("EncounterLocationComponent")]
         [DataContract]
         public partial class EncounterLocationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -336,9 +370,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("EncounterParticipantComponent")]
         [DataContract]
         public partial class EncounterParticipantComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -398,6 +429,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
         
+        /// <summary>
+        /// planned | in progress | onleave | finished | cancelled
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Encounter.EncounterState? Status
@@ -426,6 +461,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Encounter.EncounterClass> _ClassElement;
         
+        /// <summary>
+        /// inpatient | outpatient | ambulatory | emergency +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Encounter.EncounterClass? Class

@@ -41,6 +41,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
+    <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.Api.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">

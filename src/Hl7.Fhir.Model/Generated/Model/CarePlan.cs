@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,21 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CarePlanStatus")]
         public enum CarePlanStatus
         {
+            /// <summary>
+            /// The plan is in development or awaiting use but is not yet intended to be acted upon.
+            /// </summary>
             [EnumLiteral("planned")]
-            Planned, // The plan is in development or awaiting use but is not yet intended to be acted upon.
+            Planned,
+            /// <summary>
+            /// The plan is intended to be followed and used as part of patient care.
+            /// </summary>
             [EnumLiteral("active")]
-            Active, // The plan is intended to be followed and used as part of patient care.
+            Active,
+            /// <summary>
+            /// The plan is no longer in use and is not expected to be followed or used in patient care.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // The plan is no longer in use and is not expected to be followed or used in patient care.
+            Completed,
         }
         
         /// <summary>
@@ -67,20 +76,41 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CarePlanActivityCategory")]
         public enum CarePlanActivityCategory
         {
+            /// <summary>
+            /// Plan for the patient to consume food of a specified nature.
+            /// </summary>
             [EnumLiteral("diet")]
-            Diet, // Plan for the patient to consume food of a specified nature.
+            Diet,
+            /// <summary>
+            /// Plan for the patient to consume/receive a drug, vaccine or other product.
+            /// </summary>
             [EnumLiteral("drug")]
-            Drug, // Plan for the patient to consume/receive a drug, vaccine or other product.
+            Drug,
+            /// <summary>
+            /// Plan to meet or communicate with the patient (in-patient, out-patient, phone call, etc.).
+            /// </summary>
             [EnumLiteral("encounter")]
-            Encounter, // Plan to meet or communicate with the patient (in-patient, out-patient, phone call, etc.).
+            Encounter,
+            /// <summary>
+            /// Plan to capture information about a patient (vitals, labs, diagnostic images, etc.).
+            /// </summary>
             [EnumLiteral("observation")]
-            Observation, // Plan to capture information about a patient (vitals, labs, diagnostic images, etc.).
+            Observation,
+            /// <summary>
+            /// Plan to modify the patient in some way (surgery, physiotherapy, education, counseling, etc.).
+            /// </summary>
             [EnumLiteral("procedure")]
-            Procedure, // Plan to modify the patient in some way (surgery, physiotherapy, education, counseling, etc.).
+            Procedure,
+            /// <summary>
+            /// Plan to provide something to the patient (medication, medical supply, etc.).
+            /// </summary>
             [EnumLiteral("supply")]
-            Supply, // Plan to provide something to the patient (medication, medical supply, etc.).
+            Supply,
+            /// <summary>
+            /// Some other form of action.
+            /// </summary>
             [EnumLiteral("other")]
-            Other, // Some other form of action.
+            Other,
         }
         
         /// <summary>
@@ -89,14 +119,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CarePlanGoalStatus")]
         public enum CarePlanGoalStatus
         {
+            /// <summary>
+            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
+            InProgress,
+            /// <summary>
+            /// The goal has been met and no further action is needed.
+            /// </summary>
             [EnumLiteral("achieved")]
-            Achieved, // The goal has been met and no further action is needed.
+            Achieved,
+            /// <summary>
+            /// The goal has been met, but ongoing activity is needed to sustain the goal objective.
+            /// </summary>
             [EnumLiteral("sustaining")]
-            Sustaining, // The goal has been met, but ongoing activity is needed to sustain the goal objective.
+            Sustaining,
+            /// <summary>
+            /// The goal is no longer being sought.
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The goal is no longer being sought.
+            Cancelled,
         }
         
         /// <summary>
@@ -105,23 +147,38 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("CarePlanActivityStatus")]
         public enum CarePlanActivityStatus
         {
+            /// <summary>
+            /// Activity is planned but no action has yet been taken.
+            /// </summary>
             [EnumLiteral("not started")]
-            NotStarted, // Activity is planned but no action has yet been taken.
+            NotStarted,
+            /// <summary>
+            /// Appointment or other booking has occurred but activity has not yet begun.
+            /// </summary>
             [EnumLiteral("scheduled")]
-            Scheduled, // Appointment or other booking has occurred but activity has not yet begun.
+            Scheduled,
+            /// <summary>
+            /// Activity has been started but is not yet complete.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // Activity has been started but is not yet complete.
+            InProgress,
+            /// <summary>
+            /// Activity was started but has temporarily ceased with an expectation of resumption at a future time.
+            /// </summary>
             [EnumLiteral("on hold")]
-            OnHold, // Activity was started but has temporarily ceased with an expectation of resumption at a future time.
+            OnHold,
+            /// <summary>
+            /// The activities have been completed (more or less) as planned.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // The activities have been completed (more or less) as planned.
+            Completed,
+            /// <summary>
+            /// The activities have been ended prior to completion (perhaps even before they were started).
+            /// </summary>
             [EnumLiteral("cancelled")]
-            Cancelled, // The activities have been ended prior to completion (perhaps even before they were started).
+            Cancelled,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CarePlanGoalComponent")]
         [DataContract]
         public partial class CarePlanGoalComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -139,6 +196,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
+            /// <summary>
+            /// What's the desired outcome?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
@@ -166,6 +227,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus> _StatusElement;
             
+            /// <summary>
+            /// in progress | achieved | sustaining | cancelled
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus? Status
@@ -193,6 +258,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NotesElement;
             
+            /// <summary>
+            /// Comments about the goal
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Notes
@@ -225,9 +294,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CarePlanParticipantComponent")]
         [DataContract]
         public partial class CarePlanParticipantComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -261,9 +327,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CarePlanActivityComponent")]
         [DataContract]
         public partial class CarePlanActivityComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -281,6 +344,10 @@ namespace Hl7.Fhir.Model
             }
             private List<Hl7.Fhir.Model.IdRef> _GoalElement;
             
+            /// <summary>
+            /// Goals this activity relates to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Goal
@@ -308,6 +375,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> _StatusElement;
             
+            /// <summary>
+            /// not started | scheduled | in progress | on hold | completed | cancelled
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
@@ -336,6 +407,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _ProhibitedElement;
             
+            /// <summary>
+            /// Do NOT do
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Prohibited
@@ -377,6 +452,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _NotesElement;
             
+            /// <summary>
+            /// Comments about the activity
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Notes
@@ -420,9 +499,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("CarePlanActivitySimpleComponent")]
         [DataContract]
         public partial class CarePlanActivitySimpleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -440,6 +516,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityCategory> _CategoryElement;
             
+            /// <summary>
+            /// diet | drug | encounter | observation | procedure | supply | other
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CarePlan.CarePlanActivityCategory? Category
@@ -556,6 +636,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
+            /// <summary>
+            /// Extra info on activity occurrence
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Details
@@ -613,6 +697,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> _StatusElement;
         
+        /// <summary>
+        /// planned | active | completed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CarePlan.CarePlanStatus? Status
@@ -652,6 +740,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirDateTime _ModifiedElement;
         
+        /// <summary>
+        /// When last updated
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Modified
@@ -732,6 +824,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
+        /// <summary>
+        /// Comments about the plan
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Notes

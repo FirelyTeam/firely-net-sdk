@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,19 +53,28 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("QueryOutcome")]
         public enum QueryOutcome
         {
+            /// <summary>
+            /// The query was processed successfully.
+            /// </summary>
             [EnumLiteral("ok")]
-            Ok, // The query was processed successfully.
+            Ok,
+            /// <summary>
+            /// The query was processed successfully, but some additional limitations were added.
+            /// </summary>
             [EnumLiteral("limited")]
-            Limited, // The query was processed successfully, but some additional limitations were added.
+            Limited,
+            /// <summary>
+            /// The server refused to process the query.
+            /// </summary>
             [EnumLiteral("refused")]
-            Refused, // The server refused to process the query.
+            Refused,
+            /// <summary>
+            /// The server tried to process the query, but some error occurred.
+            /// </summary>
             [EnumLiteral("error")]
-            Error, // The server tried to process the query, but some error occurred.
+            Error,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("QueryResponseComponent")]
         [DataContract]
         public partial class QueryResponseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -83,6 +92,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirUri _IdentifierElement;
             
+            /// <summary>
+            /// Links response to source query
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public System.Uri Identifier
@@ -111,6 +124,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.Query.QueryOutcome> _OutcomeElement;
             
+            /// <summary>
+            /// ok | limited | refused | error
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Query.QueryOutcome? Outcome
@@ -138,6 +155,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.Integer _TotalElement;
             
+            /// <summary>
+            /// Total number of matching records
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Total
@@ -248,6 +269,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _IdentifierElement;
         
+        /// <summary>
+        /// Links query and its response(s)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri Identifier

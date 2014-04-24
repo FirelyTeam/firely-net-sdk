@@ -75,12 +75,13 @@ namespace Hl7.Fhir.Model
         /// Filter all BundleEntries with the given id.
         /// </summary>
         /// <param name="id">Id of the Resource, as given in the BundleEntry's id</param>
+        /// <param name="entries">List of bundle entries to filter on</param>
         /// <returns>A list of BundleEntries with the given id, or an empty list if none were found.</returns>
-        public static IEnumerable<BundleEntry> ById(this IEnumerable<BundleEntry> bes, Uri id)
+        public static IEnumerable<BundleEntry> ById(this IEnumerable<BundleEntry> entries, Uri id)
         {
             if (!id.IsAbsoluteUri) throw Error.Argument("id", "Id must be an absolute uri");
 
-            return bes.Where(be => Uri.Equals(be.Id, id));
+            return entries.Where(be => Uri.Equals(be.Id, id));
         }
 
 
@@ -88,6 +89,7 @@ namespace Hl7.Fhir.Model
         /// Filter all ResourceEntries with the given id.
         /// </summary>
         /// <typeparam name="T">Type of Resource to filter</typeparam>
+        /// <param name="res">List of resources to filter on</param>
         /// <param name="id">Id of the Resource, as given in the ResourceEntry's id</param>
         /// <returns>A list of typed ResourceEntries with the given id, or an empty list if none were found.</returns>
         public static IEnumerable<ResourceEntry<T>> ById<T>(this IEnumerable<ResourceEntry<T>> res, Uri id) where T : Resource, new()
@@ -101,13 +103,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Find the BundleEntry with a given self-link id.
         /// </summary>
+        /// <param name="entries">List of bundle entries to filter on</param>
         /// <param name="self">Sel-link id of the Resource, as given in the BundleEntry's link with rel='self'.</param>
         /// <returns>A list of BundleEntries with the given self-link id, or an empty list if none were found.</returns>
-        public static BundleEntry BySelfLink(this IEnumerable<BundleEntry> bes, Uri self)
+        public static BundleEntry BySelfLink(this IEnumerable<BundleEntry> entries, Uri self)
         {
             if (!self.IsAbsoluteUri) throw Error.Argument("self", "Must be an absolute uri");
 
-            return bes.FirstOrDefault(be => Uri.Equals(be.SelfLink, self));
+            return entries.FirstOrDefault(be => Uri.Equals(be.SelfLink, self));
         }
 
 
@@ -115,6 +118,7 @@ namespace Hl7.Fhir.Model
         /// Find the ResourceEntry with a given self-link id.
         /// </summary>
         /// <typeparam name="T">Type of Resource to find</typeparam>
+        /// <param name="res">List of resources to filter on</param>
         /// <param name="self">Sel-link id of the Resource, as given in the BundleEntry's link with rel='self'.</param>
         /// <returns>A list of ResourceEntries with the given self-link id. Returns
         /// the empty list if none were found.</returns>
@@ -129,11 +133,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Filter all BundleEntries that have a given tag.
         /// </summary>
+        /// <param name="entries">List of bundle entries to filter on</param>
         /// <param name="tag">Tag to filter Resources on</param>
         /// <returns>A list of BundleEntries having the given tag, or an empty list if none were found.</returns>
-        public static IEnumerable<BundleEntry> ByTag(this IEnumerable<BundleEntry> bes, Tag tag)
+        public static IEnumerable<BundleEntry> ByTag(this IEnumerable<BundleEntry> entries, Tag tag)
         {
-            return bes.Where(be => be.Tags != null && be.Tags.Contains(tag));
+            return entries.Where(be => be.Tags != null && be.Tags.Contains(tag));
         }
 
 
@@ -141,6 +146,7 @@ namespace Hl7.Fhir.Model
         /// Filter all ResourceEntries that have a given tag.
         /// </summary>
         /// <typeparam name="T">Type of Resource to filter</typeparam>
+        /// <param name="res">List of resources to filter on</param>
         /// <param name="tag">Tag to filter Resources on</param>
         /// <returns>A list of typed ResourceEntries having the given tag, or an empty list if none were found.</returns>
         public static IEnumerable<ResourceEntry<T>> ByTag<T>(this IEnumerable<ResourceEntry<T>> res, Tag tag) where T : Resource, new()

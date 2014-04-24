@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,38 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("GroupType")]
         public enum GroupType
         {
+            /// <summary>
+            /// Group contains "person" Patient resources.
+            /// </summary>
             [EnumLiteral("person")]
-            Person, // Group contains "person" Patient resources.
+            Person,
+            /// <summary>
+            /// Group contains "animal" Patient resources.
+            /// </summary>
             [EnumLiteral("animal")]
-            Animal, // Group contains "animal" Patient resources.
+            Animal,
+            /// <summary>
+            /// Group contains healthcare practitioner resources.
+            /// </summary>
             [EnumLiteral("practitioner")]
-            Practitioner, // Group contains healthcare practitioner resources.
+            Practitioner,
+            /// <summary>
+            /// Group contains Device resources.
+            /// </summary>
             [EnumLiteral("device")]
-            Device, // Group contains Device resources.
+            Device,
+            /// <summary>
+            /// Group contains Medication resources.
+            /// </summary>
             [EnumLiteral("medication")]
-            Medication, // Group contains Medication resources.
+            Medication,
+            /// <summary>
+            /// Group contains Substance resources.
+            /// </summary>
             [EnumLiteral("substance")]
-            Substance, // Group contains Substance resources.
+            Substance,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("GroupCharacteristicComponent")]
         [DataContract]
         public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -114,6 +129,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
             
+            /// <summary>
+            /// Group includes or excludes
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Exclude
@@ -157,6 +176,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Group.GroupType> _TypeElement;
         
+        /// <summary>
+        /// person | animal | practitioner | device | medication | substance
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Group.GroupType? Type
@@ -185,6 +208,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _ActualElement;
         
+        /// <summary>
+        /// Descriptive or actual
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Actual
@@ -224,6 +251,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Label for Group
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -251,6 +282,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _QuantityElement;
         
+        /// <summary>
+        /// Number of members
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Quantity

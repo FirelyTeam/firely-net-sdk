@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creates an instance of a typed ResourceEntry&lt;T&gt;, based on the actual type of the passed resource parameter
         /// </summary>
-        /// <param name="resource"></param>
+        /// <param name="type">The type of entry (T in ResourceEntry&lt;T&gt;) to create</param>
         /// <returns></returns>
         public static ResourceEntry Create(Type type)
         {

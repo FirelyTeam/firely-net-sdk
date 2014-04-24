@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,14 +53,26 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ContactSystem")]
         public enum ContactSystem
         {
+            /// <summary>
+            /// The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// </summary>
             [EnumLiteral("phone")]
-            Phone, // The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            Phone,
+            /// <summary>
+            /// The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// </summary>
             [EnumLiteral("fax")]
-            Fax, // The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            Fax,
+            /// <summary>
+            /// The value is an email address.
+            /// </summary>
             [EnumLiteral("email")]
-            Email, // The value is an email address.
+            Email,
+            /// <summary>
+            /// The value is a url. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses.
+            /// </summary>
             [EnumLiteral("url")]
-            Url, // The value is a url. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses.
+            Url,
         }
         
         /// <summary>
@@ -69,16 +81,31 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("ContactUse")]
         public enum ContactUse
         {
+            /// <summary>
+            /// A communication contact at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
+            /// </summary>
             [EnumLiteral("home")]
-            Home, // A communication contact at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
+            Home,
+            /// <summary>
+            /// An office contact. First choice for business related contacts during business hours.
+            /// </summary>
             [EnumLiteral("work")]
-            Work, // An office contact. First choice for business related contacts during business hours.
+            Work,
+            /// <summary>
+            /// A temporary contact. The period can provide more detailed information.
+            /// </summary>
             [EnumLiteral("temp")]
-            Temp, // A temporary contact. The period can provide more detailed information.
+            Temp,
+            /// <summary>
+            /// This contact is no longer in use (or was never correct, but retained for records).
+            /// </summary>
             [EnumLiteral("old")]
-            Old, // This contact is no longer in use (or was never correct, but retained for records).
+            Old,
+            /// <summary>
+            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
+            /// </summary>
             [EnumLiteral("mobile")]
-            Mobile, // A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
+            Mobile,
         }
         
         /// <summary>
@@ -93,6 +120,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Contact.ContactSystem> _SystemElement;
         
+        /// <summary>
+        /// phone | fax | email | url
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Contact.ContactSystem? System
@@ -120,6 +151,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _ValueElement;
         
+        /// <summary>
+        /// The actual contact details
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Value
@@ -147,6 +182,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Contact.ContactUse> _UseElement;
         
+        /// <summary>
+        /// home | work | temp | old | mobile - purpose of this address
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Contact.ContactUse? Use

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,6 +60,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Code _ContentTypeElement;
         
+        /// <summary>
+        /// Mime type of the content, with charset etc.
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ContentType
@@ -87,6 +91,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Code _LanguageElement;
         
+        /// <summary>
+        /// Human language of the content (BCP-47)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Language
@@ -114,6 +122,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Base64Binary _DataElement;
         
+        /// <summary>
+        /// Data inline, base64ed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Data
@@ -141,6 +153,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
+        /// <summary>
+        /// Uri where the data can be found
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public System.Uri Url
@@ -168,6 +184,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Integer _SizeElement;
         
+        /// <summary>
+        /// Number of bytes of content (if url provided)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Size
@@ -195,6 +215,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.Base64Binary _HashElement;
         
+        /// <summary>
+        /// Hash of the data (sha-1, base64ed )
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Hash
@@ -222,6 +246,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
+        /// <summary>
+        /// Label to display in place of the data
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title

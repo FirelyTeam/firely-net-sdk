@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,21 +53,33 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MedicationAdministrationStatus")]
         public enum MedicationAdministrationStatus
         {
+            /// <summary>
+            /// The administration has started but has not yet completed.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // The administration has started but has not yet completed.
+            InProgress,
+            /// <summary>
+            /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
+            /// </summary>
             [EnumLiteral("on hold")]
-            OnHold, // Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
+            OnHold,
+            /// <summary>
+            /// All actions that are implied by the administration have occurred.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // All actions that are implied by the administration have occurred.
+            Completed,
+            /// <summary>
+            /// The administration was entered in error and therefore nullified.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The administration was entered in error and therefore nullified.
+            EnteredInError,
+            /// <summary>
+            /// Actions implied by the administration have been permanently halted, before all of them occurred.
+            /// </summary>
             [EnumLiteral("stopped")]
-            Stopped, // Actions implied by the administration have been permanently halted, before all of them occurred.
+            Stopped,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationAdministrationDosageComponent")]
         [DataContract]
         public partial class MedicationAdministrationDosageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -199,6 +211,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus> _StatusElement;
         
+        /// <summary>
+        /// in progress | on hold | completed | entered in error | stopped
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus? Status
@@ -281,6 +297,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _WasNotGivenElement;
         
+        /// <summary>
+        /// True if medication not administered
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? WasNotGiven

@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Rest
         /// Parses the possibly escaped key=value query parameter into a (key,value) Tuple
         /// </summary>
         /// <param name="param"></param>
-        /// <returns>A Tuple<string,string> containing the key and value. Value maybe null if
+        /// <returns>A Tuple&lt;string,string&gt; containing the key and value. Value maybe null if
         /// only the key was specified as a query parameter.</returns>
         internal static Tuple<string, string> SplitParam(string param)
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,15 +53,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MedicationKind")]
         public enum MedicationKind
         {
+            /// <summary>
+            /// The medication is a product.
+            /// </summary>
             [EnumLiteral("product")]
-            Product, // The medication is a product.
+            Product,
+            /// <summary>
+            /// The medication is a package - a contained group of one of more products.
+            /// </summary>
             [EnumLiteral("package")]
-            Package, // The medication is a package - a contained group of one of more products.
+            Package,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationPackageContentComponent")]
         [DataContract]
         public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -95,9 +98,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationPackageComponent")]
         [DataContract]
         public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -130,9 +130,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationProductIngredientComponent")]
         [DataContract]
         public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -166,9 +163,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationProductComponent")]
         [DataContract]
         public partial class MedicationProductComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -213,6 +207,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirString _NameElement;
         
+        /// <summary>
+        /// Common / Commercial name
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
@@ -252,6 +250,10 @@ namespace Hl7.Fhir.Model
         }
         private Hl7.Fhir.Model.FhirBoolean _IsBrandElement;
         
+        /// <summary>
+        /// True if a brand
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IsBrand
@@ -292,6 +294,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.Medication.MedicationKind> _KindElement;
         
+        /// <summary>
+        /// product | package
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Medication.MedicationKind? Kind

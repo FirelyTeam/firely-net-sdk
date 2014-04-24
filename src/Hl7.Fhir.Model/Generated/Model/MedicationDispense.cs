@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 17, 2014 11:39+0200 for FHIR v0.80
+// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,21 +53,33 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("MedicationDispenseStatus")]
         public enum MedicationDispenseStatus
         {
+            /// <summary>
+            /// The dispense has started but has not yet completed.
+            /// </summary>
             [EnumLiteral("in progress")]
-            InProgress, // The dispense has started but has not yet completed.
+            InProgress,
+            /// <summary>
+            /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
+            /// </summary>
             [EnumLiteral("on hold")]
-            OnHold, // Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
+            OnHold,
+            /// <summary>
+            /// All actions that are implied by the dispense have occurred.
+            /// </summary>
             [EnumLiteral("completed")]
-            Completed, // All actions that are implied by the dispense have occurred.
+            Completed,
+            /// <summary>
+            /// The dispense was entered in error and therefore nullified.
+            /// </summary>
             [EnumLiteral("entered in error")]
-            EnteredInError, // The dispense was entered in error and therefore nullified.
+            EnteredInError,
+            /// <summary>
+            /// Actions implied by the dispense have been permanently halted, before all of them occurred.
+            /// </summary>
             [EnumLiteral("stopped")]
-            Stopped, // Actions implied by the dispense have been permanently halted, before all of them occurred.
+            Stopped,
         }
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationDispenseDispenseDosageComponent")]
         [DataContract]
         public partial class MedicationDispenseDispenseDosageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -185,9 +197,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationDispenseSubstitutionComponent")]
         [DataContract]
         public partial class MedicationDispenseSubstitutionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -235,9 +244,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        /// <summary>
-        /// null
-        /// </summary>
         [FhirType("MedicationDispenseDispenseComponent")]
         [DataContract]
         public partial class MedicationDispenseDispenseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -266,6 +272,10 @@ namespace Hl7.Fhir.Model
             }
             private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
             
+            /// <summary>
+            /// in progress | on hold | completed | entered in error | stopped
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus? Status
@@ -330,6 +340,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _WhenPreparedElement;
             
+            /// <summary>
+            /// Dispense processing time
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string WhenPrepared
@@ -357,6 +371,10 @@ namespace Hl7.Fhir.Model
             }
             private Hl7.Fhir.Model.FhirDateTime _WhenHandedOverElement;
             
+            /// <summary>
+            /// Handover time
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string WhenHandedOver
@@ -439,6 +457,10 @@ namespace Hl7.Fhir.Model
         }
         private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
         
+        /// <summary>
+        /// in progress | on hold | completed | entered in error | stopped
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus? Status
