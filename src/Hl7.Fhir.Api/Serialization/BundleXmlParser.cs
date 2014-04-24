@@ -220,10 +220,17 @@ namespace Hl7.Fhir.Serialization
         {
             string contentType = SerializationUtil.StringValueOrNull(content.Attribute(XATOM_CONTENT_TYPE));
 
-            if (contentType != "text/xml")
+			if (contentType != "text/xml" && contentType != "application/xml+fhir")
             {
-                throw Error.Format("Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
+				throw Error.Format("Bundle Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
             }
+
+#if DEBUG
+			if (contentType == "application/xml+fhir")
+			{
+				System.Diagnostics.Debug.WriteLine("Bundle Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
+			}
+#endif
 
             XElement resource = null;
 
