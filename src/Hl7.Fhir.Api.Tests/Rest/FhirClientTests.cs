@@ -170,6 +170,44 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(result.Entries.Count > 0);
         }
 
+#if PORTABLE45
+        [TestMethod, TestCategory("FhirClient")]
+        public void SearchAsync()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            Bundle result;
+
+            result = client.SearchAsync<DiagnosticReport>().Result;
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entries.Count() > 10, "Test should use testdata with more than 10 reports");
+
+            result = client.SearchAsync<DiagnosticReport>(pageSize: 10).Result;
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entries.Count <= 10);
+
+            var withSubject = 
+                result.Entries.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Resource.Subject != null);
+            Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
+
+            ResourceIdentity ri = new ResourceIdentity(withSubject.Id);
+
+            result = client.SearchByIdAsync<DiagnosticReport>(ri.Id, 
+                        includes: new string[] { "DiagnosticReport.subject" }).Result;
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Entries.Count);  // should have subject too
+
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(DiagnosticReport).GetCollectionName()));
+            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
+                        typeof(Patient).GetCollectionName()));
+
+            result = client.SearchAsync<Patient>(new string[] { "name=Everywoman", "name=Eve" }).Result;
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entries.Count > 0);
+        }
+#endif
 
         [TestMethod, TestCategory("FhirClient")]
         public void Paging()
