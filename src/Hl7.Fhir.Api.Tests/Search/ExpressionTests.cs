@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Hl7.Fhir.Search;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests
 {
@@ -71,7 +72,20 @@ namespace Hl7.Fhir.Tests
             crit = crit.Operand as Criterium;
             Assert.IsTrue(crit.Type == Operator.EQ);
             Assert.AreEqual("text", crit.Modifier);
-            Assert.IsTrue(crit.Operand is UntypedValue);            
+            Assert.IsTrue(crit.Operand is UntypedValue);
+        }
+
+        [TestMethod]
+        public void ParseCriteriumFromParameter()
+        {
+            Extension parameter = Query.BuildParamExtension("Subject.name", "Teun");
+            Criterium sut = Criterium.Parse(parameter);
+            Assert.AreEqual("Subject", sut.ParamName);
+            Assert.IsTrue(sut.Operand is Criterium);
+
+            Criterium sub = sut.Operand as Criterium;
+            Assert.AreEqual("Teun", sub.Operand.ToString());
+            Assert.AreEqual(Operator.EQ, sub.Type);
         }
 
         [TestMethod]
@@ -99,20 +113,16 @@ namespace Hl7.Fhir.Tests
         [TestMethod]
         public void SerializeCriterium()
         {
-            var crit = new Criterium
-            {  ParamName = "paramX", Modifier = "modif1", Operand = new NumberValue(18), Type = Operator.GTE };
+            var crit = new Criterium { ParamName = "paramX", Modifier = "modif1", Operand = new NumberValue(18), Type = Operator.GTE };
             Assert.AreEqual("paramX:modif1=>=18", crit.ToString());
 
-            crit = new Criterium
-            { ParamName = "paramX", Operand = new NumberValue(18) };
+            crit = new Criterium { ParamName = "paramX", Operand = new NumberValue(18) };
             Assert.AreEqual("paramX=18", crit.ToString());
 
-            crit = new Criterium
-            { ParamName = "paramX",Type = Operator.ISNULL };
+            crit = new Criterium { ParamName = "paramX", Type = Operator.ISNULL };
             Assert.AreEqual("paramX:missing=true", crit.ToString());
 
-            crit = new Criterium
-            { ParamName = "paramX", Type = Operator.NOTNULL };
+            crit = new Criterium { ParamName = "paramX", Type = Operator.NOTNULL };
             Assert.AreEqual("paramX:missing=false", crit.ToString());
         }
 
@@ -233,7 +243,7 @@ namespace Hl7.Fhir.Tests
 
             var p6 = QuantityValue.Parse(@"3.141|http://system.com/id\$4|\$/d");
             Assert.AreEqual(3.141M, p6.Number);
-            Assert.AreEqual("http://system.com/id$4",p6.Namespace);
+            Assert.AreEqual("http://system.com/id$4", p6.Namespace);
             Assert.AreEqual("$/d", p6.Unit);
 
             var crit = Criterium.Parse("paramX=3.14||mg");
@@ -257,7 +267,7 @@ namespace Hl7.Fhir.Tests
             CollectionAssert.AreEquivalent(res, new string[] { "part1", String.Empty });
 
             res = "$part2".SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { String.Empty,"part2" });
+            CollectionAssert.AreEquivalent(res, new string[] { String.Empty, "part2" });
 
             res = "$".SplitNotEscaped('$');
             CollectionAssert.AreEquivalent(res, new string[] { String.Empty, String.Empty });
@@ -319,8 +329,6 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(14.8M, ((UntypedValue)comp1.Components[1]).AsNumberValue().Value);
             Assert.AreEqual("http://somesuch.org|NOK", ((UntypedValue)crit1.Choices[1]).AsTokenValue().ToString());
         }
-
-
 
         //[TestMethod]
         //public void HandleCombinedParam()

@@ -52,6 +52,10 @@ namespace Hl7.Fhir.Search
             return Parse(keyVal.Item1, keyVal.Item2);
         }
 
+        public static Criterium Parse(Extension parameter)
+        {
+            return Parse(Query.ExtractParamKey(parameter), Query.ExtractParamValue(parameter));
+        }
 
         public override string ToString()
         {

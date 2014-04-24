@@ -195,6 +195,10 @@ namespace Hl7.Fhir.Serialization
             return ParseBundle(XmlReaderFromString(xml));
         }
 
+        public static Query ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
+        {
+            return QueryParser.Load(resource, parameters);
+        }
       
         internal static XmlReader XmlReaderFromString(string xml)
         {
