@@ -1797,9 +1797,16 @@ namespace Hl7.Fhir.Rest
 			request.UseFormatParameter = this.UseFormatParam;
 			FhirResponse result = null;
 			{
-				HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync(PreferredFormat);
-				result = FhirResponse.FromHttpWebResponse(response);
-				response.Dispose();
+				try
+				{
+					HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync(PreferredFormat);
+					result = FhirResponse.FromHttpWebResponse(response);
+					response.Dispose();
+				}
+				catch (WebException ex)
+				{
+					result = FhirResponse.FromHttpWebResponse(ex.Response as HttpWebResponse);
+				}
 			}
 
 			LastResponseDetails = result;
@@ -1830,7 +1837,11 @@ namespace Hl7.Fhir.Rest
 				{
 #if DEBUG
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-					System.Diagnostics.Debug.WriteLine(outcome.Text);
+					if (outcome != null && outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
+					{
+						System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
+						System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+					}
 					foreach (var issue in outcome.Issue)
 					{
 						System.Diagnostics.Debug.WriteLine("	" + issue.Details);

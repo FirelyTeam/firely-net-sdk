@@ -267,6 +267,67 @@ namespace Hl7.Fhir.Tests
             }
         }
 
+#if PORTABLE45
+		/// <summary>
+		/// This test is also used as a "setup" test for the History test.
+		/// If you change the number of operations in here, this will make the History test fail.
+		/// </summary>
+		[TestMethod, TestCategory("FhirClient")]
+		public void CreateEditDeleteAsync()
+		{
+			var furore = new Organization
+			{
+				Name = "Furore",
+				Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
+				Telecom = new List<Contact> { new Contact { System = Contact.ContactSystem.Phone, Value = "+31-20-3467171" } }
+			};
+
+			FhirClient client = new FhirClient(testEndpoint);
+			var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
+
+			var fe = client.CreateAsync<Organization>(furore, tags: tags, refresh: true).Result;
+
+			Assert.IsNotNull(furore);
+			Assert.IsNotNull(fe);
+			Assert.IsNotNull(fe.Id);
+			Assert.IsNotNull(fe.SelfLink);
+			Assert.AreNotEqual(fe.Id, fe.SelfLink);
+			Assert.IsNotNull(fe.Tags);
+			Assert.AreEqual(1, fe.Tags.Count(), "Tag count on new organization record don't match");
+			Assert.AreEqual(fe.Tags.First(), tags[0]);
+			createdTestOrganizationUrl = fe.Id;
+
+			fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
+			var fe2 = client.UpdateAsync(fe, refresh: true).Result;
+
+			Assert.IsNotNull(fe2);
+			Assert.AreEqual(fe.Id, fe2.Id);
+			Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
+			Assert.AreEqual(2, fe2.Resource.Identifier.Count);
+
+			Assert.IsNotNull(fe2.Tags);
+			Assert.AreEqual(1, fe2.Tags.Count(), "Tag count on updated organization record don't match");
+			Assert.AreEqual(fe2.Tags.First(), tags[0]);
+
+			fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
+			var fe3 = client.UpdateAsync(fe2.Id, fe.Resource, refresh: true).Result;
+			Assert.IsNotNull(fe3);
+			Assert.AreEqual(3, fe3.Resource.Identifier.Count);
+
+			client.DeleteAsync(fe3).Wait();
+
+			try
+			{
+				// Get most recent version
+				fe = client.ReadAsync<Organization>(new ResourceIdentity(fe.Id)).Result;
+				Assert.Fail();
+			}
+			catch
+			{
+				Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.Gone);
+			}
+		}
+#endif
 
         [TestMethod, TestCategory("FhirClient")]
         public void History()
