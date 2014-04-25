@@ -101,9 +101,7 @@ namespace Hl7.Fhir.Rest
             if(needsFormatParam)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
 
-#if DEBUG
 			System.Diagnostics.Debug.WriteLine("{0}: {1}", _method, location.ToString());
-#endif
 
             var request = createRequest(location.ToString(), _method);
 
@@ -140,9 +138,7 @@ namespace Hl7.Fhir.Rest
 			if (needsFormatParam)
 				location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
 
-#if DEBUG
 			System.Diagnostics.Debug.WriteLine("(async) {0}: {1}", _method, location.ToString());
-#endif
 
 			HttpWebRequest request = createRequest(location.ToString(), _method);
 

@@ -952,7 +952,6 @@ namespace Hl7.Fhir.Rest
 
 				if (outcome != null)
 				{
-#if DEBUG
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
 					System.Diagnostics.Debug.WriteLine(outcome.Text);
 					foreach (var issue in outcome.Issue)
@@ -960,7 +959,7 @@ namespace Hl7.Fhir.Rest
 						System.Diagnostics.Debug.WriteLine("	" + issue.Details);
 					}
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-#endif
+
 					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
 				}
 				else
@@ -1830,7 +1829,6 @@ namespace Hl7.Fhir.Rest
 
 				if (outcome != null)
 				{
-#if DEBUG
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
 					if (outcome != null && outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
 					{
@@ -1842,7 +1840,7 @@ namespace Hl7.Fhir.Rest
 						System.Diagnostics.Debug.WriteLine("	" + issue.Details);
 					}
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-#endif
+
 					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
 				}
 				else
