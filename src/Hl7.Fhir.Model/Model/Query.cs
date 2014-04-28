@@ -61,14 +61,10 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of all the search parameter that have some special meaning.
         /// Primarily used to filter to the non-special parameters.
+        /// Notice that _id, _text, _content, _tag, _profile and _security are predefined in the standard,
+        /// but not can still be parsed as regular criteria. So they are not in the RESERVED_PARAMETERS.
         /// </summary>
         public static readonly string[] RESERVED_PARAMETERS = new string[] {
-            SEARCH_PARAM_ID,
-            SEARCH_PARAM_NARRATIVE,
-            SEARCH_PARAM_CONTENT,
-            SEARCH_PARAM_TAG,
-            SEARCH_PARAM_PROFILE,
-            SEARCH_PARAM_SECURITY,
             SEARCH_PARAM_QUERY,
             SEARCH_PARAM_TYPE,
 
@@ -241,6 +237,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Returns a modifiable collection of all the parameters that are not reserved parameters.
         /// These are the parameters that can be parsed as <see cref="Hl7.Fhir.Search.Criterium"/>.
+        /// These include the resource-independent parameters _id, _text, _content, _tag, _profile and _security.
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
