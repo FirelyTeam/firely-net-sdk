@@ -3,17 +3,42 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if !PORTABLE45 || NET45
+using System.Runtime.Serialization;
+#endif
 
 namespace Hl7.Fhir.Rest
 {
-    public class ResourceIdentity : Uri
+	/// <summary>
+	/// Creates an absolute Uri representing a Resource identitity for a given resource type, id and optional version.
+	/// </summary>
+	/// <param name="endpoint">Absolute path giving the FHIR service endpoint</param>
+#if !PORTABLE45 || NET45
+	[SerializableAttribute]
+#endif
+	public class ResourceIdentity : Uri
     {
         public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) {  }
         public ResourceIdentity(Uri uri) : base(uri.ToString(), UriKind.RelativeOrAbsolute) { }
         internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
-        
 
-        /// <summary>
+		#region << Serialization Implementation >>
+#if !PORTABLE45 || NET45
+		// The default serialization is all that is required as this class does
+		// not contain any of it's own properties that are not contained in the actual Uri
+		protected ResourceIdentity(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{ 
+		}
+
+		protected virtual new void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			base.GetObjectData(info, context);
+		}
+#endif
+		#endregion
+
+		/// <summary>
         /// Creates an absolute Uri representing a Resource identitity for a given resource type, id and optional version.
         /// </summary>
         /// <param name="endpoint">Absolute path giving the FHIR service endpoint</param>
@@ -264,6 +289,4 @@ namespace Hl7.Fhir.Rest
             }
         }
     }
-
-   
 }
