@@ -18,17 +18,23 @@
     <files>
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.dll" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.xml" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.pdb" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.dll" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.xml" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.pdb" target="lib\net40\" />
 		
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.pdb" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.pdb" target="lib\net45\" />
 		
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />
     </files>
 </package>
