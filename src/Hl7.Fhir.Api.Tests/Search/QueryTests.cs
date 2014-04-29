@@ -23,5 +23,12 @@ namespace Hl7.Fhir.Test.Search
             Assert.AreEqual("ewout", Query.ExtractParamValue(q.Criteria.First()));
         }
 
+        [TestMethod]
+        public void CountSetToNullAndGet()
+        {
+            var q = new Query();
+            q.Count = null;
+            Assert.IsFalse(q.Count.HasValue);
+        }
     }
 }

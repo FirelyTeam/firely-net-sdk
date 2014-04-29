@@ -162,7 +162,8 @@ namespace Hl7.Fhir.Model
             set
             {
                 RemoveParameter(Query.SEARCH_PARAM_COUNT);
-                AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
+                if (value.HasValue)
+                    AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
             }
         }
 
