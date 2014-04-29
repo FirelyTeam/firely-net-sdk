@@ -9,17 +9,26 @@ using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Rest
 {
-	/// <summary>
-	/// Creates an absolute Uri representing a Resource identitity for a given resource type, id and optional version.
-	/// </summary>
-	/// <param name="endpoint">Absolute path giving the FHIR service endpoint</param>
 #if !PORTABLE45 || NET45
 	[SerializableAttribute]
 #endif
 	public class ResourceIdentity : Uri
     {
+        /// <summary>
+        /// Creates an Resource Identity instance for a Resource given a resource's location.
+        /// </summary>
+        /// <param name="uri">Relative or absolute location of a Resource</param>
+        /// <returns></returns>
         public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) {  }
+
+        /// <summary>
+        /// Creates an Resource Identity instance for a Resource given a resource's location.
+        /// </summary>
+        /// <param name="uri">Relative or absolute location of a Resource</param>
+        /// <returns></returns>
         public ResourceIdentity(Uri uri) : base(uri.ToString(), UriKind.RelativeOrAbsolute) { }
+
+        
         internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
 
 		#region << Serialization Implementation >>
