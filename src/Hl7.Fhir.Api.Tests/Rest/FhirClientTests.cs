@@ -66,6 +66,37 @@ namespace Hl7.Fhir.Tests
         }
 
 
+
+        class FhirClientWithHooks : FhirClient
+        {
+            internal FhirClientWithHooks(Uri endpoint) : base(endpoint) { }
+
+            internal bool HitBeforeRequest { get; set; }
+            internal bool HitAfterRequest { get; set; }
+
+            protected override void BeforeRequest(HttpWebRequest request)
+            {
+                HitBeforeRequest = true;
+            }
+
+            protected override void AfterRequest(WebResponse request)
+            {
+                HitAfterRequest = true;
+            }
+        }
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void ReadCallsHooks()
+        {
+            FhirClientWithHooks client = new FhirClientWithHooks(testEndpoint);
+
+            var loc = client.Read("Patient/1");
+
+            Assert.IsTrue(client.HitBeforeRequest);
+            Assert.IsTrue(client.HitAfterRequest);
+        }
+
+
         [TestMethod, TestCategory("FhirClient")]
         public void Read()
         {
