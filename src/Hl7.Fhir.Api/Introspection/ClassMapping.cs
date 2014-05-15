@@ -133,8 +133,12 @@ namespace Hl7.Fhir.Introspection
                 if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
 
                 var propMapping = PropertyMapping.Create(property);      
+                var propKey = propMapping.Name.ToUpperInvariant();
+                
+                if (me._propMappings.ContainsKey(propKey))
+                    throw Error.InvalidOperation("Class has multiple properties that are named '{0}'. The property name must be unique", propKey);
 
-                me._propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
+                me._propMappings.Add(propKey, propMapping);
 
                 // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
                 if (propMapping.RepresentsValueElement)
