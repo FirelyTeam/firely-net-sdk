@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Rest
             return internalCreate<TResource>(resource, tags, id, refresh);
         }
 
-        private FhirRequest createFhirRequest(Uri location, string method=null)
+        private FhirRequest createFhirRequest(Uri location, string method="GET")
         {
             return new FhirRequest(location, method, BeforeRequest, AfterRequest);
         }
@@ -934,13 +934,18 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        public event Action<HttpWebRequest> OnBeforeRequest;
+
+        public event Action<WebResponse> OnAfterRequest;
+
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
         /// <param name="request">The request as it is about to be sent to the server</param>
         protected virtual void BeforeRequest(HttpWebRequest request) 
         {
-            // Default implementation: do nothing
+            // Default implementation: call event
+            if (OnBeforeRequest != null) OnBeforeRequest(request);
         }
 
         /// <summary>
@@ -949,7 +954,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="request"></param>
         protected virtual void AfterRequest(WebResponse request)
         {
-            // Default implementation: do nothing
+            // Default implementation: call event
+            if (OnAfterRequest != null) OnAfterRequest(request);
         }
 
 
