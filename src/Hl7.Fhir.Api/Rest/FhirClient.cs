@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Rest
         {
             RestUrl url = useOptionsVerb ? new RestUrl(Endpoint) : new RestUrl(Endpoint).WithMetadata();
 
-            var req = new FhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
+            var req = createFhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<Conformance>());
         }
 
@@ -135,6 +135,11 @@ namespace Hl7.Fhir.Rest
             return internalCreate<TResource>(resource, tags, id, refresh);
         }
 
+        private FhirRequest createFhirRequest(Uri location, string method="GET")
+        {
+            return new FhirRequest(location, method, BeforeRequest, AfterRequest);
+        }
+
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
         {
             var collection = typeof(TResource).GetCollectionName();
@@ -144,13 +149,13 @@ namespace Hl7.Fhir.Rest
             {
                 // A normal create
                 var rl = new RestUrl(Endpoint).ForCollection(collection);
-                req = new FhirRequest(rl.Uri, "POST");
+                req = createFhirRequest(rl.Uri, "POST");
             }
             else
             {
                 // A create at a specific id => PUT to that address
                 var ri = ResourceIdentity.Build(Endpoint, collection, id);
-                req = new FhirRequest(ri, "PUT");
+                req = createFhirRequest(ri, "PUT");
             }
 
             req.SetBody(resource, PreferredFormat);
@@ -206,7 +211,7 @@ namespace Hl7.Fhir.Rest
         {
             if (location == null) throw Error.ArgumentNull("location");
 
-            var req = new FhirRequest(makeAbsolute(location));  
+            var req = createFhirRequest(makeAbsolute(location));  
             
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
         }
@@ -241,7 +246,7 @@ namespace Hl7.Fhir.Rest
 
             var collection = getCollectionFromLocation(location);
 
-            var req = new FhirRequest(makeAbsolute(location));
+            var req = createFhirRequest(makeAbsolute(location));
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry(collection));
         }
 
@@ -296,7 +301,7 @@ namespace Hl7.Fhir.Rest
             if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
             if (entry.Id == null) throw Error.Argument("entry","Entry needs a non-null entry.id to send the update to");
 
-            var req = new FhirRequest(entry.Id, "PUT");
+            var req = createFhirRequest(entry.Id, "PUT");
             req.SetBody(entry.Resource,PreferredFormat);
             if(entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
@@ -396,7 +401,7 @@ namespace Hl7.Fhir.Rest
         {
             if (location == null) throw Error.ArgumentNull("location");
 
-            var req = new FhirRequest(makeAbsolute(location), "DELETE");
+            var req = createFhirRequest(makeAbsolute(location), "DELETE");
             doRequest(req, HttpStatusCode.NoContent, resp => true);
         }
 
@@ -516,7 +521,7 @@ namespace Hl7.Fhir.Rest
         /// if the operation does not result in a HttpStatus OK.</returns>
         private Bundle fetchBundle(Uri location)
         {
-            var req = new FhirRequest(makeAbsolute(location), "GET");
+            var req = createFhirRequest(makeAbsolute(location), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
@@ -562,7 +567,7 @@ namespace Hl7.Fhir.Rest
 
         private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Tag> tags)
         {
-            var req = new FhirRequest(url, "POST");
+            var req = createFhirRequest(url, "POST");
 
             req.SetBody(data, PreferredFormat);
             if(tags != null) req.SetTagsInHeader(tags);
@@ -747,7 +752,7 @@ namespace Hl7.Fhir.Rest
         {
             if (bundle == null) throw new ArgumentNullException("bundle");
 
-            var req = new FhirRequest(Endpoint, "POST");
+            var req = createFhirRequest(Endpoint, "POST");
             req.SetBody(bundle, PreferredFormat);
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
@@ -766,7 +771,7 @@ namespace Hl7.Fhir.Rest
             var url = new RestUrl(Endpoint).ToDocument();
 
             // Documents are merely "accepted"
-            var req = new FhirRequest(url.Uri, "POST");
+            var req = createFhirRequest(url.Uri, "POST");
             req.SetBody(bundle, PreferredFormat);
             doRequest(req, HttpStatusCode.NoContent, resp => true );
         }
@@ -785,7 +790,7 @@ namespace Hl7.Fhir.Rest
 
             var url = new RestUrl(_endpoint).ToMailbox();
 
-            var req = new FhirRequest(url.Uri, "POST");
+            var req = createFhirRequest(url.Uri, "POST");
             req.SetBody(bundle, PreferredFormat);
 
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
@@ -824,7 +829,7 @@ namespace Hl7.Fhir.Rest
         /// Get the tags for a resource (or resource version) at a given location
         /// </summary>
         /// <param name="location">The url of the Resource to get the tags for. This can be a Resource id url or a version-specific
-        /// Resource url.</param>
+        /// Resource url, and may be relative.</param>
         /// <returns>A list of Tags for the resource instance</returns>
         public IEnumerable<Tag> Tags(Uri location)
         {
@@ -837,12 +842,24 @@ namespace Hl7.Fhir.Rest
             return internalGetTags(collection, id, version);
         }
 
+        /// <summary>
+        /// Get the tags for a resource (or resource version) at a given location
+        /// </summary>
+        /// <param name="location">The location the Resource to get the tags for. 
+        /// This can be a Resource id url or a version-specific Resource url, and may be relative</param>
+        /// <returns>A list of Tags for the resource instance</returns>
         public IEnumerable<Tag> Tags(string location)
         {
             var identity = new ResourceIdentity(location);
             return internalGetTags(identity.Collection, identity.Id, identity.VersionId);
         }
 
+        /// <summary>
+        /// Get the tags for a resource (or resource version) at a given location
+        /// </summary>
+        /// <param name="id">The logical id for the resource</param>
+        /// <param name="vid">The version identifier for the resrouce</param>
+        /// <returns>A list of Tags for the resource instance</returns>
         public IEnumerable<Tag> Tags<TResource>(string id, string vid = null)
         {
             string collection = ModelInfo.GetResourceNameForType(typeof(TResource));
@@ -863,7 +880,7 @@ namespace Hl7.Fhir.Rest
                     location = location.ResourceTags(collection, id, version);
             }
 
-            var req = new FhirRequest(location.Uri, "GET");
+            var req = createFhirRequest(location.Uri, "GET");
             var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
             return result.Category;
         }
@@ -886,7 +903,7 @@ namespace Hl7.Fhir.Rest
 
             var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
 
-            var req = new FhirRequest(rl.Uri,"POST");
+            var req = createFhirRequest(rl.Uri,"POST");
             req.SetBody(new TagList(tags), PreferredFormat);
             
             doRequest(req, HttpStatusCode.OK, resp => true);
@@ -910,11 +927,38 @@ namespace Hl7.Fhir.Rest
 
             var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
 
-            var req = new FhirRequest(rl.Uri, "POST");
+            var req = createFhirRequest(rl.Uri, "POST");
             req.SetBody(new TagList(tags), PreferredFormat);
 
             doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
         }
+
+
+        public event Action<HttpWebRequest> OnBeforeRequest;
+
+        public event Action<WebResponse> OnAfterRequest;
+
+        /// <summary>
+        /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
+        /// </summary>
+        /// <param name="request">The request as it is about to be sent to the server</param>
+        protected virtual void BeforeRequest(HttpWebRequest request) 
+        {
+            // Default implementation: call event
+            if (OnBeforeRequest != null) OnBeforeRequest(request);
+        }
+
+        /// <summary>
+        /// Inspect the HttpWebResponse as it came back from the server 
+        /// </summary>
+        /// <param name="request"></param>
+        protected virtual void AfterRequest(WebResponse request)
+        {
+            // Default implementation: call event
+            if (OnAfterRequest != null) OnAfterRequest(request);
+        }
+
+
 
         private T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess)
         {
@@ -980,7 +1024,7 @@ namespace Hl7.Fhir.Rest
         {
             RestUrl url = useOptionsVerb ? new RestUrl(Endpoint) : new RestUrl(Endpoint).WithMetadata();
 
-            var req = new FhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
+            var req = createFhirRequest(url.Uri, useOptionsVerb ? "OPTIONS" : "GET");
             return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<Conformance>());
         }
 
@@ -1031,13 +1075,13 @@ namespace Hl7.Fhir.Rest
 			{
 				// A normal create
 				var rl = new RestUrl(Endpoint).ForCollection(collection);
-				req = new FhirRequest(rl.Uri, "POST");
+				req = createFhirRequest(rl.Uri, "POST");
 			}
 			else
 			{
 				// A create at a specific id => PUT to that address
 				var ri = ResourceIdentity.Build(Endpoint, collection, id);
-				req = new FhirRequest(ri, "PUT");
+				req = createFhirRequest(ri, "PUT");
 			}
 
 			req.SetBody(resource, PreferredFormat);
@@ -1096,7 +1140,7 @@ namespace Hl7.Fhir.Rest
 		{
 			if (location == null) throw Error.ArgumentNull("location");
 
-			var req = new FhirRequest(makeAbsolute(location));
+			var req = createFhirRequest(makeAbsolute(location));
 
 			return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
 		}
@@ -1131,7 +1175,7 @@ namespace Hl7.Fhir.Rest
 
 			var collection = getCollectionFromLocation(location);
 
-			var req = new FhirRequest(makeAbsolute(location));
+			var req = createFhirRequest(makeAbsolute(location));
 			return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsEntry(collection));
 		}
 
@@ -1170,7 +1214,7 @@ namespace Hl7.Fhir.Rest
 			if (entry.Resource == null) throw Error.Argument("entry", "Entry does not contain a Resource to update");
 			if (entry.Id == null) throw Error.Argument("entry", "Entry needs a non-null entry.id to send the update to");
 
-			var req = new FhirRequest(entry.Id, "PUT");
+			var req = createFhirRequest(entry.Id, "PUT");
 			req.SetBody(entry.Resource, PreferredFormat);
 			if (entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
@@ -1271,7 +1315,7 @@ namespace Hl7.Fhir.Rest
 		{
 			if (location == null) throw Error.ArgumentNull("location");
 
-			var req = new FhirRequest(makeAbsolute(location), "DELETE");
+			var req = createFhirRequest(makeAbsolute(location), "DELETE");
 			return doRequestAsync(req, HttpStatusCode.NoContent, resp => true);
 		}
 
@@ -1390,7 +1434,7 @@ namespace Hl7.Fhir.Rest
 		/// if the operation does not result in a HttpStatus OK.</returns>
 		private Task<Bundle> fetchBundleAsync(Uri location)
 		{
-			var req = new FhirRequest(makeAbsolute(location), "GET");
+			var req = createFhirRequest(makeAbsolute(location), "GET");
 			return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
 		}
 
@@ -1450,7 +1494,7 @@ namespace Hl7.Fhir.Rest
 
 		private async Task<OperationOutcome> doValidateAsync(Uri url, Resource data, IEnumerable<Tag> tags)
 		{
-			var req = new FhirRequest(url, "POST");
+			var req = createFhirRequest(url, "POST");
 
 			req.SetBody(data, PreferredFormat);
 			if (tags != null) req.SetTagsInHeader(tags);
@@ -1613,7 +1657,7 @@ namespace Hl7.Fhir.Rest
 		{
 			if (bundle == null) throw new ArgumentNullException("bundle");
 
-			var req = new FhirRequest(Endpoint, "POST");
+			var req = createFhirRequest(Endpoint, "POST");
 			req.SetBody(bundle, PreferredFormat);
 			return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
 		}
@@ -1632,7 +1676,7 @@ namespace Hl7.Fhir.Rest
 			var url = new RestUrl(Endpoint).ToDocument();
 
 			// Documents are merely "accepted"
-			var req = new FhirRequest(url.Uri, "POST");
+			var req = createFhirRequest(url.Uri, "POST");
 			req.SetBody(bundle, PreferredFormat);
 			return doRequestAsync(req, HttpStatusCode.NoContent, resp => true);
 		}
@@ -1651,7 +1695,7 @@ namespace Hl7.Fhir.Rest
 
 			var url = new RestUrl(_endpoint).ToMailbox();
 
-			var req = new FhirRequest(url.Uri, "POST");
+			var req = createFhirRequest(url.Uri, "POST");
 			req.SetBody(bundle, PreferredFormat);
 
 			return doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
@@ -1729,7 +1773,7 @@ namespace Hl7.Fhir.Rest
 					location = location.ResourceTags(collection, id, version);
 			}
 
-			var req = new FhirRequest(location.Uri, "GET");
+			var req = createFhirRequest(location.Uri, "GET");
 			var result = await doRequestAsync(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
 			return result.Category;
 		}
@@ -1751,7 +1795,7 @@ namespace Hl7.Fhir.Rest
 
 			var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
 
-			var req = new FhirRequest(rl.Uri, "POST");
+			var req = createFhirRequest(rl.Uri, "POST");
 			req.SetBody(new TagList(tags), PreferredFormat);
 
 			return doRequestAsync(req, HttpStatusCode.OK, resp => true);
@@ -1775,7 +1819,7 @@ namespace Hl7.Fhir.Rest
 
 			var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
 
-			var req = new FhirRequest(rl.Uri, "POST");
+			var req = createFhirRequest(rl.Uri, "POST");
 			req.SetBody(new TagList(tags), PreferredFormat);
 
 			return doRequestAsync(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);

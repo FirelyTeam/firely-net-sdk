@@ -15,7 +15,8 @@ namespace Hl7.Fhir.Rest
     {
         public bool UseFormatParameter { get; set; }
 
-        public FhirRequest(Uri location, string method = "GET")
+        public FhirRequest(Uri location, string method = "GET", 
+             Action<HttpWebRequest> beforeRequest = null, Action<WebResponse> afterRequest = null)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (method == null) throw Error.ArgumentNull("method");
@@ -23,13 +24,15 @@ namespace Hl7.Fhir.Rest
 
             _location = location;
             _method = method;
+            _beforeRequest = beforeRequest;
+            _afterRequest = afterRequest;
         }
 
-#if PORTABLE45
 		public string Method { get { return _method; } }
 		public Uri Location { get { return _location; } }
-#endif
 
+        private Action<HttpWebRequest> _beforeRequest;
+        private Action<WebResponse> _afterRequest;
         private Uri _location;
         private string _method = "GET";
         private byte[] _body = null;
@@ -120,9 +123,11 @@ namespace Hl7.Fhir.Rest
             FhirResponse result = null;
 
             // Make sure the HttpResponse gets disposed!
+            if (_beforeRequest != null) _beforeRequest(request);
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponseNoEx())
             {
                 result = FhirResponse.FromHttpWebResponse(response);
+                if (_afterRequest != null) _afterRequest(response);
             }
 
             return result;
@@ -157,7 +162,11 @@ namespace Hl7.Fhir.Rest
 			}
 
 			// Make sure the caller disposes the HttpResponse gets disposed...
-			return await request.GetResponseAsync();
+            if (_beforeRequest != null) _beforeRequest(request);
+            var response = await request.GetResponseAsync();
+            if (_afterRequest != null) _afterRequest(response);
+
+            return response;
 		}
 #endif
 
