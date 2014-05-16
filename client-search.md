@@ -54,5 +54,21 @@ Bundle result = client.Search(q);
 
 Note that unlike the search options shown before, you can specify search ordering and the use of a summary result. As well, this syntax avoids the need to create arrays of strings as paramters and tends to be more readable. 
 
+### Paged Results
+Normally, any FHIR server will limit the number of search results returned. In the previous example, we explicitly limited the number of results per page to 20.
+
+The FhirClient has a `Continue` function to browse a search result after the first page has been received using a `Search`:
+
+```csharp
+var result = client.Search(q);
+
+while( result != null )
+{
+	// Do something useful
+	result = client.Continue(result);
+}
+```
+
+Note that `Continue` supports a second parameter that allows you to browse forward, backward, or go immediately to the first or last page of the search result.
 
 [fhir-search]: http://www.hl7.org/implement/standards/fhir/search.html
