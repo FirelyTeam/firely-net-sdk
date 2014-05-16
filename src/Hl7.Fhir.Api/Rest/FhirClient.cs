@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
 
         private FhirRequest createFhirRequest(Uri location, string method="GET")
         {
-            return new FhirRequest(location, method, BeforeRequest, AfterRequest);
+            return new FhirRequest(location, method, BeforeRequest, AfterResponse);
         }
 
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
@@ -934,9 +934,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public event Action<HttpWebRequest> OnBeforeRequest;
+        public event BeforeRequestEventHandler OnBeforeRequest;
 
-        public event Action<WebResponse> OnAfterRequest;
+        public event AfterResponseEventHandler OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
@@ -945,17 +945,17 @@ namespace Hl7.Fhir.Rest
         protected virtual void BeforeRequest(HttpWebRequest request) 
         {
             // Default implementation: call event
-            if (OnBeforeRequest != null) OnBeforeRequest(request);
+            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request));
         }
 
         /// <summary>
         /// Inspect the HttpWebResponse as it came back from the server 
         /// </summary>
-        /// <param name="request"></param>
-        protected virtual void AfterRequest(WebResponse request)
+        /// <param name="response"></param>
+        protected virtual void AfterResponse(WebResponse response)
         {
             // Default implementation: call event
-            if (OnAfterRequest != null) OnAfterRequest(request);
+            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(response));
         }
 
 
@@ -1905,4 +1905,28 @@ namespace Hl7.Fhir.Rest
         Last
     }
 
+
+    public delegate void BeforeRequestEventHandler(object sender, BeforeRequestEventArgs e);
+
+    public class BeforeRequestEventArgs : EventArgs
+    {
+        public BeforeRequestEventArgs(HttpWebRequest request)
+        {
+            this.Request = request;
+        }
+
+        public HttpWebRequest Request { get; internal set; }
+    }
+
+    public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
+
+    public class AfterResponseEventArgs : EventArgs
+    {
+        public AfterResponseEventArgs(WebResponse response)
+        {
+            this.Response = response;
+        }
+
+        public WebResponse Response { get; internal set; }
+    }
 }

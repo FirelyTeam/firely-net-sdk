@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Tests
                 HitBeforeRequest = true;
             }
 
-            protected override void AfterRequest(WebResponse request)
+            protected override void AfterResponse(WebResponse request)
             {
                 HitAfterRequest = true;
             }
@@ -104,8 +104,8 @@ namespace Hl7.Fhir.Tests
             bool hitBeforeRequest = false;
             bool hitAfterRequest = false;
 
-            client.OnBeforeRequest += p => hitBeforeRequest = true;
-            client.OnAfterRequest += p => hitAfterRequest = true;
+            client.OnBeforeRequest += (o,p) => hitBeforeRequest = true;
+            client.OnAfterResponse += (o,p) => hitAfterRequest = true;
 
             var loc = client.Read("Patient/1");
 
