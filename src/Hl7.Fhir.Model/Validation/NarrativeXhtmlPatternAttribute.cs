@@ -23,22 +23,8 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class NarrativeXhtmlPatternAttribute : ValidationAttribute
     {
-#if !PORTABLE45
-        private static Lazy<XmlSchemaSet> schemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
-
-        private static XmlSchemaSet compileXhtmlSchema()
-        {
-            Stream s = typeof(NarrativeXhtmlPatternAttribute).Assembly.GetManifestResourceStream("Hl7.Fhir.Model.fhir-xhtml1-strict.xsd");
-            XmlSchemaSet schemas = new XmlSchemaSet();
-            schemas.Add("http://www.w3.org/1999/xhtml", XmlReader.Create(s));
-
-            return schemas;
-        }
-#endif
-
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-
             if (value == null) return ValidationResult.Success;
 
             if (value.GetType() != typeof(string))
@@ -51,7 +37,7 @@ namespace Hl7.Fhir.Validation
 				// another implementation to cover this
 #if !PORTABLE45
                 var doc = XDocument.Parse(value as string);
-                doc.Validate(schemaSet.Value, null, false);
+                doc.Validate(SchemaCollection.ValidationSchemaSet, null, false);
 #endif
 
 				return ValidationResult.Success;
