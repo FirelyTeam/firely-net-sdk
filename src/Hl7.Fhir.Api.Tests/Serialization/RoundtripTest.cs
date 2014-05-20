@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/furore-fhir/spark/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -34,8 +34,8 @@ namespace Hl7.Fhir.Tests
         [TestMethod]
         public void FullRoundtripOfAllExamples()
         {
-            string examplesXml = @"..\..\data\examples.zip";
-            //string examplesJson = @"..\..\data\examples-json.zip";
+            string examplesXml = @"..\..\..\data\examples.zip";
+            //string examplesJson = @"..\..\..\data\examples-json.zip";
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
             string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTest");

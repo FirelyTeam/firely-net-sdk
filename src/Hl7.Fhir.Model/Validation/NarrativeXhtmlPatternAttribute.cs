@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/furore-fhir/spark/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
 				// another implementation to cover this
 #if !PORTABLE45
                 var doc = XDocument.Parse(value as string);
-                doc.Validate(SchemaCollection.ValidationSchemaSet, null, false);
+                doc.Validate(SchemaCollection.ValidationSchemaSet, validationEventHandler: null);
 #endif
 
 				return ValidationResult.Success;

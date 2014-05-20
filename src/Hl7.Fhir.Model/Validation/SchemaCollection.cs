@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/furore-fhir/spark/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -38,6 +38,8 @@ namespace Hl7.Fhir.Validation
                 Stream schema = assembly.GetManifestResourceStream(schemaName); 
                 schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
             }
+
+            schemas.Compile();
 
             return schemas;
         }
