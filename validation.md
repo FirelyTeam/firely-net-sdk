@@ -25,6 +25,16 @@ Normally, the validator will validate only the elements within the instance pass
 var success = FhirValidator.TryValidate(pat, errors, recursive: true);
 ```
 
+### Using the FHIR XSD schemas
+The FHIR distribution contains a set of XSD files supplied as an aid for the validation of XML content. These files can be used to validate individual resources and (atom) feeds.
+
+To facilitate access to these schemas, a `SchemaCollection` class is provided in the `Fhir.Model.Validation` namespace. The class has one static property `ValidationSchemaSet` which returns a .NET XmlSchemaSet containing all relevant XSD schemas, which can then readily be used in validation, like so:
+
+```csharp
+var doc = XDocument.Parse(value);
+doc.Validate(SchemaCollection.ValidationSchemaSet, validationEventHandler: null);
+``` 
+
 
 ### Supported validations
 Currently, the `FhirValidator` will validate the following aspects of the FHIR datamodel:
@@ -42,4 +52,4 @@ Notable rules not yet validated:
 * Conformance to ValueSet bindings
 * Invariants specified in the spec for Resources and datatypes
 * Profile conformance
-
+* Validation against the provided XSD schemas
