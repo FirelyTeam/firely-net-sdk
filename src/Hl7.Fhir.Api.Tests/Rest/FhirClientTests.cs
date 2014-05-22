@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +72,55 @@ namespace Hl7.Fhir.Tests
 
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
         }
+
+
+        class FhirClientWithHooks : FhirClient
+        {
+            internal FhirClientWithHooks(Uri endpoint) : base(endpoint) { }
+
+            internal bool HitBeforeRequest { get; set; }
+            internal bool HitAfterRequest { get; set; }
+
+            protected override void BeforeRequest(HttpWebRequest request)
+            {
+                HitBeforeRequest = true;
+            }
+
+            protected override void AfterResponse(WebResponse request)
+            {
+                HitAfterRequest = true;
+            }
+        }
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void ReadCallsHooks()
+        {
+            FhirClientWithHooks client = new FhirClientWithHooks(testEndpoint);
+
+            var loc = client.Read("Patient/1");
+
+            Assert.IsTrue(client.HitBeforeRequest);
+            Assert.IsTrue(client.HitAfterRequest);
+        }
+
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void ReadCallsHookedEvents()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            bool hitBeforeRequest = false;
+            bool hitAfterRequest = false;
+
+            client.OnBeforeRequest += (o,p) => hitBeforeRequest = true;
+            client.OnAfterResponse += (o,p) => hitAfterRequest = true;
+
+            var loc = client.Read("Patient/1");
+
+            Assert.IsTrue(hitBeforeRequest);
+            Assert.IsTrue(hitAfterRequest);
+        }
+
 
 
         [TestMethod, TestCategory("FhirClient")]

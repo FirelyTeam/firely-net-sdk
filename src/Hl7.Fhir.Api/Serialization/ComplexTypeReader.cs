@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.Introspection;
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Api.Properties;
 using Hl7.Fhir.Support;
@@ -88,7 +96,7 @@ namespace Hl7.Fhir.Serialization
 
                     object value = null;
 
-                    // For primitive members we can save time by net calling the getter
+                    // For primitive members we can save time by not calling the getter
                     if (!mappedProperty.IsPrimitive)
                         value = mappedProperty.GetValue(existing);
                    

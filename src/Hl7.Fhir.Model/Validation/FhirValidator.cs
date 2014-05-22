@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.Model;
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,7 +55,7 @@ namespace Hl7.Fhir.Validation
         {
             var resultMessage = String.Format(message, messageArgs);
 
-            if(context.MemberName != null)
+            if(context != null && context.MemberName != null)
                 return new ValidationResult(resultMessage, SingleMemberName(context.MemberName));
             else
                 return new ValidationResult(resultMessage);

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.github.com/furore-fhir/spark/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -133,8 +133,12 @@ namespace Hl7.Fhir.Introspection
                 if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
 
                 var propMapping = PropertyMapping.Create(property);      
+                var propKey = propMapping.Name.ToUpperInvariant();
+                
+                if (me._propMappings.ContainsKey(propKey))
+                    throw Error.InvalidOperation("Class has multiple properties that are named '{0}'. The property name must be unique", propKey);
 
-                me._propMappings.Add(propMapping.Name.ToUpperInvariant(), propMapping);
+                me._propMappings.Add(propKey, propMapping);
 
                 // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
                 if (propMapping.RepresentsValueElement)

@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Tests
         public void ValidateBundleEntry()
         {
             var e = new ResourceEntry<Patient>();
-            e.Id = new Uri("http://someserver.org/fhir/patient/@1");
+            e.Id = new Uri("http://someserver.org/fhir/Patient/1");
             e.Title = "Some title";
 
             // Validates mandatory fields?
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Tests
             e.Resource = new Patient();
 
             var bundle = new Bundle() { Title = "Some feed title" };
-            bundle.Id = new Uri("http://someserver.org/fhir/feed/@1424234232342");
+            bundle.Id = new Uri("http://someserver.org/fhir/feed/1424234232342");
 
             // Validates mandatory fields?
             validateErrorOrFail(bundle);

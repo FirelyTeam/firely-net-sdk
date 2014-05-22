@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.github.com/furore-fhir/spark/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Introspection
 
             if (!success) return null;
 
-            // Do an extra lookup via this mapping's name. This will find possible
+            // Do an extra lookup via this mapping's name when this is a Resource. This will find possible
             // replacement mappings, when a later import for the same Fhir typename
             // was found.
             if (entry.IsResource)
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Introspection
                 return FindClassMappingForResource(entry.Name, entry.Profile);
             }
             else
-                return FindClassMappingForFhirDataType(entry.Name);
+                return entry;   // NB: no extra lookup for non-resource types
         }
     }
 
