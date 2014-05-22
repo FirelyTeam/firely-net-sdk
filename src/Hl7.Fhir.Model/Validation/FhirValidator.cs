@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Validation
         {
             var resultMessage = String.Format(message, messageArgs);
 
-            if(context.MemberName != null)
+            if(context != null && context.MemberName != null)
                 return new ValidationResult(resultMessage, SingleMemberName(context.MemberName));
             else
                 return new ValidationResult(resultMessage);

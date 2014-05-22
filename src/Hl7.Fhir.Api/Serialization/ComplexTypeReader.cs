@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Serialization
 
                     object value = null;
 
-                    // For primitive members we can save time by net calling the getter
+                    // For primitive members we can save time by not calling the getter
                     if (!mappedProperty.IsPrimitive)
                         value = mappedProperty.GetValue(existing);
                    
