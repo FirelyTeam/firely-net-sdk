@@ -17,6 +17,8 @@ using System.IO;
 using Ionic.Zip;
 using Hl7.Fhir.Serialization;
 using System.Xml.XPath;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.Api.Profiles
 {
@@ -94,7 +96,13 @@ namespace Hl7.Fhir.Api.Profiles
             } 
         }
 
-        public Resource ReadArtifact(ArtifactType type, Uri artifactId)
+        /// <summary>
+        /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)
+        /// and reads an artifact with the given id from it.
+        /// </summary>
+        /// <param name="artifactId"></param>
+        /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located</returns>
+        public Resource ReadArtifact(Uri artifactId)
         {
             ensurePrepared();
 
@@ -102,12 +110,17 @@ namespace Hl7.Fhir.Api.Profiles
 
             if (artifactId == null) Error.ArgumentNull("artifactId");
 
+            // Core artifacts come from specific bundles files in the validation.zip
             if (IsCoreArtifact(artifactId))
                 artifactXml = findCoreArtifact(artifactId);
             else
                 artifactXml = findUserArtifact(artifactId);
 
-            return FhirParser.ParseResourceFromXml(artifactXml);                       
+            // We're assuming the validation.zip contains xml files
+            if (artifactXml != null)
+                return FhirParser.ParseResourceFromXml(artifactXml);
+            else
+                return null;
         }
 
 
@@ -150,20 +163,22 @@ namespace Hl7.Fhir.Api.Profiles
 
             var normalized = artifactId.ToString().ToLower();
 
+            // Depending on the actual artifact uri, determine in which supplied bundled
+            // file these artifacts should be found
             if (normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX))
-                return readFromBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
+                return readFromCoreBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
             else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX))
-                return readFromBundle(artifactId, "profiles-resources.xml");
+                return readFromCoreBundle(artifactId, "profiles-resources.xml");
             else if (normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX))
                 throw Error.NotImplemented("Don't know where to locate core ConceptMaps, so this feature has not yet been implemented");
             else if (normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
                 throw Error.NotImplemented("Namespaces are a DSTU2 feature, so this feature has not yet been implemented");
             else if (normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX))
-                return readFromBundle(artifactId, "valuesets.xml");
+                return readFromCoreBundle(artifactId, "valuesets.xml");
             else if (normalized.StartsWith(CORE_SPEC_V2VS_URI_PREFIX))
-                return readFromBundle(artifactId, "v2-tables.xml");
+                return readFromCoreBundle(artifactId, "v2-tables.xml");
             else if (normalized.StartsWith(CORE_SPEC_V3VS_URI_PREFIX))
-                return readFromBundle(artifactId, "v3-codesystems.xml");
+                return readFromCoreBundle(artifactId, "v3-codesystems.xml");
             else
                 throw Error.NotImplemented("Url {0} was recognized as a core artifact, but I don't know where to locate it within validation.zip", normalized);
         }
@@ -173,21 +188,82 @@ namespace Hl7.Fhir.Api.Profiles
         private string findUserArtifact(Uri artifactId)
         {
             // Locate a file that has the same name as the 'logical' id from the uri
-            var fileName = new ResourceIdentity(artifactId).Id;
+            var logicalId = new ResourceIdentity(artifactId).Id;
 
-            if (fileName == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
+            if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
 
             // Return the contents of the file, since there's no logical id inside the data of a simple resource file
-            return File.ReadAllText(fileName);
+            var fullPath = locateArtifactByName(logicalId);
+
+            if (fullPath != null)
+                return File.ReadAllText(fullPath);
+            else
+                return null;
         }
 
 
+        public static readonly XName ENTRY_ID = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_ID;
 
-        private string readFromBundle(Uri artifactId, params string[] fileNames)
+        // Scan a supplied bundle (atom) file with the core artifacts for an entry with the given uri
+        private string readFromCoreBundle(Uri artifactId, params string[] fileNames)
         {
-            throw new NotImplementedException();
+            var entryId = artifactId.ToString();
+
+            foreach (var filename in fileNames)
+            {
+                // Locate the bundles file first
+                var fullPath = locateArtifactByName(filename);
+                if (fullPath == null)
+                    throw new FileNotFoundException("Cannot find bundled core file " + filename);
+
+                // Note: no exception handling. If the expected bundled file cannot be
+                // read, throw the original exception.
+                using(var stream = File.Open(fullPath,FileMode.Open) )
+                {
+                    // We're a bit lenient here, but find 0..1 entry which has ANY entry.id that
+                    // matches the artifactId we're looking for
+                    var matchingEntry = streamFeedEntries(stream)
+                            .SingleOrDefault(entry => entry.Elements(ENTRY_ID)
+                                .Any(idElem => idElem.Value == artifactId.ToString()));
+
+                    if (matchingEntry != null)
+                        return matchingEntry.ToString();
+                    else
+                        return null;
+                }
+            }
+
+            return null;
         }
 
+
+        // Use a forward-only XmlReader to scan through a possibly huge bundled file,
+        // and yield the feed entries, so only one entry is in memory at a time
+        private static IEnumerable<XElement> streamFeedEntries(Stream s)
+        {
+            using (XmlReader reader = XmlReader.Create(s))
+            {
+                reader.MoveToContent();
+
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element
+                            && reader.LocalName == "entry"
+                            && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Element &&
+                                reader.Name == "Name")
+                            {
+                                var entryNode = (XElement)XElement.ReadFrom(reader);
+                                yield return entryNode;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         private void ensurePrepared()
         {
@@ -195,9 +271,14 @@ namespace Hl7.Fhir.Api.Profiles
         }
 
 
-
         private static readonly string CACHEPATH = Path.Combine(Path.GetTempPath(), "FhirArtifactCache");
 
+
+        private string locateArtifactByName(string name)
+        {
+            var searchString = (Path.DirectorySeparatorChar + name + ".xml").ToLower();
+            return ArtifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+        }
 
         private static List<string> unpackZips(string directory)
         {
@@ -295,12 +376,12 @@ namespace Hl7.Fhir.Api.Profiles
     }
 
 
-    public enum ArtifactType
-    {
-        Profile,
-        ValueSet,
-        Conformance,
-        Namespace,
-        ConceptMap
-    }
+    //public enum ArtifactType
+    //{
+    //    Profile,
+    //    ValueSet,
+    //    Conformance,
+    //    Namespace,
+    //    ConceptMap
+    //}
 }

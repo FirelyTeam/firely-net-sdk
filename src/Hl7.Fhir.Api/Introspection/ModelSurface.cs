@@ -81,55 +81,57 @@ namespace Hl7.Fhir.Api.Profiles
         // Todo: could do fallback scenario's to a list of known profile servers if the artifact was not found at its indicated location
         public Profile ResolveProfile(Uri location)
         {
-            // This is what the entry.id looks like in the profiles-resources, <id>http://hl7.org/fhir/profile/adversereaction</id> (a resource)
-            // or <id>http://hl7.org/fhir/profile/period</id>
+            throw new NotImplementedException();
 
-            Profile result = null;
+            //// This is what the entry.id looks like in the profiles-resources, <id>http://hl7.org/fhir/profile/adversereaction</id> (a resource)
+            //// or <id>http://hl7.org/fhir/profile/period</id>
 
-            // If this profile could be a base profile for a datatype or resource, first try to resolve it in the
-            // profiles-types and profiles-resources xml files
-            if (location.ToString().StartsWith(BASEPROFILE_URI_PREFIX))
-            {
-                result = ResolveFromSpecFiles(location);
+            //Profile result = null;
 
-                if (result != null) return result;
-            }
+            //// If this profile could be a base profile for a datatype or resource, first try to resolve it in the
+            //// profiles-types and profiles-resources xml files
+            //if (location.ToString().StartsWith(BASEPROFILE_URI_PREFIX))
+            //{
+            //    result = ResolveFromSpecFiles(location);
 
-            // Next, try to find a file on the local filesystem with the same name as the logical id.
-            var id = new ResourceIdentity(location);
-            var logicalId = id.Id;
+            //    if (result != null) return result;
+            //}
 
-            if (logicalId != null)
-            {
-                result = ResolveFromFilesystem(logicalId + ".xml");
-                if (result != null) return result;
-            }
+            //// Next, try to find a file on the local filesystem with the same name as the logical id.
+            //var id = new ResourceIdentity(location);
+            //var logicalId = id.Id;
 
-            // Next, try to fetch it from the addresss given
-            FhirClient client = new FhirClient(id.Endpoint);
+            //if (logicalId != null)
+            //{
+            //    result = ResolveFromFilesystem(logicalId + ".xml");
+            //    if (result != null) return result;
+            //}
 
-            try
-            {
-                result = client.Read<Profile>(location).Resource;
-            }
-            catch
-            {
-                result = null;  // just to be sure
-            }
+            //// Next, try to fetch it from the addresss given
+            //FhirClient client = new FhirClient(id.Endpoint);
 
-            return result;
+            //try
+            //{
+            //    result = client.Read<Profile>(location).Resource;
+            //}
+            //catch
+            //{
+            //    result = null;  // just to be sure
+            //}
+
+            //return result;
         }
 
 
         public static Profile ResolveFromSpecFiles(Uri location)
         {
-
+            throw new NotImplementedException();
         }
 
 
         public static Profile ResolveFromFileSystem(string filename)
         {
-
+            throw new NotImplementedException();
         }
 
         public ValueSet ResolveValueSet(Uri location)
