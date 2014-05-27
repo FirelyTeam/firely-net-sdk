@@ -15,6 +15,8 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
 using System.IO;
 using Ionic.Zip;
+using Hl7.Fhir.Serialization;
+using System.Xml.XPath;
 
 namespace Hl7.Fhir.Api.Profiles
 {
@@ -23,7 +25,14 @@ namespace Hl7.Fhir.Api.Profiles
     /// </summary>
     public class ArtifactStore
     {
-        public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/profile";
+        public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/";
+        public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/profile/";
+        public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/conformance/";
+        public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
+        public const string CORE_SPEC_V2VS_URI_PREFIX = "http://hl7.org/fhir/v2/";
+        public const string CORE_SPEC_V3VS_URI_PREFIX = "http://hl7.org/fhir/v3/";
+        public const string CORE_SPEC_NAMESPACE_URI_PREFIX = "http://hl7.org/fhir/ns/";      //TODO: check prefix
+        public const string CORE_SPEC_CONCEPTMAP_URI_PREFIX = "http://hl7.org/fhir/conceptmap/";     //TODO: check prefix
 
         private string _storeDirectory;
         private bool isPrepared = false;
@@ -38,6 +47,11 @@ namespace Hl7.Fhir.Api.Profiles
             _storeDirectory = Directory.GetCurrentDirectory();
         }
 
+        /// <summary>
+        /// Unpacks zip-files containing the artifact files, and enumerates all (zipped/nonzipped) files.
+        /// </summary>
+        /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
+        /// file system and is not thread-safe.</remarks>
         public void Prepare()
         {
             var contentDirectories = new List<string>();
@@ -59,6 +73,7 @@ namespace Hl7.Fhir.Api.Profiles
             ArtifactFiles = fileNames;
             isPrepared = true;
         }
+
 
         // todo: public XsdSchemaSet GetSchemas
         // todo: public string[] GetArtifactFileNames(string pattern=null)
@@ -83,8 +98,41 @@ namespace Hl7.Fhir.Api.Profiles
         {
             ensurePrepared();
 
+            string artifactXml;
+
             if (artifactId == null) Error.ArgumentNull("artifactId");
 
+            if (IsCoreArtifact(artifactId))
+                artifactXml = findCoreArtifact(artifactId);
+            else
+                artifactXml = findUserArtifact(artifactId);
+
+            return FhirParser.ParseResourceFromXml(artifactXml);                       
+        }
+
+
+        /// <summary>
+        /// Given the Url for an artifact (e.g. http://hl7.org/fhir/profile/adversereaction), determines whether this is
+        /// a core artifact that is pre-packaged in core files from the validation.zip
+        /// </summary>
+        /// <param name="artifactId">The location on the hl7.org repository of the core artifact</param>
+        /// <returns></returns>
+        public static bool IsCoreArtifact(Uri artifactId)
+        {
+            if(artifactId == null) throw Error.ArgumentNull("artifactId");
+
+            var normalized = artifactId.ToString().ToLower();
+
+            //return normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX) ||
+            //        normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX) ||
+            //        normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_V2VS_URI_PREFIX) ||
+            //        normalized.StartsWith(CORE_SPEC_V3VS_URI_PREFIX);
+
+            return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
+        }
+
+        private string findCoreArtifact(Uri artifactId)
+        {
             // This is what the entry.id looks like in the profiles-resources.xml and profiles-types.xml
             // <id>http://hl7.org/fhir/profile/adversereaction</id> (a resource)
             // or <id>http://hl7.org/fhir/profile/period</id>
@@ -99,13 +147,51 @@ namespace Hl7.Fhir.Api.Profiles
             // FHIR's valuesets entry.id mostly look like
             // <id>http://hl7.org/fhir/vs/reactionSeverity</id>
             // but there are some alternatives too, so better use this file as a default
-                        
+
+            var normalized = artifactId.ToString().ToLower();
+
+            if (normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX))
+                return readFromBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
+            else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX))
+                return readFromBundle(artifactId, "profiles-resources.xml");
+            else if (normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX))
+                throw Error.NotImplemented("Don't know where to locate core ConceptMaps, so this feature has not yet been implemented");
+            else if (normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
+                throw Error.NotImplemented("Namespaces are a DSTU2 feature, so this feature has not yet been implemented");
+            else if (normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX))
+                return readFromBundle(artifactId, "valuesets.xml");
+            else if (normalized.StartsWith(CORE_SPEC_V2VS_URI_PREFIX))
+                return readFromBundle(artifactId, "v2-tables.xml");
+            else if (normalized.StartsWith(CORE_SPEC_V3VS_URI_PREFIX))
+                return readFromBundle(artifactId, "v3-codesystems.xml");
+            else
+                throw Error.NotImplemented("Url {0} was recognized as a core artifact, but I don't know where to locate it within validation.zip", normalized);
+        }
+
+
+
+        private string findUserArtifact(Uri artifactId)
+        {
+            // Locate a file that has the same name as the 'logical' id from the uri
+            var fileName = new ResourceIdentity(artifactId).Id;
+
+            if (fileName == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
+
+            // Return the contents of the file, since there's no logical id inside the data of a simple resource file
+            return File.ReadAllText(fileName);
+        }
+
+
+
+        private string readFromBundle(Uri artifactId, params string[] fileNames)
+        {
             throw new NotImplementedException();
         }
 
+
         private void ensurePrepared()
         {
-            if (!isPrepared) throw Error.InvalidOperation("Must call Prepare() before trying to read artifacts");
+            if (!isPrepared) Prepare();
         }
 
 
