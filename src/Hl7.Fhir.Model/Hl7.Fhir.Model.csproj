@@ -223,24 +223,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Generated\core-conformances-base.xml" />
+    <Content Include="Generated\core-profiles-datatypes.xml" />
+    <Content Include="Generated\core-profiles-resources.xml" />
+    <Content Include="Generated\core-valuesets-dicom.xml" />
+    <Content Include="Generated\core-valuesets-fhir.xml" />
+    <Content Include="Generated\core-valuesets-v2.xml" />
+    <Content Include="Generated\core-valuesets-v3.xml" />
     <Content Include="Generated\README.txt" />
-    <Content Include="Profiles\profiles-resources.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Profiles\profiles-types.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Profiles\v2-tables.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Profiles\v3-codesystems.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Profiles\valuesets.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
