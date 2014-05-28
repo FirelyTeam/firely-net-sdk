@@ -140,6 +140,8 @@
     <Compile Include="Search\StringValue.cs" />
     <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Support\ZipCacher.cs" />
+    <Compile Include="Support\XmlFeedScanner.cs" />
     <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

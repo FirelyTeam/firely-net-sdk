@@ -38,13 +38,14 @@ namespace Hl7.Fhir.Api.Profiles
         public const string CORE_SPEC_NAMESPACE_URI_PREFIX = "http://hl7.org/fhir/ns/";      //TODO: check prefix
         public const string CORE_SPEC_CONCEPTMAP_URI_PREFIX = "http://hl7.org/fhir/conceptmap/";     //TODO: check prefix
 
-        private List<string> _contentDirectories = new List<string>();
+        private const string CACHE_KEY = "FhirArtifactCache";
+
+        private string _contentDirectory;
         private bool isPrepared = false;
 
-        public FileArtifactStore(string storeDirectory)
+        public FileArtifactStore(string contentDirectory)
         {
-            // Add the store directory to the list of directories with artifact content
-            _contentDirectories.Add(storeDirectory);
+            _contentDirectory = contentDirectory;
         }
 
         public FileArtifactStore()
@@ -54,9 +55,9 @@ namespace Hl7.Fhir.Api.Profiles
             // Add the current directory to the list of directories with artifact content, unless there's
             // a special "Model" subdirectory available
             if (Directory.Exists(modelDir))
-                _contentDirectories.Add(modelDir);
+                _contentDirectory = modelDir;
             else
-                _contentDirectories.Add(Directory.GetCurrentDirectory());
+                _contentDirectory = Directory.GetCurrentDirectory();
         }
 
         /// <summary>
@@ -66,27 +67,34 @@ namespace Hl7.Fhir.Api.Profiles
         /// file system and is not thread-safe.</remarks>
         public void Prepare()
         {
-            // Add any directories created by unzipping the zips in the store to the list of artifact directories
-            var zipOutputDirs = new List<string>();
-            foreach(string inputDir in _contentDirectories) 
-                zipOutputDirs.AddRange(unpackZips(inputDir));  // don't add to _contentDirectories, you're iterating over it  
+            _artifactFiles = new List<string>();
 
-            _contentDirectories.AddRange(zipOutputDirs);
-            
-            // Gather all filenames from the contentDirectories
-            var fileNames = new List<string>();
-            
-            foreach (string contentDirectory in _contentDirectories)
+            // First add files present in the content directory (this includes the zips themselves!)
+            _artifactFiles.AddRange(listContentFilesInDirectory(_contentDirectory));
+
+            var zips = Directory.GetFiles(_contentDirectory, "*.zip");
+
+            // Get the files in each *.zip files present in the content directory
+            // The ZipCacher will avoid re-extracting these files.
+            foreach (string zipPath in zips)
             {
-               fileNames.AddRange(Directory.GetFiles(contentDirectory, "*.*", SearchOption.AllDirectories));
+                ZipCacher zc = new ZipCacher(zipPath, CACHE_KEY);
+                _artifactFiles.AddRange(zc.GetContents());
             }
 
-            ArtifactFiles = fileNames;
             isPrepared = true;
         }
 
 
-        private IEnumerable<string> _artifactFiles = null;
+        private static IEnumerable<string> listContentFilesInDirectory(string fullPath)
+        {
+            var allFiles = Directory.GetFiles(fullPath, "*.*", SearchOption.AllDirectories);
+
+            return allFiles.Where(name => Path.GetExtension(name) != "exe" && Path.GetExtension(name) != "dll");
+        }
+
+
+        private List<string> _artifactFiles;
 
         public IEnumerable<string> ArtifactFiles 
         {
@@ -95,11 +103,6 @@ namespace Hl7.Fhir.Api.Profiles
                 ensurePrepared();
                 return _artifactFiles;
             }
-
-            private set
-            {
-                _artifactFiles = value;
-            } 
         }
 
         public Stream ReadContentArtifact(string name)
@@ -162,23 +165,9 @@ namespace Hl7.Fhir.Api.Profiles
             return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
         }
 
+
         private string loadCoreArtifactXml(Uri artifactId)
         {
-            // This is what the entry.id looks like in the profiles-resources.xml and profiles-types.xml
-            // <id>http://hl7.org/fhir/profile/adversereaction</id> (a resource)
-            // or <id>http://hl7.org/fhir/profile/period</id>
-
-            // A v2 valueset's entry.id is buggy, so instead, look at ValueSet's identifier in v2-tables.xml
-            // <id>http://hl7.org/fhir/v2/vs/0001</id> or
-            // <id>http://hl7.org/fhir/v2/vs/0006/2.1</id>
-
-            // A v3 valueset's entry.id is buggy too, so instead, look at ValueSet's identifier in v3-codesystems.xml
-            // <id>http://hl7.org/fhir/v3/vs/AcknowledgementCondition</id>
-            
-            // FHIR's valuesets entry.id mostly look like
-            // <id>http://hl7.org/fhir/vs/reactionSeverity</id>
-            // but there are some alternatives too, so better use this file as a default
-
             var normalized = artifactId.ToString().ToLower();
 
             // Depending on the actual artifact uri, determine in which supplied bundled
@@ -203,35 +192,27 @@ namespace Hl7.Fhir.Api.Profiles
                 throw Error.NotImplemented("Url {0} was recognized as a core artifact, but I don't know where to locate it within validation.zip", normalized);
         }
 
-        public static readonly XName ENTRY_ID = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_ID;
         public static readonly XName ENTRY_CONTENT = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT;
 
-        // Scan a supplied bundle (atom) file with the core artifacts for an entry with the given uri
         private string readXmlEntryFromCoreBundle(Uri artifactId, params string[] fileNames)
         {
-            var entryId = artifactId.ToString();
-
             foreach (var filename in fileNames)
             {
                 // Note: no exception handling. If the expected bundled file cannot be
                 // read, throw the original exception.
-                using(var content = ReadContentArtifact(filename))
+                using (var content = ReadContentArtifact(filename))
                 {
                     if (content == null) throw new FileNotFoundException("Cannot find bundled core file " + filename);
-                
-                    // We're a bit lenient here, but find 0..1 entry which has ANY entry.id that
-                    // matches the artifactId we're looking for
-                    var entries = streamFeedEntries(content);
-                    var matchingEntry = entries
-                            .SingleOrDefault(entry => entry.Elements(ENTRY_ID)
-                                .Any(idElem => idElem.Value == artifactId.ToString()));
 
-                    if (matchingEntry != null)
+                    var scanner = new XmlFeedScanner(content);
+                    var entry = scanner.FindEntryById(artifactId);
+
+                    if (entry != null)
                     {
                         // Matching entry found
                         try
                         {
-                            var contentElement = matchingEntry.Element(ENTRY_CONTENT);
+                            var contentElement = entry.Element(ENTRY_CONTENT);
                             var entryContentXml = contentElement.Elements().FirstOrDefault();
                             return entryContentXml == null ? null : entryContentXml.ToString();
                         }
@@ -239,35 +220,11 @@ namespace Hl7.Fhir.Api.Profiles
                         {
                             throw Error.Format("Entry {0} was found in core bundle {1}, but cannot parse its contents", null, artifactId, filename);
                         }
-                    }                   
+                    }
                 }
             }
 
             return null;
-        }
-
-
-        // Use a forward-only XmlReader to scan through a possibly huge bundled file,
-        // and yield the feed entries, so only one entry is in memory at a time
-        private static IEnumerable<XElement> streamFeedEntries(Stream s)
-        {
-            if (s.CanSeek) s.Seek(0, SeekOrigin.Begin);
-
-            using (XmlReader reader = XmlReader.Create(s))
-            {
-                reader.MoveToContent();
-
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Element
-                            && reader.LocalName == "entry"
-                            && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
-                    {                     
-                        var entryNode = (XElement)XElement.ReadFrom(reader);
-                        yield return entryNode;
-                    }
-                }                
-            }
         }
 
 
@@ -291,113 +248,7 @@ namespace Hl7.Fhir.Api.Profiles
         private void ensurePrepared()
         {
             if (!isPrepared) Prepare();
-        }
-
-
-        private static readonly string CACHEPATH = Path.Combine(Path.GetTempPath(), "FhirArtifactCache");
-
-
-        private static List<string> unpackZips(string directory)
-        {
-            var zipFiles = Directory.GetFiles(directory, "*.zip");
-            var result = new List<string>();
-
-            foreach (var zipFile in zipFiles)
-            {
-                var outputDir = unzipZip(zipFile);
-                result.Add(outputDir.FullName);
-            }
-            return result;
-        }
-
-        private static DirectoryInfo unzipZip(string filename)
-        {
-            var cacheDirName = Path.GetFileName(filename);
-            var cachedZipDir = getCachedZipDirectory(cacheDirName,File.GetLastWriteTimeUtc(filename));
-             
-            // If we have up-to-date unpacked files, do nothing
-            if( cachedZipDir != null ) return cachedZipDir;
-
-            // Cached dir does not exist or is too old, create a fresh new one
-            var output = makeCleanCachedZipDirectory(cacheDirName);
-
-            using (var zipfile = ZipFile.Read(filename))
-            {
-                zipfile.ExtractAll(output.FullName);
-            }
-
-            return output;
-        }
-
-
-        /// <summary>
-        /// Ensures the cache directory contains a subdirectory matching the specified filename 
-        /// (which is normally the name of the zip archive) -> you will get one directory per zip file
-        /// with the name of the zipfile in the cache directory. If the directory already exists
-        /// it will be deleted and recreated, to make sure it is empty
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        private static DirectoryInfo makeCleanCachedZipDirectory(string filename)
-        {
-            var dir = getCacheDirectory();
-            var cacheDirPath = Path.Combine(dir.FullName, filename);
-
-            if (Directory.Exists(cacheDirPath)) Directory.Delete(cacheDirPath, recursive: true);
-
-            return Directory.CreateDirectory(cacheDirPath);
-        }
-
-
-        /// <summary>
-        /// Locates a zip-related directory within the cache directory that is as recent
-        /// (or more recent) than the given baseline date
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="baseline"></param>
-        /// <returns></returns>
-        private static DirectoryInfo getCachedZipDirectory(string filename, DateTime baseline)
-        {
-            var dir = getCacheDirectory();
-            var cacheDirPath = Path.Combine(dir.FullName,filename);
-
-            var dirInfo = new DirectoryInfo(cacheDirPath);
-            if( !dirInfo.Exists ) return null;
-
-            if( dirInfo.CreationTimeUtc >= baseline.ToUniversalTime() )
-                return dirInfo;
-            else
-                return null;
-        }
-     
-
-        /// <summary>
-        /// Gets the cache directory, or creates it if it did not exist
-        /// </summary>
-        /// <returns></returns>
-        private static DirectoryInfo getCacheDirectory()
-        {
-            if (!Directory.Exists(CACHEPATH)) 
-                return Directory.CreateDirectory(CACHEPATH);
-
-            return new DirectoryInfo(CACHEPATH);
-        }
-
-        /// <summary>
-        /// Remove the cache directory
-        /// </summary>
-        /// <returns></returns>
-        private static DirectoryInfo clearCache()
-        {
-            if (Directory.Exists(CACHEPATH)) Directory.Delete(CACHEPATH, recursive: true);
-
-            return getCacheDirectory();
-        }    
-
-        public void Clear()
-        {
-            clearCache();
-        }
+        }     
     }
 
 

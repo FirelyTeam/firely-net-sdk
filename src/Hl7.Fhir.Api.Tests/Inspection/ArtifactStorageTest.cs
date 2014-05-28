@@ -25,34 +25,56 @@ namespace Hl7.Fhir.Test.Inspection
 #endif
     {
         [TestMethod]
-        public void FileArtifactPreparationShouldCache()
+        public void ZipCacherShouldCache()
         {
-            var fa = new FileArtifactStore();
+            var cacheKey = Guid.NewGuid().ToString();
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+
+            var fa = new ZipCacher(zipFile,cacheKey);
+
+            Assert.IsFalse(fa.IsActual());
 
             var sw = new Stopwatch();
 
             sw.Start();
-            fa.Prepare();
+            fa.GetContents();
             sw.Stop();
 
             var firstRun = sw.ElapsedMilliseconds;
 
+            Assert.IsTrue(fa.IsActual());
+
             sw.Restart();
-            fa.Prepare();
+            fa.GetContents();
             sw.Stop();
 
             var secondRun = sw.ElapsedMilliseconds;
 
             Assert.IsTrue(firstRun > secondRun);
 
-            fa.Clear();
+            fa = new ZipCacher(zipFile,cacheKey);
 
-            sw.Restart();
-            fa.Prepare();
+            Assert.IsTrue(fa.IsActual());
+
+            sw.Start();
+            fa.GetContents();
             sw.Stop();
 
             var thirdRun = sw.ElapsedMilliseconds;
-            Assert.IsTrue(thirdRun > secondRun);
+            Assert.IsTrue(thirdRun < firstRun);
+
+            fa.Clear();
+            Assert.IsFalse(fa.IsActual());
+
+            sw.Restart();
+            fa.GetContents();
+            sw.Stop();
+
+            var fourthRun = sw.ElapsedMilliseconds;
+            Assert.IsTrue(fourthRun > secondRun);
+
+            File.SetLastWriteTime(zipFile, DateTime.Now);
+            Assert.IsFalse(fa.IsActual());
         }
 
 
