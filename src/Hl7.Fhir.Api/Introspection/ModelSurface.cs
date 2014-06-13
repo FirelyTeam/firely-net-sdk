@@ -9,26 +9,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Rest;
 
-namespace Hl7.Fhir.Api.Profiles
+namespace Hl7.Fhir.Api.Introspection
 {
     public class ModelSurface
     {
         private Dictionary<string, Profile> _profiles = new Dictionary<string, Profile>();
         private Dictionary<string, ValueSet> _valuesets = new Dictionary<string, ValueSet>();
 
+        public IArtifactSource Resolver { get; set; }
 
         public ModelSurface()
         {
             // Initialize with default resolver
-            Resolver = new DefaultArtifactResolver();
+            Resolver = new MultiArtifactSource(new FileArtifactSource(), new WebArtifactSource());
         }
 
-        public ModelSurface(IArtifactResolver resolver)
+        public ModelSurface(IArtifactSource resolver)
         {
             Resolver = resolver;
         }
@@ -63,7 +61,7 @@ namespace Hl7.Fhir.Api.Profiles
         // Later: 
         // public void Load(Uri location, Assembly modelAssembly ) {}    - loads profiles/valuesets using reflection
 
-        public IArtifactResolver Resolver { get; set; }
+
     }
 
 

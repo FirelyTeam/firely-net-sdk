@@ -57,7 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Introspection\FileArtifactStore.cs" />
+    <Compile Include="Introspection\MultiArtifactSource.cs" />
+    <Compile Include="Introspection\FileArtifactSource.cs" />
+    <Compile Include="Introspection\IArtifactSource.cs" />
+    <Compile Include="Introspection\WebArtifactSource.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />

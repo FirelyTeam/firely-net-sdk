@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Rest
                 int count = Components.Count;
                 int index = Components.IndexOf(RestOperation.HISTORY);
                 int n = (index > 0) ? 4 : 2;
-                IEnumerable<string> _components = Components.Skip(count - n);
-                string path = string.Join("/", _components).Trim('/');
+                IEnumerable<string> values = Components.Skip(count - n);
+                string path = string.Join("/", values).Trim('/');
                 string s = this.ToString();
                 string endpoint = s.Remove(s.LastIndexOf(path));
                 

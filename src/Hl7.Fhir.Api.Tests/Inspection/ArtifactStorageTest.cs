@@ -10,10 +10,9 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Api.Profiles;
 using System.Diagnostics;
 using System.IO;
+using Hl7.Fhir.Api.Introspection;
 
 namespace Hl7.Fhir.Test.Inspection
 {
@@ -81,7 +80,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void RecreatingFileArtifact()
         {
-            var fa = new FileArtifactStore();
+            var fa = new FileArtifactSource();
 
             fa.Prepare(); // First time might be expensive...
 
@@ -89,7 +88,7 @@ namespace Hl7.Fhir.Test.Inspection
 
             for (var loop = 0; loop < 50; loop++)
             {
-                fa = new FileArtifactStore();
+                fa = new FileArtifactSource();
                 fa.Prepare();
             }
 
@@ -101,10 +100,10 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void GetSomeBundledArtifacts()
         {
-            var fa = new FileArtifactStore();
+            var fa = new FileArtifactSource();
 
             // Add a "user" file before preparing;
-            File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "userfile.txt"), "Hello, world");
+            File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "userfile.txt"), @"Hello, world");
 
             fa.Prepare();
 
@@ -133,7 +132,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = new FileArtifactStore();
+            var fa = new FileArtifactSource();
 
             var vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             Assert.IsNotNull(vs);
@@ -146,6 +145,41 @@ namespace Hl7.Fhir.Test.Inspection
             var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/profile/money"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(dt is Profile);
+        }
+
+        [TestMethod]
+        public void RetrieveWebArtifact()
+        {
+            var wa = new WebArtifactSource();
+
+            var artifact = wa.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+
+            Assert.IsNotNull(artifact);
+            Assert.IsTrue(artifact is Profile);
+            Assert.AreEqual("alert", ((Profile) artifact).Name);
+        }
+
+        [TestMethod]
+        public void RetrieveArtifactMulti()
+        {
+            var resolver = new MultiArtifactSource(new FileArtifactSource(), new WebArtifactSource());
+
+            resolver.Prepare();
+
+            var vs = resolver.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            using (var a = resolver.ReadContentArtifact("patient.sch"))
+            {
+                Assert.IsNotNull(a);
+            }
+
+            var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+
+            Assert.IsNotNull(artifact);
+            Assert.IsTrue(artifact is Profile);
+            Assert.AreEqual("alert", ((Profile)artifact).Name);
         }
     }
 }

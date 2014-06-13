@@ -21,34 +21,34 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Api.Profiles
+namespace Hl7.Fhir.Api.Introspection
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files
     /// </summary>
-    public class FileArtifactStore
+    public class FileArtifactSource : IArtifactSource
     {
         public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/";
         public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/profile/";
         public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/conformance/";
         public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
-        public const string CORE_SPEC_V2VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
+        public const string CORE_SPEC_V2_VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
         public const string CORE_SPEC_DICOMVS_URI_PREFIX = "http://nema.org/dicom/vs/";
-        public const string CORE_SPEC_V3VS_URI_PREFIX = "http://hl7.org/fhir/v3/vs/";
+        public const string CORE_SPEC_V3_VS_URI_PREFIX = "http://hl7.org/fhir/v3/vs/";
         public const string CORE_SPEC_NAMESPACE_URI_PREFIX = "http://hl7.org/fhir/ns/";      //TODO: check prefix
         public const string CORE_SPEC_CONCEPTMAP_URI_PREFIX = "http://hl7.org/fhir/conceptmap/";     //TODO: check prefix
 
         private const string CACHE_KEY = "FhirArtifactCache";
 
-        private string _contentDirectory;
-        private bool isPrepared = false;
+        private readonly string _contentDirectory;
+        private bool _isPrepared = false;
 
-        public FileArtifactStore(string contentDirectory)
+        public FileArtifactSource(string contentDirectory)
         {
             _contentDirectory = contentDirectory;
         }
 
-        public FileArtifactStore()
+        public FileArtifactSource()
         {
             var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
 
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Api.Profiles
                 _artifactFiles.AddRange(zc.GetContents());
             }
 
-            isPrepared = true;
+            _isPrepared = true;
         }
 
 
@@ -114,10 +114,7 @@ namespace Hl7.Fhir.Api.Profiles
             var searchString = (Path.DirectorySeparatorChar + name).ToLower();
             var fullFileName = ArtifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
-            if (fullFileName == null)
-                return null;
-            else
-                return File.OpenRead(fullFileName);
+            return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
 
@@ -143,7 +140,6 @@ namespace Hl7.Fhir.Api.Profiles
 
             // We're assuming the validation.zip contains xml files
             if (artifactXml != null)
-
                 return FhirParser.ParseResourceFromXml(artifactXml);
             else
                 return null;
@@ -182,9 +178,9 @@ namespace Hl7.Fhir.Api.Profiles
                 throw Error.NotImplemented("Namespaces are a DSTU2 feature, so this feature has not yet been implemented");
             else if (normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-fhir.xml");
-            else if (normalized.StartsWith(CORE_SPEC_V2VS_URI_PREFIX))
+            else if (normalized.StartsWith(CORE_SPEC_V2_VS_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-v2.xml");
-            else if (normalized.StartsWith(CORE_SPEC_V3VS_URI_PREFIX))
+            else if (normalized.StartsWith(CORE_SPEC_V3_VS_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-v3.xml");
             else if (normalized.StartsWith(CORE_SPEC_DICOMVS_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-dicom.xml");
@@ -247,7 +243,7 @@ namespace Hl7.Fhir.Api.Profiles
         
         private void ensurePrepared()
         {
-            if (!isPrepared) Prepare();
+            if (!_isPrepared) Prepare();
         }     
     }
 
