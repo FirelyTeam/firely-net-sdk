@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Api.Introspection
 {
@@ -37,15 +38,23 @@ namespace Hl7.Fhir.Api.Introspection
             {
                 foreach (var entry in profiles.Entries.FilterResourceEntries())
                 {
-                    if (entry.Resource is Profile)
-                        Load(entry.Id, (Profile)entry.Resource);
-                    else if (entry.Resource is ValueSet)
-                        Load(entry.Id, (ValueSet)entry.Resource);
+                    loadResourceArtifact(entry.Resource, entry.Id);
                 }
             }
         }
 
-        public void Load(Uri location, Profile profile)
+        private void loadResourceArtifact(Resource resource, Uri location)
+        {
+            if (resource is Profile)
+                Load((Profile)resource, location);
+            else if (resource is ValueSet)
+                Load((ValueSet) resource, location);
+            else
+                throw Error.NotSupported("Don't know how to load artifact {0} of type {1}", location,
+                    resource.GetType().Name);
+        }
+
+        public void Load(Profile profile, Uri location)
         {
             // Index queries, mappings, extensions for quick lookup?
             _profiles.Add(location.ToString().ToLower(), profile);
@@ -53,90 +62,24 @@ namespace Hl7.Fhir.Api.Introspection
             // make relative references absolute?
         }
 
-        public void Load(Uri location, ValueSet valueset)
+        public void Load(ValueSet valueset, Uri location)
         {
             _valuesets.Add(location.ToString().ToLower(), valueset);
         }
 
-        // Later: 
-        // public void Load(Uri location, Assembly modelAssembly ) {}    - loads profiles/valuesets using reflection
-
-
-    }
-
-
-    public interface IArtifactResolver
-    {
-        Profile ResolveProfile(Uri location);
-        ValueSet ResolveValueSet(Uri location);
-    }
-
-
-    public class DefaultArtifactResolver : IArtifactResolver
-    {
-        
-
-        // Todo: could do fallback scenario's to a list of known profile servers if the artifact was not found at its indicated location
-        public Profile ResolveProfile(Uri location)
+        public void Load(Uri location)
         {
-            throw new NotImplementedException();
+            var artifact = Resolver.ReadResourceArtifact(location);
 
-            //// This is what the entry.id looks like in the profiles-resources, <id>http://hl7.org/fhir/profile/adversereaction</id> (a resource)
-            //// or <id>http://hl7.org/fhir/profile/period</id>
-
-            //Profile result = null;
-
-            //// If this profile could be a base profile for a datatype or resource, first try to resolve it in the
-            //// profiles-types and profiles-resources xml files
-            //if (location.ToString().StartsWith(BASEPROFILE_URI_PREFIX))
-            //{
-            //    result = ResolveFromSpecFiles(location);
-
-            //    if (result != null) return result;
-            //}
-
-            //// Next, try to find a file on the local filesystem with the same name as the logical id.
-            //var id = new ResourceIdentity(location);
-            //var logicalId = id.Id;
-
-            //if (logicalId != null)
-            //{
-            //    result = ResolveFromFilesystem(logicalId + ".xml");
-            //    if (result != null) return result;
-            //}
-
-            //// Next, try to fetch it from the addresss given
-            //FhirClient client = new FhirClient(id.Endpoint);
-
-            //try
-            //{
-            //    result = client.Read<Profile>(location).Resource;
-            //}
-            //catch
-            //{
-            //    result = null;  // just to be sure
-            //}
-
-            //return result;
-        }
-
-
-        public static Profile ResolveFromSpecFiles(Uri location)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public static Profile ResolveFromFileSystem(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ValueSet ResolveValueSet(Uri location)
-        {
-            throw new NotImplementedException();
+            if (artifact != null)
+            {
+                loadResourceArtifact(artifact, location);
+            }
+            else
+                throw Error.Argument("location", "Cannot load artifact at uri {0}: not found", location);
         }
     }
+
 
 
     public static class StructureExtensions
