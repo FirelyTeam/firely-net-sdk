@@ -3,7 +3,7 @@
     "identifier": [{
         "label": "MRN",
         "period": {"start": "2001-05-06"},
-        "assigner": {"display": "Acme Healthcare"},
+        "assigner": {"display": "Acme\u202fHealthcare"},
         "use": "usual",
         "system": "urn:oid:1.2.36.146.595.217.0.1",
         "value": "12345"
@@ -38,7 +38,7 @@
         {
             "url": "urn:example-do-not-use:pi",
             "valueDecimal": 3.141592653589793
-        },
+        }
     ],
     "gender": {"coding": [{
         "system": "http://hl7.org/fhir/v3/AdministrativeGender",
@@ -47,6 +47,10 @@
     }]},
     "birthDate": "1974-12",
     "deceasedBoolean": true,
+    "_birthDate": {"extension": [{
+        "url": "http://hl7.org/fhir/example-do-not-use#DateTime.calendar",
+        "valueCode": "gregorian"
+    }]},
     "address": [{
         "use": "home",
         "line": ["534 Erewhon St"],
@@ -113,7 +117,7 @@
                 {"extension": [{
                     "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
                     "valueCode": "ASKU"
-                }]}                
+                }]}
             ],
             "_given": [
                 null,

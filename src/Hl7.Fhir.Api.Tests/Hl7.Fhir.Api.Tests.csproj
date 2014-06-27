@@ -85,6 +85,8 @@
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Inspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
+    <Compile Include="Serialization\JsonNavigatorTests.cs" />
+    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Inspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
