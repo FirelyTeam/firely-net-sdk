@@ -10,6 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Test
 {
@@ -66,6 +67,16 @@ namespace Hl7.Fhir.Test
 
             rl = old.NavigateTo("../Observation/3");
             Assert.AreEqual("http://hl7.org/fhir/Observation/3",rl.ToString());
+        }
+
+        [TestMethod]
+        public void TestEscaping()
+        {
+            var url = new RestUrl("http://www.server.org/fhir");
+            url.AddParam("_since", FhirDateTime.Now().Value);
+
+            var output = url.Uri;
+            Assert.IsFalse(output.ToString().Contains("+"));    // don't use un-escaped +
         }
 
 

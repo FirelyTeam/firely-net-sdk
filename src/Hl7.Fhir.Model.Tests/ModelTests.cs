@@ -34,6 +34,10 @@ namespace Hl7.Fhir.Tests
 
             FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10);
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
+
+            var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
+            dt = new FhirDateTime(stamp);
+            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
        
