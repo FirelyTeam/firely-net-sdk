@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -197,7 +197,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <EmbeddedResource Include="Schemas\fhir-atom-single.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -224,7 +223,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Generated\core-conformances-base.xml" />
+    <Content Include="Generated\core-profiles-datatypes.xml" />
+    <Content Include="Generated\core-profiles-resources.xml" />
+    <Content Include="Generated\core-valuesets-dicom.xml" />
+    <Content Include="Generated\core-valuesets-fhir.xml" />
+    <Content Include="Generated\core-valuesets-v2.xml" />
+    <Content Include="Generated\core-valuesets-v3.xml" />
     <Content Include="Generated\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
