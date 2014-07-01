@@ -8,6 +8,10 @@ title: What's new?
 * Validation
 * UCUM calculations support
 
+### In 0.11.0
+* Added `JsonXPathNavigator` to execute XPath statements over a FHIR-Json based document
+* Changed `FhirUri` to use string internally, rather than the Uri class to guarantee round-trips and avoid url normalization issues
+
 ### In 0.10.0
 * There's a new `FhirParser.ParseQueryFromUriParameters()` function to parse URL parameters into a FHIR `Query` resource
 * The Model classes now implements `INotifyPropertyChanged`
