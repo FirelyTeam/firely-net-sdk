@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection); 
             Assert.IsTrue(valueProp.RepresentsValueElement);
-            Assert.AreEqual(typeof(Uri),valueProp.ElementType);
+            Assert.AreEqual(typeof(string),valueProp.ElementType);
         }
     }
 }

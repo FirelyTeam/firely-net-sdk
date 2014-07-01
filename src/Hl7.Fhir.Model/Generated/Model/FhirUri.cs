@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
+// Generated on Tue, Jul 1, 2014 16:22+0200 for FHIR v0.0.81
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,12 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class FhirUri : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
-        public FhirUri(System.Uri value)
+        public FhirUri(string value)
         {
             Value = value; 
         }
         
-        public FhirUri(): this((System.Uri)null) {}
+        public FhirUri(): this((string)null) {}
         
         /// <summary>
         /// Primitive value of the element
@@ -60,12 +60,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
         [UriPattern]
         [DataMember]
-        public System.Uri Value
+        public string Value
         {
             get { return _Value; }
             set { _Value = value; OnPropertyChanged("Value"); }
         }
-        private System.Uri _Value;
+        private string _Value;
         
     }
     

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 24, 2014 12:29+0200 for FHIR v0.80
+// Generated on Tue, Jul 1, 2014 16:22+0200 for FHIR v0.0.81
 //
 namespace Hl7.Fhir.Model
 {
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public System.Uri PolicyManager
+        public string PolicyManager
         {
             get { return PolicyManagerElement != null ? PolicyManagerElement.Value : null; }
             set
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<System.Uri> Format
+        public IEnumerable<string> Format
         {
             get { return FormatElement != null ? FormatElement.Select(elem => elem.Value) : null; }
             set
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public System.Uri Location
+        public string Location
         {
             get { return LocationElement != null ? LocationElement.Value : null; }
             set

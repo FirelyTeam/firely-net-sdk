@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public Extension(Uri url, Element value)
+        public Extension(string url, Element value)
         {
             this.Url = url;
             this.Value = value;

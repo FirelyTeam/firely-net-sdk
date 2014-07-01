@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
-        public static Extension GetExtension(this IExtendable extendable, Uri uri)
+        public static Extension GetExtension(this IExtendable extendable, string uri)
         {
             if (extendable.Extension != null)
             {
@@ -65,12 +65,11 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <returns>The list of extensions with a matching uri, or empty list if none were found.</returns>
-        public static IEnumerable<Extension> GetExtensions(this IExtendable extendable, Uri uri)
+        public static IEnumerable<Extension> GetExtensions(this IExtendable extendable, string uri)
         {
             if (extendable.Extension != null)
             {
-                return extendable.Extension
-                    .Where(ext => ext.Url != null && ext.Url.ToString() == uri.ToString());
+                return extendable.Extension.Where(ext => ext.Url == uri);
             }
 
             return null;
@@ -84,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <param name="uri"></param>
         /// <param name="value"></param>
         /// <returns>The newly added Extension</returns>
-        public static Extension AddExtension(this IExtendable extendable, Uri uri, Element value)
+        public static Extension AddExtension(this IExtendable extendable, string uri, Element value)
         {
             if (extendable.Extension == null)
                 extendable.Extension = new List<Extension>();
@@ -101,11 +100,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
-        public static void RemoveExtension(this IExtendable extendable, Uri uri)
+        public static void RemoveExtension(this IExtendable extendable, string uri)
         {
             if (extendable.Extension == null) return;
 
-            var remove = extendable.Extension.Where(ext => ext.Url != null && ext.Url.ToString() == uri.ToString()).ToList();
+            var remove = extendable.Extension.Where(ext => ext.Url == uri).ToList();
            
             foreach(var ext in remove )
                 extendable.Extension.Remove(ext);
@@ -119,7 +118,7 @@ namespace Hl7.Fhir.Model
         /// <param name="uri"></param>
         /// <param name="value"></param>
         /// <returns>The newly added extension</returns>
-        public static Extension SetExtension(this IExtendable extendable, Uri uri, Element value)
+        public static Extension SetExtension(this IExtendable extendable, string uri, Element value)
         {
             if (extendable.Extension == null)
                 extendable.Extension = new List<Extension>();

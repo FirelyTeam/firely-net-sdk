@@ -40,9 +40,9 @@ namespace Hl7.Fhir.Model
 {
     public partial class FhirUri
     {
-        public FhirUri(string uri)
+        public FhirUri(Uri uri)
         {
-            Value = new Uri(uri, UriKind.RelativeOrAbsolute);
+            Value = uri.OriginalString;
         }
     }
 }

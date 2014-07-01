@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
 
         public Query()
         {
-            Identifier = new Uri("urn:uuid:" + Guid.NewGuid());
+            Identifier = "urn:uuid:" + Guid.NewGuid();
             Parameter = new List<Extension>();
         }
 
@@ -349,11 +349,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="paramKey"></param>
         /// <returns></returns>
-        public static Uri BuildParamUri(string paramKey)
+        public static string BuildParamUri(string paramKey)
         {
             if (paramKey == null) throw new ArgumentNullException("paramName");
 
-            return new Uri(PARAMETERURL + "#" + paramKey, UriKind.Absolute);
+            return PARAMETERURL + "#" + paramKey;
         }
 
         private const string PARAMETERURLANDFRAGMENT = PARAMETERURL + "#";

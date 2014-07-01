@@ -75,17 +75,12 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public CodeableConcept(Uri system, string code, string text = null)
+        public CodeableConcept(string system, string code, string text = null)
         {
             this.Coding = new List<Coding>() {
                 new Coding(system,code) };
             
             this.Text = text;
-        }
-
-        public CodeableConcept(string system, string code, string text = null)
-              : this(new Uri(system, UriKind.Absolute), code, text)
-        {
         }
     }
 
@@ -95,15 +90,10 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public Coding(Uri system, string code)
+        public Coding(string system, string code)
         {
             this.System = system;
             this.Code = code;
-        }
-
-        public Coding(string system, string code)
-            : this(new Uri(system, UriKind.Absolute), code)
-        {
         }
     }
 
@@ -113,15 +103,10 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public Identifier(Uri system, string value)
+        public Identifier(string system, string value)
         {
             this.System = system;
             this.Value = value;
-        }
-
-        public Identifier(string system, string value)
-            : this(new Uri(system, UriKind.Absolute), value)
-        {
-        }
+        }        
     }
 }

@@ -40,6 +40,14 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
+
+        [TestMethod]
+        public void Uri_Canonical()
+        {
+            var identifier = new Identifier("http://nhi.health.nz", "123");
+            Assert.AreEqual("123", identifier.Value);
+            Assert.AreEqual("http://nhi.health.nz", identifier.System);
+        }
        
 
         [TestMethod]
@@ -76,27 +84,26 @@ namespace Hl7.Fhir.Tests
         public void ExtensionManagement()
         {
             Patient p = new Patient();
-            Uri u1 = new Uri("http://fhir.org/ext/ext-test");
-            Assert.IsNull(p.GetExtension(u1));
+            var u1 = "http://fhir.org/ext/ext-test";
+            Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
             Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
             Assert.AreSame(newEx, p.GetExtension(u1));
 
-            p.AddExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Ewout"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
             Assert.AreSame(newEx, p.GetExtension(u1));
 
             p.RemoveExtension(u1);
             Assert.IsNull(p.GetExtension(u1));
 
-            p.SetExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Ewout Kramer"));
-            var ew = p.GetExtensions(new Uri("http://fhir.org/ext/ext-test2"));
+            p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
+            var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
             Assert.AreEqual(1, ew.Count());
 
-            p.AddExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Wouter Kramer"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
-            ew = p.GetExtensions(new Uri("http://fhir.org/ext/ext-test2"));
+            ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
             Assert.AreEqual(2, ew.Count());
-
         }
 
 

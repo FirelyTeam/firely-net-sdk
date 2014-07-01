@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(dt is Profile);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void RetrieveWebArtifact()
         {
             var wa = new WebArtifactSource();
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual("alert", ((Profile) artifact).Name);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void RetrieveArtifactMulti()
         {
             var resolver = new MultiArtifactSource(new FileArtifactSource(), new WebArtifactSource());
