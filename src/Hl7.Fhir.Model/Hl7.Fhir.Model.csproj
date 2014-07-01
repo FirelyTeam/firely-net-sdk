@@ -88,7 +88,6 @@
     <Compile Include="Generated\Model\FhirString.cs" />
     <Compile Include="Generated\Model\FhirUri.cs" />
     <Compile Include="Generated\Model\Uuid.cs" />
-    <Compile Include="Generated\Model\XHtml.cs" />
     <Compile Include="Generated\Model\Resource.cs" />
     <Compile Include="Generated\Model\AdverseReaction.cs" />
     <Compile Include="Generated\Model\Alert.cs" />
