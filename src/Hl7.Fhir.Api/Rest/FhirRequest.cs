@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Rest
 
 		public string Method { get { return _method; } }
 		public Uri Location { get { return _location; } }
+        public int Timeout { get; set; }
 
         private Action<HttpWebRequest> _beforeRequest;
         private Action<WebResponse> _afterRequest;
@@ -130,6 +131,8 @@ namespace Hl7.Fhir.Rest
 
             FhirResponse result = null;
 
+            request.Timeout = Timeout;
+
             // Make sure the HttpResponse gets disposed!
             if (_beforeRequest != null) _beforeRequest(request);
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponseNoEx())
@@ -168,6 +171,8 @@ namespace Hl7.Fhir.Rest
 					request.Headers[HttpRequestHeader.ContentLocation] = _contentLocation;
 				await request.WriteBodyAsync(_body);
 			}
+
+            request.Timeout = Timeout;
 
 			// Make sure the caller disposes the HttpResponse gets disposed...
             if (_beforeRequest != null) _beforeRequest(request);

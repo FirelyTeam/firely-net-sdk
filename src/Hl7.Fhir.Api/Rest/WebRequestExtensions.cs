@@ -88,9 +88,15 @@ namespace Hl7.Fhir.Rest
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
-                        //var request = (WebRequest)ar.AsyncState;
+                    //var request = (WebRequest)ar.AsyncState;
+                    try
+                    {
                         result = req.EndGetResponseNoEx(ar);
+                    }
+                    finally
+                    {
                         responseReady.Set();
+                    }
                 });
 
             var async = req.BeginGetResponse(callback, null);
