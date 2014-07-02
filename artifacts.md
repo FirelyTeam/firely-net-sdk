@@ -10,6 +10,7 @@ Some of these files can be found on the web, some of those inside zip files in t
 To help accessing these files, the FHIR .NET API contains the `ArtifactResolver` class, which has two main methods:
 
 1. To locate a non-resource artifact, like an XSD file etcetera, call the resolver's `ReadContentArtifact` method, passing it the name of the file you are looking for:
+
 ```csharp
 var resolver = new ArtifactResolver();
 using(var fileStream = resolver.ReadContentArtifact("patient.sch"))
@@ -18,7 +19,9 @@ using(var fileStream = resolver.ReadContentArtifact("patient.sch"))
 	// or use a using() block
 }
 ```
+
 2. To load a Profile, ValueSet or other artifact Resource, call `ReadResourceArtifact`. Pass the full url of the artifact to the call:
+
 ```csharp
 var resolver = new ArtifactResolver();
 var address = new Uri("http://hl7.org/fhir/v2/vs/0292");
