@@ -69,6 +69,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Inspection\SchemaCollectionTest.cs" />
     <Compile Include="Inspection\ArtifactStorageTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Inspection\ClassMappingTest.cs">

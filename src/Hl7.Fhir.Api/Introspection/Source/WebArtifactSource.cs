@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
 
                 return artifactEntry != null ? artifactEntry.Resource : null;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

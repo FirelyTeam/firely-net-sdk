@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual("alert", ((Profile) artifact).Name);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void RetrieveArtifactMulti()
         {
             var resolver = new ArtifactResolver();
@@ -208,6 +208,7 @@ namespace Hl7.Fhir.Test.Inspection
 
             using (var a = resolver.ReadContentArtifact("patient.sch"))
             {
+
                 Assert.IsNotNull(a);
             }
 

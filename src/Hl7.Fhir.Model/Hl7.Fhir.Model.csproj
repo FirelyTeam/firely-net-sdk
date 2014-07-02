@@ -196,28 +196,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Schemas\fhir-atom-single.xsd">
+    <EmbeddedResource Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\fhir-single.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\fhir-xhtml.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\opensearch.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\opensearchscore.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\tombstone.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\xml.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\xmldsig-core-schema.xsd">
+    <EmbeddedResource Include="Validation\xhtml\xml.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

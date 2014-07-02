@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
             get
             {
                 ensurePrepared();
-                return _artifactFiles;
+                return _artifactFiles.Select(path => Path.GetFileName(path));
             }
         }
 
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
             ensurePrepared();
 
             var searchString = (Path.DirectorySeparatorChar + name).ToLower();
-            var fullFileName = ArtifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+            var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }

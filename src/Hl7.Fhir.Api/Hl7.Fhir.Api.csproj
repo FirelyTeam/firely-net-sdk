@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\Source\SchemaCollection.cs" />
     <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />
     <Compile Include="Introspection\Source\ArtifactResolver.cs" />
     <Compile Include="Introspection\Source\FileArtifactSource.cs" />

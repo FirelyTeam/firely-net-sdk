@@ -32,12 +32,12 @@ namespace Hl7.Fhir.Validation
                 // another implementation to cover this
 #if !PORTABLE45
                 var doc = XDocument.Parse(value as string);
-                doc.Validate(SchemaCollection.ValidationSchemaSet, validationEventHandler: null);
+                doc.Validate(_xhtmlSchemaSet.Value, validationEventHandler: null);
 #endif
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -55,5 +55,24 @@ namespace Hl7.Fhir.Validation
             else 
                 return FhirValidator.BuildResult(validationContext, "Xml can not be parsed or is not valid according to the (limited) FHIR scheme");
         }
+
+#if !PORTABLE45
+        private static Lazy<XmlSchemaSet> _xhtmlSchemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
+
+        private static XmlSchemaSet compileXhtmlSchema()
+        {
+            var assembly = typeof(NarrativeXhtmlPatternAttribute).Assembly;
+            XmlSchemaSet schemas = new XmlSchemaSet();
+
+            Stream schema = assembly.GetManifestResourceStream("Hl7.Fhir.Validation.xhtml.fhir-xhtml.xsd"); 
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+            schema = assembly.GetManifestResourceStream("Hl7.Fhir.Validation.xhtml.xml.xsd"); 
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+
+            schemas.Compile();
+
+            return schemas;
+        }
+#endif
 	}
 }
