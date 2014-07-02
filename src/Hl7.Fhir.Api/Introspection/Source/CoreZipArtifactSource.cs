@@ -21,12 +21,12 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Api.Introspection
+namespace Hl7.Fhir.Api.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files
     /// </summary>
-    public class FileArtifactSource : IArtifactSource
+    public class CoreZipArtifactSource : IArtifactSource
     {
         public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/";
         public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/profile/";
@@ -43,12 +43,12 @@ namespace Hl7.Fhir.Api.Introspection
         private readonly string _contentDirectory;
         private bool _isPrepared = false;
 
-        public FileArtifactSource(string contentDirectory)
+        public CoreZipArtifactSource(string contentDirectory)
         {
             _contentDirectory = contentDirectory;
         }
 
-        public FileArtifactSource()
+        public CoreZipArtifactSource()
         {
             var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
 
@@ -69,9 +69,6 @@ namespace Hl7.Fhir.Api.Introspection
         {
             _artifactFiles = new List<string>();
 
-            // First add files present in the content directory (this includes the zips themselves!)
-            _artifactFiles.AddRange(listContentFilesInDirectory(_contentDirectory));
-
             var zips = Directory.GetFiles(_contentDirectory, "*.zip");
 
             // Get the files in each *.zip files present in the content directory
@@ -83,14 +80,6 @@ namespace Hl7.Fhir.Api.Introspection
             }
 
             _isPrepared = true;
-        }
-
-
-        private static IEnumerable<string> listContentFilesInDirectory(string fullPath)
-        {
-            var allFiles = Directory.GetFiles(fullPath, "*.*", SearchOption.AllDirectories);
-
-            return allFiles.Where(name => Path.GetExtension(name) != "exe" && Path.GetExtension(name) != "dll");
         }
 
 
@@ -134,15 +123,15 @@ namespace Hl7.Fhir.Api.Introspection
 
             // Core artifacts come from specific bundles files in the validation.zip
             if (IsCoreArtifact(artifactId))
+            {
                 artifactXml = loadCoreArtifactXml(artifactId);
-            else
-                artifactXml = loadUserArtifactXml(artifactId);
 
-            // We're assuming the validation.zip contains xml files
-            if (artifactXml != null)
-                return FhirParser.ParseResourceFromXml(artifactXml);
-            else
-                return null;
+                // We're assuming the validation.zip contains xml files
+                if (artifactXml != null)
+                    return FhirParser.ParseResourceFromXml(artifactXml);
+            }
+
+            return null;
         }
 
 
@@ -222,38 +211,10 @@ namespace Hl7.Fhir.Api.Introspection
 
             return null;
         }
-
-
-        private string loadUserArtifactXml(Uri artifactId)
-        {
-            // Locate a file that has the same name as the 'logical' id from the uri
-            var logicalId = new ResourceIdentity(artifactId).Id;
-
-            if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
-
-            // Return the contents of the file, since there's no logical id inside the data of a simple resource file
-            using (var content = ReadContentArtifact(logicalId + ".xml"))
-            {
-                if (content == null) return null;
-
-                return XmlReader.Create(content).ReadOuterXml();
-            }
-        }
-
-        
+            
         private void ensurePrepared()
         {
             if (!_isPrepared) Prepare();
         }     
     }
-
-
-    //public enum ArtifactType
-    //{
-    //    Profile,
-    //    ValueSet,
-    //    Conformance,
-    //    Namespace,
-    //    ConceptMap
-    //}
 }

@@ -13,23 +13,27 @@ using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Api.Introspection
+namespace Hl7.Fhir.Api.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources
     /// </summary>
-    public class MultiArtifactSource : IArtifactSource
+    public class ArtifactResolver : IArtifactSource
     {
         private readonly List<IArtifactSource> _sources = new List<IArtifactSource>();
 
-        public MultiArtifactSource(IEnumerable<IArtifactSource> sources)
+        public ArtifactResolver() : this(new FileArtifactSource(), new CoreZipArtifactSource(), new WebArtifactSource())
+        {            
+        }
+
+        public ArtifactResolver(IEnumerable<IArtifactSource> sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");
 
             _sources.AddRange(sources);
         }
 
-        public MultiArtifactSource(params IArtifactSource[] sources)
+        public ArtifactResolver(params IArtifactSource[] sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");
 
@@ -46,13 +50,18 @@ namespace Hl7.Fhir.Api.Introspection
             _sources.Remove(source);
         }
 
+        public IList<IArtifactSource> Sources
+        { 
+            get { return _sources; } 
+        }
+
         private bool _prepared = false;
 
         public void Prepare()
         {
             if (!_prepared)
             {
-                foreach (var source in _sources) source.Prepare();
+                foreach (var source in Sources) source.Prepare();
                 _prepared = true;
             }
         }
@@ -61,7 +70,7 @@ namespace Hl7.Fhir.Api.Introspection
         {
             if (!_prepared) Prepare();
 
-            foreach (var source in _sources)
+            foreach (var source in Sources)
             {
                 try
                 {
@@ -83,7 +92,7 @@ namespace Hl7.Fhir.Api.Introspection
         {
             if (!_prepared) Prepare();
 
-            foreach (var source in _sources)
+            foreach (var source in Sources)
             {
                 try
                 {

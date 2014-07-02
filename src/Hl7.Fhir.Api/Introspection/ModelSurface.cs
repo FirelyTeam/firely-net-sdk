@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.Api.Introspection.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Api.Introspection
         public ModelSurface()
         {
             // Initialize with default resolver
-            Resolver = new MultiArtifactSource(new FileArtifactSource(), new WebArtifactSource());
+            Resolver = new ArtifactResolver(new FileArtifactSource(), new WebArtifactSource());
         }
 
         public ModelSurface(IArtifactSource resolver)

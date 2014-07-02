@@ -57,14 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Introspection\MultiArtifactSource.cs" />
-    <Compile Include="Introspection\FileArtifactSource.cs" />
-    <Compile Include="Introspection\IArtifactSource.cs" />
-    <Compile Include="Introspection\WebArtifactSource.cs" />
+    <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />
+    <Compile Include="Introspection\Source\ArtifactResolver.cs" />
+    <Compile Include="Introspection\Source\FileArtifactSource.cs" />
+    <Compile Include="Introspection\Source\IArtifactSource.cs" />
+    <Compile Include="Introspection\Source\WebArtifactSource.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
-    <Compile Include="Introspection\ModelSurface.cs" />
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />

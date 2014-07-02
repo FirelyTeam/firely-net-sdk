@@ -7,12 +7,15 @@
  */
 
 using System;
-namespace Hl7.Fhir.Api.Introspection
+using System.IO;
+
+namespace Hl7.Fhir.Api.Introspection.Source
 {
     public interface IArtifactSource
     {
         void Prepare();
-        global::System.IO.Stream ReadContentArtifact(string name);
-        global::Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId);
+
+        Stream ReadContentArtifact(string name);
+        Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId);
     }
 }

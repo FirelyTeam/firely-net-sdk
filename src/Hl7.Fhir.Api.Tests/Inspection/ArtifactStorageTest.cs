@@ -7,12 +7,15 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
 using Hl7.Fhir.Api.Introspection;
+using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Test.Inspection
 {
@@ -78,9 +81,9 @@ namespace Hl7.Fhir.Test.Inspection
 
 
         [TestMethod]
-        public void RecreatingFileArtifact()
+        public void RecreatingCoreZipArtifact()
         {
-            var fa = new FileArtifactSource();
+            var fa = new CoreZipArtifactSource();
 
             fa.Prepare(); // First time might be expensive...
 
@@ -88,41 +91,32 @@ namespace Hl7.Fhir.Test.Inspection
 
             for (var loop = 0; loop < 50; loop++)
             {
-                fa = new FileArtifactSource();
+                fa = new CoreZipArtifactSource();
                 fa.Prepare();
             }
 
             sw.Stop();
 
-            Assert.IsTrue(sw.ElapsedMilliseconds < 20*50);
+            Assert.IsTrue(sw.ElapsedMilliseconds < 20 * 50);
         }
 
         [TestMethod]
         public void GetSomeBundledArtifacts()
         {
-            var fa = new FileArtifactSource();
+            var za = new CoreZipArtifactSource();
+            za.Prepare();
 
-            // Add a "user" file before preparing;
-            File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "userfile.txt"), @"Hello, world");
-
-            fa.Prepare();
-
-            using (var a = fa.ReadContentArtifact("patient.sch"))
+            using (var a = za.ReadContentArtifact("patient.sch"))
             {
                 Assert.IsNotNull(a);
             }
 
-            using (var a = fa.ReadContentArtifact("core-valuesets-v3.xml"))
+            using (var a = za.ReadContentArtifact("core-valuesets-v3.xml"))
             {
                 Assert.IsNotNull(a);
             }
 
-            using (var a = fa.ReadContentArtifact("patient.xsd"))
-            {
-                Assert.IsNotNull(a);
-            }
-
-            using (var a = fa.ReadContentArtifact("userfile.txt"))
+            using (var a = za.ReadContentArtifact("patient.xsd"))
             {
                 Assert.IsNotNull(a);
             }
@@ -130,9 +124,51 @@ namespace Hl7.Fhir.Test.Inspection
 
 
         [TestMethod]
+        public void GetFileArtifacts()
+        {
+            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testPath);
+
+            // Add a "user" file before preparing;
+            File.WriteAllText(Path.Combine(testPath,"userfile.txt"), @"Hello, world");
+            File.WriteAllText(Path.Combine(testPath, "userfile.jrg"), @"Hello, world");
+
+            // Copy a resource from the zip to a subdirectory
+            var resPath = Path.Combine(testPath, "resources");
+            Directory.CreateDirectory(resPath);
+
+            Patient p = new Patient();
+            File.WriteAllText(Path.Combine(resPath,"patientNL.xml"), FhirSerializer.SerializeResourceToXml(p));
+
+            var fa = new FileArtifactSource(testPath, includeSubdirectories:true);
+            fa.Mask = "*.txt | *.xml";
+            fa.Prepare();
+
+            // Check whether the .jrg file was indeed exluded
+            Assert.AreEqual(2, fa.ArtifactFiles.Count());
+            
+            using (var a = fa.ReadContentArtifact("userfile.txt"))
+            {
+                Assert.IsNotNull(a);
+            }
+
+            var pat = fa.ReadResourceArtifact(new Uri("http://nu.nl/fhir/patientNL"));
+            Assert.IsNotNull(pat);
+
+            // Check that, without a Mask, all files are found
+            var fa2 = new FileArtifactSource(testPath, includeSubdirectories: true);
+            Assert.AreEqual(3, fa2.ArtifactFiles.Count());
+
+            // Check that, when exluding subdirectories, we will only find 2 files again
+            var fa3 = new FileArtifactSource(testPath, includeSubdirectories: false);
+            Assert.AreEqual(2, fa3.ArtifactFiles.Count());
+            Assert.IsTrue(fa3.ArtifactFiles.All(f => f.Contains("userfile.")));
+        }
+
+        [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = new FileArtifactSource();
+            var fa = new CoreZipArtifactSource();
 
             var vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             Assert.IsNotNull(vs);
@@ -147,7 +183,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(dt is Profile);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void RetrieveWebArtifact()
         {
             var wa = new WebArtifactSource();
@@ -162,7 +198,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod, Ignore]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new MultiArtifactSource(new FileArtifactSource(), new WebArtifactSource());
+            var resolver = new ArtifactResolver();
 
             resolver.Prepare();
 

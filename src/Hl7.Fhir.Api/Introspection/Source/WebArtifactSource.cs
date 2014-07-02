@@ -13,7 +13,7 @@ using System.Text;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Api.Introspection
+namespace Hl7.Fhir.Api.Introspection.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Api.Introspection
             var id = new ResourceIdentity(artifactId);
 
             var client = new FhirClient(id.Endpoint);
+            client.Timeout = 5000;  //ms
 
             try
             {
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Api.Introspection
 
                 return artifactEntry != null ? artifactEntry.Resource : null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
