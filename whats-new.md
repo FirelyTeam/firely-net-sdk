@@ -5,11 +5,12 @@ title: What's new?
 ### Coming Soon
 * ValueSet expansion
 * More model/metadata support
-* Validation
+* Profile Validation
 * UCUM calculations support
 
 ### In 0.11.0
 * Added `JsonXPathNavigator` to execute XPath statements over a FHIR-Json based document
+* Added a new Hl7.Fhir.Introspection.Source namespace that contains an `ArtifactResolver` class to obtain schema files, profiles and valuesets by uri or id. This class will read the provided validation.zip for the core artifacts. For more info see [here](artifacts.html).
 * Changed `FhirUri` to use string internally, rather than the Uri class to guarantee round-trips and avoid url normalization issues
 
 ### In 0.10.0
