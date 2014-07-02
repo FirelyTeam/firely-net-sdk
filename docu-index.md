@@ -20,7 +20,8 @@ The documentation is currently under construction. As of april 2014, we have:
 	* Intro to Bundles and BundleEntries
 	* [Using Tags in Bundles][tagsbundles]
 * Utility classes
-	* Working with [ResourceIdentity]   
+	* Working with [ResourceIdentity]
+	* Loading [FHIR artifacts]   
 
 
 
@@ -30,3 +31,4 @@ The documentation is currently under construction. As of april 2014, we have:
 [clientcrud]: client-crud.html
 [validation]: validation.html
 [clientsearch]: client-search.html
+[FHIR artifacts]: artifacts.html
