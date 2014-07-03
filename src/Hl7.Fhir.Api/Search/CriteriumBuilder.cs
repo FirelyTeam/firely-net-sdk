@@ -19,21 +19,21 @@ namespace Hl7.Fhir.Search
         ICriteriumBuilder Eq(decimal number);
         ICriteriumBuilder LessThan();
 
-       IStringModifier Matches(string text);
+        IStringModifier Matches(string text);
 
-        
-         ITokenModifier Is(string code);
-        
-         IValueBuilder On(string dateTime);
-         IValueBuilder On(DateTimeOffset dateTime);
+
+        ITokenModifier Is(string code);
+
+        IValueBuilder On(string dateTime);
+        IValueBuilder On(DateTimeOffset dateTime);
         IValueBuilder Before();
-         IValueBuilder After();
+        IValueBuilder After();
 
         ICriteriumBuilder References(string resource, string id);
         ICriteriumBuilder References(Uri location);
-         ICriteriumBuilder References(string location);
+        ICriteriumBuilder References(string location);
 
-         ICriteriumBuilder IsMissing { get; }
+        ICriteriumBuilder IsMissing { get; }
     }
 
     public interface IReferenceBuilder
@@ -46,18 +46,18 @@ namespace Hl7.Fhir.Search
 
     public interface ICriteriumBuilder
     {
- IOperationBuilder And(string paramName);
+        IOperationBuilder And(string paramName);
     }
 
     public interface ITokenModifier : ICriteriumBuilder
     {
-       ICriteriumBuilder In(string ns);
-         ICriteriumBuilder In(Uri ns);
+        ICriteriumBuilder In(string ns);
+        ICriteriumBuilder In(Uri ns);
 
     }
 
     public interface IStringModifier : ICriteriumBuilder
     {
-         ICriteriumBuilder Exactly { get; }
+        ICriteriumBuilder Exactly { get; }
     }
 }
