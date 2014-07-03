@@ -16,6 +16,9 @@ This library provides:
 ### Get Started ###
 Get started by reading the [online documentation][3] or downloading the [NuGet package][2] 
 
+If you want to parcitipate in this project, we're using [Git Flow][4] for our branche management, so new development is done on (feature branches from) /develop.
+
 [1]: http://www.hl7.org/fhir
 [2]: http://www.nuget.org/packages/Hl7.Fhir
 [3]: http://ewoutkramer.github.io/fhir-net-api
+[4]: http://nvie.com/posts/a-successful-git-branching-model/
