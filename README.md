@@ -22,3 +22,7 @@ If you want to parcitipate in this project, we're using [Git Flow][4] for our br
 [2]: http://www.nuget.org/packages/Hl7.Fhir
 [3]: http://ewoutkramer.github.io/fhir-net-api
 [4]: http://nvie.com/posts/a-successful-git-branching-model/
+
+### Commit and merge strategy 
+- [NVIE](http://nvie.com/posts/a-successful-git-branching-model/)
+- Or see: [Git workflow](https://www.atlassian.com/git/workflows#!workflow-gitflow)
