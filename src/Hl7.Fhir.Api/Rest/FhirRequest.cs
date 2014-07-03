@@ -113,9 +113,9 @@ namespace Hl7.Fhir.Rest
             if(needsFormatParam)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(acceptFormat.Value));
 
-			System.Diagnostics.Debug.WriteLine("{0}: {1}", _method, location.ToString());
+			System.Diagnostics.Debug.WriteLine("{0}: {1}", _method, location.Uri.OriginalString);
 
-            var request = createRequest(location.ToString(), _method);
+            var request = createRequest(location.Uri, _method);
 
             if(acceptFormat != null && !UseFormatParameter)
                 request.Accept = ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Rest
 
 			System.Diagnostics.Debug.WriteLine("(async) {0}: {1}", _method, location.ToString());
 
-			HttpWebRequest request = createRequest(location.ToString(), _method);
+			HttpWebRequest request = createRequest(location.Uri, _method);
 
 			if (acceptFormat != null && !UseFormatParameter)
 				request.Accept = ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Rest
 		}
 #endif
 
-        private HttpWebRequest createRequest(string location, string method)
+        private HttpWebRequest createRequest(Uri location, string method)
         {
             var request = (HttpWebRequest)HttpWebRequest.Create(location);
             var agent = ".NET FhirClient for FHIR " + Model.ModelInfo.Version;
