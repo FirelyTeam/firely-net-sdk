@@ -13,8 +13,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Api.Introspection;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Test.Inspection

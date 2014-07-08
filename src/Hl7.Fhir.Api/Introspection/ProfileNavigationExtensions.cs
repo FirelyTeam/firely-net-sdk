@@ -18,6 +18,37 @@ namespace Hl7.Fhir.Introspection
 {
     public static class ProfileNavigationExtensions
     {
+        public static bool InRange(this Profile.ElementDefinitionComponent defn, int count)
+        {
+            int min = Convert.ToInt32(defn.Min);
+            if (count < min)
+                return false;
+
+            if (defn.Max == "*")
+                return true;
+
+            int max = Convert.ToInt32(defn.Max);
+            if (count > max)
+                return false;
+
+            return true;
+        }
+
+        public static bool IsRepeating(this Profile.ElementDefinitionComponent defn)
+        {
+            return defn.Max != "1" && defn.Max != "0";
+        }
+
+        public static bool IsExtension(this Profile.ElementComponent elem)
+        {
+            return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
+        }
+
+        public static string CardinalityAsString(this Profile.ElementDefinitionComponent defn)
+        {
+            return defn.Min + ".." + defn.Max;
+        }
+
         public static Profile.ElementComponent FindChild(this Profile.ProfileStructureComponent root, string path)
         {
             foreach (var element in root.Element)

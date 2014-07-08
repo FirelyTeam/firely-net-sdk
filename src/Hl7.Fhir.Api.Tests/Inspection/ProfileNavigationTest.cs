@@ -13,12 +13,11 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Api.Introspection;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 using System.Reflection;
 using System.Xml;
-using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Test.Inspection
 {
@@ -79,6 +78,78 @@ namespace Hl7.Fhir.Test.Inspection
 
             children = profStruct.GetChildren("Profile.query", includeGrandchildren: true);
             Assert.AreEqual(3 + 2 + 5 + 2, children.Count());
+        }
+
+        [TestMethod]
+        public void TestChildNavigation()
+        {
+            var nav = createTestNav();
+
+            Assert.IsTrue(nav.HasChildren);
+            Assert.IsFalse(nav.MoveToNext());
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(1, nav.OrdinalPosition);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(2, nav.OrdinalPosition);
+            Assert.IsFalse(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual(3, nav.OrdinalPosition);
+            Assert.IsFalse(nav.MoveToNext());
+            Assert.IsTrue(nav.MoveToParent());
+            Assert.AreEqual(1, nav.OrdinalPosition);
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual(4, nav.OrdinalPosition);
+            Assert.IsFalse(nav.HasChildren);
+            Assert.IsFalse(nav.MoveToFirstChild());
+            Assert.AreEqual(4, nav.OrdinalPosition);
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsFalse(nav.MoveToFirstChild());
+            Assert.IsFalse(nav.MoveToNext());
+            Assert.AreEqual(6, nav.OrdinalPosition);
+            Assert.IsTrue(nav.MoveToParent());
+            Assert.AreEqual(0, nav.OrdinalPosition);
+            Assert.IsFalse(nav.MoveToParent());
+        }
+
+        [TestMethod]
+        public void TestChildNavigationNamed()
+        {
+            var nav = createTestNav();
+
+            Assert.IsTrue(nav.JumpTo("A.B"));
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual(4, nav.OrdinalPosition);
+            Assert.IsTrue(nav.MoveToNext("B"));
+            Assert.AreEqual(5, nav.OrdinalPosition);
+            Assert.IsFalse(nav.MoveToNext("B"));
+
+            nav.MoveToRoot();
+            Assert.IsTrue(nav.JumpTo("A.B.C2"));
+            Assert.IsFalse(nav.MoveToNext());
+            Assert.IsTrue(nav.MoveToParent());          
+            Assert.IsTrue(nav.MoveToChild("C2"));
+            Assert.IsTrue(nav.MoveToParent());
+            Assert.IsFalse(nav.MoveToNext("X"));
+            Assert.IsTrue(nav.MoveToNext("D"));
+            Assert.AreEqual(6, nav.OrdinalPosition);
+        }
+
+        private static ElementNavigator createTestNav()
+        {
+            var struc = new Profile.ProfileStructureComponent();
+            struc.Element = new System.Collections.Generic.List<Profile.ElementComponent>();
+
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.D" });
+
+            var nav = new ElementNavigator(struc);
+            return nav;
         }
 
         [TestMethod, Ignore]

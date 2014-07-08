@@ -22,7 +22,7 @@ using System.Xml;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from individual files

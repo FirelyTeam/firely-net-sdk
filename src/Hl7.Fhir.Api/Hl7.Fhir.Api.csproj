@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\ElementNavigator.cs" />
     <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
     <Compile Include="Introspection\Source\SchemaCollection.cs" />
     <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />

@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Hl7.Fhir.Introspection.Source
 {
