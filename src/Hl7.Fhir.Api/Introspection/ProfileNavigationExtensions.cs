@@ -24,9 +24,7 @@ namespace Hl7.Fhir.Introspection
             {
                 var scanPath = element.Path;
 
-                if (scanPath == path)
-                    return element;
-                else if (element.Definition != null && !String.IsNullOrEmpty(element.Definition.NameReference) && scanPath.StartsWith(path))
+                if (element.Definition != null && !String.IsNullOrEmpty(element.Definition.NameReference) && path.StartsWith(scanPath))
                 {
                     // The path we are navigating to is on or below this element, but the element defers its definition to another named element in the structure
                     if (path.Length > scanPath.Length)
@@ -41,6 +39,11 @@ namespace Hl7.Fhir.Introspection
                         return FindChild(root, element.Definition.NameReference);
                     }
                 }
+
+                // Note the order of the if/else if matters here
+                else if (scanPath == path)
+                    return element;
+
             }
 
             return null;
@@ -55,7 +58,9 @@ namespace Hl7.Fhir.Introspection
 
         public static string GetNameFromPath(this Profile.ElementComponent element)
         {
-            return element.Path.Split('.').LastOrDefault();
+ 	        var pos = element.Path.LastIndexOf(".");
+
+            return pos != -1 ? element.Path.Substring(pos+1) : element.Path;
         }
 
 
@@ -72,19 +77,21 @@ namespace Hl7.Fhir.Introspection
 
                 foreach (var child in children)
                 {
-                    if (includeGrandchildren)
+                    // Skip children of this child
+                    var tail = child.Path.Substring(resolvedPath.Length + 1);
+                    if (!tail.Contains('.'))
                     {
                         yield return child;
-                    }
-                    else
-                    {
-                        // Skip children of this child
-                        var tail = child.Path.Substring(resolvedPath.Length + 1);
-                        if (!tail.Contains('.')) yield return child;
+
+                        if (includeGrandchildren)
+                        {
+                            foreach (var grandChild in GetChildren(root, child.Path, includeGrandchildren:true))
+                                yield return grandChild;
+                        }
                     }
                 }
             }
-
+               
             yield break;
         }
     }
