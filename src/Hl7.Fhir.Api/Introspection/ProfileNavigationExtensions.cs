@@ -94,6 +94,11 @@ namespace Hl7.Fhir.Introspection
             return pos != -1 ? element.Path.Substring(pos+1) : element.Path;
         }
 
+        public static string GetParentNameFromPath(this Profile.ElementComponent element)
+        {
+            var dot = element.Path.LastIndexOf(".");
+            return dot != -1 ? element.Path.Substring(0, dot) : String.Empty;
+        }
 
         public static IEnumerable<Profile.ElementComponent> GetChildren(this Profile.ProfileStructureComponent root, string path, bool includeGrandchildren = false)
         {
