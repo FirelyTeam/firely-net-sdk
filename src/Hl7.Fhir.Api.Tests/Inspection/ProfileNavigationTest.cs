@@ -242,6 +242,22 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsFalse(nav.Delete());
         }
 
+        [TestMethod]
+        public void TestModificationResilience()
+        {
+            var nav = createTestNav();
+            nav.JumpTo("A.B.C1");
+
+            var nav2 = nav.Clone();
+
+            // Delete children in nav
+            Assert.IsTrue(nav.Delete());
+            Assert.IsTrue(nav.Delete());
+
+            // Should still be there in nav2
+            nav2.JumpTo("A.B");
+            Assert.IsTrue(nav2.HasChildren);
+        }
 
         private static ElementNavigator createTestNav()
         {
