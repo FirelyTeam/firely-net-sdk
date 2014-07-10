@@ -37,14 +37,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Hl7.Fhir.Introspection;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
     [FhirType("codeOfT")]
+    [DataContract]
     public class Code<T> : Element where T : struct
     {
         // Primitive value of element
         [FhirElement("value", IsPrimitiveValue=true)]
+        [DataMember]
         public T? Value { get; set; }
 
         public Code() : this(null) {}
