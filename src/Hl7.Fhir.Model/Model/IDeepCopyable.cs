@@ -27,21 +27,23 @@
   
 */
 
-
-
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public abstract partial class Element : IExtendable, IDeepCopyable
+    public interface IDeepCopyable
     {
-        public virtual IDeepCopyable DeepCopy()
+        IDeepCopyable DeepCopy();
+    }
+
+    public static class ListCopyExtensions
+    {
+        public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : IDeepCopyable
         {
-            return this;
+            return source.Select(item => (T)item.DeepCopy());
         }
     }
 }
-
-
