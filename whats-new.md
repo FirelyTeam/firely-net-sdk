@@ -12,6 +12,8 @@ title: What's new?
 * Added `JsonXPathNavigator` to execute XPath statements over a FHIR-Json based document
 * Added a new Hl7.Fhir.Introspection.Source namespace that contains an `ArtifactResolver` class to obtain schema files, profiles and valuesets by uri or id. This class will read the provided validation.zip for the core artifacts. For more info see [here](artifacts.html).
 * Changed `FhirUri` to use string internally, rather than the Uri class to guarantee round-trips and avoid url normalization issues
+* All Resources and datatypes now support deep-copying using the `DeepCopy()` and `CopyTo()` methods.
+* Models are up-to-date with FHIR 0.81
 
 ### In 0.10.0
 * There's a new `FhirParser.ParseQueryFromUriParameters()` function to parse URL parameters into a FHIR `Query` resource
