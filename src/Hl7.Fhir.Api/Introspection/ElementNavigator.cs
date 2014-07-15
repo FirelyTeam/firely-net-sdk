@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Introspection
             OrdinalPosition = other.OrdinalPosition;
         }
 
-        public int OrdinalPosition { get; private set;  }
+        internal int OrdinalPosition { get; private set;  }
 
         public IList<Profile.ElementComponent> Elements { get; private set; }
 
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Introspection
             var searchPos = OrdinalPosition + 1;
             
             // Skip children of the element
-            while (searchPos < Count && isDeeperPath(Path, Elements[searchPos].Path))
+            while (searchPos < Count && IsDeeperPath(Path, Elements[searchPos].Path))
                     searchPos++;
 
             // Check whether found an element that is the next non-child element AND has the same parent
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Introspection
             {
                 var searchPath = Elements[searchPos].Path;
 
-                if (isDirectChildPath(ParentPath,searchPath))
+                if (IsDirectChildPath(ParentPath,searchPath))
                 {
                     OrdinalPosition = searchPos;
                     return true;
@@ -102,21 +102,14 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        private int numberOfParts(string path)
-        {
-            var count = 0;
-            for (var i = 0; i < path.Length; i++)
-                if (path[i] == '.') count++;
-
-            return count;
-        }
+      
 
         public bool MoveToPrevious()
         {
             var searchPos = OrdinalPosition - 1;
 
             // Skip children of the previous sibling (if any)
-            while (searchPos >= 0 && isDeeperPath(Path, Elements[searchPos].Path))
+            while (searchPos >= 0 && IsDeeperPath(Path, Elements[searchPos].Path))
                 searchPos--;
 
 
@@ -126,7 +119,7 @@ namespace Hl7.Fhir.Introspection
             {
                 var searchPath = Elements[searchPos].Path;
 
-                if (isDirectChildPath(ParentPath, searchPath))
+                if (IsDirectChildPath(ParentPath, searchPath))
                 {
                     OrdinalPosition = searchPos;
                     return true;
@@ -137,14 +130,23 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        private bool isDeeperPath(string me, string that)
+        internal static bool IsDeeperPath(string me, string that)
         {
-            return numberOfParts(that) > numberOfParts(me);
+            return NumberOfParts(that) > NumberOfParts(me);
         }
 
-        private bool isDirectChildPath(string parent, string child)
+        internal static bool IsDirectChildPath(string parent, string child)
         {
             return child.StartsWith(parent + ".") && child.IndexOf('.', parent.Length + 1) == -1;
+        }
+
+        internal static int NumberOfParts(string path)
+        {
+            var count = 0;
+            for (var i = 0; i < path.Length; i++)
+                if (path[i] == '.') count++;
+
+            return count;
         }
 
 
@@ -152,7 +154,7 @@ namespace Hl7.Fhir.Introspection
         {
             var childPos = OrdinalPosition + 1;
 
-            if (childPos < Count && isDirectChildPath(Path, Elements[childPos].Path))
+            if (childPos < Count && IsDirectChildPath(Path, Elements[childPos].Path))
             {
                 OrdinalPosition = childPos;
                 return true;
@@ -160,71 +162,7 @@ namespace Hl7.Fhir.Introspection
 
             return false;
         }
-
-
-        public bool MoveToParent()
-        {
-            if (ParentPath == String.Empty) return false;
-
-            return JumpTo(ParentPath);
-        }
-
-
-        public bool MoveToChild(string name)
-        {
-            if (MoveToFirstChild())
-            {
-                do
-                {
-                    if(Name == name) return true;
-                }
-                while (MoveToNext());
-                MoveToParent();
-            }
-
-            return false;
-        }
-
-        public bool MoveToNext(string name)
-        {
-            bookmark();
-
-            while (MoveToNext())
-            {
-                if (Name == name) return true;
-            }
-
-            returnToBookmark();
-            return false;           
-        }
-
-
-        public bool MoveToPrevious(string name)
-        {
-            bookmark();
-
-            while (MoveToPrevious())
-            {
-                if (Name == name) return true;
-            }
-
-            returnToBookmark();
-            return false;
-        }
-
-
-        public bool HasChildren
-        {
-            get
-            {
-                if (MoveToFirstChild())
-                {
-                    MoveToParent();
-                    return true;
-                }
-                return false;
-            }
-        }
+     
 
         public bool IsSamePosition(ElementNavigator other)
         {
@@ -234,12 +172,12 @@ namespace Hl7.Fhir.Introspection
 
         private int? _bookmarkPos;
 
-        private void bookmark()
+        public void Bookmark()
         {
             _bookmarkPos = OrdinalPosition;
         }
 
-        public bool returnToBookmark()
+        public bool ReturnToBookmark()
         {
             if (_bookmarkPos == null) return false;
 
@@ -309,20 +247,6 @@ namespace Hl7.Fhir.Introspection
             }
         }
 
-        public bool JumpTo(string path)
-        {
-            bookmark();
-
-            if (Approach(path))
-            {
-                if (Path == path) return true;
-            }
-
-            returnToBookmark();
-            return false;
-        }
-
-
 
 //----------------------------------
 //
@@ -350,32 +274,13 @@ namespace Hl7.Fhir.Introspection
             sibling.Path = ParentPath + "." + sibling.GetNameFromPath();
         }
 
-        public void AppendChild(Profile.ElementComponent child)
-        {
-            if (HasChildren)
-            {
-                bookmark();
-                MoveToFirstChild();
-                while (MoveToNext()) ;
-                InsertAfter(child);
-                returnToBookmark();
-            }
-            else
-            {
-                var name = Name;
-                InsertAfter(child);
-
-                // Correct the name to be a true child, not a sibling -> this actually creates a child
-                child.Path = Path + "." + child.GetNameFromPath();
-            }
-        }
-
+     
         public bool Delete()
         {
             if (Elements.Count == 0) return false;
 
             // Can't delete a parent, need to delete children first
-            if (HasChildren) return false;
+            if (this.HasChildren()) return false;
 
             // Special case, just the root is left
             if (Elements.Count == 1)

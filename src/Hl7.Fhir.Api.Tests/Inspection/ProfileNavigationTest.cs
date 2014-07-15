@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Test.Inspection
         {
             var nav = createTestNav();
 
-            Assert.IsTrue(nav.HasChildren);
+            Assert.IsTrue(nav.HasChildren());
             Assert.IsFalse(nav.MoveToNext());
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual(1, nav.OrdinalPosition);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual(1, nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(4, nav.OrdinalPosition);
-            Assert.IsFalse(nav.HasChildren);
+            Assert.IsFalse(nav.HasChildren());
             Assert.IsFalse(nav.MoveToFirstChild());
             Assert.AreEqual(4, nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToNext());
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual("A.E", nav.Path);
             nav.AppendChild(newChildNode);
             Assert.AreEqual("A.E", nav.Path);
-            Assert.IsTrue(nav.HasChildren);
+            Assert.IsTrue(nav.HasChildren());
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("A.E.F", nav.Path);
             
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Test.Inspection
 
             // Should still be there in nav2
             nav2.JumpTo("A.B");
-            Assert.IsTrue(nav2.HasChildren);
+            Assert.IsTrue(nav2.HasChildren());
         }
 
         private static ElementNavigator createTestNav()

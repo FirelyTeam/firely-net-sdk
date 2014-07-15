@@ -51,33 +51,9 @@ namespace Hl7.Fhir.Introspection
 
         public static Profile.ElementComponent FindChild(this Profile.ProfileStructureComponent root, string path)
         {
-            foreach (var element in root.Element)
-            {
-                var scanPath = element.Path;
+            var nav = new ElementNavigator(root);
 
-                if (element.Definition != null && !String.IsNullOrEmpty(element.Definition.NameReference) && path.StartsWith(scanPath))
-                {
-                    // The path we are navigating to is on or below this element, but the element defers its definition to another named element in the structure
-                    if (path.Length > scanPath.Length)
-                    {
-                        // The path navigates further into the referenced element, so go ahead along the path over there
-                        var targetElement = element.Definition.NameReference + "." + path.Substring(scanPath.Length + 1);
-                        return FindChild(root, targetElement);
-                    }
-                    else
-                    {
-                        // The path we are looking for is actually this element, but since it defers it definition, go get the referenced element
-                        return FindChild(root, element.Definition.NameReference);
-                    }
-                }
-
-                // Note the order of the if/else if matters here
-                else if (scanPath == path)
-                    return element;
-
-            }
-
-            return null;
+            return nav.JumpTo(path) ? nav.Current : null;
         }
 
 
@@ -102,33 +78,27 @@ namespace Hl7.Fhir.Introspection
 
         public static IEnumerable<Profile.ElementComponent> GetChildren(this Profile.ProfileStructureComponent root, string path, bool includeGrandchildren = false)
         {
-            var parent = FindChild(root, path);
+            var nav = new ElementNavigator(root);
 
-            if (parent != null)
+            if (nav.JumpTo(path) && nav.MoveToFirstChild())
             {
-                // We know that the path of the found parent is where we'll find the children (FindChild resolves NameReferences), so
-                // we can just do a quick lookup for its child elements
-                var resolvedPath = parent.Path;
-                var children = root.Element.Where(elem => elem.Path.StartsWith(resolvedPath + "."));
-
-                foreach (var child in children)
+                do
                 {
-                    // Skip children of this child
-                    var tail = child.Path.Substring(resolvedPath.Length + 1);
-                    if (!tail.Contains('.'))
-                    {
-                        yield return child;
+                    yield return nav.Current;
 
-                        if (includeGrandchildren)
-                        {
-                            foreach (var grandChild in GetChildren(root, child.Path, includeGrandchildren:true))
-                                yield return grandChild;
-                        }
+                    if (nav.HasChildren() && includeGrandchildren)
+                    {
+                        foreach (var child in GetChildren(root, nav.Path, includeGrandchildren))
+                            yield return child;
                     }
                 }
+                while (nav.MoveToNext());
             }
-               
-            yield break;
+            else
+            {
+                yield break;
+            }
+
         }
     }
 }
