@@ -64,14 +64,14 @@ namespace Hl7.Fhir.Model
             Value = value;
         }
 
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Code<T>;
 
             if (dest != null)
             {
-                dest.Value = this.Value;
+                base.CopyTo(dest);
+                if (Value != null) dest.Value = Value;
                 return dest;
             }
             else

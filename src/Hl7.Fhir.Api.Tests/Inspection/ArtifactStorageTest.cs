@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "Introspection", "Source", "validation.zip");
 
             var fa = new ZipCacher(zipFile,cacheKey);
 

@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Rest
             get
             {
                 int index = Components.IndexOf(RestOperation.HISTORY);
-                if (index >= 2 && Components.Count - 1 == index)
+                if (index >= 2 && Components.Count >= 4)
                 {
                     return Components[index + 1];
                 }
