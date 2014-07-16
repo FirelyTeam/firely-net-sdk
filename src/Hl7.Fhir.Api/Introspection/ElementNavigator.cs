@@ -16,7 +16,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Introspection
 {
-    public class ElementNavigator
+    public class ElementNavigator : IElementNavigation
     {
         public ElementNavigator(Profile.ProfileStructureComponent structure) : this(structure.Element)
         {
@@ -24,50 +24,30 @@ namespace Hl7.Fhir.Introspection
 
         private ElementNavigator(IList<Profile.ElementComponent> elements)
         {
-            if (elements == null || elements.Count == 0)
-                throw Error.Argument("structure", "Structure does not contain any Elements");
+            if (elements == null) throw Error.ArgumentNull("elements");
 
-            Elements = elements.ToList();      // make a copy of the *list of* elements
-            OrdinalPosition = 0;
+            _elements = elements.ToList();      // make a copy of the *list of* elements
+            OrdinalPosition = null;
         }
 
-        public ElementNavigator(ElementNavigator other) : this(other.Elements)
+        public ElementNavigator(ElementNavigator other) : this(other._elements)
         {
-            OrdinalPosition = other.OrdinalPosition;
+            this.MoveTo(other);
         }
 
-        internal int OrdinalPosition { get; private set;  }
+        internal int? OrdinalPosition { get; private set;  }
 
-        public IList<Profile.ElementComponent> Elements { get; private set; }
+        private IList<Profile.ElementComponent> _elements;
 
-        public ElementNavigator Clone()
+
+        public virtual Profile.ElementComponent Current
         {
-            return new ElementNavigator(this);
-        }
-
-        public Profile.ElementComponent Current
-        {
-            get { return Elements[OrdinalPosition]; }
-        }
-
-        public string Name
-        {
-            get { return Current.GetNameFromPath(); }
-        }
-
-        public string Path
-        {
-            get { return Current.Path; }
+            get { return OrdinalPosition != null ? _elements[OrdinalPosition.Value] : null; }
         }
 
         public int Count
         {
-            get { return Elements.Count; }
-        }
-
-        public string ParentPath
-        {
-            get { return Current.GetParentNameFromPath(); }
+            get { return _elements.Count; }
         }
 
 
@@ -79,19 +59,21 @@ namespace Hl7.Fhir.Introspection
 
         public bool MoveToNext()
         {
-            var searchPos = OrdinalPosition + 1;
+            if (OrdinalPosition == null) return false;
+
+            var searchPos = OrdinalPosition.Value + 1;
             
             // Skip children of the element
-            while (searchPos < Count && IsDeeperPath(Path, Elements[searchPos].Path))
+            while (searchPos < Count && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
                     searchPos++;
 
             // Check whether found an element that is the next non-child element AND has the same parent
             // (which is then our sibling)
             if (searchPos < Count)
             {
-                var searchPath = Elements[searchPos].Path;
+                var searchPath = _elements[searchPos].Path;
 
-                if (IsDirectChildPath(ParentPath,searchPath))
+                if (IsDirectChildPath(this.CurrentParentPath(),searchPath))
                 {
                     OrdinalPosition = searchPos;
                     return true;
@@ -100,16 +82,16 @@ namespace Hl7.Fhir.Introspection
 
             return false;
         }
-
-
-      
+     
 
         public bool MoveToPrevious()
         {
-            var searchPos = OrdinalPosition - 1;
+            if (OrdinalPosition == null) return false;
+
+            var searchPos = OrdinalPosition.Value - 1;
 
             // Skip children of the previous sibling (if any)
-            while (searchPos >= 0 && IsDeeperPath(Path, Elements[searchPos].Path))
+            while (searchPos >= 0 && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
                 searchPos--;
 
 
@@ -117,9 +99,9 @@ namespace Hl7.Fhir.Introspection
             // (which is then our sibling)
             if (searchPos >= 0)
             {
-                var searchPath = Elements[searchPos].Path;
+                var searchPath = _elements[searchPos].Path;
 
-                if (IsDirectChildPath(ParentPath, searchPath))
+                if (IsDirectChildPath(this.CurrentParentPath(), searchPath))
                 {
                     OrdinalPosition = searchPos;
                     return true;
@@ -129,6 +111,208 @@ namespace Hl7.Fhir.Introspection
             return false;
         }
 
+
+        public virtual bool MoveToFirstChild()
+        {
+            if (OrdinalPosition == null) // "root"
+            {
+                if (Count > 0)
+                {
+                    OrdinalPosition = 0;
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                var childPos = OrdinalPosition.Value + 1;
+
+                if (childPos < Count && IsDirectChildPath(this.CurrentPath(), _elements[childPos].Path))
+                {
+                    OrdinalPosition = childPos;
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public virtual bool MoveToParent()
+        {
+            if (OrdinalPosition == null)
+                return false;
+            else if (OrdinalPosition == 0)
+            {
+                OrdinalPosition = null; // move to "root"
+                return true;
+            }
+            else
+            {
+                var searchPos = OrdinalPosition.Value - 1;
+
+                // Skip back until we find a node with a one step shorter path that is our prefix
+                while (searchPos >= 0 && !IsDirectChildPath(_elements[searchPos].Path, this.CurrentPath()))
+                    searchPos--;
+
+                if (searchPos == -1)
+                    throw Error.InvalidOperation("Element list does not contain a parent for " + this.CurrentPath());
+
+                OrdinalPosition = searchPos;
+                return true;
+            }
+        }
+
+
+        public virtual void Reset()
+        {
+            OrdinalPosition = null;
+        }
+
+
+//----------------------------------
+//
+// Methods that move to absolute locations
+//
+//----------------------------------
+
+        public virtual Bookmark Bookmark()
+        {
+            return new Bookmark() { data = Current };
+        }
+
+        public virtual bool ReturnToBookmark(Bookmark bookmark)
+        {
+            if (bookmark.data == null)
+            {
+                OrdinalPosition = null;
+                return true;
+            }
+            else
+            {
+                var elem = bookmark.data as Profile.ElementComponent;
+
+                if (elem == null) return false;
+
+                var index = _elements.IndexOf(elem);
+
+                if (index != -1)
+                {
+                    OrdinalPosition = index;
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
+
+   
+
+//----------------------------------
+//
+// Methods that alter the list of elements
+// 
+//----------------------------------
+
+        public void InsertBefore(Profile.ElementComponent sibling)
+        {
+            verifyInsertPosition();
+
+            _elements.Insert(OrdinalPosition.Value, sibling);
+            OrdinalPosition++;      // make sure we are still the active node, even after the insert
+
+            // Adjust the sibling's path so it's parent is the same as the current node
+            sibling.Path = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
+        }
+
+        private void verifyInsertPosition()
+        {
+            if (OrdinalPosition == null) throw Error.InvalidOperation("Navigator has not currently positioned on an element");
+
+            if (NumberOfParts(this.CurrentPath()) == 1) // at root
+                throw Error.InvalidOperation("A structure can only have one root element");
+        }
+
+        public void InsertAfter(Profile.ElementComponent sibling)
+        {
+            verifyInsertPosition();
+
+            if (OrdinalPosition == Count - 1) // At last position
+                _elements.Add(sibling);
+            else
+                _elements.Insert(OrdinalPosition.Value + 1, sibling);
+
+            // Adjust the sibling's path so it's parent is the same as the current node
+            sibling.Path = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
+        }
+
+
+        public void InsertFirstChild(Profile.ElementComponent child)
+        {
+            if(OrdinalPosition == null)
+            {
+                if(Count == 0)
+                {
+                    // Special case, insert a new root
+                    _elements.Add(child);
+                    child.Path = child.GetNameFromPath();
+                    return;
+                }
+                else
+                    throw Error.InvalidOperation("Navigator has not currently positioned on an element");
+            }
+
+            if (this.HasChildren())
+                throw Error.InvalidOperation("Element already has a child");
+
+            if (OrdinalPosition == Count - 1) // At last position
+                _elements.Add(child);
+            else
+                _elements.Insert(OrdinalPosition.Value + 1, child);
+
+
+            // Set the name to be a true child -> this actually creates a child
+            child.Path = this.CurrentPath() + "." + child.GetNameFromPath();
+        }
+
+    
+        public bool Delete()
+        {
+            if (OrdinalPosition == null) return false;
+
+            // Can't delete a parent, need to delete children first
+            if (this.HasChildren()) return false;
+
+            // Special case, just the root is left
+            if (_elements.Count == 1)
+            {
+                _elements.Clear();
+                OrdinalPosition = null;
+            }
+            else if (MoveToNext())
+            {
+                // I have a next sibling, delete me and let my next sibling take my place as "current"
+                MoveToPrevious();
+                _elements.RemoveAt(OrdinalPosition.Value);
+            }
+            else if (MoveToPrevious())
+            {
+                // I am the last of the children, but I have preceding siblings, let the prevous take my place as "current"
+                MoveToNext();
+                _elements.RemoveAt(OrdinalPosition.Value);
+                OrdinalPosition--;
+            }
+            else
+            {
+                // I am the last child of a parent, after I disappear, my parent will be "current"
+                _elements.RemoveAt(OrdinalPosition.Value);
+                OrdinalPosition--;
+            }
+
+            return true;
+        }
 
         internal static bool IsDeeperPath(string me, string that)
         {
@@ -142,172 +326,17 @@ namespace Hl7.Fhir.Introspection
 
         internal static int NumberOfParts(string path)
         {
-            var count = 0;
+            var count = 1;
             for (var i = 0; i < path.Length; i++)
                 if (path[i] == '.') count++;
 
             return count;
         }
 
+    }
 
-        public bool MoveToFirstChild()
-        {
-            var childPos = OrdinalPosition + 1;
-
-            if (childPos < Count && IsDirectChildPath(Path, Elements[childPos].Path))
-            {
-                OrdinalPosition = childPos;
-                return true;
-            }
-
-            return false;
-        }
-     
-
-        public bool IsSamePosition(ElementNavigator other)
-        {
-            return this.OrdinalPosition == other.OrdinalPosition;
-        }
-
-
-        private int? _bookmarkPos;
-
-        public void Bookmark()
-        {
-            _bookmarkPos = OrdinalPosition;
-        }
-
-        public bool ReturnToBookmark()
-        {
-            if (_bookmarkPos == null) return false;
-
-            OrdinalPosition = _bookmarkPos.Value;
-            return true;
-        }
-
-
-//----------------------------------
-//
-// Methods that move to absolute locations
-//
-//----------------------------------
-
-        public void MoveToRoot()
-        {
-            OrdinalPosition = 0;
-        }
-
-
-        public bool MoveTo(ElementNavigator other)
-        {
-            if (other.OrdinalPosition < Count)
-            {
-                this.OrdinalPosition = other.OrdinalPosition;
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool Approach(string path)
-        {
-            var bestMatch = -1;
-            var matchSize = -1;
-
-            for (var ix = 0; ix < Count; ix++)
-            {
-                var scanPath = Elements[ix].Path; 
-
-                // If we found a path that is exactly the same, we're ready, this is the best match
-                if (scanPath == path)
-                {
-                    bestMatch = ix;
-                    break;
-                }
-
-                // Else, if the path of this element is "on the way" to the path given
-                else if (path.StartsWith(scanPath + "."))
-                {
-                    // ...check whether it's a longer match than any previous found before
-                    if (scanPath.Length > matchSize)
-                    {
-                        matchSize = scanPath.Length;
-                        bestMatch = ix;
-                    }
-                }
-            }
-
-            if (bestMatch == -1)
-                return false;   // No match found
-            else
-            {
-                // Move to the best match found
-                OrdinalPosition = bestMatch;
-                return true;
-            }
-        }
-
-
-//----------------------------------
-//
-// Methods that alter the list of elements
-// 
-//----------------------------------
-
-        public void InsertBefore(Profile.ElementComponent sibling)
-        {
-            Elements.Insert(OrdinalPosition, sibling);
-            OrdinalPosition++;      // make sure we are still the active node, even after the insert
-
-            // Adjust the sibling's path so it's parent is the same as the current node
-            sibling.Path = ParentPath + "." + sibling.GetNameFromPath();
-        }
-
-        public void InsertAfter(Profile.ElementComponent sibling)
-        {
-            if (OrdinalPosition == Count - 1) // At last position
-                Elements.Add(sibling);
-            else
-                Elements.Insert(OrdinalPosition+1, sibling);
-
-            // Adjust the sibling's path so it's parent is the same as the current node
-            sibling.Path = ParentPath + "." + sibling.GetNameFromPath();
-        }
-
-     
-        public bool Delete()
-        {
-            if (Elements.Count == 0) return false;
-
-            // Can't delete a parent, need to delete children first
-            if (this.HasChildren()) return false;
-
-            // Special case, just the root is left
-            if (Elements.Count == 1)
-            {
-                Elements.Clear();
-            }
-            else if (MoveToNext())
-            {
-                // I have a next sibling, delete me and let my next sibling take my place as "current"
-                MoveToPrevious();
-                Elements.RemoveAt(OrdinalPosition);
-            }
-            else if (MoveToPrevious())
-            {
-                // I am the last of the children, but I have preceding siblings, let the prevous take my place as "current"
-                MoveToNext();
-                Elements.RemoveAt(OrdinalPosition);
-                OrdinalPosition--;
-            }
-            else
-            {
-                // I am the last child of a parent, after I disappear, my parent will be "current"
-                Elements.RemoveAt(OrdinalPosition);
-                OrdinalPosition--;
-            }
-
-            return true;
-        }
+    public struct Bookmark
+    {
+        public object data;
     }
 }

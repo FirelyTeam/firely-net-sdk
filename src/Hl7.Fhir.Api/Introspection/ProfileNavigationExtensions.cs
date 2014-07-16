@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Introspection
         {
             var nav = new ElementNavigator(root);
 
-            return nav.JumpTo(path) ? nav.Current : null;
+            return nav.JumpToFirst(path) ? nav.Current : null;
         }
 
 
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Introspection
         {
             var nav = new ElementNavigator(root);
 
-            if (nav.JumpTo(path) && nav.MoveToFirstChild())
+            if (nav.JumpToFirst(path) && nav.MoveToFirstChild())
             {
                 do
                 {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Introspection
 
                     if (nav.HasChildren() && includeGrandchildren)
                     {
-                        foreach (var child in GetChildren(root, nav.Path, includeGrandchildren))
+                        foreach (var child in GetChildren(root, nav.CurrentPath(), includeGrandchildren))
                             yield return child;
                     }
                 }

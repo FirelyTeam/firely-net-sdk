@@ -87,20 +87,23 @@ namespace Hl7.Fhir.Test.Inspection
 
             Assert.IsTrue(nav.HasChildren());
             Assert.IsFalse(nav.MoveToNext());
+
             Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(0, nav.OrdinalPosition);    // A
+            Assert.AreEqual("A", nav.CurrentPath());
+
+            Assert.IsTrue(nav.MoveToFirstChild());      // A.B
             Assert.AreEqual(1, nav.OrdinalPosition);
-            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual("A.B", nav.CurrentPath());
+
+            Assert.IsTrue(nav.MoveToFirstChild());      // A.B.C1
             Assert.AreEqual(2, nav.OrdinalPosition);
             Assert.IsFalse(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(3, nav.OrdinalPosition);  // A.B.C2
-            var navCopy = nav.Clone();
+            Assert.AreEqual("A.B.C1", nav.CurrentPath());
 
-            Assert.IsTrue(nav.MoveToPrevious());   // A.B.C1;
-            Assert.IsFalse(nav.MoveToPrevious());
-
-            nav.MoveTo(navCopy);        // Back to A.B.C2
-            Assert.AreEqual(3, nav.OrdinalPosition);  
+            Assert.IsTrue(nav.MoveToNext());       // A.B.C2 
+            Assert.AreEqual(3, nav.OrdinalPosition);
+            Assert.AreEqual("A.B.C2", nav.CurrentPath());
 
             Assert.IsFalse(nav.MoveToNext());
             Assert.IsTrue(nav.MoveToParent());
@@ -113,20 +116,26 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(nav.MoveToNext());
             Assert.IsTrue(nav.MoveToNext());
             Assert.IsFalse(nav.MoveToFirstChild());
-            Assert.IsFalse(nav.MoveToNext());
+            Assert.IsFalse(nav.MoveToNext());            
             Assert.AreEqual(6, nav.OrdinalPosition);  // A.D
+            Assert.AreEqual("A.D", nav.CurrentPath());
+            
             Assert.IsTrue(nav.MoveToPrevious());        // A.B
-            Assert.AreEqual(5, nav.OrdinalPosition); 
+            Assert.AreEqual(5, nav.OrdinalPosition);
+            Assert.AreEqual("A.B", nav.CurrentPath());
 
             Assert.IsTrue(nav.MoveToParent());
             Assert.AreEqual(0, nav.OrdinalPosition);
-            Assert.IsFalse(nav.MoveToParent());
+
+            Assert.IsTrue(nav.MoveToParent());  // root
+            Assert.IsFalse(nav.MoveToParent()); // beyond root
         }
 
         [TestMethod]
         public void TestChildNavigationNamed()
         {
             var nav = createTestNav();
+            nav.MoveToFirstChild();     // A
 
             Assert.IsTrue(nav.MoveToChild("B"));
             Assert.IsTrue(nav.MoveToNext());
@@ -135,7 +144,9 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual(5, nav.OrdinalPosition);
             Assert.IsFalse(nav.MoveToNext("B"));
 
-            nav.MoveToRoot();
+            nav.Reset();
+            nav.MoveToFirstChild();     // A
+
             Assert.IsTrue(nav.MoveToChild("B"));
             Assert.IsTrue(nav.MoveToChild("C2"));
             Assert.IsFalse(nav.MoveToNext());
@@ -155,58 +166,40 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual(1, nav.OrdinalPosition);
         }
 
-        [TestMethod]
-        public void TestAbsoluteMoves()
-        {
-            var nav = createTestNav();
+      
+        //[TestMethod]
+        //public void TestBasicAlterations()
+        //{
+        //    var nav = createTestNav();
 
-            Assert.IsTrue(nav.JumpTo("A.B.C2"));
-            Assert.AreEqual(3, nav.OrdinalPosition);
+        //    var newCNode = new Profile.ElementComponent() { Path = "X.C" };
+        //    var newNode = new Profile.ElementComponent() { Path = "X.Y.E" };
+        //    var newChildNode = new Profile.ElementComponent() { Path = "X.Y.F" };
+        //    var newChildNodeC3 = new Profile.ElementComponent() { Path = "X.C3" };
 
-            Assert.IsFalse(nav.JumpTo("A.B.C1.E"));
-            Assert.AreEqual(3, nav.OrdinalPosition);
-
-            Assert.IsTrue(nav.Approach("A.B.C1.E"));
-            Assert.AreEqual(2, nav.OrdinalPosition);
-
-            Assert.IsTrue(nav.Approach("A.B.X"));
-            Assert.AreEqual(1, nav.OrdinalPosition);
-        }
-
-
-        [TestMethod]
-        public void TestBasicAlterations()
-        {
-            var nav = createTestNav();
-
-            var newCNode = new Profile.ElementComponent() { Path = "X.C" };
-            var newNode = new Profile.ElementComponent() { Path = "X.Y.E" };
-            var newChildNode = new Profile.ElementComponent() { Path = "X.Y.F" };
-            var newChildNodeC3 = new Profile.ElementComponent() { Path = "X.C3" };
-
-            Assert.IsTrue(nav.JumpTo("A.D"));
-            nav.InsertBefore(newCNode);
-            Assert.AreEqual("A.D", nav.Path);
-            Assert.IsTrue(nav.MoveToPrevious());
-            Assert.AreEqual("A.C", nav.Path);
-            Assert.IsTrue(nav.MoveToNext());
-            nav.InsertAfter(newNode);
-            Assert.AreEqual("A.D", nav.Path);
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("A.E", nav.Path);
-            nav.AppendChild(newChildNode);
-            Assert.AreEqual("A.E", nav.Path);
-            Assert.IsTrue(nav.HasChildren());
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("A.E.F", nav.Path);
+        //    Assert.IsTrue(nav.JumpTo("A.D"));
+        //    nav.InsertBefore(newCNode);
+        //    Assert.AreEqual("A.D", nav.CurrentPath());
+        //    Assert.IsTrue(nav.MoveToPrevious());
+        //    Assert.AreEqual("A.C", nav.CurrentPath());
+        //    Assert.IsTrue(nav.MoveToNext());
+        //    nav.InsertAfter(newNode);
+        //    Assert.AreEqual("A.D", nav.CurrentPath());
+        //    Assert.IsTrue(nav.MoveToNext());
+        //    Assert.AreEqual("A.E", nav.CurrentPath());
+        //    nav.AppendChild(newChildNode);
+        //    Assert.AreEqual("A.E", nav.CurrentPath());
+        //    Assert.IsTrue(nav.HasChildren());
+        //    Assert.IsTrue(nav.MoveToFirstChild());
+        //    Assert.AreEqual("A.E.F", nav.CurrentPath());
             
-            Assert.IsTrue(nav.JumpTo("A.B"));
-            nav.AppendChild(newChildNodeC3);
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("A.B.C3", nav.Path);
-        }
+        //    Assert.IsTrue(nav.JumpTo("A.B"));
+        //    nav.AppendChild(newChildNodeC3);
+        //    Assert.IsTrue(nav.MoveToFirstChild());
+        //    Assert.IsTrue(nav.MoveToNext());
+        //    Assert.IsTrue(nav.MoveToNext());
+        //    Assert.AreEqual("A.B.C3", nav.CurrentPath());
+        //}
 
 
         [TestMethod]
@@ -214,50 +207,131 @@ namespace Hl7.Fhir.Test.Inspection
         {
             var nav = createTestNav();
 
+            nav.MoveToFirstChild();     // A
             Assert.IsTrue(nav.MoveToChild("B"));
             Assert.IsFalse(nav.Delete(), "still has children");
 
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.MoveToNext());            // A.B.C2
             Assert.IsTrue(nav.Delete());
-            Assert.AreEqual("A.B.C1", nav.Path, "Did not move back to sibling");
+            Assert.AreEqual("A.B.C1", nav.CurrentPath(), "Did not move back to sibling");
             Assert.IsTrue(nav.Delete());
             Assert.AreEqual(1, nav.OrdinalPosition, "Did not move back to parent");
 
-            Assert.IsTrue(nav.MoveToNext());  
+            Assert.IsTrue(nav.MoveToNext());
 
             Assert.IsTrue(nav.Delete());  // 2nd A.B
             Assert.IsTrue(nav.Delete());  // 3rd A.B
-            Assert.AreEqual("A.D", nav.Path);
+            Assert.AreEqual("A.D", nav.CurrentPath());
 
             Assert.IsTrue(nav.Delete());  // A.D
-            Assert.AreEqual("A.B", nav.Path);
+            Assert.AreEqual("A.B", nav.CurrentPath());
 
             Assert.IsTrue(nav.Delete());
-            Assert.AreEqual(1, nav.Count);
+            Assert.AreEqual(1, nav.Count);  // only A left
 
             Assert.IsTrue(nav.Delete());
             Assert.AreEqual(0, nav.Count);
+            Assert.IsNull(nav.Current);
 
             Assert.IsFalse(nav.Delete());
         }
 
+        //[TestMethod]
+        //public void TestModificationResilience()
+        //{
+        //    var nav = createTestNav();
+        //    nav.JumpTo("A.B.C1");
+
+        //    var nav2 = nav.Clone();
+
+        //    // Delete children in nav
+        //    Assert.IsTrue(nav.Delete());
+        //    Assert.IsTrue(nav.Delete());
+
+        //    // Should still be there in nav2
+        //    nav2.JumpTo("A.B");
+        //    Assert.IsTrue(nav2.HasChildren());
+        //}
+
+
         [TestMethod]
-        public void TestModificationResilience()
+        public void TestBookmarks()
         {
             var nav = createTestNav();
-            nav.JumpTo("A.B.C1");
 
-            var nav2 = nav.Clone();
+            Assert.IsTrue(nav.MoveToFirstChild());  // A
+            Assert.IsTrue(nav.MoveToFirstChild());  // A.B
+            var bm1 = nav.Bookmark();
+            var pos1 = nav.OrdinalPosition;
 
-            // Delete children in nav
-            Assert.IsTrue(nav.Delete());
-            Assert.IsTrue(nav.Delete());
+            Assert.IsTrue(nav.MoveToNext());        // 2nd A.B
+            var bm2 = nav.Bookmark();
+            var pos2 = nav.OrdinalPosition;
 
-            // Should still be there in nav2
-            nav2.JumpTo("A.B");
-            Assert.IsTrue(nav2.HasChildren());
+            Assert.AreNotEqual(pos1, pos2);
+            Assert.AreNotEqual(bm1.data, bm2.data);
+
+            nav.ReturnToBookmark(bm1);
+            Assert.AreEqual(pos1, nav.OrdinalPosition);
+            nav.ReturnToBookmark(bm2);
+            Assert.AreEqual(pos2, nav.OrdinalPosition);
+
         }
+
+        //[TestMethod]
+        //public void TestAbsoluteMoves()
+        //{
+        //    var nav = createTestNav();
+
+        //    Assert.IsTrue(nav.JumpTo("A.B.C2"));
+        //    Assert.AreEqual(3, nav.OrdinalPosition);
+
+        //    Assert.IsFalse(nav.JumpTo("A.B.C1.E"));
+        //    Assert.AreEqual(3, nav.OrdinalPosition);
+
+        //    Assert.IsTrue(nav.Approach("A.B.C1.E"));
+        //    Assert.AreEqual(2, nav.OrdinalPosition);
+
+        //    Assert.IsTrue(nav.Approach("A.B.X"));
+        //    Assert.AreEqual(1, nav.OrdinalPosition);
+
+        //    Assert.IsTrue(nav.JumpTo("A.B"));
+        //    Assert.IsTrue(nav.MoveToNext("B"));
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C2" });
+        //    Assert.IsTrue(nav.MoveToChild("C2"));
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C2.E" });
+
+        //    Assert.IsTrue(nav.Approach("A.B.C2"));
+        //    Assert.AreEqual(3, nav.OrdinalPosition);
+
+        //    Assert.IsTrue(nav.Approach("A.B.C2.E"));
+        //    Assert.AreEqual(6, nav.OrdinalPosition);
+
+        //}
+
+     //   private static ElementNavigator createTestNav()
+        //{
+        //    var struc = new Profile.ProfileStructureComponent();
+        //    struc.Element = new System.Collections.Generic.List<Profile.ElementComponent>();
+
+        //    var nav = new ElementNavigator(struc);
+
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A" });
+        //    nav.MoveToFirstChild();     // To A
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B" });
+        //    nav.MoveToFirstChild();     // To A.B
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C1" });
+        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C2" });
+        //    nav.InsertAfter(new Profile.ElementComponent() { Path = "A.B" });
+        //    nav.InsertAfter(new Profile.ElementComponent() { Path = "A.B" });
+        //    nav.InsertAfter(new Profile.ElementComponent() { Path = "A.D" });
+
+        //    nav.Reset();
+
+        //    return nav;
+        //}
+
 
         private static ElementNavigator createTestNav()
         {

@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\IElementNavigation.cs" />
+    <Compile Include="Introspection\ResolvingElementNavigator.cs" />
+    <Compile Include="Introspection\ExpandingElementNavigator.cs" />
     <Compile Include="Introspection\NamedNavigationExtensions.cs" />
     <Compile Include="Introspection\ElementNavigator.cs" />
     <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
