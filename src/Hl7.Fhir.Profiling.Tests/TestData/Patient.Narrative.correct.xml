@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patient xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Everywoman, Eve. SSN:
+      444222222
+    </div>
+  </text>
+  <contact>
+    <name value="John"/>
+  </contact>
+  <identifier>
+    <system value="http://hl7.org/fhir/sid/us-ssn"/>
+    <value value="444222222"/>
+  </identifier>
+  <name>
+    <use value="official"/>
+    <family value="Everywoman"/>
+    <given value="Eve"/>
+  </name>
+  <telecom>
+    <system value="phone"/>
+    <value value="555-555-2003"/>
+    <use value="work"/>
+  </telecom>
+  <gender>
+    <coding>
+      <system value="http://hl7.org/fhir/v3/AdministrativeGender"/>
+      <code value="F"/>
+    </coding>
+  </gender>
+  <birthDate value="1973-05-31"/>
+  <address>
+    <use value="home"/>
+    <line value="2222 Home Street"/>
+  </address>
+
+  <managingOrganization>
+    <reference value="Organization/hl7"/>
+  </managingOrganization>
+  <active value="true"/>
+</Patient>

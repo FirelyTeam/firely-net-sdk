@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><div>Type definition for HumanName from <a href="http://hl7.org/fhir/datatypes.html#HumanName">FHIR Specification</a></div></div>
+  </text>
+  <name value="Basic Profile for HumanName"/>
+  <publisher value="FHIR Specification"/>
+  <description value="Basic Profile for HumanName for validation support"/>
+  <status value="draft"/>
+  <date value="2014-02-03"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2"/>
+  </mapping>
+  <mapping>
+    <identity value="servd"/>
+    <uri value="http://www.omg.org/spec/ServD/1.0/"/>
+    <name value="ServD"/>
+  </mapping>
+  <structure>
+    <type value="HumanName"/>
+    <element>
+      <path value="HumanName"/>
+      <definition>
+        <short value="Name of a human - parts and usage"/>
+        <formal value="A human&#39;s name with the ability to identify parts and usage."/>
+        <comments value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Structure"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="EN (actually, PN)"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="ProviderName"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.use"/>
+      <definition>
+        <short value="usual | official | temp | nickname | anonymous | old | maiden"/>
+        <formal value="Identifies the purpose for this name."/>
+        <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="true"/>
+        <binding>
+          <name value="NameUse"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/name-use"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="unique(./use)"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN.7, but often indicated by which field contains the name"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./NamePurpose"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.text"/>
+      <definition>
+        <short value="Text representation of the full name"/>
+        <formal value="A full text representation of the name."/>
+        <comments value="Can provide both a text representation and structured parts."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./formatted"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="implied by XPN.11"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.family"/>
+      <definition>
+        <short value="Family name (often called &#39;Surname&#39;)"/>
+        <formal value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father."/>
+        <comments value="For family name, hyphenated names such as &quot;Smith-Jones&quot; are a single name, but names with spaces such as &quot;Smith Jones&quot; are broken into multiple parts."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./part[partType = FAM]"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN.1"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./FamilyName"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.given"/>
+      <definition>
+        <short value="Given names (not always &#39;first&#39;). Includes middle names"/>
+        <formal value="Given name."/>
+        <comments value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./part[partType = GIV]"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN.2 + XPN.3"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./GivenNames"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.prefix"/>
+      <definition>
+        <short value="Parts that come before the name"/>
+        <formal value="Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./part[partType = PFX]"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN.5"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./TitleCode"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.suffix"/>
+      <definition>
+        <short value="Parts that come after the name"/>
+        <formal value="Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the end of the name."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./part[partType = SFX]"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN/4"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="HumanName.period"/>
+      <definition>
+        <short value="Time period when name was/is in use"/>
+        <formal value="Indicates the period of time when this name was valid for the named person."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Period"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="./usablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="XPN.13 + XPN.14"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./StartDate and ./EndDate"/>
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+</Profile>
