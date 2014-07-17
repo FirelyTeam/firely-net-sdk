@@ -52,15 +52,21 @@ namespace Hl7.Fhir.Introspection.Source
             _includeSubs = includeSubdirectories;
         }
 
+        public static string SpecificationDirectory
+        {
+            get
+            {
+                var location = Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
+                return Path.Combine(location, "Introspection", "Source");
+            }
+        }
 
         public FileArtifactSource(bool includeSubdirectories = false)
         {
-            var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
-
             // Add the current directory to the list of directories with artifact content, unless there's
-            // a special "Model" subdirectory available
-            if (Directory.Exists(modelDir))
-                _contentDirectory = modelDir;
+            // a special specification subdirectory available (next to the current DLL)
+            if (Directory.Exists(SpecificationDirectory))
+                _contentDirectory = SpecificationDirectory;
             else
                 _contentDirectory = Directory.GetCurrentDirectory();
 
