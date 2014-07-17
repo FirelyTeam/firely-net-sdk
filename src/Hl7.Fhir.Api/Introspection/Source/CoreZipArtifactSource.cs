@@ -50,10 +50,10 @@ namespace Hl7.Fhir.Introspection.Source
 
         public CoreZipArtifactSource()
         {
-            var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Introspection", "Source");
+            var modelDir = FileArtifactSource.SpecificationDirectory;
 
             // Add the current directory to the list of directories with artifact content, unless there's
-            // a special "Model" subdirectory available
+            // a special subdirectory available
             if (Directory.Exists(modelDir))
                 _contentDirectory = modelDir;
             else
