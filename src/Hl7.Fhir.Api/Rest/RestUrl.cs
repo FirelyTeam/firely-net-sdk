@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Rest
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
 
-            return AddParam(Tuple.Create(name, value));
+            return AddParam(Tuple.Create(name,value));
         }
 
         public RestUrl AddParam(Tuple<string, string> keyValue)
