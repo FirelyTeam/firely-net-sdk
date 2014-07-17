@@ -279,37 +279,7 @@ namespace Hl7.Fhir.Test.Inspection
 
         }
 
-        //[TestMethod]
-        //public void TestAbsoluteMoves()
-        //{
-        //    var nav = createTestNav();
-
-        //    Assert.IsTrue(nav.JumpTo("A.B.C2"));
-        //    Assert.AreEqual(3, nav.OrdinalPosition);
-
-        //    Assert.IsFalse(nav.JumpTo("A.B.C1.E"));
-        //    Assert.AreEqual(3, nav.OrdinalPosition);
-
-        //    Assert.IsTrue(nav.Approach("A.B.C1.E"));
-        //    Assert.AreEqual(2, nav.OrdinalPosition);
-
-        //    Assert.IsTrue(nav.Approach("A.B.X"));
-        //    Assert.AreEqual(1, nav.OrdinalPosition);
-
-        //    Assert.IsTrue(nav.JumpTo("A.B"));
-        //    Assert.IsTrue(nav.MoveToNext("B"));
-        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C2" });
-        //    Assert.IsTrue(nav.MoveToChild("C2"));
-        //    nav.AppendChild(new Profile.ElementComponent() { Path = "A.B.C2.E" });
-
-        //    Assert.IsTrue(nav.Approach("A.B.C2"));
-        //    Assert.AreEqual(3, nav.OrdinalPosition);
-
-        //    Assert.IsTrue(nav.Approach("A.B.C2.E"));
-        //    Assert.AreEqual(6, nav.OrdinalPosition);
-
-        //}
-
+      
      //   private static ElementNavigator createTestNav()
         //{
         //    var struc = new Profile.ProfileStructureComponent();
@@ -333,6 +303,79 @@ namespace Hl7.Fhir.Test.Inspection
         //}
 
 
+        [TestMethod]
+        public void TestAbsoluteMoves()
+        {
+            var nav = createTestNav();
+
+            Assert.IsTrue(nav.JumpToFirst("A"));
+            Assert.AreEqual(0, nav.OrdinalPosition);
+
+            Assert.IsTrue(nav.JumpToFirst("A.B.C2"));
+            Assert.AreEqual(3, nav.OrdinalPosition);
+
+            Assert.IsFalse(nav.JumpToFirst("A.B.C1.E"));
+            Assert.AreEqual(3, nav.OrdinalPosition);
+
+            Assert.IsTrue(nav.JumpToFirst("A.B"));
+            Assert.IsTrue(nav.MoveToNext("B"));
+            Assert.AreEqual(4, nav.OrdinalPosition);
+        }
+
+
+        [TestMethod]
+        public void TestFindAndApproach()
+        {
+            var nav = createTestNav();
+
+            var res = nav.Approach("A");
+            Assert.AreEqual(1, res.Count());
+            res = nav.Find("A");
+            Assert.AreEqual(1, res.Count());
+
+            res = nav.Approach("A.B.C1");
+            Assert.AreEqual(3, res.Count());
+            res = nav.Find("A.B.C1");
+            Assert.AreEqual(2, res.Count());
+
+            res = nav.Approach("A.B.C1.E");
+            Assert.AreEqual(2, res.Count()); 
+            nav.ReturnToBookmark(res.First());
+            Assert.AreEqual(2, nav.OrdinalPosition);   
+            nav.ReturnToBookmark(res.Skip(1).First());
+            Assert.AreEqual(4, nav.OrdinalPosition);  
+
+            res = nav.Find("A.B.C1.E");
+            Assert.AreEqual(0, res.Count());
+
+            res = nav.Approach("A.B.C1.D.X"); 
+            Assert.AreEqual(3, res.Count());
+            nav.ReturnToBookmark(res.First());
+            Assert.AreEqual(2, nav.OrdinalPosition);   // This one's still on the way
+            nav.ReturnToBookmark(res.Skip(1).First());
+            Assert.AreEqual(4, nav.OrdinalPosition);   // Via the one but last entry, this one approaches via A.B.C1.D
+            nav.ReturnToBookmark(res.Skip(2).First());
+            Assert.AreEqual(7, nav.OrdinalPosition);   // Via the one but last entry, this one approaches via A.B.C1.D
+            
+            res = nav.Find("A.B.C1.D.X");
+            Assert.AreEqual(0, res.Count());
+
+            res = nav.Approach("A.B.C1.D");
+            Assert.AreEqual(3, res.Count());
+            res = nav.Find("A.B.C1.D");
+            Assert.AreEqual(1, res.Count());
+
+            res = nav.Approach("A.B");
+            Assert.AreEqual(3, res.Count());
+            res = nav.Find("A.B");
+            Assert.AreEqual(3, res.Count());
+
+            res = nav.Approach("A.B.X");
+            Assert.AreEqual(1, res.Count());
+            res = nav.Find("A.B.X");
+            Assert.AreEqual(0, res.Count());
+        }
+
         private static ElementNavigator createTestNav()
         {
             var struc = new Profile.ProfileStructureComponent();
@@ -344,7 +387,10 @@ namespace Hl7.Fhir.Test.Inspection
             struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
             struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
             struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" }); 
             struc.Element.Add(new Profile.ElementComponent() { Path = "A.D" });
+
 
             var nav = new ElementNavigator(struc);
             return nav;

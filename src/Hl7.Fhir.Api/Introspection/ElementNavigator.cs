@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Introspection
 
         public ElementNavigator(ElementNavigator other) : this(other._elements)
         {
-            this.MoveTo(other);
+            ReturnToBookmark(other.Bookmark());
         }
 
         internal int? OrdinalPosition { get; private set;  }

@@ -79,23 +79,15 @@ namespace Hl7.Fhir.Introspection
 
         public static bool JumpToFirst(this ElementNavigator nav, string path)
         {
-            throw new NotImplementedException();
+            var matches = Find(nav, path);
 
-            //var bm = nav.Bookmark();
+            if (matches.Any())
+            {
+                nav.ReturnToBookmark(matches.First());
+                return true;
+            }
 
-            //if (nav.Approach(path))
-            //{
-            //    if (nav.Path == path) return true;
-            //}
-
-            //nav.ReturnToBookmark(bm);
-            //return false;
-        }
-
-
-        public static bool MoveTo(this ElementNavigator nav, ElementNavigator other)
-        {
-            return nav.ReturnToBookmark(other.Bookmark());
+            return false;
         }
 
 
@@ -127,63 +119,72 @@ namespace Hl7.Fhir.Introspection
             }
         }
 
-        public static IEnumerable<object> Find(this ElementNavigator nav, string path)
+        public static IEnumerable<Bookmark> Find(this ElementNavigator nav, string path)
         {
             var parts = path.Split('.');
 
             var bm = nav.Bookmark();
             nav.Reset();
+            var result = locateChildren(nav, parts, partial: false);
+            nav.ReturnToBookmark(bm);
 
-            if (path == nav.CurrentPath())
-            {
-                yield return nav.Bookmark();
-            }
-            else
-            {
-                nav.ReturnToBookmark(bm);
-                yield break;
-            }
+            return result;
         }
 
-        private static bool approachChild(ElementNavigator nav, IEnumerable<string> path)
+
+        public static IEnumerable<Bookmark> Approach(this ElementNavigator nav, string path)
+        {
+            var parts = path.Split('.');
+            
+            var bm = nav.Bookmark();
+            nav.Reset();
+            var result = locateChildren(nav, parts, partial: true);
+            nav.ReturnToBookmark(bm);
+
+            return result;
+        }
+
+        private static IEnumerable<Bookmark> locateChildren(ElementNavigator nav, IEnumerable<string> path, bool partial)
         {
             var child = path.First();
             var rest = path.Skip(1);
 
+            var bm = nav.Bookmark();
+
             if (nav.MoveToChild(child))
             {
-                var longest = nav.Bookmark();
-                var longestMatch = nav.CurrentPath();
+                var result = new List<Bookmark>();
 
                 do
                 {
-                    if(!rest.Any()) return true;      // found an exact match
-
-                    var bm = nav.Bookmark();
-
-                    // See if we can get any closer, by having a matching child under me
-                    if (approachChild(nav, rest))
+                    if (!rest.Any())
                     {
-                        if (nav.CurrentPath().Length > longestMatch.Length)
-                        {
-                            longestMatch = nav.CurrentPath();
-                            longest = nav.Bookmark();
-                        }
-
-                        // approachChild() will have moved to the longest match so far, but we
-                        // want to go on with my siblings, they may have even better matches,
-                        // so move back and go to the next sibling
-                        nav.ReturnToBookmark(bm);
+                        // Exact match!
+                        result.Add(nav.Bookmark());
                     }
+                    else if (!nav.HasChildren() && partial)
+                    {
+                        // This is as far as we can get in this structure,
+                        // so this is a hit too if partial hits are OK
+                        result.Add(nav.Bookmark());
+                    }
+                    else
+                    {
+                        // So, no hit, but we have children that might fit the bill.
+                        result.AddRange(locateChildren(nav, rest, partial));
+                    }
+
+                    // Try this for the other matching siblings too...
                 }
                 while (nav.MoveToNext(child));
 
-                // We've scanned all my children with a matching name for the best match,
-                // move the navigator to the longest match found in my children
-                return nav.ReturnToBookmark(longest);  // should always be true
+                // We've scanned all my children and collected the results,
+                // move the navigator back to where we were before
+                nav.ReturnToBookmark(bm);
+                return result;
             }
             else
-                return false;
+                return Enumerable.Empty<Bookmark>();
         }
     }
 }
