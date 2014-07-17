@@ -17,6 +17,11 @@ using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Rest
 {
+	/// <summary>
+	/// The ResourceIdentity Class can be used to describe the location of an actual instance of a fhir resource.
+	/// It is not designed to be able to handle all URLs for bundles, such as searching, or history retrieval.
+	/// (If this class is used with the resource history, then the results will not be as expected)
+	/// </summary>
 #if !PORTABLE45 || NET45
 	[SerializableAttribute]
 #endif
@@ -149,10 +154,14 @@ namespace Hl7.Fhir.Rest
             get
             {
                 int count = Components.Count;
+
+				if (count < 2)
+					return null;
+
                 int index = Components.IndexOf(RestOperation.HISTORY);
-                int n = (index > 0) ? 4 : 2;
-                IEnumerable<string> values = Components.Skip(count - n);
-                string path = string.Join("/", values).Trim('/');
+                int n = (index > 0) ? index - 2 : count - 2;
+                IEnumerable<string> _components = Components.Skip(n);
+                string path = string.Join("/", _components).Trim('/');
                 string s = this.ToString();
                 string endpoint = s.Remove(s.LastIndexOf(path));
                 
@@ -169,19 +178,30 @@ namespace Hl7.Fhir.Rest
             get 
             {
                 int index = Components.IndexOf(RestOperation.HISTORY);
+                if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
+
+				string collectionName = null;
                 if (index >= 2)
                 {
-                    return Components[index - 2];
+					collectionName = Components[index - 2];
                 }
-                else if (Components.Count >= 2)
+                else if (Components.Count > 2)
                 {
-                    return Components[Components.Count - 2];
+					collectionName = Components[Components.Count - 2];
                 }
-                else
-                {
-                    return null;
-                }                 
-            }            
+				else if (Components.Count == 2 && index == -1)
+				{
+					collectionName = Components[0];
+				}
+
+                return collectionName;
+                //if (!string.IsNullOrEmpty(collectionName))
+                //{
+                //    if (Model.ModelInfo.IsKnownResource(collectionName))
+                //        return collectionName;
+                //}
+                //return null;
+			}
         }
 
 
@@ -193,6 +213,7 @@ namespace Hl7.Fhir.Rest
             get
             {
                 int index = Components.IndexOf(RestOperation.HISTORY);
+                if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
 
                 if (index >= 2)
                 {
@@ -218,7 +239,9 @@ namespace Hl7.Fhir.Rest
             get
             {
                 int index = Components.IndexOf(RestOperation.HISTORY);
-                if (index >= 2 && Components.Count - 1 == index)
+                if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
+
+				if (index >= 2 && Components.Count >= 4 && index < Components.Count - 1)
                 {
                     return Components[index + 1];
                 }
@@ -254,18 +277,6 @@ namespace Hl7.Fhir.Rest
                 return ResourceIdentity.Build(this.Collection, this.Id, version);
             else
                 return ResourceIdentity.Build(this.Endpoint, this.Collection, this.Id, version); 
-            /*
-            int index = Components.IndexOf(RestOperation.HISTORY);
-
-            if (index == -1)
-                return new ResourceIdentity(construct(this, RestOperation.HISTORY, version));
-            else
-            {
-                
-                var path = construct(new Uri(getHost()), Components.Take(index).Concat( new string[] { RestOperation.HISTORY, version }));
-                return new ResourceIdentity(path);
-            }
-            */
         }
 
         /// <summary>
@@ -280,17 +291,6 @@ namespace Hl7.Fhir.Rest
                 return ResourceIdentity.Build(this.Collection, this.Id);
             else
                 return ResourceIdentity.Build(endpoint, this.Collection, this.Id); 
-            /*
-            int index = Components.IndexOf(RestOperation.HISTORY);
-
-            if (index == -1)
-                return this;
-            else
-            {
-                var path = construct(new Uri(getHost()), Components.Take(index));
-                return new ResourceIdentity(path);
-            }
-            */
         }
 
 
