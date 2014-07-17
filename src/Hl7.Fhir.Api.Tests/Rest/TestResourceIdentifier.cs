@@ -22,9 +22,9 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestResourceIdentity()
         {
-            ResourceIdentity id = new ResourceIdentity("http://localhost/services/fhir/v012/patient/3");
-            Assert.AreEqual("http://localhost/services/fhir/v012/patient/3", id.ToString());
-            Assert.AreEqual("patient", id.Collection);
+            ResourceIdentity id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+            Assert.AreEqual("http://localhost/services/fhir/v012/Patient/3", id.ToString());
+            Assert.AreEqual("Patient", id.Collection);
         }
 
         [TestMethod]
@@ -32,37 +32,48 @@ namespace Hl7.Fhir.Test
         {
             ResourceIdentity identity;
 
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
+            Assert.AreEqual("Patient", identity.Collection);
 
-            identity = new ResourceIdentity("http://localhost/fhir/organization/3/_history/98");
-            Assert.AreEqual("organization", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/3/_history/98");
+            Assert.AreEqual("Organization", identity.Collection);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/3/");
-            Assert.AreEqual("patient", identity.Collection);
+			// Test that the case sensitivity of the resource name is honoured
+			identity = new ResourceIdentity("http://localhost/fhir/organization/3/_history/98");
+			Assert.AreEqual(null, identity.Collection);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/98");
-            Assert.AreEqual("organization", identity.Collection);
+			identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/3/");
+			Assert.AreEqual("Patient", identity.Collection);
+
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/98");
+            Assert.AreEqual("Organization", identity.Collection);
 
             identity = new ResourceIdentity("http://localhost/fhir");
             Assert.AreEqual(null, identity.Collection);
-        }
+
+			identity = new ResourceIdentity("http://localhost/fhir/_history");
+			Assert.AreEqual(null, identity.Collection);
+
+			// This is expected to return null, as this is not a valid use of the Resource Identity class
+			identity = new ResourceIdentity("http://localhost/fhir/organization/_history");
+			Assert.AreEqual(null, identity.Collection);
+		}
 
         [TestMethod]
         public void TestId()
         {
             ResourceIdentity identity;
 
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
+            identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
             Assert.AreEqual("3", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/fhir/organization/508x/_history/98");
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
             Assert.AreEqual("508x", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
             Assert.AreEqual("B256", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/98");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/98");
             Assert.AreEqual("3", identity.Id);
 
             identity = new ResourceIdentity("http://localhost/fhir");
@@ -75,47 +86,71 @@ namespace Hl7.Fhir.Test
         {
             ResourceIdentity identity;
 
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
+            identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
             Assert.AreEqual(null, identity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/fhir/organization/508x/_history/98");
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
             Assert.AreEqual("98", identity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
             Assert.AreEqual(null, identity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
             Assert.AreEqual("X98", identity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98/pipo/clown");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98/pipo/clown");
             Assert.AreEqual("X98", identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/fhir");
             Assert.AreEqual(null, identity.VersionId);
         }
 
-        [TestMethod]
+		[TestMethod]
+		public void TestEndpoint()
+		{
+			ResourceIdentity identity;
+
+			identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
+			Assert.AreEqual("http://localhost/fhir/", identity.Endpoint.OriginalString);
+
+			identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
+			Assert.AreEqual("http://localhost/fhir/", identity.Endpoint.OriginalString);
+
+			identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
+			Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+
+			identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
+			Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+
+			identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98/pipo/clown");
+			Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+
+			identity = new ResourceIdentity("http://localhost/fhir");
+			Assert.IsNull(identity.Endpoint);
+		}
+
+		[TestMethod]
         public void Build()
         {
             ResourceIdentity identity;
 
-            identity = ResourceIdentity.Build("patient", "A100");
-            Assert.AreEqual("patient/A100", identity.ToString());
+            identity = ResourceIdentity.Build("Patient", "A100");
+            Assert.AreEqual("Patient/A100", identity.ToString());
 
-            identity = ResourceIdentity.Build("patient", "A100", "H2");
-            Assert.AreEqual("patient/A100/_history/H2", identity.ToString());
+            identity = ResourceIdentity.Build("Patient", "A100", "H2");
+            Assert.AreEqual("Patient/A100/_history/H2", identity.ToString());
         }
 
         [TestMethod]
         public void AddVersionNumberToExistingIdentifier()
         {
-            var identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            var identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
             var newIdentity = identity.WithVersion("3141");
 
             Assert.AreEqual("B256", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
             newIdentity = identity.WithVersion("3141");
 
             Assert.AreEqual("3", newIdentity.Id);
@@ -123,12 +158,12 @@ namespace Hl7.Fhir.Test
 
             // mh: relativ uri's:
 
-            identity = new ResourceIdentity("organization/3");
+            identity = new ResourceIdentity("Organization/3");
             newIdentity = identity.WithVersion("3141");
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
 
-            identity = new ResourceIdentity("organization/3/_history/X98");
+            identity = new ResourceIdentity("Organization/3/_history/X98");
             newIdentity = identity.WithVersion("3141");
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
@@ -140,21 +175,21 @@ namespace Hl7.Fhir.Test
         {
             ResourceIdentity identity;
             
-            identity = new ResourceIdentity("patient/8");
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity("Patient/8");
+            Assert.AreEqual("Patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
 
-            identity = new ResourceIdentity("patient/8/_history/H30");
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity("Patient/8/_history/H30");
+            Assert.AreEqual("Patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
             Assert.AreEqual("H30", identity.VersionId);
 
-            identity = new ResourceIdentity(new Uri("patient/8", UriKind.Relative));
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity(new Uri("Patient/8", UriKind.Relative));
+            Assert.AreEqual("Patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
 
-            identity = new ResourceIdentity(new Uri("patient/8/_history/H30", UriKind.Relative));
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity(new Uri("Patient/8/_history/H30", UriKind.Relative));
+            Assert.AreEqual("Patient", identity.Collection);
             Assert.AreEqual("8", identity.Id);
             Assert.AreEqual("H30", identity.VersionId);
         }
