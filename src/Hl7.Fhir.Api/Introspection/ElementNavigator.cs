@@ -61,11 +61,7 @@ namespace Hl7.Fhir.Introspection
         {
             if (OrdinalPosition == null) return false;
 
-            var searchPos = OrdinalPosition.Value + 1;
-            
-            // Skip children of the element
-            while (searchPos < Count && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
-                    searchPos++;
+            var searchPos = positionAfter();
 
             // Check whether found an element that is the next non-child element AND has the same parent
             // (which is then our sibling)
@@ -82,17 +78,23 @@ namespace Hl7.Fhir.Introspection
 
             return false;
         }
+
+        private int positionAfter()
+        {
+            var searchPos = OrdinalPosition.Value + 1;
+
+            // Skip children of the element
+            while (searchPos < Count && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
+                searchPos++;
+            return searchPos;
+        }
      
 
         public bool MoveToPrevious()
         {
             if (OrdinalPosition == null) return false;
 
-            var searchPos = OrdinalPosition.Value - 1;
-
-            // Skip children of the previous sibling (if any)
-            while (searchPos >= 0 && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
-                searchPos--;
+            var searchPos = positionBefore();
 
 
             // Check whether found an element that is the next non-child element AND has the same parent
@@ -109,6 +111,16 @@ namespace Hl7.Fhir.Introspection
             }
 
             return false;
+        }
+
+        private int positionBefore()
+        {
+            var searchPos = OrdinalPosition.Value - 1;
+
+            // Skip children of the previous sibling (if any)
+            while (searchPos >= 0 && IsDeeperPath(this.CurrentPath(), _elements[searchPos].Path))
+                searchPos--;
+            return searchPos;
         }
 
 
@@ -182,6 +194,17 @@ namespace Hl7.Fhir.Introspection
             return new Bookmark() { data = Current };
         }
 
+
+        public virtual bool IsAtBookmark(Bookmark bookmark)
+        {
+            if (bookmark.data == null)
+                 return OrdinalPosition == null;
+
+            var elem = bookmark.data as Profile.ElementComponent;
+
+            return this.Current == elem;
+        }
+
         public virtual bool ReturnToBookmark(Bookmark bookmark)
         {
             if (bookmark.data == null)
@@ -216,65 +239,84 @@ namespace Hl7.Fhir.Introspection
 // 
 //----------------------------------
 
-        public void InsertBefore(Profile.ElementComponent sibling)
+        public bool InsertBefore(Profile.ElementComponent sibling)
         {
-            verifyInsertPosition();
+            if (!canInsertSiblingHere()) return false;
+
+            var newSiblingPath = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
 
             _elements.Insert(OrdinalPosition.Value, sibling);
-            OrdinalPosition++;      // make sure we are still the active node, even after the insert
 
             // Adjust the sibling's path so it's parent is the same as the current node
-            sibling.Path = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
+            sibling.Path = newSiblingPath;
+
+            // Note: we're now positioned on the newly inserted element
+
+            return true;
         }
 
-        private void verifyInsertPosition()
+        private bool canInsertSiblingHere()
         {
-            if (OrdinalPosition == null) throw Error.InvalidOperation("Navigator has not currently positioned on an element");
+            // We're not positioned anywhere...
+            if (OrdinalPosition == null) return false;
 
-            if (NumberOfParts(this.CurrentPath()) == 1) // at root
-                throw Error.InvalidOperation("A structure can only have one root element");
+            // Cannot insert a sibling to the unique root element
+            if (OrdinalPosition == 0) return false;
+
+            return true;
         }
 
-        public void InsertAfter(Profile.ElementComponent sibling)
+        public bool InsertAfter(Profile.ElementComponent sibling)
         {
-            verifyInsertPosition();
+            if (!canInsertSiblingHere()) return false;
 
-            if (OrdinalPosition == Count - 1) // At last position
+            var insertPosition = positionAfter();
+            var newSiblingPath = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
+
+            if (insertPosition == Count) // At last position
                 _elements.Add(sibling);
             else
-                _elements.Insert(OrdinalPosition.Value + 1, sibling);
+                _elements.Insert(insertPosition, sibling);
 
             // Adjust the sibling's path so it's parent is the same as the current node
-            sibling.Path = this.CurrentParentPath() + "." + sibling.GetNameFromPath();
+            sibling.Path = newSiblingPath;
+
+            // Navigate to newly inserted node
+            OrdinalPosition = insertPosition;
+
+            return true;
         }
 
 
-        public void InsertFirstChild(Profile.ElementComponent child)
+        public bool InsertFirstChild(Profile.ElementComponent child)
         {
-            if(OrdinalPosition == null)
+            if(Count == 0)
             {
-                if(Count == 0)
-                {
-                    // Special case, insert a new root
-                    _elements.Add(child);
-                    child.Path = child.GetNameFromPath();
-                    return;
-                }
-                else
-                    throw Error.InvalidOperation("Navigator has not currently positioned on an element");
-            }
-
-            if (this.HasChildren())
-                throw Error.InvalidOperation("Element already has a child");
-
-            if (OrdinalPosition == Count - 1) // At last position
+                // Special case, insert a new root
                 _elements.Add(child);
+                child.Path = child.GetNameFromPath();
+                OrdinalPosition = 0;
+                return true;
+            }
+            else if (this.HasChildren())
+                return false;       // Cannot insert another child, there's already one.
             else
-                _elements.Insert(OrdinalPosition.Value + 1, child);
+            {
+                var newSiblingPath = this.CurrentPath() + "." + child.GetNameFromPath();
+                
+                if (OrdinalPosition == Count - 1) // At last position
+                    _elements.Add(child);
+                else
+                    _elements.Insert(OrdinalPosition.Value + 1, child);
 
+                // Set the name to be a true child -> this actually creates a child
+                child.Path = newSiblingPath;
 
-            // Set the name to be a true child -> this actually creates a child
-            child.Path = this.CurrentPath() + "." + child.GetNameFromPath();
+                // Navigate to newly inserted child
+                OrdinalPosition += 1;
+
+                return true;
+            }
         }
 
     

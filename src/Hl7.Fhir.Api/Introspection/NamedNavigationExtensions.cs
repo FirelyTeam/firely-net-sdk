@@ -101,23 +101,37 @@ namespace Hl7.Fhir.Introspection
             return false;
         }
 
-        public static void AppendChild(this ElementNavigator nav, Profile.ElementComponent child)
+        public static bool AppendChild(this ElementNavigator nav, Profile.ElementComponent child)
         {
-            if (nav.HasChildren())
+            var bm = nav.Bookmark();
+
+            if (nav.MoveToFirstChild())
             {
-                var bm = nav.Bookmark();
-                
-                nav.MoveToFirstChild();
                 while (nav.MoveToNext()) ;
-                nav.InsertAfter(child);
+                var result = nav.InsertAfter(child);
                 
-                nav.ReturnToBookmark(bm);
+                if(!result) nav.ReturnToBookmark(bm);
+                return result;
             }
             else
             {
-                nav.InsertFirstChild(child);
+                return nav.InsertFirstChild(child);
             }
         }
+
+
+        public static bool DeleteTree(this ElementNavigator nav)
+        {
+            var parent = nav.Bookmark();
+
+            if(nav.MoveToFirstChild())
+            {
+                while(!nav.IsAtBookmark(parent)) nav.DeleteTree();
+            }
+
+            return nav.Delete();
+        }
+
 
         public static IEnumerable<Bookmark> Find(this ElementNavigator nav, string path)
         {
