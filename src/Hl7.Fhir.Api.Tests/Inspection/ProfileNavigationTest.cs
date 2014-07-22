@@ -18,6 +18,7 @@ using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 using System.Reflection;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Test.Inspection
 {
@@ -434,6 +435,42 @@ namespace Hl7.Fhir.Test.Inspection
         }
 
 
+        [TestMethod]
+        public void CopyChildTree()
+        {
+            var dest = createTestNav();
+
+            var struc = new Profile.ProfileStructureComponent();
+            struc.Element = new List<Profile.ElementComponent>();
+            struc.Element.Add(new Profile.ElementComponent() { Path = "X" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y1" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2.Z1" });
+            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2.Z2" });
+            var source = new ElementNavigator(struc);
+
+            Assert.IsTrue(dest.JumpToFirst("A.D"));
+            var dstPos = dest.OrdinalPosition;
+
+            source.MoveToFirstChild();
+            var srcPos = source.OrdinalPosition;
+
+            Assert.IsTrue(dest.CopyChildren(source));
+            Assert.AreEqual(srcPos, source.OrdinalPosition, "source did not remain on original position");
+            Assert.AreEqual(dstPos, dest.OrdinalPosition, "dest did not remain on original position");
+
+            Assert.IsTrue(dest.MoveToFirstChild());
+            Assert.AreEqual("Y1", dest.CurrentName());
+            Assert.IsTrue(dest.MoveToNext());
+            Assert.AreEqual("Y2", dest.CurrentName());
+            Assert.IsFalse(dest.MoveToNext());
+            Assert.IsTrue(dest.MoveToFirstChild());
+            Assert.AreEqual("Z1", dest.CurrentName());
+            Assert.IsTrue(dest.MoveToNext());
+            Assert.AreEqual("Z2", dest.CurrentName());
+            Assert.IsFalse(dest.MoveToNext());
+        }
+
         private static ElementNavigator createTestNav()
         {
             var struc = createTestStructure();
@@ -443,7 +480,7 @@ namespace Hl7.Fhir.Test.Inspection
         private static Profile.ProfileStructureComponent createTestStructure()
         {
             var struc = new Profile.ProfileStructureComponent();
-            struc.Element = new System.Collections.Generic.List<Profile.ElementComponent>();
+            struc.Element = new List<Profile.ElementComponent>();
 
             struc.Element.Add(new Profile.ElementComponent() { Path = "A" });
             struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });

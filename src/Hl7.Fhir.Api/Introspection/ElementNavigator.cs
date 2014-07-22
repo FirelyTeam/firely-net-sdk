@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Introspection
     public class ElementNavigator : IElementNavigation
     {
         public ElementNavigator(Profile.ProfileStructureComponent structure) : this(structure.Element)
-        {
+        {            
         }
 
         private ElementNavigator(IList<Profile.ElementComponent> elements)

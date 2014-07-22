@@ -200,5 +200,46 @@ namespace Hl7.Fhir.Introspection
             else
                 return Enumerable.Empty<Bookmark>();
         }
+
+
+        /// <summary>
+        /// Insert the children of the current source node under the node pointed to by the destination.
+        /// </summary>
+        /// <param name="dest"></param>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static bool CopyChildren(this ElementNavigator dest, ElementNavigator source)
+        {
+            if (dest.HasChildren()) return false;   // Protect children from being overwritten
+            if (!source.MoveToFirstChild()) return true;    // Nothing to copy, but successful anyway
+
+            bool firstChild = true;
+
+            do
+            {
+                var copiedChild = (Profile.ElementComponent)source.Current.DeepCopy();
+
+                if (firstChild)
+                {
+                    // The first time, create a new child in the destination                    
+                    dest.InsertFirstChild(copiedChild);
+                    firstChild = false;
+                }
+                else
+                    // Then insert other childs after that
+                    dest.InsertAfter(copiedChild);
+                
+                // If there are nested children in the source, insert them under
+                // the newly inserted node in the destination
+                if (source.HasChildren()) dest.CopyChildren(source);
+            }
+            while (source.MoveToNext());
+
+            // Bring both source & destination back one step to the original parents
+            source.MoveToParent();
+            dest.MoveToParent();
+
+            return true;
+        }
     }
 }

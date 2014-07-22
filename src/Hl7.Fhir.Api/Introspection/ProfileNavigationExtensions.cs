@@ -27,19 +27,21 @@ namespace Hl7.Fhir.Introspection
         public static void Rebase(this Profile.ProfileStructureComponent root, string path)
         {
             var nav = new ElementNavigator(root);
-            var newPaths = new List<string>();
 
             if (nav.MoveToFirstChild())
             {
+                var newPaths = new List<string>();
                 newPaths.Add(path);
-                rebaseChildren(nav, path, newPaths);               
-            }
 
-            // Can only change the paths after navigating the tree, otherwise the
-            // navigation functions (which are based on the paths) won't function correctly
-            for (var i = 0; i < root.Element.Count; i++)
-                root.Element[i].Path = newPaths[i];
+                rebaseChildren(nav, path, newPaths);
+
+                // Can only change the paths after navigating the tree, otherwise the
+                // navigation functions (which are based on the paths) won't function correctly
+                for (var i = 0; i < root.Element.Count; i++)
+                    root.Element[i].Path = newPaths[i];
+            }
         }
+
 
         private static void rebaseChildren(ElementNavigator nav, string path, List<string> newPaths)
         {
