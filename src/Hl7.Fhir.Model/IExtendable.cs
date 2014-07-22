@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     public static class ExtensionExtensions
     {
         /// <summary>
-        /// Return the first extension with the given uri
+        /// Return the first extension with the given uri, or null if none was found
         /// </summary>
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
@@ -54,6 +54,24 @@ namespace Hl7.Fhir.Model
             if (extendable.Extension != null)
             {
                 return GetExtensions(extendable, uri).FirstOrDefault();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Return the first extension with the given uri, or null if none was found
+        /// </summary>
+        /// <param name="extendable"></param>
+        /// <param name="uri"></param>
+        /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
+        public static Element GetExtensionValue(this IExtendable extendable, string uri)
+        {
+            if (extendable.Extension != null)
+            {
+                var ext = GetExtensions(extendable, uri).FirstOrDefault();
+                if (ext != null)
+                    return ext.Value;
             }
 
             return null;
@@ -77,7 +95,7 @@ namespace Hl7.Fhir.Model
 
 
         /// <summary>
-        /// Add an extension with the given uri and value.
+        /// Add an extension with the given uri and value
         /// </summary>
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
