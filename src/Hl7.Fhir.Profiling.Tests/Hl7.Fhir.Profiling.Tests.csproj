@@ -60,8 +60,6 @@
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="XsltContextTests.cs" />
-    <Compile Include="JTokenExtensionsTests.cs" />
-    <Compile Include="JsonNavigatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
