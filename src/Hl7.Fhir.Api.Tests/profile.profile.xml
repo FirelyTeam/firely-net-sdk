@@ -117,6 +117,7 @@ This page defines the profile resource, and describes how it is used. Note that 
 A FHIR RESTful server serving the profile resource is also a profile repository. HL7 hosts one for public registration of FHIR profiles at (yet to be done)."/>
   <structure>
     <type value="Profile"/>
+    <name value="base-profile" />
     <publish value="true"/>
     <element>
       <path value="Profile"/>

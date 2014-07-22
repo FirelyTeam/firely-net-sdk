@@ -57,8 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Introspection\IElementNavigation.cs" />
-    <Compile Include="Introspection\NamedNavigationExtensions.cs" />
+    <Compile Include="Introspection\BaseElementNavigator.cs" />
+    <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
+    <Compile Include="Introspection\StructureLoader.cs" />
+    <Compile Include="Introspection\StructureExpander.cs" />
+    <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Introspection\ElementNavigator.cs" />
     <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
     <Compile Include="Introspection\Source\SchemaCollection.cs" />

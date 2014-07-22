@@ -29,89 +29,112 @@ namespace Hl7.Fhir.Test.Inspection
     public class ProfileNavigationTest
 #endif
     {
-        public Profile testProfile;
+
+        IArtifactSource profileSource = new TestProfileSource();
 
         [TestInitialize]
         public void SetupProfile()
         {
-            var str = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.profile.profile.xml");
-            testProfile = (Profile)FhirParser.ParseResource(XmlReader.Create(str));
+            profileSource.Prepare();
         }
 
-        [TestMethod, Ignore]
-        public void TestFindChild()
+        [TestMethod]
+        public void LocateStructure()
         {
-            var profStruct = testProfile.Structure[0];
+            var locator = new StructureLocator(profileSource);
+            var profileUri = new Uri("http://hl7.org/fhir/profile/profile");
 
-            var child = profStruct.FindChild("Profile.structure.searchParam.documentation");
-            Assert.IsNotNull(child);
-            Assert.AreEqual("documentation", child.GetNameFromPath());
-            Assert.AreEqual("Profile.structure.searchParam.documentation", child.Path);
+            var prof = locator.Locate(profileUri, new Code("Profile"));
+            Assert.IsNotNull(prof);
+            Assert.AreEqual("Profile", prof.Type);
+            Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
 
-            child = profStruct.FindChild("Profile.doesntexist");
-            Assert.IsNull(child);
-
-            child = profStruct.FindChild("Profile.extensionDefn.definition.max");
-            Assert.IsNotNull(child);
-            Assert.AreEqual("max", child.GetNameFromPath());
-            Assert.AreEqual("Profile.structure.element.definition.max", child.Path);
-
-            child = profStruct.FindChild("Profile.extensionDefn.definition");
-            Assert.IsNotNull(child);
-            Assert.AreEqual(child, profStruct.FindChild("Profile.structure.element.definition"));
-
-            child = profStruct.FindChild("Profile");
-            Assert.IsNotNull(child);
-            Assert.AreEqual(child, profStruct.Element[0]);
+            var profileUriWithFrag = new Uri(profileUri.ToString() + "#base-profile");
+            prof = locator.Locate(profileUriWithFrag, new Code("Profile"));
+            Assert.IsNotNull(prof);
+            Assert.AreEqual("Profile", prof.Type);
+            Assert.AreEqual("base-profile", prof.Name);
+            Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
         }
 
-        [TestMethod, Ignore]
-        public void TestListChildren()
-        {
-            var profStruct = testProfile.Structure[0];
+        //[TestMethod]
+        //public void TestFindChild()
+        //{
+        //    var profStruct = testProfile.Structure[0];
 
-            var children = profStruct.GetChildren("Profile.structure.searchParam");
-            Assert.AreEqual(5+2, children.Count());   // first 2 are extension elements
-            Assert.AreEqual("name", children.Skip(2).First().GetNameFromPath());
+        //    var child = profStruct.FindChild("Profile.structure.searchParam.documentation");
+        //    Assert.IsNotNull(child);
+        //    Assert.AreEqual("documentation", child.GetNameFromPath());
+        //    Assert.AreEqual("Profile.structure.searchParam.documentation", child.Path);
 
-            children = profStruct.GetChildren("Profile.crap");
-            Assert.AreEqual(0, children.Count());
+        //    child = profStruct.FindChild("Profile.telecom.system");
+        //    Assert.IsNotNull(child);
 
-            children = profStruct.GetChildren("Profile.query", includeGrandchildren: true);
-            Assert.AreEqual(3 + 2 + 5 + 2, children.Count());
-        }
+        //    child = profStruct.FindChild("Profile.extensionDefn.definition.max");
+        //    Assert.IsNotNull(child);
+        //    Assert.AreEqual("max", child.GetNameFromPath());
+        //    //Assert.AreEqual("Profile.structure.element.definition.max", child.Path);
+
+        //    child = profStruct.FindChild("Profile.doesntexist");
+        //    Assert.IsNull(child);
+
+
+        //    //child = profStruct.FindChild("Profile.extensionDefn.definition");
+        //    //Assert.IsNotNull(child);
+        //    //Assert.AreEqual(child, profStruct.FindChild("Profile.structure.element.definition"));
+
+        //    child = profStruct.FindChild("Profile");
+        //    Assert.IsNotNull(child);
+        //    Assert.AreEqual(child, profStruct.Element[0]);
+        //}
+
+        //[TestMethod, Ignore]
+        //public void TestListChildren()
+        //{
+        //    var profStruct = testProfile.Structure[0];
+
+        //    var children = profStruct.GetChildren("Profile.structure.searchParam");
+        //    Assert.AreEqual(5+2, children.Count());   // first 2 are extension elements
+        //    Assert.AreEqual("name", children.Skip(2).First().GetNameFromPath());
+
+        //    children = profStruct.GetChildren("Profile.crap");
+        //    Assert.AreEqual(0, children.Count());
+
+        //    children = profStruct.GetChildren("Profile.query", includeGrandchildren: true);
+        //    Assert.AreEqual(3 + 2 + 5 + 2, children.Count());
+        //}
 
         [TestMethod]
         public void TestChildNavigation()
         {
             var nav = createTestNav();
 
-            Assert.IsTrue(nav.HasChildren());
+            Assert.IsTrue(nav.HasChildren);
             Assert.IsFalse(nav.MoveToNext());
 
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual(0, nav.OrdinalPosition);    // A
-            Assert.AreEqual("A", nav.CurrentPath());
+            Assert.AreEqual("A", nav.Path);
 
             Assert.IsTrue(nav.MoveToFirstChild());      // A.B
             Assert.AreEqual(1, nav.OrdinalPosition);
-            Assert.AreEqual("A.B", nav.CurrentPath());
+            Assert.AreEqual("A.B", nav.Path);
 
             Assert.IsTrue(nav.MoveToFirstChild());      // A.B.C1
             Assert.AreEqual(2, nav.OrdinalPosition);
             Assert.IsFalse(nav.MoveToFirstChild());
-            Assert.AreEqual("A.B.C1", nav.CurrentPath());
+            Assert.AreEqual("A.B.C1", nav.Path);
 
             Assert.IsTrue(nav.MoveToNext());       // A.B.C2 
             Assert.AreEqual(3, nav.OrdinalPosition);
-            Assert.AreEqual("A.B.C2", nav.CurrentPath());
+            Assert.AreEqual("A.B.C2", nav.Path);
 
             Assert.IsFalse(nav.MoveToNext());
             Assert.IsTrue(nav.MoveToParent());   // Back to first A.B
             Assert.AreEqual(1, nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToNext());  // 2nd A.B
             Assert.AreEqual(4, nav.OrdinalPosition);
-            Assert.IsFalse(nav.HasChildren());
+            Assert.IsFalse(nav.HasChildren);
             Assert.IsFalse(nav.MoveToFirstChild());
             Assert.AreEqual(4, nav.OrdinalPosition);
 
@@ -120,11 +143,11 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsFalse(nav.MoveToFirstChild());
             Assert.IsFalse(nav.MoveToNext());            
             Assert.AreEqual(8, nav.OrdinalPosition); 
-            Assert.AreEqual("A.D", nav.CurrentPath());
+            Assert.AreEqual("A.D", nav.Path);
             
             Assert.IsTrue(nav.MoveToPrevious());        // A.B
             Assert.AreEqual(5, nav.OrdinalPosition);
-            Assert.AreEqual("A.B", nav.CurrentPath());
+            Assert.AreEqual("A.B", nav.Path);
 
             Assert.IsTrue(nav.MoveToParent());
             Assert.AreEqual(0, nav.OrdinalPosition);
@@ -181,7 +204,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.MoveToNext());            // A.B.C2
             Assert.IsTrue(nav.Delete());
-            Assert.AreEqual("A.B.C1", nav.CurrentPath(), "Did not move back to sibling");
+            Assert.AreEqual("A.B.C1", nav.Path, "Did not move back to sibling");
             Assert.IsTrue(nav.Delete());
             Assert.AreEqual(1, nav.OrdinalPosition, "Did not move back to parent");
 
@@ -191,10 +214,10 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsFalse(nav.Delete());  // 3rd A.B cannot yet be deleted
             Assert.IsTrue(nav.DeleteTree());    // delete the whole A.B tree
 
-            Assert.AreEqual("A.D", nav.CurrentPath());  // should leave us on A.D
+            Assert.AreEqual("A.D", nav.Path);  // should leave us on A.D
 
             Assert.IsTrue(nav.Delete());  // A.D
-            Assert.AreEqual("A.B", nav.CurrentPath());
+            Assert.AreEqual("A.B", nav.Path);
 
             Assert.IsTrue(nav.Delete());    // remove 1st A.B
             Assert.AreEqual(1, nav.Count);  // only A left
@@ -357,7 +380,7 @@ namespace Hl7.Fhir.Test.Inspection
             nav.MoveToFirstChild();
             Assert.IsTrue(nav.MoveToChild("D"));
             Assert.IsTrue(nav.InsertBefore(newCNode));
-            Assert.AreEqual("A.C", nav.CurrentPath());
+            Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(8, nav.OrdinalPosition);
             Assert.AreEqual(10, nav.Count);
 
@@ -367,7 +390,7 @@ namespace Hl7.Fhir.Test.Inspection
 
             Assert.IsTrue(nav.MoveToPrevious()); // 3rd "A.B" node
             Assert.IsTrue(nav.InsertAfter(newCNode));
-            Assert.AreEqual("A.C", nav.CurrentPath());
+            Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(8, nav.OrdinalPosition);
             Assert.AreEqual(10, nav.Count);
 
@@ -376,7 +399,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual(9, nav.Count);
 
             Assert.IsTrue(nav.InsertAfter(newCNode));
-            Assert.AreEqual("A.C", nav.CurrentPath());
+            Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(9, nav.OrdinalPosition);
             Assert.AreEqual(10, nav.Count);
 
@@ -387,7 +410,7 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(nav.MoveToParent());
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.InsertBefore(newCNode));
-            Assert.AreEqual("A.C", nav.CurrentPath());
+            Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(1, nav.OrdinalPosition);
             Assert.AreEqual(10, nav.Count);
         }
@@ -404,25 +427,25 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(nav.InsertFirstChild(newENode));
             Assert.AreEqual(8,nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToParent());
-            Assert.AreEqual("A.B.C1.D", nav.CurrentPath());
+            Assert.AreEqual("A.B.C1.D", nav.Path);
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.Delete());   
-            Assert.AreEqual("A.B.C1.D", nav.CurrentPath());  // should have moved back to parent (single child deleted)
+            Assert.AreEqual("A.B.C1.D", nav.Path);  // should have moved back to parent (single child deleted)
 
             Assert.IsTrue(nav.JumpToFirst("A.D"));
             Assert.IsTrue(nav.InsertFirstChild(newENode));
             Assert.AreEqual(9,nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToParent());
-            Assert.AreEqual("A.D", nav.CurrentPath());
+            Assert.AreEqual("A.D", nav.Path);
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.Delete());   
-            Assert.AreEqual("A.D", nav.CurrentPath());  // should have moved back to parent (single child deleted)
+            Assert.AreEqual("A.D", nav.Path);  // should have moved back to parent (single child deleted)
 
             nav.Reset();
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.MoveToFirstChild()); // A.B
             Assert.IsTrue(nav.AppendChild(newC3Node));
-            Assert.AreEqual("A.B.C3",nav.CurrentPath());
+            Assert.AreEqual("A.B.C3",nav.Path);
             Assert.AreEqual(4, nav.OrdinalPosition);
 
             Assert.IsTrue(nav.Delete());
@@ -460,14 +483,14 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual(dstPos, dest.OrdinalPosition, "dest did not remain on original position");
 
             Assert.IsTrue(dest.MoveToFirstChild());
-            Assert.AreEqual("Y1", dest.CurrentName());
+            Assert.AreEqual("Y1", dest.PathName);
             Assert.IsTrue(dest.MoveToNext());
-            Assert.AreEqual("Y2", dest.CurrentName());
+            Assert.AreEqual("Y2", dest.PathName);
             Assert.IsFalse(dest.MoveToNext());
             Assert.IsTrue(dest.MoveToFirstChild());
-            Assert.AreEqual("Z1", dest.CurrentName());
+            Assert.AreEqual("Z1", dest.PathName);
             Assert.IsTrue(dest.MoveToNext());
-            Assert.AreEqual("Z2", dest.CurrentName());
+            Assert.AreEqual("Z2", dest.PathName);
             Assert.IsFalse(dest.MoveToNext());
         }
 
@@ -494,4 +517,36 @@ namespace Hl7.Fhir.Test.Inspection
             return struc;
         }
     }
+
+    internal class TestProfileSource : IArtifactSource
+    {
+        private Profile profile;
+        private bool prepared = false;
+
+        public void Prepare()
+        {
+            var str = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.profile.profile.xml");
+            profile = (Profile)FhirParser.ParseResource(XmlReader.Create(str));
+        }
+
+        public Stream ReadContentArtifact(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resource ReadResourceArtifact(Uri artifactId)
+        {
+            if (!prepared)
+            {
+                Prepare();
+                prepared = true;
+            }
+
+            if (artifactId.ToString() == "http://hl7.org/fhir/profile/profile")
+                return profile;
+            else
+                return null;
+        }
+    }
+
 }

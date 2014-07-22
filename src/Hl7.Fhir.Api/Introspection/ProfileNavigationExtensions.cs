@@ -18,6 +18,59 @@ namespace Hl7.Fhir.Introspection
 {
     public static class ProfileNavigationExtensions
     {
+        public const string STRUCTURE_PROFILE_URI = "http://fhir.furore.com/Profiles/navigation-extensions#profile-location";
+
+        public static string GetProfileLocation(this Element structure)
+        {
+            var val = structure.GetExtensionValue(STRUCTURE_PROFILE_URI) as FhirUri;
+            return val != null ? val.Value : null;
+        }
+
+        public static string GetProfileLocation(this Profile profile)
+        {
+            var val = profile.GetExtensionValue(STRUCTURE_PROFILE_URI) as FhirUri;
+            return val != null ? val.Value : null;
+        }
+
+
+        public static void SetProfileLocation(this Element structure, string profileAddress)
+        {
+            structure.SetExtension(STRUCTURE_PROFILE_URI, new FhirUri(profileAddress));
+        }
+
+        public static void RemoveProfileLocation(this Element structure)
+        {
+            structure.RemoveExtension(STRUCTURE_PROFILE_URI);
+        }
+
+        public static void SetProfileLocation(this Profile profile, Uri profileUri)
+        {
+            var uri = profileUri.ToString();
+
+            profile.SetExtension(STRUCTURE_PROFILE_URI, new FhirUri(profileUri));
+
+            if(profile.Structure != null) 
+                foreach (var structure in profile.Structure)
+                    structure.SetProfileLocation(uri);
+
+            if (profile.Extension != null)
+                foreach (var extension in profile.Extension)
+                    extension.SetProfileLocation(uri);
+        }
+
+        public static void RemoveProfileLocation(this Profile profile)
+        {
+            profile.RemoveExtension(STRUCTURE_PROFILE_URI);
+
+            if (profile.Structure != null)
+                foreach (var structure in profile.Structure)
+                    structure.RemoveProfileLocation();
+
+            if (profile.Extension != null)
+                foreach (var extension in profile.Extension)
+                    extension.RemoveProfileLocation();
+        }
+
         /// <summary>
         /// Rewrites the Path's of the elements in a structure so they are based on the given path: the root
         /// of the given structure will become the given path, it's children will be relocated below that path
@@ -43,7 +96,7 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        private static void rebaseChildren(ElementNavigator nav, string path, List<string> newPaths)
+        private static void rebaseChildren(BaseElementNavigator nav, string path, List<string> newPaths)
         {
             var bm = nav.Bookmark();
 
@@ -55,7 +108,7 @@ namespace Hl7.Fhir.Introspection
 
                     newPaths.Add(newPath);
 
-                    if(nav.HasChildren()) 
+                    if(nav.HasChildren) 
                         rebaseChildren(nav, newPath, newPaths);
                 }
                 while (nav.MoveToNext());
@@ -95,20 +148,6 @@ namespace Hl7.Fhir.Introspection
             return defn.Min + ".." + defn.Max;
         }
 
-        public static Profile.ElementComponent FindChild(this Profile.ProfileStructureComponent root, string path)
-        {
-            var nav = new ElementNavigator(root);
-
-            return nav.JumpToFirst(path) ? nav.Current : null;
-        }
-
-
-        public static Profile.ElementComponent FindChild(this Profile.ProfileStructureComponent root, Profile.ElementComponent element)
-        {
-            return FindChild(root, element.Path);
-        }
-
-
         public static string GetNameFromPath(this Profile.ElementComponent element)
         {
  	        var pos = element.Path.LastIndexOf(".");
@@ -120,32 +159,7 @@ namespace Hl7.Fhir.Introspection
         {
             var dot = element.Path.LastIndexOf(".");
             return dot != -1 ? element.Path.Substring(0, dot) : String.Empty;
-        }
-
-        public static IEnumerable<Profile.ElementComponent> GetChildren(this Profile.ProfileStructureComponent root, string path, bool includeGrandchildren = false)
-        {
-            var nav = new ElementNavigator(root);
-
-            if (nav.JumpToFirst(path) && nav.MoveToFirstChild())
-            {
-                do
-                {
-                    yield return nav.Current;
-
-                    if (nav.HasChildren() && includeGrandchildren)
-                    {
-                        foreach (var child in GetChildren(root, nav.CurrentPath(), includeGrandchildren))
-                            yield return child;
-                    }
-                }
-                while (nav.MoveToNext());
-            }
-            else
-            {
-                yield break;
-            }
-
-        }
+        }      
     }
 }
     
