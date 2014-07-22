@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Introspection
 
             var profile = loadProfile(uriWithoutAnchor.Uri);
 
-            if(profile.Structure == null || profile.Structure.Count == 0) return null;
+            if(profile == null || profile.Structure == null || profile.Structure.Count == 0) return null;
 
             var structureName = structureUri.Fragment.TrimStart('#');
 

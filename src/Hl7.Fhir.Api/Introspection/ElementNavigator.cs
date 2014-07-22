@@ -18,11 +18,20 @@ namespace Hl7.Fhir.Introspection
 {
     public class ElementNavigator : BaseElementNavigator
     {
-        public ElementNavigator(Profile.ProfileStructureComponent structure) : this(structure.Element)
-        {            
+        public ElementNavigator(Profile.ProfileStructureComponent structure)
+        {
+            setupElems(structure.Element);
+            Structure = structure;
         }
 
-        private ElementNavigator(IList<Profile.ElementComponent> elements)
+        public ElementNavigator(ElementNavigator other)
+        {
+            setupElems(other._elements);
+            Structure = other.Structure;
+            OrdinalPosition = other.OrdinalPosition;
+        }
+
+        private void setupElems(IList<Profile.ElementComponent> elements)
         {
             if (elements == null) throw Error.ArgumentNull("elements");
 
@@ -30,12 +39,9 @@ namespace Hl7.Fhir.Introspection
             OrdinalPosition = null;
         }
 
-        public ElementNavigator(ElementNavigator other) : this(other._elements)
-        {
-            ReturnToBookmark(other.Bookmark());
-        }
-
         internal int? OrdinalPosition { get; private set;  }
+
+        public Profile.ProfileStructureComponent Structure { get; private set; }
 
         private IList<Profile.ElementComponent> _elements;
 
@@ -180,11 +186,28 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-//----------------------------------
-//
-// Bookmark operations
-//
-//----------------------------------
+        public bool JumpToNameReference(string nameReference)
+        {
+            if(Count == 0) return false;
+
+            for (int pos = 0; pos < Count; pos++)
+            {
+                if (_elements[pos].Name == nameReference)
+                {
+                    OrdinalPosition = pos;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        //----------------------------------
+        //
+        // Bookmark operations
+        //
+        //----------------------------------
 
 
         public override Bookmark Bookmark()

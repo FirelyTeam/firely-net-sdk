@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void SetupProfile()
         {
             profileSource.Prepare();
-        }
+        }       
 
         [TestMethod]
         public void LocateStructure()
@@ -49,44 +49,61 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.AreEqual("Profile", prof.Type);
             Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
 
+            // Try to locate a structure that cannot be found in the given profile
+            prof = locator.Locate(profileUri, new Code("Patient"));
+            Assert.IsNull(prof);
+
             var profileUriWithFrag = new Uri(profileUri.ToString() + "#base-profile");
             prof = locator.Locate(profileUriWithFrag, new Code("Profile"));
             Assert.IsNotNull(prof);
             Assert.AreEqual("Profile", prof.Type);
             Assert.AreEqual("base-profile", prof.Name);
             Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
+
+            // Try to locate a structure that cannot be found in the profile by name
+            profileUriWithFrag = new Uri(profileUri.ToString() + "#XXX");
+            prof = locator.Locate(profileUriWithFrag, new Code("Profile"));
+            Assert.IsNull(prof);
         }
 
-        //[TestMethod]
-        //public void TestFindChild()
-        //{
-        //    var profStruct = testProfile.Structure[0];
+        [TestMethod]
+        public void TestExpandChild()
+        {
+            var locator = new StructureLocator(new ArtifactResolver());
+            
+            var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/profile/profile"), new Code("Profile"));
 
-        //    var child = profStruct.FindChild("Profile.structure.searchParam.documentation");
-        //    Assert.IsNotNull(child);
-        //    Assert.AreEqual("documentation", child.GetNameFromPath());
-        //    Assert.AreEqual("Profile.structure.searchParam.documentation", child.Path);
+            var exp = new StructureExpander(profStruct, locator);
 
-        //    child = profStruct.FindChild("Profile.telecom.system");
-        //    Assert.IsNotNull(child);
+            var nav = exp.ExpandElement("Profile.telecom");
+            Assert.IsTrue(nav.MoveToChild("period"));
 
-        //    child = profStruct.FindChild("Profile.extensionDefn.definition.max");
-        //    Assert.IsNotNull(child);
-        //    Assert.AreEqual("max", child.GetNameFromPath());
-        //    //Assert.AreEqual("Profile.structure.element.definition.max", child.Path);
+            nav = exp.ExpandElement("Profile.extensionDefn.definition");
+            Assert.IsTrue(nav.MoveToChild("max"));
 
-        //    child = profStruct.FindChild("Profile.doesntexist");
-        //    Assert.IsNull(child);
+            //var child = profStruct.FindChild("Profile.structure.searchParam.documentation");
+            //Assert.IsNotNull(child);
+            //Assert.AreEqual("documentation", child.GetNameFromPath());
+            //Assert.AreEqual("Profile.structure.searchParam.documentation", child.Path);
 
 
-        //    //child = profStruct.FindChild("Profile.extensionDefn.definition");
-        //    //Assert.IsNotNull(child);
-        //    //Assert.AreEqual(child, profStruct.FindChild("Profile.structure.element.definition"));
+            //child = profStruct.FindChild("Profile.extensionDefn.definition.max");
+            //Assert.IsNotNull(child);
+            //Assert.AreEqual("max", child.GetNameFromPath());
+            ////Assert.AreEqual("Profile.structure.element.definition.max", child.Path);
 
-        //    child = profStruct.FindChild("Profile");
-        //    Assert.IsNotNull(child);
-        //    Assert.AreEqual(child, profStruct.Element[0]);
-        //}
+            //child = profStruct.FindChild("Profile.doesntexist");
+            //Assert.IsNull(child);
+
+
+            ////child = profStruct.FindChild("Profile.extensionDefn.definition");
+            ////Assert.IsNotNull(child);
+            ////Assert.AreEqual(child, profStruct.FindChild("Profile.structure.element.definition"));
+
+            //child = profStruct.FindChild("Profile");
+            //Assert.IsNotNull(child);
+            //Assert.AreEqual(child, profStruct.Element[0]);
+        }
 
         //[TestMethod, Ignore]
         //public void TestListChildren()
@@ -492,6 +509,20 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(dest.MoveToNext());
             Assert.AreEqual("Z2", dest.PathName);
             Assert.IsFalse(dest.MoveToNext());
+        }
+
+        [TestMethod]
+        public void LocateElementByName()
+        {
+            var nav = createTestNav();
+            nav.JumpToFirst("A.B.C1.D");
+            nav.Current.Name = "A-Named-Constraint";
+
+            nav.Reset();
+            Assert.IsTrue(nav.JumpToNameReference("A-Named-Constraint"));
+            Assert.AreEqual(7, nav.OrdinalPosition);
+
+            Assert.IsFalse(nav.JumpToNameReference("IDontExist"));
         }
 
         private static ElementNavigator createTestNav()
