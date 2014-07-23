@@ -56,8 +56,8 @@ namespace Hl7.Fhir.Introspection.Source
         {
             get
             {
-                var location = Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
-                return Path.Combine(location, "Introspection", "Source");
+                return Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
+                //return Path.Combine(location, "Introspection", "Source");
             }
         }
 
@@ -142,12 +142,14 @@ namespace Hl7.Fhir.Introspection.Source
             if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
 
             // Return the contents of the file, since there's no logical id inside the data of a simple resource file
-            using (var contentXml = ReadContentArtifact(logicalId + ".xml"))
+            var xmlFilename = logicalId.EndsWith(".xml") ? logicalId : logicalId + ".xml";
+            using (var contentXml = ReadContentArtifact(xmlFilename))
             {
                 if (contentXml != null)
                     return FhirParser.ParseResource(XmlReader.Create(contentXml));
 
-                using (var contentJson = ReadContentArtifact(logicalId + ".json"))
+                var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
+                using (var contentJson = ReadContentArtifact(jsonFilename))
                 {
                     if (contentJson != null)
                         return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));

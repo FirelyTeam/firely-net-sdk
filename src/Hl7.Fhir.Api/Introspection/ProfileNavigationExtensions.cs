@@ -18,60 +18,6 @@ namespace Hl7.Fhir.Introspection
 {
     public static class ProfileNavigationExtensions
     {
-        public const string STRUCTURE_PROFILE_URI = "http://fhir.furore.com/Profiles/navigation-extensions#profile-location";
-
-        public static string GetProfileLocation(this Element structure)
-        {
-            var val = structure.GetExtensionValue(STRUCTURE_PROFILE_URI) as FhirUri;
-            return val != null ? val.Value : null;
-        }
-
-        public static string GetProfileLocation(this Profile profile)
-        {
-            var val = profile.GetExtensionValue(STRUCTURE_PROFILE_URI) as FhirUri;
-            return val != null ? val.Value : null;
-        }
-
-
-        public static void SetProfileLocation(this Element structure, string profileAddress)
-        {
-            structure.SetExtension(STRUCTURE_PROFILE_URI, new FhirUri(profileAddress));
-        }
-
-        public static void RemoveProfileLocation(this Element structure)
-        {
-            structure.RemoveExtension(STRUCTURE_PROFILE_URI);
-        }
-
-        public static void SetProfileLocation(this Profile profile, Uri profileUri)
-        {
-            var uri = profileUri.ToString();
-
-            profile.SetExtension(STRUCTURE_PROFILE_URI, new FhirUri(profileUri));
-
-            if(profile.Structure != null) 
-                foreach (var structure in profile.Structure)
-                    structure.SetProfileLocation(uri);
-
-            if (profile.Extension != null)
-                foreach (var extension in profile.Extension)
-                    extension.SetProfileLocation(uri);
-        }
-
-        public static void RemoveProfileLocation(this Profile profile)
-        {
-            profile.RemoveExtension(STRUCTURE_PROFILE_URI);
-
-            if (profile.Structure != null)
-                foreach (var structure in profile.Structure)
-                    structure.RemoveProfileLocation();
-
-            if (profile.Extension != null)
-                foreach (var extension in profile.Extension)
-                    extension.RemoveProfileLocation();
-        }
-
-
         public static ElementNavigator JumpToNameReference(this Profile.ProfileStructureComponent structure, string nameReference)
         {
             var nav = new ElementNavigator(structure);
@@ -184,8 +130,7 @@ namespace Hl7.Fhir.Introspection
 
         public static string GetParentNameFromPath(this Profile.ElementComponent element)
         {
-            var dot = element.Path.LastIndexOf(".");
-            return dot != -1 ? element.Path.Substring(0, dot) : String.Empty;
+            return ElementNavigator.GetParentPath(element.Path);
         }      
     }
 }

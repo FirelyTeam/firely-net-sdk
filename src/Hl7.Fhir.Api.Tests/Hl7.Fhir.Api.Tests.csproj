@@ -69,6 +69,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Inspection\ProfileExpansionTest.cs" />
     <Compile Include="Inspection\ProfileNavigationTest.cs" />
     <Compile Include="Inspection\SchemaCollectionTest.cs" />
     <Compile Include="Inspection\ArtifactStorageTest.cs" />
@@ -135,9 +136,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="profile.profile.xml">
+    <Content Include="example-lipid-profile-differential.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

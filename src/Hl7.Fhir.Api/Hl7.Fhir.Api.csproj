@@ -58,7 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Introspection\BaseElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileExtensionExtensions.cs" />
     <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
+    <Compile Include="Introspection\ProfileExpander.cs" />
+    <Compile Include="Introspection\DifferentialTreeConstructor.cs" />
     <Compile Include="Introspection\StructureLoader.cs" />
     <Compile Include="Introspection\StructureExpander.cs" />
     <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />
@@ -173,7 +176,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Introspection\Source\validation.zip">
+    <Content Include="validation.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

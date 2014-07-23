@@ -19,47 +19,43 @@ namespace Hl7.Fhir.Introspection
 {
     internal class StructureExpander
     {
-        public StructureExpander(Profile.ProfileStructureComponent structure, StructureLocator locator)
+        public StructureExpander(Profile.ProfileStructureComponent structure, StructureLoader loader)
         {
             Structure = structure;
-            _locator = locator;
+            _loader = loader;
         }
 
         public Profile.ProfileStructureComponent Structure { get; private set; }
 
-        private StructureLocator _locator;
+        private StructureLoader _loader;
 
-        public ElementNavigator ExpandElement(string path)
+        public Profile.ProfileStructureComponent Expand(Profile.ProfileStructureComponent differential)
         {
-            var nav = new ElementNavigator(Structure);
+            var baseStructure = _loader.LocateBaseStructure(differential.TypeElement);
+            var baseUri = StructureLoader.BuildBaseStructureUri(differential.TypeElement).ToString();
 
-            var points = nav.Find(path);
+            var snapshot = (Profile.ProfileStructureComponent)baseStructure.DeepCopy();
+            snapshot.SetStructureForm(StructureForm.Snapshot);
+            snapshot.SetStructureBaseUri(baseUri.ToString());
 
-            //foreach (var point in points)
-            //{
-            //    nav.ReturnToBookmark(point);
-            //    ExpandElement(nav);
-            //}
+            var fullDifferential = new DifferentialTreeConstructor(differential).MakeTree();
 
-            if (points.Any())
-            {
-                nav.ReturnToBookmark(points.First());
-                return ExpandElement(nav);
-            }
-            else
-                return null;
+            // Do stuff to snapshot...
+
+            return snapshot;
         }
+
 
         public ElementNavigator ExpandElement(ElementNavigator nav)
         {
             if (nav.HasChildren) return null;
-                        
+
             if (nav.Current.Definition != null)
             {
                 var defn = nav.Current.Definition;
                 if (!String.IsNullOrEmpty(defn.NameReference))
                 {
-                    var sourceNav = resolveNameReference(nav.Structure,defn.NameReference);
+                    var sourceNav = resolveNameReference(nav.Structure, defn.NameReference);
                     nav.CopyChildren(sourceNav);
                 }
                 else if (defn.Type != null && defn.Type.Count > 0)
@@ -68,7 +64,7 @@ namespace Hl7.Fhir.Introspection
                         throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
                     else
                     {
-                        var sourceNav = resolveStructureReference(_locator, defn.Type[0].CodeElement);
+                        var sourceNav = resolveStructureReference(_loader, defn.Type[0].CodeElement);
 
                         if (sourceNav != null)
                         {
@@ -84,20 +80,16 @@ namespace Hl7.Fhir.Introspection
             return nav;
         }
 
+        private static ElementNavigator resolveStructureReference(StructureLoader _loader, Code code)
+        {
+            var result = _loader.LocateBaseStructure(code);
+            return result != null ? new ElementNavigator(result) : null;
+        }
+
 
         private static ElementNavigator resolveNameReference(Profile.ProfileStructureComponent structure, string nameReference)
         {
             return structure.JumpToNameReference(nameReference);
-        }
-
-        private static ElementNavigator resolveStructureReference(StructureLocator locator, Code baseType)
-        {
-            // TODO: This works for profiles based on base-profiles, but if you could constrain a constrained
-            // element with a TypeRef.profile, this logic should change
-            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + baseType.Value.ToLower();
-            var structure = locator.Locate(new Uri(fullReference), baseType);
-            
-            return structure != null ? new ElementNavigator(structure) : null;
         }
     }
 }

@@ -16,12 +16,11 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Introspection
 {
-    internal class StructureLocator
+    internal class StructureLoader
     {
-        public StructureLocator(IArtifactSource source)
+        public StructureLoader(IArtifactSource source)
         {
             ArtifactSource = source;
-            _cachedSource = new CachedArtifactSource(ArtifactSource);
         }
 
         public IArtifactSource ArtifactSource { get; private set; }
@@ -31,15 +30,17 @@ namespace Hl7.Fhir.Introspection
         {
             if(!structureUri.IsAbsoluteUri) throw Error.Argument("Reference to structure must be an absolute url");
 
-            var name = structureUri.ToString();
-
+            // The structure Uri might be of the form <url-to-profile>#<structure name>
+            // First split off the <url-to-profile> and load the profile
             var uriWithoutAnchor = new UriBuilder(structureUri);
             uriWithoutAnchor.Fragment = null;
 
             var profile = loadProfile(uriWithoutAnchor.Uri);
 
+            // If the profile was not found, return without doing work
             if(profile == null || profile.Structure == null || profile.Structure.Count == 0) return null;
 
+            // Determine the <structure name>
             var structureName = structureUri.Fragment.TrimStart('#');
 
             if (!String.IsNullOrEmpty(structureName))
@@ -55,14 +56,33 @@ namespace Hl7.Fhir.Introspection
         }
 
 
+        /// <summary>
+        /// All base structures (resources + datatypes) that come with the spec have a specific pre-defined
+        /// (but currently symbolic) url where they can be found. Locate base structures using that url
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public Profile.ProfileStructureComponent LocateBaseStructure(Code type)
+        {
+            return Locate(BuildBaseStructureUri(type),type);
+        }
+
+
+        public static Uri BuildBaseStructureUri(Code type)
+        {
+            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value.ToLower();
+            return new Uri(fullReference);
+        }
+
         private Profile loadProfile(Uri profileUri)
         {
-            var profile = _cachedSource.ReadResourceArtifact(profileUri) as Profile;
+            var profile = ArtifactSource.ReadResourceArtifact(profileUri) as Profile;
 
             if (profile == null) return null;
 
-            if(profile.GetProfileLocation() == null)
-                profile.SetProfileLocation(profileUri);
+            // Do preprocessing
+            //if(profile.GetProfileLocation() == null)
+            //    profile.SetProfileLocation(profileUri);
 
             return profile;
         }

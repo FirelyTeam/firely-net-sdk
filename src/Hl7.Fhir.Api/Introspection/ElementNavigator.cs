@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Introspection
             var searchPos = OrdinalPosition.Value + 1;
 
             // Skip children of the element
-            while (searchPos < Count && IsDeeperPath(Path, _elements[searchPos].Path))
+            while (searchPos < Count && isDeeperPath(Path, _elements[searchPos].Path))
                 searchPos++;
             return searchPos;
         }
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Introspection
             var searchPos = OrdinalPosition.Value - 1;
 
             // Skip children of the previous sibling (if any)
-            while (searchPos >= 0 && IsDeeperPath(Path, _elements[searchPos].Path))
+            while (searchPos >= 0 && isDeeperPath(Path, _elements[searchPos].Path))
                 searchPos--;
             return searchPos;
         }
@@ -377,14 +377,28 @@ namespace Hl7.Fhir.Introspection
             return true;
         }
 
-        internal static bool IsDeeperPath(string me, string that)
+        private static bool isDeeperPath(string me, string that)
         {
             return NumberOfParts(that) > NumberOfParts(me);
         }
 
-        internal static bool IsDirectChildPath(string parent, string child)
+        public static bool IsSibling(string me, string him)
         {
+            return GetParentPath(me) == GetParentPath(him);
+        }
+
+        public static bool IsDirectChildPath(string parent, string child)
+        {
+            // A child with a single path segment, is "root" and child of "no" parent
+            //if (parent == String.Empty && child.IndexOf('.') == -1) return true;
+
             return child.StartsWith(parent + ".") && child.IndexOf('.', parent.Length + 1) == -1;
+        }
+
+        public static string GetParentPath(string child)
+        {
+            var dot = child.LastIndexOf(".");
+            return dot != -1 ? child.Substring(0, dot) : String.Empty;
         }
 
         internal static int NumberOfParts(string path)

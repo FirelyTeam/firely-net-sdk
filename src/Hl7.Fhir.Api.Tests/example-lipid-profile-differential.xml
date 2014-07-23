@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Profile xmlns="http://hl7.org/fhir">
+  <identifier value="urn:hl7.org:lipid-profile:v1" />
+  <version value="1.0.0" />
+  <name value="Lipid Profile" />
+  <publisher value="HL7 International" />
+  <telecom>
+    <system value="email" />
+    <value value="e.kramer@furore.com" />
+  </telecom>
+  <description value="Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes&#xD;&#xA;" />
+  <code>
+    <system value="http://loinc.org/" />
+    <code value="58239-5" />
+    <display value="lipid profile" />
+  </code>
+  <status value="draft" />
+  <experimental value="true" />
+  <date value="2014-04-17T00:00:00+02:00" />
+  <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial" />
+  <fhirVersion value="0.80" />
+  <structure>
+    <type value="Quantity" />
+    <name value="lipidQuantity" />
+    <publish value="true"/>
+    <element>
+      <path value="Quantity" />
+      <definition>
+        <short value="Quantity as used in lipid measurements" />
+        <formal value="Quantity as used in lipid measurements" />
+        <comments value="Lipid measurements are expressed in mmol/L" />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Type" />
+        </type>
+        <constraint>
+          <key value="3" />
+          <name value="SHALL have a system" />
+          <severity value="error" />
+          <human value="If a code for the units is present, the system SHALL also be present" />
+          <xpath value="not(exists(f:code)) or exists(f:system)" />
+        </constraint>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="SN (see also Range) or CQ" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Quantity.value" />
+      <definition>
+        <short value="Numerical value (with implicit precision)" />
+        <formal value="The value of the measured amount. The value includes an implicit precision in the presentation of the value." />
+        <comments value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="decimal" />
+        </type>
+        <mustSupport value="true" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="SN.2  / CQ - N/A" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="MessageHeader" />
+    <name value="newLipidResult" />
+    <publish value="true" />
+    <element>
+      <path value="MessageHeader.data" />
+      <definition>
+        <short value="The actual content of the message" />
+        <formal value="The actual data of the message - a reference to the root/focus class of the event." />
+        <comments value="The data is defined where the transaction type is defined. The transaction data is always included in the bundle that is the full message.  Only the root resource is specified.  The resources it references should be contained in the bundle but are not also listed here.  Multiple repetitions are allowed to cater for merges and other situations with multiple focal targets." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#lipidPanel" />
+          <aggregation value="bundled" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="unique(./controlAct[classCode=&quot;CACT&quot; and classCode=&quot;EVN&quot; and isNormalAct()]/participation[typeCode=&quot;SUBJ&quot; and isNormalParticipation]/role or ./controlAct[classCode=&quot;CACT&quot; and classCode=&quot;EVN&quot; and isNormalAct()]/outboundRelationship[typeCode=&quot;SBJ&quot; and isNormalActRelatoinship]/target)" />
+        </mapping>
+      </definition>
+    </element>
+    <searchParam>
+      <name value="_id" />
+      <type value="token" />
+      <documentation value="The logical resource id associated with the resource (must be supported by all servers)" />
+    </searchParam>
+  </structure>
+  <extensionDefn>
+    <code value="calculated" />
+    <contextType value="resource" />
+    <context value="Observation.valueQuantity" />
+    <definition>
+      <short value="LDL is Calculated" />
+      <formal value="True if the value is calculated from other observations" />
+      <comments value="E.g. True if the LDL value is calculated from Chol, Trig, and HDLC" />
+      <type>
+        <code value="boolean" />
+      </type>
+    </definition>
+  </extensionDefn>
+</Profile>
