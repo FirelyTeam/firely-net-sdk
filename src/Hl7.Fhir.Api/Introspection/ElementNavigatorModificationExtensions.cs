@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection.Source;
@@ -90,6 +91,61 @@ namespace Hl7.Fhir.Introspection
             dest.MoveToParent();
 
             return true;
+        }
+
+
+        public static bool ExpandElement(this ElementNavigator nav, IArtifactSource source)
+        {
+            if(source == null) throw Error.ArgumentNull("source");
+            if(nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
+
+            if (nav.Current.Definition == null) throw Error.Argument("Cannot move down into element {0} since it has no element definition information", nav.Path);
+
+            if(nav.HasChildren) return true;     // already has children, we're not doing anything extra
+
+            if (nav.Current.Definition != null)
+            {
+                var defn = nav.Current.Definition;
+                if (!String.IsNullOrEmpty(defn.NameReference))
+                {
+                    var sourceNav = resolveNameReference(nav.Structure, defn.NameReference);
+                    nav.CopyChildren(sourceNav);
+                }
+                else if (defn.Type != null && defn.Type.Count > 0)
+                {
+                    if (defn.Type.Count > 1)
+                        throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
+                    else
+                    {
+                        var loader = new StructureLoader(source);
+                        var sourceNav = resolveStructureReference(loader, defn.Type[0].CodeElement);
+
+                        if (sourceNav != null)
+                        {
+                            sourceNav.MoveToFirstChild();
+                            nav.CopyChildren(sourceNav);
+                        }
+                        else
+                            throw new FileNotFoundException("Cannot locate base-structure for datatype " + defn.Type[0].Code);
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static ElementNavigator resolveStructureReference(StructureLoader _loader, Code code)
+        {
+            var result = _loader.LocateBaseStructure(code);
+            return result != null ? new ElementNavigator(result) : null;
+        }
+
+
+        private static ElementNavigator resolveNameReference(Profile.ProfileStructureComponent structure, string nameReference)
+        {
+            return structure.JumpToNameReference(nameReference);
         }
     }
 }

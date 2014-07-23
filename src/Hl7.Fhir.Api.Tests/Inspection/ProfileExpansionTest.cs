@@ -126,16 +126,14 @@ namespace Hl7.Fhir.Test.Inspection
             var locator = new StructureLoader(new ArtifactResolver());
             var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/profile/profile"), new Code("Profile"));
 
-            var exp = new StructureExpander(profStruct, locator);
-
             var nav = new ElementNavigator(profStruct);
             
             nav.JumpToFirst("Profile.telecom");
-            exp.ExpandElement(nav);
+            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
             Assert.IsTrue(nav.MoveToChild("period"));
 
             nav.JumpToFirst("Profile.extensionDefn.definition");
-            exp.ExpandElement(nav);
+            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
             Assert.IsTrue(nav.MoveToChild("max"));
         }
 

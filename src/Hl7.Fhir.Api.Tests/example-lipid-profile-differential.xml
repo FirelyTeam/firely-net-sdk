@@ -20,59 +20,57 @@
   <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial" />
   <fhirVersion value="0.80" />
   <structure>
-    <type value="Quantity" />
-    <name value="lipidQuantity" />
-    <publish value="true"/>
+    <type value="Observation" />
+    <name value="cholesterol" />
+    <publish value="true" />
     <element>
-      <path value="Quantity" />
+      <path value="Observation" />
       <definition>
-        <short value="Quantity as used in lipid measurements" />
-        <formal value="Quantity as used in lipid measurements" />
-        <comments value="Lipid measurements are expressed in mmol/L" />
-        <min value="1" />
-        <max value="1" />
-        <type>
-          <code value="Type" />
-        </type>
+        <short value="Cholesterol measurement" />
+        <formal value="Cholesterol measurement" />
         <constraint>
-          <key value="3" />
-          <name value="SHALL have a system" />
+          <key value="chol-01" />
+          <name value="Must have valueQuantity or comment" />
           <severity value="error" />
-          <human value="If a code for the units is present, the system SHALL also be present" />
-          <xpath value="not(exists(f:code)) or exists(f:system)" />
+          <human value="If a Cholesterol value result is not available, use the comments field" />
+          <xpath value="exists(f:valueQuantity) or exists(f:comment)" />
         </constraint>
-        <isModifier value="false" />
-        <mapping>
-          <identity value="rim" />
-          <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values" />
-        </mapping>
-        <mapping>
-          <identity value="v2" />
-          <map value="SN (see also Range) or CQ" />
-        </mapping>
       </definition>
     </element>
     <element>
-      <path value="Quantity.value" />
+      <path value="Observation.name.coding.system" />
       <definition>
-        <short value="Numerical value (with implicit precision)" />
-        <formal value="The value of the measured amount. The value includes an implicit precision in the presentation of the value." />
-        <comments value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)." />
-        <min value="0" />
+        <min value="1" />
         <max value="1" />
-        <type>
-          <code value="decimal" />
-        </type>
-        <mustSupport value="true" />
-        <isModifier value="false" />
-        <mapping>
-          <identity value="rim" />
-          <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value" />
-        </mapping>
-        <mapping>
-          <identity value="v2" />
-          <map value="SN.2  / CQ - N/A" />
-        </mapping>
+        <valueUri value="http://loinc.org/" />
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.version" />
+      <definition>
+        <min value="0" />
+        <max value="0" />
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.code" />
+      <definition>
+        <min value="1" />
+        <max value="1" />
+        <valueCode value="35200-5" />
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.display" />
+      <definition>
+        <valueString value="Cholesterol" />
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.primary" />
+      <definition>
+        <min value="0" />
+        <max value="0" />
       </definition>
     </element>
   </structure>

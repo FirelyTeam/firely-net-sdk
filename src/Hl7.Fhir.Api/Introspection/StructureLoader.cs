@@ -24,7 +24,6 @@ namespace Hl7.Fhir.Introspection
         }
 
         public IArtifactSource ArtifactSource { get; private set; }
-        private IArtifactSource _cachedSource;
        
         public Profile.ProfileStructureComponent Locate(Uri structureUri, Code type)
         {

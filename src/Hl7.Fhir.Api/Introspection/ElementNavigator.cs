@@ -377,6 +377,11 @@ namespace Hl7.Fhir.Introspection
             return true;
         }
 
+        public void CommitChanges()
+        {
+            Structure.Element = new List<Profile.ElementComponent>(_elements);
+        }
+
         private static bool isDeeperPath(string me, string that)
         {
             return NumberOfParts(that) > NumberOfParts(me);

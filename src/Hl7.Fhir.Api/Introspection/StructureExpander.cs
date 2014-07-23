@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Introspection
             _loader = loader;
         }
 
-        public Profile.ProfileStructureComponent Structure { get; private set; }
+        public Profile.ProfileStructureComponent Structure {get; private set; }
 
         private StructureLoader _loader;
 
@@ -40,56 +40,144 @@ namespace Hl7.Fhir.Introspection
 
             var fullDifferential = new DifferentialTreeConstructor(differential).MakeTree();
 
-            // Do stuff to snapshot...
+            var snapNav = new ElementNavigator(snapshot);
+            snapNav.MoveToFirstChild();
 
+            var diffNav = new ElementNavigator(fullDifferential);
+            diffNav.MoveToFirstChild();
+
+            merge(snapNav, diffNav);
+
+            //TODO: Merge search params?
+
+            snapNav.CommitChanges();
             return snapshot;
         }
 
-
-        public ElementNavigator ExpandElement(ElementNavigator nav)
+        private void merge(ElementNavigator snapshot, ElementNavigator diff)
         {
-            if (nav.HasChildren) return null;
+            mergeElementAttributes(snapshot.Current, diff.Current);
 
-            if (nav.Current.Definition != null)
+            // If there are children, move into them, and recursively merge them
+            if (diff.MoveToFirstChild())
             {
-                var defn = nav.Current.Definition;
-                if (!String.IsNullOrEmpty(defn.NameReference))
+                if (!snapshot.HasChildren)
                 {
-                    var sourceNav = resolveNameReference(nav.Structure, defn.NameReference);
-                    nav.CopyChildren(sourceNav);
-                }
-                else if (defn.Type != null && defn.Type.Count > 0)
-                {
-                    if (defn.Type.Count > 1)
-                        throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
-                    else
-                    {
-                        var sourceNav = resolveStructureReference(_loader, defn.Type[0].CodeElement);
+                    // The differential moves into an element that has no children in the base.
+                    // However, this is possible if the base's element has a nameReference or a TypeRef,
+                    // in which case it can be expanded
+                    snapshot.ExpandElement(_loader.ArtifactSource);
 
-                        if (sourceNav != null)
-                        {
-                            sourceNav.MoveToFirstChild();
-                            nav.CopyChildren(sourceNav);
-                        }
-                        else
-                            throw new FileNotFoundException("Cannot locate base-structure for datatype " + defn.Type[0].Code);
+                    if (!snapshot.HasChildren)
+                    {
+                        // Snapshot's element is not expandable, so the diff tries to move where it cannot go
+                        throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
                     }
                 }
+
+                do
+                {
+                    if (!snapshot.MoveToChild(diff.PathName))
+                        throw Error.InvalidOperation("Differential has a constraint for path {0}, which does not exist in its base", diff.PathName);
+                    else 
+                    
+                        // Child found in both, merge them
+                    merge(snapshot, diff);
+
+                    snapshot.MoveToParent();
+                }
+                while (diff.MoveToNext());
+
+                // After the merge, return the diff and snapshot back to its original position
+                diff.MoveToParent();
+                
+            }
+        }
+
+        private void mergeElementAttributes(Profile.ElementComponent dest, Profile.ElementComponent src)
+        {
+            // Check whether this is an empty parent inserted into the differential form to create a full tree representation
+            // without skips
+            var isFillerParent = src.Definition == null && src.Slicing == null;
+            if (isFillerParent) return;   // nothing to do, parent remains unchanged
+
+            if (src.Name != null) dest.Name = src.Name;
+
+            // You cannot change Element.representation in a derived profile
+
+            if (src.Definition != null)
+            {
+                if (dest.Definition == null) dest.Definition = new Profile.ElementDefinitionComponent();
+
+                mergeElementDefnAttributes(dest.Definition, src.Definition);
+            }
+        }
+
+
+        private void mergeElementDefnAttributes(Profile.ElementDefinitionComponent snap, Profile.ElementDefinitionComponent diff)
+        {
+            if (diff.ShortElement != null) snap.ShortElement = (FhirString)diff.ShortElement.DeepCopy();
+            if (diff.FormalElement != null) snap.FormalElement = (FhirString)diff.FormalElement.DeepCopy();
+            if (diff.CommentsElement != null) snap.CommentsElement = (FhirString)diff.CommentsElement.DeepCopy();
+            if (diff.RequirementsElement != null) snap.RequirementsElement = (FhirString)diff.RequirementsElement.DeepCopy();
+
+            if(diff.SynonymElement != null)
+            {
+                if(snap.SynonymElement == null) snap.SynonymElement = new List<FhirString>();
+
+                // Add new synonyms to the snap, and replace existing ones
+                foreach(var dsyn in diff.SynonymElement)
+                {
+                    snap.SynonymElement.Remove(snap.SynonymElement.FirstOrDefault(ssyn => ssyn.Value == dsyn.Value));
+                    snap.SynonymElement.Add((FhirString)dsyn.DeepCopy());
+                }
+                // Original code from Java leaves snapshot untouched when encountering an existing synonym,but
+                // this means differential can not override e.g. extensions in such synonyms.
+                //var newSynonyms = from dsyn in diff.SynonymElement
+                //                  where !snap.SynonymElement.Any(ssyn => ssyn.Value == dsyn.Value)
+                //                  select (FhirString)dsyn.DeepCopy();
+                //snap.SynonymElement.AddRange(newSynonyms);
             }
 
-            return nav;
-        }
+            if (diff.MinElement != null) snap.MinElement =  (Integer)diff.MinElement.DeepCopy();
+            if (diff.MaxElement != null) snap.MaxElement =  (FhirString)diff.MaxElement.DeepCopy();
 
-        private static ElementNavigator resolveStructureReference(StructureLoader _loader, Code code)
-        {
-            var result = _loader.LocateBaseStructure(code);
-            return result != null ? new ElementNavigator(result) : null;
-        }
+            // ElementDefinition.nameReference cannot be overridden by a derived profile
 
+            if(diff.Value != null) snap.Value = (Element)diff.Value.DeepCopy();
+            if(diff.Example != null) snap.Example = (Element)diff.Example.DeepCopy();
+            if(diff.MaxLengthElement != null) snap.MaxLengthElement =  (Integer)diff.MaxLengthElement.DeepCopy();
 
-        private static ElementNavigator resolveNameReference(Profile.ProfileStructureComponent structure, string nameReference)
-        {
-            return structure.JumpToNameReference(nameReference);
+            // todo: [GG] what to do about conditions?  [EK] Since me made ElementDefinition.Constrain cumulative, these need to be cumulative too?
+            if (diff.ConditionElement != null && diff.ConditionElement.Any())
+            {
+                if (snap.ConditionElement == null) snap.ConditionElement = new List<Id>();
+                snap.ConditionElement.AddRange(diff.ConditionElement.DeepCopy());
+            }
+
+            if(diff.MustSupportElement != null) snap.MustSupportElement = (FhirBoolean)diff.MustSupportElement.DeepCopy();
+
+            // ElementDefinition.isModifier cannot be overridden by a derived profle
+
+            if(diff.Binding != null) snap.Binding = (Profile.ElementDefinitionBindingComponent)diff.Binding.DeepCopy();
+
+            // todo: [GG] is this actually right?  [EK] I think it is, at least this is what Forge expects as well
+            if(diff.Type != null && diff.Type.Any())
+                snap.Type = new List<Profile.TypeRefComponent>(diff.Type.DeepCopy());
+            
+            // todo: [GG] mappings are cumulative - or does one replace another?
+            if(diff.Mapping != null && diff.Mapping.Any())
+            {
+                if(snap.Mapping == null) snap.Mapping = new List<Profile.ElementDefinitionMappingComponent>();
+                snap.Mapping.AddRange(diff.Mapping.DeepCopy());
+            }
+
+            // todo: constraints are cumulative - or does one replace another?
+            if(diff.Constraint != null && diff.Constraint.Any())
+            {
+                if(snap.Constraint == null) snap.Constraint = new List<Profile.ElementDefinitionConstraintComponent>();
+                snap.Constraint.AddRange(diff.Constraint.DeepCopy());
+            }
         }
     }
 }
