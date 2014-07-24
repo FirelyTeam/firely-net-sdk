@@ -111,6 +111,14 @@ namespace Hl7.Fhir.Introspection
             return defn.Max != "1" && defn.Max != "0";
         }
 
+        public static bool IsRepeating(this Profile.ElementComponent elem)
+        {
+            if (elem.Definition != null)
+                return elem.Definition.IsRepeating();
+            else
+                return false;
+        }
+
         public static bool IsExtension(this Profile.ElementComponent elem)
         {
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");

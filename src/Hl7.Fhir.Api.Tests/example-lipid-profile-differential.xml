@@ -20,6 +20,64 @@
   <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial" />
   <fhirVersion value="0.80" />
   <structure>
+    <type value="DiagnosticReport" />
+    <name value="lipidPanel" />
+    <publish value="true" />
+    <element>
+      <path value="DiagnosticReport" />
+      <definition>
+        <short value="Lipid Lab Report" />
+        <formal value="The findings and interpretation of a general lipd lab profile" />
+        <comments value="Note that this profile doesn't mention workflow  elements - it's solely concerned with the semantics of a lipid report. Things that are ignored are not constrained" />
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result" />
+      <slicing>
+        <discriminator value="name" />
+        <ordered value="true" />
+        <rules value="closed" />
+      </slicing>
+      <definition>
+        <short value="Observations - simple, or complex nested groups" />
+        <formal value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)." />
+        <comments value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional" />
+        <min value="3" />
+        <max value="4" /> 
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result" />
+      <name value="cholesterol" />
+      <definition>
+        <short value="Cholesterol observation" />
+        <formal value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#cholesterol" />
+          <aggregation value="bundled" />
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result" />
+      <name value="triglyceride" />
+      <definition>
+        <short value="Triglyceride observation" />
+        <formal value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#triglyceride" />
+          <aggregation value="bundled" />
+        </type>
+      </definition>
+    </element>
+  </structure> 
+  <structure>
     <type value="Observation" />
     <name value="cholesterol" />
     <publish value="true" />
