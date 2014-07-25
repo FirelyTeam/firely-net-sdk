@@ -88,18 +88,9 @@ namespace Hl7.Fhir.Introspection
                     firstEntry = false;
 
                     // Child found in both, merge them
-
-                    //// First, some bookkeeping. If we were iterating over children in a slice,
-                    //// but we encounter a new constraint that's not in the slice, we "reset" to normal treatment
-                    //// of matching the children
-                    //if (diff.Path != sliceName) sliceName = null;
-
-                    // So, we were not in a slice, but we're on an element where the next element has the same name
-                    // this means we are on the slicing "entry" element.
-                    //if (sliceName == null && childNameRepeats(diff))
                     if (childNameRepeats(diff))
                     {
-                        //sliceName = diff.Path;
+                        // The child in the diff repeats -> we're on the first element of a slice!
                         mergeSlice(snap, diff); 
                     }
                     else
@@ -152,15 +143,15 @@ namespace Hl7.Fhir.Introspection
 
             do
             {
-                if(!first)
+                if(first)
                 {
                     // The first time, we still have the original base definition available to slice
-                    first = true;
+                    first = false;
                 }
                 else
                 {
                     snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
-                    snap.MoveToNext();
+                    //snap.MoveToNext();
                 }
 
                 merge(snap, diff);

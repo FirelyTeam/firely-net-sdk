@@ -26,9 +26,8 @@ namespace Hl7.Fhir.Introspection
     public static class ProfileExtensionExtensions
     {
         //public const string STRUCTURE_PROFILE_URI = "http://fhir.furore.com/Profiles/navigation-extensions#profile-location";
-        public const string STRUCTURE_FORM = "http://hl7.org/fhir/Profiles/dstu1-profile-extensions#structure-form";
-        public const string STRUCTURE_BASE_URI = "http://hl7.org/fhir/Profiles/dstu1-profile-extensions#base";
-
+        public const string STRUCTURE_FORM = "http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form";
+        public const string STRUCTURE_BASE_URI = "http://hl7.org/fhir/Profile/tools-extensions#profile-base";
 
         //
         // STRUCTURE_FORM

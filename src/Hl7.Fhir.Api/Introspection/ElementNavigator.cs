@@ -259,7 +259,13 @@ namespace Hl7.Fhir.Introspection
 // Methods that alter the list of elements
 // 
 //----------------------------------
-
+        
+        /// <summary>
+        /// Inserts the element passed in as a sibling to the element the navigator is currently on. 
+        /// The navigator will move to the inserted element.
+        /// </summary>
+        /// <param name="sibling"></param>
+        /// <returns></returns>
         public override bool InsertBefore(Profile.ElementComponent sibling)
         {
             if (!canInsertSiblingHere()) return false;
@@ -287,6 +293,13 @@ namespace Hl7.Fhir.Introspection
             return true;
         }
 
+
+        /// <summary>
+        /// Inserts the element passed in as a sibling to the element the navigator is currently on. 
+        /// The navigator will move to the inserted element.
+        /// </summary>
+        /// <param name="sibling"></param>
+        /// <returns></returns>
         public override bool InsertAfter(Profile.ElementComponent sibling)
         {
             if (!canInsertSiblingHere()) return false;
@@ -309,6 +322,13 @@ namespace Hl7.Fhir.Introspection
         }
 
 
+        /// <summary>
+        /// Inserts the element passed in as a child of the element the navigator is currently on. 
+        /// The navigator will move to the inserted element.
+        /// </summary>
+        /// <param name="sibling"></param>
+        /// <returns></returns>
+        /// <remarks>You can only insert a child for an element does not have children yet.</remarks>
         public override bool InsertFirstChild(Profile.ElementComponent child)
         {
             if(Count == 0)

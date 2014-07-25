@@ -54,11 +54,11 @@ namespace Hl7.Fhir.Introspection.Source
         }
 
         public Stream ReadContentArtifact(string name)
-        {
-            throw new NotImplementedException("Caching of streamed artifact sources is not yet implemented");
-            
-            
-            //if (!_prepared) Prepare();
+        {                    
+            if (!_prepared) Prepare();
+
+            // We don't cache a stream (yet?)
+            return Source.ReadContentArtifact(name);
         }
 
 
