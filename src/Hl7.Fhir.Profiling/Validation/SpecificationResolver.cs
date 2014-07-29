@@ -47,6 +47,13 @@ namespace Hl7.Fhir.Introspection
             return profile;
         }
 
+        public Hl7.Fhir.Model.ValueSet GetValueSet(Uri uri)
+        {
+            Resource resource = resolver.ReadResourceArtifact(uri);
+            Hl7.Fhir.Model.ValueSet valueset = (Hl7.Fhir.Model.ValueSet)resource;
+            return (Hl7.Fhir.Model.ValueSet)resource;
+        }
+
        
 
     }

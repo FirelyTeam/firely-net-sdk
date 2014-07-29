@@ -74,7 +74,7 @@ namespace Fhir.Profiling
             {
                 if (!ResolvedProfileUris.Contains(uri))
                 {
-                    IEnumerable<Structure> structures = Resolve(uri);
+                    IEnumerable<Structure> structures = ResolveProfile(uri);
                     this.Add(structures);
                     ResolvedProfileUris.Add(uri);
                     // todo: this not give an error if unresolved.
@@ -180,7 +180,6 @@ namespace Fhir.Profiling
             }
         }
         
-
         /// <summary>
         /// Make the profile complete and usable by linking all internal structures and perform precompilation
         /// </summary>
@@ -195,7 +194,7 @@ namespace Fhir.Profiling
             specification.Seal();
         }
 
-        public IEnumerable<Structure> Resolve(Uri uri)
+        public IEnumerable<Structure> ResolveProfile(Uri uri)
         {
             Profile profile = resolver.GetProfile(uri);
             if (profile != null)
@@ -208,13 +207,13 @@ namespace Fhir.Profiling
             }
         }
 
-        public IEnumerable<Structure> Resolve(string uri)
+        public IEnumerable<Structure> ResolveProfile(string uri)
         {
             //uri = uri.ToLower();
-            return Resolve(new Uri(uri));
+            return ResolveProfile(new Uri(uri));
         }
 
-        public IEnumerable<Structure> Resolve(TypeRef typeref)
+        public IEnumerable<Structure> ResolveProfile(TypeRef typeref)
         {
             Uri uri;
             if (typeref.ProfileUri == null)
@@ -226,42 +225,72 @@ namespace Fhir.Profiling
             {
                 uri = new Uri(typeref.ProfileUri);
             }
-            return Resolve(uri);
+            return ResolveProfile(uri);
         }
       
-        private int resolveTypeRef(TypeRef typeref)
+        public ValueSet ResolveValueSet(string uri)
         {
-            IEnumerable<Structure> structures = Resolve(typeref);
-            this.Add(structures);
-            return structures.Count();
+            throw new NotImplementedException();
         }
 
-        private int resolveTypeRefs()
-        {
-            int count = 0;
-            // Resolve all typerefs that are not resource references
 
+        private bool resolveTypeRef(TypeRef typeref)
+        {
+            IEnumerable<Structure> structures = ResolveProfile(typeref);
+            this.Add(structures);
+            return structures.Count() > 0;
+        }
+
+        private bool resolveTypeRefs()
+        {
+            bool haschanges = false;
             List<TypeRef> typerefs = specification.TypeRefs.Where(t => t.Resolution == Resolution.New).ToList();
-            // list because we change the resolution.
 
             foreach (TypeRef typeref in typerefs)
             {
-                count += resolveTypeRef(typeref);
-                typeref.Resolution = (count > 0) ? Resolution.Resolved : Resolution.Unresolvable;
+                bool resolved = resolveTypeRef(typeref);
+                typeref.Resolution = (resolved) ? Resolution.Resolved : Resolution.Unresolvable;
+                haschanges |= resolved;
             }
-            return count;
+            return haschanges;
+        }
+
+        private void resolveBindings()
+        {
+            List<Uri> bindings =
+                specification.Elements
+                    .Where(e => e.BindingUri != null)
+                    .Select(e => new Uri(e.BindingUri))
+                    .Distinct()
+                    .Except(specification.ValueSetUris())
+                    .ToList();
+
+            foreach(Uri uri in bindings)
+            {
+                Hl7.Fhir.Model.ValueSet source = resolver.GetValueSet(uri);
+                if (source != null)
+                {
+                    ValueSet target = loader.LoadValueSet(source);
+                    specification.Add(target);
+                }
+            }
+
+            /*
+            foreach (Element element in specification.Elements)
+            {
+                if (element.BindingUri != null)
+                    element.Binding = specification.GetValueSetByUri(element.BindingUri);
+            }
+       
+            specification.ValueSets
+            */
+            
         }
 
         public void Resolve()
         {
-            int count;
-            do
-            {
-                count = resolveTypeRefs();
-
-            }
-            while (count > 0);
-            
+            while (resolveTypeRefs());
+            resolveBindings();
         }
 
         public Specification ToSpecification()

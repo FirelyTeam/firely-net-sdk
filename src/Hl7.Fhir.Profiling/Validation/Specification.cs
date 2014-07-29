@@ -80,28 +80,35 @@ namespace Fhir.Profiling
             }
         }
 
+        private void AssertNotSealed()
+        {
+            if (Sealed) throw new InvalidOperationException("Profile is sealed");
+        }
+        internal void Add(ValueSet valueset)
+        {
+            AssertNotSealed();
+            _valueSets.Add(valueset);
+
+        }
+
         internal void Add(IEnumerable<ValueSet> valuesets)
         {
-            if (!Sealed)
-                _valueSets.AddRange(valuesets);
-            else
-                throw new InvalidOperationException("Profile is sealed");
+            AssertNotSealed();
+            _valueSets.AddRange(valuesets);
+
         }
 
         internal void Add(IEnumerable<Structure> structures)
         {
-            if (!Sealed)
-                _structures.AddRange(structures);
-            else
-                throw new InvalidOperationException("Profile is sealed");
+
+            AssertNotSealed();
+            _structures.AddRange(structures);
         }
 
         internal void Add(Structure structure)
         {
-            if (!Sealed)
-                _structures.Add(structure);
-            else
-                throw new InvalidOperationException("Profile is sealed");
+            AssertNotSealed();
+            _structures.Add(structure);
         }
 
         internal void Add(TypeRef typeref)
@@ -200,6 +207,10 @@ namespace Fhir.Profiling
             return TypeRefs.FirstOrDefault(t => t.Equals(typeref));
         }
 
+        public IEnumerable<Uri> ValueSetUris()
+        {
+            return ValueSets.Select(v => new Uri(v.System));
+        }
         
     }
    

@@ -24,10 +24,9 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
         }
 
-        public static Specification GetOldPatientSpec
+        public static Specification Old_GetPatientSpec()
         {
-            get
-            {
+            
                 SpecificationBuilder builder = new SpecificationBuilder();
                 builder.Add(StructureFactory.PrimitiveTypes());
                 builder.Add(StructureFactory.NonFhirNamespaces());
@@ -39,7 +38,7 @@ namespace Fhir.Profiling.Tests
                 builder.LoadXmlFile("TestData\\type-Narrative.profile.xml");
                 builder.LoadXmlFile("TestData\\patient.profile.xml");
                 return builder.ToSpecification();
-            }
+            
         }
 
         public static Specification Lipid

@@ -19,12 +19,28 @@ namespace Fhir.Profiling.IO
 
         private void LoadBinding(Profile.ElementComponent source, Element target)
         {
-            // todo: how to get reference binding
+            if (source.Definition.Binding != null)
+            {
+                var reference = source.Definition.Binding.Reference;
 
-            //target.BindingUri = 
-            //target.Binding =
+                if (reference is ResourceReference)
+                {
+                    // todo: dit deel is nog niet getest.
+                    target.BindingUri = (reference as ResourceReference).Url.ToString();
+                }
+                else if (reference is FhirUri)
+                {
+                    target.BindingUri = (reference as FhirUri).Value;
+                }
+
+
+                
+                // todo: how to get reference binding
+
+                //target.BindingUri = 
+                //target.Binding =
+            }
             
-            //source.Definition.Binding.Reference.
         }
 
         private void LoadFixedValue(Profile.ElementComponent source, Element target)
@@ -123,6 +139,19 @@ namespace Fhir.Profiling.IO
                 yield return GetStructure(structure);
             }
         }
+
+        public ValueSet LoadValueSet(Hl7.Fhir.Model.ValueSet source)
+        {
+            ValueSet valueset = new ValueSet();
+            foreach(var concept in source.Define.Concept)
+            {
+                valueset.codes.Add(concept.Code);
+                //valueset.codes.Add()
+            }
+            return valueset;
+        }
+
+        
 
              
     }

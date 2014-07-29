@@ -125,7 +125,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void NamespaceXHtml()
         {
-            var profile = Factory.GetOldPatientSpec;
+            var profile = Factory.Old_GetPatientSpec();
             var resource = FhirFile.LoadResource("TestData\\Patient.Narrative.correct.xml");
             Report report = profile.Validate(resource);
             report.Errors.ToConsole();
