@@ -1770,12 +1770,12 @@
       <path value="DiagnosticReport.result" />
       <name value="cholesterol" />
       <definition>
-        <extension url="http://hl7.org/fhir/profiles/Profile#discriminator-value">
+     
           <valueCoding>
             <system value="http://loinc.org" />
             <value value="35200-5" />
           </valueCoding>
-        </extension>
+        
         <short value="Cholesterol observation" />
         <formal value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)." />
         <min value="1" />
@@ -1796,12 +1796,16 @@
       <path value="DiagnosticReport.result" />
       <name value="triglyceride" />
       <definition>
-        <extension url="http://hl7.org/fhir/profiles/Profile#discriminator-value">
+        <!-- waarom was dit in vredesnaam een extensie
+          <extension url="http://hl7.org/fhir/profiles/Profile#discriminator-value"> 
+        -->
           <valueCoding>
             <system value="http://loinc.org" />
             <value value="35200-5" />
           </valueCoding>
-        </extension>
+        <!--
+          </extension>
+        -->
         <short value="Triglyceride observation" />
         <formal value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)." />
         <min value="1" />

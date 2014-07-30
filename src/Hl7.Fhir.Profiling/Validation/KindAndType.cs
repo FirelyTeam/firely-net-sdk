@@ -38,7 +38,7 @@ namespace Fhir.Profiling
         Cardinality, Constraint, 
         Profile, Hierarchy,
         Structure, Element, Primitive, Attribute,
-        Reference, Coding, Value
+        Reference, Coding, Value, Slice
     }
     
 }

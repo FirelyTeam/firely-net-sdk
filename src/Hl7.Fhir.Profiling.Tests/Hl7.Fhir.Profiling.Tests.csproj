@@ -56,6 +56,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ProfileOutput.cs" />
+    <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestPath.cs" />
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
@@ -65,6 +66,18 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="TestPatient.json" />
+    <Content Include="TestData\lipid.slice.invalid.extra.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\lipid.slice.invalid.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\lipid.slice.valid.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\validation.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

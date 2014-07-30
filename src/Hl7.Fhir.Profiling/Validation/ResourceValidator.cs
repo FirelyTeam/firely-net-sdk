@@ -4,6 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,23 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Text.RegularExpressions;
 using Fhir.IO;
+
+    // todo: fixed value testen (er is nog geen testdata)
+    // todo: adding JSON tests
+    
+    // todo: Specification heeft nu valuesets. Maar uiteindelijk moeten er zowel met ValueSets als CodeSystems gevalideerd kunnen worden 
+    // todo: resourceReference can refer to <profile> which is a structure.
+    // todo: Element names are profile URI specific (names can overlap with other profiles)
+    // todo: Merge Specification, Structure, Element classes (when possible) with Api.Introspection and Api.ModelInfo
+    // todo: Slices
+    
+    
+    
+    // done: When an element type is a ResourceReference, then the path does not contain [x]. The restriction is content of the refered resource.
+    // done: parse meaning of [x].
+    // done: name reference (recursion)
+    // done: extensions
+
 
 namespace Fhir.Profiling
 {
@@ -39,7 +57,11 @@ namespace Fhir.Profiling
         public void ValidateCode(Vector vector)
         {
             if (vector.Element.Binding == null)
+            {
+                if (vector.Element.BindingUri != null)
+                    reporter.Log(Group.Coding, Status.Skipped, vector, "Binding [{0}] could not be resolved for use in validation", vector.Element.BindingUri);
                 return;
+            }
 
             string value = vector.GetValue("@value");
             bool exists = vector.Element.Binding.Contains(value);
@@ -54,32 +76,44 @@ namespace Fhir.Profiling
                 Log(Group.Coding, Status.Failed, vector, "Code [{0}] ({1}) contains a nonexisting value [{2}]",
                     vector.Element.Name, vector.Element.Binding.System, value);
             }
-            
         }
 
         public void ValidateCardinality(Vector vector)
-        {   
+        {
+            string slice = (vector.Element.Sliced) ? string.Format("Slice {0}: ", vector.Element.Slice) : string.Empty;
             int count = vector.Count(); 
             if (vector.Element.Cardinality.InRange(count))
             {
-                Log(Group.Cardinality, Status.Valid, vector, "Cardinality ({1}) of element [{0}] is valid", vector.Element.Name, count);
+                Log(Group.Cardinality, Status.Valid, vector, "{0}Cardinality ({1}) of element [{2}] is valid", slice, count, vector.Element.Name);
             }
             else 
             {
+                if (vector.Element.Sliced)
+                {
+                    Log(Group.Slice, Status.Failed, vector, "Slice {0} is not valid.", vector.Element.Slice);
+                }
+
                 if (count == 0)
                 {
-                    Log(Group.Cardinality, Status.Failed, vector,
-                     "Node [{0}] has missing child node [{1}] ",
-                     vector.NodePath(), vector.Element.Name);
+                    Log(Group.Cardinality, Status.Failed, vector, "{0}Node [{1}] has missing child node [{2}] ",
+                            slice, vector.NodePath(), vector.Element.Name);
                 }
                 else
                 {
                     Log(Group.Cardinality, Status.Failed, vector,
-                        "The occurence {0} of node [{1}] under [{2}] is out of range ({3})",
-                        count, vector.NodePath(), vector.Element.Name, vector.Element.Cardinality);
+                        "{0}The occurence {1} of node [{2}] under [{3}] is out of range ({4})",
+                        slice, count, vector.Element.Name, vector.NodePath(), vector.Element.Cardinality);
                 }
             }
         }
+
+        public void ValidateSlice(Vector vector)
+        {
+            // Because Vector.Count en Vector.MatchingNodes make use of Element.XPath
+            // and Element.XPath takes the Slice discriminator into account,
+            // Slicing can be validated within ValidateCardinality en ValidateElementChildren
+
+        } 
 
         public void ValidateConstraint(Vector vector, Constraint constraint)
         {
@@ -157,20 +191,25 @@ namespace Fhir.Profiling
 
         public void ValidateFixedValue(Vector vector)
         {
-            string fixvalue = vector.Element.FixedValue;
-            XPathNavigator node = vector.Node.SelectSingleNode("@value");
-            string value = (node != null) ? node.Value : null;
-
-            if (fixvalue != null)
+            // todo: op dit moment gaan we er vanuit dat de fixedvalue een andere betekenis heeft in het geval van een slice.
+            if (!vector.Element.Sliced) 
             {
-                bool equal = fixvalue.Equals(value);
-                if (equal)
+                string fixvalue = vector.Element.FixedValue;
+                XPathNavigator node = vector.Node.SelectSingleNode("@value");
+                string value = (node != null) ? node.Value : null;
+
+                if (fixvalue != null)
                 {
-                    Log(Group.Value, Status.Valid, vector, "Fixed value validated correctly");
-                }
-                else
-                {
-                    Log(Group.Value, Status.Failed, vector, "Value [{0}] doesn't match fixed value [{1}] of element [{2}]", value, fixvalue, vector.Element.Name);
+                    bool equal = fixvalue.Equals(value);
+                    if (equal)
+                    {
+                        Log(Group.Value, Status.Valid, vector, "Fixed value validated correctly");
+                    }
+                    else
+                    {
+                        Log(Group.Value, Status.Failed, vector, "Value [{0}] in node [{1}] doesn't match fixed value [{2}] of element [{3}]",
+                            value, vector.Node.Name, fixvalue, vector.Element.Name);
+                    }
                 }
             }
         }
@@ -181,7 +220,7 @@ namespace Fhir.Profiling
             {
                 ValidateCardinality(v);
 
-                foreach(Vector u in v.Matches)
+                foreach(Vector u in v.MatchingNodes)
                 {
                     ValidateElement(u);
                 }
@@ -224,10 +263,7 @@ namespace Fhir.Profiling
             }
         }
 
-        public void ValidateSlices(Vector vector)
-        {
-             
-        }
+        
 
         public void ValidateElement(Vector vector)
         {
@@ -237,12 +273,14 @@ namespace Fhir.Profiling
                 ValidateConstraints(vector);
                 ValidateStructures(vector);
                 ValidatePrimitive(vector);
-                ValidateFixedValue(vector);
+                
+                ValidateFixedValue(vector); // except when slicing
+
                 ValidateForMissingStructures(vector);
                 ValidateNodeChildren(vector);
-                ValidateElementChildren(vector);
+                ValidateElementChildren(vector); // except when slicing
                 ValidateElementRef(vector);
-                ValidateSlices(vector);
+                ValidateSlice(vector);
             }
             reporter.End(Group.Element);
         }

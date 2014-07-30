@@ -8,6 +8,7 @@ using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Model;
 using Fhir.Profiling;
 using Fhir.Profiling.IO;
+using System.IO;
 
 
 namespace Hl7.Fhir.Introspection
@@ -25,10 +26,14 @@ namespace Hl7.Fhir.Introspection
             this.loader = new SpecificationLoader(builder);
         }
 
-        public SpecificationResolver(string path)
+        public SpecificationResolver(params string[] paths)
         {
-            CoreZipArtifactSource source = new CoreZipArtifactSource(path);
-            resolver.AddSource(source);
+            foreach(string path in paths)
+            {
+                resolver.AddSource(new CoreZipArtifactSource(path));
+                resolver.AddSource(new FileArtifactSource(path));
+            }
+           
         }
 
         public SpecificationResolver(params IArtifactSource[] sources)

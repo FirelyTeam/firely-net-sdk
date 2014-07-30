@@ -94,7 +94,7 @@ namespace Fhir.Profiling
 
         public int Count()
         {
-            string xpath = Element.NodeMatch;
+            string xpath = Element.XPath;
             XPathNodeIterator iterator = Node.Select(xpath, NSM);
             return iterator.Count;
         }
@@ -141,11 +141,11 @@ namespace Fhir.Profiling
             }
         }
 
-        public IEnumerable<Vector> Matches
+        public IEnumerable<Vector> MatchingNodes
         {
             get
             {
-                string xpath = this.Element.NodeMatch;
+                string xpath = this.Element.XPath;
 
                 foreach (XPathNavigator node in Node.Select(xpath, NSM))
                 {

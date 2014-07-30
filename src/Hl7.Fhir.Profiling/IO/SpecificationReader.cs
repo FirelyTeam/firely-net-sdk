@@ -4,13 +4,8 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+
 using System;
-/*
-* Copyright (c) 2014, Furore (info@furore.com) and contributors
-* See the file CONTRIBUTORS for details.
-*
-* This file is licensed under the BSD 3-Clause license
-*/
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,6 +17,8 @@ namespace Fhir.Profiling
 {
     public class SpecificationReader
     {
+        int id = 0; // id to give to each element (id++) in order to identify them during debugging
+
         XmlNamespaceManager ns;
 
         List<Slicing> Slicings = new List<Slicing>();
@@ -56,9 +53,21 @@ namespace Fhir.Profiling
 
         public void ReadFixedValue(Element element, XPathNavigator node)
         {
-            string xpath = string.Format("f:definition/*[starts-with(name(),'value')]/@value");
+            // todo: Do we have all fixedvalue cases, including slicing
+
+            string xpath = string.Format("f:definition/f:valueCoding/f:value/@value");
             string value = OptionalValue(node, xpath);
-            element.FixedValue = value;
+
+            if (value == null)
+            {
+                xpath = string.Format("f:definition/*[starts-with(name(),'value')]/@value");
+                value = OptionalValue(node, xpath);
+            }
+
+            if (value != null)
+            {
+                element.FixedValue = value;
+            }
         }
 
         public void ReadReference(Element element, XPathNavigator node)
@@ -106,9 +115,9 @@ namespace Fhir.Profiling
             }   
         }
 
-        public bool IsSliced(XPathNavigator node)
+        public bool IsSliceDefinitionNode(XPathNavigator node)
         {
-            bool sliced = OptionalValue(node, "slicing") != null;
+            bool sliced = OptionalValue(node, "f:slicing") != null;
             return sliced;
         }
 
@@ -132,7 +141,7 @@ namespace Fhir.Profiling
         {
             foreach (XPathNavigator node in xNodes)
             {
-                if (IsSliced(node))
+                if (IsSliceDefinitionNode(node))
                 {
                     Slicing s = readSlicing(node);
                     Slicings.Add(s);
@@ -145,14 +154,14 @@ namespace Fhir.Profiling
             Slicing slicing = GetSlicingForElement(element);
             if (slicing != null)
             {
-                if (IsSliced(node))
+                if (IsSliceDefinitionNode(node))
                 {
                     // todo: SlicingRules op de slicing-element-null implementeren
                 }
                 else
                 {
                     element.Discriminator = slicing.Discriminator;
-                    slicing.Count++;
+                    element.Slice = ++slicing.Count;
                 }
             }
 
@@ -175,6 +184,7 @@ namespace Fhir.Profiling
         public Element ReadElement(Structure structure, XPathNavigator node)
         {
             Element element = new Element();
+            element.ID = id++;
             ReadElementDefinition(element, node);
             return element;
         }

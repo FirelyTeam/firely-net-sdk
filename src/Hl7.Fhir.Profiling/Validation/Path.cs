@@ -101,10 +101,10 @@ namespace Fhir.Profiling
             }
         }
 
-        private string ToXPath()
+        public string ToXPath()
         {
             var parts = Segments.Select(s => "f:" + s.Name);
-            return "../" + string.Join("/", parts);
+            return string.Join("/", parts);
         }
 
         public int Count

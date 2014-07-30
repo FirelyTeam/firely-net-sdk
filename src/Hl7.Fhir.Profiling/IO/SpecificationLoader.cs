@@ -1,4 +1,11 @@
-﻿using Fhir.IO;
+﻿/*
+* Copyright (c) 2014, Furore (info@furore.com) and contributors
+* See the file CONTRIBUTORS for details.
+*
+* This file is licensed under the BSD 3-Clause license
+*/
+
+using Fhir.IO;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
@@ -11,6 +18,25 @@ namespace Fhir.Profiling.IO
     public class SpecificationLoader
     {
         private SpecificationBuilder builder;
+
+        List<Slicing> Slicings = new List<Slicing>();
+
+        internal Slicing GetSlicingForElement(Element element)
+        {
+            Slicing slicing = Slicings.FirstOrDefault(s => s.Path.Equals(element.Path));
+            return slicing;
+        }
+
+        internal void InjectSlice(Element element)
+        {
+            Slicing slicing = GetSlicingForElement(element);
+            if (slicing != null)
+            {
+               element.Discriminator = slicing.Discriminator;
+               slicing.Count++;
+               
+            }
+        }
 
         public SpecificationLoader(SpecificationBuilder builder)
         {
@@ -32,13 +58,6 @@ namespace Fhir.Profiling.IO
                 {
                     target.BindingUri = (reference as FhirUri).Value;
                 }
-
-
-                
-                // todo: how to get reference binding
-
-                //target.BindingUri = 
-                //target.Binding =
             }
             
         }
@@ -95,6 +114,12 @@ namespace Fhir.Profiling.IO
             }
         }
 
+       
+        private void LoadSlicing(Profile.ElementComponent source, Element target)
+        {
+            InjectSlice(target);
+        }
+
         private void LoadElement(Profile.ElementComponent source, Element target)
         {
             target.Path = new Path(source.Path);
@@ -105,7 +130,7 @@ namespace Fhir.Profiling.IO
             LoadCardinality(source, target);
             LoadConstraints(source, target);
             LoadFixedValue(source, target);
-            // todo: slicing
+            LoadSlicing(source, target); 
         }
 
         private Element GetElement(Profile.ElementComponent source)
@@ -123,11 +148,31 @@ namespace Fhir.Profiling.IO
             }
         }
 
+        private Slicing ReadSlice(Profile.ElementComponent source)
+        {
+            Slicing slicing = new Slicing();
+            slicing.Path = new Path(source.Path);
+            slicing.Discriminator = new Path(source.Slicing.Discriminator);
+            return slicing;
+        }
+        public void PreReadSlices(Profile.ProfileStructureComponent source)
+        {
+            foreach(Profile.ElementComponent e in source.Element)
+            {
+                if (e.Slicing != null)
+                {
+                    Slicing s = ReadSlice(e);
+                    Slicings.Add(s);
+                }
+            }
+        }
+
         private Structure GetStructure(Profile.ProfileStructureComponent source)
         {
             Structure target = new Structure();
             target.Type = source.Type;
             target.NameSpacePrefix = FhirNamespaceManager.Fhir;
+            PreReadSlices(source);
             LoadElements(source, target);
             return target;
         }
@@ -143,16 +188,17 @@ namespace Fhir.Profiling.IO
         public ValueSet LoadValueSet(Hl7.Fhir.Model.ValueSet source)
         {
             ValueSet valueset = new ValueSet();
-            foreach(var concept in source.Define.Concept)
+            // todo: This now only works with "defines". 
+
+            if (source.Define != null)
             {
-                valueset.codes.Add(concept.Code);
-                //valueset.codes.Add()
+                foreach (var concept in source.Define.Concept)
+                {
+                    valueset.codes.Add(concept.Code);
+                }
             }
             return valueset;
         }
-
-        
-
              
     }
 }

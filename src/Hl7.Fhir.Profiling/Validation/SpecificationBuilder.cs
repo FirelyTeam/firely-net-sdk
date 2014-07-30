@@ -257,13 +257,12 @@ namespace Fhir.Profiling
 
         private void resolveBindings()
         {
-            List<Uri> bindings =
+            IEnumerable<Uri> bindings = 
                 specification.Elements
                     .Where(e => e.BindingUri != null)
                     .Select(e => new Uri(e.BindingUri))
                     .Distinct()
-                    .Except(specification.ValueSetUris())
-                    .ToList();
+                    .Except(specification.ValueSetUris());
 
             foreach(Uri uri in bindings)
             {
@@ -274,17 +273,6 @@ namespace Fhir.Profiling
                     specification.Add(target);
                 }
             }
-
-            /*
-            foreach (Element element in specification.Elements)
-            {
-                if (element.BindingUri != null)
-                    element.Binding = specification.GetValueSetByUri(element.BindingUri);
-            }
-       
-            specification.ValueSets
-            */
-            
         }
 
         public void Resolve()

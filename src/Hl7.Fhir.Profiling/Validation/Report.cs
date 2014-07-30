@@ -14,15 +14,25 @@ using System.Threading.Tasks;
 namespace Fhir.Profiling
 {
 
-    public class Report : List<Outcome>
+    public class Report 
     {
-        
+        List<Outcome> Outcomes = new List<Outcome>();
+
+        public void Add(params Outcome[] outcomes)
+        {
+            Outcomes.AddRange(outcomes);
+        }
+
+        public void Clear()
+        {
+            Outcomes.Clear();
+        }
 
         public IEnumerable<Outcome> Errors
         {
             get
             {
-                return this.Where(outcome => outcome.Kind.Failed());
+                return Outcomes.Where(outcome => outcome.Kind.Failed());
             }
         }
 
@@ -30,13 +40,13 @@ namespace Fhir.Profiling
         {
             get 
             {
-                return this.Count(o => o.Kind.Failed());
+                return Outcomes.Count(o => o.Kind.Failed());
             }
         }
 
         public IEnumerable<Outcome> Where(Group group, Status kind)
         {
-            return this.Where(outcome => outcome.Type == group && outcome.Kind == kind);
+            return Outcomes.Where(outcome => outcome.Type == group && outcome.Kind == kind);
         }
 
         public bool Contains(Group group, Status kind)
@@ -48,7 +58,7 @@ namespace Fhir.Profiling
         {
             get
             {
-                return this.Count(o => o.Kind.Failed()) == 0;
+                return Outcomes.Count(o => o.Kind.Failed()) == 0;
             }
         }
 

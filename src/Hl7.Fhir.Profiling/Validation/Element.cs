@@ -14,6 +14,7 @@ namespace Fhir.Profiling
 {
     public class Element
     {
+        internal int ID;
         public string Name;
         public Path Path { get; set; }
         public Segment TailSegment
@@ -60,9 +61,9 @@ namespace Fhir.Profiling
                 return Path.Count == 1;
             }
         }
-        public bool Sliced { get { return Discriminator == null; } }
+        public bool Sliced { get { return Discriminator != null; } }
     
-        public string NodeMatch
+        public string XPath
         {
             get
             {
@@ -76,6 +77,12 @@ namespace Fhir.Profiling
                 {
                     xpath = string.Format("./{0}:{1}", this.NameSpacePrefix, TailSegment.Name);
                 }
+
+                if (Sliced)
+                {
+                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
+                }
+
                 return xpath;
             }
         }
