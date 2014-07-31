@@ -31,6 +31,16 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
         }
 
+        public static Specification GetUnresolvedPatientSpec()
+        {
+            SpecificationResolver resolver = new SpecificationResolver("TestData");
+            SpecificationBuilder builder = new SpecificationBuilder(resolver);
+            builder.Add(StructureFactory.PrimitiveTypes());
+            builder.Add(StructureFactory.NonFhirNamespaces());
+            builder.Add("http://hl7.org/fhir/profile/patient");
+            return builder.ToSpecification();
+        }
+
         public static Specification GetLipidSpec()
         {
             SpecificationResolver resolver = new SpecificationResolver("TestData");

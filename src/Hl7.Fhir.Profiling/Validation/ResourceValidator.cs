@@ -49,6 +49,18 @@ namespace Fhir.Profiling
             if (LogOutcome != null) LogOutcome(outcome);
         }
 
+        public void Start(Group group, Vector vector)
+        {
+            Outcome outcome = reporter.Start(group, vector);
+            if (LogOutcome != null) LogOutcome(outcome);
+        }
+
+        public void Stop(Group group)
+        {
+            Outcome outcome = reporter.End(group);
+            if (LogOutcome != null) LogOutcome(outcome);
+        }
+
         public ResourceValidator(Specification profile)
         {
             this.Profile = profile;
@@ -248,12 +260,13 @@ namespace Fhir.Profiling
 
         public void ValidateNodeChildren(Vector vector)
         {
-            if (vector.Element.HasTypeRef) //element has a reference, so there are no Element children to validate to. 
+            // todo: HACK: exclude Resource, because this way there is no frigging way to test any undefined elements.
+            if (vector.Element.HasTypeRef && vector.Element.TypeRefs[0].Code != "Resource") //element has a reference, so there are no Element children to validate to. 
                 return;
 
             if (vector.Element.NameSpacePrefix != FhirNamespaceManager.Fhir)
             {
-                reporter.Log(Group.Element, Status.Info, "Element [{0}] was skipped because it was not in the FHIR namespace.", vector.Element.Name);
+                Log(Group.Element, Status.Info, vector, "Element [{0}] was skipped because it was not in the FHIR namespace.", vector.Element.Name);
                 return;
             }
 
@@ -267,7 +280,7 @@ namespace Fhir.Profiling
 
         public void ValidateElement(Vector vector)
         {
-            reporter.Start(Group.Element, vector);
+            Start(Group.Element, vector);
             {
                 ValidateCode(vector);
                 ValidateConstraints(vector);
@@ -282,7 +295,7 @@ namespace Fhir.Profiling
                 ValidateElementRef(vector);
                 ValidateSlice(vector);
             }
-            reporter.End(Group.Element);
+            Stop(Group.Element);
         }
         
         public void ValidateStructure(Vector vector)
@@ -293,9 +306,9 @@ namespace Fhir.Profiling
             }
             else
             {
-                reporter.Start(Group.Structure, vector);
+                Start(Group.Structure, vector);
                 ValidateElement(vector);
-                reporter.End(Group.Structure);
+                Stop(Group.Structure);
             }
         }
 

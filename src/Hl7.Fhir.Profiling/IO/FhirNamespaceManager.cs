@@ -35,6 +35,7 @@ namespace Fhir.IO
             return nsm;
         }
 
+
         private static void addNamespaces(XmlNamespaceManager mgr)
         {
             mgr.AddNamespace(FhirNamespaceManager.Fhir, "http://hl7.org/fhir");

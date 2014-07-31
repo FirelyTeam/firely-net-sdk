@@ -58,6 +58,7 @@
     <Compile Include="ProfileOutput.cs" />
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestPath.cs" />
+    <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="XsltContextTests.cs" />
@@ -77,6 +78,10 @@
     <Content Include="TestData\lipid.slice.valid.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\Patient.InvalidElement.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\validation.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -19,13 +19,15 @@ namespace Fhir.Profiling
 {
     public static class ConstraintCompiler
     {
-        public static void Compile(Constraint constraint)
+        private volatile static Lazy<XmlNamespaceManager> nsm = new Lazy<XmlNamespaceManager>(delegate() { return FhirNamespaceManager.CreateManager(); });
+        
+        public static void Compile(this Constraint constraint)
         {
             try
             {
                 constraint.Compiled = true;
                 var expr = XPathExpression.Compile(constraint.XPath);
-                expr.SetContext(FhirNamespaceManager.CreateManager());
+                expr.SetContext(nsm.Value);
                 constraint.Expression = expr;
                 constraint.IsValid = true;
             }

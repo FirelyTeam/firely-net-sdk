@@ -16,7 +16,7 @@ namespace Fhir.Profiling
 
     public class Report 
     {
-        List<Outcome> Outcomes = new List<Outcome>();
+        public List<Outcome> Outcomes = new List<Outcome>();
 
         public void Add(params Outcome[] outcomes)
         {

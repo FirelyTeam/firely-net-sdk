@@ -37,14 +37,17 @@ namespace Fhir.Profiling
         public Outcome Start(Group group, Vector vector = null)
         {
             Outcome outcome = new Outcome(group, Status.Start, vector, null, this.nesting);
+            Report.Add(outcome);
             nesting++;
             return outcome;
         }
 
         public Outcome End(Group group)
         {
-            Outcome outcome = new Outcome(group, Status.End, null, null, this.nesting);
             nesting--;
+            Outcome outcome = new Outcome(group, Status.End, null, null, this.nesting);
+            Report.Add(outcome);
+            
             return outcome;
         }
 

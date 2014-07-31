@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiagnosticReport xmlns="http://hl7.org/fhir">
-  <identifier value="urn:hl7.org:lipid-interpretation-diagnosticreport:v1"/>
-  <version value="101"/>
-  <status value="draft"/>
+  <!-- 
+    <identifier value="urn:hl7.org:lipid-interpretation-diagnosticreport:v1"/>
+    <version value="101"/>
+    <status value="draft"/>
+  -->
   <name value="LipidDiagnosticReport-v1"/>
-  <publisher value="Furore, M. Harthoorn"/>
-  <description value="This is an example diagnostic report for the Lipid Profile example"/>
-  <experimental value="true"/>
-  <date value="2014-04-22T17:53:51+02:00"/>
+  <!--
+    <publisher value="Furore, M. Harthoorn"/>
+    <description value="This is an example diagnostic report for the Lipid Profile example"/>
+    <experimental value="true"/>
+    <date value="2014-04-22T17:53:51+02:00"/>
+  -->
   <subject>
     
   </subject>
