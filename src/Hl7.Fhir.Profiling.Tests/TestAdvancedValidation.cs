@@ -21,6 +21,7 @@ namespace Fhir.Profiling.Tests
         public static void Init(TestContext context)
         {
             lipidSpec = Factory.GetLipidSpec();
+            
         }
 
         [TestMethod]
@@ -42,6 +43,8 @@ namespace Fhir.Profiling.Tests
             Assert.AreEqual(1, report.ErrorCount);
             Assert.IsTrue(report.Contains(Group.Value, Status.Failed));
         }
+
+       
 
         [TestMethod]
         public void Slicing()

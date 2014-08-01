@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
+
+    public enum Representation { Element, Attribute };
+
     public class Element
     {
         internal int ID;
@@ -21,7 +24,7 @@ namespace Fhir.Profiling
         {
             get
             {
-                return Path.Last;
+                return Path.Tail;
             }
         }
         public List<TypeRef> TypeRefs = new List<TypeRef>();
@@ -32,21 +35,29 @@ namespace Fhir.Profiling
                 return TypeRefs.Count > 0;
             }
         }
+       
         public string ElementRefPath { get; set; }
         public Element ElementRef { get; set; }
         public List<Element> Children = new List<Element>();
         public string FixedValue { get; set; }
+        public string SliceValue { get; set; }
         public Cardinality Cardinality;
         public List<Constraint> Constraints = new List<Constraint>();
         public bool IsPrimitive { get; set; }
-        public bool IsAttribute { get; set; }
+        public Representation Representation { get; set; }
         public string PrimitivePattern {get; set;} // RegExPattern to validate a primite against (only in case of IsPrimitive)
         public string BindingUri;
         public ValueSet Binding;
         public string NameSpacePrefix { get; set; }
         public int Slice { get; set; }
         public Path Discriminator { get; set; }
-
+        public bool IsExtension
+        {
+            get
+            {
+                return HasTypeRef && TypeRefs.Exists(t => t.Code == "Extension");
+            }
+        }
         public bool Multi
         {
             get
@@ -63,7 +74,8 @@ namespace Fhir.Profiling
         }
         public bool Sliced { get { return Discriminator != null; } }
     
-        public string XPath
+        
+        public string XFilter
         {
             get
             {
@@ -71,21 +83,58 @@ namespace Fhir.Profiling
 
                 if (TailSegment.Multi)
                 {
-                    xpath = string.Format("./*[starts-with(name(),'{0}')]", TailSegment.Name);
+                    xpath = string.Format("*[starts-with(name(),'{0}')]", TailSegment.Name);
                 }
-                else
+                else if (Representation == Representation.Element)
                 {
-                    xpath = string.Format("./{0}:{1}", this.NameSpacePrefix, TailSegment.Name);
+                    xpath = string.Format("{0}:{1}", this.NameSpacePrefix, TailSegment.Name);
+                }
+                else 
+                {
+                    xpath = string.Format("@{0}", TailSegment.Name);
                 }
 
+                 
                 if (Sliced)
                 {
-                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
+                    xpath += string.Format("[{0}]", DiscriminatorXPath());
                 }
-
                 return xpath;
             }
         }
+
+        public string DiscriminatorXPath()
+        {
+            //Segment segment = Discriminator.Tail;
+            Element element = this;
+            List<string> pieces = new List<string>();
+            foreach(Segment segment in Discriminator.Segments)
+            {
+                element = element.FindChild(segment.Name);
+                string s;
+
+                if (segment != Discriminator.Tail)
+                {
+                    s = string.Format("{0}:{1}", element.NameSpacePrefix, element.Name);
+                }
+                else
+                {
+                    if (element.Representation == Representation.Element)
+                    {
+                        s = string.Format("{0}:{1}/@value='{2}'", element.NameSpacePrefix, element.Name, this.SliceValue);
+                    }
+                    else
+                    {
+                        s = string.Format("@{0}='{1}'", element.Name, this.SliceValue);
+                    }
+                }
+                pieces.Add(s);
+            }
+            return string.Join("/", pieces);
+        }
+                
+               
+             
 
         public bool NodeNameIsMatch(string name)
         {
@@ -97,6 +146,32 @@ namespace Fhir.Profiling
             {
                 return name == Name;
             }
+        }
+
+        public Element FindChild(string name)
+        {
+            Element element = Children.FirstOrDefault(c => c.NodeNameIsMatch(name));
+            if (element == null)
+            {
+                foreach(TypeRef typref in this.TypeRefs.Where(t => t.Structure != null))
+                {
+                    element = typref.Structure.Root.FindChild(name);
+                    if (element != null)
+                        break;
+                }
+            }
+            return element;
+        }
+
+        public Element FindChild(Path path)
+        {
+            Element element = this;
+            foreach (Segment segment in path.Segments)
+            {
+                element = element.FindChild(segment.Name);
+                if (element == null) break;
+            }
+            return element;
         }
 
         public bool HasChild(string name)
@@ -119,5 +194,32 @@ namespace Fhir.Profiling
         }
     }
 
+
+    public static class PathUtils
+    {
+        
+            
+        /*public static string XFilter(this Element element)
+        {
+            if (element.Sliced)
+            {
+                Element child = element.FindChild(element.Discriminator);
+                
+                bool attribute = (child != null && child.IsAttribute);
+                if (attribute)
+                {
+                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
+                }
+                else
+                {
+                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
+                }
+
+            }
+        }
+        */
+
+        
+    }
     
 }

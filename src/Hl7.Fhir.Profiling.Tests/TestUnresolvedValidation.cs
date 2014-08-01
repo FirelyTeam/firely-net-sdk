@@ -25,5 +25,18 @@ namespace Fhir.Profiling.Tests
             Assert.AreEqual(1, report.ErrorCount);
             Assert.IsTrue(report.Contains(Group.Element, Status.Unknown));
         }
+
+        [TestMethod]
+        public void ConstraintError()
+        {
+            var resource = FhirFile.LoadResource("TestData\\Patient.ConstraintError.xml");
+            Report report = patientSpec.Validate(resource);
+
+            Assert.IsFalse(report.IsValid);
+            Assert.AreEqual(1, report.ErrorCount);
+            Assert.IsTrue(report.Contains(Group.Constraint, Status.Failed));
+        }
+
+        
     }
 }

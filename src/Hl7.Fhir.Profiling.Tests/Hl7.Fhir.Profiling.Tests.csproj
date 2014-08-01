@@ -56,6 +56,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestAdvancedValidation.cs" />
+    <Compile Include="TestExtensions.cs" />
     <Compile Include="TestPath.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
@@ -77,6 +78,14 @@
     <Content Include="TestData\lipid.slice.valid.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\patient.extended.profile.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\patient.extended.valid.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\Patient.InvalidElement.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

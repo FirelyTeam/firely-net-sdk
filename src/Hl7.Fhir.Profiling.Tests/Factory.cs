@@ -54,6 +54,17 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
 
         }
+
+        public static Specification GetPatientExtendedSpec()
+        {
+            SpecificationBuilder builder = new SpecificationBuilder();
+            builder.Add(StructureFactory.PrimitiveTypes());
+            builder.Add(StructureFactory.NonFhirNamespaces());
+            builder.LoadXmlFile("TestData\\patient.extended.profile.xml");
+            builder.LoadXmlFile("TestData\\type-Extension.profile.xml");
+            return builder.ToSpecification();
+
+        }
     }
 
 }

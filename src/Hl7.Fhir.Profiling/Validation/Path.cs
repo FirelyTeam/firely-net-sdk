@@ -37,6 +37,8 @@ namespace Fhir.Profiling
             return s;
         }
 
+        
+
         public bool Equals(Segment other)
         {
             return this.Match(other.Name);
@@ -47,7 +49,7 @@ namespace Fhir.Profiling
     {
         public List<Segment> Segments { get; private set; }
 
-        public Segment Last
+        public Segment Tail
         {
             get
             {

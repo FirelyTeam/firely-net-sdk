@@ -109,7 +109,7 @@ namespace Fhir.Profiling
 
         public void ValidateAttribute(Element element)
         {
-            if (element.IsAttribute)
+            if (element.Representation == Representation.Attribute)
             {
                 if (element.Children != null)
                     Log(Group.Attribute, Status.Failed, "Element [{0}] is has an attribute representation and can not have children", element);

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patient xmlns="http://hl7.org/fhir">
+  <extension url="http://example.org/phr/documents/fhir/extensions#participation-agreement" >
+    <valueUri value="http://example.org/phr/documents/patient/general/v1" />
+  </extension>
+
+</Patient>

@@ -94,7 +94,7 @@ namespace Fhir.Profiling
 
         public int Count()
         {
-            string xpath = Element.XPath;
+            string xpath = Element.XFilter;
             XPathNodeIterator iterator = Node.Select(xpath, NSM);
             return iterator.Count;
         }
@@ -106,14 +106,15 @@ namespace Fhir.Profiling
 
         public string GetContent()
         {
-            if (Element.IsAttribute)
+            if (Element.Representation == Representation.Element)
             {
-                string attr = Element.Name;
-                return this.GetValue(attr);
+                return this.GetValue("@value"); 
+                
             }
             else
             {
-                return this.GetValue("./@value");
+                string attr = string.Format("@{0}", Element.Name);
+                return this.GetValue(attr);
             }
 
         }
@@ -145,9 +146,9 @@ namespace Fhir.Profiling
         {
             get
             {
-                string xpath = this.Element.XPath;
+                string xfilter = this.Element.XFilter;
 
-                foreach (XPathNavigator node in Node.Select(xpath, NSM))
+                foreach (XPathNavigator node in Node.Select(xfilter, NSM))
                 {
                     yield return this.MoveTo(node);
                 }

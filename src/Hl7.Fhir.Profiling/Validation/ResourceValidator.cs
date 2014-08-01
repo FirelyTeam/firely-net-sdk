@@ -166,6 +166,14 @@ namespace Fhir.Profiling
         
         public void ValidateStructures(Vector vector)
         {
+
+            if (vector.Element.Representation == Representation.Attribute) 
+                // todo: HACK: the standard contradicts itself here. 
+                // Extension.uri is defined as uri (which we modeled as a structure a primitive element containing extensions. And the root element is defined as Representation=Element
+                // but on a higher level, it is already defined as Representation=Attribute.
+                return; 
+
+
             foreach(Vector v in vector.ElementStructures)
             {
                 ValidateStructure(v);
@@ -174,8 +182,6 @@ namespace Fhir.Profiling
 
         public void ValidatePrimitive(Vector vector)
         {
-            // fail. validation of primites should be done at the root element
-            // this should be the root element of a structure
             if (!vector.Element.IsPrimitive)
                 return;
 

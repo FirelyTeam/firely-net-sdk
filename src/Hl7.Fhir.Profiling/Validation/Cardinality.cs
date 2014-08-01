@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
-    public struct Cardinality
+    public class Cardinality
     {
         public string Min;
         public string Max;

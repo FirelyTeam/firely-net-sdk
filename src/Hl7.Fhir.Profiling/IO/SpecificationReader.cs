@@ -53,20 +53,35 @@ namespace Fhir.Profiling
 
         public void ReadFixedValue(Element element, XPathNavigator node)
         {
-            // todo: Do we have all fixedvalue cases, including slicing
-
-            string xpath = string.Format("f:definition/f:valueCoding/f:value/@value");
-            string value = OptionalValue(node, xpath);
-
-            if (value == null)
+            string xpath;
+            if (element.Multi)
             {
                 xpath = string.Format("f:definition/*[starts-with(name(),'value')]/@value");
-                value = OptionalValue(node, xpath);
-            }
-
-            if (value != null)
-            {
+                string value = OptionalValue(node, xpath);
                 element.FixedValue = value;
+            }
+            else
+            {
+                xpath = string.Format("f:definition/f:valueCoding/f:value/@value");
+                string value = OptionalValue(node, xpath);
+                element.FixedValue = value;
+            }
+        }
+
+        public void ReadSliceValue(Element element, XPathNavigator node)
+        {
+            if (!element.Sliced)
+                return;
+
+            if (element.IsExtension) 
+            {
+                string xpath = string.Format("f:definition/f:type/f:profile/@value");
+                string value = OptionalValue(node, xpath);
+                element.SliceValue = value;
+            }
+            else if (element.Multi)
+            {
+                element.SliceValue = element.FixedValue;
             }
         }
 
@@ -167,11 +182,18 @@ namespace Fhir.Profiling
 
         }
 
+        public void ReadElementRepresentation(Element element, XPathNavigator node)
+        {
+            string rep = OptionalValue(node, "f:representation/@value");
+            element.Representation = (rep == "xmlAttr") ? Representation.Attribute : Representation.Element;
+        }
+
         public void ReadElementDefinition(Element element, XPathNavigator node)
         {
 
             element.Path = ReadElementPath(node);
             element.Name = element.Path.ElementName;
+            ReadElementRepresentation(element, node);
             ReadReference(element, node);
             ReadTypeRefs(element, node);
             ReadElementRef(element, node);
@@ -179,12 +201,14 @@ namespace Fhir.Profiling
             ReadConstraints(element, node);
             ReadFixedValue(element, node);
             InjectSlice(element, node);
+            ReadSliceValue(element, node);
         }
      
         public Element ReadElement(Structure structure, XPathNavigator node)
         {
             Element element = new Element();
             element.ID = id++;
+            
             ReadElementDefinition(element, node);
             return element;
         }
