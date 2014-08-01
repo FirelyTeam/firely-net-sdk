@@ -104,14 +104,14 @@ namespace Fhir.Profiling.Tests
         {
             var resource = FhirFile.LoadResource("TestData\\Patient.Narrative.correct.xml");
             Report report = patientSpec.Validate(resource);
-            report.Errors.ToConsole();
+            //report.Errors.ToConsole();
 
             Assert.IsTrue(report.IsValid);
 
             // In this narrative node, the div element does not contain a xhtml namespace and should not be found by the validator
             resource = FhirFile.LoadResource("TestData\\Patient.Narrative.wrong.xml");
             report = patientSpec.Validate(resource);
-            report.Errors.ToConsole();
+            //report.Errors.ToConsole();
 
             Assert.IsFalse(report.IsValid);
             Assert.IsTrue(report.Contains(Group.Cardinality, Status.Failed));

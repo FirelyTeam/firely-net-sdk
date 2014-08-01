@@ -55,7 +55,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ProfileOutput.cs" />
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestPath.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
