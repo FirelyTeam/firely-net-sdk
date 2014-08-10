@@ -62,6 +62,7 @@
     <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
     <Compile Include="Introspection\ProfileExpander.cs" />
     <Compile Include="Introspection\DifferentialTreeConstructor.cs" />
+    <Compile Include="Introspection\Source\EmbeddedResource.cs" />
     <Compile Include="Introspection\StructureLoader.cs" />
     <Compile Include="Introspection\StructureExpander.cs" />
     <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />

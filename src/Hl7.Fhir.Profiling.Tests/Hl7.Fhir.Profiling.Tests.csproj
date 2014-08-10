@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestExtensions.cs" />
-    <Compile Include="TestPath.cs" />
+    <Compile Include="TestEmbeddedArtifacts.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
@@ -67,6 +67,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="TestPatient.json" />
+    <EmbeddedResource Include="Resources\Patient.Valid.xml" />
     <Content Include="TestData\lipid.slice.invalid.extra.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -91,9 +92,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="TestData\validation.zip">
+    <EmbeddedResource Include="Resources\validation.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\invalidroot.xml">
