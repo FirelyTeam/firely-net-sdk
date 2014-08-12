@@ -12,7 +12,7 @@ namespace Fhir.Profiling.Tests
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            patientSpec = Factory.GetUnresolvedPatientSpec();
+            patientSpec = Factory.GetPatientSpec(resolve: false);
         }
 
         [TestMethod]

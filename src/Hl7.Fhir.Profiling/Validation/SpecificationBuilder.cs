@@ -16,12 +16,13 @@ using Fhir.Profiling.IO;
 
 namespace Fhir.Profiling
 {
+    using Model = Hl7.Fhir.Model;
+
     public class SpecificationBuilder
     {
         private Specification specification = new Specification();
         public SpecificationResolver resolver = null;
         public SpecificationLoader loader = null;
-        // SpecificationSealer (die code moet naar een eigen class)
 
         public SpecificationBuilder(SpecificationResolver resolver = null)
         {
@@ -29,7 +30,7 @@ namespace Fhir.Profiling
             loader = new SpecificationLoader(this);
         }
 
-        private List<string> ResolvedProfileUris = new List<string>();
+        private List<string> knownUris = new List<string>();
 
         public TypeRef CreateTypeRef(string code, string profileUri)
         {
@@ -59,144 +60,27 @@ namespace Fhir.Profiling
             specification.Add(structures);
         }
 
-        private void _linkBindings()
-        {
-            foreach (Element element in specification.Elements)
-            {
-                if (element.BindingUri != null)
-                    element.Binding = specification.GetValueSetByUri(element.BindingUri);
-            }
-        }
-
         public void Add(string uri)
         {
             if (resolver != null)
             {
-                if (!ResolvedProfileUris.Contains(uri))
+                if (!knownUris.Contains(uri))
                 {
                     IEnumerable<Structure> structures = ResolveProfile(uri);
                     this.Add(structures);
-                    ResolvedProfileUris.Add(uri);
+                    knownUris.Add(uri);
                     // todo: this not give an error if unresolved.
                 }
             }
             else
             {
-                throw new InvalidOperationException("This ProfileBuilder has no resolver for uri's");
+                throw new InvalidOperationException("This SpecificationBuilder has no SpecificationResolver");
             }
-        }
-
-        private IEnumerable<TypeRef> UnlinkedTypeRefs
-        {
-            get
-            {
-                return specification.Elements.SelectMany(e => e.TypeRefs).Where(r => r.Structure == null);
-            }
-        }
-
-        private IEnumerable<string> CollectProfileUris()
-        {
-            return specification.Elements.SelectMany(e => e.TypeRefs).Select(t => t.ProfileUri).Distinct().Where(s => s != null);
-            
-        }
-
-        private void _linkTypeRefs()
-        {
-            foreach (TypeRef typeref in UnlinkedTypeRefs)
-            {
-                typeref.Structure = specification.GetStructureByName(typeref.Code);
-            }
-        }
-
-        private void _linkElementRefs()
-        {
-            foreach (Structure structure in specification.Structures)
-            {
-                foreach (Element element in structure.Elements)
-                {
-                    if (element.ElementRef == null && element.ElementRefPath != null)
-                        element.ElementRef = specification.GetElementByPath(structure, element.ElementRefPath);
-                }
-            }
-        }
-
-        private bool _tryLinkToParent(Structure structure, Element element)
-        {
-            Element parent = specification.ParentOf(structure, element);
-            if (parent != null)
-            {
-                parent.Children.Add(element);
-                return true;
-            }
-            return false;
-        }
-
-        public void _linkElements(Structure structure)
-        {
-            foreach (Element e in structure.Elements)
-            {
-                _tryLinkToParent(structure, e);
-            }
-        }
-
-        public void _linkElements()
-        {
-            foreach (Structure structure in specification.Structures)
-            {
-                _linkElements(structure);
-            }
-        }
-
-        public void _addNameSpace(Element element)
-        {
-            if (element.HasTypeRef)
-            {
-                TypeRef typeref = element.TypeRefs.FirstOrDefault(t => t.Structure != null);
-                if (typeref != null)
-                {
-                    element.NameSpacePrefix = typeref.Structure.NameSpacePrefix;
-                }
-            }
-
-            if (element.NameSpacePrefix == null)
-                element.NameSpacePrefix = FhirNamespaceManager.Fhir;
-            
-        }
-
-        public void _addNameSpaces()
-        {
-            foreach (Element element in specification.Elements.Where(e => e.NameSpacePrefix == null))
-            {
-                _addNameSpace(element);
-            }
-        }
-
-        private void _compileConstraints()
-        {
-            foreach (Constraint c in specification.Constraints)
-            {
-                if (!c.Compiled)
-                    ConstraintCompiler.Compile(c);
-            }
-        }
-        
-        /// <summary>
-        /// Make the profile complete and usable by linking all internal structures and perform precompilation
-        /// </summary>
-        private void _surrect()
-        {
-            _linkBindings();
-            _linkElements();
-            _linkTypeRefs();
-            _linkElementRefs();
-            _compileConstraints();
-            _addNameSpaces();
-            specification.Seal();
         }
 
         public IEnumerable<Structure> ResolveProfile(Uri uri)
         {
-            Profile profile = resolver.GetProfile(uri);
+            Profile profile = resolver.Get<Profile>(uri);
             if (profile != null)
             {
                 return loader.LoadStructures(profile);
@@ -233,7 +117,6 @@ namespace Fhir.Profiling
             throw new NotImplementedException();
         }
 
-
         private bool resolveTypeRef(TypeRef typeref)
         {
             IEnumerable<Structure> structures = ResolveProfile(typeref);
@@ -266,7 +149,7 @@ namespace Fhir.Profiling
 
             foreach(Uri uri in bindings)
             {
-                Hl7.Fhir.Model.ValueSet source = resolver.GetValueSet(uri);
+                Model.ValueSet source = resolver.Get<Model.ValueSet>(uri);
                 if (source != null)
                 {
                     ValueSet target = loader.LoadValueSet(source);
@@ -285,7 +168,7 @@ namespace Fhir.Profiling
         {
             if (!specification.Sealed)
             {
-                _surrect();
+                SpecificationSealer.Seal(specification);
             }
             return specification;
 

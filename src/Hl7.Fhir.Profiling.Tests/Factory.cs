@@ -19,49 +19,46 @@ namespace Fhir.Profiling.Tests
 {
     public static class Factory
     {
-        public static Specification GetPatientSpec()
+        public static Specification GetPatientSpec(bool resolve)
         {
-            SpecificationResolver resolver = new SpecificationResolver("TestData");
+            SpecificationResolver resolver = new SpecificationResolver();
+            resolver.Add("TestData");
+
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.Add("http://hl7.org/fhir/profile/patient");
-            builder.Resolve();
+            if (resolve) builder.Resolve();
 
             return builder.ToSpecification();
         }
 
-        public static Specification GetUnresolvedPatientSpec()
-        {
-            SpecificationResolver resolver = new SpecificationResolver("TestData");
-            SpecificationBuilder builder = new SpecificationBuilder(resolver);
-            builder.Add(StructureFactory.PrimitiveTypes());
-            builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.Add("http://hl7.org/fhir/profile/patient");
-            return builder.ToSpecification();
-        }
+        
 
-        public static Specification GetLipidSpec()
+        public static Specification GetLipidSpec(bool resolve)
         {
-            SpecificationResolver resolver = new SpecificationResolver("TestData");
+            SpecificationResolver resolver = new SpecificationResolver();
+            resolver.Add("TestData");
+
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.LoadXmlFile("TestData\\valueset.profile.xml");
             builder.LoadXmlFile("TestData\\lipid.profile.xml");
-            builder.Resolve();
+            if (resolve) builder.Resolve();
             
             return builder.ToSpecification();
 
         }
 
-        public static Specification GetPatientExtendedSpec()
+        public static Specification GetExtendedPatientSpec(bool resolve)
         {
             SpecificationBuilder builder = new SpecificationBuilder();
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.LoadXmlFile("TestData\\patient.extended.profile.xml");
             builder.LoadXmlFile("TestData\\type-Extension.profile.xml");
+            if (resolve) builder.Resolve();
             return builder.ToSpecification();
 
         }

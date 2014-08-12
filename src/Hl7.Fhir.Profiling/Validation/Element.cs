@@ -111,8 +111,14 @@ namespace Fhir.Profiling
             foreach(Segment segment in Discriminator.Segments)
             {
                 element = element.FindChild(segment.Name);
-                string s;
 
+                if (element == null)
+                {
+                    return "false"; 
+                    // if the fixed value element can't be found, give back an all discriminating xpath.
+                }
+
+                string s;
                 if (segment != Discriminator.Tail)
                 {
                     s = string.Format("{0}:{1}", element.NameSpacePrefix, element.Name);

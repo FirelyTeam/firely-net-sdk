@@ -20,7 +20,7 @@ namespace Fhir.Profiling.Tests
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            lipidSpec = Factory.GetLipidSpec();
+            lipidSpec = Factory.GetLipidSpec(resolve: false);
             
         }
 

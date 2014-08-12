@@ -28,18 +28,13 @@ namespace Fhir.Profiling
         private List<ValueSet> _valueSets = new List<ValueSet>();
         private List<TypeRef> _typerefs = new List<TypeRef>();
 
-        public bool Sealed { get; private set; }
+        public bool Sealed { get; internal set; }
 
         internal Specification()
         {
             Sealed = false;
         }
-        
-        public void Seal()
-        {
-            Sealed = true;
-        }
-    
+
         public IEnumerable<Structure> Structures
         {
             get

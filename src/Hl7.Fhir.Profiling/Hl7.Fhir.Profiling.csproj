@@ -57,6 +57,7 @@
     <Compile Include="Validation\Path.cs" />
     <Compile Include="Validation\SpecificationBuilder.cs" />
     <Compile Include="Validation\SpecificationResolver.cs" />
+    <Compile Include="Validation\SpecificationSealer.cs" />
     <Compile Include="Validation\SpecificationValidator.cs" />
     <Compile Include="Validation\ReportBuilder.cs" />
     <Compile Include="Validation\Structure.cs" />

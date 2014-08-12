@@ -28,9 +28,7 @@ namespace Hl7.Fhir.Introspection
         {
             _loader = new StructureLoader(source);
         }
-
-
-
+        
         // Used to resolve references to datatypes that we need to expand to accomodate the constaints in the differential
         private StructureLoader _loader;
 

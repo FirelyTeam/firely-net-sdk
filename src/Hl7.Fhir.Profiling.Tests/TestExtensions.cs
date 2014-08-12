@@ -10,7 +10,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void Extensions()
         {
-            Specification patientSpec = Factory.GetPatientExtendedSpec();
+            Specification patientSpec = Factory.GetExtendedPatientSpec(resolve: false);
             var resource = FhirFile.LoadResource("TestData\\patient.extended.valid.xml");
             Report report = patientSpec.Validate(resource);
 
