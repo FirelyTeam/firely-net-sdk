@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Hl7.Fhir</id>
+    <version>0.14.2</version>
+    <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
+    <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET support for HL7 FHIR profile based resource Validation. FHIR DSTU1 (0.8).</description>
+    <releaseNotes>DSTU1 (0.8) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+	<iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
+    <copyright>Copyright 2014</copyright>
+    <tags>HL7 FHIR Profile Validation</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0.2" />
+    </dependencies>
+  </metadata>
+    <files>
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Model.dll" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Model.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Model.pdb" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Api.dll" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Api.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Hl7.Fhir.Api.pdb" target="lib\net45\" />
+		
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Fhir.Profiling.dll" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Fhir.Profiling.pdb" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\validation.zip" target="lib\net45\" />
+
+    </files>
+</package>

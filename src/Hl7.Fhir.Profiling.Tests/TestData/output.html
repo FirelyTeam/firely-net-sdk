@@ -1,0 +1,61 @@
+<!DOCTYPE html><html>
+                <style> 
+                    pre { font: 10pt Consolas; white-space: pre-wrap; } 
+                    b { color: blue; font-weight: normal; } 
+                    i { color: maroon; font-style:normal; } 
+                    u { color: red; text-decoration:none; } 
+                    s { color: black; text-decoration:none; } 
+                    l { color: blue; }    
+                    span.error { border-bottom: 2px dotted red;  }
+                    div.message { 
+                            font: 10pt ; background-color: #FFF8C0; border: 1px solid #E8E8E8; 
+                            box-shadow: 1px 1px #888;
+                            width: 560px; margin-left:50px; margin-top: 4px; padding: 6px;  display:block;}
+                    div.message span.title { color: Red; }
+                </style><body><pre><b>&lt;</b><i>Patient</i><b>&gt;</b>
+  <b>&lt;</b><i>text</i><b>&gt;</b>
+    <b>&lt;</b><i>status <u>value</u>=<s>"</s><l>generated</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>div</i><b>&gt;</b>
+      
+      Everywoman, Eve. SSN:
+      444222222
+    
+    <b>&lt;/</b><i>div</i><b>&gt;</b>
+  <b>&lt;/</b><i>text</i><b>&gt;</b>
+  <b>&lt;</b><i>contact</i><b>&gt;</b>
+    <b>&lt;</b><i>name <u>value</u>=<s>"</s><l>John</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;/</b><i>contact</i><b>&gt;</b>
+  <b>&lt;</b><i>identifier</i><b>&gt;</b>
+    <b>&lt;</b><i>system <u>value</u>=<s>"</s><l>http://hl7.org/fhir/sid/us-ssn</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>value <u>value</u>=<s>"</s><l>444222222</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;/</b><i>identifier</i><b>&gt;</b>
+  <b>&lt;</b><i>name</i><b>&gt;</b>
+    <b>&lt;</b><i>use <u>value</u>=<s>"</s><l>official</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>family <u>value</u>=<s>"</s><l>Everywoman</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>given <u>value</u>=<s>"</s><l>Eve</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>weirdelement</i><b> /&gt;</b>
+  <b>&lt;/</b><i>name</i><b>&gt;</b>
+  <b>&lt;</b><i>telecom</i><b>&gt;</b>
+    <b>&lt;</b><i>system <u>value</u>=<s>"</s><l>phone</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>value <u>value</u>=<s>"</s><l>555-555-2003</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>use <u>value</u>=<s>"</s><l>work</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;/</b><i>telecom</i><b>&gt;</b>
+  <b>&lt;</b><i>gender</i><b>&gt;</b>
+    <b>&lt;</b><i>coding</i><b>&gt;</b>
+      <b>&lt;</b><i>system <u>value</u>=<s>"</s><l>http://hl7.org/fhir/v3/AdministrativeGender</l><s>"</s></i><b> /&gt;</b>
+      <b>&lt;</b><i>code <u>value</u>=<s>"</s><l>F</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;/</b><i>coding</i><b>&gt;</b>
+  <b>&lt;/</b><i>gender</i><b>&gt;</b>
+  <b>&lt;</b><i>birthDate <u>value</u>=<s>"</s><l>1973-05-31</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;</b><i>address</i><b>&gt;</b>
+    <b>&lt;</b><i>use <u>value</u>=<s>"</s><l>home</l><s>"</s></i><b> /&gt;</b>
+    <b>&lt;</b><i>line <u>value</u>=<s>"</s><l>2222 Home Street</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;/</b><i>address</i><b>&gt;</b>
+  <b>&lt;</b><i>managingOrganization</i><b>&gt;</b>
+    <b>&lt;</b><i>reference <u>value</u>=<s>"</s><l>Organization/hl7</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;/</b><i>managingOrganization</i><b>&gt;</b>
+  <b>&lt;</b><i>active <u>value</u>=<s>"</s><l>true</l><s>"</s></i><b> /&gt;</b>
+  <b>&lt;</b><i><span class=error>idontexist</span></i><b> /&gt;</b>
+<div class=message><span class=title>Element Unknown</span>
+Element [Patient] contains undefined element [idontexist]</div><b>&lt;/</b><i>Patient</i><b>&gt;</b>
+</pre></body></html>

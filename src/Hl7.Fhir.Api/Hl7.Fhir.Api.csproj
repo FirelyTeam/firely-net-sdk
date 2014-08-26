@@ -57,6 +57,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\BaseElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileExtensionExtensions.cs" />
+    <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
+    <Compile Include="Introspection\ProfileExpander.cs" />
+    <Compile Include="Introspection\DifferentialTreeConstructor.cs" />
+    <Compile Include="Introspection\Source\EmbeddedResource.cs" />
+    <Compile Include="Introspection\StructureLoader.cs" />
+    <Compile Include="Introspection\StructureExpander.cs" />
+    <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
     <Compile Include="Introspection\Source\SchemaCollection.cs" />
     <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />
     <Compile Include="Introspection\Source\ArtifactResolver.cs" />
@@ -165,9 +177,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Introspection\Source\core-conformances-base.xml" />
+    <Content Include="Introspection\Source\core-profiles-datatypes.xml" />
+    <Content Include="Introspection\Source\core-profiles-resources.xml" />
+    <Content Include="Introspection\Source\core-valuesets-dicom.xml" />
+    <Content Include="Introspection\Source\core-valuesets-fhir.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v2.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v3.xml" />
+    <Content Include="Introspection\Source\README.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

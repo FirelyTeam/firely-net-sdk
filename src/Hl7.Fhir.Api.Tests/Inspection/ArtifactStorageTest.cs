@@ -13,8 +13,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Api.Introspection;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Test.Inspection
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.zip");
 
             var fa = new ZipCacher(zipFile,cacheKey);
 
@@ -218,5 +218,40 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsTrue(artifact is Profile);
             Assert.AreEqual("alert", ((Profile)artifact).Name);
         }
+
+        [TestMethod]
+        public void TestSourceCaching()
+        {
+            var src = new CachedArtifactSource(new ArtifactResolver());
+
+            src.Prepare();
+
+            Stopwatch sw1 = new Stopwatch();
+
+            // Ensure looking up a failed endpoint repeatedly does not cost much time
+            sw1.Start();
+            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
+            sw1.Stop();
+
+            var sw2 = new Stopwatch();
+
+            sw2.Start();
+            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
+            sw2.Stop();
+
+            Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+
+            // Now try an existing artifact
+            sw1.Restart();
+            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            sw1.Stop();
+
+            sw2.Restart();
+            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            sw2.Stop();
+
+            Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+
+       }
     }
 }

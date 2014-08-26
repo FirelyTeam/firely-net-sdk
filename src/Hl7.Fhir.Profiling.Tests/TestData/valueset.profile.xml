@@ -1,0 +1,1084 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><pre>
+&lt;<a title="A value set specifies a set of codes drawn from one or more code systems." class="dict" href="valueset-definitions.html#ValueSet"><b>ValueSet</b></a> xmlns=&quot;http://hl7.org/fhir&quot;&gt; <span style="float: right"><a title="Documentation for this format" href="formats.html"><img alt="doco" src="help.png"/></a></span>
+ &lt;!-- from <a href="resources.html">Resource</a>: <a href="extensibility.html">extension</a>, <a href="extensibility.html#modifierExtension">modifierExtension</a>, language, <a href="narrative.html#Narrative">text</a>, and <a href="references.html#contained">contained</a> --&gt;
+ &lt;<a title="The identifier that is used to identify this value set when it is referenced in a specification, model, design or an instance (should be globally unique OID, UUID, or URI)." class="dict" href="valueset-definitions.html#ValueSet.identifier"><b>identifier</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Logical id to reference this value set<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="The identifier that is used to identify this version of the value set when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp." class="dict" href="valueset-definitions.html#ValueSet.version"><b>version</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Logical id for this version of the value set<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="A free text natural language name describing the value set." class="dict" href="valueset-definitions.html#ValueSet.name"><b>name</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">Informal name for this value set<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="The name of the individual or organization that published the value set." class="dict" href="valueset-definitions.html#ValueSet.publisher"><b>publisher</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Name of the publisher (Organization or individual)<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="Contacts of the publisher to assist a user in finding and communicating with the publisher." class="dict" href="valueset-definitions.html#ValueSet.telecom"><b>telecom</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Contact">Contact</a></span> <span style="color: navy">Contact information of the publisher<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/telecom&gt;
+ &lt;<a title="A free text natural language description of the use of the value set - reason for definition, conditions of use, etc." class="dict" href="valueset-definitions.html#ValueSet.description"><b>description</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">Human language description of the value set<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="A copyright statement relating to the value set and/or its contents." class="dict" href="valueset-definitions.html#ValueSet.copyright"><b>copyright</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">About the value set or its content</span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="The status of the value set (this element modifies the meaning of other elements)" class="dict" href="valueset-definitions.html#ValueSet.status"><span style="text-decoration: underline"><b>status</b></span></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy"><a style="color: navy" href="valueset-status.html">draft | active | retired<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="This valueset was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage." class="dict" href="valueset-definitions.html#ValueSet.experimental"><b>experimental</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">If for testing purposes, not real usage<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="Whether this is intended to be used with an extensible binding or not." class="dict" href="valueset-definitions.html#ValueSet.extensible"><b>extensible</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Whether this is intended to be used with an extensible binding</span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="The date that the value set status was last changed." class="dict" href="valueset-definitions.html#ValueSet.date"><b>date</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#dateTime">dateTime</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Date for given status<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="When value set defines its own codes." class="dict" href="valueset-definitions.html#ValueSet.define"><b>define</b></a>&gt;  <span style="color: Gray">&lt;!-- <span title="Inv-5: Value set SHALL contain either a define, a compose, or an expansion element" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> When value set defines its own codes<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span> --&gt;</span>
+  &lt;<a title="URI to identify the code system." class="dict" href="valueset-definitions.html#ValueSet.define.system"><b>system</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#uri">uri</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">URI to identify the code system<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+  &lt;<a title="The version of this code system that defines the codes. Note that the version is optional because a well maintained code system does not suffer from versioning, and therefore the version does not need to be maintained. However many code systems are not well maintained, and the version needs to be defined and tracked." class="dict" href="valueset-definitions.html#ValueSet.define.version"><b>version</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Version of this system<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+  &lt;<a title="If code comparison is case sensitive when codes within this system are compared to each other." class="dict" href="valueset-definitions.html#ValueSet.define.caseSensitive"><b>caseSensitive</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">If code comparison is case sensitive<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+  &lt;<a title="Concepts in the code system." class="dict" href="valueset-definitions.html#ValueSet.define.concept"><b>concept</b></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..*</b></span> Concepts in the code system --&gt;</span>
+   &lt;<a title="Code that identifies concept." class="dict" href="valueset-definitions.html#ValueSet.define.concept.code"><b>code</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">Code that identifies concept</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="If this code is not for use as a real concept." class="dict" href="valueset-definitions.html#ValueSet.define.concept.abstract"><b>abstract</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">If this code is not for use as a real concept</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Text to Display to the user." class="dict" href="valueset-definitions.html#ValueSet.define.concept.display"><b>display</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Text to Display to the user</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="The formal definition of the concept. Formal definitions are not required, because of the prevalence of legacy systems without them, but they are highly recommended, as without them there is no formal meaning associated with the concept." class="dict" href="valueset-definitions.html#ValueSet.define.concept.definition"><b>definition</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Formal Definition</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Child Concepts (is-a / contains)." class="dict" href="valueset-definitions.html#ValueSet.define.concept.concept"><b>concept</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen">Content as for ValueSet.define.concept</span> <span style="color: navy">Child Concepts (is-a / contains)</span><span style="color: Gray"> --&gt;</span>&lt;/concept&gt;
+  &lt;/concept&gt;
+ &lt;/define&gt;
+ &lt;<a title="When value set includes codes from elsewhere." class="dict" href="valueset-definitions.html#ValueSet.compose"><b>compose</b></a>&gt;  <span style="color: Gray">&lt;!-- <span title="Inv-5: Value set SHALL contain either a define, a compose, or an expansion element" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> When value set includes codes from elsewhere --&gt;</span>
+  &lt;<a title="Includes the contents of the referenced value set as a part of the contents of this value set." class="dict" href="valueset-definitions.html#ValueSet.compose.import"><b>import</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#uri">uri</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span title="Inv-1: A value set composition SHALL have an include or an import" style="color: brown"><b><img alt="??" src="lock.png"/> 0..*</b></span> <span style="color: navy">Import the contents of another value set<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+  &lt;<a title="Include one or more codes from a code system." class="dict" href="valueset-definitions.html#ValueSet.compose.include"><b>include</b></a>&gt;  <span style="color: Gray">&lt;!-- <span title="Inv-1: A value set composition SHALL have an include or an import" style="color: brown"><b><img alt="??" src="lock.png"/> 0..*</b></span> Include one or more codes from a code system<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span> --&gt;</span>
+   &lt;<a title="The code system from which the selected codes come from." class="dict" href="valueset-definitions.html#ValueSet.compose.include.system"><b>system</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#uri">uri</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">The system the codes come from<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="The version of the code system that the codes are selected from." class="dict" href="valueset-definitions.html#ValueSet.compose.include.version"><b>version</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Specific version of the code system referred to<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Specifies a code or concept to be included or excluded. The list of codes is considered ordered, though the order may not have any particular significance." class="dict" href="valueset-definitions.html#ValueSet.compose.include.code"><b>code</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: navy">Code or concept from system</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Select concepts by specify a matching criteria based on the properties (including relationships) defined by the system. If multiple filters are specified, they SHALL all be true." class="dict" href="valueset-definitions.html#ValueSet.compose.include.filter"><b>filter</b></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..*</b></span> Select codes/concepts by their properties (including relationships) --&gt;</span>
+    &lt;<a title="A code that identifies a property defined in the code system." class="dict" href="valueset-definitions.html#ValueSet.compose.include.filter.property"><b>property</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">A property defined by the code system</span><span style="color: Gray"> --&gt;</span>
+    &lt;<a title="The kind of operation to perform as a part of the filter criteria." class="dict" href="valueset-definitions.html#ValueSet.compose.include.filter.op"><b>op</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy"><a style="color: navy" href="filter-operator.html">= | is-a | is-not-a | regex | in | not in</a></span><span style="color: Gray"> --&gt;</span>
+    &lt;<a title="The match value may be either a code defined by the system, or a string value which is used a regex match on the literal string of the property value." class="dict" href="valueset-definitions.html#ValueSet.compose.include.filter.value"><b>value</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">Code from the system, or regex criteria</span><span style="color: Gray"> --&gt;</span>
+   &lt;/filter&gt;
+  &lt;/include&gt;
+  &lt;<a title="Exclude one or more codes from the value set." class="dict" href="valueset-definitions.html#ValueSet.compose.exclude"><b>exclude</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span title="Inv-2: A value set with only one import SHALL also have an include and/or an exclude unless the value set defines its own codes" style="color: brown"><b><img alt="??" src="lock.png"/> 0..*</b></span> <span style="color: darkgreen">Content as for ValueSet.compose.include</span> <span style="color: navy">Explicitly exclude codes</span><span style="color: Gray"> --&gt;</span>&lt;/exclude&gt;
+ &lt;/compose&gt;
+ &lt;<a title="When value set is an expansion." class="dict" href="valueset-definitions.html#ValueSet.expansion"><b>expansion</b></a>&gt;  <span style="color: Gray">&lt;!-- <span title="Inv-5: Value set SHALL contain either a define, a compose, or an expansion element" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> When value set is an expansion --&gt;</span>
+  &lt;<a title="An identifier that uniquely identifies this expansion of the valueset. Systems may re-use the same identifier as long as the expansion and the definition remain the same, but are not required to do so." class="dict" href="valueset-definitions.html#ValueSet.expansion.identifier"><b>identifier</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#Identifier">Identifier</a></span> <span style="color: navy">Uniquely identifies this expansion</span><span style="color: Gray"> --&gt;</span>&lt;/identifier&gt;
+  &lt;<a title="Time valueset expansion happened." class="dict" href="valueset-definitions.html#ValueSet.expansion.timestamp"><b>timestamp</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#instant">instant</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy">Time valueset expansion happened</span><span style="color: Gray"> --&gt;</span>
+  &lt;<a title="Codes in the value set." class="dict" href="valueset-definitions.html#ValueSet.expansion.contains"><b>contains</b></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..*</b></span> Codes in the value set --&gt;</span>
+   &lt;<a title="System value for the code." class="dict" href="valueset-definitions.html#ValueSet.expansion.contains.system"><b>system</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#uri">uri</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">System value for the code</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Code - if blank, this is not a choosable code." class="dict" href="valueset-definitions.html#ValueSet.expansion.contains.code"><b>code</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span title="Inv-6: SHALL have a code or a display" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> <span style="color: navy">Code - if blank, this is not a choosable code</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="User display for the concept." class="dict" href="valueset-definitions.html#ValueSet.expansion.contains.display"><b>display</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#string">string</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span title="Inv-6: SHALL have a code or a display" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> <span style="color: navy">User display for the concept</span><span style="color: Gray"> --&gt;</span>
+   &lt;<a title="Codes contained in this concept." class="dict" href="valueset-definitions.html#ValueSet.expansion.contains.contains"><b>contains</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen">Content as for ValueSet.expansion.contains</span> <span style="color: navy">Codes contained in this concept</span><span style="color: Gray"> --&gt;</span>&lt;/contains&gt;
+  &lt;/contains&gt;
+ &lt;/expansion&gt;
+&lt;/ValueSet&gt;
+</pre></div>
+  </text>
+  <name value="valueset"/>
+  <publisher value="FHIR Project"/>
+  <description value="Basic Profile. A value set specifies a set of codes drawn from one or more code systems."/>
+  <status value="draft"/>
+  <date value="2014-02-03"/>
+  <requirements value="Scope and Usage Value sets may be constructed in one of two ways: 
+
+* A value set can define its own codes, and/or
+* A value set can be composed of codes defined in other code systems, either by listing the codes or by providing a set of selection criteria
+A value set can also be &quot;expanded&quot;, where the value set is turned into a simple collection of enumerated codes. This operation is performed to produce a collection of codes that are ready to use for data entry or validation. An expanded value set may also contain the original definition as well."/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <structure>
+    <type value="ValueSet"/>
+    <publish value="true"/>
+    <element>
+      <path value="ValueSet"/>
+      <definition>
+        <short value="A set of codes drawn from one or more code systems"/>
+        <formal value="A value set specifies a set of codes drawn from one or more code systems."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Resource"/>
+        </type>
+        <constraint>
+          <key value="2"/>
+          <severity value="error"/>
+          <human value="A value set with only one import SHALL also have an include and/or an exclude unless the value set defines its own codes"/>
+          <xpath value="not(exists(f:compose)) or (count(f:compose/f:import)!=1 or exists(f:compose/f:include) or exists(f:compose/f:exclude) or exists(f:define))"/>
+        </constraint>
+        <constraint>
+          <key value="7"/>
+          <severity value="error"/>
+          <human value="A defined code system (if present) SHALL have a different identifier to the value set itself"/>
+          <xpath value="not(exists(f:define)) or (f:define/f:system/@value != f:identifier/@value)"/>
+        </constraint>
+        <constraint>
+          <key value="5"/>
+          <severity value="error"/>
+          <human value="Value set SHALL contain either a define, a compose, or an expansion element"/>
+          <xpath value="exists(f:define) or exists(f:compose) or exists(f:expansion)"/>
+        </constraint>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.text"/>
+      <definition>
+        <short value="Text summary of the resource, for human interpretation"/>
+        <formal value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
+        <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative."/>
+        <synonym value="narrative"/>
+        <synonym value="html"/>
+        <synonym value="xhtml"/>
+        <synonym value="display"/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Narrative"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.contained"/>
+      <definition>
+        <short value="Contained, inline Resources"/>
+        <formal value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+        <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+        <synonym value="inline resources"/>
+        <synonym value="anonymous resources"/>
+        <synonym value="contained resources"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Resource"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.identifier"/>
+      <definition>
+        <short value="Logical id to reference this value set"/>
+        <formal value="The identifier that is used to identify this value set when it is referenced in a specification, model, design or an instance (should be globally unique OID, UUID, or URI)."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.version"/>
+      <definition>
+        <short value="Logical id for this version of the value set"/>
+        <formal value="The identifier that is used to identify this version of the value set when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp."/>
+        <comments value="There may be multiple resource versions of the value set that have the same identifier."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <valueString value="100" />
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.name"/>
+      <definition>
+        <short value="Informal name for this value set"/>
+        <formal value="A free text natural language name describing the value set."/>
+        <comments value="Not expected to be unique."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.publisher"/>
+      <definition>
+        <short value="Name of the publisher (Organization or individual)"/>
+        <formal value="The name of the individual or organization that published the value set."/>
+        <comments value="Usually an organization, but may be an individual. This item SHOULD be populated unless the information is available from context."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.telecom"/>
+      <definition>
+        <short value="Contact information of the publisher"/>
+        <formal value="Contacts of the publisher to assist a user in finding and communicating with the publisher."/>
+        <comments value="May be a web site, an email address, a telephone number (tel:), etc."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Contact"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.description"/>
+      <definition>
+        <short value="Human language description of the value set"/>
+        <formal value="A free text natural language description of the use of the value set - reason for definition, conditions of use, etc."/>
+        <comments value="The description is not intended to describe the semantics of the Value Set - there are no intrinsic semantics separate from the codes contained in its expansion. The description should capture its intended use, which is needed for ensuring integrity for its use in models across future changes."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.copyright"/>
+      <definition>
+        <short value="About the value set or its content"/>
+        <formal value="A copyright statement relating to the value set and/or its contents."/>
+        <comments value="Frequently, the copyright differs between the value set, and codes that are included. The copyright statement should clearly differentiate between these when required."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.status"/>
+      <definition>
+        <short value="draft | active | retired"/>
+        <formal value="The status of the value set."/>
+        <comments value="Allows filtering of valuesets that are appropriate for use vs. not."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="true"/>
+        <binding>
+          <name value="ValueSetStatus"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/valueset-status"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.experimental"/>
+      <definition>
+        <short value="If for testing purposes, not real usage"/>
+        <formal value="This valueset was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage."/>
+        <comments value="Allows filtering of valuesets that are appropriate for use vs. not."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.extensible"/>
+      <definition>
+        <short value="Whether this is intended to be used with an extensible binding"/>
+        <formal value="Whether this is intended to be used with an extensible binding or not."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.date"/>
+      <definition>
+        <short value="Date for given status"/>
+        <formal value="The date that the value set status was last changed."/>
+        <comments value="Note that this is not the same as the resource last-modified-date, since the resource may be a secondary representation of the value set."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="dateTime"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define"/>
+      <definition>
+        <short value="When value set defines its own codes"/>
+        <formal value="When value set defines its own codes."/>
+        <min value="0"/>
+        <max value="1"/>
+        <constraint>
+          <key value="3"/>
+          <severity value="error"/>
+          <human value="Within a code system definition, all the codes SHALL be unique"/>
+          <xpath value="count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"/>
+        </constraint>
+        <constraint>
+          <key value="8"/>
+          <severity value="error"/>
+          <human value="Codes must be unique"/>
+          <xpath value="count(descendant::f:concept)=count(distinct-values(descendant::f:concept/f:code/@value))"/>
+        </constraint>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.system"/>
+      <definition>
+        <short value="URI to identify the code system"/>
+        <formal value="URI to identify the code system."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="uri"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.version"/>
+      <definition>
+        <short value="Version of this system"/>
+        <formal value="The version of this code system that defines the codes. Note that the version is optional because a well maintained code system does not suffer from versioning, and therefore the version does not need to be maintained. However many code systems are not well maintained, and the version needs to be defined and tracked."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.caseSensitive"/>
+      <definition>
+        <short value="If code comparison is case sensitive"/>
+        <formal value="If code comparison is case sensitive when codes within this system are compared to each other."/>
+        <comments value="If this value is missing, then it is not specified whether a code system is case sensitive or not. When the rule is not known, Postel&#39;s law should be followed: produce codes with the correct case, and accept codes in any case. This element is primarily provided to support validation software."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept"/>
+      <definition>
+        <short value="Concepts in the code system"/>
+        <formal value="Concepts in the code system."/>
+        <min value="0"/>
+        <max value="*"/>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.code"/>
+      <definition>
+        <short value="Code that identifies concept"/>
+        <formal value="Code that identifies concept."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.abstract"/>
+      <definition>
+        <short value="If this code is not for use as a real concept"/>
+        <formal value="If this code is not for use as a real concept."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.display"/>
+      <definition>
+        <short value="Text to Display to the user"/>
+        <formal value="Text to Display to the user."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.definition"/>
+      <definition>
+        <short value="Formal Definition"/>
+        <formal value="The formal definition of the concept. Formal definitions are not required, because of the prevalence of legacy systems without them, but they are highly recommended, as without them there is no formal meaning associated with the concept."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.define.concept.concept"/>
+      <definition>
+        <short value="Child Concepts (is-a / contains)"/>
+        <formal value="Child Concepts (is-a / contains)."/>
+        <min value="0"/>
+        <max value="*"/>
+        <nameReference value="ValueSet.define.concept"/>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose"/>
+      <definition>
+        <short value="When value set includes codes from elsewhere"/>
+        <formal value="When value set includes codes from elsewhere."/>
+        <min value="0"/>
+        <max value="1"/>
+        <constraint>
+          <key value="1"/>
+          <severity value="error"/>
+          <human value="A value set composition SHALL have an include or an import"/>
+          <xpath value="exists(f:include) or exists(f:import)"/>
+        </constraint>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.import"/>
+      <definition>
+        <short value="Import the contents of another value set"/>
+        <formal value="Includes the contents of the referenced value set as a part of the contents of this value set."/>
+        <comments value="The value set URI is either a logical reference to a defined value set such as a SNOMED CT reference set, or a literal reference to a value set definition (not an expansion). If the reference is a logical one, it may not reference a actual FHIR value set resource; in this case, the referenced definition of a set of coded values needs to be clear about how versions are resolved."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="uri"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include"/>
+      <definition>
+        <short value="Include one or more codes from a code system"/>
+        <formal value="Include one or more codes from a code system."/>
+        <comments value="If there are no codes or filters, the entire code system is included."/>
+        <min value="0"/>
+        <max value="*"/>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.system"/>
+      <definition>
+        <short value="The system the codes come from"/>
+        <formal value="The code system from which the selected codes come from."/>
+        <comments value="See [[Coding.system]] for further documentation."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="uri"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.version"/>
+      <definition>
+        <short value="Specific version of the code system referred to"/>
+        <formal value="The version of the code system that the codes are selected from."/>
+        <comments value="This is used when selecting the descendents of a concept - they may change between versions. If no version is specified, then the exact contents of the value set may not be known until a context of use binds it to a particular version."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.code"/>
+      <definition>
+        <short value="Code or concept from system"/>
+        <formal value="Specifies a code or concept to be included or excluded. The list of codes is considered ordered, though the order may not have any particular significance."/>
+        <comments value="Expressions are allowed if defined by the underlying code system."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter"/>
+      <definition>
+        <short value="Select codes/concepts by their properties (including relationships)"/>
+        <formal value="Select concepts by specify a matching criteria based on the properties (including relationships) defined by the system. If multiple filters are specified, they SHALL all be true."/>
+        <comments value="Selecting codes by specifying filters based on properties is only possible where the underlying code system defines appropriate properties. Note that in some cases, the underlying code system defines the logical concepts but not the literal codes for the concepts. In such cases, the literal definitions may be provided by a third party."/>
+        <min value="0"/>
+        <max value="*"/>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter.property"/>
+      <definition>
+        <short value="A property defined by the code system"/>
+        <formal value="A code that identifies a property defined in the code system."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter.op"/>
+      <definition>
+        <short value="= | is-a | is-not-a | regex | in | not in"/>
+        <formal value="The kind of operation to perform as a part of the filter criteria."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="FilterOperator"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/filter-operator"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.include.filter.value"/>
+      <definition>
+        <short value="Code from the system, or regex criteria"/>
+        <formal value="The match value may be either a code defined by the system, or a string value which is used a regex match on the literal string of the property value."/>
+        <comments value="Use regex matching with care - full regex matching on every SNOMED CT term is prohibitive, for example."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.compose.exclude"/>
+      <definition>
+        <short value="Explicitly exclude codes"/>
+        <formal value="Exclude one or more codes from the value set."/>
+        <comments value="Usually this is used to selectively exclude codes that were included by subsumption in the inclusions."/>
+        <min value="0"/>
+        <max value="*"/>
+        <nameReference value="ValueSet.compose.include"/>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion"/>
+      <definition>
+        <short value="When value set is an expansion"/>
+        <formal value="When value set is an expansion."/>
+        <min value="0"/>
+        <max value="1"/>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.identifier"/>
+      <definition>
+        <short value="Uniquely identifies this expansion"/>
+        <formal value="An identifier that uniquely identifies this expansion of the valueset. Systems may re-use the same identifier as long as the expansion and the definition remain the same, but are not required to do so."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Identifier"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.timestamp"/>
+      <definition>
+        <short value="Time valueset expansion happened"/>
+        <formal value="Time valueset expansion happened."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="instant"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains"/>
+      <definition>
+        <short value="Codes in the value set"/>
+        <formal value="Codes in the value set."/>
+        <min value="0"/>
+        <max value="*"/>
+        <constraint>
+          <key value="6"/>
+          <severity value="error"/>
+          <human value="SHALL have a code or a display"/>
+          <xpath value="exists(f:code) or exists(f:display)"/>
+        </constraint>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.system"/>
+      <definition>
+        <short value="System value for the code"/>
+        <formal value="System value for the code."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="uri"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.code"/>
+      <definition>
+        <short value="Code - if blank, this is not a choosable code"/>
+        <formal value="Code - if blank, this is not a choosable code."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.display"/>
+      <definition>
+        <short value="User display for the concept"/>
+        <formal value="User display for the concept."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="ValueSet.expansion.contains.contains"/>
+      <definition>
+        <short value="Codes contained in this concept"/>
+        <formal value="Codes contained in this concept."/>
+        <min value="0"/>
+        <max value="*"/>
+        <nameReference value="ValueSet.expansion.contains"/>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <searchParam>
+      <name value="_id"/>
+      <type value="token"/>
+      <documentation value="The logical resource id associated with the resource (must be supported by all servers)"/>
+    </searchParam>
+    <searchParam>
+      <name value="code"/>
+      <type value="token"/>
+      <documentation value="A code defined in the value set"/>
+      <xpath value="f:ValueSet/f:define/f:concept/f:code"/>
+    </searchParam>
+    <searchParam>
+      <name value="date"/>
+      <type value="date"/>
+      <documentation value="The value set publication date"/>
+      <xpath value="f:ValueSet/f:date"/>
+    </searchParam>
+    <searchParam>
+      <name value="description"/>
+      <type value="string"/>
+      <documentation value="Text search in the description of the value set"/>
+      <xpath value="f:ValueSet/f:description"/>
+    </searchParam>
+    <searchParam>
+      <name value="identifier"/>
+      <type value="token"/>
+      <documentation value="The identifier of the value set"/>
+      <xpath value="f:ValueSet/f:identifier"/>
+    </searchParam>
+    <searchParam>
+      <name value="name"/>
+      <type value="string"/>
+      <documentation value="The name of the value set"/>
+      <xpath value="f:ValueSet/f:name"/>
+    </searchParam>
+    <searchParam>
+      <name value="publisher"/>
+      <type value="string"/>
+      <documentation value="Name of the publisher of the value set"/>
+      <xpath value="f:ValueSet/f:publisher"/>
+    </searchParam>
+    <searchParam>
+      <name value="reference"/>
+      <type value="token"/>
+      <documentation value="A code system included or excluded in the value set or an imported value set"/>
+      <xpath value="f:ValueSet/f:compose/f:include/f:system"/>
+    </searchParam>
+    <searchParam>
+      <name value="status"/>
+      <type value="token"/>
+      <documentation value="The status of the value set"/>
+      <xpath value="f:ValueSet/f:status"/>
+    </searchParam>
+    <searchParam>
+      <name value="system"/>
+      <type value="token"/>
+      <documentation value="The system for any codes defined by this value set"/>
+      <xpath value="f:ValueSet/f:define/f:system"/>
+    </searchParam>
+    <searchParam>
+      <name value="version"/>
+      <type value="token"/>
+      <documentation value="The version identifier of the value set"/>
+      <xpath value="f:ValueSet/f:version"/>
+    </searchParam>
+  </structure>
+</Profile>

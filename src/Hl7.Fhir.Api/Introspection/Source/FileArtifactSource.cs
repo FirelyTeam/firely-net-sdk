@@ -22,7 +22,7 @@ using System.Xml;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from individual files
@@ -52,15 +52,21 @@ namespace Hl7.Fhir.Api.Introspection.Source
             _includeSubs = includeSubdirectories;
         }
 
+        public static string SpecificationDirectory
+        {
+            get
+            {
+                return Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
+                //return Path.Combine(location, "Introspection", "Source");
+            }
+        }
 
         public FileArtifactSource(bool includeSubdirectories = false)
         {
-            var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
-
             // Add the current directory to the list of directories with artifact content, unless there's
-            // a special "Model" subdirectory available
-            if (Directory.Exists(modelDir))
-                _contentDirectory = modelDir;
+            // a special specification subdirectory available (next to the current DLL)
+            if (Directory.Exists(SpecificationDirectory))
+                _contentDirectory = SpecificationDirectory;
             else
                 _contentDirectory = Directory.GetCurrentDirectory();
 
@@ -136,12 +142,14 @@ namespace Hl7.Fhir.Api.Introspection.Source
             if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
 
             // Return the contents of the file, since there's no logical id inside the data of a simple resource file
-            using (var contentXml = ReadContentArtifact(logicalId + ".xml"))
+            var xmlFilename = logicalId.EndsWith(".xml") ? logicalId : logicalId + ".xml";
+            using (var contentXml = ReadContentArtifact(xmlFilename))
             {
                 if (contentXml != null)
                     return FhirParser.ParseResource(XmlReader.Create(contentXml));
 
-                using (var contentJson = ReadContentArtifact(logicalId + ".json"))
+                var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
+                using (var contentJson = ReadContentArtifact(jsonFilename))
                 {
                     if (contentJson != null)
                         return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));

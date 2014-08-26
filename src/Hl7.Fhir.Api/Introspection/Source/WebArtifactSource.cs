@@ -13,7 +13,7 @@ using System.Text;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     public class WebArtifactSource : IArtifactSource
     {

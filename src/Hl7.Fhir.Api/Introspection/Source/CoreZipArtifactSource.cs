@@ -21,7 +21,7 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files
@@ -50,10 +50,10 @@ namespace Hl7.Fhir.Api.Introspection.Source
 
         public CoreZipArtifactSource()
         {
-            var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
+            var modelDir = FileArtifactSource.SpecificationDirectory;
 
             // Add the current directory to the list of directories with artifact content, unless there's
-            // a special "Model" subdirectory available
+            // a special subdirectory available
             if (Directory.Exists(modelDir))
                 _contentDirectory = modelDir;
             else
