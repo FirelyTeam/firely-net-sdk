@@ -14,9 +14,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
 using System.IO;
-using Ionic.Zip;
 using Hl7.Fhir.Serialization;
-using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
@@ -56,13 +54,17 @@ namespace Hl7.Fhir.Introspection.Source
         {
             get
             {
+#if !PORTABLE45
                 return Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
-                //return Path.Combine(location, "Introspection", "Source");
+#else
+            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
+#endif
             }
         }
 
         public FileArtifactSource(bool includeSubdirectories = false)
         {
+#if !PORTABLE45
             // Add the current directory to the list of directories with artifact content, unless there's
             // a special specification subdirectory available (next to the current DLL)
             if (Directory.Exists(SpecificationDirectory))
@@ -71,6 +73,9 @@ namespace Hl7.Fhir.Introspection.Source
                 _contentDirectory = Directory.GetCurrentDirectory();
 
             _includeSubs = includeSubdirectories;
+#else
+            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
+#endif
         }
 
         /// <summary>
@@ -78,6 +83,7 @@ namespace Hl7.Fhir.Introspection.Source
         /// </summary>
         public void Prepare()
         {
+#if !PORTABLE45
             _artifactFiles = new List<string>();
 
             IEnumerable<string> masks;
@@ -98,6 +104,10 @@ namespace Hl7.Fhir.Introspection.Source
             
             _artifactFiles.AddRange(files);
             _isPrepared = true;
+#else
+            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
+#endif
+
         }
 
 
@@ -112,6 +122,7 @@ namespace Hl7.Fhir.Introspection.Source
 
         public Stream ReadContentArtifact(string name)
         {
+#if !PORTABLE45
             if (name == null) throw Error.ArgumentNull("name");
 
             ensurePrepared();
@@ -120,6 +131,9 @@ namespace Hl7.Fhir.Introspection.Source
             var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
+#else
+            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
+#endif
         }
 
 

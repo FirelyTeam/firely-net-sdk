@@ -7,19 +7,20 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.XPath;
 using Hl7.Fhir.Model;
+#if !PORTABLE45
 using Ionic.Zip;
+using System.Xml.XPath;
+#endif
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 
 namespace Fhir.Profiling.IO
 {
+#if !PORTABLE45
     public class EmbeddedResource
     {
-        static Stream zipstream;
-
         public static Stream GetStream<T>(string name)
         {
             Assembly assembly = typeof(T).Assembly;
@@ -63,22 +64,22 @@ namespace Fhir.Profiling.IO
             return s;
         }
 
-        public static XPathNavigator GetXPathNavigator<T>(string name)
-        {
-            using (Stream stream = GetStream<T>(name))
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(stream);
-                return doc.CreateNavigator();
-            }
-        }
+        //public static XPathNavigator GetXPathNavigator<T>(string name)
+        //{
+        //    using (Stream stream = GetStream<T>(name))
+        //    {
+        //        XmlDocument doc = new XmlDocument();
+        //        doc.Load(stream);
+        //        return doc.CreateNavigator();
+        //    }
+        //}
 
-        public static ZipFile ZipFile<T>(string name)
-        {
-            Stream stream = GetStream<T>(name);
-            ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
-            return zip;
-        }
+        //public static ZipFile ZipFile<T>(string name)
+        //{
+        //    Stream stream = GetStream<T>(name);
+        //    ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
+        //    return zip;
+        //}
     }
 
     public class ResourceCollection
@@ -169,4 +170,5 @@ namespace Fhir.Profiling.IO
             return null;
         }
     }
+#endif
 }

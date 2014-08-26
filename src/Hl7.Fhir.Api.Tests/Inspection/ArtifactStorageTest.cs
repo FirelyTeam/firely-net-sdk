@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Test.Inspection
     public class ArtifactStorageTest
 #endif
     {
+#if !PORTABLE45
         [TestMethod]
         public void ZipCacherShouldCache()
         {
@@ -78,7 +79,7 @@ namespace Hl7.Fhir.Test.Inspection
             File.SetLastWriteTime(zipFile, DateTime.Now);
             Assert.IsFalse(fa.IsActual());
         }
-
+#endif
 
         [TestMethod]
         public void RecreatingCoreZipArtifact()

@@ -105,7 +105,6 @@
     <Compile Include="Model\TagExtensionsTest.cs" />
     <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="ValidatePatient.cs" />
-    <Compile Include="Validation\IdPatternAttributeTest.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>

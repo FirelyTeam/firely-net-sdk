@@ -7,7 +7,9 @@
  */
 
 using Hl7.Fhir.Serialization;
+#if !PORTABLE45
 using Ionic.Zip;
+#endif
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +19,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Support
 {
+#if !PORTABLE45
     /// <summary>
     /// Internal class which gives access to files within a zip whilst avoiding unpacking that zip on every access.
     /// The ZipCacher will unpack the zip once and store the contents in a cache directory, serving files from this cache.
@@ -124,4 +127,5 @@ namespace Hl7.Fhir.Support
             return zipCacheDir;
         }
     }
+#endif
 }

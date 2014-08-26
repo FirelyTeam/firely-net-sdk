@@ -21,12 +21,9 @@ using System.Xml.Schema;
 
 namespace Hl7.Fhir.Test.Inspection
 {
+#if !PORTABLE45
     [TestClass]
-#if PORTABLE45
-	public class PortableSchemaCollectionTest
-#else
     public class SchemaCollectionTest
-#endif
     {
         [TestMethod]
         public void TestSchemaCompilation()
@@ -49,4 +46,5 @@ namespace Hl7.Fhir.Test.Inspection
             }
         }
     }
+#endif
 }
