@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new ArtifactResolver();
+            var resolver = ArtifactResolver.CreateDefault();
 
             resolver.Prepare();
 
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void TestSourceCaching()
         {
-            var src = new CachedArtifactSource(new ArtifactResolver());
+            var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
 
             src.Prepare();
 

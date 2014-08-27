@@ -15,6 +15,7 @@ using System.Xml.XPath;
 using System.Text.RegularExpressions;
 using Fhir.IO;
 
+    // todo: ExtensionDefns opnemen in Specification!!
     // todo: fixed value testen (er is nog geen testdata)
     // todo: adding JSON tests
     

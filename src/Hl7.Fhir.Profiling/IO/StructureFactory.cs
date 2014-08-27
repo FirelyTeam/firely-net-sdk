@@ -119,7 +119,7 @@ namespace Fhir.Profiling
                 Primitive("uri", @"http"),
                 Primitive("base64Binary", @".*"),
                 Primitive("code", Hl7.Fhir.Model.Code.PATTERN),
-                Primitive("id", @"\d+"),
+                Primitive("id", @"[a-z0-9\-\.]{1,36}"),
                 Primitive("oid", @".*"),
                 Primitive("uuid" , @".*")
             };

@@ -6,6 +6,7 @@ using System.Xml.XPath;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Fhir.Profiling.Tests
 {
@@ -15,7 +16,8 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void ResourceAccess()
         {
-            ArtifactSource source = EmbeddedResource.CreateArtifactSource<TestResources>("Fhir.Profiling.Tests.Resources.validation.zip");
+            var embedded = EmbeddedResourceAccess.Create<TestResources>();
+            IArtifactSource source = embedded.CreateArtifactSource("Fhir.Profiling.Tests.Resources.validation.zip");
           
             Resource resource = source.ReadResourceArtifact(new Uri("http://hl7.org/fhir/profile/Patient"));
             Assert.IsNotNull(resource);
@@ -24,7 +26,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void TestTextoutput()
         {
-            List<string> texts = EmbeddedResource.ZipXmlContentStrings<TestResources>("Fhir.Profiling.Tests.Resources.validation.zip").ToList();
+            List<string> texts = EmbeddedResourceAccess.ZipXmlContentStrings<TestResources>("Fhir.Profiling.Tests.Resources.validation.zip").ToList();
             Assert.IsTrue(texts.Count > 0);
         }
     }

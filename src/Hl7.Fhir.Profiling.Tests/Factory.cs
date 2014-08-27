@@ -33,7 +33,18 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
         }
 
-        
+        public static Specification GetProfileSpec(bool resolve)
+        {
+            SpecificationResolver resolver = new SpecificationResolver();
+            resolver.Add("TestData");
+            SpecificationBuilder builder = new SpecificationBuilder(resolver);
+            builder.Add(StructureFactory.PrimitiveTypes());
+            builder.Add(StructureFactory.NonFhirNamespaces());
+            builder.LoadXmlFile("TestData\\profiles.xml");
+            if (resolve) builder.Resolve();
+
+            return builder.ToSpecification();
+        }
 
         public static Specification GetLipidSpec(bool resolve)
         {

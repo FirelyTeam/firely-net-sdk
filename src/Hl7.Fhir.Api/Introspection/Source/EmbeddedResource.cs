@@ -13,22 +13,39 @@ using Ionic.Zip;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
+using Hl7.Fhir.Api.Introspection.Source;
 
 namespace Fhir.Profiling.IO
 {
-    public class EmbeddedResource
+    public class EmbeddedResourceAccess
     {
-        static Stream zipstream;
+        Assembly assembly;
 
-        public static Stream GetStream<T>(string name)
+        public EmbeddedResourceAccess(Assembly assembly)
+        {
+            this.assembly = assembly;
+        }
+
+        public static Stream GetStream(Assembly assembly, string resourcename)
+        {
+            return assembly.GetManifestResourceStream(resourcename);
+        }
+        
+        public static EmbeddedResourceAccess Create<T>()
         {
             Assembly assembly = typeof(T).Assembly;
+            return new EmbeddedResourceAccess(assembly);
+        }
+
+        public Stream GetStream(string name)
+        {
             return assembly.GetManifestResourceStream(name);
         }
 
-        public static IEnumerable<string> ZipXmlContentStrings<T>(string name)
+
+        public IEnumerable<string> ZipXmlContentStrings(string name)
         {
-            Stream stream = GetStream<T>(name);
+            Stream stream = GetStream(name);
             ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
             foreach (ZipEntry entry in zip)
             {
@@ -42,16 +59,29 @@ namespace Fhir.Profiling.IO
             }
         }
 
-        public static ArtifactSource CreateArtifactSource<T>(string name)
+        public IArtifactSource CreateArtifactSource(string name)
         {
-            IEnumerable<string> texts = ZipXmlContentStrings<T>(name);
+            IEnumerable<string> texts = ZipXmlContentStrings(name);
             ResourceCollection col = new ResourceCollection(texts);
             IEnumerable<ResourceEntry> entries = col.ResourceEntries();
-            ArtifactSource source = new ArtifactSource(entries);
+            IArtifactSource source = new MemoryArtifactSource(entries);
             return source;
         }
 
 
+        public static IEnumerable<string> ZipXmlContentStrings<T>(string name)
+        {
+            EmbeddedResourceAccess embedded = EmbeddedResourceAccess.Create<T>();
+            return embedded.ZipXmlContentStrings(name);
+        }
+
+        public static IArtifactSource CreateArtifactSource<T>(string name)
+        {
+            EmbeddedResourceAccess embedded = EmbeddedResourceAccess.Create<T>();
+            return embedded.CreateArtifactSource(name);
+        }
+
+        /*
         public static string GetText<T>(string name)
         {
             string s;
@@ -72,101 +102,16 @@ namespace Fhir.Profiling.IO
                 return doc.CreateNavigator();
             }
         }
+        */
 
+        /*
         public static ZipFile ZipFile<T>(string name)
         {
             Stream stream = GetStream<T>(name);
             ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
             return zip;
         }
+        */
     }
 
-    public class ResourceCollection
-    {
-        List<string> texts;
-
-        public ResourceCollection(IEnumerable<string> texts)
-        {
-            this.texts = texts.ToList();
-        }
-
-        public IEnumerable<ResourceEntry> ResourceEntries()
-        {
-            foreach (string text in texts)
-            {
-                Bundle bundle = FhirParser.ParseBundleFromXml(text);
-                foreach (ResourceEntry entry in bundle.Entries.OfType<ResourceEntry>())
-                {
-                    yield return entry;
-                }
-            }
-        }
-        
-        public static IEnumerable<XElement> FeedEntries(XmlReader reader)
-        {
-            while (reader.Read())
-            {
-                if (reader.NodeType == XmlNodeType.Element
-                       && reader.LocalName == "entry"
-                       && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
-                {
-                    XElement element = (XElement)XElement.ReadFrom(reader);
-                    yield return element;
-                }
-            }
-        }
-
-        public static readonly XName ENTRY_CONTENT = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT;
-
-        public static string Content(XElement element)
-        {
-            var contentElement = element.Element(ENTRY_CONTENT);
-            var entryContentXml = contentElement.Elements().FirstOrDefault();
-            return entryContentXml == null ? null : entryContentXml.ToString();
-        }
-    }
-
-    public class ArtifactSource : IArtifactSource
-    {
-        
-        List<ResourceEntry> entries;
-
-        public ArtifactSource(IEnumerable<ResourceEntry> entries)
-        {
-            this.entries = entries.ToList();
-        }
-        
-        private void load()
-        {
-           
-        }
-
-        bool _isPrepared = false;
-        public void Prepare()
-        {
-            if (!_isPrepared)
-            {
-                load();
-                _isPrepared = true;
-            }
-        }
-    
-        public Stream ReadContentArtifact(string name)
-        {
-            Prepare();
-            throw new NotImplementedException();
-        }
-
-        public Resource ReadResourceArtifact(Uri artifactId)
-        {
-            
-            Prepare();
-            foreach (ResourceEntry entry in entries)
-            {
-                if (entry.Id.ToString().ToLower() == artifactId.ToString().ToLower())
-                    return entry.Resource;
-            }
-            return null;
-        }
-    }
 }

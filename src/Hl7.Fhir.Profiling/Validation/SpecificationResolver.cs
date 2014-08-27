@@ -22,6 +22,10 @@ namespace Hl7.Fhir.Introspection
         public SpecificationResolver()
         {
             // always add a web artifact source to resolve uri's
+        }
+
+        public void AddWebSource()
+        {
             cache(new WebArtifactSource());
         }
         
@@ -29,7 +33,7 @@ namespace Hl7.Fhir.Introspection
         {
             foreach (string path in paths)
             {
-                Add(new CoreZipArtifactSource(path), new FileArtifactSource(path));
+                Add(new CoreZipArtifactSource(), new FileArtifactSource(path));
             }
         }
 

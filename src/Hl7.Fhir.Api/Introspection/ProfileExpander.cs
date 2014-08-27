@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Introspection
     {
         public ProfileExpander()
         {
-            _loader = new StructureLoader(new CachedArtifactSource(new ArtifactResolver()));
+            _loader = new StructureLoader(new CachedArtifactSource(ArtifactResolver.CreateDefault()));
         }
 
         public ProfileExpander(IArtifactSource source)
