@@ -485,5 +485,34 @@ namespace Hl7.Fhir.Tests
             client.DeleteTags(affixedEntry.SelfLink, tags);
             //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         }
+
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void TestConnectionError()
+        {
+            // todo: Thread error handling
+            // In Forge, a Conformance request to a nonexisting endpoint, results in an exception that cannot be caught.
+            // This unit tests simulates that behaviour, but here we can catch the error. 
+            // The error however is a NullReferenceException and not the original WebException.
+            // Solution: The AsyncCallBack of GetResponseNoEx(this WebRequest req) should have a catch block.
+            // -- MH.
+            Exception register = null;
+
+            try
+            {
+                string endpoint = "http://localhost:1396/fhir";
+                FhirClient client = new FhirClient(endpoint);
+                client.Conformance();
+            }
+            catch (Exception e)
+            {
+                register = e;
+            }
+
+            Assert.IsTrue(register != null);
+        }
+
+
     }
+
 }

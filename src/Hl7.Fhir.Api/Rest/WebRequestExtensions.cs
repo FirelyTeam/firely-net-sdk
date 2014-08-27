@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Rest
         public static WebResponse GetResponseNoEx(this WebRequest req)
         {
             WebResponse result = null;
-            ManualResetEvent responseReady = new ManualResetEvent(false);
+            ManualResetEvent responseReady = new ManualResetEvent(initialState: false);
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Rest
                     {
                         result = req.EndGetResponseNoEx(ar);
                     }
+                   
                     finally
                     {
                         responseReady.Set();
