@@ -69,6 +69,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\BaseElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileExtensionExtensions.cs" />
+    <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
+    <Compile Include="Introspection\ProfileExpander.cs" />
+    <Compile Include="Introspection\DifferentialTreeConstructor.cs" />
+    <Compile Include="Introspection\Source\EmbeddedResource.cs" />
+    <Compile Include="Introspection\StructureLoader.cs" />
+    <Compile Include="Introspection\StructureExpander.cs" />
+    <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
+    <Compile Include="Introspection\Source\SchemaCollection.cs" />
+    <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />
+    <Compile Include="Introspection\Source\ArtifactResolver.cs" />
+    <Compile Include="Introspection\Source\FileArtifactSource.cs" />
+    <Compile Include="Introspection\Source\IArtifactSource.cs" />
+    <Compile Include="Introspection\Source\WebArtifactSource.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
@@ -117,6 +135,8 @@
     <Compile Include="Serialization\IFhirReader.cs" />
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\JTokenExtensions.cs" />
+    <Compile Include="Serialization\NavigatorState.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
@@ -151,6 +171,8 @@
     <Compile Include="Search\StringValue.cs" />
     <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Support\ZipCacher.cs" />
+    <Compile Include="Support\XmlFeedScanner.cs" />
     <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +193,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Profiles\" />
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Introspection\Source\core-conformances-base.xml" />
+    <Content Include="Introspection\Source\core-profiles-datatypes.xml" />
+    <Content Include="Introspection\Source\core-profiles-resources.xml" />
+    <Content Include="Introspection\Source\core-valuesets-dicom.xml" />
+    <Content Include="Introspection\Source\core-valuesets-fhir.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v2.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v3.xml" />
+    <Content Include="Introspection\Source\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

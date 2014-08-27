@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
 
                 return true;
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }

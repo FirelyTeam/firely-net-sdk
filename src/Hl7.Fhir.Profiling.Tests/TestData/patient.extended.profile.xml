@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <name value="Example Extension Definition" />
+  <!-- snip other metadata -->
+  <extensionDefn>
+    <code value="participation-agreement" />
+    <contextType value="resource" />
+    <context value="Patient" />
+    <definition>
+      <short value="Agreed agreement/policy" />
+      <formal value="A URI that identifies a participation agreement/policy 
+        to which the patient has agreed" />
+      <comments value="URI is a literal reference to agreement text (html). 
+        Systems SHALL conform to the policies as indicated. 
+        For further information, see the partnership agreement..." />
+      <min value="1" />
+      <max value="*" />
+      <type>
+        <code value="uri" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+    </definition>
+  </extensionDefn>
+
+  <!-- snip narrative -->
+
+  
+  <!-- snip other metadata, narrative -->
+    <structure>
+      
+      <type value="Patient"/> <!-- mh.1 -->
+      
+      <!-- first, the patient root element 
+      - can be copy/paste from the base patient profile -->
+      <element>
+        <path value="Patient"/>
+        <!-- snip definition -->
+      </element>
+
+      <!-- now, the general definition for extensions
+      - can be copy/paste from the base patient profile,
+      with changes for slicing  -->
+      <element>
+        <path value="Patient.extension"/>
+        <name value="base extension"/>
+        <!-- we're going to slice the extension element, and 
+        one of the extensions is one we have defined -->
+        <slicing>
+          <!-- extension is always sliced on url -->
+          <discriminator value="url"/>
+          <!-- we don't care what the order of any extensions is -->
+          <ordered value="false"/>
+          <!-- Other extensions are allowed in addition to this one -->
+          <rules value="open"/>
+        </slicing>
+        <!-- snip definition -->
+        <definition>
+          <min value="1"/>
+          <max value="*"/>
+          <type>
+            <!-- obviously it has to be an extension -->
+            <code value="Extension"/>
+            <!-- and here is the link to the extension definition:
+            this extension has to conform to the rules laid down in it's definition -->
+            <profile value="http://example.org/phr/documents/fhir/extensions#participation-agreement"/>
+          </type>
+        </definition>
+      </element>
+
+      <!-- now, the slice that contains our extension -->
+      <element>
+        <path value="Patient.extension"/>
+        <definition>
+          <!-- clone information from the extension definition. 
+          duplicative, but this duplication makes it over all simpler -->
+          <short value="Agreed agreement/policy"/>
+          <formal value="A URI that identifies a participation agreement/policy 
+        to which the patient has agreed"/>
+          <!--  min has to be 1, since the extension itself has min = 1 -->
+          <min value="1"/>
+          <max value="*"/>
+          <type>
+            <!-- obviously it has to be an extension -->
+            <code value="Extension"/>
+            <!-- and here is the link to the extension definition:
+            this extension has to conform to the rules laid down in it's definition -->
+            <profile value="http://example.org/phr/documents/fhir/extensions#participation-agreement"/>
+          </type>
+          <isModifier value="false"/>
+        </definition>
+      </element>
+
+      <!-- snip the rest of the profile -->
+
+    </structure>
+</Profile>
+

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><div>Type definition for Identifier from <a href="http://hl7.org/fhir/datatypes.html#Identifier">FHIR Specification</a></div></div>
+  </text>
+  <name value="Basic Profile for Identifier"/>
+  <publisher value="FHIR Specification"/>
+  <description value="Basic Profile for Identifier for validation support"/>
+  <status value="draft"/>
+  <date value="2014-02-03"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2"/>
+  </mapping>
+  <mapping>
+    <identity value="servd"/>
+    <uri value="http://www.omg.org/spec/ServD/1.0/"/>
+    <name value="ServD"/>
+  </mapping>
+  <structure>
+    <type value="Identifier"/>
+    <element>
+      <path value="Identifier"/>
+      <definition>
+        <short value="An identifier intended for computation"/>
+        <formal value="A technical identifier - identifies some entity uniquely and unambiguously."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Type"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="II - see see identifier pattern at http://wiki.hl7.org/index.php?title=Common_Design_Patterns#Identifier_Pattern for relevant discussion. The Identifier class is a little looser than the v3 type II because it allows URIs as well as registered OIDs or GUIDs"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX / EI (occasionally, more often EI maps to a resource id or a URL)"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="Identifier"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.use"/>
+      <definition>
+        <short value="usual | official | temp | secondary (If known)"/>
+        <formal value="The purpose of this identifier."/>
+        <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one. Applications can assume that an identifier is permanent unless it explicitly says that it is temporary."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="true"/>
+        <binding>
+          <name value="IdentifierUse"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/identifier-use"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A - this is sometimes implied by context"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX.5"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.label"/>
+      <definition>
+        <short value="Description of identifier"/>
+        <formal value="A text string for the identifier that can be displayed to a human so they can recognize the identifier."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A - this is sometimes implied by context"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.system"/>
+      <definition>
+        <short value="The namespace for the identifier"/>
+        <formal value="Establishes the namespace in which set of possible id values is unique."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="uri"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="II.root"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX.4 / EI-2-4"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./IdentifierType"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.value"/>
+      <definition>
+        <short value="The value that is unique"/>
+        <formal value="The portion of the identifier typically displayed to the user and which is unique within the context of the system."/>
+        <comments value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="string"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="II.extension or II.root if system indicates OID or GUID"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX.1 / EI.1"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./Value"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.period"/>
+      <definition>
+        <short value="Time period when id is/was valid for use"/>
+        <formal value="Time period during which identifier is/was valid for use."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Period"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A - this is sometimes implied by context"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX.7 + CX.8"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./StartDate and ./EndDate"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Identifier.assigner"/>
+      <definition>
+        <short value="Organization that issued id (may be just text)"/>
+        <formal value="Organization that issued/manages the identifier."/>
+        <comments value="The reference may be just a text description of the assigner."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/profiles/Organization"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="II.assigningAuthorityName but note that this is an improper use by the definition of the field"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="CX.4 / (CX.4,CX.9,CX.10)"/>
+        </mapping>
+        <mapping>
+          <identity value="servd"/>
+          <map value="./IdentifierIssuingAuthority"/>
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+</Profile>

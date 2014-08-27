@@ -14,14 +14,15 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
 using System.IO;
+#if !PORTABLE45
 using Ionic.Zip;
+#endif
 using Hl7.Fhir.Serialization;
-using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files
@@ -50,14 +51,18 @@ namespace Hl7.Fhir.Api.Introspection.Source
 
         public CoreZipArtifactSource()
         {
-            var modelDir = Path.Combine(Directory.GetCurrentDirectory(), "Model");
+#if !PORTABLE45
+            var modelDir = FileArtifactSource.SpecificationDirectory;
 
             // Add the current directory to the list of directories with artifact content, unless there's
-            // a special "Model" subdirectory available
+            // a special subdirectory available
             if (Directory.Exists(modelDir))
                 _contentDirectory = modelDir;
             else
                 _contentDirectory = Directory.GetCurrentDirectory();
+#else
+            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
+#endif
         }
 
         /// <summary>
@@ -67,6 +72,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
         /// file system and is not thread-safe.</remarks>
         public void Prepare()
         {
+#if !PORTABLE45
             _artifactFiles = new List<string>();
 
             var zips = Directory.GetFiles(_contentDirectory, "*.zip");
@@ -80,6 +86,10 @@ namespace Hl7.Fhir.Api.Introspection.Source
             }
 
             _isPrepared = true;
+#else
+            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
+#endif
+
         }
 
 
@@ -96,6 +106,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
 
         public Stream ReadContentArtifact(string name)
         {
+#if !PORTABLE45
             if (name == null) throw Error.ArgumentNull("name");
 
             ensurePrepared();
@@ -104,6 +115,10 @@ namespace Hl7.Fhir.Api.Introspection.Source
             var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
+#else
+            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
+#endif
+
         }
 
 

@@ -86,8 +86,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Inspection\ProfileExpansionTest.cs" />
+    <Compile Include="Inspection\ProfileNavigationTest.cs" />
+    <Compile Include="Inspection\SchemaCollectionTest.cs" />
+    <Compile Include="Inspection\ArtifactStorageTest.cs" />
+    <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Inspection\ClassMappingTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Search\QueryTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rest\FhirClientTests.cs" />
@@ -95,12 +103,12 @@
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Search\ExpressionTests.cs" />
     <Compile Include="Search\QueryExtensionTests.cs" />
-    <Compile Include="Search\QueryTests.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Inspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
+    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Inspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

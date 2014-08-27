@@ -13,13 +13,14 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Hl7.Fhir.Introspection.Source
 {
+#if !PORTABLE45
     public class SchemaCollection
     {
-#if !PORTABLE45
+
         private static Lazy<XmlSchemaSet> _validationSchemaSet = new Lazy<XmlSchemaSet>(compileValidationSchemas, true);
 
         public static XmlSchemaSet ValidationSchemaSet
@@ -49,7 +50,6 @@ namespace Hl7.Fhir.Introspection.Source
 
             return schemas;
         }
-#endif
-
     }
+#endif
 }

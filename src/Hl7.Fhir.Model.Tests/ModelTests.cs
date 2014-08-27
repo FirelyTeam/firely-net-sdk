@@ -149,6 +149,19 @@ namespace Hl7.Fhir.Tests
         }
 
         [TestMethod]
+        public void TestListDeepCopy()
+        {
+            var x = new List<Patient>();
+            x.Add(new Patient());
+            x.Add(new Patient());
+
+            var y = new List<Patient>(x.DeepCopy());
+            Assert.IsTrue(x[0] is Patient);
+            Assert.AreNotEqual(x[0], y[0]);
+            Assert.AreNotEqual(x[1], y[1]);
+        }
+
+        [TestMethod]
         public void TypedResourceEntry()
         {
             var pe = new ResourceEntry<Patient>();

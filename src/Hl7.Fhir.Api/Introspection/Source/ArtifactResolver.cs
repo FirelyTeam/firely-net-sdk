@@ -13,7 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Introspection.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources

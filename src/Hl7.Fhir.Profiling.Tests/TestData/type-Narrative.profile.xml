@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><div>Type definition for Narrative from <a href="http://hl7.org/fhir/datatypes.html#Narrative">FHIR Specification</a></div></div>
+  </text>
+  <name value="Basic Profile for Narrative"/>
+  <publisher value="FHIR Specification"/>
+  <description value="Basic Profile for Narrative for validation support"/>
+  <status value="draft"/>
+  <date value="2014-02-03"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <structure>
+    <type value="Narrative"/>
+    <element>
+      <path value="Narrative"/>
+      <definition>
+        <short value="A human-readable formatted text, including images"/>
+        <formal value="A human-readable formatted text, including images."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Type"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Narrative.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Narrative.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Narrative.status"/>
+      <definition>
+        <short value="generated | extensions | additional"/>
+        <formal value="The status of the narrative - whether it&#39;s entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="NarrativeStatus"/>
+          <isExtensible value="true"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/narrative-status"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Narrative.div"/>
+      <definition>
+        <short value="Limited xhtml content"/>
+        <formal value="The actual narrative content, a stripped down version of XHTML."/>
+        <comments value="The contents of the html element are an XHTML fragment containing only the basic html formatting elements described in chapters 7-11 and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained stylesheets. The XHTML content may not contain a head, a body, external stylesheet references, scripts, forms, base/link/xlink, frames, iframes and objects."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="xhtml"/>
+        </type>
+        <constraint>
+          <key value="3"/>
+          <severity value="error"/>
+          <human value="The narrative SHALL contain only the basic html formatting attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained style attributes"/>
+          <xpath value="not(descendant-or-self::*/@*[not(name(.)=(&#39;abbr&#39;, &#39;accesskey&#39;, &#39;align&#39;, &#39;alt&#39;, &#39;axis&#39;, &#39;bgcolor&#39;, &#39;border&#39;, &#39;cellhalign&#39;, &#39;cellpadding&#39;, &#39;cellspacing&#39;, &#39;cellvalign&#39;, &#39;char&#39;, &#39;charoff&#39;, &#39;charset&#39;, &#39;cite&#39;, &#39;class&#39;, &#39;colspan&#39;, &#39;compact&#39;, &#39;coords&#39;, &#39;dir&#39;, &#39;frame&#39;, &#39;headers&#39;, &#39;height&#39;, &#39;href&#39;, &#39;hreflang&#39;, &#39;hspace&#39;, &#39;id&#39;, &#39;lang&#39;, &#39;longdesc&#39;, &#39;name&#39;, &#39;nowrap&#39;, &#39;rel&#39;, &#39;rev&#39;, &#39;rowspan&#39;, &#39;rules&#39;, &#39;scope&#39;, &#39;shape&#39;, &#39;span&#39;, &#39;src&#39;, &#39;start&#39;, &#39;style&#39;, &#39;summary&#39;, &#39;tabindex&#39;, &#39;title&#39;, &#39;type&#39;, &#39;valign&#39;, &#39;value&#39;, &#39;vspace&#39;, &#39;width&#39;))])"/>
+        </constraint>
+        <constraint>
+          <key value="2"/>
+          <severity value="error"/>
+          <human value="The narrative SHALL have some non-whitespace content"/>
+          <xpath value="descendant::text()[normalize-space(.)!=&#39;&#39;] or descendant::html:img[@src]"/>
+        </constraint>
+        <constraint>
+          <key value="1"/>
+          <severity value="error"/>
+          <human value="The narrative SHALL contain only the basic html formatting elements described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained style attributes"/>
+          <xpath value="not(descendant-or-self::*[not(local-name(.)=(&#39;a&#39;, &#39;abbr&#39;, &#39;acronym&#39;, &#39;b&#39;, &#39;big&#39;, &#39;blockquote&#39;, &#39;br&#39;, &#39;caption&#39;, &#39;cite&#39;, &#39;code&#39;, &#39;colgroup&#39;, &#39;dd&#39;, &#39;dfn&#39;, &#39;div&#39;, &#39;dl&#39;, &#39;dt&#39;, &#39;em&#39;, &#39;h1&#39;, &#39;h2&#39;, &#39;h3&#39;, &#39;h4&#39;, &#39;h5&#39;, &#39;h6&#39;, &#39;hr&#39;, &#39;i&#39;, &#39;li&#39;, &#39;ol&#39;, &#39;p&#39;, &#39;pre&#39;, &#39;q&#39;, &#39;samp&#39;, &#39;small&#39;, &#39;span&#39;, &#39;strong&#39;, &#39;table&#39;, &#39;tbody&#39;, &#39;td&#39;, &#39;tfoot&#39;, &#39;th&#39;, &#39;thead&#39;, &#39;tr&#39;, &#39;tt&#39;, &#39;ul&#39;, &#39;var&#39;))])"/>
+        </constraint>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+</Profile>

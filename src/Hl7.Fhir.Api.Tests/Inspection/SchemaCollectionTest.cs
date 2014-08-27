@@ -13,21 +13,17 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Api.Introspection;
-using Hl7.Fhir.Api.Introspection.Source;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Hl7.Fhir.Introspection.Source;
 
 namespace Hl7.Fhir.Test.Inspection
 {
+#if !PORTABLE45
     [TestClass]
-#if PORTABLE45
-	public class PortableSchemaCollectionTest
-#else
     public class SchemaCollectionTest
-#endif
     {
         [TestMethod]
         public void TestSchemaCompilation()
@@ -50,4 +46,5 @@ namespace Hl7.Fhir.Test.Inspection
             }
         }
     }
+#endif
 }

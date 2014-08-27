@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValueSet xmlns="http://hl7.org/fhir">
+  <identifier value="urn:hl7.org:lipid-interpretation-valueset:v1"/>
+  <version value="101"/>
+  <status value="draft"/>
+  <name value="LipidInterpretation-v1"/>
+  <publisher value="Hl7 Inc"/>
+  <description value="This is an example valueset for the Lipid Profile example"/>
+  <experimental value="true"/>
+  <date value="2014-04-22T17:53:51+02:00"/>
+  <compose>
+    <include>
+      <system value="http://hl7.org/fhir/v2/0078"/>
+      <code value="H">
+        <extension url="http://hl7.org/fhir/Profile/tools-extensions#display">
+          <valueString value="Above high normal"/>
+        </extension>
+      </code>
+      <code value="HH">
+        <extension url="http://hl7.org/fhir/Profile/tools-extensions#display">
+          <valueString value="Above upper panic limits"/>
+        </extension>
+      </code>
+      <code value="N">
+        <extension url="http://hl7.org/fhir/Profile/tools-extensions#display">
+          <valueString value="Normal (applies to non-numeric results)"/>
+        </extension>
+      </code>
+    </include>
+  </compose>
+</ValueSet>

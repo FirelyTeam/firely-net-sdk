@@ -37,9 +37,13 @@
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Api.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -51,6 +55,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Introspection\BaseElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileExtensionExtensions.cs" />
+    <Compile Include="Introspection\Source\CachedArtifactSource.cs" />
+    <Compile Include="Introspection\ProfileExpander.cs" />
+    <Compile Include="Introspection\DifferentialTreeConstructor.cs" />
+    <Compile Include="Introspection\Source\EmbeddedResource.cs" />
+    <Compile Include="Introspection\StructureLoader.cs" />
+    <Compile Include="Introspection\StructureExpander.cs" />
+    <Compile Include="Introspection\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Introspection\ElementNavigator.cs" />
+    <Compile Include="Introspection\ProfileNavigationExtensions.cs" />
+    <Compile Include="Introspection\Source\SchemaCollection.cs" />
+    <Compile Include="Introspection\Source\CoreZipArtifactSource.cs" />
+    <Compile Include="Introspection\Source\ArtifactResolver.cs" />
+    <Compile Include="Introspection\Source\FileArtifactSource.cs" />
+    <Compile Include="Introspection\Source\IArtifactSource.cs" />
+    <Compile Include="Introspection\Source\WebArtifactSource.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\ValueSet.cs" />
@@ -93,6 +115,9 @@
     <Compile Include="Serialization\IFhirReader.cs" />
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\JsonXPathNavigator.cs" />
+    <Compile Include="Serialization\JTokenExtensions.cs" />
+    <Compile Include="Serialization\NavigatorState.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
@@ -132,6 +157,8 @@
     <Compile Include="Search\StringValue.cs" />
     <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Support\ZipCacher.cs" />
+    <Compile Include="Support\XmlFeedScanner.cs" />
     <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,13 +169,26 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.Net45.csproj">
       <Project>{2f8a060a-b12e-4ae7-aa15-5148b2711557}</Project>
       <Name>Hl7.Fhir.Model.Net45</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Introspection\Source\core-conformances-base.xml" />
+    <Content Include="Introspection\Source\core-profiles-datatypes.xml" />
+    <Content Include="Introspection\Source\core-profiles-resources.xml" />
+    <Content Include="Introspection\Source\core-valuesets-dicom.xml" />
+    <Content Include="Introspection\Source\core-valuesets-fhir.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v2.xml" />
+    <Content Include="Introspection\Source\core-valuesets-v3.xml" />
+    <Content Include="Introspection\Source\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
