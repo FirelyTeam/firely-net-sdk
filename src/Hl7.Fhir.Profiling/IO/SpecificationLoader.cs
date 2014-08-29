@@ -16,7 +16,7 @@ using Hl7.Fhir.Model;
 namespace Fhir.Profiling.IO
 {
 
-    public class SpecificationHarvester
+    internal class SpecificationHarvester
     {
 
         List<Slicing> Slicings = new List<Slicing>();

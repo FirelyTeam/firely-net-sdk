@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace Fhir.Profiling
 {
 
-
     public class TypeRef : IEquatable<TypeRef>
     {
         public TypeRef(string code, string profileUri = null)
@@ -23,19 +22,29 @@ namespace Fhir.Profiling
         }
         public string Code;
         public string ProfileUri { get; set; }
-        public Uri GetUri()
+        public Uri ResolvingUri
         {
-            Uri uri;
-            if (this.ProfileUri == null)
+            get
             {
-                string name = this.Code.ToLower(); // todo: this is a temporary fix!!!
-                uri = new Uri("http://hl7.org/fhir/profile/" + name);
+                Uri uri;
+                if (this.ProfileUri == null)
+                {
+                    string name = this.Code.ToLower(); // todo: this is a temporary fix!!!
+                    uri = new Uri("http://hl7.org/fhir/profile/" + name);
+                }
+                else
+                {
+                    uri = new Uri(this.ProfileUri);
+                }
+                return uri;
             }
-            else
+        }
+        public bool Unresolved
+        {
+            get
             {
-                uri = new Uri(this.ProfileUri);
+                return (Structure == null);
             }
-            return uri;
         }
         public Structure Structure { get; set; }
         public override string ToString()

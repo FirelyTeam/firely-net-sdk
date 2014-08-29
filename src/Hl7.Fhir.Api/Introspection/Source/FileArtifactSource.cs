@@ -147,16 +147,17 @@ namespace Hl7.Fhir.Introspection.Source
             {
                 if (contentXml != null)
                     return FhirParser.ParseResource(XmlReader.Create(contentXml));
-
-                var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
-                using (var contentJson = ReadContentArtifact(jsonFilename))
-                {
-                    if (contentJson != null)
-                        return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
-                    else
-                        return null;
-                }
             }
+            
+            var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
+            using (var contentJson = ReadContentArtifact(jsonFilename))
+            {
+                if (contentJson != null)
+                    return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
+            }
+
+            return null;
+            
         }
         
         private void ensurePrepared()

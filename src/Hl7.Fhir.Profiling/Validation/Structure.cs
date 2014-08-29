@@ -24,7 +24,6 @@ namespace Fhir.Profiling
                 return Elements.FirstOrDefault(e => e.Path.Count == 1);
             }
         }
-        
        
         public override string ToString()
         {

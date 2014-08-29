@@ -56,11 +56,12 @@
     <Compile Include="Validation\Outcome.cs" />
     <Compile Include="Validation\Path.cs" />
     <Compile Include="Validation\SpecificationBuilder.cs" />
-    <Compile Include="Validation\SpecificationResolver.cs" />
-    <Compile Include="Validation\SpecificationSealer.cs" />
+    <Compile Include="Validation\SpecificationProvider.cs" />
+    <Compile Include="Validation\SpecificationBinder.cs" />
     <Compile Include="Validation\SpecificationValidator.cs" />
     <Compile Include="Validation\ReportBuilder.cs" />
     <Compile Include="Validation\Structure.cs" />
+    <Compile Include="Validation\Tracker.cs" />
     <Compile Include="Validation\TypeRef.cs" />
     <Compile Include="Validation\Validate.cs" />
     <Compile Include="Validation\ValueSet.cs" />

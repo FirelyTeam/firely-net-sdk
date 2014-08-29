@@ -6,15 +6,14 @@ using System.Linq;
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
-    public class TestProfileResources
+    public class TestMetaValidation
     {
         static Specification spec;
 
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            spec = Factory.GetProfileSpec(resolve: false);
-            
+            spec = Factory.GetProfileSpec(expand: true, online: false);
         }
 
         [TestMethod]

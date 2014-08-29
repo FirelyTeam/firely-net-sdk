@@ -20,53 +20,64 @@ namespace Fhir.Profiling.Tests
 {
     public static class Factory
     {
-        public static Specification GetPatientSpec(bool resolve)
+        public static SpecificationProvider GetProvider(bool online)
         {
-            SpecificationProvider resolver = SpecificationProvider.CreateDefault();
+            if (online)
+            {
+                return SpecificationProvider.CreateDefault();
+            }
+            else
+            {
+                return SpecificationProvider.CreateOffline();
+            }
+        }
+
+        public static Specification GetPatientSpec(bool expand, bool online)
+        {
+            SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.Add("http://hl7.org/fhir/profile/patient");
-            if (resolve) builder.Expand();
+            if (expand) builder.Expand();
 
             return builder.ToSpecification();
         }
 
-        public static Specification GetProfileSpec(bool resolve)
+        public static Specification GetProfileSpec(bool expand, bool online)
         {
-            SpecificationProvider resolver = SpecificationProvider.CreateDefault();
+            SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.LoadXmlFile("TestData\\profiles.xml");
-            if (resolve) builder.Expand();
+            if (expand) builder.Expand();
 
             return builder.ToSpecification();
         }
 
-        public static Specification GetLipidSpec(bool resolve)
+        public static Specification GetLipidSpec(bool expand, bool online)
         {
-            SpecificationProvider resolver = SpecificationProvider.CreateDefault();
+            SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.LoadXmlFile("TestData\\valueset.profile.xml");
             builder.LoadXmlFile("TestData\\lipid.profile.xml");
-            if (resolve) builder.Expand();
+            if (expand) builder.Expand();
             
             return builder.ToSpecification();
 
         }
 
-        public static Specification GetExtendedPatientSpec(bool resolve)
+        public static Specification GetExtendedPatientSpec(bool expand, bool online)
         {
-            SpecificationProvider resolver = SpecificationProvider.CreateDefault();
+            SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.LoadXmlFile("TestData\\patient.extended.profile.xml");
             builder.LoadXmlFile("TestData\\type-Extension.profile.xml");
-            if (resolve) builder.Expand();
+            if (expand) builder.Expand();
             return builder.ToSpecification();
 
         }

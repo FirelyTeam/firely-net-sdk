@@ -19,60 +19,94 @@ namespace Fhir.Profiling
 {
     using Model = Hl7.Fhir.Model;
     
-    public enum Resolution { Unknown, Unresolvable, Resolved }
-
-    public class Tracker
-    {
-        Dictionary<Uri, Resolution> list = new Dictionary<Uri, Resolution>();
-
-        public void Log(Uri uri, Resolution resolution)
-        {
-
-
-        }
-
-        public bool Knows(Uri uri)
-        {
-            Resolution resolution = Resolution.Unknown;
-            list.TryGetValue(uri, out resolution);
-            return resolution != Resolution.Unknown;
-        }
-    }
-
     public class SpecificationBuilder
     {
+        public SpecificationBuilder(SpecificationProvider provider)
+        {
+            this.provider = provider;
+        }
+
         private Specification specification = new Specification();
         private SpecificationProvider provider;
         private Tracker tracker = new Tracker();
 
-        public SpecificationBuilder(SpecificationProvider resolver)
+        private bool TryExpandStructures(Uri uri)
         {
-            this.provider = resolver;
-        }
-
-        private List<string> knownUris = new List<string>();
-
-        public TypeRef CreateTypeRef(string code, string profileUri)
-        {
-            // Create new or refer to existing
-
-            TypeRef typeref = new TypeRef(code, profileUri);
-            TypeRef existing = specification.FindTypeRef(typeref);
-           
-            if (existing != null)
+            if (tracker.Knows(uri)) return false;
+                
+            IEnumerable<Structure> structures = provider.GetStructures(uri);
+            if (structures.Count() > 0)
             {
-                return existing;
+                specification.Add(structures);
+                tracker.Add(uri, Resolution.Resolved);
+                return true;
             }
             else
             {
-                specification.Add(typeref);
-                return typeref;
+                tracker.Add(uri, Resolution.Unresolvable);
+                return true;
             }
         }
 
-        public void Add(IEnumerable<ValueSet> valuesets)
+        private List<Uri> UnresolvedTypeRefUris()
         {
-            specification.Add(valuesets);
+            return 
+                specification.TypeRefs
+                .Where(t => t.Unresolved)
+                .Select(t => t.ResolvingUri)
+                .ToList();
+        }
+
+        private bool ExpandTypeRefs()
+        {
+            var uris = UnresolvedTypeRefUris();
+            // ToList(), because expanding will modify this list.
+
+            bool expanded = false;
+            foreach (Uri uri in uris)
+            {
+                expanded |= TryExpandStructures(uri);
+            }
+            return expanded;
+        }
+
+        private bool TryExpandBinding(Uri uri)
+        {
+            if (tracker.Knows(uri)) return false;
+
+            ValueSet valueset = provider.GetValueSet(uri);
+            if (valueset != null)
+            {
+                tracker.Add(uri, Resolution.Resolved);
+                specification.Add(valueset);
+                return true;
+            }
+            else
+            {
+                tracker.Add(uri, Resolution.Unresolvable);
+                return false;
+            }
+        }
+
+        private void ExpandBindings()
+        {
+            IEnumerable<Uri> newbindings = specification.BindingUris;
+            
+            foreach (Uri uri in newbindings)
+            {
+                TryExpandBinding(uri);
+            }
+        }
+
+        public void Expand()
+        {
+            while (ExpandTypeRefs()) ;
+            ExpandBindings();
+        }
+
+        public void Add(string uri)
+        {
+            TryExpandStructures(new Uri(uri));
         }
 
         public void Add(IEnumerable<Structure> structures)
@@ -80,63 +114,16 @@ namespace Fhir.Profiling
             specification.Add(structures);
         }
 
-        public void Add(string uri)
+        public void Add(IEnumerable<ValueSet> valuesets)
         {
-            if (provider != null)
-            {
-                if (!knownUris.Contains(uri))
-                {
-                    IEnumerable<Structure> structures = provider.GetStructures(uri);
-                    this.Add(structures);
-                    knownUris.Add(uri);
-                    // todo: this should not give an error if unresolved.
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("This SpecificationBuilder has no SpecificationResolver");
-            }
-        }
-
-        private bool TryExpand(TypeRef typeref)
-        {
-            Uri uri = typeref.GetUri();
-            if (tracker.Knows(uri)) return false;
-
-            IEnumerable<Structure> structures = provider.GetStructures(typeref);
-            this.Add(structures);
-            return structures.Count() > 0;
-        }
-
-        private bool ExpandTypeRefs()
-        {
-            bool expanded = false;
-
-            foreach (TypeRef typeref in specification.TypeRefs)
-            {
-                expanded |= TryExpand(typeref);
-            }
-            return expanded;
-        }
-
-        private void ExpandBindings()
-        {
-            IEnumerable<Uri> newbindings = specification.BindingUris.Except(specification.ValueSetUris);
-            IEnumerable<ValueSet> valuesets = provider.GetValueSets(newbindings);
-            this.Add(valuesets);
-        }
-
-        public void Expand()
-        {
-            while (ExpandTypeRefs());
-            ExpandBindings();
+            specification.Add(valuesets);
         }
 
         public Specification ToSpecification()
         {
             if (!specification.Sealed)
             {
-                SpecificationSealer.Seal(specification);
+                SpecificationBinder.Bind(specification);
             }
             return specification;
 

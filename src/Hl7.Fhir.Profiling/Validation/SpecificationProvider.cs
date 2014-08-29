@@ -18,12 +18,9 @@ namespace Hl7.Fhir.Introspection
         IArtifactSource source;
         SpecificationHarvester harvester;
 
-        public SpecificationProvider(IArtifactSource source = null)
+        public SpecificationProvider(IArtifactSource source)
         {
-            if (source == null)
-                source = ArtifactResolver.CreateCachedDefault();
             this.source = source;
-
             this.harvester = new SpecificationHarvester();
         }
 
@@ -31,6 +28,13 @@ namespace Hl7.Fhir.Introspection
         {
             IArtifactSource source = ArtifactResolver.CreateCachedDefault();
             return new SpecificationProvider(source);
+        }
+
+        public static SpecificationProvider CreateOffline()
+        {
+            IArtifactSource source = new ArtifactResolver(new CoreZipArtifactSource(), new FileArtifactSource());
+            IArtifactSource cache = new CachedArtifactSource(source);
+            return new SpecificationProvider(cache);
         }
 
         private T Resolve<T>(Uri uri) where T : Model.Resource
@@ -59,7 +63,7 @@ namespace Hl7.Fhir.Introspection
 
         public IEnumerable<Structure> GetStructures(TypeRef typeref)
         {
-            Uri uri = typeref.GetUri();
+            Uri uri = typeref.ResolvingUri;
             return GetStructures(uri);
         }
 
