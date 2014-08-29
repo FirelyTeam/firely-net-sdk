@@ -63,7 +63,7 @@
     <Compile Include="Validation\Structure.cs" />
     <Compile Include="Validation\Tracker.cs" />
     <Compile Include="Validation\TypeRef.cs" />
-    <Compile Include="Validation\Validate.cs" />
+    <Compile Include="Validation\Validation.cs" />
     <Compile Include="Validation\ValueSet.cs" />
     <Compile Include="Validation\Vector.cs" />
     <Compile Include="IO\FhirDocument.cs" />

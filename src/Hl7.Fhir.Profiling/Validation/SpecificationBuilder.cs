@@ -104,9 +104,13 @@ namespace Fhir.Profiling
             ExpandBindings();
         }
 
+        public void Add(Uri uri)
+        {
+            TryExpandStructures(uri);
+        }
         public void Add(string uri)
         {
-            TryExpandStructures(new Uri(uri));
+            Add(new Uri(uri));
         }
 
         public void Add(IEnumerable<Structure> structures)

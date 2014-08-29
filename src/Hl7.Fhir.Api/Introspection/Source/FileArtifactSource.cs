@@ -100,7 +100,6 @@ namespace Hl7.Fhir.Introspection.Source
             _isPrepared = true;
         }
 
-
         public IEnumerable<string> ArtifactFiles 
         {
             get
@@ -121,7 +120,6 @@ namespace Hl7.Fhir.Introspection.Source
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
-
 
         /// <summary>
         /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)

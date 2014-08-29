@@ -6,7 +6,7 @@ using System.Linq;
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
-    public class TestMetaValidation
+    public class TestCustomProfiles
     {
         static Specification spec;
 
@@ -19,11 +19,29 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void LipidProfile()
         {
-            // todo: Resolving does not resolve custom profiles (for testing)
-            // therefore these profiles are loaded the old way.
-
             var resource = FhirFile.LoadResource("TestData\\lipid.profile.xml");
-            Report report = spec.Validate(resource);
+            Report report = Validation.Validate(resource);
+
+            var errors = report.Errors.ToList();
+            Assert.IsTrue(report.IsValid);
+        }
+
+        [TestMethod]
+        public void Differential()
+        {
+            var resource = FhirFile.LoadResource("TestData\\lipid.profile.manual.differential.xml");
+            Report report = Validation.Validate(resource);
+
+            var errors = report.Errors.ToList();
+            Assert.IsTrue(report.IsValid);
+        }
+
+        [TestMethod]
+        public void Expanded()
+        {
+            var resource = FhirFile.LoadResource("TestData\\lipid.profile.expanded.xml");
+            Report report = Validation.Validate(resource);
+
             var errors = report.Errors.ToList();
             Assert.IsTrue(report.IsValid);
         }
