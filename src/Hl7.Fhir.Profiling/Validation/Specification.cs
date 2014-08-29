@@ -202,11 +202,33 @@ namespace Fhir.Profiling
             return TypeRefs.FirstOrDefault(t => t.Equals(typeref));
         }
 
-        public IEnumerable<Uri> ValueSetUris()
+        public IEnumerable<Uri> ValueSetUris
         {
-            return ValueSets.Select(v => new Uri(v.System));
+            get
+            {
+                return ValueSets.Select(v => new Uri(v.System));
+            }
         }
-        
+
+        public IEnumerable<Uri> BindingUris
+        {
+            get
+            {
+                return Elements
+                    .Where(e => e.BindingUri != null)
+                    .Distinct()
+                    .Select(e => new Uri(e.BindingUri));
+                    
+            }
+        }
+
+        public IEnumerable<Uri> TypeRefUris
+        {
+            get
+            {
+                return TypeRefs.Select(t => t.ProfileUri).Distinct().Select(s => new Uri(s));
+            }
+        }
     }
    
 }

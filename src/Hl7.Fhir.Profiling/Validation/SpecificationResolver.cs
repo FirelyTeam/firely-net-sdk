@@ -5,51 +5,83 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
-using Hl7.Fhir.Model;
+using Fhir.Profiling;
+using Fhir.Profiling.IO;
 
 namespace Hl7.Fhir.Introspection
 {
-    public class SpecificationResolver
+    using Model = Hl7.Fhir.Model;
+
+
+    public class SpecificationProvider
     {
-        ArtifactResolver resolver = new ArtifactResolver();
+        IArtifactSource source;
+        SpecificationHarvester harvester;
 
-        private void cache(IArtifactSource source)
+        public SpecificationProvider(IArtifactSource source = null)
         {
-            CachedArtifactSource cache = new CachedArtifactSource(source);
-            resolver.AddSource(cache);
+            if (source == null)
+                source = ArtifactResolver.CreateCachedDefault();
+            this.source = source;
+
+            this.harvester = new SpecificationHarvester();
         }
 
-        public SpecificationResolver()
+        public static SpecificationProvider CreateDefault()
         {
-            // always add a web artifact source to resolve uri's
+            IArtifactSource source = ArtifactResolver.CreateCachedDefault();
+            return new SpecificationProvider(source);
         }
 
-        public void AddWebSource()
+        private T Resolve<T>(Uri uri) where T : Model.Resource
         {
-            cache(new WebArtifactSource());
-        }
-        
-        public void Add(params string[] paths)
-        {
-            foreach (string path in paths)
-            {
-                Add(new CoreZipArtifactSource(), new FileArtifactSource(path));
-            }
-        }
-
-        public void Add(params IArtifactSource[] sources)
-        {
-            foreach (IArtifactSource source in sources)
-            {
-                cache(source);
-            }
-        }
-
-        public T Get<T>(Uri uri) where T : Resource
-        {
-            Resource resource = resolver.ReadResourceArtifact(uri);
+            Model.Resource resource = source.ReadResourceArtifact(uri);
             return (T)resource;
         }
 
+        public IEnumerable<Structure> GetStructures(Uri uri)
+        {
+            Model.Profile profile = Resolve<Model.Profile>(uri);
+            if (profile != null)
+            {
+                return harvester.HarvestStructures(profile);
+            }
+            else
+            {
+                return Enumerable.Empty<Structure>();
+            }
+        }
+
+        public IEnumerable<Structure> GetStructures(string uri)
+        {
+            return GetStructures(new Uri(uri));
+        }
+
+        public IEnumerable<Structure> GetStructures(TypeRef typeref)
+        {
+            Uri uri = typeref.GetUri();
+            return GetStructures(uri);
+        }
+
+        public ValueSet GetValueSet(Uri uri)
+        {
+            Model.ValueSet source = Resolve<Model.ValueSet>(uri);
+            if (source != null)
+            {
+                ValueSet target = harvester.HarvestValueSet(source);
+                return target;
+            }
+            return null;
+        }
+
+        public IEnumerable<ValueSet> GetValueSets(IEnumerable<Uri> uris)
+        {
+            foreach (Uri uri in uris)
+            {
+                ValueSet valueset = GetValueSet(uri);
+                if (valueset != null) yield return valueset;
+
+            }
+        }
     }
 }

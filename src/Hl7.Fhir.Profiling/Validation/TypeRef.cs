@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
-    public enum Resolution { New, Unresolvable, Resolved }
+
 
     public class TypeRef : IEquatable<TypeRef>
     {
@@ -20,11 +20,23 @@ namespace Fhir.Profiling
         {
             this.Code = code;
             this.ProfileUri = profileUri;
-            this.Resolution = Resolution.New;
         }
         public string Code;
         public string ProfileUri { get; set; }
-        public Resolution Resolution { get; set; }
+        public Uri GetUri()
+        {
+            Uri uri;
+            if (this.ProfileUri == null)
+            {
+                string name = this.Code.ToLower(); // todo: this is a temporary fix!!!
+                uri = new Uri("http://hl7.org/fhir/profile/" + name);
+            }
+            else
+            {
+                uri = new Uri(this.ProfileUri);
+            }
+            return uri;
+        }
         public Structure Structure { get; set; }
         public override string ToString()
         {

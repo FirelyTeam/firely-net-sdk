@@ -13,21 +13,41 @@ using Fhir.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Fhir.Profiling.IO;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Fhir.Profiling
 {
     using Model = Hl7.Fhir.Model;
+    
+    public enum Resolution { Unknown, Unresolvable, Resolved }
+
+    public class Tracker
+    {
+        Dictionary<Uri, Resolution> list = new Dictionary<Uri, Resolution>();
+
+        public void Log(Uri uri, Resolution resolution)
+        {
+
+
+        }
+
+        public bool Knows(Uri uri)
+        {
+            Resolution resolution = Resolution.Unknown;
+            list.TryGetValue(uri, out resolution);
+            return resolution != Resolution.Unknown;
+        }
+    }
 
     public class SpecificationBuilder
     {
         private Specification specification = new Specification();
-        public SpecificationResolver resolver = null;
-        public SpecificationLoader loader = null;
+        private SpecificationProvider provider;
+        private Tracker tracker = new Tracker();
 
-        public SpecificationBuilder(SpecificationResolver resolver = null)
+        public SpecificationBuilder(SpecificationProvider resolver)
         {
-            this.resolver = resolver;
-            loader = new SpecificationLoader(this);
+            this.provider = resolver;
         }
 
         private List<string> knownUris = new List<string>();
@@ -62,14 +82,14 @@ namespace Fhir.Profiling
 
         public void Add(string uri)
         {
-            if (resolver != null)
+            if (provider != null)
             {
                 if (!knownUris.Contains(uri))
                 {
-                    IEnumerable<Structure> structures = ResolveProfile(uri);
+                    IEnumerable<Structure> structures = provider.GetStructures(uri);
                     this.Add(structures);
                     knownUris.Add(uri);
-                    // todo: this not give an error if unresolved.
+                    // todo: this should not give an error if unresolved.
                 }
             }
             else
@@ -78,90 +98,38 @@ namespace Fhir.Profiling
             }
         }
 
-        public IEnumerable<Structure> ResolveProfile(Uri uri)
+        private bool TryExpand(TypeRef typeref)
         {
-            Profile profile = resolver.Get<Profile>(uri);
-            if (profile != null)
-            {
-                return loader.LoadStructures(profile);
-            }
-            else
-            {
-                return Enumerable.Empty<Structure>();
-            }
-        }
+            Uri uri = typeref.GetUri();
+            if (tracker.Knows(uri)) return false;
 
-        public IEnumerable<Structure> ResolveProfile(string uri)
-        {
-            //uri = uri.ToLower();
-            return ResolveProfile(new Uri(uri));
-        }
-
-        public IEnumerable<Structure> ResolveProfile(TypeRef typeref)
-        {
-            Uri uri;
-            if (typeref.ProfileUri == null)
-            {
-                string name = typeref.Code.ToLower(); // todo: this is a temporary fix!!!
-                uri = new Uri("http://hl7.org/fhir/profile/" + name);
-            }
-            else
-            {
-                uri = new Uri(typeref.ProfileUri);
-            }
-            return ResolveProfile(uri);
-        }
-      
-        public ValueSet ResolveValueSet(string uri)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool resolveTypeRef(TypeRef typeref)
-        {
-            IEnumerable<Structure> structures = ResolveProfile(typeref);
+            IEnumerable<Structure> structures = provider.GetStructures(typeref);
             this.Add(structures);
             return structures.Count() > 0;
         }
 
-        private bool resolveTypeRefs()
+        private bool ExpandTypeRefs()
         {
-            bool haschanges = false;
-            List<TypeRef> typerefs = specification.TypeRefs.Where(t => t.Resolution == Resolution.New).ToList();
+            bool expanded = false;
 
-            foreach (TypeRef typeref in typerefs)
+            foreach (TypeRef typeref in specification.TypeRefs)
             {
-                bool resolved = resolveTypeRef(typeref);
-                typeref.Resolution = (resolved) ? Resolution.Resolved : Resolution.Unresolvable;
-                haschanges |= resolved;
+                expanded |= TryExpand(typeref);
             }
-            return haschanges;
+            return expanded;
         }
 
-        private void resolveBindings()
+        private void ExpandBindings()
         {
-            IEnumerable<Uri> bindings = 
-                specification.Elements
-                    .Where(e => e.BindingUri != null)
-                    .Select(e => new Uri(e.BindingUri))
-                    .Distinct()
-                    .Except(specification.ValueSetUris());
-
-            foreach(Uri uri in bindings)
-            {
-                Model.ValueSet source = resolver.Get<Model.ValueSet>(uri);
-                if (source != null)
-                {
-                    ValueSet target = loader.LoadValueSet(source);
-                    specification.Add(target);
-                }
-            }
+            IEnumerable<Uri> newbindings = specification.BindingUris.Except(specification.ValueSetUris);
+            IEnumerable<ValueSet> valuesets = provider.GetValueSets(newbindings);
+            this.Add(valuesets);
         }
 
-        public void Resolve()
+        public void Expand()
         {
-            while (resolveTypeRefs());
-            resolveBindings();
+            while (ExpandTypeRefs());
+            ExpandBindings();
         }
 
         public Specification ToSpecification()

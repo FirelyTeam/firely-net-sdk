@@ -26,9 +26,15 @@ namespace Hl7.Fhir.Introspection.Source
         {            
         }
 
-        public static ArtifactResolver CreateDefault()
+        public static IArtifactSource CreateDefault()
         {
             return new ArtifactResolver(new FileArtifactSource(), new CoreZipArtifactSource(), new WebArtifactSource());
+        }
+
+        public static IArtifactSource CreateCachedDefault()
+        {
+            IArtifactSource resolver = ArtifactResolver.CreateDefault();
+            return new CachedArtifactSource(resolver);
         }
 
         public ArtifactResolver(IEnumerable<IArtifactSource> sources)
