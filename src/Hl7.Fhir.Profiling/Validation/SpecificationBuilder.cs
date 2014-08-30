@@ -30,8 +30,19 @@ namespace Fhir.Profiling
         private SpecificationProvider provider;
         private Tracker tracker = new Tracker();
 
-        private bool TryExpandStructures(Uri uri)
+
+        private void TrackStructures(IEnumerable<Structure> structures)
         {
+            var uris = structures.Select(s => UriHelper.ResolvingUri(s));
+            foreach (Uri u in uris)
+            {
+                tracker.Resolve(u);
+            }
+        }
+
+        private bool TryAddStructures(Uri uri)
+        {
+            if (uri == null) return false;
             if (tracker.Knows(uri)) return false;
                 
             IEnumerable<Structure> structures = provider.GetStructures(uri);
@@ -39,6 +50,7 @@ namespace Fhir.Profiling
             {
                 specification.Add(structures);
                 tracker.Add(uri, Resolution.Resolved);
+                TrackStructures(structures);
                 return true;
             }
             else
@@ -53,7 +65,7 @@ namespace Fhir.Profiling
             return 
                 specification.TypeRefs
                 .Where(t => t.Unresolved)
-                .Select(t => t.ResolvingUri)
+                .Select(t => UriHelper.ResolvingUri(t))
                 .ToList();
         }
 
@@ -65,12 +77,12 @@ namespace Fhir.Profiling
             bool expanded = false;
             foreach (Uri uri in uris)
             {
-                expanded |= TryExpandStructures(uri);
+                expanded |= TryAddStructures(uri);
             }
             return expanded;
         }
 
-        private bool TryExpandBinding(Uri uri)
+        private bool TryAddBinding(Uri uri)
         {
             if (tracker.Knows(uri)) return false;
 
@@ -90,11 +102,11 @@ namespace Fhir.Profiling
 
         private void ExpandBindings()
         {
-            IEnumerable<Uri> newbindings = specification.BindingUris;
+            IEnumerable<Uri> newbindings = specification.BindingUris.ToList();
             
             foreach (Uri uri in newbindings)
             {
-                TryExpandBinding(uri);
+                TryAddBinding(uri);
             }
         }
 
@@ -106,7 +118,7 @@ namespace Fhir.Profiling
 
         public void Add(Uri uri)
         {
-            TryExpandStructures(uri);
+            TryAddStructures(uri);
         }
         public void Add(string uri)
         {

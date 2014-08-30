@@ -36,7 +36,7 @@ namespace Fhir.Profiling.Tests
         }
         
         [TestMethod]
-        public void ValueSetUnknown()
+        public void ValueSet_UnknownValue()
         {
             var resource = FhirFile.LoadResource("TestData\\Patient.ErrorUse.xml");
             Report report = spec.Validate(resource);

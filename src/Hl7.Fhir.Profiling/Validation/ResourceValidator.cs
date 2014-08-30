@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using System.Text.RegularExpressions;
+
 using Fhir.IO;
 
     // todo: ExtensionDefns opnemen in Specification!!
@@ -39,7 +39,7 @@ namespace Fhir.Profiling
     public class ResourceValidator
     {
 
-        private Specification Profile = new Specification();
+        private Specification specification = new Specification();
         public event OutcomeLogger LogOutcome = null;
 
         private ReportBuilder reporter = new ReportBuilder();
@@ -64,7 +64,7 @@ namespace Fhir.Profiling
 
         public ResourceValidator(Specification profile)
         {
-            this.Profile = profile;
+            this.specification = profile;
         }
 
         public void ValidateCode(Vector vector)
@@ -192,14 +192,15 @@ namespace Fhir.Profiling
             try
             {
                 string value = vector.GetContent();
-                string pattern = vector.Element.PrimitivePattern;
-                if (Regex.IsMatch(value, pattern))
+                //string pattern = vector.Element.PrimitivePattern;
+                bool valid = vector.Element.IsValidPrimitive(value);
+                if (valid)
                 {   
                     Log(Group.Primitive, Status.Valid, vector, "The value format ({0}) of primitive [{1}] is valid. ", vector.Element.Name, vector.Node.Name);
                 }
                 else
                 {
-                    Log(Group.Primitive, Status.Failed, vector, "The value format ({0}) of primitive [{1}] not valid: '{2}'", vector.Element.Name, vector.Node.Name, value);
+                    Log(Group.Primitive, Status.Failed, vector, "The value format ({0}) of primitive [{1}] is not valid: '{2}'", vector.Element.Name, vector.Node.Name, value);
                 }
             }
             catch
@@ -322,7 +323,7 @@ namespace Fhir.Profiling
         public Vector GetVector(XPathNavigator root)
         {
             XmlNamespaceManager nsm = FhirNamespaceManager.CreateManager(root);
-            Structure structure = Profile.GetStructureByName(root.Name);
+            Structure structure = specification.GetStructureByName(root.Name);
             XPathNavigator node = root.CreateNavigator();
 
             return Vector.Create(structure, node, nsm);

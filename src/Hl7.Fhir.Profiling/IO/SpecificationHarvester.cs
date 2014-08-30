@@ -39,6 +39,7 @@ namespace Fhir.Profiling.IO
 
         private void HarvestBinding(Profile.ElementComponent source, Element target)
         {
+
             if (source.Definition.Binding != null)
             {
                 var reference = source.Definition.Binding.Reference;
@@ -125,18 +126,26 @@ namespace Fhir.Profiling.IO
                 : Representation.Element;
         }
 
+        private void HarvestElementDefinition(Profile.ElementComponent source, Element target)
+        {
+            if (source.Definition != null)
+            {
+                HarvestBinding(source, target);
+                HarvestTypeRefs(source, target);
+                HarvestElementRef(source, target);
+                HarvestCardinality(source, target);
+                HarvestConstraints(source, target);
+                HarvestFixedValue(source, target);
+            }
+        }
+
         private void HarvestElement(Profile.ElementComponent source, Element target)
         {
             target.Path = new Path(source.Path);
             target.Name = target.Path.ElementName; //source.Name; 
             target.Representation = TransformRepresentation(source);
-                
-            HarvestBinding(source, target);
-            HarvestTypeRefs(source, target);
-            HarvestElementRef(source, target);
-            HarvestCardinality(source, target);
-            HarvestConstraints(source, target);
-            HarvestFixedValue(source, target);
+
+            HarvestElementDefinition(source, target);
             HarvestSlicing(source, target); 
         }
 

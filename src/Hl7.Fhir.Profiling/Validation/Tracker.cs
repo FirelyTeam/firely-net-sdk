@@ -24,14 +24,23 @@ namespace Fhir.Profiling
             }
         }
 
+
         public void Add(string uri, Resolution resolution)
         {
             Add(new Uri(uri), resolution);
         }
 
-        public void Resolved(Uri uri)
+        public void Resolve(Uri uri)
         {
             Add(uri, Resolution.Resolved);
+        }
+
+        public void Resolve(IEnumerable<Uri> uris)
+        {
+            foreach(Uri uri in uris)
+            {
+                Resolve(uri);
+            }
         }
 
         public bool Knows(Uri uri)

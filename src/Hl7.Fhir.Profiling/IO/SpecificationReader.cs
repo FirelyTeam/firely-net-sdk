@@ -95,7 +95,7 @@ namespace Fhir.Profiling
             
             string code = Value(node, "f:code/@value");
             string profileUri = OptionalValue(node, "f:profile/@value");
-
+            
             return new TypeRef(code, profileUri);
         }
 

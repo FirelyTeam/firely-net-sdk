@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Introspection
 
         public IEnumerable<Structure> GetStructures(TypeRef typeref)
         {
-            Uri uri = typeref.ResolvingUri;
+            Uri uri = UriHelper.ResolvingUri(typeref);
             return GetStructures(uri);
         }
 

@@ -39,6 +39,7 @@ namespace Fhir.Profiling.Tests
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
             builder.Add("http://hl7.org/fhir/profile/patient");
+            
             if (expand) builder.Expand();
 
             return builder.ToSpecification();

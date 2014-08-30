@@ -9,26 +9,38 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhir.IO;
 using System.Linq;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class TestAdvancedValidation
     {
-        static Specification lipidSpec;
+        static Specification spec;
 
-        [ClassInitialize]
+        [ClassInitialize] 
         public static void Init(TestContext context)
         {
-            lipidSpec = Factory.GetLipidSpec(expand: false, online: false);
-            
+            ArtifactResolver resolver = new ArtifactResolver(new FileArtifactSource("TestData"));
+            SpecificationProvider provider = new SpecificationProvider(resolver);
+            SpecificationBuilder builder = new SpecificationBuilder(provider);
+
+            builder.Add(StructureFactory.PrimitiveTypes());
+            builder.Add(StructureFactory.NonFhirNamespaces());
+            builder.Add("http://disk/Profile/lipid.profile.expanded.xml");
+            builder.Expand();
+
+            spec =  builder.ToSpecification();
+
+            throw new Exception("Ewout: Expanded profile contains structures that refer to the same type");
         }
 
         [TestMethod]
         public void CorrectFixedValue()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.fixvalue.xml");
-            Report report = lipidSpec.Validate(resource);
+            Report report = spec.Validate(resource);
             var errors = report.Errors;
             Assert.IsTrue(report.IsValid);
         }
@@ -37,7 +49,7 @@ namespace Fhir.Profiling.Tests
         public void IncorrectFixedValue()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.fixvalue.wrong.xml");
-            Report report = lipidSpec.Validate(resource);
+            Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(1, report.ErrorCount);
@@ -49,16 +61,13 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void Slicing()
         {
-            // todo: Resolving does not resolve custom profiles (for testing)
-            // therefore these profiles are loaded the old way.
-
             var resource = FhirFile.LoadResource("TestData\\lipid.slice.valid.xml");
-            Report report = lipidSpec.Validate(resource);
+            Report report = spec.Validate(resource);
             Assert.IsTrue(report.IsValid);
 
 
             resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.xml");
-            report = lipidSpec.Validate(resource);
+            report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(4, report.ErrorCount);
             Assert.IsTrue(report.Contains(Group.Cardinality, Status.Failed));
@@ -66,7 +75,7 @@ namespace Fhir.Profiling.Tests
 
             
             resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.extra.xml");
-            report = lipidSpec.Validate(resource);
+            report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(1, report.ErrorCount);
             Assert.IsTrue(report.Contains(Group.Cardinality, Status.Failed));

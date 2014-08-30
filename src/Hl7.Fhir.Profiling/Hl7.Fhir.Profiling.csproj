@@ -48,6 +48,7 @@
     <Compile Include="IO\JsonReaderExtensions.cs" />
     <Compile Include="IO\JTokenExtensions.cs" />
     <Compile Include="IO\SpecificationHarvester.cs" />
+    <Compile Include="UriHelper.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\Constraint.cs" />
     <Compile Include="Validation\ConstraintCompiler.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Validation\KindAndType.cs" />
     <Compile Include="Validation\Outcome.cs" />
     <Compile Include="Validation\Path.cs" />
+    <Compile Include="Validation\PrimitiveValidator.cs" />
     <Compile Include="Validation\SpecificationBuilder.cs" />
     <Compile Include="Validation\SpecificationProvider.cs" />
     <Compile Include="Validation\SpecificationBinder.cs" />
