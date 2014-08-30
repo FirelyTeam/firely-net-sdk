@@ -34,7 +34,6 @@ namespace Fhir.Profiling.IO
             {
                element.Discriminator = slicing.Discriminator;
                slicing.Count++;
-               
             }
         }
 
@@ -72,7 +71,7 @@ namespace Fhir.Profiling.IO
             foreach(Profile.ElementDefinitionConstraintComponent c in source.Definition.Constraint)
             {
                 Constraint constraint = new Constraint();
-                constraint.Name = c.Name;
+                constraint.Name = c.Name ?? c.Key;
                 constraint.XPath = c.Xpath;
                 constraint.HumanReadable = c.Human;
                 target.Constraints.Add(constraint);
@@ -116,10 +115,22 @@ namespace Fhir.Profiling.IO
             InjectSlice(target);
         }
 
+        private Representation TransformRepresentation(Profile.ElementComponent source)
+        {
+            if (source.Representation == null)
+                return Representation.Element;
+
+            return (source.Representation.Contains(Profile.PropertyRepresentation.XmlAttr))
+                ? Representation.Attribute
+                : Representation.Element;
+        }
+
         private void HarvestElement(Profile.ElementComponent source, Element target)
         {
             target.Path = new Path(source.Path);
             target.Name = target.Path.ElementName; //source.Name; 
+            target.Representation = TransformRepresentation(source);
+                
             HarvestBinding(source, target);
             HarvestTypeRefs(source, target);
             HarvestElementRef(source, target);

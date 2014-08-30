@@ -34,10 +34,16 @@ namespace Fhir.Profiling
             Report.Clear();
         }
 
+        public void Add(Outcome outcome)
+        {
+
+            Report.Add(outcome);
+        }
+
         public Outcome Start(Group group, Vector vector = null)
         {
             Outcome outcome = new Outcome(group, Status.Start, vector, null, this.nesting);
-            Report.Add(outcome);
+            Add(outcome);
             nesting++;
             return outcome;
         }
@@ -46,7 +52,7 @@ namespace Fhir.Profiling
         {
             nesting--;
             Outcome outcome = new Outcome(group, Status.End, null, null, this.nesting);
-            Report.Add(outcome);
+            Add(outcome);
             
             return outcome;
         }
@@ -65,13 +71,15 @@ namespace Fhir.Profiling
         {
             Outcome outcome = new Outcome(group, status, vector, string.Format(message, args), this.nesting);
             
-            Report.Add(outcome);
+            Add(outcome);
             return outcome;
         }
 
         public Outcome Log(Group group, Status status, string message, params object[] args)
         {
-            return new Outcome(group, status, null, string.Format(message, args), this.nesting);
+            Outcome outcome = new Outcome(group, status, null, string.Format(message, args), this.nesting);
+            Add(outcome);
+            return outcome;
         }
 
     }

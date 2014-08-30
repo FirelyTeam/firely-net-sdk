@@ -47,7 +47,7 @@
     <Compile Include="IO\JsonXPathNavigator.cs" />
     <Compile Include="IO\JsonReaderExtensions.cs" />
     <Compile Include="IO\JTokenExtensions.cs" />
-    <Compile Include="IO\SpecificationLoader.cs" />
+    <Compile Include="IO\SpecificationHarvester.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\Constraint.cs" />
     <Compile Include="Validation\ConstraintCompiler.cs" />
