@@ -9,10 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.IO;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using Fhir.Profiling.IO;
 using Hl7.Fhir.Introspection.Source;
 
 namespace Fhir.Profiling
@@ -36,7 +33,7 @@ namespace Fhir.Profiling
             var uris = structures.Select(s => UriHelper.ResolvingUri(s));
             foreach (Uri u in uris)
             {
-                tracker.Resolve(u);
+                tracker.MarkResolved(u);
             }
         }
 

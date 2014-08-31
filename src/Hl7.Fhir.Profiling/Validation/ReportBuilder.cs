@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
-    
     public delegate void OutcomeLogger(Outcome outcome);
 
     public class ValidationException : Exception

@@ -212,32 +212,5 @@ namespace Fhir.Profiling
         }
     }
 
-
-    public static class PathUtils
-    {
-        
-            
-        /*public static string XFilter(this Element element)
-        {
-            if (element.Sliced)
-            {
-                Element child = element.FindChild(element.Discriminator);
-                
-                bool attribute = (child != null && child.IsAttribute);
-                if (attribute)
-                {
-                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
-                }
-                else
-                {
-                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
-                }
-
-            }
-        }
-        */
-
-        
-    }
     
 }

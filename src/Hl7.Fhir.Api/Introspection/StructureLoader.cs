@@ -54,7 +54,6 @@ namespace Hl7.Fhir.Introspection
             }
         }
 
-
         /// <summary>
         /// All base structures (resources + datatypes) that come with the spec have a specific pre-defined
         /// (but currently symbolic) url where they can be found. Locate base structures using that url

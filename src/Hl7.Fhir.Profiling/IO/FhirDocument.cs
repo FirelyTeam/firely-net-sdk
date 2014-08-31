@@ -4,7 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
-using Fhir.Profiling;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Fhir.IO
+namespace Fhir.Profiling
 {
     public static class FhirFile
     {

@@ -12,20 +12,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
+using Fhir.XPath;
+using Fhir.Profiling;
 
-using Fhir.IO;
+    // todo: profile references "#lipidpanel" worden nog niet geresolved
+    // todo: valuesets worden nog niet geresolved (door de ArtifactResolver)
+    // todo: waar zitten de slicing fixed-values
 
     // todo: ExtensionDefns opnemen in Specification!!
     // todo: fixed value testen (er is nog geen testdata)
-    // todo: adding JSON tests
-    
+
     // todo: Specification heeft nu valuesets. Maar uiteindelijk moeten er zowel met ValueSets als CodeSystems gevalideerd kunnen worden 
     // todo: resourceReference can refer to <profile> which is a structure.
     // todo: Element names are profile URI specific (names can overlap with other profiles)
     // todo: Merge Specification, Structure, Element classes (when possible) with Api.Introspection and Api.ModelInfo
     // todo: Slices
-    
-    
+
+    // todo: adding JSON tests
     
     // done: When an element type is a ResourceReference, then the path does not contain [x]. The restriction is content of the refered resource.
     // done: parse meaning of [x].

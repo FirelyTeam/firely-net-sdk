@@ -7,10 +7,11 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.IO;
+
 using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
+using Fhir.Profiling.IO;
 
 namespace Fhir.Profiling.Tests
 {

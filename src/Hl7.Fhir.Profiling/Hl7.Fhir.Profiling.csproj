@@ -43,43 +43,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\NavigatorState.cs" />
-    <Compile Include="IO\JsonXPathNavigator.cs" />
-    <Compile Include="IO\JsonReaderExtensions.cs" />
-    <Compile Include="IO\JTokenExtensions.cs" />
-    <Compile Include="IO\SpecificationHarvester.cs" />
-    <Compile Include="UriHelper.cs" />
-    <Compile Include="Validation\Cardinality.cs" />
-    <Compile Include="Validation\Constraint.cs" />
+    <Compile Include="Model\Slicing.cs" />
+    <Compile Include="XPath\NavigatorState.cs" />
+    <Compile Include="XPath\JsonXPathNavigator.cs" />
+    <Compile Include="XPath\JsonReaderExtensions.cs" />
+    <Compile Include="XPath\JTokenExtensions.cs" />
+    <Compile Include="Validation\SpecificationHarvester.cs" />
+    <Compile Include="Model\UriHelper.cs" />
+    <Compile Include="Model\Cardinality.cs" />
+    <Compile Include="Model\Constraint.cs" />
     <Compile Include="Validation\ConstraintCompiler.cs" />
-    <Compile Include="Validation\Element.cs" />
+    <Compile Include="Model\Element.cs" />
     <Compile Include="Validation\KindAndType.cs" />
     <Compile Include="Validation\Outcome.cs" />
-    <Compile Include="Validation\Path.cs" />
-    <Compile Include="Validation\PrimitiveValidator.cs" />
+    <Compile Include="Model\Path.cs" />
+    <Compile Include="Model\PrimitiveValidator.cs" />
     <Compile Include="Validation\SpecificationBuilder.cs" />
     <Compile Include="Validation\SpecificationProvider.cs" />
     <Compile Include="Validation\SpecificationBinder.cs" />
     <Compile Include="Validation\SpecificationValidator.cs" />
     <Compile Include="Validation\ReportBuilder.cs" />
-    <Compile Include="Validation\Structure.cs" />
+    <Compile Include="Model\Structure.cs" />
     <Compile Include="Validation\Tracker.cs" />
-    <Compile Include="Validation\TypeRef.cs" />
+    <Compile Include="Model\TypeRef.cs" />
     <Compile Include="Validation\Validation.cs" />
-    <Compile Include="Validation\ValueSet.cs" />
-    <Compile Include="Validation\Vector.cs" />
+    <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Model\Vector.cs" />
     <Compile Include="IO\FhirDocument.cs" />
     <Compile Include="IO\FhirFeed.cs" />
-    <Compile Include="IO\FhirNamespaceManager.cs" />
+    <Compile Include="XPath\FhirNamespaceManager.cs" />
     <Compile Include="IO\InvalidStructureException.cs" />
-    <Compile Include="IO\StructureFactory.cs" />
+    <Compile Include="Model\StructureFactory.cs" />
     <Compile Include="IO\SpecificationReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\Report.cs" />
-    <Compile Include="Validation\Specification.cs" />
+    <Compile Include="Model\Specification.cs" />
     <Compile Include="Validation\ResourceValidator.cs" />
-    <Compile Include="IO\CustomXsltFunction.cs" />
-    <Compile Include="IO\XPath2Context.cs" />
+    <Compile Include="XPath\CustomXsltFunction.cs" />
+    <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -94,6 +95,7 @@
       <Name>Hl7.Fhir.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.IO;
+using Fhir.Profiling.IO;
 using System.Linq;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

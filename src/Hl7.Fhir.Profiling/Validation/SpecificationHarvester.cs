@@ -5,15 +5,16 @@
 * This file is licensed under the BSD 3-Clause license
 */
 
-using Fhir.IO;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
+using Fhir.XPath;
 
-namespace Fhir.Profiling.IO
+namespace Fhir.Profiling
 {
 
     internal class SpecificationHarvester

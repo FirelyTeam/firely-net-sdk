@@ -10,11 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.IO;
 using System.Xml.XPath;
 using System.Xml;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

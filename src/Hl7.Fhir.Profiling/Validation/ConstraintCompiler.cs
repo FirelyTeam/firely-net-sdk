@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Fhir.IO;
+using Fhir.XPath;
 
 namespace Fhir.Profiling
 {

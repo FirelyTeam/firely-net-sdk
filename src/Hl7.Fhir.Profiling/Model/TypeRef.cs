@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 namespace Fhir.Profiling
 {
 
-    
-
     public class TypeRef : IEquatable<TypeRef>
     {
         public TypeRef(string code, string profileUri = null)

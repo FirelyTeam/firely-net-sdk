@@ -15,7 +15,6 @@ using System.Xml.XPath;
 namespace Fhir.Profiling
 {
 
-   
     public enum SlicingRules { OpenAtEnd };
     
     /// <summary>

@@ -18,7 +18,6 @@ namespace Fhir.Profiling
         public string Name;
         public bool Multi;
 
-        
         public bool Match(string name)
         {
             if (this.Multi)
@@ -30,14 +29,13 @@ namespace Fhir.Profiling
                 return name == Name;
             }
         }
+        
         public override string ToString()
         {
             string s = Name;
             if (Multi) s += "[x]";
             return s;
         }
-
-        
 
         public bool Equals(Segment other)
         {

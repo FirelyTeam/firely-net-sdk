@@ -5,13 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
-using Fhir.Profiling;
-using Fhir.Profiling.IO;
 
-namespace Hl7.Fhir.Introspection
+namespace Fhir.Profiling
 {
     using Model = Hl7.Fhir.Model;
-
 
     public class SpecificationProvider
     {

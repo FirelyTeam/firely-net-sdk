@@ -30,7 +30,7 @@ namespace Fhir.Profiling
             Add(new Uri(uri), resolution);
         }
 
-        public void Resolve(Uri uri)
+        public void MarkResolved(Uri uri)
         {
             Add(uri, Resolution.Resolved);
         }
@@ -39,7 +39,7 @@ namespace Fhir.Profiling
         {
             foreach(Uri uri in uris)
             {
-                Resolve(uri);
+                MarkResolved(uri);
             }
         }
 

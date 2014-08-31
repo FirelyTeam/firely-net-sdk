@@ -36,5 +36,9 @@ namespace Fhir.Profiling
         {
             return TypeUri(structure.Type);
         }
+
+
     }
+
+
 }
