@@ -38,12 +38,12 @@ namespace Fhir.Profiling
             }
         }
 
-        private void HarvestBinding(Profile.ElementComponent source, Element target)
+        private void HarvestBinding(Profile.ElementDefinitionComponent source, Element target)
         {
 
-            if (source.Definition.Binding != null)
+            if (source.Binding != null)
             {
-                var reference = source.Definition.Binding.Reference;
+                var reference = source.Binding.Reference;
 
                 if (reference is ResourceReference)
                 {
@@ -58,19 +58,19 @@ namespace Fhir.Profiling
             
         }
 
-        private void HarvestFixedValue(Profile.ElementComponent source, Element target)
+        private void HarvestFixedValue(Profile.ElementDefinitionComponent source, Element target)
         {
-            target.FixedValue = (source.Definition.Value != null) 
-                ? source.Definition.Value.ToString()
+            target.FixedValue = (source.Value != null) 
+                ? source.Value.ToString()
                 : null;
         }
 
-        private void HarvestConstraints(Profile.ElementComponent source, Element target)
+        private void HarvestConstraints(Profile.ElementDefinitionComponent source, Element target)
         {
-            if (source.Definition.Constraint == null)
+            if (source.Constraint == null)
                 return;
 
-            foreach(Profile.ElementDefinitionConstraintComponent c in source.Definition.Constraint)
+            foreach(Profile.ElementDefinitionConstraintComponent c in source.Constraint)
             {
                 Constraint constraint = new Constraint();
                 constraint.Name = c.Name ?? c.Key;
@@ -80,17 +80,17 @@ namespace Fhir.Profiling
             }
         }
 
-        private void HarvestCardinality(Profile.ElementComponent source, Element target)
+        private void HarvestCardinality(Profile.ElementDefinitionComponent source, Element target)
         {
             Cardinality cardinality = new Cardinality();
-            cardinality.Min = source.Definition.Min.ToString();
-            cardinality.Max = source.Definition.Max;
+            cardinality.Min = source.Min.ToString();
+            cardinality.Max = source.Max;
             target.Cardinality = cardinality;
         }
 
-        private void HarvestElementRef(Profile.ElementComponent source, Element target)
+        private void HarvestElementRef(Profile.ElementDefinitionComponent source, Element target)
         {
-            target.ElementRefPath = source.Definition.NameReference;
+            target.ElementRefPath = source.NameReference;
         }
 
         private TypeRef HarvestTypeRef(Profile.TypeRefComponent type)
@@ -101,12 +101,12 @@ namespace Fhir.Profiling
             return typeref;
         }
 
-        private void HarvestTypeRefs(Profile.ElementComponent source, Element target)
+        private void HarvestTypeRefs(Profile.ElementDefinitionComponent source, Element target)
         {
-            if (source.Definition.Type == null)
+            if (source.Type == null)
                 return;
 
-            foreach (var type in source.Definition.Type)
+            foreach (var type in source.Type)
             {
                 target.TypeRefs.Add(HarvestTypeRef(type));
             }
@@ -127,9 +127,9 @@ namespace Fhir.Profiling
                 : Representation.Element;
         }
 
-        private void HarvestElementDefinition(Profile.ElementComponent source, Element target)
+        private void HarvestElementDefinition(Profile.ElementDefinitionComponent source, Element target)
         {
-            if (source.Definition != null)
+            if (source != null)
             {
                 HarvestBinding(source, target);
                 HarvestTypeRefs(source, target);
@@ -146,7 +146,7 @@ namespace Fhir.Profiling
             target.Name = target.Path.ElementName; //source.Name; 
             target.Representation = TransformRepresentation(source);
 
-            HarvestElementDefinition(source, target);
+            HarvestElementDefinition(source.Definition, target);
             HarvestSlicing(source, target); 
         }
 
@@ -185,6 +185,7 @@ namespace Fhir.Profiling
             }
         }
 
+       
         private Structure HarvestStructure(Profile.ProfileStructureComponent source)
         {
             Structure target = new Structure();
@@ -195,11 +196,29 @@ namespace Fhir.Profiling
             return target;
         }
 
+        public void HarvestExtensionDefn(Profile.ProfileExtensionDefnComponent source)
+        {
+            Element element = new Element();
+            element.Name = source.Code;
+            // todo: unclear what an extensiondefn is. A structure, an element, something in itself...
+            HarvestElementDefinition(source.Definition, element);
+        }
+
+
         public IEnumerable<Structure> HarvestStructures(Profile source)
         {
             foreach (var structure in source.Structure)
             {
                 yield return HarvestStructure(structure);
+            }
+        }
+
+
+        public void HarvestProfileExtensions(Profile source)
+        {
+            foreach(var defn in source.ExtensionDefn)
+            {
+                HarvestExtensionDefn(defn);
             }
         }
 

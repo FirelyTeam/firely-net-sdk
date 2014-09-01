@@ -328,6 +328,7 @@
         <max value="1"/>
         <type>
           <code value="Resource"/>
+          <!-- [MH] Do you mean resource reference?  This should point to the extension definition, should it not? -->
           <profile value="#calculated"/>
         </type>
       </definition>
