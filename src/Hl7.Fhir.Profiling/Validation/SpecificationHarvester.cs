@@ -5,7 +5,6 @@
 * This file is licensed under the BSD 3-Clause license
 */
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,6 +188,7 @@ namespace Fhir.Profiling
         private Structure HarvestStructure(Profile.ProfileStructureComponent source)
         {
             Structure target = new Structure();
+            target.Name = source.Name;
             target.Type = source.Type;
             target.NameSpacePrefix = FhirNamespaceManager.Fhir;
             PrepareSlices(source);
@@ -196,12 +196,16 @@ namespace Fhir.Profiling
             return target;
         }
 
-        public void HarvestExtensionDefn(Profile.ProfileExtensionDefnComponent source)
+        public Structure HarvestExtensionDefn(Profile.ProfileExtensionDefnComponent source)
         {
+            Structure target = new Structure();
+            target.Name = source.Code;
             Element element = new Element();
             element.Name = source.Code;
-            // todo: unclear what an extensiondefn is. A structure, an element, something in itself...
             HarvestElementDefinition(source.Definition, element);
+            
+            target.Elements.Add(element);
+            return target;
         }
 
 

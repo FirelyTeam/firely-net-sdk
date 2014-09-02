@@ -32,6 +32,7 @@ namespace Fhir.Profiling
                 }
             }
         }
+
         public static Uri ResolvingUri(this Structure structure)
         {
             return TypeUri(structure.Type);

@@ -69,14 +69,21 @@ namespace Fhir.Profiling
             }
         }
 
+        private void _linkElementRef(Structure structure, Element element)
+        {
+            if (element.ElementRef == null && element.ElementRefPath != null)
+            {
+                element.ElementRef = specification.GetElementByPath(structure, element.ElementRefPath);
+            }
+        }
+
         private void _linkElementRefs()
         {
             foreach (Structure structure in specification.Structures)
             {
                 foreach (Element element in structure.Elements)
                 {
-                    if (element.ElementRef == null && element.ElementRefPath != null)
-                        element.ElementRef = specification.GetElementByPath(structure, element.ElementRefPath);
+                    _linkElementRef(structure, element);
                 }
             }
         }
