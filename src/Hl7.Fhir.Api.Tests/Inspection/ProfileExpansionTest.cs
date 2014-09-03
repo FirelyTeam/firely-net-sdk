@@ -48,7 +48,6 @@ namespace Hl7.Fhir.Test.Inspection
             var snapshot = expander.Expand(diff);
             Assert.IsNotNull(diff);
 
-            snapshot.Text = new Narrative() { Status = Narrative.NarrativeStatus.Empty };
             var xml = FhirSerializer.SerializeResourceToXml(snapshot);
             File.WriteAllText("c:\\temp\\expanded.xml", xml);
         }

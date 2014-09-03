@@ -17,9 +17,8 @@
   </code>
   <status value="draft"/>
   <experimental value="true"/>
-  <date value="2014-04-17T00:00:00+02:00"/>
-  <requirements
-    value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial"/>
+  <date value="2014-04-17"/>
+  <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial"/>
   <fhirVersion value="0.80"/>
 
   <!-- ====================================================================================
@@ -50,7 +49,6 @@
   <!-- ====================================================================================
        Then, the DiagnosticReport used by MessageHeader, "lipidPanel"      
        ==================================================================================== -->
-
   <structure>
     <type value="DiagnosticReport"/>
     <name value="lipidPanel"/>
@@ -68,6 +66,7 @@
 
     <element>
       <!-- I wonder whether this means *all* codings under "name" must now conform to the constraints below, or just *any* ? -->
+      <!-- If we'd allow non-primitive valueXXX, we'd need only one fixed value at DiagnosticReport.name, but then, how do we define equality for complex types? -->
       <path value="DiagnosticReport.name.coding.system"/>
       <definition>
         <min value="1"/>

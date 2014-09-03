@@ -41,6 +41,8 @@ namespace Hl7.Fhir.Introspection
             snapshot.SetStructureForm(StructureForm.Snapshot);
             snapshot.SetStructureBaseUri(baseUri.ToString());
 
+            mergeStructure(snapshot, differential);
+
             var fullDifferential = new DifferentialTreeConstructor(differential).MakeTree();
 
             var snapNav = new ElementNavigator(snapshot);
@@ -57,6 +59,15 @@ namespace Hl7.Fhir.Introspection
             return snapshot;
         }
 
+
+        private static void mergeStructure(Profile.ProfileStructureComponent snapshot, Profile.ProfileStructureComponent differential)
+        {
+            if (differential.Name != null) snapshot.Name = differential.Name;
+            if (differential.Publish != null) snapshot.Publish = differential.Publish;
+            if (differential.Purpose != null) snapshot.Purpose = differential.Purpose;
+        }
+
+
         private void merge(ElementNavigator snap, ElementNavigator diff)
         {
             mergeElementAttributes(snap.Current, diff.Current);
@@ -72,8 +83,6 @@ namespace Hl7.Fhir.Introspection
                     // by the differential
                     expandBaseElement(snap, diff);
                 }
-
-                //string sliceName = null;
 
                 // Due to how MoveToFirstChild() works, we have to move to the first matching *child*
                 // when entering the loop for the first time, after that we can look for the next
@@ -98,7 +107,7 @@ namespace Hl7.Fhir.Introspection
                 }
                 while (diff.MoveToNext());
 
-                // After the merge, return the diff back to its original position
+                // After the merge, return the diff and snapho back to their original position
                 diff.MoveToParent();
                 snap.MoveToParent();
             }
@@ -117,7 +126,9 @@ namespace Hl7.Fhir.Introspection
             // Yes, so, first, add the slicing entry to the snapshot. 
             if (diff.Current.Slicing != null)
             {
-                snap.InsertBefore((Profile.ElementComponent)diff.Current.DeepCopy());
+                var slicingEntry = createSliceEntry(snap.Current, diff.Current);
+                snap.InsertBefore(slicingEntry);
+
                 if (!diff.MoveToNext(diff.PathName))
                     throw Error.InvalidOperation("Slicing has no elements beyond the slicing entry");  // currently impossible to happen
             }
@@ -160,6 +171,7 @@ namespace Hl7.Fhir.Introspection
 
             //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
         }
+
 
         private Profile.ElementComponent createExtensionSlicingEntry(string path)
         {
@@ -218,6 +230,33 @@ namespace Hl7.Fhir.Introspection
 
                 mergeElementDefnAttributes(dest.Definition, src.Definition);
             }
+
+            if(src.Slicing != null) dest.Slicing = (Profile.ElementSlicingComponent)src.Slicing.DeepCopy();
+        }
+
+
+        private Profile.ElementComponent createSliceEntry(Profile.ElementComponent baseDefn, Profile.ElementComponent diff)
+        {
+            var slicingEntry = new Profile.ElementComponent();
+
+            slicingEntry.PathElement = (FhirString)baseDefn.PathElement.DeepCopy();
+            if (diff.Name != null) slicingEntry.NameElement = (FhirString)diff.NameElement.DeepCopy();
+
+            if (diff.Slicing != null) slicingEntry.Slicing = (Profile.ElementSlicingComponent)diff.Slicing.DeepCopy();
+
+            // A slicing entry only has an ElementDefinition if the differential overrides the elementdefn
+            // and then, only some of the fields go into the slicing entry
+            if (diff.Definition != null)
+            {
+                slicingEntry.Definition = (Profile.ElementDefinitionComponent)diff.Definition.DeepCopy();
+                if (slicingEntry.Definition.ShortElement == null) slicingEntry.Definition.ShortElement = (FhirString)baseDefn.Definition.ShortElement.DeepCopy();
+                if (slicingEntry.Definition.FormalElement == null) slicingEntry.Definition.FormalElement = (FhirString)baseDefn.Definition.FormalElement.DeepCopy();
+                if (slicingEntry.Definition.MinElement == null) slicingEntry.Definition.MinElement = (Integer)baseDefn.Definition.MinElement.DeepCopy();
+                if (slicingEntry.Definition.MaxElement == null) slicingEntry.Definition.MaxElement = (FhirString)baseDefn.Definition.MaxElement.DeepCopy();
+                slicingEntry.Definition.IsModifierElement = (FhirBoolean)baseDefn.Definition.IsModifierElement.DeepCopy();
+            }
+
+            return slicingEntry;
         }
 
 
