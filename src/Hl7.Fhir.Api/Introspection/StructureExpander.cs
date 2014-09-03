@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Introspection
                     firstEntry = false;
 
                     // Child found in both, merge them
-                    if (childNameRepeats(diff))
+                    if (childNameRepeats(diff) || diff.Current.IsExtension())
                     {
-                        // The child in the diff repeats -> we're on the first element of a slice!
+                        // The child in the diff repeats or we recognize it as an extension slice -> we're on the first element of a slice!
                         mergeSlice(snap, diff); 
                     }
                     else
@@ -180,8 +180,8 @@ namespace Hl7.Fhir.Introspection
             result.Path = path;
             result.Slicing = new Profile.ElementSlicingComponent();
             result.Slicing.Discriminator = "url";
-            result.Slicing.Ordered = true;
-            result.Slicing.Rules = Profile.SlicingRules.OpenAtEnd;
+            result.Slicing.Ordered = false;
+            result.Slicing.Rules = Profile.SlicingRules.Open;
 
             return result;
         }

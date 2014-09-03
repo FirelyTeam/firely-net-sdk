@@ -128,11 +128,35 @@ namespace Hl7.Fhir.Introspection.Source
 
                 // We're assuming the validation.zip contains xml files
                 if (artifactXml != null)
-                    return FhirParser.ParseResourceFromXml(artifactXml);
+                {
+                    var result = FhirParser.ParseResourceFromXml(artifactXml);
+                 //   if (result is Profile) cleanupProfile((Profile)result);
+
+                    return result; 
+                }
             }
 
             return null;
         }
+
+        //private void cleanupProfile(Profile result)
+        //{
+        //    // Correct errors present in the current DSTU1 profiles
+        //    foreach (var structure in result.Structure)
+        //    {
+        //        var structNav = new ElementNavigator(structure);
+        //        if(structNav.MoveToFirstChild()) cleanupStructure(structNav);
+        //    }
+        //}
+
+        //private void cleanupStructure(ElementNavigator structNav)
+        //{
+        //    if (structNav.Current.Definition != null)
+        //    {
+        //        var typeRef = structNav.Current.Definition.Type;
+        //        if(typeRef != null && (typeRef.Count > 1 || (typeRef[0].Code == "Resource" || typeRef.Code == "
+        //    }
+        //}
 
 
         /// <summary>

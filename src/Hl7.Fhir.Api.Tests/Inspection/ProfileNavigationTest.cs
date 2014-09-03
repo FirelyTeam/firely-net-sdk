@@ -433,6 +433,21 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsFalse(nav.JumpToNameReference("IDontExist"));
         }
 
+
+
+        [TestMethod]
+        public void TestChildDeletions()
+        {
+            var nav = createTestNav();
+
+            nav.MoveToFirstChild();     // A
+            Assert.IsTrue(nav.MoveToChild("B"));
+            Assert.IsTrue(nav.DeleteChildren());
+            Assert.AreEqual(1, nav.OrdinalPosition);
+            Assert.IsFalse(nav.HasChildren);
+        }
+
+
         private static ElementNavigator createTestNav()
         {
             var struc = createTestStructure();

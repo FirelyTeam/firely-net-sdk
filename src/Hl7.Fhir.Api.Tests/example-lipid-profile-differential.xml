@@ -2,7 +2,7 @@
 <Profile xmlns="http://hl7.org/fhir">
   <identifier value="urn:hl7.org:lipid-profile:v1"/>
   <version value="1.0.0"/>
-  <name value="Lipid Profile"/>
+  <name value="Example Lipid Profile"/>
   <publisher value="HL7 International"/>
   <telecom>
     <system value="email"/>
@@ -62,6 +62,15 @@
           value="Note that this profile doesn't mention workflow  elements - it's solely concerned with the semantics of a lipid report. Things that are ignored are not constrained"
         />
       </definition>
+    </element>
+
+
+    <element>
+      <path value="DiagnosticReport.name"/>
+      <short value="LOINC Code for Lipid Panel with LDL"/>
+      <formal value="LOINC Code for Lipid Panel with LDL."/>
+      <comments value="LOINC code includes &quot;direct&quot; LDL - does this mean LDL derived by measuring VLDL
+        by ultracentrifugation? This panel includes both measured and calculated LDL."/>
     </element>
 
     <element>
@@ -212,7 +221,8 @@
       <path value="DiagnosticReport.result"/>
       <name value="cholesterol"/>
       <definition>
-        <short value="Cholesterol observation"/>
+        <short value="Cholesterol Result"/>
+        <formal value="Reference to Cholesterol Result."/>        
         <min value="1"/>
         <max value="1"/>
         <type>
@@ -226,9 +236,8 @@
       <path value="DiagnosticReport.result"/>
       <name value="triglyceride"/>
       <definition>
-        <short value="Triglyceride observation"/>
-        <formal
-          value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+        <short value="Triglyceride Result"/>
+        <formal value="Group of elements for Triglyceride result."/>        
         <min value="1"/>
         <max value="1"/>
         <type>
@@ -238,8 +247,36 @@
         </type>
       </definition>
     </element>
-
-    <!-- HDLC and LDLC are left as an excercise to the reader -->
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="hdlCholesterol"/>
+      <definition>
+        <short value="HDL Cholesterol Result"/>
+        <formal value="Group of elements for HDL Cholesterol result."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#hdlCholesterol"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="ldlCholesterol"/>
+      <definition>
+        <short value="LDL Cholesterol result, if reported"/>
+        <formal value="LDL Cholesterol result, if reported."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#ldlCholesterol"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
 
     <element>
       <path value="DiagnosticReport.imagingStudy"/>
@@ -311,20 +348,22 @@
          <slicing>
         <discriminator value="type"/>
         <ordered value="true"/>
-        <rules value="openAtEnd"/>
+        <rules value="open"/>
       </slicing>
+      
+      Also of note: "open" slices will no longer contain the original "base" definition of extension (0..* "extension" elements of type Extension), which will make it harder
+      for validators to know what can go into the open slots. Repeat the original definition in open slices?  Do we need to specify "open" if we explicitly add the base definition?
       -->
-    <element>
-      <path value="Observation.extension"/>
-    </element>
     <element>
       <path value="Observation.extension"/>
       <name value="LDLCalculated"/>
       <definition>
-        <min value="1"/>
+        <short value="Whether LDL value is calculated"/>
+        <formal value="Whether LDL value is calculated."/>        
+        <min value="0"/>
         <max value="1"/>
         <type>
-          <code value="Resource"/>
+          <code value="Extension"/>
           <profile value="#calculated"/>
         </type>
       </definition>
@@ -571,6 +610,7 @@
 
   <extensionDefn>
     <code value="calculated"/>
+    <display value="LDL is Calculated"/>
     <contextType value="resource"/>
     <!-- Don't know which of these two are correct -->
     <!-- <context value="Observation.value[x]"/> -->
@@ -583,6 +623,8 @@
       <type>
         <code value="boolean"/>
       </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>      
     </definition>
   </extensionDefn>
 </Profile>

@@ -51,6 +51,18 @@ namespace Hl7.Fhir.Introspection
         }
 
 
+        public static bool DeleteChildren(this BaseElementNavigator nav)
+        {
+            var parent = nav.Bookmark();
+
+            if (nav.MoveToFirstChild())
+            {
+                while (!nav.IsAtBookmark(parent)) nav.DeleteTree();
+            }
+
+            return true;
+        }
+
 
 
         /// <summary>
