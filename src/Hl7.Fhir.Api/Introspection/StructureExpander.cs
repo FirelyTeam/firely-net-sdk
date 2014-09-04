@@ -122,13 +122,15 @@ namespace Hl7.Fhir.Introspection
 
             // Before we start, is the base element sliceable?
             if (!snap.Current.IsRepeating() && !isSlicedToOne(diff.Current))
-                throw Error.InvalidOperation("The slicing entry at {0} indicates an unbounded slice, but the base element is not a repeating element",
+                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an unbounded slice, but the base element is not a repeating element",
                    diff.Current.Path);
+           
+            Profile.ElementComponent slicingEntry;
 
             // Yes, so, first, add the slicing entry to the snapshot. 
             if (diff.Current.Slicing != null)
             {
-                var slicingEntry = createSliceEntry(snap.Current, diff.Current);
+                slicingEntry = createSliceEntry(snap.Current, diff.Current);
                 snap.InsertBefore(slicingEntry);
 
                 if (!diff.MoveToNext(diff.PathName))
@@ -141,7 +143,8 @@ namespace Hl7.Fhir.Introspection
                     throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
 
                 // In this case we insert a "prefab" extension slice.
-                snap.InsertBefore(createExtensionSlicingEntry(snap.Path));
+                slicingEntry = createExtensionSlicingEntry(snap.Path);
+                snap.InsertBefore(slicingEntry);
             }
 
             snap.MoveToNext();  
@@ -171,6 +174,13 @@ namespace Hl7.Fhir.Introspection
             }
             while (diff.MoveToNext(slicingName));
 
+            if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
+            {
+                // Slices that are open in some form need to repeat the original "base" definition,
+                // so that the open slices have a place to "fit in"
+                snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
+            }
+
             //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
         }
 
@@ -190,7 +200,7 @@ namespace Hl7.Fhir.Introspection
 
         private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
         {
-            snap.ExpandElement(_loader.ArtifactSource);
+            snap.ExpandElement(_loader);
 
             if (!snap.HasChildren)
             {

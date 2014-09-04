@@ -224,7 +224,7 @@
       <name value="cholesterol"/>
       <definition>
         <short value="Cholesterol Result"/>
-        <formal value="Reference to Cholesterol Result."/>
+        <formal value="Reference to Cholesterol Result."/>        
         <min value="1"/>
         <max value="1"/>
         <type>
@@ -239,7 +239,7 @@
       <name value="triglyceride"/>
       <definition>
         <short value="Triglyceride Result"/>
-        <formal value="Group of elements for Triglyceride result."/>
+        <formal value="Group of elements for Triglyceride result."/>        
         <min value="1"/>
         <max value="1"/>
         <type>
@@ -361,7 +361,7 @@
       <name value="LDLCalculated"/>
       <definition>
         <short value="Whether LDL value is calculated"/>
-        <formal value="Whether LDL value is calculated."/>
+        <formal value="Whether LDL value is calculated."/>        
         <min value="0"/>
         <max value="1"/>
         <type>
@@ -626,7 +626,7 @@
         <code value="boolean"/>
       </type>
       <mustSupport value="false"/>
-      <isModifier value="false"/>
+      <isModifier value="false"/>      
     </definition>
   </extensionDefn>
 </Profile>

@@ -122,17 +122,17 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void TestExpandChild()
         {
-            var locator = new StructureLoader(ArtifactResolver.CreateDefault());
-            var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
+            var loader = new StructureLoader(ArtifactResolver.CreateDefault());
+            var profStruct = loader.Locate(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
 
             var nav = new ElementNavigator(profStruct);
             
             nav.JumpToFirst("Profile.telecom");
-            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
+            Assert.IsTrue(nav.ExpandElement(loader));
             Assert.IsTrue(nav.MoveToChild("period"));
 
             nav.JumpToFirst("Profile.extensionDefn.definition");
-            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
+            Assert.IsTrue(nav.ExpandElement(loader));
             Assert.IsTrue(nav.MoveToChild("max"));
         }
 
