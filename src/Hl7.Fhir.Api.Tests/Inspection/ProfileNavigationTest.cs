@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Test.Inspection
                 prepared = true;
             }
 
-            if (artifactId.ToString() == "http://hl7.org/fhir/profile/profile")
+            if (artifactId.ToString() == "http://hl7.org/fhir/Profile/Profile")
                 return profile;
             else
                 return null;

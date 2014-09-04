@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void LocateStructure()
         {
             var locator = new StructureLoader(ArtifactResolver.CreateDefault());
-            var profileUri = new Uri("http://hl7.org/fhir/profile/profile");
+            var profileUri = new Uri("http://hl7.org/fhir/Profile/Profile");
 
             var prof = locator.Locate(profileUri, new Code("Profile"));
             Assert.IsNotNull(prof);
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void TestExpandChild()
         {
             var locator = new StructureLoader(ArtifactResolver.CreateDefault());
-            var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/profile/profile"), new Code("Profile"));
+            var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
 
             var nav = new ElementNavigator(profStruct);
             

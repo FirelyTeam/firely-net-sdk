@@ -50,7 +50,7 @@ namespace Fhir.Profiling
 
         public static Specification GetSpecification(XPathNavigator root, bool expand = true)
         {
-            Uri uri = new Uri("http://hl7.org/fhir/profile/" + root.Name.ToLower());
+            Uri uri = new Uri("http://hl7.org/fhir/Profile/" + root.Name.ToLower());
             
             return GetSpecification(uri, expand);
         }

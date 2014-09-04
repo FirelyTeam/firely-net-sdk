@@ -2,12 +2,12 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Resources as Profiles</title>
-  <id>http://hl7.org/fhir/profile/types</id>
+  <id>http://hl7.org/fhir/Profile/types</id>
   <link href="http://hl7.org/implement/standards/fhir/profiles-types.xml" rel="self"/>
   <updated>2014-05-09T11:15:05.567+10:00</updated>
   <entry>
     <title>&quot;period&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/period</id>
+    <id>http://hl7.org/fhir/Profile/Period</id>
     <link href="http://hl7.org/implement/standards/fhir/period.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -150,7 +150,7 @@
   </entry>
   <entry>
     <title>&quot;coding&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/coding</id>
+    <id>http://hl7.org/fhir/Profile/Coding</id>
     <link href="http://hl7.org/implement/standards/fhir/coding.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -357,7 +357,7 @@
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -378,7 +378,7 @@
   </entry>
   <entry>
     <title>&quot;range&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/range</id>
+    <id>http://hl7.org/fhir/Profile/Range</id>
     <link href="http://hl7.org/implement/standards/fhir/range.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -528,7 +528,7 @@
   </entry>
   <entry>
     <title>&quot;quantity&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/quantity</id>
+    <id>http://hl7.org/fhir/Profile/Quantity</id>
     <link href="http://hl7.org/implement/standards/fhir/quantity.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -745,7 +745,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;attachment&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/attachment</id>
+    <id>http://hl7.org/fhir/Profile/Attachment</id>
     <link href="http://hl7.org/implement/standards/fhir/attachment.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -982,7 +982,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;ratio&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/ratio</id>
+    <id>http://hl7.org/fhir/Profile/Ratio</id>
     <link href="http://hl7.org/implement/standards/fhir/ratio.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1114,7 +1114,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;sampleddata&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/sampleddata</id>
+    <id>http://hl7.org/fhir/Profile/SampledData</id>
     <link href="http://hl7.org/implement/standards/fhir/sampleddata.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1327,7 +1327,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;resourcereference&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/resourcereference</id>
+    <id>http://hl7.org/fhir/Profile/ResourceReference</id>
     <link href="http://hl7.org/implement/standards/fhir/resourcereference.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1454,7 +1454,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;codeableconcept&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/codeableconcept</id>
+    <id>http://hl7.org/fhir/Profile/CodeableConcept</id>
     <link href="http://hl7.org/implement/standards/fhir/codeableconcept.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1597,7 +1597,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;identifier&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/identifier</id>
+    <id>http://hl7.org/fhir/Profile/Identifier</id>
     <link href="http://hl7.org/implement/standards/fhir/identifier.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1826,7 +1826,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1851,7 +1851,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;extension&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/extension</id>
+    <id>http://hl7.org/fhir/Profile/Extension</id>
     <link href="http://hl7.org/implement/standards/fhir/extension.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1969,7 +1969,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;narrative&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/narrative</id>
+    <id>http://hl7.org/fhir/Profile/Narrative</id>
     <link href="http://hl7.org/implement/standards/fhir/narrative.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2111,7 +2111,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;schedule&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/schedule</id>
+    <id>http://hl7.org/fhir/Profile/Schedule</id>
     <link href="http://hl7.org/implement/standards/fhir/schedule.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2415,7 +2415,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;contact&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/contact</id>
+    <id>http://hl7.org/fhir/Profile/Contact</id>
     <link href="http://hl7.org/implement/standards/fhir/contact.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2640,7 +2640,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
   </entry>
   <entry>
     <title>&quot;address&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/address</id>
+    <id>http://hl7.org/fhir/Profile/Address</id>
     <link href="http://hl7.org/implement/standards/fhir/address.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2974,7 +2974,7 @@ P.O. Box number, delivery hints, and similar address information."/>
   </entry>
   <entry>
     <title>&quot;humanname&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/humanname</id>
+    <id>http://hl7.org/fhir/Profile/HumanName</id>
     <link href="http://hl7.org/implement/standards/fhir/humanname.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3254,7 +3254,7 @@ P.O. Box number, delivery hints, and similar address information."/>
   </entry>
   <entry>
     <title>&quot;age&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/age</id>
+    <id>http://hl7.org/fhir/Profile/Age</id>
     <link href="http://hl7.org/implement/standards/fhir/age.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3472,7 +3472,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;count&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/count</id>
+    <id>http://hl7.org/fhir/Profile/Count</id>
     <link href="http://hl7.org/implement/standards/fhir/count.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3690,7 +3690,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;money&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/money</id>
+    <id>http://hl7.org/fhir/Profile/Money</id>
     <link href="http://hl7.org/implement/standards/fhir/money.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3908,7 +3908,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;distance&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/distance</id>
+    <id>http://hl7.org/fhir/Profile/Distance</id>
     <link href="http://hl7.org/implement/standards/fhir/distance.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4126,7 +4126,7 @@ The context of use may additionally require a code from a particular system (Unl
   </entry>
   <entry>
     <title>&quot;duration&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/duration</id>
+    <id>http://hl7.org/fhir/Profile/Duration</id>
     <link href="http://hl7.org/implement/standards/fhir/duration.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>

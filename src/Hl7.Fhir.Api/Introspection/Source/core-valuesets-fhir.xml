@@ -2,7 +2,7 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>FHIR Core Valuesets</title>
-  <id>http://hl7.org/fhir/profile/valuesets</id>
+  <id>http://hl7.org/fhir/Profile/valuesets</id>
   <link href="http://hl7.org/implement/standards/fhir/valuesets.xml" rel="self"/>
   <updated>2014-05-09T11:15:05.567+10:00</updated>
   

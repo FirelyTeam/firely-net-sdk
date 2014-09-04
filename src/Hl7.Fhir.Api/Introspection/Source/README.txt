@@ -17,3 +17,4 @@ NOTE: Remember to also copy:
 			  search & replace "<id>http://hl7.org/fhir/v3/vs/vs/" with "<id>http://hl7.org/fhir/v3/vs/" (or make entry.id the same as ValueSet.identifier)
 			- in core-valuesets-fhir.xml, correct entry.id "http://hl7.org/fhir/valueset/http://hl7.org/fhir/valueset-systems" to become "http://hl7.org/fhir/valueset/valueset-systems", update it's identifier as well.
 			- add all core-* files to validation.zip, remove the original (=renamed) files. leave the rest of the files intact
+			- rename all references http://hl7.org/fhir/profiles and http://hl7.org/fhir/profile to http://hl7.org/fhir/Profile and change the Feed <id>'s to use camelcasing

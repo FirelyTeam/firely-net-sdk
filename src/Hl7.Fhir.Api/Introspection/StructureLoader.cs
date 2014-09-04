@@ -68,7 +68,8 @@ namespace Hl7.Fhir.Introspection
 
         public static Uri BuildBaseStructureUri(Code type)
         {
-            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value.ToLower();
+            //string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value.ToLower();
+            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value;
             return new Uri(fullReference);
         }
 

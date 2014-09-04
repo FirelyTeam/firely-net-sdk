@@ -35,6 +35,8 @@ namespace Hl7.Fhir.Introspection
         public Profile.ProfileStructureComponent Expand(Profile.ProfileStructureComponent differential)
         {
             var baseStructure = _loader.LocateBaseStructure(differential.TypeElement);
+            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base profile for type {0}", differential.TypeElement.ToString());
+
             var baseUri = StructureLoader.BuildBaseStructureUri(differential.TypeElement).ToString();
 
             var snapshot = (Profile.ProfileStructureComponent)baseStructure.DeepCopy();

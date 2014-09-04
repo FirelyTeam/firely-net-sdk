@@ -67,10 +67,12 @@
 
     <element>
       <path value="DiagnosticReport.name"/>
-      <short value="LOINC Code for Lipid Panel with LDL"/>
-      <formal value="LOINC Code for Lipid Panel with LDL."/>
-      <comments value="LOINC code includes &quot;direct&quot; LDL - does this mean LDL derived by measuring VLDL
-        by ultracentrifugation? This panel includes both measured and calculated LDL."/>
+      <definition>
+        <short value="LOINC Code for Lipid Panel with LDL"/>
+        <formal value="LOINC Code for Lipid Panel with LDL."/>
+        <comments value="LOINC code includes &quot;direct&quot; LDL - does this mean LDL derived by measuring VLDL
+          by ultracentrifugation? This panel includes both measured and calculated LDL."/>
+      </definition>
     </element>
 
     <element>
@@ -618,8 +620,8 @@
     <context value="Observation"/>
     <definition>
       <short value="LDL is Calculated"/>
-      <formal value="True if the value is calculated from other observations"/>
-      <comments value="E.g. True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+      <formal value="True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+      <comments value="It's definitely better that whether the LDL was calculated or not comes from the LOINC code. But this is defined to exercise the extension machinery in the publication tooling, and to make this comment. Actually, the location is odd too - it would probably be on the root observation, but this is for testing purposes"/>
       <type>
         <code value="boolean"/>
       </type>
