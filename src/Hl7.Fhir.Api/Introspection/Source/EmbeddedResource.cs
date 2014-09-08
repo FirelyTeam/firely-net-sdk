@@ -15,21 +15,40 @@ using System.Xml.XPath;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
+using Hl7.Fhir.Api.Introspection.Source;
 
 namespace Fhir.Profiling.IO
 {
 #if !PORTABLE45
-    public class EmbeddedResource
+    public class EmbeddedResourceAccess
     {
-        public static Stream GetStream<T>(string name)
+        Assembly assembly;
+
+        public EmbeddedResourceAccess(Assembly assembly)
+        {
+            this.assembly = assembly;
+        }
+
+        public static Stream GetStream(Assembly assembly, string resourcename)
+        {
+            return assembly.GetManifestResourceStream(resourcename);
+        }
+        
+        public static EmbeddedResourceAccess Create<T>()
         {
             Assembly assembly = typeof(T).Assembly;
+            return new EmbeddedResourceAccess(assembly);
+        }
+
+        public Stream GetStream(string name)
+        {
             return assembly.GetManifestResourceStream(name);
         }
 
-        public static IEnumerable<string> ZipXmlContentStrings<T>(string name)
+
+        public IEnumerable<string> ZipXmlContentStrings(string name)
         {
-            Stream stream = GetStream<T>(name);
+            Stream stream = GetStream(name);
             ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
             foreach (ZipEntry entry in zip)
             {
@@ -43,16 +62,29 @@ namespace Fhir.Profiling.IO
             }
         }
 
-        public static ArtifactSource CreateArtifactSource<T>(string name)
+        public IArtifactSource CreateArtifactSource(string name)
         {
-            IEnumerable<string> texts = ZipXmlContentStrings<T>(name);
+            IEnumerable<string> texts = ZipXmlContentStrings(name);
             ResourceCollection col = new ResourceCollection(texts);
             IEnumerable<ResourceEntry> entries = col.ResourceEntries();
-            ArtifactSource source = new ArtifactSource(entries);
+            IArtifactSource source = new MemoryArtifactSource(entries);
             return source;
         }
 
 
+        public static IEnumerable<string> ZipXmlContentStrings<T>(string name)
+        {
+            EmbeddedResourceAccess embedded = EmbeddedResourceAccess.Create<T>();
+            return embedded.ZipXmlContentStrings(name);
+        }
+
+        public static IArtifactSource CreateArtifactSource<T>(string name)
+        {
+            EmbeddedResourceAccess embedded = EmbeddedResourceAccess.Create<T>();
+            return embedded.CreateArtifactSource(name);
+        }
+
+        /*
         public static string GetText<T>(string name)
         {
             string s;
@@ -62,7 +94,7 @@ namespace Fhir.Profiling.IO
                 s = reader.ReadToEnd();
             }
             return s;
-        }
+        }*/
 
         //public static XPathNavigator GetXPathNavigator<T>(string name)
         //{

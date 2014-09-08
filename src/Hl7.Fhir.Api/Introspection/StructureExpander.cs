@@ -35,11 +35,15 @@ namespace Hl7.Fhir.Introspection
         public Profile.ProfileStructureComponent Expand(Profile.ProfileStructureComponent differential)
         {
             var baseStructure = _loader.LocateBaseStructure(differential.TypeElement);
+            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base profile for type {0}", differential.TypeElement.ToString());
+
             var baseUri = StructureLoader.BuildBaseStructureUri(differential.TypeElement).ToString();
 
             var snapshot = (Profile.ProfileStructureComponent)baseStructure.DeepCopy();
             snapshot.SetStructureForm(StructureForm.Snapshot);
             snapshot.SetStructureBaseUri(baseUri.ToString());
+
+            mergeStructure(snapshot, differential);
 
             var fullDifferential = new DifferentialTreeConstructor(differential).MakeTree();
 
@@ -57,6 +61,15 @@ namespace Hl7.Fhir.Introspection
             return snapshot;
         }
 
+
+        private static void mergeStructure(Profile.ProfileStructureComponent snapshot, Profile.ProfileStructureComponent differential)
+        {
+            if (differential.Name != null) snapshot.Name = differential.Name;
+            if (differential.Publish != null) snapshot.Publish = differential.Publish;
+            if (differential.Purpose != null) snapshot.Purpose = differential.Purpose;
+        }
+
+
         private void merge(ElementNavigator snap, ElementNavigator diff)
         {
             mergeElementAttributes(snap.Current, diff.Current);
@@ -73,8 +86,6 @@ namespace Hl7.Fhir.Introspection
                     expandBaseElement(snap, diff);
                 }
 
-                //string sliceName = null;
-
                 // Due to how MoveToFirstChild() works, we have to move to the first matching *child*
                 // when entering the loop for the first time, after that we can look for the next
                 // matching *sibling*.
@@ -88,9 +99,9 @@ namespace Hl7.Fhir.Introspection
                     firstEntry = false;
 
                     // Child found in both, merge them
-                    if (childNameRepeats(diff))
+                    if (childNameRepeats(diff) || diff.Current.IsExtension())
                     {
-                        // The child in the diff repeats -> we're on the first element of a slice!
+                        // The child in the diff repeats or we recognize it as an extension slice -> we're on the first element of a slice!
                         mergeSlice(snap, diff); 
                     }
                     else
@@ -98,7 +109,7 @@ namespace Hl7.Fhir.Introspection
                 }
                 while (diff.MoveToNext());
 
-                // After the merge, return the diff back to its original position
+                // After the merge, return the diff and snapho back to their original position
                 diff.MoveToParent();
                 snap.MoveToParent();
             }
@@ -111,13 +122,17 @@ namespace Hl7.Fhir.Introspection
 
             // Before we start, is the base element sliceable?
             if (!snap.Current.IsRepeating() && !isSlicedToOne(diff.Current))
-                throw Error.InvalidOperation("The slicing entry at {0} indicates an unbounded slice, but the base element is not a repeating element",
+                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an unbounded slice, but the base element is not a repeating element",
                    diff.Current.Path);
+           
+            Profile.ElementComponent slicingEntry;
 
             // Yes, so, first, add the slicing entry to the snapshot. 
             if (diff.Current.Slicing != null)
             {
-                snap.InsertBefore((Profile.ElementComponent)diff.Current.DeepCopy());
+                slicingEntry = createSliceEntry(snap.Current, diff.Current);
+                snap.InsertBefore(slicingEntry);
+
                 if (!diff.MoveToNext(diff.PathName))
                     throw Error.InvalidOperation("Slicing has no elements beyond the slicing entry");  // currently impossible to happen
             }
@@ -128,7 +143,8 @@ namespace Hl7.Fhir.Introspection
                     throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
 
                 // In this case we insert a "prefab" extension slice.
-                snap.InsertBefore(createExtensionSlicingEntry(snap.Path));
+                slicingEntry = createExtensionSlicingEntry(snap.Path);
+                snap.InsertBefore(slicingEntry);
             }
 
             snap.MoveToNext();  
@@ -158,8 +174,16 @@ namespace Hl7.Fhir.Introspection
             }
             while (diff.MoveToNext(slicingName));
 
+            if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
+            {
+                // Slices that are open in some form need to repeat the original "base" definition,
+                // so that the open slices have a place to "fit in"
+                snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
+            }
+
             //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
         }
+
 
         private Profile.ElementComponent createExtensionSlicingEntry(string path)
         {
@@ -168,15 +192,15 @@ namespace Hl7.Fhir.Introspection
             result.Path = path;
             result.Slicing = new Profile.ElementSlicingComponent();
             result.Slicing.Discriminator = "url";
-            result.Slicing.Ordered = true;
-            result.Slicing.Rules = Profile.SlicingRules.OpenAtEnd;
+            result.Slicing.Ordered = false;
+            result.Slicing.Rules = Profile.SlicingRules.Open;
 
             return result;
         }
 
         private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
         {
-            snap.ExpandElement(_loader.ArtifactSource);
+            snap.ExpandElement(_loader);
 
             if (!snap.HasChildren)
             {
@@ -218,6 +242,33 @@ namespace Hl7.Fhir.Introspection
 
                 mergeElementDefnAttributes(dest.Definition, src.Definition);
             }
+
+            if(src.Slicing != null) dest.Slicing = (Profile.ElementSlicingComponent)src.Slicing.DeepCopy();
+        }
+
+
+        private Profile.ElementComponent createSliceEntry(Profile.ElementComponent baseDefn, Profile.ElementComponent diff)
+        {
+            var slicingEntry = new Profile.ElementComponent();
+
+            slicingEntry.PathElement = (FhirString)baseDefn.PathElement.DeepCopy();
+            if (diff.Name != null) slicingEntry.NameElement = (FhirString)diff.NameElement.DeepCopy();
+
+            if (diff.Slicing != null) slicingEntry.Slicing = (Profile.ElementSlicingComponent)diff.Slicing.DeepCopy();
+
+            // A slicing entry only has an ElementDefinition if the differential overrides the elementdefn
+            // and then, only some of the fields go into the slicing entry
+            if (diff.Definition != null)
+            {
+                slicingEntry.Definition = (Profile.ElementDefinitionComponent)diff.Definition.DeepCopy();
+                if (slicingEntry.Definition.ShortElement == null) slicingEntry.Definition.ShortElement = (FhirString)baseDefn.Definition.ShortElement.DeepCopy();
+                if (slicingEntry.Definition.FormalElement == null) slicingEntry.Definition.FormalElement = (FhirString)baseDefn.Definition.FormalElement.DeepCopy();
+                if (slicingEntry.Definition.MinElement == null) slicingEntry.Definition.MinElement = (Integer)baseDefn.Definition.MinElement.DeepCopy();
+                if (slicingEntry.Definition.MaxElement == null) slicingEntry.Definition.MaxElement = (FhirString)baseDefn.Definition.MaxElement.DeepCopy();
+                slicingEntry.Definition.IsModifierElement = (FhirBoolean)baseDefn.Definition.IsModifierElement.DeepCopy();
+            }
+
+            return slicingEntry;
         }
 
 

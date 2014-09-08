@@ -4,10 +4,10 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Fhir.IO;
 using Fhir.Profiling.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Fhir.XPath;
 
 namespace Fhir.Profiling.Tests
 {

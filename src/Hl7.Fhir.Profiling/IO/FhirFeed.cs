@@ -12,12 +12,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Fhir
+namespace Fhir.Profiling
 {
-
-    
-    
-    
 
     public class Feed
     {

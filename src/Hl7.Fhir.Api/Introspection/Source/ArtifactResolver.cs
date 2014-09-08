@@ -22,10 +22,47 @@ namespace Hl7.Fhir.Introspection.Source
     {
         private readonly List<IArtifactSource> _sources = new List<IArtifactSource>();
 
-        public ArtifactResolver() : this(new FileArtifactSource(), new CoreZipArtifactSource(), new WebArtifactSource())
+        public ArtifactResolver()
         {            
         }
 
+        /// <summary>
+        /// Creates a default non-cached ArtifactResolver
+        /// Default only searches in the executable directory files and the core zip. 
+        /// This non-cached resolver is primary for testing purposes.
+        /// </summary>
+        public static IArtifactSource CreateDefault()
+        {
+            return new ArtifactResolver(new FileArtifactSource(), new CoreZipArtifactSource(), new WebArtifactSource());
+        }
+
+        /// <summary>
+        /// Creates a default offline cached ArtifactResolver
+        /// Default only searches in the executable directory files and the core zip. 
+        /// </summary>
+        public static IArtifactSource CreateOffline()
+        {
+            // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
+            IArtifactSource resolver = new ArtifactResolver(new FileArtifactSource(), new CoreZipArtifactSource());
+            return new CachedArtifactSource(resolver);
+            
+        }
+
+        /// <summary>
+        /// Creates a default cached ArtifactResolver
+        /// Default only searches in the executable directory files and the core zip. 
+
+        /// </summary>
+        public static IArtifactSource CreateCachedDefault()
+        {
+            IArtifactSource resolver = ArtifactResolver.CreateDefault();
+            return new CachedArtifactSource(resolver);
+        }
+
+        /// <summary>
+        /// Custom implementation of the artifact resolver
+        /// </summary>
+        /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
         public ArtifactResolver(IEnumerable<IArtifactSource> sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");
@@ -33,6 +70,10 @@ namespace Hl7.Fhir.Introspection.Source
             _sources.AddRange(sources);
         }
 
+        /// <summary>
+        /// Custom implementation of the artifact resolver
+        /// </summary>
+        /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
         public ArtifactResolver(params IArtifactSource[] sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");

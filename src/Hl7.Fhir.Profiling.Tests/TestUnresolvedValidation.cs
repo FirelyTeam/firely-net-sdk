@@ -1,25 +1,25 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.IO;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class TestSimpleValidation
     {
-        static Specification patientSpec;
+        static Specification spec;
         
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            patientSpec = Factory.GetPatientSpec(resolve: false);
+            spec = Factory.GetPatientSpec(expand: false, online: false);
         }
 
         [TestMethod]
         public void InvalidElement()
         {
             var resource = FhirFile.LoadResource("TestData\\Patient.InvalidElement.xml");
-            Report report = patientSpec.Validate(resource);
+            Report report = spec.Validate(resource);
             
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(1, report.ErrorCount);
@@ -30,7 +30,7 @@ namespace Fhir.Profiling.Tests
         public void ConstraintError()
         {
             var resource = FhirFile.LoadResource("TestData\\Patient.ConstraintError.xml");
-            Report report = patientSpec.Validate(resource);
+            Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(1, report.ErrorCount);

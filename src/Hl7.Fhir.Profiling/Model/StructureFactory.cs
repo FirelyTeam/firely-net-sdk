@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.IO;
+using Fhir.XPath;
 
 namespace Fhir.Profiling
 {
@@ -34,7 +34,7 @@ namespace Fhir.Profiling
             structure.Elements.Add(element);
         }
 
-        public static Structure Primitive(string name, string pattern, string nsprefix = FhirNamespaceManager.Fhir)
+        public static Structure Primitive(string name, IPrimitiveValidator validator, string nsprefix = FhirNamespaceManager.Fhir)
         {
             Structure structure = new Structure();
             structure.Type = name;
@@ -43,7 +43,7 @@ namespace Fhir.Profiling
             element.Path = new Path(name);
             element.Name = name;
             element.IsPrimitive = true;
-            element.PrimitivePattern = pattern;
+            element.PrimitiveValidator = validator;
             element.Cardinality = new Cardinality { Min = "1", Max = "1" };
             element.NameSpacePrefix = nsprefix;
             structure.Elements.Add(element);
@@ -64,7 +64,7 @@ namespace Fhir.Profiling
             List<Structure> structures = new List<Structure>();
             foreach (string s in list)
             {
-                structures.Add(Primitive(s, ""));
+                structures.Add(Primitive(s, null));
             }
 
             return structures;
@@ -108,20 +108,20 @@ namespace Fhir.Profiling
 
             List<Structure> list = new List<Structure>
             { 
-                Primitive("instant", @".*"),
-                Primitive("date", @".*"),
-                Primitive("dateTime", Hl7.Fhir.Model.FhirDateTime.PATTERN),
-                Primitive("decimal", @"\d+"),
+                Primitive("instant", null),
+                Primitive("date", null),
+                Primitive("dateTime", RegExPrimitiveValidator.For(Hl7.Fhir.Model.FhirDateTime.PATTERN)),
+                Primitive("decimal", RegExPrimitiveValidator.For(@"\d+")),
                 //Primitive("element", ".*"),
-                Primitive("boolean", @"(true|false)"),
-                Primitive("integer", @"\d+"),
-                Primitive("string", @".*"),
-                Primitive("uri", @"http"),
-                Primitive("base64Binary", @".*"),
-                Primitive("code", Hl7.Fhir.Model.Code.PATTERN),
-                Primitive("id", @"\d+"),
-                Primitive("oid", @".*"),
-                Primitive("uuid" , @".*")
+                Primitive("boolean", RegExPrimitiveValidator.For("(true|false)")),
+                Primitive("integer", RegExPrimitiveValidator.For(@"\d+")),
+                Primitive("string", null),
+                Primitive("uri", new UriPrimitiveValidator()),
+                Primitive("base64Binary", null),
+                Primitive("code", RegExPrimitiveValidator.For(Hl7.Fhir.Model.Code.PATTERN)),
+                Primitive("id", RegExPrimitiveValidator.For(@"[a-z0-9\-\.]{1,36}")),
+                Primitive("oid", null),
+                Primitive("uuid" , null)
             };
 
             return list;

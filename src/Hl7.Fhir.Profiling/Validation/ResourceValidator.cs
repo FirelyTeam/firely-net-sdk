@@ -12,19 +12,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using System.Text.RegularExpressions;
-using Fhir.IO;
+using Fhir.XPath;
+using Fhir.Profiling;
 
+    // todo: profile references "#lipidpanel" worden nog niet geresolved
+    // todo: valuesets worden nog niet geresolved (door de ArtifactResolver)
+    // todo: waar zitten de slicing fixed-values
+
+    // todo: ExtensionDefns opnemen in Specification!!
     // todo: fixed value testen (er is nog geen testdata)
-    // todo: adding JSON tests
-    
+
     // todo: Specification heeft nu valuesets. Maar uiteindelijk moeten er zowel met ValueSets als CodeSystems gevalideerd kunnen worden 
     // todo: resourceReference can refer to <profile> which is a structure.
     // todo: Element names are profile URI specific (names can overlap with other profiles)
     // todo: Merge Specification, Structure, Element classes (when possible) with Api.Introspection and Api.ModelInfo
     // todo: Slices
-    
-    
+
+    // todo: adding JSON tests
     
     // done: When an element type is a ResourceReference, then the path does not contain [x]. The restriction is content of the refered resource.
     // done: parse meaning of [x].
@@ -38,7 +42,7 @@ namespace Fhir.Profiling
     public class ResourceValidator
     {
 
-        private Specification Profile = new Specification();
+        private Specification specification = new Specification();
         public event OutcomeLogger LogOutcome = null;
 
         private ReportBuilder reporter = new ReportBuilder();
@@ -63,7 +67,7 @@ namespace Fhir.Profiling
 
         public ResourceValidator(Specification profile)
         {
-            this.Profile = profile;
+            this.specification = profile;
         }
 
         public void ValidateCode(Vector vector)
@@ -191,14 +195,15 @@ namespace Fhir.Profiling
             try
             {
                 string value = vector.GetContent();
-                string pattern = vector.Element.PrimitivePattern;
-                if (Regex.IsMatch(value, pattern))
+                //string pattern = vector.Element.PrimitivePattern;
+                bool valid = vector.Element.IsValidPrimitive(value);
+                if (valid)
                 {   
                     Log(Group.Primitive, Status.Valid, vector, "The value format ({0}) of primitive [{1}] is valid. ", vector.Element.Name, vector.Node.Name);
                 }
                 else
                 {
-                    Log(Group.Primitive, Status.Failed, vector, "The value format ({0}) of primitive [{1}] not valid: '{2}'", vector.Element.Name, vector.Node.Name, value);
+                    Log(Group.Primitive, Status.Failed, vector, "The value format ({0}) of primitive [{1}] is not valid: '{2}'", vector.Element.Name, vector.Node.Name, value);
                 }
             }
             catch
@@ -321,7 +326,7 @@ namespace Fhir.Profiling
         public Vector GetVector(XPathNavigator root)
         {
             XmlNamespaceManager nsm = FhirNamespaceManager.CreateManager(root);
-            Structure structure = Profile.GetStructureByName(root.Name);
+            Structure structure = specification.GetStructureByName(root.Name);
             XPathNavigator node = root.CreateNavigator();
 
             return Vector.Create(structure, node, nsm);

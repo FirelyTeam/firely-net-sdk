@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestInitialize]
         public void Setup()
         {
-            _source = new CachedArtifactSource(new ArtifactResolver());
+            _source = new CachedArtifactSource(ArtifactResolver.CreateDefault());
         }
 
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void ExpandProfile()
         {
             var expander = new ProfileExpander(_source);
-
+            
             // This file will be found local to the test DLL, based on its it, not its url
             var diff = (Profile)_source.ReadResourceArtifact(new Uri("http://test.nu/Profile/example-lipid-profile-differential"));
             Assert.IsNotNull(diff);
@@ -48,7 +48,6 @@ namespace Hl7.Fhir.Test.Inspection
             var snapshot = expander.Expand(diff);
             Assert.IsNotNull(diff);
 
-            snapshot.Text = new Narrative() { Status = Narrative.NarrativeStatus.Empty };
             var xml = FhirSerializer.SerializeResourceToXml(snapshot);
             File.WriteAllText("c:\\temp\\expanded.xml", xml);
         }
@@ -94,8 +93,8 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod, Ignore]
         public void LocateStructure()
         {
-            var locator = new StructureLoader(new ArtifactResolver());
-            var profileUri = new Uri("http://hl7.org/fhir/profile/profile");
+            var locator = new StructureLoader(ArtifactResolver.CreateDefault());
+            var profileUri = new Uri("http://hl7.org/fhir/Profile/Profile");
 
             var prof = locator.Locate(profileUri, new Code("Profile"));
             Assert.IsNotNull(prof);
@@ -123,17 +122,17 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void TestExpandChild()
         {
-            var locator = new StructureLoader(new ArtifactResolver());
-            var profStruct = locator.Locate(new Uri("http://hl7.org/fhir/profile/profile"), new Code("Profile"));
+            var loader = new StructureLoader(ArtifactResolver.CreateDefault());
+            var profStruct = loader.Locate(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
 
             var nav = new ElementNavigator(profStruct);
             
             nav.JumpToFirst("Profile.telecom");
-            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
+            Assert.IsTrue(nav.ExpandElement(loader));
             Assert.IsTrue(nav.MoveToChild("period"));
 
             nav.JumpToFirst("Profile.extensionDefn.definition");
-            Assert.IsTrue(nav.ExpandElement(locator.ArtifactSource));
+            Assert.IsTrue(nav.ExpandElement(loader));
             Assert.IsTrue(nav.MoveToChild("max"));
         }
 

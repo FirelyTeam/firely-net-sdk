@@ -45,12 +45,24 @@ namespace Fhir.Profiling
         public List<Constraint> Constraints = new List<Constraint>();
         public bool IsPrimitive { get; set; }
         public Representation Representation { get; set; }
-        public string PrimitivePattern {get; set;} // RegExPattern to validate a primite against (only in case of IsPrimitive)
+        //public string PrimitivePattern {get; set;} // RegExPattern to validate a primite against (only in case of IsPrimitive)
+        public IPrimitiveValidator PrimitiveValidator;
+
         public string BindingUri;
         public ValueSet Binding;
         public string NameSpacePrefix { get; set; }
         public int Slice { get; set; }
         public Path Discriminator { get; set; }
+
+        public bool IsValidPrimitive(string value)
+        {
+            if (PrimitiveValidator != null)
+            {
+                return PrimitiveValidator.IsValid(value);
+            }
+            else return true;
+        }
+
         public bool IsExtension
         {
             get
@@ -200,32 +212,5 @@ namespace Fhir.Profiling
         }
     }
 
-
-    public static class PathUtils
-    {
-        
-            
-        /*public static string XFilter(this Element element)
-        {
-            if (element.Sliced)
-            {
-                Element child = element.FindChild(element.Discriminator);
-                
-                bool attribute = (child != null && child.IsAttribute);
-                if (attribute)
-                {
-                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
-                }
-                else
-                {
-                    xpath += string.Format("[{0}:{1}/@value='{2}']", this.NameSpacePrefix, Discriminator, FixedValue);
-                }
-
-            }
-        }
-        */
-
-        
-    }
     
 }

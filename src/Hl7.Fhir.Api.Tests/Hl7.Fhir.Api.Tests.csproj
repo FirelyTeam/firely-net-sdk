@@ -138,6 +138,9 @@
     <Content Include="example-lipid-profile-differential.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="example-lipid-profile-testmessage.xml" />
+    <Content Include="example-lipid-profile.xml" />
+    <Content Include="example-lipid-valueset-interpretation.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

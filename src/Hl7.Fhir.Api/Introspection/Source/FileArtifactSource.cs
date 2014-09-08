@@ -110,7 +110,6 @@ namespace Hl7.Fhir.Introspection.Source
 
         }
 
-
         public IEnumerable<string> ArtifactFiles 
         {
             get
@@ -136,7 +135,6 @@ namespace Hl7.Fhir.Introspection.Source
 #endif
         }
 
-
         /// <summary>
         /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)
         /// and reads an artifact with the given id from it.
@@ -161,16 +159,17 @@ namespace Hl7.Fhir.Introspection.Source
             {
                 if (contentXml != null)
                     return FhirParser.ParseResource(XmlReader.Create(contentXml));
-
-                var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
-                using (var contentJson = ReadContentArtifact(jsonFilename))
-                {
-                    if (contentJson != null)
-                        return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
-                    else
-                        return null;
-                }
             }
+            
+            var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
+            using (var contentJson = ReadContentArtifact(jsonFilename))
+            {
+                if (contentJson != null)
+                    return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
+            }
+
+            return null;
+            
         }
         
         private void ensurePrepared()

@@ -12,11 +12,13 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
+
     public class Structure
     {
         public string Type { get; set; }
         public string Name { get; set; }
         public List<Element> Elements = new List<Element>();
+        
         public Element Root
         {
             get
@@ -24,12 +26,12 @@ namespace Fhir.Profiling
                 return Elements.FirstOrDefault(e => e.Path.Count == 1);
             }
         }
-        
-       
+
         public override string ToString()
         {
             return string.Format("{0} ({1} elements)", Type, Elements.Count);
         }
+
         public string NameSpacePrefix { get; set; }
     }
 }

@@ -15,7 +15,6 @@ using System.Xml.XPath;
 namespace Fhir.Profiling
 {
 
-   
     public enum SlicingRules { OpenAtEnd };
     
     /// <summary>
@@ -26,7 +25,6 @@ namespace Fhir.Profiling
     {
         private List<Structure> _structures = new List<Structure>();
         private List<ValueSet> _valueSets = new List<ValueSet>();
-        private List<TypeRef> _typerefs = new List<TypeRef>();
 
         public bool Sealed { get; internal set; }
 
@@ -35,50 +33,11 @@ namespace Fhir.Profiling
             Sealed = false;
         }
 
-        public IEnumerable<Structure> Structures
-        {
-            get
-            {
-                return _structures;
-            }
-        }
-
-        public IEnumerable<ValueSet> ValueSets
-        {
-            get
-            {
-                return _valueSets;
-            }
-        }
-
-        public IEnumerable<Element> Elements
-        {
-            get
-            {
-                return Structures.SelectMany(s => s.Elements);
-            }
-        }
-
-        public IEnumerable<Constraint> Constraints
-        {
-            get
-            {
-                return Elements.SelectMany(e => e.Constraints);
-            }
-        }
-
-        public IEnumerable<TypeRef> TypeRefs
-        {
-            get
-            {
-                return _typerefs;
-            }
-        }
-
         private void AssertNotSealed()
         {
             if (Sealed) throw new InvalidOperationException("Profile is sealed");
         }
+
         internal void Add(ValueSet valueset)
         {
             AssertNotSealed();
@@ -90,12 +49,10 @@ namespace Fhir.Profiling
         {
             AssertNotSealed();
             _valueSets.AddRange(valuesets);
-
         }
 
         internal void Add(IEnumerable<Structure> structures)
         {
-
             AssertNotSealed();
             _structures.AddRange(structures);
         }
@@ -106,15 +63,14 @@ namespace Fhir.Profiling
             _structures.Add(structure);
         }
 
-        internal void Add(TypeRef typeref)
-        {
-            _typerefs.Add(typeref);
-    
-        }
-
         public Structure GetStructureByName(string name)
         {
             return Structures.FirstOrDefault(s => s.Type == name);
+        }
+
+        public IEnumerable<Structure> StructuresWithName(string name)
+        {
+            return Structures.Where(s => s.Type == name);
         }
 
         public ValueSet GetValueSetByUri(string uri)
@@ -202,11 +158,73 @@ namespace Fhir.Profiling
             return TypeRefs.FirstOrDefault(t => t.Equals(typeref));
         }
 
-        public IEnumerable<Uri> ValueSetUris()
+        public IEnumerable<Structure> Structures
         {
-            return ValueSets.Select(v => new Uri(v.System));
+            get
+            {
+                return _structures;
+            }
         }
-        
+
+        public IEnumerable<ValueSet> ValueSets
+        {
+            get
+            {
+                return _valueSets;
+            }
+        }
+
+        public IEnumerable<Element> Elements
+        {
+            get
+            {
+                return Structures.SelectMany(s => s.Elements);
+            }
+        }
+
+        public IEnumerable<Constraint> Constraints
+        {
+            get
+            {
+                return Elements.SelectMany(e => e.Constraints);
+            }
+        }
+
+        public IEnumerable<TypeRef> TypeRefs
+        {
+            get
+            {
+                return Elements.SelectMany(e => e.TypeRefs);
+            }
+        }
+
+        public IEnumerable<Uri> ValueSetUris
+        {
+            get
+            {
+                return ValueSets.Select(v => new Uri(v.System));
+            }
+        }
+
+        public IEnumerable<Uri> BindingUris
+        {
+            get
+            {
+                return Elements
+                    .Where(e => e.BindingUri != null)
+                    .Distinct()
+                    .Select(e => new Uri(e.BindingUri));
+                    
+            }
+        }
+
+        public IEnumerable<Uri> TypeRefUris
+        {
+            get
+            {
+                return TypeRefs.Select(t => UriHelper.ResolvingUri(t)).Distinct();
+            }
+        }
     }
    
 }

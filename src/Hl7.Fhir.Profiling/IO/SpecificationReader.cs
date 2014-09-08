@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
-using Fhir.IO;
+using Fhir.XPath;
 
 namespace Fhir.Profiling
 {
@@ -95,7 +95,7 @@ namespace Fhir.Profiling
             
             string code = Value(node, "f:code/@value");
             string profileUri = OptionalValue(node, "f:profile/@value");
-
+            
             return new TypeRef(code, profileUri);
         }
 
@@ -291,12 +291,6 @@ namespace Fhir.Profiling
 
     }
 
-    // This class is only for keeping track of slicings while reading a profile into structure.
-    internal class Slicing
-    {
-        internal int Count = 0;
-        internal Path Path;
-        internal Path Discriminator {get; set; }
-    }
+    
 
 }

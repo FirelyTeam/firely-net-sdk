@@ -16,7 +16,7 @@ using System.Xml.XPath;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Fhir.Profiling.IO
+namespace Fhir.XPath
 {
     public class JsonXPathNavigator : XPathNavigator, IXPathNavigable
     {

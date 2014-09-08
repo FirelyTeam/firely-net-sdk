@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Fhir.Profiling
 {
-    public enum Resolution { New, Unresolvable, Resolved }
 
     public class TypeRef : IEquatable<TypeRef>
     {
@@ -20,11 +19,17 @@ namespace Fhir.Profiling
         {
             this.Code = code;
             this.ProfileUri = profileUri;
-            this.Resolution = Resolution.New;
         }
         public string Code;
         public string ProfileUri { get; set; }
-        public Resolution Resolution { get; set; }
+        
+        public bool Unresolved
+        {
+            get
+            {
+                return (Structure == null);
+            }
+        }
         public Structure Structure { get; set; }
         public override string ToString()
         {

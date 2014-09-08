@@ -51,6 +51,18 @@ namespace Hl7.Fhir.Introspection
         }
 
 
+        public static bool DeleteChildren(this BaseElementNavigator nav)
+        {
+            var parent = nav.Bookmark();
+
+            if (nav.MoveToFirstChild())
+            {
+                while (!nav.IsAtBookmark(parent)) nav.DeleteTree();
+            }
+
+            return true;
+        }
+
 
 
         /// <summary>
@@ -94,7 +106,7 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        public static bool ExpandElement(this ElementNavigator nav, IArtifactSource source)
+        public static bool ExpandElement(this ElementNavigator nav, StructureLoader source)
         {
             if(source == null) throw Error.ArgumentNull("source");
             if(nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
@@ -117,8 +129,7 @@ namespace Hl7.Fhir.Introspection
                         throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
                     else
                     {
-                        var loader = new StructureLoader(source);
-                        var sourceNav = resolveStructureReference(loader, defn.Type[0].CodeElement);
+                        var sourceNav = resolveStructureReference(source, defn.Type[0].CodeElement);
 
                         if (sourceNav != null)
                         {
@@ -136,9 +147,9 @@ namespace Hl7.Fhir.Introspection
             return false;
         }
 
-        private static ElementNavigator resolveStructureReference(StructureLoader _loader, Code code)
+        private static ElementNavigator resolveStructureReference(StructureLoader loader, Code code)
         {
-            var result = _loader.LocateBaseStructure(code);
+            var result = loader.LocateBaseStructure(code);
             return result != null ? new ElementNavigator(result) : null;
         }
 

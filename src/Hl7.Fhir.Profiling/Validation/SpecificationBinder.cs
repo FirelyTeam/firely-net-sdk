@@ -1,17 +1,18 @@
-﻿using Fhir.IO;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fhir.XPath;
 
 namespace Fhir.Profiling
 {
-    public class SpecificationSealer
+    internal class SpecificationBinder
     {
         private Specification specification;
 
-        private SpecificationSealer(Specification specification)
+        private SpecificationBinder(Specification specification)
         {
             this.specification = specification;
         }
@@ -44,7 +45,7 @@ namespace Fhir.Profiling
             }
         }
 
-        public void _linkElements()
+        private void _linkElements()
         {
             foreach (Structure structure in specification.Structures)
             {
@@ -68,14 +69,21 @@ namespace Fhir.Profiling
             }
         }
 
+        private void _linkElementRef(Structure structure, Element element)
+        {
+            if (element.ElementRef == null && element.ElementRefPath != null)
+            {
+                element.ElementRef = specification.GetElementByPath(structure, element.ElementRefPath);
+            }
+        }
+
         private void _linkElementRefs()
         {
             foreach (Structure structure in specification.Structures)
             {
                 foreach (Element element in structure.Elements)
                 {
-                    if (element.ElementRef == null && element.ElementRefPath != null)
-                        element.ElementRef = specification.GetElementByPath(structure, element.ElementRefPath);
+                    _linkElementRef(structure, element);
                 }
             }
         }
@@ -89,7 +97,7 @@ namespace Fhir.Profiling
             }
         }
 
-        public void _addNameSpace(Element element)
+        private void _addNameSpace(Element element)
         {
             if (element.HasTypeRef)
             {
@@ -104,7 +112,7 @@ namespace Fhir.Profiling
                 element.NameSpacePrefix = FhirNamespaceManager.Fhir;
         }
 
-        public void _addNameSpaces()
+        private void _addNameSpaces()
         {
             foreach (Element element in specification.Elements.Where(e => e.NameSpacePrefix == null))
             {
@@ -112,7 +120,7 @@ namespace Fhir.Profiling
             }
         }
 
-        private void seal()
+        private void bind()
         {
             _linkBindings();
             _linkElements();
@@ -124,12 +132,12 @@ namespace Fhir.Profiling
         }
 
         /// <summary>
-        /// Make the profile complete and usable by linking all internal structures and perform precompilation
+        /// Make the profile complete and usable by binding all internal structures and perform precompilation
         /// </summary>
-        public static void Seal(Specification specification)
+        public static void Bind(Specification specification)
         {
-            SpecificationSealer sealer = new SpecificationSealer(specification);
-            sealer.seal();
+            SpecificationBinder binder = new SpecificationBinder(specification);
+            binder.bind();
         }
     }
 }

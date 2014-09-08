@@ -175,11 +175,11 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/profile/condition"));
+            var rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Condition"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
-            var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/profile/money"));
+            var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Money"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(dt is Profile);
         }
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Test.Inspection
         {
             var wa = new WebArtifactSource();
 
-            var artifact = wa.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+            var artifact = wa.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is Profile);
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new ArtifactResolver();
+            var resolver = ArtifactResolver.CreateDefault();
 
             resolver.Prepare();
 
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Test.Inspection
         [TestMethod]
         public void TestSourceCaching()
         {
-            var src = new CachedArtifactSource(new ArtifactResolver());
+            var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
 
             src.Prepare();
 
