@@ -28,22 +28,13 @@ namespace Fhir.Profiling.Tests
         }
 
         [TestMethod]
-        public void Differential()
-        {
-            var resource = FhirFile.LoadResource("TestData\\lipid.profile.manual.differential.xml");
-            Report report = Validation.Validate(resource);
-
-            var errors = report.Errors.ToList();
-            Assert.IsTrue(report.IsValid);
-        }
-
-        [TestMethod]
         public void Expanded()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.profile.expanded.xml");
             Report report = Validation.Validate(resource);
 
             var errors = report.Errors.ToList();
+            
             Assert.IsTrue(report.IsValid);
         }
     }

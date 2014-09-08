@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace Fhir.Profiling
 {
@@ -26,7 +27,7 @@ namespace Fhir.Profiling
     public class ReportBuilder
     {
         private int nesting = 0;
-        public Report Report = new Report();
+        public Report Report;
         
         public void Clear()
         {

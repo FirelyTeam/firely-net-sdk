@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace Fhir.Profiling
 {
@@ -34,6 +35,27 @@ namespace Fhir.Profiling
             {
                 return Outcomes.Where(outcome => outcome.Kind.Failed());
             }
+        }
+
+        
+
+        public IEnumerable<Outcome> ErrorsAt(XPathNavigator node)
+        {
+
+            foreach (Outcome outcome in Errors)
+            {
+                XPathNavigator n = outcome.Vector.Node;
+
+                if (outcome.Vector.Node.IsSamePosition(node))
+                {
+                    yield return outcome;
+                }
+            }
+        }
+        
+        public bool HasErrorAt(XPathNavigator node)
+        {
+            return ErrorsAt(node).Count() > 0;
         }
 
         public int ErrorCount

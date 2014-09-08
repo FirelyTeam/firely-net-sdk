@@ -1,6 +1,11 @@
-<Profile xmlns="http://hl7.org/fhir">
+<?xml-model href="../SVN/FHIR-DSTU/publish/profile.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://hl7.org/fhir ../../../../SVN/FHIR-DSTU/publish/profile.xsd"
+    xmlns="http://hl7.org/fhir">
+    
     <text>
         <status value="empty"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">No narrative was supplied for this Profile</div>
     </text>
     <identifier value="urn:hl7.org:lipid-profile:v1"/>
     <version value="1.0.0"/>
@@ -19,462 +24,10 @@
     </code>
     <status value="draft"/>
     <experimental value="true"/>
-    <date value="2014-04-17T00:00:00+02:00"/>
+    <date value="2014-04-17"/>
     <requirements
         value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial"/>
     <fhirVersion value="0.80"/>
-    <structure>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form">
-            <valueCode value="Differential"/>
-        </extension>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/messageheader"/>
-        </extension>
-        <type value="MessageHeader"/>
-        <name value="newLipidResult-differential"/>
-        <publish value="false"/>
-        <element>
-            <path value="MessageHeader.data"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="#lipidPanel"/>
-                    <aggregation value="bundled"/>
-                </type>
-                <isModifier value="false"/>
-            </definition>
-        </element>
-    </structure>
-    <structure>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form">
-            <valueCode value="Differential"/>
-        </extension>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/diagnosticreport"/>
-        </extension>
-        <type value="DiagnosticReport"/>
-        <name value="lipidPanel-differential"/>
-        <publish value="false"/>
-        <element>
-            <path value="DiagnosticReport"/>
-            <definition>
-                <short value="Lipid Lab Report"/>
-                <formal value="The findings and interpretation of a general lipd lab profile"/>
-                <comments
-                    value="Note that this profile doesn't mention workflow  elements - it's solely concerned with the semantics of a lipid report. Things that are ignored are not constrained"
-                />
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.system"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueUri value="http://loinc.org/"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.version"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.code"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueCode value="57698-3"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.display"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueString value="Lipid Panel with direct LDL"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.primary"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.name.coding.valueSet"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.subject"/>
-            <definition>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Patient"/>
-                    <aggregation value="referenced"/>
-                    <aggregation value="bundled"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.performer"/>
-            <definition>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
-                    <aggregation value="referenced"/>
-                    <aggregation value="bundled"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.requestDetail"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.serviceCategory"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.specimen"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.result"/>
-            <slicing>
-                <discriminator value="name"/>
-                <ordered value="true"/>
-                <rules value="closed"/>
-            </slicing>
-            <definition>
-                <comments
-                    value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional"/>
-                <min value="3"/>
-                <max value="4"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.result"/>
-            <name value="cholesterol"/>
-            <definition>
-                <short value="Cholesterol observation"/>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="#cholesterol"/>
-                    <aggregation value="bundled"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.result"/>
-            <name value="triglyceride"/>
-            <definition>
-                <short value="Triglyceride observation"/>
-                <formal
-                    value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="#triglyceride"/>
-                    <aggregation value="bundled"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.imagingStudy"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.image"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.codedDiagnosis"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="DiagnosticReport.presentedForm"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-    </structure>
-    <structure>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form">
-            <valueCode value="Differential"/>
-        </extension>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/observation"/>
-        </extension>
-        <type value="Observation"/>
-        <name value="cholesterol-differential"/>
-        <publish value="false"/>
-        <element>
-            <path value="Observation"/>
-            <definition>
-                <short value="Cholesterol measurement"/>
-                <formal value="Cholesterol measurement"/>
-                <constraint>
-                    <key value="chol-01"/>
-                    <name value="Must have valueQuantity or comment"/>
-                    <severity value="error"/>
-                    <human
-                        value="If a Cholesterol value result is not available, use the comments field"/>
-                    <xpath value="exists(f:valueQuantity) or exists(f:comment)"/>
-                </constraint>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.extension"/>
-        </element>
-        <element>
-            <path value="Observation.extension"/>
-            <name value="LDLCalculated"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="Resource"/>
-                    <profile value="#calculated"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.name.coding.system"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueUri value="http://loinc.org/"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.name.coding.version"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.name.coding.code"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueCode value="35200-5"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.name.coding.display"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueString value="Cholesterol"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.name.coding.primary"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.value[x]"/>
-            <definition>
-                <short value="Actual result"/>
-                <formal value="The actual value of the cholesterol measurement"/>
-                <comments value="If not available, a comment should be given"/>
-                <min value="0"/>
-                <max value="1"/>
-                <type>
-                    <code value="Quantity"/>
-                    <profile value="#lipidQuantity"/>
-                </type>
-                <condition value="chol-01"/>
-                <mustSupport value="true"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.interpretation"/>
-            <definition>
-                <binding>
-                    <name value="LipidInterpretation-v1"/>
-                    <isExtensible value="true"/>
-                    <conformance value="required"/>
-                    <description value="This is an example valueset for the Lipid Profile example"/>
-                    <referenceResource>
-                        <reference value="http://fhir.healthintersections.com.au/open/ValueSet/644"
-                        />
-                    </referenceResource>
-                </binding>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.comments"/>
-            <definition>
-                <min value="0"/>
-                <max value="1"/>
-                <condition value="chol-01"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.bodySite"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.method"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.identifier"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.subject"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Patient"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange.low"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange.high"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="Quantity"/>
-                    <profile value="#lipidQuantity"/>
-                </type>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange.high.value"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueDecimal value="4.5"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange.meaning"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.referenceRange.age"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.related"/>
-            <definition>
-                <min value="0"/>
-                <max value="0"/>
-            </definition>
-        </element>
-    </structure>
-    <structure>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form">
-            <valueCode value="Differential"/>
-        </extension>
-        <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/quantity"/>
-        </extension>
-        <type value="Quantity"/>
-        <name value="lipidQuantity-differential"/>
-        <publish value="false"/>
-        <element>
-            <path value="Quantity"/>
-            <definition>
-                <short value="Quantity as used in lipid measurements"/>
-                <formal value="Quantity as used in lipid measurements"/>
-                <comments value="Lipid measurements are expressed in mmol/L"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Quantity.units"/>
-            <definition>
-                <min value="0"/>
-                <max value="1"/>
-                <valueString value="mmol/L"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Quantity.system"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueUri value="http://unitsofmeasure.org/"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Quantity.code"/>
-            <definition>
-                <min value="1"/>
-                <max value="1"/>
-                <valueCode value="mmol/L"/>
-            </definition>
-        </element>
-    </structure>
     <structure>
         <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-structure-form">
             <valueCode value="Snapshot"/>
@@ -483,6 +36,7 @@
             <valueUri value="http://hl7.org/fhir/profile/messageheader"/>
         </extension>
         <type value="MessageHeader"/>
+        <name value="newLipidResult"/>
         <publish value="true"/>
         <element>
             <path value="MessageHeader"/>
@@ -643,6 +197,9 @@
                     <referenceResource>
                         <reference value="http://hl7.org/fhir/message-events"/>
                     </referenceResource>
+
+                    <referenceResource value="http://hl7.org/fhir/message-events" />
+                    
                 </binding>
                 <mapping>
                     <identity value="rim"/>
@@ -1275,6 +832,7 @@
             <valueUri value="http://hl7.org/fhir/profile/diagnosticreport"/>
         </extension>
         <type value="DiagnosticReport"/>
+        <name value="lipidPanel"/>
         <publish value="true"/>
         <element>
             <path value="DiagnosticReport"/>
@@ -1906,10 +1464,14 @@
                 <rules value="closed"/>
             </slicing>
             <definition>
+                <short value="Observations - simple, or complex nested groups"/>
+                <formal
+                    value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
                 <comments
                     value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional"/>
                 <min value="3"/>
                 <max value="4"/>
+                <isModifier value="false"/>
             </definition>
         </element>
         <element>
@@ -2254,6 +1816,7 @@
             <valueUri value="http://hl7.org/fhir/profile/observation"/>
         </extension>
         <type value="Observation"/>
+        <name value="cholesterol"/>
         <publish value="true"/>
         <element>
             <path value="Observation"/>
@@ -3585,6 +3148,7 @@
             <valueUri value="http://hl7.org/fhir/profile/quantity"/>
         </extension>
         <type value="Quantity"/>
+        <name value="lipidQuantity"/>
         <element>
             <path value="Quantity"/>
             <definition>
@@ -3788,9 +3352,12 @@
             <short value="LDL is Calculated"/>
             <formal value="True if the value is calculated from other observations"/>
             <comments value="E.g. True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+            <min value="0"/>
+            <max value="1"/>
             <type>
                 <code value="boolean"/>
             </type>
+            <isModifier value="false"/>
         </definition>
     </extensionDefn>
 </Profile>
