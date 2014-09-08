@@ -38,7 +38,7 @@ namespace Fhir.Profiling.Tests
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.Add("http://hl7.org/fhir/profile/patient");
+            builder.Add("http://hl7.org/fhir/Profile/Patient");
             
             if (expand) builder.Expand();
 

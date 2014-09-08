@@ -2,12 +2,12 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Resources as Profiles</title>
-  <id>http://hl7.org/fhir/profile/resources</id>
+  <id>http://hl7.org/fhir/Profile/resources</id>
   <link href="http://hl7.org/implement/standards/fhir/profiles-resources.xml" rel="self"/>
   <updated>2014-05-09T11:15:05.567+10:00</updated>
   <entry>
     <title>&quot;adversereaction&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/adversereaction</id>
+    <id>http://hl7.org/fhir/Profile/AdverseReaction</id>
     <link href="http://hl7.org/implement/standards/fhir/adversereaction.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -189,7 +189,7 @@
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -229,11 +229,11 @@
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -481,7 +481,7 @@ Note: Observation also needs to have a subject of the Adverse Reaction itself (i
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -555,7 +555,7 @@ Note: Observation also needs to have a subject of the Adverse Reaction itself (i
   </entry>
   <entry>
     <title>&quot;alert&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/alert</id>
+    <id>http://hl7.org/fhir/Profile/Alert</id>
     <link href="http://hl7.org/implement/standards/fhir/alert.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -746,7 +746,7 @@ Usually, resources specific to particular types of issues (health conditions, al
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -764,15 +764,15 @@ Usually, resources specific to particular types of issues (health conditions, al
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -832,7 +832,7 @@ Usually, resources specific to particular types of issues (health conditions, al
   </entry>
   <entry>
     <title>&quot;allergyintolerance&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/allergyintolerance</id>
+    <id>http://hl7.org/fhir/Profile/AllergyIntolerance</id>
     <link href="http://hl7.org/implement/standards/fhir/allergyintolerance.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1099,7 +1099,7 @@ Note that this specification draws a distinction between the patients condition/
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1121,11 +1121,11 @@ Note that this specification draws a distinction between the patients condition/
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1147,7 +1147,7 @@ Note that this specification draws a distinction between the patients condition/
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1169,7 +1169,7 @@ Note that this specification draws a distinction between the patients condition/
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AdverseReaction"/>
+                <profile value="http://hl7.org/fhir/Profiles/AdverseReaction"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1191,7 +1191,7 @@ Note that this specification draws a distinction between the patients condition/
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1274,7 +1274,7 @@ Note that this specification draws a distinction between the patients condition/
   </entry>
   <entry>
     <title>&quot;careplan&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/careplan</id>
+    <id>http://hl7.org/fhir/Profile/Careplan</id>
     <link href="http://hl7.org/implement/standards/fhir/careplan.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1462,7 +1462,7 @@ Comments are welcome about the appropriateness of the proposed level of granular
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1559,7 +1559,7 @@ completed = completed"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Condition"/>
+                <profile value="http://hl7.org/fhir/Profiles/Condition"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1660,19 +1660,19 @@ completed = completed"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1822,7 +1822,7 @@ cancelled = aborted"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Condition"/>
+                <profile value="http://hl7.org/fhir/Profiles/Condition"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1956,7 +1956,7 @@ cancelled = aborted"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1996,19 +1996,19 @@ cancelled = aborted"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Procedure"/>
+                <profile value="http://hl7.org/fhir/Profiles/Procedure"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationPrescription"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationPrescription"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DiagnosticOrder"/>
+                <profile value="http://hl7.org/fhir/Profiles/DiagnosticOrder"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2174,7 +2174,7 @@ cancelled = aborted"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2197,19 +2197,19 @@ cancelled = aborted"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2231,11 +2231,11 @@ cancelled = aborted"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2434,7 +2434,7 @@ cancelled = aborted"/>
   </entry>
   <entry>
     <title>&quot;composition&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/composition</id>
+    <id>http://hl7.org/fhir/Profile/Composition</id>
     <link href="http://hl7.org/implement/standards/fhir/composition.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2792,23 +2792,23 @@ withdrawn : .completionCode=NI &amp;&amp;  ./statusCode[isNormalDatatype()]=&quo
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2830,19 +2830,19 @@ withdrawn : .completionCode=NI &amp;&amp;  ./statusCode[isNormalDatatype()]=&quo
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2966,15 +2966,15 @@ withdrawn : .completionCode=NI &amp;&amp;  ./statusCode[isNormalDatatype()]=&quo
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -2999,7 +2999,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -3123,7 +3123,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -3145,7 +3145,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -3275,15 +3275,15 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="true"/>
               <mapping>
@@ -3308,7 +3308,7 @@ unique(./participation[typeCode=&quot;SBJ&quot; and isNormalParticipation]/role[
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -3453,7 +3453,7 @@ unique(./participation[typeCode=&quot;SBJ&quot; and isNormalParticipation]/role[
   </entry>
   <entry>
     <title>&quot;conceptmap&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/conceptmap</id>
+    <id>http://hl7.org/fhir/Profile/ConceptMap</id>
     <link href="http://hl7.org/implement/standards/fhir/conceptmap.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3777,7 +3777,7 @@ unique(./participation[typeCode=&quot;SBJ&quot; and isNormalParticipation]/role[
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -3791,7 +3791,7 @@ unique(./participation[typeCode=&quot;SBJ&quot; and isNormalParticipation]/role[
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -4195,7 +4195,7 @@ unique(./participation[typeCode=&quot;SBJ&quot; and isNormalParticipation]/role[
   </entry>
   <entry>
     <title>&quot;condition&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/condition</id>
+    <id>http://hl7.org/fhir/Profile/Condition</id>
     <link href="http://hl7.org/implement/standards/fhir/condition.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4382,7 +4382,7 @@ The conditions represented in this resources are sometimes described as &quot;Pr
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -4404,7 +4404,7 @@ The conditions represented in this resources are sometimes described as &quot;Pr
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -4426,11 +4426,11 @@ The conditions represented in this resources are sometimes described as &quot;Pr
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -4751,7 +4751,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -4840,7 +4840,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -5055,23 +5055,23 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Condition"/>
+                <profile value="http://hl7.org/fhir/Profiles/Condition"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Procedure"/>
+                <profile value="http://hl7.org/fhir/Profiles/Procedure"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationAdministration"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationAdministration"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Immunization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Immunization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationStatement"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationStatement"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -5238,7 +5238,7 @@ or
   </entry>
   <entry>
     <title>&quot;conformance&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/conformance</id>
+    <id>http://hl7.org/fhir/Profile/Conformance</id>
     <link href="http://hl7.org/implement/standards/fhir/conformance.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5830,7 +5830,7 @@ Typical supported profiles cross resource types to describe a network of related
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Profile"/>
+                <profile value="http://hl7.org/fhir/Profiles/Profile"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -6178,7 +6178,7 @@ Typical supported profiles cross resource types to describe a network of related
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Profile"/>
+                <profile value="http://hl7.org/fhir/Profiles/Profile"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -6887,7 +6887,7 @@ Typical supported profiles cross resource types to describe a network of related
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Profile"/>
+                <profile value="http://hl7.org/fhir/Profiles/Profile"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -6901,7 +6901,7 @@ Typical supported profiles cross resource types to describe a network of related
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Profile"/>
+                <profile value="http://hl7.org/fhir/Profiles/Profile"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -7005,7 +7005,7 @@ Typical supported profiles cross resource types to describe a network of related
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Profile"/>
+                <profile value="http://hl7.org/fhir/Profiles/Profile"/>
               </type>
               <isModifier value="false"/>
             </definition>
@@ -7213,7 +7213,7 @@ Typical supported profiles cross resource types to describe a network of related
   </entry>
   <entry>
     <title>&quot;device&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/device</id>
+    <id>http://hl7.org/fhir/Profile/Device</id>
     <link href="http://hl7.org/implement/standards/fhir/device.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7497,7 +7497,7 @@ Devices that are implanted in a patient differ from medications because they are
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -7515,7 +7515,7 @@ Devices that are implanted in a patient differ from medications because they are
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -7533,7 +7533,7 @@ Devices that are implanted in a patient differ from medications because they are
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -7661,7 +7661,7 @@ Devices that are implanted in a patient differ from medications because they are
   </entry>
   <entry>
     <title>&quot;deviceobservationreport&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/deviceobservationreport</id>
+    <id>http://hl7.org/fhir/Profile/DeviceObservationReport</id>
     <link href="http://hl7.org/implement/standards/fhir/deviceobservationreport.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7838,7 +7838,7 @@ This capability is expected to be subject of additional resources that are yet t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -7856,15 +7856,15 @@ This capability is expected to be subject of additional resources that are yet t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8066,7 +8066,7 @@ This capability is expected to be subject of additional resources that are yet t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8140,7 +8140,7 @@ This capability is expected to be subject of additional resources that are yet t
   </entry>
   <entry>
     <title>&quot;diagnosticorder&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/diagnosticorder</id>
+    <id>http://hl7.org/fhir/Profile/DiagnosticOrder</id>
     <link href="http://hl7.org/implement/standards/fhir/diagnosticorder.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8295,19 +8295,19 @@ The general work flow that this resource facilitates is that a clinical system c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8325,7 +8325,7 @@ The general work flow that this resource facilitates is that a clinical system c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8360,7 +8360,7 @@ The general work flow that this resource facilitates is that a clinical system c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8397,7 +8397,7 @@ The general work flow that this resource facilitates is that a clinical system c
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8583,11 +8583,11 @@ also influenced by whether a ControlAct fulfillment requeste exists, whether a p
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8683,7 +8683,7 @@ also influenced by whether a ControlAct fulfillment requeste exists, whether a p
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -8895,7 +8895,7 @@ also influenced by whether a ControlAct fulfillment requeste exists, whether a p
   </entry>
   <entry>
     <title>&quot;diagnosticreport&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/diagnosticreport</id>
+    <id>http://hl7.org/fhir/Profile/DiagnosticReport</id>
     <link href="http://hl7.org/implement/standards/fhir/diagnosticreport.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9138,19 +9138,19 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9173,11 +9173,11 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9221,7 +9221,7 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DiagnosticOrder"/>
+                <profile value="http://hl7.org/fhir/Profiles/DiagnosticOrder"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9294,7 +9294,7 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9316,7 +9316,7 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9335,7 +9335,7 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ImagingStudy"/>
+                <profile value="http://hl7.org/fhir/Profiles/ImagingStudy"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9421,7 +9421,7 @@ Note: final and amended are distinguished by whether observation is the subject 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Media"/>
+                <profile value="http://hl7.org/fhir/Profiles/Media"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9625,7 +9625,7 @@ Note: final and amended are distinguished by whether observation is the subject 
   </entry>
   <entry>
     <title>&quot;documentmanifest&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/documentmanifest</id>
+    <id>http://hl7.org/fhir/Profile/DocumentManifest</id>
     <link href="http://hl7.org/implement/standards/fhir/documentmanifest.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9814,19 +9814,19 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9845,15 +9845,15 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9897,19 +9897,19 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -9987,7 +9987,7 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DocumentManifest"/>
+                <profile value="http://hl7.org/fhir/Profiles/DocumentManifest"/>
               </type>
               <isModifier value="true"/>
               <mapping>
@@ -10049,15 +10049,15 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DocumentReference"/>
+                <profile value="http://hl7.org/fhir/Profiles/DocumentReference"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Binary"/>
+                <profile value="http://hl7.org/fhir/Profiles/Binary"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Media"/>
+                <profile value="http://hl7.org/fhir/Profiles/Media"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -10171,7 +10171,7 @@ Identifiers, XDS Workflow Instance Identifiers."/>
   </entry>
   <entry>
     <title>&quot;documentreference&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/documentreference</id>
+    <id>http://hl7.org/fhir/Profile/DocumentReference</id>
     <link href="http://hl7.org/implement/standards/fhir/documentreference.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -10400,19 +10400,19 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -10495,19 +10495,19 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -10530,7 +10530,7 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -10565,11 +10565,11 @@ Identifiers, XDS Workflow Instance Identifiers."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -10767,7 +10767,7 @@ withdrawn : .completionCode=NI &amp;&amp;  ./statusCode[isNormalDatatype()]=&quo
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DocumentReference"/>
+                <profile value="http://hl7.org/fhir/Profiles/DocumentReference"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -11434,7 +11434,7 @@ where it is simply &quot;Procedure Report&quot; and the procedure was a &quot;co
   </entry>
   <entry>
     <title>&quot;encounter&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/encounter</id>
+    <id>http://hl7.org/fhir/Profile/Encounter</id>
     <link href="http://hl7.org/implement/standards/fhir/encounter.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -11719,7 +11719,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -11816,11 +11816,11 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -11913,7 +11913,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12027,7 +12027,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12142,7 +12142,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12268,7 +12268,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12315,7 +12315,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12400,7 +12400,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12439,7 +12439,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12461,7 +12461,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -12580,7 +12580,7 @@ Encounter instances may exist before the actual encounter takes place to convey 
   </entry>
   <entry>
     <title>&quot;familyhistory&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/familyhistory</id>
+    <id>http://hl7.org/fhir/Profile/FamilyHistory</id>
     <link href="http://hl7.org/implement/standards/fhir/familyhistory.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -12750,7 +12750,7 @@ The entire family history for an individual is stored in a single resource."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -13107,7 +13107,7 @@ Use originalText for string"/>
   </entry>
   <entry>
     <title>&quot;group&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/group</id>
+    <id>http://hl7.org/fhir/Profile/Group</id>
     <link href="http://hl7.org/implement/standards/fhir/group.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -13510,23 +13510,23 @@ false: ./determinerCode=&quot;GRP_KIND&quot;"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <constraint>
                 <key value="3"/>
@@ -13629,7 +13629,7 @@ false: ./determinerCode=&quot;GRP_KIND&quot;"/>
   </entry>
   <entry>
     <title>&quot;imagingstudy&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/imagingstudy</id>
+    <id>http://hl7.org/fhir/Profile/ImagingStudy</id>
     <link href="http://hl7.org/implement/standards/fhir/imagingstudy.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -13821,7 +13821,7 @@ This resources has been specifically designed with use in DICOM contexts in mind
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -13908,7 +13908,7 @@ Note that there is a many-many relationship between orders and studies."/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DiagnosticOrder"/>
+                <profile value="http://hl7.org/fhir/Profiles/DiagnosticOrder"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -13955,7 +13955,7 @@ Note that there is a many-many relationship between orders and studies."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -14112,7 +14112,7 @@ Note that there is a many-many relationship between orders and studies."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -14584,7 +14584,7 @@ Note that there is a many-many relationship between orders and studies."/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -14710,7 +14710,7 @@ Note that there is a many-many relationship between orders and studies."/>
   </entry>
   <entry>
     <title>&quot;immunization&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/immunization</id>
+    <id>http://hl7.org/fhir/Profile/Immunization</id>
     <link href="http://hl7.org/implement/standards/fhir/immunization.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -14963,7 +14963,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15024,7 +15024,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15051,7 +15051,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15073,7 +15073,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15099,7 +15099,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15426,11 +15426,11 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AdverseReaction"/>
+                <profile value="http://hl7.org/fhir/Profiles/AdverseReaction"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15557,7 +15557,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -15822,7 +15822,7 @@ Additionally, the immunization resource is expected to cover key concepts relate
   </entry>
   <entry>
     <title>&quot;immunizationrecommendation&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/immunizationrecommendation</id>
+    <id>http://hl7.org/fhir/Profile/ImmunizationRecommendation</id>
     <link href="http://hl7.org/implement/standards/fhir/immunizationrecommendation.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15996,7 +15996,7 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16353,7 +16353,7 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16396,7 +16396,7 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Immunization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Immunization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16418,15 +16418,15 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AdverseReaction"/>
+                <profile value="http://hl7.org/fhir/Profiles/AdverseReaction"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AllergyIntolerance"/>
+                <profile value="http://hl7.org/fhir/Profiles/AllergyIntolerance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16537,7 +16537,7 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
   </entry>
   <entry>
     <title>&quot;list&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/list</id>
+    <id>http://hl7.org/fhir/Profile/List</id>
     <link href="http://hl7.org/implement/standards/fhir/list.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16735,19 +16735,19 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16767,15 +16767,15 @@ Additionally, the ImmunizationRecommendation resource is expected to cover key c
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -16973,7 +16973,7 @@ deleted: .updateMode=&quot;D&quot;"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -17086,7 +17086,7 @@ or
   </entry>
   <entry>
     <title>&quot;location&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/location</id>
+    <id>http://hl7.org/fhir/Profile/Location</id>
     <link href="http://hl7.org/implement/standards/fhir/location.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17470,7 +17470,7 @@ Examples of Locations are:
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -17513,7 +17513,7 @@ Examples of Locations are:
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -17634,7 +17634,7 @@ Examples of Locations are:
   </entry>
   <entry>
     <title>&quot;media&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/media</id>
+    <id>http://hl7.org/fhir/Profile/Media</id>
     <link href="http://hl7.org/implement/standards/fhir/media.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17909,23 +17909,23 @@ The Media resource may contain medical images in a DICOM format. While such imag
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -17947,7 +17947,7 @@ The Media resource may contain medical images in a DICOM format. While such imag
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -18182,7 +18182,7 @@ The Media resource may contain medical images in a DICOM format. While such imag
   </entry>
   <entry>
     <title>&quot;medication&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/medication</id>
+    <id>http://hl7.org/fhir/Profile/Medication</id>
     <link href="http://hl7.org/implement/standards/fhir/medication.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -18402,7 +18402,7 @@ Depending on whether the medication is a product or a package, further details a
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -18572,11 +18572,11 @@ Depending on whether the medication is a product or a package, further details a
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -18738,7 +18738,7 @@ if medication: RXO-2-Requested Give Amount - Minimum &amp; RXO-4-Requested Give 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -18847,7 +18847,7 @@ if medication: RXO-2-Requested Give Amount - Minimum &amp; RXO-4-Requested Give 
   </entry>
   <entry>
     <title>&quot;medicationadministration&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/medicationadministration</id>
+    <id>http://hl7.org/fhir/Profile/MedicationAdministration</id>
     <link href="http://hl7.org/implement/standards/fhir/medicationadministration.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -19063,7 +19063,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19085,7 +19085,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19107,7 +19107,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19129,7 +19129,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationPrescription"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationPrescription"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19223,7 +19223,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19245,7 +19245,7 @@ Related resources tie this event to the authorizing prescription, and the specif
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19620,7 +19620,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
   </entry>
   <entry>
     <title>&quot;medicationdispense&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/medicationdispense</id>
+    <id>http://hl7.org/fhir/Profile/MedicationDispense</id>
     <link href="http://hl7.org/implement/standards/fhir/medicationdispense.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -19833,7 +19833,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19855,7 +19855,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -19877,7 +19877,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationPrescription"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationPrescription"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20045,7 +20045,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20109,7 +20109,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20131,11 +20131,11 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20525,7 +20525,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20659,7 +20659,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
   </entry>
   <entry>
     <title>&quot;medicationprescription&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/medicationprescription</id>
+    <id>http://hl7.org/fhir/Profile/MedicationPrescription</id>
     <link href="http://hl7.org/implement/standards/fhir/medicationprescription.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -20895,7 +20895,7 @@ In some situations, this attribute may be used instead of quantity to identify t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20917,7 +20917,7 @@ In some situations, this attribute may be used instead of quantity to identify t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20940,7 +20940,7 @@ In some situations, this attribute may be used instead of quantity to identify t
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20965,7 +20965,7 @@ In some situations, this attribute may be used instead of quantity to identify t
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Condition"/>
+                <profile value="http://hl7.org/fhir/Profiles/Condition"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -20990,7 +20990,7 @@ reason.observation[code=ASSERTION].value"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -21356,7 +21356,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -21651,7 +21651,7 @@ In some situations, this attribute may be used instead of quantity to identify t
   </entry>
   <entry>
     <title>&quot;medicationstatement&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/medicationstatement</id>
+    <id>http://hl7.org/fhir/Profile/MedicationStatement</id>
     <link href="http://hl7.org/implement/standards/fhir/medicationstatement.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -21832,7 +21832,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -21927,7 +21927,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -21949,7 +21949,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22281,7 +22281,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
   </entry>
   <entry>
     <title>&quot;messageheader&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/messageheader</id>
+    <id>http://hl7.org/fhir/Profile/MessageHeader</id>
     <link href="http://hl7.org/implement/standards/fhir/messageheader.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -22616,7 +22616,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/OperationOutcome"/>
+                <profile value="http://hl7.org/fhir/Profiles/OperationOutcome"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22858,7 +22858,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22899,7 +22899,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22922,7 +22922,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22944,11 +22944,11 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -22971,11 +22971,11 @@ Terminologies used often pre-coordinate this term with the route and or form of 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -23030,7 +23030,7 @@ PRT-8-Participation Organization:PRT-4-Participation=&#39;OP&#39;
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -23089,7 +23089,7 @@ PRT-8-Participation Organization:PRT-4-Participation=&#39;OP&#39;
   </entry>
   <entry>
     <title>&quot;observation&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/observation</id>
+    <id>http://hl7.org/fhir/Profile/Observation</id>
     <link href="http://hl7.org/implement/standards/fhir/observation.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -23574,19 +23574,19 @@ Amended &amp; Final are differentiated by whether it is the subject of a Control
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -23609,7 +23609,7 @@ Amended &amp; Final are differentiated by whether it is the subject of a Control
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -23628,15 +23628,15 @@ Amended &amp; Final are differentiated by whether it is the subject of a Control
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -23885,7 +23885,7 @@ Amended &amp; Final are differentiated by whether it is the subject of a Control
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24030,7 +24030,7 @@ Amended &amp; Final are differentiated by whether it is the subject of a Control
   </entry>
   <entry>
     <title>&quot;operationoutcome&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/operationoutcome</id>
+    <id>http://hl7.org/fhir/Profile/OperationOutcome</id>
     <link href="http://hl7.org/implement/standards/fhir/operationoutcome.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -24345,7 +24345,7 @@ Specifically, OperationOutcomes are used in the following circumstances:
   </entry>
   <entry>
     <title>&quot;order&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/order</id>
+    <id>http://hl7.org/fhir/Profile/Order</id>
     <link href="http://hl7.org/implement/standards/fhir/order.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -24530,7 +24530,7 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24552,7 +24552,7 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24574,15 +24574,15 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24607,7 +24607,7 @@ Note that there are a variety of processes associated with making and processing
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24630,7 +24630,7 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24750,7 +24750,7 @@ Note that there are a variety of processes associated with making and processing
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -24844,7 +24844,7 @@ Note that there are a variety of processes associated with making and processing
   </entry>
   <entry>
     <title>&quot;orderresponse&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/orderresponse</id>
+    <id>http://hl7.org/fhir/Profile/OrderResponse</id>
     <link href="http://hl7.org/implement/standards/fhir/orderresponse.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -25000,7 +25000,7 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Order"/>
+                <profile value="http://hl7.org/fhir/Profiles/Order"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25043,15 +25043,15 @@ Note that there are a variety of processes associated with making and processing
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25077,7 +25077,7 @@ Note that there are a variety of processes associated with making and processing
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25153,7 +25153,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25227,7 +25227,7 @@ or
   </entry>
   <entry>
     <title>&quot;organization&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/organization</id>
+    <id>http://hl7.org/fhir/Profile/Organization</id>
     <link href="http://hl7.org/implement/standards/fhir/organization.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -25543,7 +25543,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25732,7 +25732,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -25845,7 +25845,7 @@ or
   </entry>
   <entry>
     <title>&quot;other&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/other</id>
+    <id>http://hl7.org/fhir/Profile/Other</id>
     <link href="http://hl7.org/implement/standards/fhir/other.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -26026,7 +26026,7 @@ Implementers don&#39;t really need to be concerned with one of the two categorie
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -26044,15 +26044,15 @@ Implementers don&#39;t really need to be concerned with one of the two categorie
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -26123,7 +26123,7 @@ Implementers don&#39;t really need to be concerned with one of the two categorie
   </entry>
   <entry>
     <title>&quot;patient&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/patient</id>
+    <id>http://hl7.org/fhir/Profile/Patient</id>
     <link href="http://hl7.org/implement/standards/fhir/patient.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -26715,7 +26715,7 @@ May need to have options for contacting the person urgently, and also to help wi
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -26901,11 +26901,11 @@ For animals, language is not a relevant field, and should be absent from the ins
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -26923,7 +26923,7 @@ For animals, language is not a relevant field, and should be absent from the ins
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -26988,7 +26988,7 @@ For animals, language is not a relevant field, and should be absent from the ins
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="true"/>
               <mapping>
@@ -27190,7 +27190,7 @@ For animals, language is not a relevant field, and should be absent from the ins
   </entry>
   <entry>
     <title>&quot;practitioner&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/practitioner</id>
+    <id>http://hl7.org/fhir/Profile/Practitioner</id>
     <link href="http://hl7.org/implement/standards/fhir/practitioner.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -27543,7 +27543,7 @@ May need to have options for contacting the person urgently, and also to help wi
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -27661,7 +27661,7 @@ May need to have options for contacting the person urgently, and also to help wi
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -27788,7 +27788,7 @@ However these are accessed via the Site.ServiceSite.ServiceSiteProvider record. 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -27926,7 +27926,7 @@ However these are accessed via the Site.ServiceSite.ServiceSiteProvider record. 
   </entry>
   <entry>
     <title>&quot;procedure&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/procedure</id>
+    <id>http://hl7.org/fhir/Profile/Procedure</id>
     <link href="http://hl7.org/implement/standards/fhir/procedure.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -28098,7 +28098,7 @@ Note that many diagnostic processes are procedures that generate observations an
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -28214,7 +28214,7 @@ Note that many diagnostic processes are procedures that generate observations an
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -28270,7 +28270,7 @@ Note that many diagnostic processes are procedures that generate observations an
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -28305,7 +28305,7 @@ Note that many diagnostic processes are procedures that generate observations an
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DiagnosticReport"/>
+                <profile value="http://hl7.org/fhir/Profiles/DiagnosticReport"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -28428,67 +28428,67 @@ Note that many diagnostic processes are procedures that generate observations an
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AdverseReaction"/>
+                <profile value="http://hl7.org/fhir/Profiles/AdverseReaction"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/AllergyIntolerance"/>
+                <profile value="http://hl7.org/fhir/Profiles/AllergyIntolerance"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/CarePlan"/>
+                <profile value="http://hl7.org/fhir/Profiles/CarePlan"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Condition"/>
+                <profile value="http://hl7.org/fhir/Profiles/Condition"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DeviceObservationReport"/>
+                <profile value="http://hl7.org/fhir/Profiles/DeviceObservationReport"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/DiagnosticReport"/>
+                <profile value="http://hl7.org/fhir/Profiles/DiagnosticReport"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/FamilyHistory"/>
+                <profile value="http://hl7.org/fhir/Profiles/FamilyHistory"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ImagingStudy"/>
+                <profile value="http://hl7.org/fhir/Profiles/ImagingStudy"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Immunization"/>
+                <profile value="http://hl7.org/fhir/Profiles/Immunization"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ImmunizationRecommendation"/>
+                <profile value="http://hl7.org/fhir/Profiles/ImmunizationRecommendation"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationAdministration"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationAdministration"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationDispense"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationDispense"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationPrescription"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationPrescription"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/MedicationStatement"/>
+                <profile value="http://hl7.org/fhir/Profiles/MedicationStatement"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                <profile value="http://hl7.org/fhir/Profiles/Observation"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Procedure"/>
+                <profile value="http://hl7.org/fhir/Profiles/Procedure"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -28578,7 +28578,7 @@ Note that many diagnostic processes are procedures that generate observations an
   </entry>
   <entry>
     <title>&quot;profile&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/profile</id>
+    <id>http://hl7.org/fhir/Profile/Profile</id>
     <link href="http://hl7.org/implement/standards/fhir/profile.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -29663,7 +29663,7 @@ A FHIR RESTful server serving the profile resource is also a profile repository.
             <definition>
               <short value="Name of Data type or Resource"/>
               <formal value="Name of Data type or Resource."/>
-              <comments value="If the element is a reference to another resource, this element contains &quot;ResourceReference&quot;, and the profile element refers to the profile of the allowed target of the resource, which may be a reference to the general definition of a resource (e.g. http://hl7.org/fhir/profiles/Patient). There would be one pair of type/code for each allowed target resource type."/>
+              <comments value="If the element is a reference to another resource, this element contains &quot;ResourceReference&quot;, and the profile element refers to the profile of the allowed target of the resource, which may be a reference to the general definition of a resource (e.g. http://hl7.org/fhir/Profiles/Patient). There would be one pair of type/code for each allowed target resource type."/>
               <min value="1"/>
               <max value="1"/>
               <type>
@@ -30060,7 +30060,7 @@ A FHIR RESTful server serving the profile resource is also a profile repository.
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
               </type>
               <constraint>
                 <key value="13"/>
@@ -30644,7 +30644,7 @@ A FHIR RESTful server serving the profile resource is also a profile repository.
   </entry>
   <entry>
     <title>&quot;provenance&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/provenance</id>
+    <id>http://hl7.org/fhir/Profile/Provenance</id>
     <link href="http://hl7.org/implement/standards/fhir/provenance.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -30801,7 +30801,7 @@ Provenance resources are a record-keeping assertion that gathers information abo
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -30888,7 +30888,7 @@ OR
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -31326,7 +31326,7 @@ OR
   </entry>
   <entry>
     <title>&quot;query&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/query</id>
+    <id>http://hl7.org/fhir/Profile/Query</id>
     <link href="http://hl7.org/implement/standards/fhir/query.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -31689,7 +31689,7 @@ OR
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -31747,7 +31747,7 @@ or
   </entry>
   <entry>
     <title>&quot;questionnaire&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/questionnaire</id>
+    <id>http://hl7.org/fhir/Profile/Questionnaire</id>
     <link href="http://hl7.org/implement/standards/fhir/questionnaire.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -31954,11 +31954,11 @@ Support for validation is outside the scope of this Resource, although basic str
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -31977,15 +31977,15 @@ Support for validation is outside the scope of this Resource, although basic str
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32003,15 +32003,15 @@ Support for validation is outside the scope of this Resource, although basic str
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/RelatedPerson"/>
+                <profile value="http://hl7.org/fhir/Profiles/RelatedPerson"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32071,7 +32071,7 @@ Support for validation is outside the scope of this Resource, although basic str
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Encounter"/>
+                <profile value="http://hl7.org/fhir/Profiles/Encounter"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32202,7 +32202,7 @@ Support for validation is outside the scope of this Resource, although basic str
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32391,7 +32391,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32542,7 +32542,7 @@ or
   </entry>
   <entry>
     <title>&quot;relatedperson&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/relatedperson</id>
+    <id>http://hl7.org/fhir/Profile/RelatedPerson</id>
     <link href="http://hl7.org/implement/standards/fhir/relatedperson.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -32708,7 +32708,7 @@ Example RelatedPersons are:
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -32936,7 +32936,7 @@ May need to have options for contacting the person urgently, and also to help wi
   </entry>
   <entry>
     <title>&quot;securityevent&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/securityevent</id>
+    <id>http://hl7.org/fhir/Profile/SecurityEvent</id>
     <link href="http://hl7.org/implement/standards/fhir/securityevent.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -33411,15 +33411,15 @@ The primary purpose of this resource is the maintenance of audit log information
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -33855,7 +33855,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Any"/>
+                <profile value="http://hl7.org/fhir/Profiles/Any"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -34299,7 +34299,7 @@ role.player.code"/>
   </entry>
   <entry>
     <title>&quot;specimen&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/specimen</id>
+    <id>http://hl7.org/fhir/Profile/Specimen</id>
     <link href="http://hl7.org/implement/standards/fhir/specimen.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -34593,7 +34593,7 @@ derived as child,if SPM-3 Specimen parent ID is filled in"/>
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -34611,19 +34611,19 @@ derived as child,if SPM-3 Specimen parent ID is filled in"/>
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Group"/>
+                <profile value="http://hl7.org/fhir/Profiles/Group"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -34733,7 +34733,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -34959,7 +34959,7 @@ or
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -35136,7 +35136,7 @@ or
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -35208,7 +35208,7 @@ or
   </entry>
   <entry>
     <title>&quot;substance&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/substance</id>
+    <id>http://hl7.org/fhir/Profile/Substance</id>
     <link href="http://hl7.org/implement/standards/fhir/substance.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -35548,7 +35548,7 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -35620,7 +35620,7 @@ The composition of the material can be specified in terms of a mix of other mate
   </entry>
   <entry>
     <title>&quot;supply&quot; as a profile (to help derivation)</title>
-    <id>http://hl7.org/fhir/profile/supply</id>
+    <id>http://hl7.org/fhir/Profile/Supply</id>
     <link href="http://hl7.org/implement/standards/fhir/supply.profile.xml" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -35832,15 +35832,15 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -35858,7 +35858,7 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Patient"/>
+                <profile value="http://hl7.org/fhir/Profiles/Patient"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -36007,15 +36007,15 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Medication"/>
+                <profile value="http://hl7.org/fhir/Profiles/Medication"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Substance"/>
+                <profile value="http://hl7.org/fhir/Profiles/Substance"/>
               </type>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Device"/>
+                <profile value="http://hl7.org/fhir/Profiles/Device"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -36033,7 +36033,7 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -36085,7 +36085,7 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Location"/>
+                <profile value="http://hl7.org/fhir/Profiles/Location"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -36103,7 +36103,7 @@ The composition of the material can be specified in terms of a mix of other mate
               <max value="*"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
               </type>
               <isModifier value="false"/>
               <mapping>

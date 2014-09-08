@@ -16,7 +16,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Introspection
 {
-    internal class StructureLoader
+    public class StructureLoader
     {
         public StructureLoader(IArtifactSource source)
         {
@@ -24,10 +24,21 @@ namespace Hl7.Fhir.Introspection
         }
 
         public IArtifactSource ArtifactSource { get; private set; }
-       
-        public Profile.ProfileStructureComponent Locate(Uri structureUri, Code type)
+
+
+        /// <summary>
+        /// Locate a structures within a profile given by an uri
+        /// </summary>
+        /// <param name="structureUri">An Uri pointing to a profile or a structure within a profile</param>
+        /// <param name="type">Resource or Datatype that the structure is constraining</param>
+        /// <returns>The structure as indicated by the uri or null if it was not found</returns>
+        /// <remarks>This function accepts an uri that has only the profile's address, or a uri that has both the 
+        /// address and an achor indicating the name of the structure to locate (e.g. http://someplace.org/fhir/Profiles/myprofile#somestructure).
+        /// </remarks>
+        public Profile.ProfileStructureComponent Locate(Uri structureUri, Code type = null)
         {
-            if(!structureUri.IsAbsoluteUri) throw Error.Argument("Reference to structure must be an absolute url");
+            if (structureUri == null) throw Error.ArgumentNull("structureUri");
+            if (!structureUri.IsAbsoluteUri) throw Error.Argument("Reference to structure must be an absolute url");
 
             // The structure Uri might be of the form <url-to-profile>#<structure name>
             // First split off the <url-to-profile> and load the profile
@@ -37,28 +48,52 @@ namespace Hl7.Fhir.Introspection
             var profile = loadProfile(uriWithoutAnchor.Uri);
 
             // If the profile was not found, return without doing work
-            if(profile == null || profile.Structure == null || profile.Structure.Count == 0) return null;
+            if (profile == null || profile.Structure == null || profile.Structure.Count == 0) return null;
 
-            // Determine the <structure name>
-            var structureName = structureUri.Fragment.TrimStart('#');
+            // Determine the anchor, which we use to locate the structure by comparing it to Structure.name
+            var anchor = structureUri.Fragment.TrimStart('#');
 
-            if (!String.IsNullOrEmpty(structureName))
+            return locate(profile, anchor, type);
+        }
+
+
+        private static Profile.ProfileStructureComponent locate(Profile profile, string anchor, Code type)
+        {
+            if(String.IsNullOrEmpty(anchor)) anchor = null;
+
+            IEnumerable<Profile.ProfileStructureComponent> results = null;
+
+            if (anchor == null && type == null)
             {
-                // We have an explicit structure name in the address, try to fetch it from the resource
-                return profile.Structure.Where(str => str.Name == structureName && str.Type == type.Value).SingleOrDefault();
+                // We have NO structure name and NO type hint. This is only unambiguous if there's just 1 structure in the profile
+                results = profile.Structure;
+            }
+            else if(anchor != null && type == null)
+            {
+                // We have a structure name but NO specific type. This is normally unambiguous, since the name should be unique
+                results = profile.Structure.Where(str => str.Name == anchor);
+            }
+            else if (anchor == null && type != null)
+            {
+                // We don't know the structure name but have it's type. This is unambiguous if there's just one structure of the given type
+                results = profile.Structure.Where(str => str.Type == type.Value);
             }
             else
             {
-                // No explicit structure name, locate a single structure that's the type we're looking for.
-                return profile.Structure.Where(str => str.Type == type.Value).SingleOrDefault();
+                // We have both the name and the type, this should also normally be unique
+                results = profile.Structure.Where(str => str.Name == anchor && str.Type == type.Value);
             }
+
+            if (results.Count() == 1)
+                return profile.Structure.First();
+            else
+                throw Error.InvalidOperation("Cannot unambiguously determine structure to locate based on the given combination of url, anchor and structure type");
         }
 
         /// <summary>
-        /// All base structures (resources + datatypes) that come with the spec have a specific pre-defined
-        /// (but currently symbolic) url where they can be found. Locate base structures using that url
+        /// Locate base structures for a given FHIR core type
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">The Resource or Datatype to locate</param>
         /// <returns></returns>
         public Profile.ProfileStructureComponent LocateBaseStructure(Code type)
         {
@@ -66,9 +101,17 @@ namespace Hl7.Fhir.Introspection
         }
 
 
+        /// <summary>
+        /// All base structures (resources + datatypes) that come with the spec have a specific pre-defined
+        /// (but currently symbolic) url where they can be found. This function constructs this Url, given the
+        /// core Resource or Datatype code.
+        /// </summary>
+        /// <param name="type">Resource or Datatype to build the Uri for</param>
+        /// <returns></returns>
         public static Uri BuildBaseStructureUri(Code type)
         {
-            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value.ToLower();
+            //string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value.ToLower();
+            string fullReference = CoreZipArtifactSource.CORE_SPEC_PROFILE_URI_PREFIX + type.Value;
             return new Uri(fullReference);
         }
 

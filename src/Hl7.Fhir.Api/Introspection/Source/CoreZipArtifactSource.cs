@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Introspection.Source
     public class CoreZipArtifactSource : IArtifactSource
     {
         public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/";
-        public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/profile/";
+        public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/Profile/";
         public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/conformance/";
         public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
         public const string CORE_SPEC_V2_VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
@@ -128,15 +128,39 @@ namespace Hl7.Fhir.Introspection.Source
 
                 // We're assuming the validation.zip contains xml files
                 if (artifactXml != null)
-                    return FhirParser.ParseResourceFromXml(artifactXml);
+                {
+                    var result = FhirParser.ParseResourceFromXml(artifactXml);
+                 //   if (result is Profile) cleanupProfile((Profile)result);
+
+                    return result; 
+                }
             }
 
             return null;
         }
 
+        //private void cleanupProfile(Profile result)
+        //{
+        //    // Correct errors present in the current DSTU1 profiles
+        //    foreach (var structure in result.Structure)
+        //    {
+        //        var structNav = new ElementNavigator(structure);
+        //        if(structNav.MoveToFirstChild()) cleanupStructure(structNav);
+        //    }
+        //}
+
+        //private void cleanupStructure(ElementNavigator structNav)
+        //{
+        //    if (structNav.Current.Definition != null)
+        //    {
+        //        var typeRef = structNav.Current.Definition.Type;
+        //        if(typeRef != null && (typeRef.Count > 1 || (typeRef[0].Code == "Resource" || typeRef.Code == "
+        //    }
+        //}
+
 
         /// <summary>
-        /// Given the Url for an artifact (e.g. http://hl7.org/fhir/profile/adversereaction), determines whether this is
+        /// Given the Url for an artifact (e.g. http://hl7.org/fhir/Profile/AdverseReaction), determines whether this is
         /// a core artifact that is pre-packaged in core files from the validation.zip
         /// </summary>
         /// <param name="artifactId">The location on the hl7.org repository of the core artifact</param>
@@ -145,15 +169,17 @@ namespace Hl7.Fhir.Introspection.Source
         {
             if(artifactId == null) throw Error.ArgumentNull("artifactId");
 
-            var normalized = artifactId.ToString().ToLower();
+            //var normalized = artifactId.ToString().ToLower();
 
-            return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
+            //return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
+            return artifactId.ToString().StartsWith(CORE_SPEC_URI_PREFIX);
         }
 
 
         private string loadCoreArtifactXml(Uri artifactId)
         {
-            var normalized = artifactId.ToString().ToLower();
+           // var normalized = artifactId.ToString().ToLower();
+            var normalized = artifactId.ToString();
 
             // Depending on the actual artifact uri, determine in which supplied bundled
             // file these artifacts should be found

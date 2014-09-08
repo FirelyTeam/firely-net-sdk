@@ -1,15 +1,11 @@
-<?xml-model href="../SVN/FHIR-DSTU/publish/profile.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://hl7.org/fhir ../../../../SVN/FHIR-DSTU/publish/profile.xsd"
-    xmlns="http://hl7.org/fhir">
-    
+<Profile xmlns="http://hl7.org/fhir">
     <text>
         <status value="empty"/>
         <div xmlns="http://www.w3.org/1999/xhtml">No narrative was supplied for this Profile</div>
     </text>
     <identifier value="urn:hl7.org:lipid-profile:v1"/>
     <version value="1.0.0"/>
-    <name value="Lipid Profile"/>
+    <name value="Example Lipid Profile"/>
     <publisher value="HL7 International"/>
     <telecom>
         <system value="email"/>
@@ -33,7 +29,7 @@
             <valueCode value="Snapshot"/>
         </extension>
         <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/messageheader"/>
+            <valueUri value="http://hl7.org/fhir/Profile/MessageHeader"/>
         </extension>
         <type value="MessageHeader"/>
         <name value="newLipidResult"/>
@@ -197,9 +193,6 @@
                     <referenceResource>
                         <reference value="http://hl7.org/fhir/message-events"/>
                     </referenceResource>
-
-                    <referenceResource value="http://hl7.org/fhir/message-events" />
-                    
                 </binding>
                 <mapping>
                     <identity value="rim"/>
@@ -332,7 +325,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/OperationOutcome"/>
+                    <profile value="http://hl7.org/fhir/Profiles/OperationOutcome"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -598,7 +591,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Device"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Device"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -645,7 +638,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -673,7 +666,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -700,11 +693,11 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
                 </type>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Organization"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -732,11 +725,11 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
                 </type>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Organization"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -829,7 +822,7 @@
             <valueCode value="Snapshot"/>
         </extension>
         <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/diagnosticreport"/>
+            <valueUri value="http://hl7.org/fhir/Profile/DiagnosticReport"/>
         </extension>
         <type value="DiagnosticReport"/>
         <name value="lipidPanel"/>
@@ -931,8 +924,10 @@
         <element>
             <path value="DiagnosticReport.name"/>
             <definition>
-                <short value="Name/Code for this diagnostic report"/>
-                <formal value="A code or name that describes this diagnostic report."/>
+                <short value="LOINC Code for Lipid Panel with LDL"/>
+                <formal value="LOINC Code for Lipid Panel with LDL."/>
+                <comments
+                    value="LOINC code includes &quot;direct&quot; LDL - does this mean LDL derived by measuring VLDL           by ultracentrifugation? This panel includes both measured and calculated LDL."/>
                 <min value="1"/>
                 <max value="1"/>
                 <type>
@@ -1181,7 +1176,7 @@
                 <max value="0"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                    <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -1363,7 +1358,7 @@
                 <max value="0"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/DiagnosticOrder"/>
+                    <profile value="http://hl7.org/fhir/Profiles/DiagnosticOrder"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -1443,7 +1438,7 @@
                 <max value="0"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -1478,9 +1473,8 @@
             <path value="DiagnosticReport.result"/>
             <name value="cholesterol"/>
             <definition>
-                <short value="Cholesterol observation"/>
-                <formal
-                    value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+                <short value="Cholesterol Result"/>
+                <formal value="Reference to Cholesterol Result."/>
                 <min value="1"/>
                 <max value="1"/>
                 <type>
@@ -1499,14 +1493,53 @@
             <path value="DiagnosticReport.result"/>
             <name value="triglyceride"/>
             <definition>
-                <short value="Triglyceride observation"/>
-                <formal
-                    value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+                <short value="Triglyceride Result"/>
+                <formal value="Group of elements for Triglyceride result."/>
                 <min value="1"/>
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
                     <profile value="#triglyceride"/>
+                    <aggregation value="bundled"/>
+                </type>
+                <isModifier value="false"/>
+                <mapping>
+                    <identity value="rim"/>
+                    <map value="outboundRelationship[typeCode=COMP].target"/>
+                </mapping>
+            </definition>
+        </element>
+        <element>
+            <path value="DiagnosticReport.result"/>
+            <name value="hdlCholesterol"/>
+            <definition>
+                <short value="HDL Cholesterol Result"/>
+                <formal value="Group of elements for HDL Cholesterol result."/>
+                <min value="1"/>
+                <max value="1"/>
+                <type>
+                    <code value="ResourceReference"/>
+                    <profile value="#hdlCholesterol"/>
+                    <aggregation value="bundled"/>
+                </type>
+                <isModifier value="false"/>
+                <mapping>
+                    <identity value="rim"/>
+                    <map value="outboundRelationship[typeCode=COMP].target"/>
+                </mapping>
+            </definition>
+        </element>
+        <element>
+            <path value="DiagnosticReport.result"/>
+            <name value="ldlCholesterol"/>
+            <definition>
+                <short value="LDL Cholesterol result, if reported"/>
+                <formal value="LDL Cholesterol result, if reported."/>
+                <min value="1"/>
+                <max value="1"/>
+                <type>
+                    <code value="ResourceReference"/>
+                    <profile value="#ldlCholesterol"/>
                     <aggregation value="bundled"/>
                 </type>
                 <isModifier value="false"/>
@@ -1529,7 +1562,7 @@
                 <max value="0"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/ImagingStudy"/>
+                    <profile value="http://hl7.org/fhir/Profiles/ImagingStudy"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -1626,7 +1659,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Media"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Media"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -1813,7 +1846,7 @@
             <valueCode value="Snapshot"/>
         </extension>
         <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/observation"/>
+            <valueUri value="http://hl7.org/fhir/Profile/Observation"/>
         </extension>
         <type value="Observation"/>
         <name value="cholesterol"/>
@@ -1860,9 +1893,28 @@
             <path value="Observation.extension"/>
             <slicing>
                 <discriminator value="url"/>
-                <ordered value="true"/>
-                <rules value="openAtEnd"/>
+                <ordered value="false"/>
+                <rules value="open"/>
             </slicing>
+        </element>
+        <element>
+            <path value="Observation.extension"/>
+            <name value="LDLCalculated"/>
+            <definition>
+                <short value="Whether LDL value is calculated"/>
+                <formal value="Whether LDL value is calculated."/>
+                <comments
+                    value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+                <synonym value="extensions"/>
+                <synonym value="user content"/>
+                <min value="0"/>
+                <max value="1"/>
+                <type>
+                    <code value="Extension"/>
+                    <profile value="#calculated"/>
+                </type>
+                <isModifier value="false"/>
+            </definition>
         </element>
         <element>
             <path value="Observation.extension"/>
@@ -1878,26 +1930,6 @@
                 <max value="*"/>
                 <type>
                     <code value="Extension"/>
-                </type>
-                <isModifier value="false"/>
-            </definition>
-        </element>
-        <element>
-            <path value="Observation.extension"/>
-            <name value="LDLCalculated"/>
-            <definition>
-                <short value="Additional Content defined by implementations"/>
-                <formal
-                    value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-                <comments
-                    value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
-                <synonym value="extensions"/>
-                <synonym value="user content"/>
-                <min value="1"/>
-                <max value="1"/>
-                <type>
-                    <code value="Resource"/>
-                    <profile value="#calculated"/>
                 </type>
                 <isModifier value="false"/>
             </definition>
@@ -2211,7 +2243,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/ValueSet"/>
+                    <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -2559,7 +2591,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Specimen"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Specimen"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -2580,15 +2612,15 @@
                 <max value="*"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Practitioner"/>
                 </type>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Device"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Device"/>
                 </type>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Organization"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Organization"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -3025,7 +3057,7 @@
                 <max value="1"/>
                 <type>
                     <code value="ResourceReference"/>
-                    <profile value="http://hl7.org/fhir/profiles/Observation"/>
+                    <profile value="http://hl7.org/fhir/Profiles/Observation"/>
                 </type>
                 <isModifier value="false"/>
                 <mapping>
@@ -3145,7 +3177,7 @@
             <valueCode value="Snapshot"/>
         </extension>
         <extension url="http://hl7.org/fhir/Profile/tools-extensions#profile-base">
-            <valueUri value="http://hl7.org/fhir/profile/quantity"/>
+            <valueUri value="http://hl7.org/fhir/Profile/Quantity"/>
         </extension>
         <type value="Quantity"/>
         <name value="lipidQuantity"/>
@@ -3346,17 +3378,20 @@
     </structure>
     <extensionDefn>
         <code value="calculated"/>
+        <display value="LDL is Calculated"/>
         <contextType value="resource"/>
         <context value="Observation"/>
         <definition>
             <short value="LDL is Calculated"/>
-            <formal value="True if the value is calculated from other observations"/>
-            <comments value="E.g. True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+            <formal value="True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+            <comments
+                value="It's definitely better that whether the LDL was calculated or not comes from the LOINC code. But this is defined to exercise the extension machinery in the publication tooling, and to make this comment. Actually, the location is odd too - it would probably be on the root observation, but this is for testing purposes"/>
             <min value="0"/>
             <max value="1"/>
             <type>
                 <code value="boolean"/>
             </type>
+            <mustSupport value="false"/>
             <isModifier value="false"/>
         </definition>
     </extensionDefn>

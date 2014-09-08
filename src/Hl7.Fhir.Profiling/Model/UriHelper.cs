@@ -10,8 +10,8 @@ namespace Fhir.Profiling
     {
         public static Uri TypeUri(string type)
         {
-            //string name = type.ToLower(); // todo: this is a temporary fix!!!
-            return new Uri("http://hl7.org/fhir/Profile/" + type);
+            string name = type.ToLower(); // todo: this is a temporary fix!!!
+            return new Uri("http://hl7.org/fhir/Profile/" + name);
         }
 
         public static Uri ResolvingUri(TypeRef typeref)
