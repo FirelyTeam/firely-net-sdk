@@ -35,13 +35,10 @@
     <NoWarn>3016, 3015</NoWarn>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Model.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -143,29 +140,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Introspection\ReferencesAttribute.cs" />
-    <Compile Include="Model\Extension.cs" />
-    <Compile Include="Model\Binary.cs" />
-    <Compile Include="Model\Bundle.cs" />
-    <Compile Include="Model\BundleEntry.cs" />
-    <Compile Include="Model\Code.cs" />
-    <Compile Include="Model\Query.cs" />
-    <Compile Include="Model\Date.cs" />
-    <Compile Include="Model\DeletedEntry.cs" />
-    <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\FhirDateTime.cs" />
-    <Compile Include="Model\FhirUri.cs" />
-    <Compile Include="Model\IExtendable.cs" />
-    <Compile Include="Model\Identifier.cs" />
-    <Compile Include="Model\Initializers.cs" />
-    <Compile Include="Model\Instant.cs" />
-    <Compile Include="Model\ModelInfo.cs" />
-    <Compile Include="Model\OperationOutcome.cs" />
-    <Compile Include="Model\Resource.cs" />
-    <Compile Include="Model\ResourceEntry.cs" />
-    <Compile Include="Model\ResourceReference.cs" />
-    <Compile Include="Model\TagList.cs" />
-    <Compile Include="Model\UriLinkList.cs" />
-    <Compile Include="Model\XHtml.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Binary.cs" />
+    <Compile Include="Bundle.cs" />
+    <Compile Include="BundleEntry.cs" />
+    <Compile Include="Code.cs" />
+    <Compile Include="IDeepCopyable.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="Date.cs" />
+    <Compile Include="DeletedEntry.cs" />
+    <Compile Include="Element.cs" />
+    <Compile Include="FhirDateTime.cs" />
+    <Compile Include="FhirUri.cs" />
+    <Compile Include="IExtendable.cs" />
+    <Compile Include="Identifier.cs" />
+    <Compile Include="Initializers.cs" />
+    <Compile Include="Instant.cs" />
+    <Compile Include="ModelInfo.cs" />
+    <Compile Include="OperationOutcome.cs" />
+    <Compile Include="Resource.cs" />
+    <Compile Include="ResourceEntry.cs" />
+    <Compile Include="ResourceReference.cs" />
+    <Compile Include="TagList.cs" />
+    <Compile Include="UriLinkList.cs" />
+    <Compile Include="XHtml.cs" />
     <Compile Include="Introspection\NotMappedAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
@@ -193,32 +191,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EwoutFhirNetApi.snk" />
+    <EmbeddedResource Include="Validation\xhtml\fhir-xhtml.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validation\xhtml\xml.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Schemas\fhir-atom-single.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\fhir-single.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\fhir-xhtml.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\opensearch.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\opensearchscore.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\tombstone.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\xml.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schemas\xmldsig-core-schema.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

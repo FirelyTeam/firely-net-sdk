@@ -131,7 +131,9 @@ namespace Hl7.Fhir.Rest
 
             FhirResponse result = null;
 
+#if !PORTABLE45
             request.Timeout = Timeout;
+#endif
 
             // Make sure the HttpResponse gets disposed!
             if (_beforeRequest != null) _beforeRequest(request);
@@ -172,11 +174,11 @@ namespace Hl7.Fhir.Rest
 				await request.WriteBodyAsync(_body);
 			}
 
-            request.Timeout = Timeout;
+
 
 			// Make sure the caller disposes the HttpResponse gets disposed...
             if (_beforeRequest != null) _beforeRequest(request);
-            var response = await request.GetResponseAsync();
+            var response = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
             if (_afterRequest != null) _afterRequest(response);
 
             return response;

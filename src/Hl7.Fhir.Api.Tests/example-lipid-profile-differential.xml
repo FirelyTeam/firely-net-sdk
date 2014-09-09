@@ -76,6 +76,14 @@
     </element>
 
     <element>
+      <path value="DiagnosticReport.name.coding"/>
+      <definition>
+        <min value="1" />
+        <max value="1" />
+      </definition>
+    </element>
+    
+    <element>
       <!-- I wonder whether this means *all* codings under "name" must now conform to the constraints below, or just *any* ? -->
       <!-- If we'd allow non-primitive valueXXX, we'd need only one fixed value at DiagnosticReport.name, but then, how do we define equality for complex types? -->
       <path value="DiagnosticReport.name.coding.system"/>
@@ -343,7 +351,16 @@
       </definition>
     </element>
 
+
     <!-- Below, fixing the Observation.name -->
+    <element>
+      <path value="Observation.name.coding"/>
+      <definition>
+        <min value="1" />
+        <max value="1" />
+      </definition>
+    </element>    
+
     <element>
       <path value="Observation.name.coding.system"/>
       <definition>
@@ -551,6 +568,9 @@
   </structure>
 
 
+  <!-- ====================================================================================
+       The second of the Observations referenced by DiagnosticReport, #triglyceride      
+       ==================================================================================== -->
   
   <structure>
     <type value="Observation"/>
@@ -575,6 +595,14 @@
     
         
     <!-- Below, fixing the Observation.name -->
+    <element>
+      <path value="Observation.name.coding"/>
+      <definition>
+        <min value="1" />
+        <max value="1" />
+      </definition>
+    </element>    
+    
     <element>
       <path value="Observation.name.coding.system"/>
       <definition>
@@ -782,7 +810,9 @@
   </structure>
   
   
-  
+  <!-- ====================================================================================
+       The third of the Observations referenced by DiagnosticReport, #hdlCholesterol      
+       ==================================================================================== -->  
   <structure>
     <type value="Observation"/>
     <name value="hdlCholesterol"/>
@@ -805,6 +835,14 @@
     </element>
        
     <!-- Below, fixing the Observation.name -->
+    <element>
+      <path value="Observation.name.coding"/>
+      <definition>
+        <min value="1" />
+        <max value="1" />
+      </definition>
+    </element>    
+    
     <element>
       <path value="Observation.name.coding.system"/>
       <definition>
@@ -1012,6 +1050,10 @@
   </structure>
   
 
+  <!-- ====================================================================================
+       The final (optional) of the Observations referenced by DiagnosticReport, #ldlCholesterol      
+       ==================================================================================== -->  
+  
   <structure>
     <type value="Observation"/>
     <name value="ldlCholesterol"/>
@@ -1058,6 +1100,14 @@
     
     
     <!-- Below, fixing the Observation.name -->
+    <element>
+      <path value="Observation.name.coding"/>
+      <definition>
+        <min value="1" />
+        <max value="1" />
+      </definition>
+    </element>    
+    
     <element>
       <path value="Observation.name.coding.system"/>
       <definition>
