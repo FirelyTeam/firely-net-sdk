@@ -62,7 +62,7 @@ namespace Fhir.Profiling
         }
 
         private void _linkTypeRefs()
-        {
+        { 
             foreach (TypeRef typeref in unlinkedTypeRefs)
             {
                 typeref.Structure = specification.GetStructureByName(typeref.Code);

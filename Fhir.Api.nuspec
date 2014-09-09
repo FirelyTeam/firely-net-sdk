@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Fhir.Api</id>
-    <version>0.14.16</version>
+    <version>0.14.20</version>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -26,7 +26,6 @@
 		
 		<file src="src\Hl7.Fhir.Profiling\bin\Release\Fhir.Profiling.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Profiling\bin\Release\Fhir.Profiling.pdb" target="lib\net45\" />
-		<file src="src\Hl7.Fhir.Profiling\bin\Release\validation.zip" target="lib\net45\" />
-
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\validation.zip" target="content\net45" />
     </files>
 </package>

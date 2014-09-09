@@ -27,7 +27,7 @@ namespace Fhir.Profiling
     public class ReportBuilder
     {
         private int nesting = 0;
-        public Report Report;
+        public Report Report = new Report();
         
         public void Clear()
         {

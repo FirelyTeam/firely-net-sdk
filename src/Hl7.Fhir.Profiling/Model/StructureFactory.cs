@@ -72,7 +72,7 @@ namespace Fhir.Profiling
 
         public static List<Structure> MetaTypes()
         {
-            string[] list = { "Structure", "Extension", "Resource", "Narrative" };
+            string[] list = { "Structure", "Extension", "Resource" };
             // NB. Narrative bevat <status> en <div>, en <div> mag html bevatten. 
             // Dit blijkt niet uit profiles.
             return PrimitiveProfileFor(list);

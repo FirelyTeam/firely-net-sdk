@@ -307,6 +307,7 @@ namespace Fhir.Profiling
             }
             else
             {
+                ValidateStructures(vector);
                 ValidateElementRef(vector);
             }
         }
@@ -317,15 +318,10 @@ namespace Fhir.Profiling
             {
                 ValidateCode(vector);
                 ValidateConstraints(vector);
-                ValidateStructures(vector);
                 ValidatePrimitive(vector);
-                
                 ValidateFixedValue(vector); // except when slicing
-
                 ValidateForMissingStructures(vector);
-
                 ValidateChildren(vector);
-
                 ValidateSlice(vector);
             }
             Stop(Group.Element);
