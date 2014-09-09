@@ -36,7 +36,7 @@ using Fhir.Profiling;
     // done: extensions
 
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
   
     public class ResourceValidator

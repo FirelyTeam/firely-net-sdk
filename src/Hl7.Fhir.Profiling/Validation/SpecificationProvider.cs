@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     using Model = Hl7.Fhir.Model;
 

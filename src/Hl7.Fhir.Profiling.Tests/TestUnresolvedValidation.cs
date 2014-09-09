@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.Profiling;
+using Hl7.Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

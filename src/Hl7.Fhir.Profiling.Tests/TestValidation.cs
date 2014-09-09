@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Introspection;
-using Fhir.Profiling;
+using Hl7.Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

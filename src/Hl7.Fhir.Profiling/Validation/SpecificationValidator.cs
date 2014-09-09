@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
 
     public class SpecificationValidator

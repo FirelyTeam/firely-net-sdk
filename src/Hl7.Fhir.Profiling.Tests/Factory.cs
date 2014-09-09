@@ -14,7 +14,7 @@ using System.Xml.XPath;
 using System.Xml;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
-using Fhir.Profiling;
+using Hl7.Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
 
     public class TypeRef : IEquatable<TypeRef>

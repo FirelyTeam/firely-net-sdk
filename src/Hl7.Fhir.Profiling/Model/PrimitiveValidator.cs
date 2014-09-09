@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     public interface IPrimitiveValidator
     {

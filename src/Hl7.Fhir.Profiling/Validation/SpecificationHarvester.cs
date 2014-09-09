@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Fhir.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
 
     internal class SpecificationHarvester

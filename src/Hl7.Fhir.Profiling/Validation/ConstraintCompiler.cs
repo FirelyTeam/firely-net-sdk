@@ -15,7 +15,7 @@ using System.Xml.XPath;
 using System.Xml.Xsl;
 using Fhir.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     public static class ConstraintCompiler
     {

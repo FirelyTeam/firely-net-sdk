@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     // This class is only for keeping track of slicings while reading a profile into structure.
     internal class Slicing

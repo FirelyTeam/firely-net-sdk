@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fhir.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     internal class SpecificationBinder
     {

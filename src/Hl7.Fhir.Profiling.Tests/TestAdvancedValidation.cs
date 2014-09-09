@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
-using Fhir.Profiling.IO;
+using Hl7.Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

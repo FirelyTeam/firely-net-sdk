@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
-
     public class Vector
     {
         public Structure Structure;

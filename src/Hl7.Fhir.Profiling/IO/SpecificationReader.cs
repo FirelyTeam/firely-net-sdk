@@ -13,7 +13,7 @@ using System.Xml;
 using System.Xml.XPath;
 using Fhir.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     public class SpecificationReader
     {

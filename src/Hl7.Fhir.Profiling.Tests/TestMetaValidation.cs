@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhir.Profiling.IO;
 using System.Linq;
-using Fhir.Profiling;
+using Hl7.Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {

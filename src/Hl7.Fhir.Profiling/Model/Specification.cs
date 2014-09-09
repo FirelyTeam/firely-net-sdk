@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
 
     public enum SlicingRules { OpenAtEnd };

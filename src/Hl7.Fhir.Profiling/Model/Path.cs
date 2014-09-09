@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Fhir.Profiling
+namespace Hl7.Fhir.Profiling
 {
     public class Segment : IEquatable<Segment>
     {
