@@ -271,10 +271,6 @@ namespace Hl7.Fhir.Profiling
 
         public void ValidateNodeChildren(Vector vector)
         {
-            // todo: HACK: exclude Resource, because this way there is no frigging way to test any undefined elements.
-            if (vector.Element.HasTypeRef && vector.Element.TypeRefs[0].Code != "Resource") //element has a reference, so there are no Element children to validate to. 
-                return;
-
             if (vector.Element.NameSpacePrefix != FhirNamespaceManager.Fhir)
             {
                 Log(Group.Element, Status.Info, vector, "Element [{0}] was skipped because it was not in the FHIR namespace.", vector.Element.Name);
@@ -287,7 +283,34 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        
+        public bool ShouldValidateElementChildren(Vector vector)
+        {
+            // RULE 1: children should be validated;
+            bool should = vector.Element.HasChildren;
+
+            if (should)
+            {
+                // RULE 2: Unless there is a profile reference. In that case  there should not be any children, so let's ignore them.
+                bool profile = vector.Element.TypeRefs.Any(t => t.ProfileUri != null);
+                should = !profile;
+            }
+
+            return should;
+        }
+
+        public void ValidateChildren(Vector vector)
+        {
+            if (ShouldValidateElementChildren(vector))
+            {
+                ValidateNodeChildren(vector);
+                ValidateElementChildren(vector); // except when slicing
+            }
+            else
+            {
+                ValidateStructures(vector);
+                ValidateElementRef(vector);
+            }
+        }
 
         public void ValidateElement(Vector vector)
         {
@@ -295,15 +318,10 @@ namespace Hl7.Fhir.Profiling
             {
                 ValidateCode(vector);
                 ValidateConstraints(vector);
-                ValidateStructures(vector);
                 ValidatePrimitive(vector);
-                
                 ValidateFixedValue(vector); // except when slicing
-
                 ValidateForMissingStructures(vector);
-                ValidateNodeChildren(vector);
-                ValidateElementChildren(vector); // except when slicing
-                ValidateElementRef(vector);
+                ValidateChildren(vector);
                 ValidateSlice(vector);
             }
             Stop(Group.Element);
@@ -334,7 +352,7 @@ namespace Hl7.Fhir.Profiling
 
         public Report Validate(XPathNavigator root)
         {
-            reporter.Clear();
+            
             Vector vector = GetVector(root);
             ValidateStructure(vector);
 

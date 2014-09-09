@@ -64,6 +64,7 @@ namespace Hl7.Fhir.Profiling
                 specification.TypeRefs
                 .Where(t => t.Unresolved)
                 .Select(t => UriHelper.ResolvingUri(t))
+                .Distinct()
                 .ToList();
         }
 

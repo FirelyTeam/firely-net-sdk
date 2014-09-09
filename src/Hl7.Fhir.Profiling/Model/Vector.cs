@@ -81,8 +81,8 @@ namespace Hl7.Fhir.Profiling
 
         public bool Evaluate(Constraint constraint)
         {
-            return (bool)Node.Evaluate(constraint.Expression);
-            //return (bool)Node.Evaluate(constraint.XPath, NSM);
+            bool valid = (bool)Node.Evaluate(constraint.Expression);
+            return valid;
         }
         
         public bool Exists(string xpath)

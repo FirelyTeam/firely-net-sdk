@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Introspection.Source
             _includeSubs = includeSubdirectories;
         }
 
-        public static string SpecificationDirectory
+        public static string  SpecificationDirectory
         {
             get
             {
