@@ -357,7 +357,7 @@
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/Profiles/ValueSet"/>
+                <profile value="http://hl7.org/fhir/Profile/ValueSet"/>
               </type>
               <isModifier value="false"/>
               <mapping>
@@ -1826,7 +1826,7 @@ Absolute URLs do not need to point to a FHIR RESTful server, though this is the 
               <max value="1"/>
               <type>
                 <code value="ResourceReference"/>
-                <profile value="http://hl7.org/fhir/Profiles/Organization"/>
+                <profile value="http://hl7.org/fhir/Profile/Organization"/>
               </type>
               <isModifier value="false"/>
               <mapping>

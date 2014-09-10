@@ -191,7 +191,7 @@
                     <isExtensible value="true"/>
                     <conformance value="preferred"/>
                     <referenceResource>
-                        <reference value="http://hl7.org/fhir/message-events"/>
+                        <reference value="http://hl7.org/fhir/vs/message-events"/>
                     </referenceResource>
                 </binding>
                 <mapping>

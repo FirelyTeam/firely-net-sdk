@@ -19,7 +19,7 @@
                 <identifier value="1cbdfb97-5859-48a4-8301-d54eab818d69"/>
                 <timestamp value="2014-09-08T11:47:14+02:00"/>
                 <event>
-                    <system value="http://hl7.org/fhir/message-type"/>
+                    <system value="http://hl7.org/fhir/message-events"/>
                     <code value="diagnosticreport-provide"/>
                 </event>  
                 <source>

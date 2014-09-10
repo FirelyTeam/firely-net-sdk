@@ -185,7 +185,9 @@
   <ItemGroup>
     <Content Include="Introspection\Source\core-conformances-base.xml" />
     <Content Include="Introspection\Source\core-profiles-datatypes.xml" />
-    <Content Include="Introspection\Source\core-profiles-resources.xml" />
+    <Content Include="Introspection\Source\core-profiles-resources.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Introspection\Source\core-valuesets-dicom.xml" />
     <Content Include="Introspection\Source\core-valuesets-fhir.xml" />
     <Content Include="Introspection\Source\core-valuesets-v2.xml" />
@@ -193,13 +195,6 @@
     <Content Include="Introspection\Source\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
