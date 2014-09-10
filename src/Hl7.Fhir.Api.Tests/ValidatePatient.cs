@@ -13,6 +13,9 @@ using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using Hl7.Fhir.Model;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace Hl7.Fhir.Test
 {
@@ -24,13 +27,20 @@ namespace Hl7.Fhir.Test
         {
             var s = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.patient-example.xml");
 
-            var patient = FhirParser.ParseResource(XmlReader.Create(s));
+            var patient = (Patient)FhirParser.ParseResource(XmlReader.Create(s));
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 
             FhirValidator.Validate(patient,true);
 
             Assert.IsTrue(FhirValidator.TryValidate(patient, results, true));
+
+            patient.Identifier[0].System = "urn:oid:crap really not valid";
+
+            results = null;
+            
+            Assert.IsFalse(FhirValidator.TryValidate(patient, results, true));
+            Assert.IsTrue(results.Count > 0);
         }
     }
 }

@@ -41,6 +41,9 @@ namespace Hl7.Fhir.Introspection.Source
             {
                 using (var schema = resolver.ReadContentArtifact(schemaName))
                 {
+                    if(schema == null)
+                        throw new FileNotFoundException("Cannot find manifest resources that represent the minimal set of schemas required for validation");
+
                     schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
                     schema.Dispose();
                 }

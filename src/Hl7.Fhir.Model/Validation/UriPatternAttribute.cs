@@ -20,7 +20,16 @@ namespace Hl7.Fhir.Validation
     {
         public static bool IsValidValue(string value)
         {
-            var uri = new Uri((string)value);
+            Uri uri = null;
+
+            try
+            {
+                uri = new Uri((string)value, UriKind.RelativeOrAbsolute);
+            }
+            catch
+            {
+                return false;
+            }
 
             if (uri.IsAbsoluteUri)
             {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Rest
             return requestStream;
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NET45
         internal static async Task WriteBodyAsync(this HttpWebRequest request, byte[] data)
         {
             Stream outs = await getRequestStreamAsync(request);

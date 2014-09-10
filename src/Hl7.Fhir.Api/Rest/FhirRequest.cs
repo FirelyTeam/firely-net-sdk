@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NET45
 		public async Task<WebResponse> GetResponseAsync(ResourceFormat? acceptFormat)
 		{
 			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;

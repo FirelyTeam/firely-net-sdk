@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;RELEASE;PORTABLE45;NET45</DefineConstants>
+    <DefineConstants>TRACE;RELEASE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
@@ -183,7 +183,6 @@
     <Compile Include="Validation\FhirValidator.cs" />
     <Compile Include="Validation\NarrativeXhtmlPatternAttribute.cs" />
     <Compile Include="Validation\OidPatternAttribute.cs" />
-    <Compile Include="Validation\SchemaCollection.cs" />
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
     <Compile Include="Validation\ValidationContextExtensions.cs" />
@@ -191,15 +190,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <EmbeddedResource Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Validation\xhtml\xml.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

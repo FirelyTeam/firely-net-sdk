@@ -32,6 +32,8 @@ namespace Hl7.Fhir.Validation
 
             var results = validationResults ?? new List<ValidationResult>();
             return Validator.TryValidateObject(value, ValidationContextFactory.Create(value, null, recurse), results, true);
+
+            // Note, if you pass a null validationResults, you will *not* get results (it's not an out param!)
         }
 
 

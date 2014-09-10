@@ -211,7 +211,6 @@ namespace Hl7.Fhir.Tests
         }
 
 
-
         [TestMethod]
         public void ValidateBundleEntry()
         {

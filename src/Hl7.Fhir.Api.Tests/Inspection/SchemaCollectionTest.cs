@@ -45,6 +45,22 @@ namespace Hl7.Fhir.Test.Inspection
                 // perfect.
             }
         }
+
+        [TestMethod]
+        public void TestSchemaCollectionValidation()
+        {
+            // This kind of test is also done in Introspection/SchemaCollectionTest....
+
+            var s = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.patient-example.xml");
+            var doc = XDocument.Load(s);
+
+            bool hasError = false;
+
+            doc.Validate(SchemaCollection.ValidationSchemaSet, (source, args) => hasError = true);
+
+            Assert.IsFalse(hasError);
+        }
+
     }
 #endif
 }
