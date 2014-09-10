@@ -7,13 +7,13 @@ using System.Xml.Xsl;
 using Fhir.Profiling.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Fhir.XPath;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class XsltContextTests
-    {
+    { 
         private XPathNavigator testDoc()
         {
             var doc = new XmlDocument();

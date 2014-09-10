@@ -14,7 +14,7 @@ using System.Xml.Xsl;
 using System.Xml.XPath;
 using System.Xml;
 
-namespace Fhir.XPath
+namespace Fhir.Profiling
 {
     internal class XPath2Context : XsltContext
     {

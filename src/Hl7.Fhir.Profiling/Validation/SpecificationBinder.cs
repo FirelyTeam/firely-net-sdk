@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.XPath;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling
 {
@@ -65,7 +65,8 @@ namespace Fhir.Profiling
         { 
             foreach (TypeRef typeref in unlinkedTypeRefs)
             {
-                typeref.Structure = specification.GetStructureByName(typeref.Code);
+                Structure structure = specification.GetStructureByUri(typeref.Uri);
+                typeref.Structure = structure;
             }
         }
 
@@ -119,6 +120,8 @@ namespace Fhir.Profiling
                 _addNameSpace(element);
             }
         }
+
+        
 
         private void bind()
         {

@@ -17,6 +17,10 @@ namespace Fhir.Profiling
     {
         public string Type { get; set; }
         public string Name { get; set; }
+        
+        public Uri ProfileUri { get; set; }
+        public Uri Uri { get; set; }
+
         public List<Element> Elements = new List<Element>();
         
         public Element Root
@@ -29,7 +33,8 @@ namespace Fhir.Profiling
 
         public override string ToString()
         {
-            return string.Format("{0} ({1} elements)", Type, Elements.Count);
+            string name = (Name != null) ? string.Format("{0} ({1})", Name, Type) : Type;
+            return string.Format("{0} ({1} elements)", name, Elements.Count);
         }
 
         public string NameSpacePrefix { get; set; }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.XPath;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling
 {
@@ -30,7 +30,9 @@ namespace Fhir.Profiling
             element.Path = new Path(path);
             element.Name = "extension";
             element.Cardinality = new Cardinality { Min = "0", Max = "*" };
-            element.TypeRefs.Add(new TypeRef("Extension"));
+            TypeRef typeref = new TypeRef("Extension");
+            UriHelper.SetTypeRefIdentification(structure, typeref);
+            element.TypeRefs.Add(typeref);
             structure.Elements.Add(element);
         }
 
@@ -38,6 +40,7 @@ namespace Fhir.Profiling
         {
             Structure structure = new Structure();
             structure.Type = name;
+            UriHelper.SetStructureIdentification(structure, UriHelper.BASEPROFILE);
 
             Element element = new Element();
             element.Path = new Path(name);
@@ -49,6 +52,7 @@ namespace Fhir.Profiling
             structure.Elements.Add(element);
 
             AddExtensionElement(structure, element);
+            
             return structure;
         }
 

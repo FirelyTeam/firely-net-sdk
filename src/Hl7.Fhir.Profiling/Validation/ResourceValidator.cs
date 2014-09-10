@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using Fhir.XPath;
+using Fhir.Profiling;
 using Fhir.Profiling;
 
     // todo: profile references "#lipidpanel" worden nog niet geresolved

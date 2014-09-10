@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml.Xsl;
 using System.Xml.XPath;
 
-namespace Fhir.XPath
+namespace Fhir.Profiling
 {
     internal delegate object InvokedFunction(XsltContext ctx, object[] args, XPathNavigator nav);
 

@@ -61,27 +61,18 @@
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="TestMetaValidation.cs" />
+    <Compile Include="TypeRefUniform.cs" />
     <Compile Include="XsltContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="TestPatient.json" />
-    <Content Include="TestData\lipid.profile.expanded.xml">
+    <Content Include="TestData\example-lipid-profile-testmessage.xml" />
+    <Content Include="TestData\lipid.profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\lipid.slice.invalid.extra.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.slice.invalid.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.slice.valid.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="TestData\lipid.profile.valueset.xml" />
     <Content Include="TestData\patient.extended.profile.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -104,7 +95,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\lipid.fixvalue.xml">
+    <Content Include="TestData\lipid.slice.valid.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

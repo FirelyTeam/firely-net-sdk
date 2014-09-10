@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Fhir.XPath
+namespace Fhir.Profiling
 {
     public static class FhirNamespaceManager
     {

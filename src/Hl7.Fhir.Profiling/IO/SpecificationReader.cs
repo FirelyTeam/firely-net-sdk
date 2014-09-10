@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
-using Fhir.XPath;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling
 {

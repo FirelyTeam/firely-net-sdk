@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
-using Fhir.XPath;
+using Fhir.Profiling;
 
 namespace Fhir.Profiling
 {
@@ -54,7 +54,7 @@ namespace Fhir.Profiling
                     target.BindingUri = (reference as FhirUri).Value;
                 }
             }
-            
+
         }
 
         private void HarvestFixedValue(Profile.ElementDefinitionComponent source, Element target)
@@ -184,8 +184,18 @@ namespace Fhir.Profiling
             }
         }
 
-       
-        private Structure HarvestStructure(Profile.ProfileStructureComponent source)
+        private void fixUris(Structure structure, Uri uri)
+        {
+            UriHelper.SetStructureIdentification(structure, uri);
+            List<TypeRef> typerefs = structure.Elements.SelectMany(e => e.TypeRefs).ToList();
+            foreach (TypeRef t in typerefs)
+            {
+                UriHelper.SetTypeRefIdentification(structure, t);
+            }
+        }
+
+      
+        public Structure HarvestStructure(Profile.ProfileStructureComponent source, Uri uri)
         {
             Structure target = new Structure();
             target.Name = source.Name;
@@ -193,6 +203,7 @@ namespace Fhir.Profiling
             target.NameSpacePrefix = FhirNamespaceManager.Fhir;
             PrepareSlices(source);
             HarvestElements(source, target);
+            fixUris(target, uri);
             return target;
         }
 
@@ -209,13 +220,7 @@ namespace Fhir.Profiling
         }
 
 
-        public IEnumerable<Structure> HarvestStructures(Profile source)
-        {
-            foreach (var structure in source.Structure)
-            {
-                yield return HarvestStructure(structure);
-            }
-        }
+       
 
 
         public void HarvestProfileExtensions(Profile source)

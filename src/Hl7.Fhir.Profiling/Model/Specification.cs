@@ -68,6 +68,11 @@ namespace Fhir.Profiling
             return Structures.FirstOrDefault(s => s.Type == name);
         }
 
+        public Structure GetStructureByUri(Uri uri)
+        {
+            return Structures.FirstOrDefault(s => UriHelper.Equal(s.Uri, uri));
+        }
+
         public IEnumerable<Structure> StructuresWithName(string name)
         {
             return Structures.Where(s => s.Type == name);
@@ -218,13 +223,7 @@ namespace Fhir.Profiling
             }
         }
 
-        public IEnumerable<Uri> TypeRefUris
-        {
-            get
-            {
-                return TypeRefs.Select(t => UriHelper.ResolvingUri(t)).Distinct();
-            }
-        }
+        
     }
    
 }

@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fhir.Profiling.IO;
 
-namespace Fhir.XPath
+namespace Fhir.Profiling
 {
     public static class JsonReaderExtensions
     {

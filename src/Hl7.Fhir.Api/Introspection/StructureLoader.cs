@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Introspection
             }
 
             if (results.Count() == 1)
-                return profile.Structure.First();
+                return results.Single();
             else
                 throw Error.InvalidOperation("Cannot unambiguously determine structure to locate based on the given combination of url, anchor and structure type");
         }

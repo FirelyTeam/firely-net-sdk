@@ -20,8 +20,10 @@ namespace Fhir.Profiling
             this.Code = code;
             this.ProfileUri = profileUri;
         }
+        
         public string Code;
         public string ProfileUri { get; set; }
+        public Uri Uri { get; set; }
         
         public bool Unresolved
         {

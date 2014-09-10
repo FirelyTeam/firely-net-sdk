@@ -15,7 +15,7 @@ using System.Xml.XPath;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Fhir.XPath
+namespace Fhir.Profiling
 {
     internal class NavigatorState : IEqualityComparer<NavigatorState>, IEquatable<NavigatorState>
     {
