@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
-using Fhir.XPath;
+using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Profiling
 {

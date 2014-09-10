@@ -26,3 +26,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("0.0.81.2634")]
 [assembly: AssemblyFileVersion("0.0.81.2634")]
+
+#if RELEASE
+[assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+#endif

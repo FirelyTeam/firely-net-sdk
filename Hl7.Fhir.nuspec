@@ -3,17 +3,23 @@
   <metadata>
     <id>Hl7.Fhir</id>
     <version>0.11.0</version>
+	<title>HL7 FHIR support API</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.NET support for using REST-based HL7 FHIR. Supports FHIR DSTU1 (0.81).</description>
+    <description>.NET support for working with HL7 FHIR. Supports FHIR DSTU1 (0.81).</description>
     <releaseNotes>DSTU1 (0.81) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+	<summary>This library offers support for HL7's FHIR standard (http://hl7.org/fhir).
+	It contains functionality to working with RESTful FHIR servers, validation of profiles,
+	and parsing/serialization of FHIR data.</summary>
+	<language>en-us</language>
+	<projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>	
 	<iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
     <copyright>Copyright 2014</copyright>
-    <tags>HL7 FHIR</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>HL7 FHIR Profile validation REST</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="6.0.2" />
-	  <dependency id="DotNetZip" version="1.9.2" />
+      <dependency id="Newtonsoft.Json" version="6.0.3" />
+	  <dependency id="p3-sharpcompress" version="0.10.5" />
     </dependencies>
   </metadata>
     <files>

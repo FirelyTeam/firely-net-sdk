@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Xml;
 using Hl7.Fhir.Model;
 #if !PORTABLE45
-using Ionic.Zip;
 using System.Xml.XPath;
+using SharpCompress.Archive;
 #endif
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using Hl7.Fhir.Api.Introspection.Source;
+
 
 namespace Fhir.Profiling.IO
 {
@@ -48,18 +49,20 @@ namespace Fhir.Profiling.IO
 
         public IEnumerable<string> ZipXmlContentStrings(string name)
         {
-            Stream stream = GetStream(name);
-            ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
-            foreach (ZipEntry entry in zip)
-            {
-                if (Path.GetExtension(entry.FileName) == ".xml")
-                {
-                    Stream output = entry.OpenReader();
-                    StreamReader reader = new StreamReader(output);
-                    string text = reader.ReadToEnd();
-                    yield return text;
-                }
-            }
+            throw new NotImplementedException();
+            //Stream stream = GetStream(name);
+
+            //ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
+            //foreach (ZipEntry entry in zip)
+            //{
+            //    if (Path.GetExtension(entry.FileName) == ".xml")
+            //    {
+            //        Stream output = entry.OpenReader();
+            //        StreamReader reader = new StreamReader(output);
+            //        string text = reader.ReadToEnd();
+            //        yield return text;
+            //    }
+            //}
         }
 
         public IArtifactSource CreateArtifactSource(string name)

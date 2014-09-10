@@ -12,8 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using Fhir.XPath;
-using Fhir.Profiling;
+using Hl7.Fhir.XPath;
+using Hl7.Fhir.Profiling;
 
     // todo: profile references "#lipidpanel" worden nog niet geresolved
     // todo: valuesets worden nog niet geresolved (door de ArtifactResolver)

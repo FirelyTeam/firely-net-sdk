@@ -7,7 +7,7 @@ using System.Xml.Xsl;
 using Fhir.Profiling.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Fhir.XPath;
+using Hl7.Fhir.XPath;
 
 namespace Fhir.Profiling.Tests
 {

@@ -32,7 +32,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Portable45\</OutputPath>
-    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
+    <DefineConstants>TRACE;RELEASE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
@@ -46,95 +46,95 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-	<Compile Include="Generated\Bindings.cs" />
-	<Compile Include="Generated\ModelInfo.cs" />
-	<Compile Include="Generated\Address.cs" />
-	<Compile Include="Generated\Attachment.cs" />
-	<Compile Include="Generated\CodeableConcept.cs" />
-	<Compile Include="Generated\Coding.cs" />
-	<Compile Include="Generated\Contact.cs" />
-	<Compile Include="Generated\Element.cs" />
-	<Compile Include="Generated\Extension.cs" />
-	<Compile Include="Generated\HumanName.cs" />
-	<Compile Include="Generated\Identifier.cs" />
-	<Compile Include="Generated\Narrative.cs" />
-	<Compile Include="Generated\Period.cs" />
-	<Compile Include="Generated\Quantity.cs" />
-	<Compile Include="Generated\Range.cs" />
-	<Compile Include="Generated\Ratio.cs" />
-	<Compile Include="Generated\ResourceReference.cs" />
-	<Compile Include="Generated\SampledData.cs" />
-	<Compile Include="Generated\Schedule.cs" />
-	<Compile Include="Generated\Base64Binary.cs" />
-	<Compile Include="Generated\FhirBoolean.cs" />
-	<Compile Include="Generated\Code.cs" />
-	<Compile Include="Generated\Date.cs" />
-	<Compile Include="Generated\FhirDateTime.cs" />
-	<Compile Include="Generated\FhirDecimal.cs" />
-	<Compile Include="Generated\Id.cs" />
-	<Compile Include="Generated\IdRef.cs" />
-	<Compile Include="Generated\Instant.cs" />
-	<Compile Include="Generated\Integer.cs" />
-	<Compile Include="Generated\Oid.cs" />
-	<Compile Include="Generated\FhirString.cs" />
-	<Compile Include="Generated\FhirUri.cs" />
-	<Compile Include="Generated\Uuid.cs" />
-	<Compile Include="Generated\XHtml.cs" />
-	<Compile Include="Generated\Resource.cs" />
-	<Compile Include="Generated\AdverseReaction.cs" />
-	<Compile Include="Generated\Alert.cs" />
-	<Compile Include="Generated\AllergyIntolerance.cs" />
-	<Compile Include="Generated\CarePlan.cs" />
-	<Compile Include="Generated\Composition.cs" />
-	<Compile Include="Generated\ConceptMap.cs" />
-	<Compile Include="Generated\Condition.cs" />
-	<Compile Include="Generated\Conformance.cs" />
-	<Compile Include="Generated\Device.cs" />
-	<Compile Include="Generated\DeviceObservationReport.cs" />
-	<Compile Include="Generated\DiagnosticOrder.cs" />
-	<Compile Include="Generated\DiagnosticReport.cs" />
-	<Compile Include="Generated\DocumentManifest.cs" />
-	<Compile Include="Generated\DocumentReference.cs" />
-	<Compile Include="Generated\Encounter.cs" />
-	<Compile Include="Generated\FamilyHistory.cs" />
-	<Compile Include="Generated\Group.cs" />
-	<Compile Include="Generated\ImagingStudy.cs" />
-	<Compile Include="Generated\Immunization.cs" />
-	<Compile Include="Generated\ImmunizationRecommendation.cs" />
-	<Compile Include="Generated\List.cs" />
-	<Compile Include="Generated\Location.cs" />
-	<Compile Include="Generated\Media.cs" />
-	<Compile Include="Generated\Medication.cs" />
-	<Compile Include="Generated\MedicationAdministration.cs" />
-	<Compile Include="Generated\MedicationDispense.cs" />
-	<Compile Include="Generated\MedicationPrescription.cs" />
-	<Compile Include="Generated\MedicationStatement.cs" />
-	<Compile Include="Generated\MessageHeader.cs" />
-	<Compile Include="Generated\Observation.cs" />
-	<Compile Include="Generated\OperationOutcome.cs" />
-	<Compile Include="Generated\Order.cs" />
-	<Compile Include="Generated\OrderResponse.cs" />
-	<Compile Include="Generated\Organization.cs" />
-	<Compile Include="Generated\Other.cs" />
-	<Compile Include="Generated\Patient.cs" />
-	<Compile Include="Generated\Practitioner.cs" />
-	<Compile Include="Generated\Procedure.cs" />
-	<Compile Include="Generated\Profile.cs" />
-	<Compile Include="Generated\Provenance.cs" />
-	<Compile Include="Generated\Query.cs" />
-	<Compile Include="Generated\Questionnaire.cs" />
-	<Compile Include="Generated\RelatedPerson.cs" />
-	<Compile Include="Generated\SecurityEvent.cs" />
-	<Compile Include="Generated\Specimen.cs" />
-	<Compile Include="Generated\Substance.cs" />
-	<Compile Include="Generated\Supply.cs" />
-	<Compile Include="Generated\ValueSet.cs" />
-	<Compile Include="Generated\Binary.cs" />
-	<Compile Include="Generated\Age.cs" />
-	<Compile Include="Generated\Count.cs" />
-	<Compile Include="Generated\Distance.cs" />
-	<Compile Include="Generated\Duration.cs" />
-	<Compile Include="Generated\Money.cs" />
+    <Compile Include="Generated\Bindings.cs" />
+    <Compile Include="Generated\ModelInfo.cs" />
+    <Compile Include="Generated\Address.cs" />
+    <Compile Include="Generated\Attachment.cs" />
+    <Compile Include="Generated\CodeableConcept.cs" />
+    <Compile Include="Generated\Coding.cs" />
+    <Compile Include="Generated\Contact.cs" />
+    <Compile Include="Generated\Element.cs" />
+    <Compile Include="Generated\Extension.cs" />
+    <Compile Include="Generated\HumanName.cs" />
+    <Compile Include="Generated\Identifier.cs" />
+    <Compile Include="Generated\Narrative.cs" />
+    <Compile Include="Generated\Period.cs" />
+    <Compile Include="Generated\Quantity.cs" />
+    <Compile Include="Generated\Range.cs" />
+    <Compile Include="Generated\Ratio.cs" />
+    <Compile Include="Generated\ResourceReference.cs" />
+    <Compile Include="Generated\SampledData.cs" />
+    <Compile Include="Generated\Schedule.cs" />
+    <Compile Include="Generated\Base64Binary.cs" />
+    <Compile Include="Generated\FhirBoolean.cs" />
+    <Compile Include="Generated\Code.cs" />
+    <Compile Include="Generated\Date.cs" />
+    <Compile Include="Generated\FhirDateTime.cs" />
+    <Compile Include="Generated\FhirDecimal.cs" />
+    <Compile Include="Generated\Id.cs" />
+    <Compile Include="Generated\IdRef.cs" />
+    <Compile Include="Generated\Instant.cs" />
+    <Compile Include="Generated\Integer.cs" />
+    <Compile Include="Generated\Oid.cs" />
+    <Compile Include="Generated\FhirString.cs" />
+    <Compile Include="Generated\FhirUri.cs" />
+    <Compile Include="Generated\Uuid.cs" />
+    <Compile Include="Generated\XHtml.cs" />
+    <Compile Include="Generated\Resource.cs" />
+    <Compile Include="Generated\AdverseReaction.cs" />
+    <Compile Include="Generated\Alert.cs" />
+    <Compile Include="Generated\AllergyIntolerance.cs" />
+    <Compile Include="Generated\CarePlan.cs" />
+    <Compile Include="Generated\Composition.cs" />
+    <Compile Include="Generated\ConceptMap.cs" />
+    <Compile Include="Generated\Condition.cs" />
+    <Compile Include="Generated\Conformance.cs" />
+    <Compile Include="Generated\Device.cs" />
+    <Compile Include="Generated\DeviceObservationReport.cs" />
+    <Compile Include="Generated\DiagnosticOrder.cs" />
+    <Compile Include="Generated\DiagnosticReport.cs" />
+    <Compile Include="Generated\DocumentManifest.cs" />
+    <Compile Include="Generated\DocumentReference.cs" />
+    <Compile Include="Generated\Encounter.cs" />
+    <Compile Include="Generated\FamilyHistory.cs" />
+    <Compile Include="Generated\Group.cs" />
+    <Compile Include="Generated\ImagingStudy.cs" />
+    <Compile Include="Generated\Immunization.cs" />
+    <Compile Include="Generated\ImmunizationRecommendation.cs" />
+    <Compile Include="Generated\List.cs" />
+    <Compile Include="Generated\Location.cs" />
+    <Compile Include="Generated\Media.cs" />
+    <Compile Include="Generated\Medication.cs" />
+    <Compile Include="Generated\MedicationAdministration.cs" />
+    <Compile Include="Generated\MedicationDispense.cs" />
+    <Compile Include="Generated\MedicationPrescription.cs" />
+    <Compile Include="Generated\MedicationStatement.cs" />
+    <Compile Include="Generated\MessageHeader.cs" />
+    <Compile Include="Generated\Observation.cs" />
+    <Compile Include="Generated\OperationOutcome.cs" />
+    <Compile Include="Generated\Order.cs" />
+    <Compile Include="Generated\OrderResponse.cs" />
+    <Compile Include="Generated\Organization.cs" />
+    <Compile Include="Generated\Other.cs" />
+    <Compile Include="Generated\Patient.cs" />
+    <Compile Include="Generated\Practitioner.cs" />
+    <Compile Include="Generated\Procedure.cs" />
+    <Compile Include="Generated\Profile.cs" />
+    <Compile Include="Generated\Provenance.cs" />
+    <Compile Include="Generated\Query.cs" />
+    <Compile Include="Generated\Questionnaire.cs" />
+    <Compile Include="Generated\RelatedPerson.cs" />
+    <Compile Include="Generated\SecurityEvent.cs" />
+    <Compile Include="Generated\Specimen.cs" />
+    <Compile Include="Generated\Substance.cs" />
+    <Compile Include="Generated\Supply.cs" />
+    <Compile Include="Generated\ValueSet.cs" />
+    <Compile Include="Generated\Binary.cs" />
+    <Compile Include="Generated\Age.cs" />
+    <Compile Include="Generated\Count.cs" />
+    <Compile Include="Generated\Distance.cs" />
+    <Compile Include="Generated\Duration.cs" />
+    <Compile Include="Generated\Money.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Introspection\ReferencesAttribute.cs" />
@@ -200,6 +200,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

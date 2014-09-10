@@ -7,15 +7,15 @@
  */
 
 using Hl7.Fhir.Serialization;
-#if !PORTABLE45
-using Ionic.Zip;
-#endif
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+#if !PORTABLE45
+using SharpCompress.Archive;
+#endif
 
 namespace Hl7.Fhir.Support
 {
@@ -98,10 +98,12 @@ namespace Hl7.Fhir.Support
 
         private static void unzip(string zipPath, string outputPath)
         {
-            using (var zipfile = ZipFile.Read(zipPath))
-            {
-                zipfile.ExtractAll(outputPath);
-            }
+            ArchiveFactory.WriteToDirectory(zipPath, outputPath);
+
+            //using (var zipfile = ZipFile.Read(zipPath))
+            //{
+            //    zipfile.ExtractAll(outputPath);
+            //}
         }
 
 

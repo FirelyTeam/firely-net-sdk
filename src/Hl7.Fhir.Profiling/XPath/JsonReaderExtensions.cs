@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.Profiling.IO;
 
-namespace Fhir.XPath
+namespace Hl7.Fhir.XPath
 {
     public static class JsonReaderExtensions
     {

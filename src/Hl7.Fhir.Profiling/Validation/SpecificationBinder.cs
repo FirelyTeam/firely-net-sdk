@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fhir.XPath;
+using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Profiling
 {

@@ -14,9 +14,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
 using System.IO;
-#if !PORTABLE45
-using Ionic.Zip;
-#endif
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml;

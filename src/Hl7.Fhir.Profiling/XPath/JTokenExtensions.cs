@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Newtonsoft.Json.Linq;
 
-namespace Fhir.XPath
+namespace Hl7.Fhir.XPath
 {
     internal static class JTokenExtensions
     {
