@@ -23,18 +23,15 @@ namespace Fhir.Profiling.Tests
         [ClassInitialize] 
         public static void Init(TestContext context)
         {
-            ArtifactResolver resolver = new ArtifactResolver(new FileArtifactSource("TestData"));
-            SpecificationProvider provider = new SpecificationProvider(resolver);
+            SpecificationProvider provider = SpecificationProvider.CreateOffline(new FileArtifactSource("TestData"));
             SpecificationBuilder builder = new SpecificationBuilder(provider);
 
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.Add("http://disk/Profile/lipid.profile.expanded.xml");
+            builder.Add("http://disk/Profile/lipid.profile.xml#lipidPanel");
             builder.Expand();
 
             spec =  builder.ToSpecification();
-
-            throw new Exception("Ewout: Expanded profile contains structures that refer to the same type");
         }
 
         [TestMethod]
@@ -57,29 +54,27 @@ namespace Fhir.Profiling.Tests
             Assert.IsTrue(report.Contains(Group.Value, Status.Failed));
         }
 
-       
+
 
         [TestMethod]
-        public void Slicing()
+        public void SlicingValid()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.slice.valid.xml");
             Report report = spec.Validate(resource);
             Assert.IsTrue(report.IsValid);
+        }
 
 
-            resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.xml");
-            report = spec.Validate(resource);
+        [TestMethod]
+        public void SlicingInvalid()
+        {
+            var resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.xml");
+            Report report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(4, report.ErrorCount);
             Assert.IsTrue(report.Contains(Group.Cardinality, Status.Failed));
             Assert.IsTrue(report.Contains(Group.Slice, Status.Failed));
 
-            
-            resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.extra.xml");
-            report = spec.Validate(resource);
-            Assert.IsFalse(report.IsValid);
-            Assert.AreEqual(1, report.ErrorCount);
-            Assert.IsTrue(report.Contains(Group.Cardinality, Status.Failed));
         }
     }
 }

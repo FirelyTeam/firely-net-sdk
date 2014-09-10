@@ -31,7 +31,9 @@ namespace Hl7.Fhir.Profiling
             element.Path = new Path(path);
             element.Name = "extension";
             element.Cardinality = new Cardinality { Min = "0", Max = "*" };
-            element.TypeRefs.Add(new TypeRef("Extension"));
+            TypeRef typeref = new TypeRef("Extension");
+            UriHelper.SetTypeRefIdentification(structure, typeref);
+            element.TypeRefs.Add(typeref);
             structure.Elements.Add(element);
         }
 
@@ -39,6 +41,7 @@ namespace Hl7.Fhir.Profiling
         {
             Structure structure = new Structure();
             structure.Type = name;
+            UriHelper.SetStructureIdentification(structure, UriHelper.BASEPROFILE);
 
             Element element = new Element();
             element.Path = new Path(name);
@@ -50,6 +53,7 @@ namespace Hl7.Fhir.Profiling
             structure.Elements.Add(element);
 
             AddExtensionElement(structure, element);
+            
             return structure;
         }
 

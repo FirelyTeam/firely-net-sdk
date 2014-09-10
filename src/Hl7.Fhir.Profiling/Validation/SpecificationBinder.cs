@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Profiling
         { 
             foreach (TypeRef typeref in unlinkedTypeRefs)
             {
-                typeref.Structure = specification.GetStructureByName(typeref.Code);
+                Structure structure = specification.GetStructureByUri(typeref.Uri);
+                typeref.Structure = structure;
             }
         }
 
@@ -119,6 +120,8 @@ namespace Hl7.Fhir.Profiling
                 _addNameSpace(element);
             }
         }
+
+        
 
         private void bind()
         {

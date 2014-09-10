@@ -10,29 +10,29 @@ namespace Hl7.Fhir.Profiling
 
     public class Tracker
     {
-        Dictionary<Uri, Resolution> dictionary = new Dictionary<Uri, Resolution>();
+        Dictionary<string, Resolution> dictionary = new Dictionary<string, Resolution>();
 
-        public void Add(Uri uri, Resolution resolution)
+        public void Add(string key, Resolution resolution)
         {
-            if (Knows(uri))
+            if (Knows(key))
             {
-                dictionary[uri] = resolution;
+                dictionary[key] = resolution;
             }
             else
             {
-                dictionary.Add(uri, resolution);
+                dictionary.Add(key, resolution);
             }
         }
 
 
-        public void Add(string uri, Resolution resolution)
+        public void Add(Uri uri, Resolution resolution)
         {
-            Add(new Uri(uri), resolution);
+            Add(uri.ToString(), resolution);
         }
 
         public void MarkResolved(Uri uri)
         {
-            Add(uri, Resolution.Resolved);
+            Add(uri.ToString(), Resolution.Resolved);
         }
 
         public void Resolve(IEnumerable<Uri> uris)
@@ -43,17 +43,17 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        public bool Knows(Uri uri)
+        public bool Knows(string key)
         {
             Resolution resolution = Resolution.Unknown;
-            dictionary.TryGetValue(uri, out resolution);
+            dictionary.TryGetValue(key, out resolution);
             return resolution != Resolution.Unknown;
         }
-
-        public bool Knows(string uri)
+        public bool Knows(Uri uri)
         {
-            return Knows(new Uri(uri));
+            return Knows(uri.ToString());
         }
+
     }
 
 }

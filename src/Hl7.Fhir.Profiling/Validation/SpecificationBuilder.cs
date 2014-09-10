@@ -28,10 +28,16 @@ namespace Hl7.Fhir.Profiling
         private SpecificationProvider provider;
         private Tracker tracker = new Tracker();
 
-
-        private void TrackStructures(IEnumerable<Structure> structures)
+        
+        public void TrackStructure(Structure structure)
         {
-            var uris = structures.Select(s => UriHelper.ResolvingUri(s));
+            Uri uri = structure.ProfileUri;
+            tracker.MarkResolved(uri);
+        }
+
+        public void TrackStructures(IEnumerable<Structure> structures)
+        {
+            var uris = structures.Select(s => s.Uri).Distinct();
             foreach (Uri u in uris)
             {
                 tracker.MarkResolved(u);
@@ -42,13 +48,13 @@ namespace Hl7.Fhir.Profiling
         {
             if (uri == null) return false;
             if (tracker.Knows(uri)) return false;
-                
-            IEnumerable<Structure> structures = provider.GetStructures(uri);
-            if (structures.Count() > 0)
+            
+            Structure structure = provider.GetStructure(uri);
+            if (structure != null)
             {
-                specification.Add(structures);
+                specification.Add(structure);
                 tracker.Add(uri, Resolution.Resolved);
-                TrackStructures(structures);
+                TrackStructure(structure);
                 return true;
             }
             else
@@ -63,7 +69,7 @@ namespace Hl7.Fhir.Profiling
             return 
                 specification.TypeRefs
                 .Where(t => t.Unresolved)
-                .Select(t => UriHelper.ResolvingUri(t))
+                .Select(t => t.Uri)
                 .Distinct()
                 .ToList();
         }
@@ -127,11 +133,13 @@ namespace Hl7.Fhir.Profiling
         public void Add(IEnumerable<Structure> structures)
         {
             specification.Add(structures);
+            TrackStructures(structures);
         }
 
         public void Add(IEnumerable<ValueSet> valuesets)
         {
             specification.Add(valuesets);
+
         }
 
         public Specification ToSpecification()
