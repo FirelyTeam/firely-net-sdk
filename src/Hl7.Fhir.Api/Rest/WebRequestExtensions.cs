@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Rest
         {
             WebResponse result = null;
             ManualResetEvent responseReady = new ManualResetEvent(initialState: false);
+            Exception caught = null;
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
@@ -108,7 +109,10 @@ namespace Hl7.Fhir.Rest
                     {
                         result = req.EndGetResponseNoEx(ar);
                     }
-                   
+                    catch(Exception ex)
+                    {
+                        caught = ex;
+                    }
                     finally
                     {
                         responseReady.Set();
@@ -127,6 +131,8 @@ namespace Hl7.Fhir.Rest
                 responseReady.WaitOne();
                 //async.AsyncWaitHandle.WaitOne();
             }
+
+            if (caught != null) throw caught;
 
             return result;
         }
