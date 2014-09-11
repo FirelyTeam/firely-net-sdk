@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Introspection.Source;
+using Hl7.Fhir.Profiling;
 
 namespace Hl7.Fhir.Profiling
 {
@@ -64,19 +65,19 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        private List<Uri> UnresolvedTypeRefUris()
+        private IEnumerable<Uri> UnresolvedTypeRefKeys()
         {
-            return 
-                specification.TypeRefs
-                .Where(t => t.Unresolved)
-                .Select(t => t.Uri)
-                .Distinct()
-                .ToList();
+            IEnumerable<Uri> uris =
+                specification
+                .UnresolvedTypeRefUris()
+                .Where(uri => !tracker.Knows(uri));
+
+            return uris;
         }
 
         private bool ExpandTypeRefs()
         {
-            var uris = UnresolvedTypeRefUris();
+            var uris = UnresolvedTypeRefKeys().ToList();
             // ToList(), because expanding will modify this list.
 
             bool expanded = false;

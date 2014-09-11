@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Fhir.Profiling.IO;
+using Hl7.Fhir.Profiling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Hl7.Fhir.XPath;

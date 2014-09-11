@@ -39,7 +39,11 @@ namespace Hl7.Fhir.Profiling
             string name = typeref.Code;
             Uri uri;
 
-            if (typeref.ProfileUri != null)
+            if ((name == "ResourceReference"))
+            {
+                uri = BaseProfileUriFor(name);
+            }
+            else if (typeref.ProfileUri != null)
             {
                 
                 if (typeref.ProfileUri.StartsWith("#"))

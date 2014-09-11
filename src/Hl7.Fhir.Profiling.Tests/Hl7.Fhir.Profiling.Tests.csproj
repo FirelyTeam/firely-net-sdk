@@ -62,6 +62,7 @@
     <Compile Include="Factory.cs" />
     <Compile Include="TestMetaValidation.cs" />
     <Compile Include="TypeRefUniform.cs" />
+    <Compile Include="ValidationAnalysis.cs" />
     <Compile Include="XsltContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -114,6 +115,7 @@
     </Content>
     <Content Include="TestData\Patient.CardinalityMinus.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\Patient.CardinalityPlus.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -135,10 +137,6 @@
     <ProjectReference Include="..\Hl7.Fhir.Api\Hl7.Fhir.Api.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.csproj">
-      <Project>{3ca811d7-19a7-43ac-a403-1f35e4ec2bfc}</Project>
-      <Name>Hl7.Fhir.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hl7.Fhir.Profiling\Hl7.Fhir.Profiling.csproj">
       <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>

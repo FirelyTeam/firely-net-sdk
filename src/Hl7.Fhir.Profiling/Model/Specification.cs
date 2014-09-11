@@ -203,6 +203,15 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
+        public IEnumerable<Uri> UnresolvedTypeRefUris()
+        {
+            return
+                TypeRefs
+                .Where(t => t.Unresolved)
+                .Select(t => t.Uri)
+                .Distinct();
+        }
+
         public IEnumerable<Uri> ValueSetUris
         {
             get

@@ -38,14 +38,14 @@ namespace Fhir.Profiling.Tests
             Assert.AreEqual("http://hl7.org/fhir/Profile/Patient", s);
 
             s = TypeRefUri("ResourceReference", "http://hl7.org/fhir/Profile/Patient");
-            Assert.AreEqual("http://hl7.org/fhir/Profile/Patient", s);
+            Assert.AreEqual("http://hl7.org/fhir/Profile/ResourceReference", s);
 
-            s = TypeRefUri("ResourceReference", "http://myprofiles/Netherlands#patient");
+            s = TypeRefUri("Resource", "http://myprofiles/Netherlands#patient");
             Assert.AreEqual("http://myprofiles/Netherlands#patient", s);
 
 
             s = TypeRefUri("Extension", "#calculated");
-            Assert.AreEqual("http://hl7.org/fhir/Profile/Patient", s);
+            Assert.AreEqual("http://myprofiles/Netherlands#calculated", s);
 
         }
 
@@ -55,13 +55,13 @@ namespace Fhir.Profiling.Tests
             string s;
 
             s = StructureUri("http://myprofile", "Patient", "dutchpatient");
-            Assert.AreEqual("http://myprofile#dutchpatient", s);
+            Assert.AreEqual("http://myprofile/#dutchpatient", s);
 
             s = StructureUri("http://myprofile", "Patient", null);
-            Assert.AreEqual("http://myprofile#Patient", s);
+            Assert.AreEqual("http://myprofile/#Patient", s);
 
             s = StructureUri("http://hl7.org/fhir/Profile/Patient", "Patient", null);
-            Assert.AreEqual("http://hl7.org/fhir/Profile/Patient#Patient", s);
+            Assert.AreEqual("http://hl7.org/fhir/Profile/Patient", s);
         }
     }
 }

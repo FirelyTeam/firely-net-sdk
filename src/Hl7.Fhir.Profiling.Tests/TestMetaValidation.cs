@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.Profiling.IO;
 using System.Linq;
 using Hl7.Fhir.Profiling;
 

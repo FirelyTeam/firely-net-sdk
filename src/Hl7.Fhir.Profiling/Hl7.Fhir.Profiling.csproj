@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Slicing.cs" />
+    <Compile Include="Validation\Ienumerable.cs" />
     <Compile Include="XPath\NavigatorState.cs" />
     <Compile Include="XPath\JsonXPathNavigator.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />
