@@ -175,6 +175,10 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
+            vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/vs/location-status"));
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
             var rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Condition"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);

@@ -9,7 +9,7 @@
   
   <entry>
     <title>Valueset &quot;http://hl7.org/fhir/valueset-systems&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/valueset-systems</id>
+    <id>http://hl7.org/fhir/vs/valueset-systems</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/http://hl7.org/fhir/valueset-systems" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -87,7 +87,7 @@
       </table>
     </div>
         </text>
-        <identifier value="http://hl7.org/fhir/valueset/valueset-systems"/>
+        <identifier value="http://hl7.org/fhir/vs/valueset-systems"/>
         <version value="2013-10-12"/>
         <name value="Explicitly Named systems list for FHIR"/>
         <publisher value="FHIR project team"/>
@@ -480,7 +480,7 @@
   </entry>
   <entry>
     <title>Valueset &quot;security-event-action&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-event-action</id>
+    <id>http://hl7.org/fhir/vs/security-event-action</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-event-action" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -543,7 +543,7 @@
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-report-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-report-status</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-report-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-report-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -613,7 +613,7 @@
   </entry>
   <entry>
     <title>Valueset &quot;questionnaire-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/questionnaire-status</id>
+    <id>http://hl7.org/fhir/vs/questionnaire-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/questionnaire-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -681,7 +681,7 @@
   </entry>
   <entry>
     <title>Valueset &quot;medication-dispense-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-dispense-status</id>
+    <id>http://hl7.org/fhir/vs/medication-dispense-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-dispense-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -741,7 +741,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;causalityExpectation&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/causalityExpectation</id>
+    <id>http://hl7.org/fhir/vs/causalityExpectation</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/causalityExpectation" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -795,7 +795,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;sensitivitytype&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/sensitivitytype</id>
+    <id>http://hl7.org/fhir/vs/sensitivitytype</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/sensitivitytype" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -845,7 +845,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;filter-operator&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/filter-operator</id>
+    <id>http://hl7.org/fhir/vs/filter-operator</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/filter-operator" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -907,7 +907,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;valueset-supply-dispense-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/valueset-supply-dispense-status</id>
+    <id>http://hl7.org/fhir/vs/valueset-supply-dispense-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/valueset-supply-dispense-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -960,7 +960,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;procedure-relationship-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/procedure-relationship-type</id>
+    <id>http://hl7.org/fhir/vs/procedure-relationship-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/procedure-relationship-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1006,7 +1006,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;message-conformance-event-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/message-conformance-event-mode</id>
+    <id>http://hl7.org/fhir/vs/message-conformance-event-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/message-conformance-event-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1052,7 +1052,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;identifier-use&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/identifier-use</id>
+    <id>http://hl7.org/fhir/vs/identifier-use</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/identifier-use" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1106,7 +1106,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;criticality&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/criticality</id>
+    <id>http://hl7.org/fhir/vs/criticality</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/criticality" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1160,7 +1160,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;extension-context&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/extension-context</id>
+    <id>http://hl7.org/fhir/vs/extension-context</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/extension-context" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1214,7 +1214,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;modality&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/modality</id>
+    <id>http://hl7.org/fhir/vs/modality</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/modality" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1307,7 +1307,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;data-absent-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/data-absent-reason</id>
+    <id>http://hl7.org/fhir/vs/data-absent-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/data-absent-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1377,7 +1377,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;group-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/group-type</id>
+    <id>http://hl7.org/fhir/vs/group-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/group-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1439,7 +1439,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;document-reference-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/document-reference-status</id>
+    <id>http://hl7.org/fhir/vs/document-reference-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/document-reference-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1489,7 +1489,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;issue-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/issue-type</id>
+    <id>http://hl7.org/fhir/vs/issue-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/issue-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1631,7 +1631,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;list-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/list-mode</id>
+    <id>http://hl7.org/fhir/vs/list-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/list-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1681,7 +1681,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;system-restful-operation&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/system-restful-operation</id>
+    <id>http://hl7.org/fhir/vs/system-restful-operation</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/system-restful-operation" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1723,7 +1723,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;restful-conformance-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/restful-conformance-mode</id>
+    <id>http://hl7.org/fhir/vs/restful-conformance-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/restful-conformance-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1769,7 +1769,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;null-flavor&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/null-flavor</id>
+    <id>http://hl7.org/fhir/vs/null-flavor</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/null-flavor" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1883,7 +1883,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;special-values&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/special-values</id>
+    <id>http://hl7.org/fhir/vs/special-values</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/special-values" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -1951,7 +1951,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;narrative-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/narrative-status</id>
+    <id>http://hl7.org/fhir/vs/narrative-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/narrative-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2005,7 +2005,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;order-outcome-code&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/order-outcome-code</id>
+    <id>http://hl7.org/fhir/vs/order-outcome-code</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/order-outcome-code" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2079,7 +2079,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;valueset-supply-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/valueset-supply-status</id>
+    <id>http://hl7.org/fhir/vs/valueset-supply-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/valueset-supply-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2142,7 +2142,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-order-priority&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-order-priority</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-order-priority</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-order-priority" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2200,7 +2200,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;observation-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-status</id>
+    <id>http://hl7.org/fhir/vs/observation-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2262,7 +2262,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;instance-availability&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/instance-availability</id>
+    <id>http://hl7.org/fhir/vs/instance-availability</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/instance-availability" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2322,7 +2322,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;location-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/location-status</id>
+    <id>http://hl7.org/fhir/vs/location-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/location-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2372,7 +2372,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;medication-admin-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-admin-status</id>
+    <id>http://hl7.org/fhir/vs/medication-admin-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-admin-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2430,7 +2430,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;observation-reliability&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-reliability</id>
+    <id>http://hl7.org/fhir/vs/observation-reliability</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-reliability" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2496,7 +2496,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;hierarchical-relationship-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/hierarchical-relationship-type</id>
+    <id>http://hl7.org/fhir/vs/hierarchical-relationship-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/hierarchical-relationship-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2544,7 +2544,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;search-param-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/search-param-type</id>
+    <id>http://hl7.org/fhir/vs/search-param-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/search-param-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2610,7 +2610,7 @@ Describes the lifecycle of the dispense."/>
   </entry>
   <entry>
     <title>Valueset &quot;xds-relationship-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/xds-relationship-type</id>
+    <id>http://hl7.org/fhir/vs/xds-relationship-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/xds-relationship-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -2671,7 +2671,7 @@ alter the observations in the prior document.</td></tr><tr><td>RPLC<a name="RPLC
   </entry>
   <entry>
     <title>Valueset &quot;defined-types&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/defined-types</id>
+    <id>http://hl7.org/fhir/vs/defined-types</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/defined-types" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3043,7 +3043,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;name-use&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/name-use</id>
+    <id>http://hl7.org/fhir/vs/name-use</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/name-use" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3109,7 +3109,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;binding-conformance&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/binding-conformance</id>
+    <id>http://hl7.org/fhir/vs/binding-conformance</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/binding-conformance" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3159,7 +3159,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;encounter-class&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-class</id>
+    <id>http://hl7.org/fhir/vs/encounter-class</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-class" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3229,7 +3229,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;care-plan-activity-category&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/care-plan-activity-category</id>
+    <id>http://hl7.org/fhir/vs/care-plan-activity-category</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/care-plan-activity-category" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3295,7 +3295,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;type-restful-operation&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/type-restful-operation</id>
+    <id>http://hl7.org/fhir/vs/type-restful-operation</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/type-restful-operation" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3343,7 +3343,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;object-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/object-type</id>
+    <id>http://hl7.org/fhir/vs/object-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/object-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3397,7 +3397,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;exposureType&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/exposureType</id>
+    <id>http://hl7.org/fhir/vs/exposureType</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/exposureType" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3447,7 +3447,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-order-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-order-status</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-order-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-order-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3521,7 +3521,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;data-types&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/data-types</id>
+    <id>http://hl7.org/fhir/vs/data-types</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/data-types" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3695,7 +3695,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;media-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/media-type</id>
+    <id>http://hl7.org/fhir/vs/media-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/media-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3745,7 +3745,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;resource-profile-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/resource-profile-status</id>
+    <id>http://hl7.org/fhir/vs/resource-profile-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/resource-profile-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3795,7 +3795,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;address-use&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/address-use</id>
+    <id>http://hl7.org/fhir/vs/address-use</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/address-use" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3849,7 +3849,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;encounter-state&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-state</id>
+    <id>http://hl7.org/fhir/vs/encounter-state</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-state" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3907,7 +3907,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;imaging-modality&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/imaging-modality</id>
+    <id>http://hl7.org/fhir/vs/imaging-modality</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/imaging-modality" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -3987,7 +3987,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;answer-format&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/answer-format</id>
+    <id>http://hl7.org/fhir/vs/answer-format</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/answer-format" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4069,7 +4069,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;composition-attestation-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/composition-attestation-mode</id>
+    <id>http://hl7.org/fhir/vs/composition-attestation-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/composition-attestation-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4123,7 +4123,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;object-role&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/object-role</id>
+    <id>http://hl7.org/fhir/vs/object-role</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/object-role" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4281,7 +4281,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;care-plan-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/care-plan-status</id>
+    <id>http://hl7.org/fhir/vs/care-plan-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/care-plan-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4331,7 +4331,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;care-plan-activity-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/care-plan-activity-status</id>
+    <id>http://hl7.org/fhir/vs/care-plan-activity-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/care-plan-activity-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4393,7 +4393,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;probability-distribution-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/probability-distribution-type</id>
+    <id>http://hl7.org/fhir/vs/probability-distribution-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/probability-distribution-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4477,7 +4477,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;observation-relationshiptypes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-relationshiptypes</id>
+    <id>http://hl7.org/fhir/vs/observation-relationshiptypes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-relationshiptypes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4543,7 +4543,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;units-of-time&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/units-of-time</id>
+    <id>http://hl7.org/fhir/vs/units-of-time</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/units-of-time" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4617,7 +4617,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;response-code&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/response-code</id>
+    <id>http://hl7.org/fhir/vs/response-code</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/response-code" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4667,7 +4667,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;medication-kind&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-kind</id>
+    <id>http://hl7.org/fhir/vs/medication-kind</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-kind" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4713,7 +4713,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;resource-aggregation-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/resource-aggregation-mode</id>
+    <id>http://hl7.org/fhir/vs/resource-aggregation-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/resource-aggregation-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4763,7 +4763,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;message-transport&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/message-transport</id>
+    <id>http://hl7.org/fhir/vs/message-transport</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/message-transport" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -4813,7 +4813,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;resource-types&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/resource-types</id>
+    <id>http://hl7.org/fhir/vs/resource-types</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/resource-types" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5049,7 +5049,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;query-outcome&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/query-outcome</id>
+    <id>http://hl7.org/fhir/vs/query-outcome</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/query-outcome" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5103,7 +5103,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;care-plan-goal-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/care-plan-goal-status</id>
+    <id>http://hl7.org/fhir/vs/care-plan-goal-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/care-plan-goal-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5157,7 +5157,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;message-significance-category&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/message-significance-category</id>
+    <id>http://hl7.org/fhir/vs/message-significance-category</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/message-significance-category" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5207,7 +5207,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;concept-equivalence&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/concept-equivalence</id>
+    <id>http://hl7.org/fhir/vs/concept-equivalence</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/concept-equivalence" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5281,7 +5281,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;quantity-comparator&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/quantity-comparator</id>
+    <id>http://hl7.org/fhir/vs/quantity-comparator</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/quantity-comparator" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5335,7 +5335,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;condition-relationship-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-relationship-type</id>
+    <id>http://hl7.org/fhir/vs/condition-relationship-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-relationship-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5381,7 +5381,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;security-event-outcome&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-event-outcome</id>
+    <id>http://hl7.org/fhir/vs/security-event-outcome</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-event-outcome" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5439,7 +5439,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;restful-security-service&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/restful-security-service</id>
+    <id>http://hl7.org/fhir/vs/restful-security-service</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/restful-security-service" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5497,7 +5497,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;reactionSeverity&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/reactionSeverity</id>
+    <id>http://hl7.org/fhir/vs/reactionSeverity</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/reactionSeverity" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5551,7 +5551,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;network-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/network-type</id>
+    <id>http://hl7.org/fhir/vs/network-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/network-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5609,7 +5609,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;object-lifecycle&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/object-lifecycle</id>
+    <id>http://hl7.org/fhir/vs/object-lifecycle</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/object-lifecycle" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5707,7 +5707,7 @@ Related resources tie this event to the authorizing prescription, and the specif
   </entry>
   <entry>
     <title>Valueset &quot;name-part-qualifier&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/name-part-qualifier</id>
+    <id>http://hl7.org/fhir/vs/name-part-qualifier</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/name-part-qualifier" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5804,7 +5804,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;location-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/location-mode</id>
+    <id>http://hl7.org/fhir/vs/location-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/location-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5850,7 +5850,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;contact-use&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/contact-use</id>
+    <id>http://hl7.org/fhir/vs/contact-use</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/contact-use" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5908,7 +5908,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;resource-slicing-rules&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/resource-slicing-rules</id>
+    <id>http://hl7.org/fhir/vs/resource-slicing-rules</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/resource-slicing-rules" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -5958,7 +5958,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;sensitivitystatus&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/sensitivitystatus</id>
+    <id>http://hl7.org/fhir/vs/sensitivitystatus</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/sensitivitystatus" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6012,7 +6012,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;contact-system&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/contact-system</id>
+    <id>http://hl7.org/fhir/vs/contact-system</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/contact-system" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6066,7 +6066,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;composition-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/composition-status</id>
+    <id>http://hl7.org/fhir/vs/composition-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/composition-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6124,7 +6124,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;document-relationship-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/document-relationship-type</id>
+    <id>http://hl7.org/fhir/vs/document-relationship-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/document-relationship-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6178,7 +6178,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;medication-prescription-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-prescription-status</id>
+    <id>http://hl7.org/fhir/vs/medication-prescription-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-prescription-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6240,7 +6240,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;alert-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/alert-status</id>
+    <id>http://hl7.org/fhir/vs/alert-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/alert-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6290,7 +6290,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;document-mode&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/document-mode</id>
+    <id>http://hl7.org/fhir/vs/document-mode</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/document-mode" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6336,7 +6336,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;condition-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-status</id>
+    <id>http://hl7.org/fhir/vs/condition-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6390,7 +6390,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;message-events&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/message-events</id>
+    <id>http://hl7.org/fhir/vs/message-events</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/message-events" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6472,7 +6472,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;event-timing&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/event-timing</id>
+    <id>http://hl7.org/fhir/vs/event-timing</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/event-timing" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6561,7 +6561,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;link-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/link-type</id>
+    <id>http://hl7.org/fhir/vs/link-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/link-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6611,7 +6611,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;conformance-statement-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/conformance-statement-status</id>
+    <id>http://hl7.org/fhir/vs/conformance-statement-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/conformance-statement-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6661,7 +6661,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;provenance-entity-role&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/provenance-entity-role</id>
+    <id>http://hl7.org/fhir/vs/provenance-entity-role</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/provenance-entity-role" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6715,7 +6715,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;property-representation&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/property-representation</id>
+    <id>http://hl7.org/fhir/vs/property-representation</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/property-representation" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6757,7 +6757,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;valueset-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/valueset-status</id>
+    <id>http://hl7.org/fhir/vs/valueset-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/valueset-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6807,7 +6807,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;issue-severity&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/issue-severity</id>
+    <id>http://hl7.org/fhir/vs/issue-severity</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/issue-severity" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6861,7 +6861,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;postal-address-use&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/postal-address-use</id>
+    <id>http://hl7.org/fhir/vs/postal-address-use</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/postal-address-use" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6940,7 +6940,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;constraint-severity&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/constraint-severity</id>
+    <id>http://hl7.org/fhir/vs/constraint-severity</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/constraint-severity" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -6986,7 +6986,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;encounter-admit-source&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-admit-source</id>
+    <id>http://hl7.org/fhir/vs/encounter-admit-source</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-admit-source" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7059,7 +7059,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;observation-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-codes</id>
+    <id>http://hl7.org/fhir/vs/observation-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7097,7 +7097,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;reason-medication-not-given-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/reason-medication-not-given-codes</id>
+    <id>http://hl7.org/fhir/vs/reason-medication-not-given-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/reason-medication-not-given-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7156,7 +7156,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;report-names&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/report-names</id>
+    <id>http://hl7.org/fhir/vs/report-names</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/report-names" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7194,7 +7194,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;parent-relationship-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/parent-relationship-codes</id>
+    <id>http://hl7.org/fhir/vs/parent-relationship-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/parent-relationship-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7237,7 +7237,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;condition-severity&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-severity</id>
+    <id>http://hl7.org/fhir/vs/condition-severity</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-severity" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7291,7 +7291,7 @@ track of this.</td></tr><tr><td>PR</td><td/><td>Primarily in the British Imperia
   </entry>
   <entry>
     <title>Valueset &quot;list-empty-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/list-empty-reason</id>
+    <id>http://hl7.org/fhir/vs/list-empty-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/list-empty-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7358,7 +7358,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-service-sections&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-service-sections</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-service-sections</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-service-sections" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7396,7 +7396,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;documentreference-service-types&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/documentreference-service-types</id>
+    <id>http://hl7.org/fhir/vs/documentreference-service-types</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/documentreference-service-types" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7437,7 +7437,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;immunization-recommendation-date-criterion&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/immunization-recommendation-date-criterion</id>
+    <id>http://hl7.org/fhir/vs/immunization-recommendation-date-criterion</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/immunization-recommendation-date-criterion" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7484,7 +7484,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-type</id>
+    <id>http://hl7.org/fhir/vs/encounter-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7533,7 +7533,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;security-event-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-event-type</id>
+    <id>http://hl7.org/fhir/vs/security-event-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-event-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7587,7 +7587,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-participant-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-participant-type</id>
+    <id>http://hl7.org/fhir/vs/encounter-participant-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-participant-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7640,7 +7640,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;other-resource-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/other-resource-type</id>
+    <id>http://hl7.org/fhir/vs/other-resource-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/other-resource-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7762,7 +7762,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;location-physical-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/location-physical-type</id>
+    <id>http://hl7.org/fhir/vs/location-physical-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/location-physical-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7827,7 +7827,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;vaccination-protocol-dose-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/vaccination-protocol-dose-status</id>
+    <id>http://hl7.org/fhir/vs/vaccination-protocol-dose-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/vaccination-protocol-dose-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7867,7 +7867,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;body-site&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/body-site</id>
+    <id>http://hl7.org/fhir/vs/body-site</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/body-site" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7910,7 +7910,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-special-arrangements&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-special-arrangements</id>
+    <id>http://hl7.org/fhir/vs/encounter-special-arrangements</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-special-arrangements" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -7963,7 +7963,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;specimen-collection-method&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/specimen-collection-method</id>
+    <id>http://hl7.org/fhir/vs/specimen-collection-method</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/specimen-collection-method" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8065,7 +8065,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;specimen-treatment-procedure&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/specimen-treatment-procedure</id>
+    <id>http://hl7.org/fhir/vs/specimen-treatment-procedure</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/specimen-treatment-procedure" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8099,7 +8099,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;dicm-402-roleid&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/dicm-402-roleid</id>
+    <id>http://hl7.org/fhir/vs/dicm-402-roleid</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/dicm-402-roleid" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8142,7 +8142,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;administrative-gender&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/administrative-gender</id>
+    <id>http://hl7.org/fhir/vs/administrative-gender</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/administrative-gender" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8193,7 +8193,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;questionnaire-group-name&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/questionnaire-group-name</id>
+    <id>http://hl7.org/fhir/vs/questionnaire-group-name</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/questionnaire-group-name" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8246,7 +8246,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;animal-breeds&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/animal-breeds</id>
+    <id>http://hl7.org/fhir/vs/animal-breeds</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/animal-breeds" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8295,7 +8295,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;immunization-route&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/immunization-route</id>
+    <id>http://hl7.org/fhir/vs/immunization-route</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/immunization-route" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8332,7 +8332,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;provenance-agent-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/provenance-agent-type</id>
+    <id>http://hl7.org/fhir/vs/provenance-agent-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/provenance-agent-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8399,7 +8399,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;condition-category&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-category</id>
+    <id>http://hl7.org/fhir/vs/condition-category</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-category" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8451,7 +8451,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;xds-practice-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/xds-practice-codes</id>
+    <id>http://hl7.org/fhir/vs/xds-practice-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/xds-practice-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8683,7 +8683,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;xds-typecodes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/xds-typecodes</id>
+    <id>http://hl7.org/fhir/vs/xds-typecodes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/xds-typecodes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8845,7 +8845,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-discharge-disposition&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-discharge-disposition</id>
+    <id>http://hl7.org/fhir/vs/encounter-discharge-disposition</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-discharge-disposition" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8914,7 +8914,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;condition-code&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-code</id>
+    <id>http://hl7.org/fhir/vs/condition-code</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-code" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8957,7 +8957,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;specimen-container-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/specimen-container-type</id>
+    <id>http://hl7.org/fhir/vs/specimen-container-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/specimen-container-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -8996,7 +8996,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;approach-site-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/approach-site-codes</id>
+    <id>http://hl7.org/fhir/vs/approach-site-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/approach-site-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9067,7 +9067,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;medication-package-form-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-package-form-codes</id>
+    <id>http://hl7.org/fhir/vs/medication-package-form-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-package-form-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9122,7 +9122,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;doc-section-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/doc-section-codes</id>
+    <id>http://hl7.org/fhir/vs/doc-section-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/doc-section-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9156,7 +9156,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;administration-method-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/administration-method-codes</id>
+    <id>http://hl7.org/fhir/vs/administration-method-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/administration-method-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9219,7 +9219,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;doc-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/doc-codes</id>
+    <id>http://hl7.org/fhir/vs/doc-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/doc-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9258,7 +9258,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;supply-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/supply-type</id>
+    <id>http://hl7.org/fhir/vs/supply-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/supply-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9300,7 +9300,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-requests&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-requests</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-requests</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-requests" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9351,7 +9351,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;observation-methods&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-methods</id>
+    <id>http://hl7.org/fhir/vs/observation-methods</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-methods" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9415,7 +9415,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;supply-item&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/supply-item</id>
+    <id>http://hl7.org/fhir/vs/supply-item</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/supply-item" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9457,7 +9457,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;relatedperson-relationshiptype&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/relatedperson-relationshiptype</id>
+    <id>http://hl7.org/fhir/vs/relatedperson-relationshiptype</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/relatedperson-relationshiptype" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9497,7 +9497,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;referencerange-meaning&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/referencerange-meaning</id>
+    <id>http://hl7.org/fhir/vs/referencerange-meaning</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/referencerange-meaning" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9604,7 +9604,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;provenance-agent-role&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/provenance-agent-role</id>
+    <id>http://hl7.org/fhir/vs/provenance-agent-role</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/provenance-agent-role" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9700,7 +9700,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;route-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/route-codes</id>
+    <id>http://hl7.org/fhir/vs/route-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/route-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -9767,7 +9767,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;anzsco-occupations&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/anzsco-occupations</id>
+    <id>http://hl7.org/fhir/vs/anzsco-occupations</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/anzsco-occupations" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15104,7 +15104,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-special-courtesy&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-special-courtesy</id>
+    <id>http://hl7.org/fhir/vs/encounter-special-courtesy</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-special-courtesy" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15157,7 +15157,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;practitioner-role&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/practitioner-role</id>
+    <id>http://hl7.org/fhir/vs/practitioner-role</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/practitioner-role" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15209,7 +15209,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;diagnostic-order-event&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/diagnostic-order-event</id>
+    <id>http://hl7.org/fhir/vs/diagnostic-order-event</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/diagnostic-order-event" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15246,7 +15246,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;media-view&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/media-view</id>
+    <id>http://hl7.org/fhir/vs/media-view</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/media-view" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15285,7 +15285,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;media-subtype&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/media-subtype</id>
+    <id>http://hl7.org/fhir/vs/media-subtype</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/media-subtype" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15369,7 +15369,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;questionnaire-question-name&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/questionnaire-question-name</id>
+    <id>http://hl7.org/fhir/vs/questionnaire-question-name</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/questionnaire-question-name" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15414,7 +15414,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;medication-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-codes</id>
+    <id>http://hl7.org/fhir/vs/medication-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15469,7 +15469,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;medication-form-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/medication-form-codes</id>
+    <id>http://hl7.org/fhir/vs/medication-form-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/medication-form-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15524,7 +15524,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-reason</id>
+    <id>http://hl7.org/fhir/vs/encounter-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15571,7 +15571,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;immunization-recommendation-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/immunization-recommendation-status</id>
+    <id>http://hl7.org/fhir/vs/immunization-recommendation-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/immunization-recommendation-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15613,7 +15613,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;vaccination-protocol-dose-target&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/vaccination-protocol-dose-target</id>
+    <id>http://hl7.org/fhir/vs/vaccination-protocol-dose-target</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/vaccination-protocol-dose-target" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15681,7 +15681,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;list-item-flag&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/list-item-flag</id>
+    <id>http://hl7.org/fhir/vs/list-item-flag</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/list-item-flag" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15748,7 +15748,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;security-source-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-source-type</id>
+    <id>http://hl7.org/fhir/vs/security-source-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-source-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15828,7 +15828,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;security-event-sub-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-event-sub-type</id>
+    <id>http://hl7.org/fhir/vs/security-event-sub-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-event-sub-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15903,7 +15903,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;patient-contact-relationship&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/patient-contact-relationship</id>
+    <id>http://hl7.org/fhir/vs/patient-contact-relationship</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/patient-contact-relationship" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -15986,7 +15986,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-priority&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-priority</id>
+    <id>http://hl7.org/fhir/vs/encounter-priority</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-priority" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16044,7 +16044,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;questionnaire-name&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/questionnaire-name</id>
+    <id>http://hl7.org/fhir/vs/questionnaire-name</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/questionnaire-name" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16089,7 +16089,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;organization-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/organization-type</id>
+    <id>http://hl7.org/fhir/vs/organization-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/organization-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16157,7 +16157,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;xds-facilitycodes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/xds-facilitycodes</id>
+    <id>http://hl7.org/fhir/vs/xds-facilitycodes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/xds-facilitycodes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16361,7 +16361,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;immunization-site&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/immunization-site</id>
+    <id>http://hl7.org/fhir/vs/immunization-site</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/immunization-site" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16397,7 +16397,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;animal-species&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/animal-species</id>
+    <id>http://hl7.org/fhir/vs/animal-species</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/animal-species" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16444,7 +16444,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;security-event-sensitivity&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/security-event-sensitivity</id>
+    <id>http://hl7.org/fhir/vs/security-event-sensitivity</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/security-event-sensitivity" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16476,7 +16476,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;docset-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/docset-codes</id>
+    <id>http://hl7.org/fhir/vs/docset-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/docset-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16515,7 +16515,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;observation-interpretation&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/observation-interpretation</id>
+    <id>http://hl7.org/fhir/vs/observation-interpretation</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/observation-interpretation" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16549,7 +16549,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;immunization-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/immunization-reason</id>
+    <id>http://hl7.org/fhir/vs/immunization-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/immunization-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16585,7 +16585,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;animal-genderstatus&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/animal-genderstatus</id>
+    <id>http://hl7.org/fhir/vs/animal-genderstatus</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/animal-genderstatus" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16628,7 +16628,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;substance-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/substance-type</id>
+    <id>http://hl7.org/fhir/vs/substance-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/substance-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16675,7 +16675,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;clinical-findings&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/clinical-findings</id>
+    <id>http://hl7.org/fhir/vs/clinical-findings</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/clinical-findings" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16718,7 +16718,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;encounter-diet&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/encounter-diet</id>
+    <id>http://hl7.org/fhir/vs/encounter-diet</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/encounter-diet" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16779,7 +16779,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;list-example-codes&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/list-example-codes</id>
+    <id>http://hl7.org/fhir/vs/list-example-codes</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/list-example-codes" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16856,7 +16856,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;no-immunization-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/no-immunization-reason</id>
+    <id>http://hl7.org/fhir/vs/no-immunization-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/no-immunization-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16902,7 +16902,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;marital-status&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/marital-status</id>
+    <id>http://hl7.org/fhir/vs/marital-status</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/marital-status" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -16968,7 +16968,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;vaccination-protocol-dose-status-reason&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/vaccination-protocol-dose-status-reason</id>
+    <id>http://hl7.org/fhir/vs/vaccination-protocol-dose-status-reason</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/vaccination-protocol-dose-status-reason" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17020,7 +17020,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;contactentity-type&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/contactentity-type</id>
+    <id>http://hl7.org/fhir/vs/contactentity-type</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/contactentity-type" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17078,7 +17078,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;condition-certainty&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/condition-certainty</id>
+    <id>http://hl7.org/fhir/vs/condition-certainty</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/condition-certainty" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17121,7 +17121,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;message-reason-encounter&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/message-reason-encounter</id>
+    <id>http://hl7.org/fhir/vs/message-reason-encounter</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/message-reason-encounter" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
@@ -17183,7 +17183,7 @@ SNOMED CT includes many codes for this general concept, but no single generalisa
   </entry>
   <entry>
     <title>Valueset &quot;practitioner-specialty&quot; to support automated processing</title>
-    <id>http://hl7.org/fhir/valueset/practitioner-specialty</id>
+    <id>http://hl7.org/fhir/vs/practitioner-specialty</id>
     <link href="http://hl7.org/implement/standards/fhir/valueset/practitioner-specialty" rel="self"/>
     <updated>2014-05-09T11:14:37.530+10:00</updated>
     <author>
