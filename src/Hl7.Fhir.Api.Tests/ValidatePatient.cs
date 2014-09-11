@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Test
 
             patient.Identifier[0].System = "urn:oid:crap really not valid";
 
-            results = null;
+            results = new List<ValidationResult>();
             
             Assert.IsFalse(FhirValidator.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);

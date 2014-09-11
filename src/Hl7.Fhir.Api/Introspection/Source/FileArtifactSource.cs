@@ -152,7 +152,8 @@ namespace Hl7.Fhir.Introspection.Source
             ensurePrepared();
 
             // Locate a file that has the same name as the 'logical' id from the uri
-            var logicalId = new ResourceIdentity(artifactId).Id;
+            var logicalId = artifactId.Segments[artifactId.Segments.Length - 1];
+            //var logicalId = new ResourceIdentity(artifactId).Id;
 
             if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
 

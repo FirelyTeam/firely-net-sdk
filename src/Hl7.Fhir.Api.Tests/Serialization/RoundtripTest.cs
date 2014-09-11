@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests
         private void doRoundTrip(string examplesZip, string baseTestPath)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
-
+            Directory.CreateDirectory(examplePath);
             // Unzip files into this path
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 

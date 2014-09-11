@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Tests
         Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        // Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
 
 		[TestInitialize]
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Tests
 		}
 #endif
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), Ignore]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                string endpoint = "http://localhost:1396/fhir";
+                string endpoint = "http://localhost:9876/fhir";
                 FhirClient client = new FhirClient(endpoint);
                 client.Conformance();
             }

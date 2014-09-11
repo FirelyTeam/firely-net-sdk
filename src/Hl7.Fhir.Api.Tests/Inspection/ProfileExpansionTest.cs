@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Test.Inspection
 
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void LocateStructure()
         {
             var locator = new StructureLoader(ArtifactResolver.CreateDefault());
@@ -105,11 +105,12 @@ namespace Hl7.Fhir.Test.Inspection
             prof = locator.Locate(profileUri, new Code("Patient"));
             Assert.IsNull(prof);
 
-            var profileUriWithFrag = new Uri(profileUri.ToString() + "#base-profile");
-            prof = locator.Locate(profileUriWithFrag, new Code("Profile"));
+            profileUri = new Uri("http://take.from.disk/Profile/example-lipid-profile");
+            var profileUriWithFrag = new Uri(profileUri.ToString() + "#lipidResultMessage");
+            prof = locator.Locate(profileUriWithFrag, new Code("MessageHeader"));
             Assert.IsNotNull(prof);
-            Assert.AreEqual("Profile", prof.Type);
-            Assert.AreEqual("base-profile", prof.Name);
+            Assert.AreEqual("MessageHeader", prof.Type);
+            Assert.AreEqual("lipidResultMessage", prof.Name);
             //Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
 
             // Try to locate a structure that cannot be found in the profile by name

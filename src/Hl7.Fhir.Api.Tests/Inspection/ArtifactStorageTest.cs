@@ -183,6 +183,10 @@ namespace Hl7.Fhir.Test.Inspection
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
+            rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/ValueSet"));
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs is Profile);
+
             var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Money"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(dt is Profile);

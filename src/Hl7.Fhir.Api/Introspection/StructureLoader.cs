@@ -83,9 +83,9 @@ namespace Hl7.Fhir.Introspection
                 // We have both the name and the type, this should also normally be unique
                 results = profile.Structure.Where(str => str.Name == anchor && str.Type == type.Value);
             }
-
-            if (results.Count() == 1)
-                return results.Single();
+            
+            if (results.Count() <= 1)
+                return results.SingleOrDefault();
             else
                 throw Error.InvalidOperation("Cannot unambiguously determine structure to locate based on the given combination of url, anchor and structure type");
         }
