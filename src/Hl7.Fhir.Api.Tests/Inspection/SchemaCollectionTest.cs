@@ -44,6 +44,11 @@ namespace Hl7.Fhir.Test.Inspection
             {
                 // perfect.
             }
+
+            var hasError = false;
+            patDoc = XDocument.Parse("<Patient xmlns='http://hl7.org/fhir'><garbage/></Patient>");
+            patDoc.Validate(SchemaCollection.ValidationSchemaSet, (source,args) => hasError = true);
+            Assert.IsTrue(hasError);
         }
 
         [TestMethod]

@@ -50,12 +50,15 @@ namespace Hl7.Fhir.Introspection.Source
             _includeSubs = includeSubdirectories;
         }
 
-        public static string  SpecificationDirectory
+        public static string SpecificationDirectory
         {
             get
             {
 #if !PORTABLE45
-                return Path.GetDirectoryName(typeof(FileArtifactSource).Assembly.Location);
+                var codebase = AppDomain.CurrentDomain.BaseDirectory;
+                //if (!codebase.StartsWith("file:///")) return Directory.GetCurrentDirectory();
+                //codebase = codebase.Substring("file:///".Length);
+                return codebase;
 #else
             throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
 #endif
