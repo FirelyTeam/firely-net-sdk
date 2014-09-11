@@ -56,7 +56,15 @@ namespace Hl7.Fhir.Serialization
                 var enumMapping = _inspector.FindEnumMappingByType(nativeType);
 
                 if (enumMapping != null)
-                    return enumMapping.ParseLiteral((string)primitiveValue);
+                {
+                    var enumLiteral = (string)primitiveValue;
+                    if (enumMapping.ContainsLiteral(enumLiteral))
+                        return enumMapping.ParseLiteral((string)primitiveValue);
+                    else
+                        throw Error.Format("Literal {0} is not a valid value for enumeration {1}", _current, enumLiteral, enumMapping.Name);
+                }
+                else
+                    throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
             }
 
             try
