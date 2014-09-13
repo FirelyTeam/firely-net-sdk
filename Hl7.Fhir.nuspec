@@ -2,39 +2,55 @@
 <package >
   <metadata>
     <id>Hl7.Fhir</id>
-    <version>0.10.0</version>
+    <version>0.11.1-alpha3</version>
+	<title>HL7 FHIR support API</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.NET support for using REST-based HL7 FHIR. Supports FHIR DSTU1 (0.8).</description>
-    <releaseNotes>DSTU1 (0.8) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+    <description>.NET support for working with HL7 FHIR. Supports FHIR DSTU1 (0.81).</description>
+    <releaseNotes>DSTU1 (0.81) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+	<summary>This library offers support for HL7's FHIR standard (http://hl7.org/fhir).
+	It contains functionality to working with RESTful FHIR servers, validation of profiles,
+	and parsing/serialization of FHIR data.</summary>
+	<language>en-us</language>
+	<projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>	
 	<iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
     <copyright>Copyright 2014</copyright>
-    <tags>HL7 FHIR</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>HL7 FHIR Profile validation REST</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="6.0.2" />
+      <dependency id="Newtonsoft.Json" version="6.0.3" />
+	  <dependency id="p3-sharpcompress" version="0.10.5" />
     </dependencies>
   </metadata>
     <files>
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.dll" target="lib\net40\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.xml" target="lib\net40\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Model.pdb" target="lib\net40\" />
+		<file src="install.ps1" target="tools\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\validation.zip" target="content" />
+		
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net40\Hl7.Fhir.Model.dll" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net40\Hl7.Fhir.Model.xml" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net40\Hl7.Fhir.Model.pdb" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.dll" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.xml" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net40\Hl7.Fhir.Api.pdb" target="lib\net40\" />
-		
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.dll" target="lib\net45\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.xml" target="lib\net45\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Model.pdb" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net40\Hl7.Fhir.Profiling.dll" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net40\Hl7.Fhir.Profiling.xml" target="lib\net40\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net40\Hl7.Fhir.Profiling.pdb" target="lib\net40\" />
+
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net45\Hl7.Fhir.Model.dll" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net45\Hl7.Fhir.Model.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Net45\Hl7.Fhir.Model.pdb" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.xml" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Net45\Hl7.Fhir.Api.pdb" target="lib\net45\" />
-		
-		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Model.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net45\Hl7.Fhir.Profiling.dll" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net45\Hl7.Fhir.Profiling.xml" target="lib\net45\" />
+		<file src="src\Hl7.Fhir.Profiling\bin\Release\Net45\Hl7.Fhir.Profiling.pdb" target="lib\net45\" />
+	
+		<file src="src\Hl7.Fhir.Model\bin\Release\Portable45\Hl7.Fhir.Model.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Portable45\Hl7.Fhir.Model.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Model\bin\Release\Portable45\Hl7.Fhir.Model.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
-		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />
+		<file src="src\Hl7.Fhir.Api\bin\Release\Portable45\Hl7.Fhir.Api.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />	
     </files>
 </package>

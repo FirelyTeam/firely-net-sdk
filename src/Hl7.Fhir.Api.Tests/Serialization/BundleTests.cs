@@ -314,6 +314,16 @@ namespace Hl7.Fhir.Test
         }
 
 
+        [TestMethod]
+        public void SerializeBundleWithoutId()
+        {
+            Bundle result = createTestBundle();
+            result.Id = null;
+
+            var xml = FhirSerializer.SerializeBundleToXml(result);
+            var json = FhirSerializer.SerializeBundleToJson(result);
+        }
+
         private static string testResourceEntryAsXml =
            @"<entry><title type=""text"">Resource 233 Version 1</title>" +
            @"<id>http://test.com/fhir/patient/@233</id><updated>2012-11-01T13:04:14Z</updated><published>2012-11-02T14:17:21Z</published>" +

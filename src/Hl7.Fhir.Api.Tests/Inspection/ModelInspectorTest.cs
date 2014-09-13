@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Test.Inspection
         }
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void TypeDataTypeNameResolving()
         {
             var inspector = new ModelInspector();
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Test.Inspection
             // Validate a mapping for a type will return the newest registration
             result = inspector.FindClassMappingByType(typeof(AnimalName));
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
+            Assert.AreEqual(typeof(NewAnimalName),result.NativeType);
         }
 
 

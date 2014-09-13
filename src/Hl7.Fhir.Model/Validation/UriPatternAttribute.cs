@@ -18,26 +18,43 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class UriPatternAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        public static bool IsValidValue(string value)
         {
-            if (value == null) return ValidationResult.Success;
+            Uri uri = null;
 
-            if (value.GetType() != typeof(Uri))
-                throw new ArgumentException("UriPatternAttribute can only be applied to .NET Uri properties");
-
-            var uri = (Uri)value;
+            try
+            {
+                uri = new Uri((string)value, UriKind.RelativeOrAbsolute);
+            }
+            catch
+            {
+                return false;
+            }
 
             if (uri.IsAbsoluteUri)
             {
                 var uris = uri.ToString();
-                
-                if (uris.StartsWith("urn:oid:") && !OidPatternAttribute.IsValid(uris))
-                    return FhirValidator.BuildResult(validationContext, "Uri uses an urn:oid scheme, but the oid {0} is incorrect", uris);
-                else if (uris.StartsWith("urn:uuid:") && !UuidPatternAttribute.IsValid(uris))
-                    return FhirValidator.BuildResult(validationContext, "Uri uses an urn:uuid schema, but the uuid {0} is incorrect", uris);
+
+                if (uris.StartsWith("urn:oid:") && !OidPatternAttribute.IsValidValue(uris))
+                    return false;
+                else if (uris.StartsWith("urn:uuid:") && !UuidPatternAttribute.IsValidValue(uris))
+                    return false;
             }
 
-            return ValidationResult.Success;
+            return true;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value == null) return ValidationResult.Success;
+
+            if (value.GetType() != typeof(string))
+                throw new ArgumentException("UriPatternAttribute can only be applied to .NET Uri properties");
+
+            if (!IsValidValue(value as string))
+                return FhirValidator.BuildResult(validationContext, "Uri uses an urn:oid or urn:uuid scheme, but the syntax {0} is incorrect", value as string);
+            else
+                return ValidationResult.Success;
         }
     }
 }

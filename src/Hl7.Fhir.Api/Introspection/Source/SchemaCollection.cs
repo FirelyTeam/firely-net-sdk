@@ -1,0 +1,58 @@
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Schema;
+using Hl7.Fhir.Introspection.Source;
+
+namespace Hl7.Fhir.Introspection.Source
+{
+#if !PORTABLE45
+    public class SchemaCollection
+    {
+
+        private static Lazy<XmlSchemaSet> _validationSchemaSet = new Lazy<XmlSchemaSet>(compileValidationSchemas, true);
+
+        public static XmlSchemaSet ValidationSchemaSet
+        {
+            get { return _validationSchemaSet.Value; }
+        }
+
+
+        private static string[] minimalSchemas = { "fhir-atom-single.xsd", "fhir-single.xsd", "fhir-xhtml.xsd", "opensearch.xsd", "opensearchscore.xsd", "tombstone.xsd", "xml.xsd", "xmldsig-core-schema.xsd" };
+        
+        private static XmlSchemaSet compileValidationSchemas()
+        {
+            var resolver = new CoreZipArtifactSource();
+
+            XmlSchemaSet schemas = new XmlSchemaSet();
+
+            foreach(var schemaName in minimalSchemas)
+            {
+                using (var schema = resolver.ReadContentArtifact(schemaName))
+                {
+                    if(schema == null)
+                        throw new FileNotFoundException("Cannot find manifest resources that represent the minimal set of schemas required for validation");
+
+                    schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+                    schema.Dispose();
+                }
+            }
+
+            schemas.Compile();
+
+            return schemas;
+        }
+    }
+#endif
+}

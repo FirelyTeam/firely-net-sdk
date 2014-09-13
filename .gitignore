@@ -15,6 +15,7 @@ build/
 [Bb]in/
 [Oo]bj/
 packages/
+*.ide
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
@@ -161,3 +162,4 @@ $RECYCLE.BIN/
 /packages/repositories.config
 src/Hl7.Fhir.Api/EwoutFhirNetApi.snk
 src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
+*.snk

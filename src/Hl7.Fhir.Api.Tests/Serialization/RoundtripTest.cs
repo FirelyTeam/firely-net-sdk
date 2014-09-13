@@ -20,7 +20,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Test;
 using Hl7.Fhir.Serialization;
-using Ionic.Zip;
+using SharpCompress.Archive;
 
 namespace Hl7.Fhir.Tests
 {
@@ -62,14 +62,16 @@ namespace Hl7.Fhir.Tests
         private void doRoundTrip(string examplesZip, string baseTestPath)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
-
+            Directory.CreateDirectory(examplePath);
             // Unzip files into this path
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 
-            using (var zipfile = ZipFile.Read(examplesZip))
-            {
-                zipfile.ExtractAll(examplePath, ExtractExistingFileAction.OverwriteSilently);
-            }
+            ArchiveFactory.WriteToDirectory(examplesZip, examplePath);
+
+            //using (var zipfile = ZipFile.Read(examplesZip))
+            //{
+            //    zipfile.ExtractAll(examplePath, ExtractExistingFileAction.OverwriteSilently);
+            //}
        
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);

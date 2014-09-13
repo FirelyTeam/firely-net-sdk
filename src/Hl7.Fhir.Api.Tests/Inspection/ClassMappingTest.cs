@@ -86,10 +86,10 @@ namespace Hl7.Fhir.Test.Inspection
     public class Road {}
 
     [FhirType]
-    public class Way : Resource { }
+    public class Way : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
     
     [FhirType("Way", Profile="http://nu.nl/profile#street")]
-    public class ProfiledWay : Resource {}
+    public class ProfiledWay : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
 
     [FhirType("Street", IsResource=true)]
     public class NewStreet { }

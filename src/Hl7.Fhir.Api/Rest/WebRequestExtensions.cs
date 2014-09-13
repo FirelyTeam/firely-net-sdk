@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Rest
             return requestStream;
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NET45
         internal static async Task WriteBodyAsync(this HttpWebRequest request, byte[] data)
         {
             Stream outs = await getRequestStreamAsync(request);
@@ -59,6 +59,21 @@ namespace Hl7.Fhir.Rest
 		{
 			return request.GetRequestStreamAsync();
 		}
+
+        internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
+        {
+            return Task.Factory.StartNew<WebResponse>(() =>
+            {
+                var t = Task.Factory.FromAsync<WebResponse>(
+                    request.BeginGetResponse,
+                    request.EndGetResponse,
+                    null);
+
+                if (!t.Wait(timeout)) throw new TimeoutException();
+
+                return t.Result;
+            });
+        }
 
 		//public static Task<WebResponse> GetResponseAsync(this HttpWebRequest req)
 		//{
@@ -84,13 +99,24 @@ namespace Hl7.Fhir.Rest
         public static WebResponse GetResponseNoEx(this WebRequest req)
         {
             WebResponse result = null;
-            ManualResetEvent responseReady = new ManualResetEvent(false);
+            ManualResetEvent responseReady = new ManualResetEvent(initialState: false);
+            Exception caught = null;
 
             AsyncCallback callback = new AsyncCallback(ar =>
                 {
-                        //var request = (WebRequest)ar.AsyncState;
+                    //var request = (WebRequest)ar.AsyncState;
+                    try
+                    {
                         result = req.EndGetResponseNoEx(ar);
+                    }
+                    catch(Exception ex)
+                    {
+                        caught = ex;
+                    }
+                    finally
+                    {
                         responseReady.Set();
+                    }
                 });
 
             var async = req.BeginGetResponse(callback, null);
@@ -105,6 +131,8 @@ namespace Hl7.Fhir.Rest
                 responseReady.WaitOne();
                 //async.AsyncWaitHandle.WaitOne();
             }
+
+            if (caught != null) throw caught;
 
             return result;
         }

@@ -42,9 +42,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.2\lib\net20\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -54,8 +51,12 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpCompress">
+      <HintPath>..\packages\p3-sharpcompress.0.10.5.2\lib\net40\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -86,8 +87,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Inspection\ProfileExpansionTest.cs" />
+    <Compile Include="Inspection\ProfileNavigationTest.cs" />
+    <Compile Include="Inspection\SchemaCollectionTest.cs" />
+    <Compile Include="Inspection\ArtifactStorageTest.cs" />
+    <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Inspection\ClassMappingTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Search\QueryTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rest\FhirClientTests.cs" />
@@ -95,12 +104,12 @@
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Search\ExpressionTests.cs" />
     <Compile Include="Search\QueryExtensionTests.cs" />
-    <Compile Include="Search\QueryTests.cs" />
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Inspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
+    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Inspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

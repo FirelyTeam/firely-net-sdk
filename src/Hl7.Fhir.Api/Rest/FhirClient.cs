@@ -57,6 +57,8 @@ namespace Hl7.Fhir.Rest
         public ResourceFormat PreferredFormat { get; set; }
         public bool UseFormatParam { get; set; }
 
+        public int? Timeout { get; set; }
+
         public FhirResponse LastResponseDetails { get; private set; }
 
         /// <summary>
@@ -145,7 +147,11 @@ namespace Hl7.Fhir.Rest
 
         private FhirRequest createFhirRequest(Uri location, string method="GET")
         {
-            return new FhirRequest(location, method, BeforeRequest, AfterResponse);
+            var req = new FhirRequest(location, method, BeforeRequest, AfterResponse);
+            
+            if(Timeout != null) req.Timeout = Timeout.Value;
+
+            return req;
         }
 
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()

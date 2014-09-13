@@ -24,5 +24,9 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("0.10.0.2408")]
-[assembly: AssemblyFileVersion("0.10.0.2408")]
+[assembly: AssemblyVersion("0.0.81.2634")]
+[assembly: AssemblyFileVersion("0.0.81.2634")]
+
+#if RELEASE
+[assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+#endif

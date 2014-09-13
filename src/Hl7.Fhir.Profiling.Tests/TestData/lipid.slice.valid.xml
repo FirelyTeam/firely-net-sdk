@@ -1,0 +1,38 @@
+<DiagnosticReport xmlns="http://hl7.org/fhir">
+  <name>
+    <coding>
+      <system value="http://loinc.org/"/>
+      <code value="57698-3" />
+      <display value="Lipid Panel with direct LDL" />
+    </coding>
+  </name>
+  <status value="corrected" />
+  <issued value="2014-09-08T11:47:14+02:00" />
+  <subject>
+    <reference value="Patient/example" />
+  </subject>
+  <performer>
+    <reference value="http://lab03.ielab.nl/lm/fhir/Performer/1153X33" />
+  </performer>
+  <identifier>
+    <system value="http://ielab.nl/ids/reports"/>
+    <value value="LAB3-2014-3123"/>
+  </identifier>
+  <diagnosticDateTime value="2014-09-07T16:22:56+02:00" />
+  <result>
+    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA331" />
+    <display value="The cholesterol result"/>
+  </result>
+  <result>
+    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA332" />
+    <display value="The triglyceride result"/>
+  </result>
+  <result>
+    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA333" />
+    <display value="The HDL-Cholesterol result"/>
+  </result>
+  <result>
+    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA334" />
+    <display value="The LDL-Cholesterol result"/>
+  </result>
+</DiagnosticReport>

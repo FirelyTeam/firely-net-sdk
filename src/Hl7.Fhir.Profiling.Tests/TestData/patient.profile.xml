@@ -1,0 +1,1256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Profile xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><pre>
+&lt;<a title="Demographics and other administrative information about a person or animal receiving care or other health-related services." class="dict" href="patient-definitions.html#Patient"><b>Patient</b></a> xmlns=&quot;http://hl7.org/fhir&quot;&gt; <span style="float: right"><a title="Documentation for this format" href="formats.html"><img alt="doco" src="help.png"/></a></span>
+ &lt;!-- from <a href="resources.html">Resource</a>: <a href="extensibility.html">extension</a>, <a href="extensibility.html#modifierExtension">modifierExtension</a>, language, <a href="narrative.html#Narrative">text</a>, and <a href="references.html#contained">contained</a> --&gt;
+ &lt;<a title="An identifier that applies to this person as a patient." class="dict" href="patient-definitions.html#Patient.identifier"><b>identifier</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Identifier">Identifier</a></span> <span style="color: navy">An identifier for the person as this patient<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/identifier&gt;
+ &lt;<a title="A name associated with the individual." class="dict" href="patient-definitions.html#Patient.name"><b>name</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#HumanName">HumanName</a></span> <span style="color: navy">A name associated with the patient<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/name&gt;
+ &lt;<a title="A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted." class="dict" href="patient-definitions.html#Patient.telecom"><b>telecom</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Contact">Contact</a></span> <span style="color: navy">A contact detail for the individual<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/telecom&gt;
+ &lt;<a title="Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes." class="dict" href="patient-definitions.html#Patient.gender"><b>gender</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-administrative-gender.html">Gender for administrative purposes<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>&lt;/gender&gt;
+ &lt;<a title="The date and time of birth for the individual." class="dict" href="patient-definitions.html#Patient.birthDate"><b>birthDate</b></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#dateTime">dateTime</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">The date and time of birth for the individual<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+ &lt;<a title="Indicates if the individual is deceased or not (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.deceased_x_"><span style="text-decoration: underline"><b>deceased[x]</b></span></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a>|<a href="datatypes.html#dateTime">dateTime</a></span> <span style="color: navy">Indicates if the individual is deceased or not<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/deceased[x]&gt;
+ &lt;<a title="Addresses for the individual." class="dict" href="patient-definitions.html#Patient.address"><b>address</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Address">Address</a></span> <span style="color: navy">Addresses for the individual<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/address&gt;
+ &lt;<a title="This field contains a patient&#39;s most recent marital (civil) status." class="dict" href="patient-definitions.html#Patient.maritalStatus"><b>maritalStatus</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-marital-status.html">Marital (civil) status of a person<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>&lt;/maritalStatus&gt;
+ &lt;<a title="Indicates whether the patient is part of a multiple or indicates the actual birth order." class="dict" href="patient-definitions.html#Patient.multipleBirth_x_"><b>multipleBirth[x]</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a>|<a href="datatypes.html#integer">integer</a></span> <span style="color: navy">
+     Whether patient is part of a multiple birth<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/multipleBirth[x]&gt;
+ &lt;<a title="Image of the person." class="dict" href="patient-definitions.html#Patient.photo"><b>photo</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Attachment">Attachment</a></span> <span style="color: navy">Image of the person</span><span style="color: Gray"> --&gt;</span>&lt;/photo&gt;
+ &lt;<a title="A contact party (e.g. guardian, partner, friend) for the patient." class="dict" href="patient-definitions.html#Patient.contact"><b>contact</b></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..*</b></span> A contact party (e.g. guardian, partner, friend) for the patient --&gt;</span>
+  &lt;<a title="The nature of the relationship between the patient and the contact person." class="dict" href="patient-definitions.html#Patient.contact.relationship"><b>relationship</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-patient-contact-relationship.html">The kind of relationship</a></span><span style="color: Gray"> --&gt;</span>&lt;/relationship&gt;
+  &lt;<a title="A name associated with the person." class="dict" href="patient-definitions.html#Patient.contact.name"><b>name</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#HumanName">HumanName</a></span> <span style="color: navy">A name associated with the person</span><span style="color: Gray"> --&gt;</span>&lt;/name&gt;
+  &lt;<a title="A contact detail for the person, e.g. a telephone number or an email address." class="dict" href="patient-definitions.html#Patient.contact.telecom"><b>telecom</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#Contact">Contact</a></span> <span style="color: navy">A contact detail for the person</span><span style="color: Gray"> --&gt;</span>&lt;/telecom&gt;
+  &lt;<a title="Address for the contact person." class="dict" href="patient-definitions.html#Patient.contact.address"><b>address</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#Address">Address</a></span> <span style="color: navy">Address for the contact person</span><span style="color: Gray"> --&gt;</span>&lt;/address&gt;
+  &lt;<a title="Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes." class="dict" href="patient-definitions.html#Patient.contact.gender"><b>gender</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-administrative-gender.html">Gender for administrative purposes</a></span><span style="color: Gray"> --&gt;</span>&lt;/gender&gt;
+  &lt;<a title="Organization on behalf of which the contact is acting or for which the contact is working." class="dict" href="patient-definitions.html#Patient.contact.organization"><b>organization</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span title="Inv-1: SHALL at least contain a contact&#39;s details or a reference to an organization" style="color: brown"><b><img alt="??" src="lock.png"/> 0..1</b></span> <span style="color: darkgreen"><a href="references.html#Resource">Resource</a>(<a href="organization.html#Organization">Organization</a>)</span> <span style="color: navy">
+      Organization that is associated with the contact</span><span style="color: Gray"> --&gt;</span>&lt;/organization&gt;
+ &lt;/contact&gt;
+ &lt;<a title="This element has a value if the patient is an animal (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.animal"><span style="text-decoration: underline"><b>animal</b></span></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..1</b></span> If this patient is an animal (non-human)<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span> --&gt;</span>
+  &lt;<a title="Identifies the high level categorization of the kind of animal." class="dict" href="patient-definitions.html#Patient.animal.species"><b>species</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-animal-species.html">E.g. Dog, Cow<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>&lt;/species&gt;
+  &lt;<a title="Identifies the detailed categorization of the kind of animal." class="dict" href="patient-definitions.html#Patient.animal.breed"><b>breed</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-animal-breeds.html">E.g. Poodle, Angus<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>&lt;/breed&gt;
+  &lt;<a title="Indicates the current state of the animal&#39;s reproductive organs." class="dict" href="patient-definitions.html#Patient.animal.genderStatus"><b>genderStatus</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="valueset-animal-genderstatus.html">E.g. Neutered, Intact<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>&lt;/genderStatus&gt;
+ &lt;/animal&gt;
+ &lt;<a title="Languages which may be used to communicate with the patient about his or her health." class="dict" href="patient-definitions.html#Patient.communication"><b>communication</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="datatypes.html#CodeableConcept">CodeableConcept</a></span> <span style="color: navy"><a style="color: navy" href="http://tools.ietf.org/html/bcp47.html">Languages which may be used to communicate with the patient about his or her health</a></span><span style="color: Gray"> --&gt;</span>&lt;/communication&gt;
+ &lt;<a title="Patient&#39;s nominated care provider." class="dict" href="patient-definitions.html#Patient.careProvider"><b>careProvider</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..*</b></span> <span style="color: darkgreen"><a href="references.html#Resource">Resource</a>(<a href="organization.html#Organization">Organization</a>|<a href="practitioner.html#Practitioner">Practitioner</a>)</span> <span style="color: navy">
+     Patient&#39;s nominated care provider</span><span style="color: Gray"> --&gt;</span>&lt;/careProvider&gt;
+ &lt;<a title="Organization that is the custodian of the patient record." class="dict" href="patient-definitions.html#Patient.managingOrganization"><b>managingOrganization</b></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: darkgreen"><a href="references.html#Resource">Resource</a>(<a href="organization.html#Organization">Organization</a>)</span> <span style="color: navy">
+     Organization that is the custodian of the patient record<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/managingOrganization&gt;
+ &lt;<a title="Link to another patient resource that concerns the same actual person (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.link"><span style="text-decoration: underline"><b>link</b></span></a>&gt;  <span style="color: Gray">&lt;!-- <span style="color: brown"><b>0..*</b></span> Link to another patient resource that concerns the same actual person<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span> --&gt;</span>
+  &lt;<a title="The other patient resource that the link refers to (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.link.other"><span style="text-decoration: underline"><b>other</b></span></a>&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: darkgreen"><a href="references.html#Resource">Resource</a>(<a href="patient.html#Patient">Patient</a>)</span> <span style="color: navy">The other patient resource that the link refers to<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>&lt;/other&gt;
+  &lt;<a title="The type of link between this patient resource and another patient resource (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.link.type"><span style="text-decoration: underline"><b>type</b></span></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#code">code</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>1..1</b></span> <span style="color: navy"><a style="color: navy" href="link-type.html">replace | refer | seealso - type of link<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></a></span><span style="color: Gray"> --&gt;</span>
+ &lt;/link&gt;
+ &lt;<a title="Whether this patient record is in active use (this element modifies the meaning of other elements)" class="dict" href="patient-definitions.html#Patient.active"><span style="text-decoration: underline"><b>active</b></span></a> value=&quot;[<span style="color: darkgreen"><a href="datatypes.html#boolean">boolean</a></span>]&quot;/&gt;<span style="color: Gray">&lt;!--</span> <span style="color: brown"><b>0..1</b></span> <span style="color: navy">Whether this patient&#39;s record is in active use<span title="This element is included in a summary view (See Search/Query)" style="color: Navy"> §</span></span><span style="color: Gray"> --&gt;</span>
+&lt;/Patient&gt;
+</pre></div>
+  </text>
+  <name value="patient"/>
+  <publisher value="FHIR Project"/>
+  <description value="Basic Profile. Demographics and other administrative information about a person or animal receiving care or other health-related services."/>
+  <status value="draft"/>
+  <date value="2014-01-07"/>
+  <requirements value="Scope and Usage This Resource covers data about persons and animals involved in a wide range of health-related activities, including: 
+
+* Curative activities
+* Psychiatric care
+* Social services
+* Pregnancy care
+* Nursing and assisted living
+* Dietary services
+* Tracking of personal health and exercise data
+The data in the Resource covers the &quot;who&quot; information about the patient: its attributes are focused on the demographic information necessary to support the administrative, financial and logistic procedures. A Patient record is generally created and maintained by each organization providing care for a patient. A person or animal receiving care at multiple organizations may therefore have its information present in multiple Patient Resources."/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2"/>
+  </mapping>
+  <structure>
+    <type value="Patient"/>
+    <publish value="true"/>
+    <element>
+      <path value="Patient"/>
+      <definition>
+        <short value="Information about a person or animal receiving health care services"/>
+        <formal value="Demographics and other administrative information about a person or animal receiving care or other health-related services."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Resource"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="Patient[classCode=PAT]"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.text"/>
+      <definition>
+        <short value="Text summary of the resource, for human interpretation"/>
+        <formal value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
+        <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative."/>
+        <synonym value="narrative"/>
+        <synonym value="html"/>
+        <synonym value="xhtml"/>
+        <synonym value="display"/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Narrative"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contained"/>
+      <definition>
+        <short value="Contained, inline Resources"/>
+        <formal value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+        <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+        <synonym value="inline resources"/>
+        <synonym value="anonymous resources"/>
+        <synonym value="contained resources"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Resource"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier"/>
+      <definition>
+        <short value="An identifier for the person as this patient"/>
+        <formal value="An identifier that applies to this person as a patient."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Identifier"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="id"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-3"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name"/>
+      <definition>
+        <short value="A name associated with the patient"/>
+        <formal value="A name associated with the individual."/>
+        <comments value="Person may have multiple names with different uses or applicable periods.For animals, the name is a &quot;HumanName&quot; in the sense that is assigned and used by humans and has the same patterns."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="HumanName"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="name"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-5, PID-9"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.telecom"/>
+      <definition>
+        <short value="A contact detail for the individual"/>
+        <formal value="A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted."/>
+        <comments value="Person may have multiple ways to be contacted with different uses or applicable periods. 
+May need to have options for contacting the person urgently and also to help with identification. The address may not go directly to the individual, but may reach another party that is able to proxy for the patient (i.e. home phone, or pet owner&#39;s phone)."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Contact"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="telecom"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-13, PID-14, PID-40"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.telecom.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.gender"/>
+      <definition>
+        <short value="Gender for administrative purposes"/>
+        <formal value="Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes."/>
+        <comments value="The gender may not match the biological sex as determined by genetics, or the individual&#39;s preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than M and F, though the vast majority of systems and contexts only support M and F."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="AdministrativeGender"/>
+          <isExtensible value="true"/>
+          <conformance value="preferred"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/administrative-gender"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/administrativeGender"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-8"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.gender.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.birthDate"/>
+      <definition>
+        <short value="The date and time of birth for the individual"/>
+        <formal value="The date and time of birth for the individual."/>
+        <comments value="At least an estimated year should be provided as a guess if the real dob is unknown."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="dateTime"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/birthTime"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-7"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.birthDate.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.deceased[x]"/>
+      <definition>
+        <short value="Indicates if the individual is deceased or not"/>
+        <formal value="Indicates if the individual is deceased or not."/>
+        <comments value="If there&#39;s no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <type>
+          <code value="dateTime"/>
+        </type>
+        <isModifier value="true"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedInd,
+player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedTime"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-30
+ (bool) and PID-29 (datetime)"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.deceased[x].extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.address"/>
+      <definition>
+        <short value="Addresses for the individual"/>
+        <formal value="Addresses for the individual."/>
+        <comments value="Person may have multiple addresses with different uses or applicable periods."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Address"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="addr"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-11"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.address.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus"/>
+      <definition>
+        <short value="Marital (civil) status of a person"/>
+        <formal value="This field contains a patient&#39;s most recent marital (civil) status."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="MaritalStatus"/>
+          <isExtensible value="true"/>
+          <conformance value="preferred"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/marital-status"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN]/maritalStatusCode"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-16"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.multipleBirth[x]"/>
+      <definition>
+        <short value="Whether patient is part of a multiple birth"/>
+        <formal value="Indicates whether the patient is part of a multiple or indicates the actual birth order."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <type>
+          <code value="integer"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthInd, 
+player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthOrderNumber"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-24 (bool), PID-25 (integer)"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.multipleBirth[x].extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.photo"/>
+      <definition>
+        <short value="Image of the person"/>
+        <formal value="Image of the person."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Attachment"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/desc"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="OBX-5 - needs a profile"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.photo.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <definition>
+        <short value="A contact party (e.g. guardian, partner, friend) for the patient"/>
+        <formal value="A contact party (e.g. guardian, partner, friend) for the patient."/>
+        <comments value="Contact covers all kinds of contact parties: family members, business contacts, guardians, caregivers. Not applicable to register pedigree and family ties beyond use of having contact."/>
+        <min value="0"/>
+        <max value="*"/>
+        <constraint>
+          <key value="1"/>
+          <name value="ContactNeedsDetails"/>
+          <severity value="error"/>
+          <human value="SHALL at least contain a contact&#39;s details or a reference to an organization"/>
+          <xpath value="f:name or f:telecom or f:address or f:organization"/>
+        </constraint>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/scopedRole[classCode=CON]"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.relationship"/>
+      <definition>
+        <short value="The kind of relationship"/>
+        <formal value="The nature of the relationship between the patient and the contact person."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="ContactRelationship"/>
+          <isExtensible value="true"/>
+          <conformance value="preferred"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/patient-contact-relationship"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="code"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-7, NK1-3"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.relationship.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.name"/>
+      <definition>
+        <short value="A name associated with the person"/>
+        <formal value="A name associated with the person."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="HumanName"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="name"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-2"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.name.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.telecom"/>
+      <definition>
+        <short value="A contact detail for the person"/>
+        <formal value="A contact detail for the person, e.g. a telephone number or an email address."/>
+        <comments value="Person may have multiple ways to be contacted with different uses or applicable periods. 
+May need to have options for contacting the person urgently, and also to help with identification."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Contact"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="telecom"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-5, NK1-6, NK1-40"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.telecom.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.address"/>
+      <definition>
+        <short value="Address for the contact person"/>
+        <formal value="Address for the contact person."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Address"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="addr"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-4"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.address.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.gender"/>
+      <definition>
+        <short value="Gender for administrative purposes"/>
+        <formal value="Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="AdministrativeGender"/>
+          <isExtensible value="true"/>
+          <conformance value="preferred"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/administrative-gender"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/administrativeGender"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-15"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.gender.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.organization"/>
+      <definition>
+        <short value="Organization that is associated with the contact"/>
+        <formal value="Organization on behalf of which the contact is acting or for which the contact is working."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Resource(Organization)"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="scoper"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="NK1-13, NK1-30, NK1-31, NK1-32, NK1-41"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact.organization.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal"/>
+      <definition>
+        <short value="If this patient is an animal (non-human)"/>
+        <formal value="This element has a value if the patient is an animal."/>
+        <comments value="The animal element is labeled &quot;Is Modifier&quot; since patients may be non-human. Systems SHALL either handle patient details appropriately (e.g. inform users patient is not human) or reject non-human patient records."/>
+        <min value="0"/>
+        <max value="1"/>
+        <isModifier value="true"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=ANM]"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.species"/>
+      <definition>
+        <short value="E.g. Dog, Cow"/>
+        <formal value="Identifies the high level categorization of the kind of animal."/>
+        <comments value="If the patient is non-human, at least a species SHALL be specified."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="AnimalSpecies"/>
+          <isExtensible value="true"/>
+          <conformance value="example"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/animal-species"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="code"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-35"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.species.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.breed"/>
+      <definition>
+        <short value="E.g. Poodle, Angus"/>
+        <formal value="Identifies the detailed categorization of the kind of animal."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="AnimalBreed"/>
+          <isExtensible value="true"/>
+          <conformance value="example"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/animal-breeds"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="playedRole[classCode=GEN]/scoper[classCode=ANM, determinerCode=KIND]/code"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-37"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.breed.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.genderStatus"/>
+      <definition>
+        <short value="E.g. Neutered, Intact"/>
+        <formal value="Indicates the current state of the animal&#39;s reproductive organs."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="AnimalGenderStatus"/>
+          <isExtensible value="true"/>
+          <conformance value="example"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/animal-genderstatus"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="genderStatusCode"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="N/A"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal.genderStatus.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.communication"/>
+      <definition>
+        <short value="Languages which may be used to communicate with the patient about his or her health"/>
+        <formal value="Languages which may be used to communicate with the patient about his or her health."/>
+        <comments value="If no language is specified, this *implies* that the default local language is spoken.
+For animals, language is not a relevant field, and should be absent from the instance."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="CodeableConcept"/>
+        </type>
+        <isModifier value="false"/>
+        <binding>
+          <name value="Language"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceUri value="http://tools.ietf.org/html/bcp47"/>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/languageCommunication/code"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="LAN-2"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.communication.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.careProvider"/>
+      <definition>
+        <short value="Patient&#39;s nominated care provider"/>
+        <formal value="Patient&#39;s nominated care provider."/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Resource(Organization|Practitioner)"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.careProvider.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.managingOrganization"/>
+      <definition>
+        <short value="Organization that is the custodian of the patient record"/>
+        <formal value="Organization that is the custodian of the patient record."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Resource(Organization)"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="scoper"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.managingOrganization.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link"/>
+      <definition>
+        <short value="Link to another patient resource that concerns the same actual person"/>
+        <formal value="Link to another patient resource that concerns the same actual person."/>
+        <comments value="There is no assumption that linked patient records have mutual links."/>
+        <min value="0"/>
+        <max value="*"/>
+        <isModifier value="true"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="outboundLink"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link.modifierExtension"/>
+      <definition>
+        <short value="Extensions that cannot be ignored"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link.other"/>
+      <definition>
+        <short value="The other patient resource that the link refers to"/>
+        <formal value="The other patient resource that the link refers to."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="Resource(Patient)"/>
+        </type>
+        <isModifier value="true"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="id"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="PID-3, MRG-1"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link.other.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link.type"/>
+      <definition>
+        <short value="replace | refer | seealso - type of link"/>
+        <formal value="The type of link between this patient resource and another patient resource."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="code"/>
+        </type>
+        <isModifier value="true"/>
+        <binding>
+          <name value="LinkType"/>
+          <isExtensible value="false"/>
+          <conformance value="required"/>
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/link-type"/>
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim"/>
+          <map value="typeCode"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link.type.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.active"/>
+      <definition>
+        <short value="Whether this patient&#39;s record is in active use"/>
+        <formal value="Whether this patient record is in active use."/>
+        <comments value="Default is true. If a record is inactive, and linked to an active record, then future patient/person/record updates should occur on the other patient."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="boolean"/>
+        </type>
+        <isModifier value="true"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="statusCode"/>
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.active.extension"/>
+      <definition>
+        <short value="Additional Content defined by implementations"/>
+        <formal value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+        <comments value="there can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core simplicity for everyone."/>
+        <synonym value="extensions"/>
+        <synonym value="user content"/>
+        <min value="0"/>
+        <max value="*"/>
+        <type>
+          <code value="Extension"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+  </structure>
+</Profile>

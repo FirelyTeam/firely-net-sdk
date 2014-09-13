@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +42,20 @@ namespace Hl7.Fhir.Tests
 
             FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10);
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
+
+            var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
+            dt = new FhirDateTime(stamp);
+            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
+
+        [TestMethod]
+        public void Uri_Canonical()
+        {
+            var identifier = new Identifier("http://nhi.health.nz", "123");
+            Assert.AreEqual("123", identifier.Value);
+            Assert.AreEqual("http://nhi.health.nz", identifier.System);
+        }
        
 
         [TestMethod]
@@ -72,27 +92,26 @@ namespace Hl7.Fhir.Tests
         public void ExtensionManagement()
         {
             Patient p = new Patient();
-            Uri u1 = new Uri("http://fhir.org/ext/ext-test");
-            Assert.IsNull(p.GetExtension(u1));
+            var u1 = "http://fhir.org/ext/ext-test";
+            Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
             Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
             Assert.AreSame(newEx, p.GetExtension(u1));
 
-            p.AddExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Ewout"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
             Assert.AreSame(newEx, p.GetExtension(u1));
 
             p.RemoveExtension(u1);
             Assert.IsNull(p.GetExtension(u1));
 
-            p.SetExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Ewout Kramer"));
-            var ew = p.GetExtensions(new Uri("http://fhir.org/ext/ext-test2"));
+            p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
+            var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
             Assert.AreEqual(1, ew.Count());
 
-            p.AddExtension(new Uri("http://fhir.org/ext/ext-test2"), new FhirString("Wouter Kramer"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
-            ew = p.GetExtensions(new Uri("http://fhir.org/ext/ext-test2"));
+            ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
             Assert.AreEqual(2, ew.Count());
-
         }
 
 
@@ -127,6 +146,19 @@ namespace Hl7.Fhir.Tests
             
             rref.Reference = "#pat3";
             Assert.IsNull(pat.FindContainedResource(rref));
+        }
+
+        [TestMethod]
+        public void TestListDeepCopy()
+        {
+            var x = new List<Patient>();
+            x.Add(new Patient());
+            x.Add(new Patient());
+
+            var y = new List<Patient>(x.DeepCopy());
+            Assert.IsTrue(x[0] is Patient);
+            Assert.AreNotEqual(x[0], y[0]);
+            Assert.AreNotEqual(x[1], y[1]);
         }
 
         [TestMethod]

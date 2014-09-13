@@ -43,11 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.2\lib\net20\Ionic.Zip.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="SharpCompress">
+      <HintPath>..\packages\p3-sharpcompress.0.10.5.2\lib\net40\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -68,6 +69,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Inspection\ProfileExpansionTest.cs" />
+    <Compile Include="Inspection\ProfileNavigationTest.cs" />
+    <Compile Include="Inspection\SchemaCollectionTest.cs" />
+    <Compile Include="Inspection\ArtifactStorageTest.cs" />
+    <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Inspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
@@ -99,7 +105,6 @@
     <Compile Include="Model\TagExtensionsTest.cs" />
     <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="ValidatePatient.cs" />
-    <Compile Include="Validation\IdPatternAttributeTest.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +133,16 @@
       <Project>{3ca811d7-19a7-43ac-a403-1f35e4ec2bfc}</Project>
       <Name>Hl7.Fhir.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="example-lipid-profile-differential.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="example-lipid-profile-testmessage.xml" />
+    <Content Include="example-lipid-profile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="example-lipid-valueset-interpretation.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

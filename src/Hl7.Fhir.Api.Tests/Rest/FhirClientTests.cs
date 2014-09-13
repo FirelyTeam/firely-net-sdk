@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Tests
         Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
+        // Uri testEndpoint = new Uri("http://fhir.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
 
 		[TestInitialize]
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Tests
 		}
 #endif
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), Ignore]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -485,5 +485,34 @@ namespace Hl7.Fhir.Tests
             client.DeleteTags(affixedEntry.SelfLink, tags);
             //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         }
+
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void TestConnectionError()
+        {
+            // todo: Thread error handling
+            // In Forge, a Conformance request to a nonexisting endpoint, results in an exception that cannot be caught.
+            // This unit tests simulates that behaviour, but here we can catch the error. 
+            // The error however is a NullReferenceException and not the original WebException.
+            // Solution: The AsyncCallBack of GetResponseNoEx(this WebRequest req) should have a catch block.
+            // -- MH.
+            Exception register = null;
+
+            try
+            {
+                string endpoint = "http://localhost:9876/fhir";
+                FhirClient client = new FhirClient(endpoint);
+                client.Conformance();
+            }
+            catch (Exception e)
+            {
+                register = e;
+            }
+
+            Assert.IsTrue(register != null);
+        }
+
+
     }
+
 }

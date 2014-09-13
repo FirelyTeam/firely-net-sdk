@@ -19,6 +19,11 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class DatePatternAttribute : ValidationAttribute
     {
+        public static bool IsValidValue(string value)
+        {
+            return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);
+        }
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null) return ValidationResult.Success;
@@ -26,7 +31,7 @@ namespace Hl7.Fhir.Validation
             if (value.GetType() != typeof(string))
                 throw new ArgumentException("DatePatternAttribute can only be applied to string properties");
 
-            if (Regex.IsMatch(value as string, "^" + Date.PATTERN + "$", RegexOptions.Singleline))
+            if (IsValidValue(value as string))
                 return ValidationResult.Success;
             else
 				return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Date", value as string);

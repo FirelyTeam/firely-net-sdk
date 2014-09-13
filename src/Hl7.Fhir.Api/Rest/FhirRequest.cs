@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Rest
 
 		public string Method { get { return _method; } }
 		public Uri Location { get { return _location; } }
+        public int Timeout { get; set; }
 
         private Action<HttpWebRequest> _beforeRequest;
         private Action<WebResponse> _afterRequest;
@@ -130,6 +131,10 @@ namespace Hl7.Fhir.Rest
 
             FhirResponse result = null;
 
+#if !PORTABLE45
+            request.Timeout = Timeout;
+#endif
+
             // Make sure the HttpResponse gets disposed!
             if (_beforeRequest != null) _beforeRequest(request);
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponseNoEx())
@@ -141,7 +146,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NET45
 		public async Task<WebResponse> GetResponseAsync(ResourceFormat? acceptFormat)
 		{
 			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
@@ -169,9 +174,11 @@ namespace Hl7.Fhir.Rest
 				await request.WriteBodyAsync(_body);
 			}
 
+
+
 			// Make sure the caller disposes the HttpResponse gets disposed...
             if (_beforeRequest != null) _beforeRequest(request);
-            var response = await request.GetResponseAsync();
+            var response = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
             if (_afterRequest != null) _afterRequest(response);
 
             return response;
