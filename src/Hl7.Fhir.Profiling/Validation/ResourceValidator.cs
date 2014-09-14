@@ -16,7 +16,6 @@ using Hl7.Fhir.XPath;
 using Hl7.Fhir.Profiling;
 
     // todo: profile references "#lipidpanel" worden nog niet geresolved
-    // todo: valuesets worden nog niet geresolved (door de ArtifactResolver)
     // todo: waar zitten de slicing fixed-values
 
     // todo: ExtensionDefns opnemen in Specification!!

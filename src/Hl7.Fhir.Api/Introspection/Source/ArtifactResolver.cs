@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Introspection.Source
         /// </summary>
         public static IArtifactSource CreateDefault()
         {
-            return new ArtifactResolver(new FileArtifactSource(), new CoreZipArtifactSource(), new WebArtifactSource());
+            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Introspection.Source
         public static IArtifactSource CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            IArtifactSource resolver = new ArtifactResolver(new FileArtifactSource(), new CoreZipArtifactSource());
+            IArtifactSource resolver = new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource());
             return new CachedArtifactSource(resolver);
             
         }

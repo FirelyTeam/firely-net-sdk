@@ -70,6 +70,9 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="TestPatient.json" />
     <Content Include="TestData\example-lipid-profile-testmessage.xml" />
+    <Content Include="TestData\ldlcholesterol-correct.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\lipid.profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

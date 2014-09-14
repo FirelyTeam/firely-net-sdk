@@ -16,9 +16,9 @@ using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    internal static class ReflectionHelper
+    public static class ReflectionHelper
     {
-        internal static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
+        public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {
             if(t == null) throw Error.ArgumentNull("t");
 
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Introspection
 #endif
         }
 
-        internal static PropertyInfo FindPublicProperty(Type t, string name)
+        public static PropertyInfo FindPublicProperty(Type t, string name)
         {
             if(t == null) throw Error.ArgumentNull("t");
             if (name == null) throw Error.ArgumentNull("name");

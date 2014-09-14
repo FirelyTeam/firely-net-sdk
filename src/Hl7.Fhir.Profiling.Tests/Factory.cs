@@ -49,6 +49,7 @@ namespace Fhir.Profiling.Tests
         public static Specification GetProfileSpec(bool expand, bool online)
         {
             SpecificationProvider resolver = GetProvider(online);
+            
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
@@ -83,6 +84,21 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
 
         }
+
+        public static Specification GetOtherSpec(bool expand, bool online, string uri)
+        {
+            SpecificationProvider resolver = GetProvider(online);
+            SpecificationBuilder builder = new SpecificationBuilder(resolver);
+            builder.Add(StructureFactory.PrimitiveTypes());
+            builder.Add(StructureFactory.NonFhirNamespaces());
+            builder.Add(uri);
+
+            if (expand) builder.Expand();
+
+            return builder.ToSpecification();
+        }
+
+
     }
 
 }

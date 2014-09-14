@@ -39,12 +39,6 @@ namespace Fhir.Profiling.Tests
         {
             var resource = FhirFile.LoadResource("TestData\\Patient.ErrorUse.xml");
             Report report = spec.Validate(resource);
-            // todo: bugfix ValueSet resolving
-            // This validation should fail because the name use "unofficial" does not exist
-            
-            // However, the ProfileExpander/Resolver is not yet loading ValueSets, so ValueSet validation cannot take place.
-            // As a result, the validation reports an unresolved error instead of a coding failed error.
-
             Assert.IsFalse(report.IsValid);
             Assert.IsTrue(report.Contains(Group.Coding, Status.Failed));
             Assert.AreEqual(1, report.ErrorCount);
@@ -114,5 +108,13 @@ namespace Fhir.Profiling.Tests
             Assert.AreEqual(1, report.ErrorCount);
         }
 
+        [TestMethod]
+        public void OtherProfile()
+        {
+            var spec = Factory.GetOtherSpec(true, false, "http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
+
+            var resource = FhirFile.LoadResource("TestData\\ldlcholesterol-correct.xml");
+            var report = spec.Validate(resource);
+        }
     }
 }

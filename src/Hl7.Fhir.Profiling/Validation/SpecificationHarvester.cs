@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.XPath;
+using Hl7.Fhir.Api.Introspection;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Profiling
 {
@@ -59,9 +62,18 @@ namespace Hl7.Fhir.Profiling
 
         private void HarvestFixedValue(Profile.ElementDefinitionComponent source, Element target)
         {
-            target.FixedValue = (source.Value != null) 
-                ? source.Value.ToString()
-                : null;
+            target.FixedValue = null;
+
+            if (source.Value != null)
+            {
+                //if(source.Value is FhirString) target.FixedValue = ((FhirString)source.Value).Value;
+                //if (source.Value is Code) target.FixedValue = ((Code)source.Value).Value;
+                //if (source.Value is FhirBoolean) target.FixedValue = PrimitiveConverter ((FhirBoolean)source.Value).Value;
+                //if (source.Value is FhirBoolean) target.FixedValue = ((FhirBoolean)source.Value).Value;
+                var valMember = ReflectionHelper.FindPublicProperty(source.Value.GetType(), "Value");
+                var value = valMember.GetValue(source.Value, null);
+                target.FixedValue = value.ConvertTo<string>();
+            }            
         }
 
         private void HarvestConstraints(Profile.ElementDefinitionComponent source, Element target)
@@ -160,7 +172,8 @@ namespace Hl7.Fhir.Profiling
         {
             foreach(var element in source.Element)
             {
-                target.Elements.Add(HarvestElement(element));
+                if(element.Slicing == null)
+                    target.Elements.Add(HarvestElement(element));
             }
         }
 

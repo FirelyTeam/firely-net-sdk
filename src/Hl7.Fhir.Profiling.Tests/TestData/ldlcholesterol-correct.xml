@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Observation xmlns="http://hl7.org/fhir">
+  <extension url="http://hl7.org/fhir/Profile/example-lipid-profile#calculated">
+    <valueBoolean value="false" />
+  </extension>
+  <name>
+    <coding>
+      <system value="http://loinc.org/"/>
+      <code value="18262-6" />
+      <display value="LDL Cholesterol - direct assay" />
+    </coding>
+  </name>
+  <valueQuantity>
+    <value value="2.5" />
+    <system value="http://unitsofmeasure.org/" />
+    <code value="mmol/L" />
+  </valueQuantity>
+  <interpretation>
+    <coding>
+      <system value="http://hl7.org/fhir/v2/0078" />
+      <code value="N"/>
+    </coding>
+  </interpretation>
+  <appliesDateTime value="2014-09-07T16:22:56+02:00" />
+  <status value="cancelled" />
+  <reliability value="ok" />
+  <identifier>
+    <system value="http://ielab.nl/ids/observations"/>
+    <value value="LAB3-2014-O5547"/>
+  </identifier>
+  <subject>
+    <reference value="Patient/example" />
+  </subject>
+  <referenceRange>
+    <high>
+      <value value="3.0" />
+      <system value="http://unitsofmeasure.org/" />
+      <code value="mmol/L" />
+    </high>
+  </referenceRange>
+</Observation>

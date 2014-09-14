@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Profiling
 
     public class SpecificationProvider
     {
-        IArtifactSource source;
+        public IArtifactSource source;
         SpecificationHarvester harvester;
         StructureLoader loader;
         
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Profiling
             ArtifactResolver resolver = new ArtifactResolver();
             foreach (IArtifactSource s in sources) resolver.AddSource(s);
             resolver.AddSource(new CoreZipArtifactSource());
-            resolver.AddSource(new FileArtifactSource());
+            resolver.AddSource(new FileArtifactSource(true));
             
             IArtifactSource cache = new CachedArtifactSource(resolver);
             return new SpecificationProvider(cache);
