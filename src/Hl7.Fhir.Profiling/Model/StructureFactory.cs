@@ -83,30 +83,6 @@ namespace Hl7.Fhir.Profiling
             return PrimitiveProfileFor(list);
         }
 
-        public static List<Structure> MockDataTypes()
-        {
-            string[] list = {
-                "ratio",
-                "Period",
-                "range",
-                "Attachment",
-                "Identifier",
-                "schedule",
-                "HumanName",
-                "Coding",
-                "Address", 
-                "CodeableConcept",
-                "Quantity",
-                "SampledData",
-                "Contact",
-                "Age",
-                "Distance",
-                "Duration",
-                "Count",
-                "Money"};
-            return PrimitiveProfileFor(list);
-        }
-
         public static List<Structure> PrimitiveTypes()
         {
 //            Hl7.Fhir.Validation.DatePatternAttribute.IsValidValue()

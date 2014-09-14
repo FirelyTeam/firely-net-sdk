@@ -79,19 +79,24 @@ namespace Hl7.Fhir.Profiling
                 return;
             }
 
-            string value = vector.GetValue("@value");
-            bool exists = vector.Element.Binding.Contains(value);
-            
-            if (exists)
+            if (vector.Element.TypeRefs[0].Code == "code")
             {
-                reporter.Log(Group.Coding, Status.Valid, vector, "Code [{0}] ({1}) is valid [{2}]",
-                    vector.Element.Name, vector.Element.Binding.System, value);
+                string value = vector.GetValue("@value");
+                bool exists = vector.Element.Binding.Contains(value);
+
+                if (exists)
+                {
+                    reporter.Log(Group.Coding, Status.Valid, vector, "Code [{0}] ({1}) is valid [{2}]",
+                        vector.Element.Name, vector.Element.Binding.System, value);
+                }
+                else
+                {
+                    Log(Group.Coding, Status.Failed, vector, "Code [{0}] ({1}) contains a nonexisting value [{2}]",
+                        vector.Element.Name, vector.Element.Binding.System, value);
+                }
             }
             else
-            {
-                Log(Group.Coding, Status.Failed, vector, "Code [{0}] ({1}) contains a nonexisting value [{2}]",
-                    vector.Element.Name, vector.Element.Binding.System, value);
-            }
+                Log(Group.Coding, Status.Skipped, vector, "Cannot handle Coding/CodeableConcept yet");
         }
 
         public void ValidateCardinality(Vector vector)

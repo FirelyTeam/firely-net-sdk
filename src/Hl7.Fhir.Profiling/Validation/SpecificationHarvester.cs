@@ -231,10 +231,11 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        public ValueSet HarvestValueSet(Hl7.Fhir.Model.ValueSet source)
+        public ValueSet HarvestValueSet(Hl7.Fhir.Model.ValueSet source, Uri system)
         {
             ValueSet valueset = new ValueSet();
             // todo: This now only works with "defines". 
+            valueset.System = system.ToString();
 
             if (source.Define != null)
             {

@@ -108,10 +108,11 @@ namespace Hl7.Fhir.Profiling
         
         public ValueSet GetValueSet(Uri uri)
         {
-            Model.ValueSet source = Resolve<Model.ValueSet>(uri);
-            if (source != null)
+            var valueset = source.ReadResourceArtifact(uri) as Model.ValueSet;
+            
+            if (valueset != null)
             {
-                ValueSet target = harvester.HarvestValueSet(source);
+                ValueSet target = harvester.HarvestValueSet(valueset, uri);
                 return target;
             }
             return null;
