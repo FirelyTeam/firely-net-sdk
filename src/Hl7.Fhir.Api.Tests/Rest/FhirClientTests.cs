@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Tests
             internal bool HitBeforeRequest { get; set; }
             internal bool HitAfterRequest { get; set; }
 
-            protected override void BeforeRequest(HttpWebRequest request)
+            protected override void BeforeRequest(HttpWebRequest request, byte[] body)
             {
                 HitBeforeRequest = true;
             }
