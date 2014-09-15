@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests
                 HitBeforeRequest = true;
             }
 
-            protected override void AfterResponse(WebResponse request)
+            protected override void AfterResponse(WebResponse webResponse, FhirResponse fhirResponse)
             {
                 HitAfterRequest = true;
             }

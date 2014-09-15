@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Rest
         public bool UseFormatParameter { get; set; }
 
         public FhirRequest(Uri location, string method = "GET",
-             Action<HttpWebRequest, byte[]> beforeRequest = null, Action<WebResponse> afterRequest = null)
+             Action<HttpWebRequest, byte[]> beforeRequest = null, Action<WebResponse, FhirResponse> afterRequest = null)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (method == null) throw Error.ArgumentNull("method");
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest
         public int Timeout { get; set; }
 
         private Action<HttpWebRequest, byte[]> _beforeRequest;
-        private Action<WebResponse> _afterRequest;
+        private Action<WebResponse, FhirResponse> _afterRequest;
         private Uri _location;
         private string _method = "GET";
         private byte[] _body = null;
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Rest
 
             if(_categoryHeader != null) request.Headers[HttpUtil.CATEGORY] = _categoryHeader;
 
-            FhirResponse result = null;
+            FhirResponse fhirResponse = null;
 
 #if !PORTABLE45
             request.Timeout = Timeout;
@@ -137,13 +137,13 @@ namespace Hl7.Fhir.Rest
 
             // Make sure the HttpResponse gets disposed!
             if (_beforeRequest != null) _beforeRequest(request, _body);
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponseNoEx())
+            using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
-                result = FhirResponse.FromHttpWebResponse(response);
-                if (_afterRequest != null) _afterRequest(response);
+                fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
+                if (_afterRequest != null) _afterRequest(webResponse, fhirResponse);
             }
 
-            return result;
+            return fhirResponse;
         }
 
 #if PORTABLE45 || NET45
@@ -178,8 +178,8 @@ namespace Hl7.Fhir.Rest
 
 			// Make sure the caller disposes the HttpResponse gets disposed...
             if (_beforeRequest != null) _beforeRequest(request);
-            var response = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
-            if (_afterRequest != null) _afterRequest(response);
+            var webResponse = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
+            if (_afterRequest != null) _afterRequest(webResponse, null);
 
             return response;
 		}
