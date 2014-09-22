@@ -34,6 +34,7 @@ namespace Hl7.Fhir.Profiling
     {
         public bool IsValid(string value)
         {
+            //return Hl7.Fhir.Validation.UriPatternAttribute.IsValidValue(value);
             return Uri.IsWellFormedUriString(value, UriKind.RelativeOrAbsolute);
 
         }

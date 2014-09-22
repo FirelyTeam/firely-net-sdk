@@ -15,8 +15,7 @@ using System.Xml.XPath;
 
 namespace Hl7.Fhir.Profiling
 {
-
-    public class Feed
+    internal class Feed
     {
         XPathNavigator navigator;
         XmlNamespaceManager manager;
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Profiling
             internal XPathNavigator Node;
         }
 
-        public Feed(IXPathNavigable navigable)
+        internal Feed(IXPathNavigable navigable)
         {
             navigator = navigable.CreateNavigator();
             manager = new XmlNamespaceManager(navigator.NameTable);

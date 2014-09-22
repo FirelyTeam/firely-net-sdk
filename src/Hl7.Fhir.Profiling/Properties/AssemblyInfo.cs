@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.11.1.*")]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Fhir.Profiling.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Profiling.Tests")]
 #endif
 
 #if RELEASE

@@ -15,7 +15,7 @@ using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Profiling
 {
-    public class SpecificationReader
+    internal class SpecificationReader
     {
         int id = 0; // id to give to each element (id++) in order to identify them during debugging
 

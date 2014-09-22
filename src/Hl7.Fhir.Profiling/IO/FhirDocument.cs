@@ -15,7 +15,7 @@ using System.Xml.XPath;
 
 namespace Hl7.Fhir.Profiling
 {
-    public static class FhirFile
+    internal static class FhirFile
     {
         public static XPathNavigator LoadResource(string filename)
         {
@@ -55,30 +55,6 @@ namespace Hl7.Fhir.Profiling
             XmlDocument document = new XmlDocument();
             document.Load(filename);
             return new Feed(document);
-        }
-
-        public static Feed.Entry LoadXMLResource(string filename)
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-            
-            XPathNavigator navigator;
-            XmlNamespaceManager manager;
-
-            Feed.Entry entry = new Feed.Entry();
-            entry.Title = filename;
-            entry.Id = "unknown";
-
-            navigator = document.CreateNavigator();
-            manager = new XmlNamespaceManager(navigator.NameTable);
-            manager.AddNamespace("f", "http://hl7.org/fhir");
-            entry.ResourceNode = navigator.SelectSingleNode("*");
-            /*
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-            return new Feed(document);
-            */
-            return entry;
         }
 
         public static void LoadXMLValueSets(this SpecificationBuilder builder, string filename)
