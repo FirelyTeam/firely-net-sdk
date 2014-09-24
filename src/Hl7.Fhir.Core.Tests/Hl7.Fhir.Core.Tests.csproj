@@ -93,7 +93,6 @@
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
-    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
