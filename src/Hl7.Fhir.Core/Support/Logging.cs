@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
-using Hl7.Fhir.Api.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,7 +94,7 @@ namespace Hl7.Fhir.Support
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static ArgumentException ArgumentNullOrEmpty(string parameterName)
         {
-            return Error.Argument(parameterName, Messages.ArgumentNullOrEmpty, parameterName);
+            return Error.Argument(parameterName, "The argument '{0}' is null or empty.", parameterName);
         }
 
 

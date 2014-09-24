@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Introspection.Source
                 throw Error.NotImplemented("Url {0} was recognized as a core artifact, but I don't know where to locate it within validation.zip", normalized);
         }
 
-        public static readonly XName ENTRY_CONTENT = XmlNs.XATOMNS + BundleXmlParser.XATOM_CONTENT;
+        public static readonly XName ENTRY_CONTENT = XmlNs.XATOM + "content";
 
         private string readXmlEntryFromCoreBundle(Uri artifactId, params string[] fileNames)
         {

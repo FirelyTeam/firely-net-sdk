@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Api.Properties;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
 using System;
@@ -108,7 +107,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format(Messages.DeserializeUnknownMember, _current, memberName);
+                        throw Error.Format("Encountered unknown member '{0}' while deserializing", _current, memberName);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }

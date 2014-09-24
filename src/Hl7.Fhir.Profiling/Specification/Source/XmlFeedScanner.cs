@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Support
     /// </summary>
     internal class XmlFeedScanner
     {
-        public static readonly XName ENTRY_ID = XmlNs.XATOMNS + BundleXmlParser.XATOM_ID;        
+        public static readonly XName ENTRY_ID = XmlNs.XATOM + "id";        
 
         private Stream _input;
 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Support
             {
                 if (reader.NodeType == XmlNodeType.Element
                         && reader.LocalName == "entry"
-                        && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
+                        && reader.NamespaceURI == XmlNs.ATOM)
                 {
                     var entryNode = (XElement)XElement.ReadFrom(reader);
                     yield return entryNode;

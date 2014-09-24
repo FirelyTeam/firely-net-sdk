@@ -240,11 +240,6 @@
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
     <Compile Include="Serialization\PrimitiveValueReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
     <Compile Include="Introspection\PropertyMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -280,13 +275,6 @@
     <Compile Include="Validation\UuidPatternAttribute.cs" />
     <Compile Include="Validation\ValidationContextExtensions.cs" />
     <Compile Include="Validation\ValidationContextFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Hl7.Fhir.Api.Properties</CustomToolNamespace>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

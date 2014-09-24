@@ -144,7 +144,7 @@ namespace Fhir.Profiling.IO
             {
                 if (reader.NodeType == XmlNodeType.Element
                        && reader.LocalName == "entry"
-                       && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
+                       && reader.NamespaceURI == XmlNs.ATOM)
                 {
                     XElement element = (XElement)XElement.ReadFrom(reader);
                     yield return element;
@@ -152,7 +152,7 @@ namespace Fhir.Profiling.IO
             }
         }
 
-        public static readonly XName ENTRY_CONTENT = XmlNs.XATOMNS + BundleXmlParser.XATOM_CONTENT;
+        public static readonly XName ENTRY_CONTENT = XmlNs.XATOM + "content";
 
         public static string Content(XElement element)
         {

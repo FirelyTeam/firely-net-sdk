@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Api.Properties;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
 using System;

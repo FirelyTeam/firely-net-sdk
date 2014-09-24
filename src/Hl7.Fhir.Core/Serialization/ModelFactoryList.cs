@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Api.Properties;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -31,10 +30,10 @@ namespace Hl7.Fhir.Serialization
         {
             var chosenFactory = list != null ? list.FindFactory(type) : null;
             if (type == null) throw Error.ArgumentNull("type");
-            if (chosenFactory == null) throw Error.InvalidOperation(Messages.NoSuchClassFactory, type.Name);
+            if (chosenFactory == null) throw Error.InvalidOperation("No ModelClassFactory registered to handle type '{0}'", type.Name);
 
             object result = chosenFactory.Create(type);
-            if (result == null) throw Error.InvalidOperation(Messages.FactoryCreationFailed);
+            if (result == null) throw Error.InvalidOperation("Factory failed to create object");
 
             return result;
         }

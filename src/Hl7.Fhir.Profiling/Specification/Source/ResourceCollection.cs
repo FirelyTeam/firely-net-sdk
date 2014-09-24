@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Api.Introspection.Source
 {
@@ -36,7 +37,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
             {
                 if (reader.NodeType == XmlNodeType.Element
                        && reader.LocalName == "entry"
-                       && reader.NamespaceURI == BundleXmlParser.ATOMPUB_NS)
+                       && reader.NamespaceURI == XmlNs.ATOM)
                 {
                     XElement element = (XElement)XElement.ReadFrom(reader);
                     yield return element;
@@ -44,7 +45,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
             }
         }
 
-        public static readonly XName ENTRY_CONTENT = XmlNs.XATOMNS + BundleXmlParser.XATOM_CONTENT;
+        public static readonly XName ENTRY_CONTENT = XmlNs.XATOM + "content";
 
         public static string Content(XElement element)
         {

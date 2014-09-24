@@ -15,6 +15,7 @@ using Hl7.Fhir.XPath;
 using Hl7.Fhir.Api.Introspection;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Profiling
 {
