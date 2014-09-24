@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}</ProjectGuid>
+    <ProjectGuid>{D6CE2817-0931-4D56-B989-AAC5319B78CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir.Profiling.Tests</RootNamespace>
-    <AssemblyName>HL7.Fhir.Profiling.Tests</AssemblyName>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,6 +16,13 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,11 +32,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net40</OutputPath>
+    <OutputPath>bin\Release\Net40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,8 +47,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SharpCompress">
+      <HintPath>..\packages\p3-sharpcompress.0.10.5.2\lib\net40\SharpCompress.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Net" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,96 +69,59 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ArtifactStorageTest.cs" />
-    <Compile Include="SchemaCollectionTest.cs" />
-    <Compile Include="TestAdvancedValidation.cs" />
-    <Compile Include="TestExtensions.cs" />
-    <Compile Include="TestUnresolvedValidation.cs" />
-    <Compile Include="TestValidation.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="TestMetaValidation.cs" />
-    <Compile Include="TypeRefUniform.cs" />
-    <Compile Include="ValidationAnalysis.cs" />
-    <Compile Include="XsltContextTests.cs" />
+    <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Model\DeepCopyTest.cs" />
+    <Compile Include="Model\BundleExtensionsTest.cs" />
+    <Compile Include="Introspection\ClassMappingTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Search\QueryTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rest\FhirClientTests.cs" />
+    <Compile Include="Rest\TestResourceIdentifier.cs" />
+    <Compile Include="Rest\TestRestUrl.cs" />
+    <Compile Include="Search\ExpressionTests.cs" />
+    <Compile Include="Search\QueryExtensionTests.cs" />
+    <Compile Include="Serialization\BundleTests.cs" />
+    <Compile Include="Serialization\ConversionTest.cs" />
+    <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
+    <Compile Include="Introspection\EnumMappingTest.cs" />
+    <Compile Include="Serialization\FhirParserTests.cs" />
+    <Compile Include="Serialization\JsonNavigatorTests.cs" />
+    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
+    <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
+    <Compile Include="Introspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Introspection\PropertyMappingTest.cs" />
+    <Compile Include="Serialization\MeasurePerformance.cs" />
+    <Compile Include="JsonAssert.cs" />
+    <Compile Include="Serialization\RoundtripTest.cs" />
+    <Compile Include="Serialization\TagParsingTests.cs" />
+    <Compile Include="Serialization\SerializationTests.cs" />
+    <Compile Include="Model\TagExtensionsTest.cs" />
+    <Compile Include="Serialization\ResourceParsingTests.cs" />
+    <Compile Include="Model\TagTests.cs" />
+    <Compile Include="Validation\ValidatePatient.cs" />
+    <Compile Include="Validation\ValidationTests.cs" />
+    <Compile Include="XmlAssert.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestPatient.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestPatientLargeNumbers.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestPatient.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="TestPatient.json" />
-    <Content Include="example-lipid-profile-differential.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="example-lipid-profile-testmessage.xml" />
-    <Content Include="example-lipid-profile.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="example-lipid-valueset-interpretation.xml" />
-    <Content Include="TestData\example-lipid-profile-testmessage.xml" />
-    <Content Include="TestData\ldlcholesterol-correct.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.profile.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.profile.valueset.xml" />
-    <Content Include="TestData\patient.extended.profile.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="TestData\patient.extended.valid.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="TestData\Patient.InvalidElement.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData\invalidroot.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.fixvalue.wrong.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.slice.valid.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.Narrative.correct.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\patient.profile.full.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\patient.profile.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.ConstraintError.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.CardinalityMinus.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="TestData\Patient.CardinalityPlus.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.Narrative.wrong.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.Valid.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\Patient.ErrorUse.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="TestData\valuesets.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="patient-example.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">

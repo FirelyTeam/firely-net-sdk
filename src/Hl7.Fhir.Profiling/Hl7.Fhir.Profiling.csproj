@@ -49,6 +49,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Slicing.cs" />
+    <Compile Include="Specification\BaseElementNavigator.cs" />
+    <Compile Include="Specification\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\ElementNavigator.cs" />
+    <Compile Include="Specification\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Specification\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Specification\ProfileExpander.cs" />
+    <Compile Include="Specification\ProfileExtensionExtensions.cs" />
+    <Compile Include="Specification\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Source\ArtifactResolver.cs" />
+    <Compile Include="Specification\Source\CachedArtifactSource.cs" />
+    <Compile Include="Specification\Source\CoreZipArtifactSource.cs" />
+    <Compile Include="Specification\Source\EmbeddedResource.cs" />
+    <Compile Include="Specification\Source\FileArtifactSource.cs" />
+    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\MemoryArtifactSource.cs" />
+    <Compile Include="Specification\Source\ResourceCollection.cs" />
+    <Compile Include="Specification\Source\SchemaCollection.cs" />
+    <Compile Include="Specification\Source\WebArtifactSource.cs" />
+    <Compile Include="Specification\Source\XmlFeedScanner.cs" />
+    <Compile Include="Specification\Source\ZipCacher.cs" />
+    <Compile Include="Specification\StructureExpander.cs" />
+    <Compile Include="Specification\StructureLoader.cs" />
     <Compile Include="Validation\Ienumerable.cs" />
     <Compile Include="XPath\NavigatorState.cs" />
     <Compile Include="XPath\JsonXPathNavigator.cs" />
@@ -90,16 +112,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="validation.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Api\Hl7.Fhir.Api.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.csproj">
-      <Project>{3ca811d7-19a7-43ac-a403-1f35e4ec2bfc}</Project>
-      <Name>Hl7.Fhir.Model</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Specification\Source\core-conformances-base.xml" />
+    <Content Include="Specification\Source\core-profiles-datatypes.xml" />
+    <Content Include="Specification\Source\core-profiles-resources.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Specification\Source\core-valuesets-dicom.xml" />
+    <Content Include="Specification\Source\core-valuesets-fhir.xml" />
+    <Content Include="Specification\Source\core-valuesets-v2.xml" />
+    <Content Include="Specification\Source\core-valuesets-v3.xml" />
+    <Content Include="Specification\Source\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
