@@ -28,9 +28,12 @@ namespace Hl7.Fhir.Model
 
     public static class TagListExtensions
     {
-        private const string TAG_TERM_TEXT = "http://hl7.org/fhir/tag/text/";
-        private const string TAG_TERM_DOCUMENT = "http://hl7.org/fhir/tag/document";
-        private const string TAG_TERM_MESSAGE = "http://hl7.org/fhir/tag/message";
+        public const string TAG_TERM_DOCUMENT = "http://hl7.org/fhir/tag/document";
+        public const string TAG_TERM_MESSAGE = "http://hl7.org/fhir/tag/message";
+        public const string TAG_TERM_TEXT = "http://hl7.org/fhir/tag/text/";
+
+        private static readonly Tag MESSAGE_TAG = new Tag(TAG_TERM_MESSAGE, Tag.FHIRTAGSCHEME_GENERAL);
+        private static readonly Tag DOCUMENT_TAG = new Tag(TAG_TERM_DOCUMENT, Tag.FHIRTAGSCHEME_GENERAL);
 
         public static void SetTextTag(this BundleEntry entry, string text)
         {
@@ -55,9 +58,6 @@ namespace Hl7.Fhir.Model
 
             return Uri.UnescapeDataString(textTag.Term.Substring(TAG_TERM_TEXT.Length));
         }
-
-        private static readonly Tag MESSAGE_TAG = new Tag(TAG_TERM_MESSAGE, Tag.FHIRTAGSCHEME_GENERAL);
-        private static readonly Tag DOCUMENT_TAG = new Tag(TAG_TERM_DOCUMENT, Tag.FHIRTAGSCHEME_GENERAL);
 
         public static void SetBundleType(this Bundle bundle, BundleType type)
         {

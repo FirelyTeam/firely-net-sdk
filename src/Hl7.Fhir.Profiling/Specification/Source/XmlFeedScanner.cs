@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Support
 {
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Support
     /// </summary>
     internal class XmlFeedScanner
     {
-        public static readonly XName ENTRY_ID = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_ID;        
+        public static readonly XName ENTRY_ID = XmlNs.XATOMNS + BundleXmlParser.XATOM_ID;        
 
         private Stream _input;
 

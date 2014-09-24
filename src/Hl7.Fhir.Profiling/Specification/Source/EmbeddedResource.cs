@@ -152,7 +152,7 @@ namespace Fhir.Profiling.IO
             }
         }
 
-        public static readonly XName ENTRY_CONTENT = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT;
+        public static readonly XName ENTRY_CONTENT = XmlNs.XATOMNS + BundleXmlParser.XATOM_CONTENT;
 
         public static string Content(XElement element)
         {

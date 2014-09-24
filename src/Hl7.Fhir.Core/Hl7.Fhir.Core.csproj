@@ -248,6 +248,7 @@
     <Compile Include="Introspection\PropertyMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
     <Compile Include="Serialization\ResourceReader.cs">

@@ -50,7 +50,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Core\Support\Logging.cs">
+      <Link>Support\Logging.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
+      <Link>Support\ReflectionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
+      <Link>Support\StringExtensions.cs</Link>
+    </Compile>
     <Compile Include="Model\Slicing.cs" />
+    <Compile Include="Specification\BaseElementNavigator.cs" />
+    <Compile Include="Specification\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\ElementNavigator.cs" />
+    <Compile Include="Specification\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Specification\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Specification\ProfileExpander.cs" />
+    <Compile Include="Specification\ProfileExtensionExtensions.cs" />
+    <Compile Include="Specification\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Source\ArtifactResolver.cs" />
+    <Compile Include="Specification\Source\CachedArtifactSource.cs" />
+    <Compile Include="Specification\Source\CoreZipArtifactSource.cs" />
+    <Compile Include="Specification\Source\EmbeddedResource.cs" />
+    <Compile Include="Specification\Source\FileArtifactSource.cs" />
+    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\MemoryArtifactSource.cs" />
+    <Compile Include="Specification\Source\ResourceCollection.cs" />
+    <Compile Include="Specification\Source\SchemaCollection.cs" />
+    <Compile Include="Specification\Source\WebArtifactSource.cs" />
+    <Compile Include="Specification\Source\XmlFeedScanner.cs" />
+    <Compile Include="Specification\Source\ZipCacher.cs" />
+    <Compile Include="Specification\StructureExpander.cs" />
+    <Compile Include="Specification\StructureLoader.cs" />
     <Compile Include="XPath\NavigatorState.cs" />
     <Compile Include="XPath\JsonXPathNavigator.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />
@@ -91,15 +122,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="validation.zip" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Api\Hl7.Fhir.Api.Net45.csproj">
-      <Project>{f3673a58-fa89-45c3-9341-79319c59b686}</Project>
-      <Name>Hl7.Fhir.Api.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.Net45.csproj">
-      <Project>{2f8a060a-b12e-4ae7-aa15-5148b2711557}</Project>
-      <Name>Hl7.Fhir.Model.Net45</Name>
+    <Content Include="Specification\Source\core-conformances-base.xml" />
+    <Content Include="Specification\Source\core-profiles-datatypes.xml" />
+    <Content Include="Specification\Source\core-profiles-resources.xml" />
+    <Content Include="Specification\Source\core-valuesets-dicom.xml" />
+    <Content Include="Specification\Source\core-valuesets-fhir.xml" />
+    <Content Include="Specification\Source\core-valuesets-v2.xml" />
+    <Content Include="Specification\Source\core-valuesets-v3.xml" />
+    <Content Include="Specification\Source\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
+      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
+      <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

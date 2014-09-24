@@ -24,7 +24,6 @@ namespace Hl7.Fhir.Serialization
 {
     internal class SerializationUtil
     {
-        public const string FHIRNS = "http://hl7.org/fhir";
         public const string RESTPARAM_FORMAT = "_format";
        
         public const string SEARCH_PARAM_ID = "_id";

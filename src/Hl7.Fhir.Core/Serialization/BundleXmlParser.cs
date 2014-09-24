@@ -46,18 +46,7 @@ namespace Hl7.Fhir.Serialization
         public const string XATOM_CONTENT = "content";
         public const string XATOM_SUMMARY = "summary";
         public const string XATOM_TOTALRESULTS = "totalResults";
-
-        public static string ATOM_CATEGORY_RESOURCETYPE_NS = "http://hl7.org/fhir/resource-types";
-        public static string ATOMPUB_TOMBSTONES_NS = "http://purl.org/atompub/tombstones/1.0";
-        public static string ATOMPUB_NS = "http://www.w3.org/2005/Atom";
-        public static string OPENSEARCH_NS = "http://a9.com/-/spec/opensearch/1.1/";
-
-        public static readonly XNamespace XATOMNS = ATOMPUB_NS;
-        public static readonly XNamespace XTOMBSTONE = ATOMPUB_TOMBSTONES_NS;
-        public static readonly XNamespace XFHIRNS = SerializationUtil.FHIRNS;
-        public static readonly XNamespace XOPENSEARCHNS = OPENSEARCH_NS;
-
-
+     
         internal static Bundle Load(XmlReader reader)
         {
             XElement feed;
@@ -72,7 +61,7 @@ namespace Hl7.Fhir.Serialization
 
                 var internalReader = XmlReader.Create(reader, settings);
                 feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
-                if (feed.Name != XNamespace.Get(ATOMPUB_NS) + "feed")
+                if (feed.Name != XmlNs.XATOM + "feed")
                     throw Error.Format("Input data is not an Atom feed", null);
             }
             catch (Exception exc)
@@ -86,18 +75,18 @@ namespace Hl7.Fhir.Serialization
             {
                 result = new Bundle()
                 {
-                    Title = SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_TITLE)),
-                    LastUpdated = SerializationUtil.InstantOrNull(feed.Element(XATOMNS + XATOM_UPDATED)),
-                    Id = SerializationUtil.UriValueOrNull(feed.Element(XATOMNS + XATOM_ID)),
-                    Links = getLinks(feed.Elements(XATOMNS + XATOM_LINK)),
-                    Tags = TagListParser.ParseTags(feed.Elements(XATOMNS + XATOM_CATEGORY)),
-                    AuthorName = feed.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                            SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
-                                .Element(XATOMNS + XATOM_AUTH_NAME)),
-                    AuthorUri = feed.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                            SerializationUtil.StringValueOrNull(feed.Element(XATOMNS + XATOM_AUTHOR)
-                                .Element(XATOMNS + XATOM_AUTH_URI)),
-                    TotalResults = SerializationUtil.IntValueOrNull(feed.Element(XOPENSEARCHNS + XATOM_TOTALRESULTS))
+                    Title = SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_TITLE)),
+                    LastUpdated = SerializationUtil.InstantOrNull(feed.Element(XmlNs.XATOM + XATOM_UPDATED)),
+                    Id = SerializationUtil.UriValueOrNull(feed.Element(XmlNs.XATOM + XATOM_ID)),
+                    Links = getLinks(feed.Elements(XmlNs.XATOM + XATOM_LINK)),
+                    Tags = TagListParser.ParseTags(feed.Elements(XmlNs.XATOM + XATOM_CATEGORY)),
+                    AuthorName = feed.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
+                            SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_AUTHOR)
+                                .Element(XmlNs.XATOM + XATOM_AUTH_NAME)),
+                    AuthorUri = feed.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
+                            SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_AUTHOR)
+                                .Element(XmlNs.XATOM + XATOM_AUTH_URI)),
+                    TotalResults = SerializationUtil.IntValueOrNull(feed.Element(XmlNs.XOPENSEARCH + XATOM_TOTALRESULTS))
                 };
             }
             catch (Exception exc)
@@ -106,8 +95,8 @@ namespace Hl7.Fhir.Serialization
             }
 
             result.Entries = loadEntries(feed.Elements().Where(elem =>
-                        (elem.Name == XATOMNS + XATOM_ENTRY ||
-                         elem.Name == XTOMBSTONE + XATOM_DELETED_ENTRY)), result);
+                        (elem.Name == XmlNs.XATOM + XATOM_ENTRY ||
+                         elem.Name == XmlNs.XATOMPUB_TOMBSTONES + XATOM_DELETED_ENTRY)), result);
 
             return result;
         }
@@ -157,15 +146,15 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                if (entry.Name == XTOMBSTONE + XATOM_DELETED_ENTRY)
+                if (entry.Name == XmlNs.XATOMPUB_TOMBSTONES + XATOM_DELETED_ENTRY)
                 {
                     result = new DeletedEntry();
                     result.Id = SerializationUtil.UriValueOrNull(entry.Attribute(XATOM_DELETED_REF));
                 }
                 else
                 {
-                    XElement content = entry.Element(XATOMNS + XATOM_CONTENT);
-                    var id = SerializationUtil.UriValueOrNull(entry.Element(XATOMNS + XATOM_ID));
+                    XElement content = entry.Element(XmlNs.XATOM + XATOM_CONTENT);
+                    var id = SerializationUtil.UriValueOrNull(entry.Element(XmlNs.XATOM + XATOM_ID));
 
                     if (content != null)
                     {
@@ -183,8 +172,8 @@ namespace Hl7.Fhir.Serialization
                     result.Id = id;
                 }
 
-                result.Links = getLinks(entry.Elements(XATOMNS + XATOM_LINK));
-                result.Tags = TagListParser.ParseTags(entry.Elements(XATOMNS + XATOM_CATEGORY));
+                result.Links = getLinks(entry.Elements(XmlNs.XATOM + XATOM_LINK));
+                result.Tags = TagListParser.ParseTags(entry.Elements(XmlNs.XATOM + XATOM_CATEGORY));
 
                 if (result is DeletedEntry)
                 {
@@ -193,15 +182,15 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     ResourceEntry re = (ResourceEntry)result;
-                    re.Title = SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_TITLE));
-                    re.LastUpdated = SerializationUtil.InstantOrNull(entry.Element(XATOMNS + XATOM_UPDATED));
-                    re.Published = SerializationUtil.InstantOrNull(entry.Element(XATOMNS + XATOM_PUBLISHED));
-                    re.AuthorName = entry.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                                SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
-                                    .Element(XATOMNS + XATOM_AUTH_NAME));
-                    re.AuthorUri = entry.Elements(XATOMNS + XATOM_AUTHOR).Count() == 0 ? null :
-                                SerializationUtil.StringValueOrNull(entry.Element(XATOMNS + XATOM_AUTHOR)
-                                    .Element(XATOMNS + XATOM_AUTH_URI));                  
+                    re.Title = SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_TITLE));
+                    re.LastUpdated = SerializationUtil.InstantOrNull(entry.Element(XmlNs.XATOM + XATOM_UPDATED));
+                    re.Published = SerializationUtil.InstantOrNull(entry.Element(XmlNs.XATOM + XATOM_PUBLISHED));
+                    re.AuthorName = entry.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
+                                SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_AUTHOR)
+                                    .Element(XmlNs.XATOM + XATOM_AUTH_NAME));
+                    re.AuthorUri = entry.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
+                                SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_AUTHOR)
+                                    .Element(XmlNs.XATOM + XATOM_AUTH_URI));                  
                 }
             }
             catch (Exception exc)

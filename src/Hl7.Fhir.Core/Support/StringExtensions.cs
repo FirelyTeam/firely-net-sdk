@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Support
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         internal static string[] SplitNotInQuotes(this string value, char separator)
         {

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Api.Introspection.Source
             }
         }
 
-        public static readonly XName ENTRY_CONTENT = BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CONTENT;
+        public static readonly XName ENTRY_CONTENT = XmlNs.XATOMNS + BundleXmlParser.XATOM_CONTENT;
 
         public static string Content(XElement element)
         {

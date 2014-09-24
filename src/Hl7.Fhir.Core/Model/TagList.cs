@@ -38,6 +38,7 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -62,11 +63,10 @@ namespace Hl7.Fhir.Model
     [FhirType]
     public class Tag
     {
-        private const string FHIRTAGNS = "http://hl7.org/fhir/tag";
-        
-        public static readonly Uri FHIRTAGSCHEME_GENERAL = new Uri(FHIRTAGNS, UriKind.Absolute);
-        public static readonly Uri FHIRTAGSCHEME_PROFILE = new Uri(FHIRTAGNS + "/profile", UriKind.Absolute);
-        public static readonly Uri FHIRTAGSCHEME_SECURITY = new Uri(FHIRTAGNS + "/security", UriKind.Absolute);
+       
+        public static readonly Uri FHIRTAGSCHEME_GENERAL = new Uri(XmlNs.FHIRTAG, UriKind.Absolute);
+        public static readonly Uri FHIRTAGSCHEME_PROFILE = new Uri(XmlNs.TAG_PROFILE, UriKind.Absolute);
+        public static readonly Uri FHIRTAGSCHEME_SECURITY = new Uri(XmlNs.TAG_SECURITY, UriKind.Absolute);
 
         [Required]
         public string Term { get; private set; }

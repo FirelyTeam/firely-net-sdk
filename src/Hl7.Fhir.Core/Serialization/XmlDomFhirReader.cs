@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static readonly XName XHTMLDIV = XHtml.XHTMLNS + "div";
+        private static readonly XName XHTMLDIV = XmlNs.XHTMLNS + "div";
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Serialization
                         var elem = (XElement)node;
                         
                         // All normal elements
-                        if(elem.Name.NamespaceName == SerializationUtil.FHIRNS)
+                        if(elem.Name.NamespaceName == XmlNs.FHIR)
                             result.Add(Tuple.Create(elem.Name.LocalName, (IFhirReader)new XmlDomFhirReader(elem)));
 
                         // The special xhtml div element

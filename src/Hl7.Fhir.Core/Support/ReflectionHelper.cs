@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Support
 {
-    public static class ReflectionHelper
+    internal static class ReflectionHelper
     {
         public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {

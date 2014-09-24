@@ -39,6 +39,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -92,7 +93,7 @@ namespace Hl7.Fhir.Model
         public const char SEARCH_CHAINSEPARATOR = '.';
         public const char SEARCH_MODIFIERSEPARATOR = ':';
 
-        public const string PARAMETERURL = "http://hl7.org/fhir/query";
+        
 
 
         public Query()
@@ -353,10 +354,10 @@ namespace Hl7.Fhir.Model
         {
             if (paramKey == null) throw new ArgumentNullException("paramName");
 
-            return PARAMETERURL + "#" + paramKey;
+            return XmlNs.FHIR_URL_SEARCHPARAM + "#" + paramKey;
         }
 
-        private const string PARAMETERURLANDFRAGMENT = PARAMETERURL + "#";
+        private const string PARAMETERURLANDFRAGMENT = XmlNs.FHIR_URL_SEARCHPARAM + "#";
 
         /// <summary>
         /// Given a Extension containing a FHIR search parameter, returns the

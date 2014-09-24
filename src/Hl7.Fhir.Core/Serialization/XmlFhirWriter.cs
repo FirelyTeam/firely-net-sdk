@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization
             if (_currentMemberName == null)
                 throw Error.InvalidOperation("There is no current member name set while starting complex content");
 
-            xw.WriteStartElement(_currentMemberName, SerializationUtil.FHIRNS);
+            xw.WriteStartElement(_currentMemberName, XmlNs.FHIR);
 
             // A new complex element starts a new scope with its own members and member names
             _memberNameStack.Push(_currentMemberName);
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Serialization
             else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
             {
                 XElement xe = XElement.Parse(valueAsString);
-                xe.Name = XHtml.XHTMLNS + xe.Name.LocalName;
+                xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
                     
                 // Write xhtml directly into the output stream,
                 // the xhtml <div> becomes part of the elements

@@ -66,8 +66,8 @@ namespace Hl7.Fhir.Serialization
         internal static XElement CreateTagCategoryPropertyXml(Tag tag, bool useAtomNs = true)
         {           
             XElement result = useAtomNs ?
-                new XElement(BundleXmlParser.XATOMNS + BundleXmlParser.XATOM_CATEGORY) :
-                new XElement(BundleXmlParser.XFHIRNS + BundleXmlParser.XATOM_CATEGORY);
+                new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_CATEGORY) :
+                new XElement(XmlNs.XFHIR + BundleXmlParser.XATOM_CATEGORY);
 
             if (!String.IsNullOrEmpty(tag.Term))
                 result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_TERM, tag.Term));

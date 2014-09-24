@@ -42,9 +42,6 @@ namespace Hl7.Fhir.Model
 {
     public partial class XHtml
     {
-        public const string XHTML = "http://www.w3.org/1999/xhtml";
-        public static readonly XNamespace XHTMLNS = (XNamespace)XHtml.XHTML;
-
         public static bool IsValidValue(string value)
         {
             try
