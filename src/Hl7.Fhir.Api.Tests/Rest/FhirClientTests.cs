@@ -455,9 +455,7 @@ namespace Hl7.Fhir.Tests
             //Assert.AreEqual(1, history.Entries.Where(entry => entry is DeletedEntry).Count());
         }
 
-
-
-
+     
         [TestMethod, TestCategory("FhirClient")]
         public void ReadTags()
         {

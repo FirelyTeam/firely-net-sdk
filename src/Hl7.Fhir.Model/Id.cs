@@ -38,17 +38,11 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Date
+    public partial class Id
     {
-        public static Date Today()
-        {
-            return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
-        }
-
         public static bool IsValidValue(string value)
         {
-            return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);
+            return Regex.IsMatch(value as string, "^" + Hl7.Fhir.Model.Id.PATTERN + "$", RegexOptions.Singleline);
         }
-
     }
 }

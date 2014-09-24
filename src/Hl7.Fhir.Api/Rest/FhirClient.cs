@@ -20,6 +20,7 @@ using Hl7.Fhir.Search;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Rest;
 using System.Threading;
+using Hl7.Fhir.Introspection;
 #if PORTABLE45 || NET45
 using System.Threading.Tasks;
 #endif
@@ -191,6 +192,7 @@ namespace Hl7.Fhir.Rest
             return entry;
         }
 
+       
         /// <summary>
         /// Refreshes the data and metadata for a given ResourceEntry.
         /// </summary>

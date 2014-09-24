@@ -48,6 +48,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Uuid.cs" />
+    <Compile Include="Oid.cs" />
+    <Compile Include="Id.cs" />
     <Compile Include="Generated\Bindings.cs" />
     <Compile Include="Generated\ModelInfo.cs" />
     <Compile Include="Generated\Address.cs" />

@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Validation
 {
@@ -25,8 +26,10 @@ namespace Hl7.Fhir.Validation
             if (value.GetType() != typeof(DateTimeOffset))
                 throw new ArgumentException("IdPatternAttribute can only be applied to DateTimeOffset properties");
 
-            //TODO: Check FHIR specific rules
-            return ValidationResult.Success;
+            if (Instant.IsValidValue(value as string))
+                return ValidationResult.Success;
+            else
+                return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted Instant", value as string);
         }
     }
 }

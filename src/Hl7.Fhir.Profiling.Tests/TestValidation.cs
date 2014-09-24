@@ -111,7 +111,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void OtherProfile()
         {
-            var spec = Factory.GetOtherSpec(true, false, "http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
+            var spec = Factory.GetOtherSpec(expand:true, online:false, uri: "http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
 
             var resource = FhirFile.LoadResource("TestData\\ldlcholesterol-correct.xml");
             var report = spec.Validate(resource);

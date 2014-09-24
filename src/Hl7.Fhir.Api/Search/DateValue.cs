@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Search
 
         public DateValue(string date)
         {
-            if (!DateTimePatternAttribute.IsValidValue(date)) throw Error.Argument("date", "Is not a valid FHIR date/time string");
+            if (!FhirDateTime.IsValidValue(date)) throw Error.Argument("date", "Is not a valid FHIR date/time string");
 
             Value = date;
         }

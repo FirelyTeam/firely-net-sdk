@@ -59,5 +59,12 @@ namespace Hl7.Fhir.Model
         {
             return new Instant(DateTimeOffset.Now);
         }
+
+        public static bool IsValidValue(string value)
+        {
+            //TODO: Implement useful validation functionality
+            return true;
+        }
+
     }
 }

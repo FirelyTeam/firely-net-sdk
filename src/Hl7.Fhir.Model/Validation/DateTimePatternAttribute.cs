@@ -19,13 +19,6 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class DateTimePatternAttribute : ValidationAttribute
     {
-        public static bool IsValidValue(string value)
-        {
-            return Regex.IsMatch(value as string, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
-
-           //TODO: Additional checks not implementable by the regex
-        }
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null) return ValidationResult.Success;
@@ -33,7 +26,7 @@ namespace Hl7.Fhir.Validation
             if (value.GetType() != typeof(string))
                 throw new ArgumentException("DateTimePatternAttribute can only be applied to string properties");
 
-            if (IsValidValue(value as string))
+            if (FhirDateTime.IsValidValue(value as string))
                 return ValidationResult.Success;
             else
                 return FhirValidator.BuildResult(validationContext, "{0} is not a correctly formatted DateTime", value as string);

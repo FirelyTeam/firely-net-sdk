@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Search
         public ReferenceValue(string value)
         {
             if (!Uri.IsWellFormedUriString(value, UriKind.Absolute) &&
-                !IdPatternAttribute.IsValidValue(value))
+                !Id.IsValidValue(value))
                 throw Error.Argument("text", "Reference is not a valid Id nor a valid absolute Url");
 
             Value = value;

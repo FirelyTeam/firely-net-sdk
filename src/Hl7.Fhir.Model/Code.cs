@@ -41,6 +41,14 @@ using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
+    public partial class Code
+    {
+        public static bool IsValidValue(string value)
+        {
+            return Regex.IsMatch(value, "^" + Code.PATTERN + "$", RegexOptions.Singleline);
+        }
+    }
+
     [FhirType("codeOfT")]
     [DataContract]
     public class Code<T> : Element where T : struct

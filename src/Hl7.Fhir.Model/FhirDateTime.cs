@@ -78,5 +78,13 @@ namespace Hl7.Fhir.Model
         {
             return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
         }
+
+        public static bool IsValidValue(string value)
+        {
+            return Regex.IsMatch(value as string, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
+
+            //TODO: Additional checks not implementable by the regex
+        }
+
     }
 }
