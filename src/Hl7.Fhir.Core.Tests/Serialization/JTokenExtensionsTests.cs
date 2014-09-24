@@ -23,9 +23,9 @@ namespace Hl7.Fhir.Tests.Serialization
     {
         private Newtonsoft.Json.Linq.JObject getPatientExample()
         {
-            Stream example = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.json");
+            var reader = new StringReader(Properties.TestResources.TestPatientJson);
 
-            return (JObject)JObject.ReadFrom(new JsonTextReader(new StreamReader(example)));
+            return (JObject)JObject.ReadFrom(new JsonTextReader(reader));
         }
 
         [TestMethod]

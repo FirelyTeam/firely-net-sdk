@@ -309,5 +309,12 @@ namespace Hl7.Fhir.Support
             return t.GetFields(BindingFlags.Public | BindingFlags.Static);
 #endif
         }
+
+        internal static bool IsArray(object value)
+        {
+            if (value == null) throw Error.ArgumentNull("value");
+
+            return value.GetType().IsArray;
+        }
     }
 }

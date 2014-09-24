@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using System.IO;
 
 namespace Hl7.Fhir.Tests.Validation
 {
@@ -25,14 +26,20 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void ValidateDemoPatient()
         {
-            var s = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.patient-example.xml");
+            var s = new StringReader(Properties.TestResources.TestPatientXml);
 
             var patient = (Patient)FhirParser.ParseResource(XmlReader.Create(s));
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 
-            DotNetAttributeValidation.Validate(patient,true);
+            Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsTrue(results.Count > 0);
+            // In the example, the contained resource has narrative
 
+            results.Clear();
+            foreach (var contained in patient.Contained) contained.Text = null;
+
+            // Try again
             Assert.IsTrue(DotNetAttributeValidation.TryValidate(patient, results, true));
 
             patient.Identifier[0].System = "urn:oid:crap really not valid";

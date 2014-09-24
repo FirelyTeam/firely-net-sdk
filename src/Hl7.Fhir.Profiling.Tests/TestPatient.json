@@ -1,4 +1,4 @@
-﻿{
+{
     "resourceType": "Patient",
     "identifier": [{
         "label": "MRN",

@@ -278,8 +278,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
         private static JsonXPathNavigator buildNav()
         {
-            Stream example = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Hl7.Fhir.Test.TestPatient.json");
-            return new JsonXPathNavigator(new JsonTextReader(new StreamReader(example)));
+            var reader = new StringReader(Properties.TestResources.TestPatientJson);
+            return new JsonXPathNavigator(new JsonTextReader(reader));
         }
     }
 }

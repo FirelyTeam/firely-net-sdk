@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -37,7 +38,7 @@ namespace Hl7.Fhir.Validation
 
             var count = 1;
 
-            if (value is IList)
+            if (value is IList && !ReflectionHelper.IsArray(value))
             {
                 var list = value as IList;
                 foreach(var elem in list)

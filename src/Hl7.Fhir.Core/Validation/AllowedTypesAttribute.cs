@@ -21,7 +21,6 @@ namespace Hl7.Fhir.Validation
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class AllowedTypesAttribute : ValidationAttribute
     {
-        [CLSCompliant(false)]
         public AllowedTypesAttribute(params Type[] types)
         {
             Types = types;

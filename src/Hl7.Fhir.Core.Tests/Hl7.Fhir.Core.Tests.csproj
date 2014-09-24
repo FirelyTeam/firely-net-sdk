@@ -75,6 +75,11 @@
     <Compile Include="Introspection\ClassMappingTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\TestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Search\QueryTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,7 +93,6 @@
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
-    <Compile Include="Serialization\JsonNavigatorTests.cs" />
     <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
@@ -107,13 +111,14 @@
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestPatient.json" />
+    <EmbeddedResource Include="Properties\TestResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>TestResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestPatientLargeNumbers.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestPatient.xml">
+    <EmbeddedResource Include="TestData\TestPatient.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -121,13 +126,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="patient-example.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\TestPatient.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\TestPatientLargeNumbers.json" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
