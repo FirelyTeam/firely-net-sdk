@@ -13,6 +13,7 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -278,7 +279,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
         private static JsonXPathNavigator buildNav()
         {
-            var reader = new StringReader(Properties.TestResources.TestPatientJson);
+            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var reader = new StringReader(json);
             return new JsonXPathNavigator(new JsonTextReader(reader));
         }
     }

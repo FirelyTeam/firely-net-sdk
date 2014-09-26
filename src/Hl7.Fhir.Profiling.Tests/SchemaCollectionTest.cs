@@ -17,6 +17,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using Hl7.Fhir.Introspection.Source;
 
 namespace Hl7.Fhir.Test.Inspection
 {
@@ -55,8 +56,8 @@ namespace Hl7.Fhir.Test.Inspection
         {
             // This kind of test is also done in Introspection/SchemaCollectionTest....
 
-            var s = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.patient-example.xml");
-            var doc = XDocument.Load(s);
+            var s = File.ReadAllText(@"TestData\TestPatient.xml");
+            var doc = XDocument.Parse(s);
 
             bool hasError = false;
 

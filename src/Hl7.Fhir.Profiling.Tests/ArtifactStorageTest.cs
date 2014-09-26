@@ -248,7 +248,8 @@ namespace Hl7.Fhir.Test.Inspection
             src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
             sw2.Stop();
 
-            Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+            Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
+            Assert.IsTrue(sw2.ElapsedMilliseconds <= sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
 
             // Now try an existing artifact
             sw1.Restart();

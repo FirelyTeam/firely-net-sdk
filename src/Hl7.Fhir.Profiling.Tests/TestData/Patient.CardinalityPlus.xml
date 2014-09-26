@@ -23,7 +23,7 @@
     <system value="phone"/>
     <value value="555-555-2003"/>
     <use value="work"/>
-    <use value="private"/> <!-- the cardinality of use should fail -->
+    <use value="mobile"/> <!-- the cardinality of use should fail -->
   </telecom>
   <gender>
     <coding>

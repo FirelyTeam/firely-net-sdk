@@ -16,24 +16,13 @@ namespace Fhir.Profiling.Tests
             spec = Factory.GetProfileSpec(expand: true, online: false);
         }
        
-        [TestMethod]
+        [TestMethod,Ignore]
         public void LipidProfile()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.profile.xml");
             Report report = Validation.Validate(resource);
 
             var errors = report.Errors.ToList();
-            Assert.IsTrue(report.IsValid);
-        }
-
-        [TestMethod]
-        public void Expanded()
-        {
-            var resource = FhirFile.LoadResource("TestData\\lipid.profile.expanded.xml");
-            Report report = Validation.Validate(resource);
-
-            var errors = report.Errors.ToList();
-            
             Assert.IsTrue(report.IsValid);
         }
     }

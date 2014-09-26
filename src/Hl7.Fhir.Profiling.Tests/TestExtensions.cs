@@ -7,7 +7,7 @@ namespace Fhir.Profiling.Tests
     [TestClass]
     public class TestExtensions
     {
-        [TestMethod]
+        [TestMethod,Ignore]
         public void Extensions()
         {
             Specification spec = Factory.GetExtendedPatientSpec(expand: false, online: false);

@@ -33,7 +33,7 @@ namespace Fhir.Profiling.Tests
             spec =  builder.ToSpecification();
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void CorrectFixedValue()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.fixvalue.xml");
@@ -42,7 +42,7 @@ namespace Fhir.Profiling.Tests
             Assert.IsTrue(report.IsValid);
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void IncorrectFixedValue()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.fixvalue.wrong.xml");
@@ -55,7 +55,7 @@ namespace Fhir.Profiling.Tests
 
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void SlicingValid()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.slice.valid.xml");
@@ -64,7 +64,7 @@ namespace Fhir.Profiling.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void SlicingInvalid()
         {
             var resource = FhirFile.LoadResource("TestData\\lipid.slice.invalid.xml");

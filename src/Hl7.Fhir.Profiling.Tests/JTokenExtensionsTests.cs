@@ -15,17 +15,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using Hl7.Fhir.XPath;
 
-namespace Hl7.Fhir.Tests.Serialization
+namespace Hl7.Fhir.Profiling.Tests
 {
     [TestClass]
     public class JTokenExtensionTests
     {
         private Newtonsoft.Json.Linq.JObject getPatientExample()
         {
-            var reader = new StringReader(Properties.TestResources.TestPatientJson);
+            //var reader = new StringReader(Properties.TestResources.TestPatientJson);
+            var json = File.ReadAllText(@"TestData\TestPatient.json");
 
-            return (JObject)JObject.ReadFrom(new JsonTextReader(reader));
+            return (JObject)JObject.Parse(json);
         }
 
         [TestMethod]

@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -56,6 +57,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ArtifactStorageTest.cs" />
+    <Compile Include="JsonNavigatorTests.cs" />
+    <Compile Include="JTokenExtensionsTests.cs" />
+    <Compile Include="ProfileExpansionTest.cs" />
+    <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestExtensions.cs" />
@@ -69,20 +74,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="TestData\TestPatient.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\TestPatient.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
-    <EmbeddedResource Include="TestPatient.json" />
-    <Content Include="example-lipid-profile-differential.xml">
+    <Content Include="TestData\example-lipid-profile-differential.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="example-lipid-profile-testmessage.xml" />
-    <Content Include="example-lipid-profile.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="example-lipid-valueset-interpretation.xml" />
     <Content Include="TestData\example-lipid-profile-testmessage.xml" />
+    <Content Include="TestData\example-lipid-profile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\example-lipid-valueset-interpretation.xml" />
     <Content Include="TestData\ldlcholesterol-correct.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\lipid.profile.manual.differential.xml" />
     <Content Include="TestData\lipid.profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -149,7 +160,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Api</Name>
+      <Name>Hl7.Fhir.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hl7.Fhir.Profiling\Hl7.Fhir.Profiling.csproj">
+      <Project>{3b6b0d98-f3f2-43eb-97f2-a20d23be3b71}</Project>
+      <Name>Hl7.Fhir.Profiling</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
