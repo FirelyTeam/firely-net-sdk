@@ -1,5 +1,6 @@
 ﻿using System;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Fhir.Profiling.Tests

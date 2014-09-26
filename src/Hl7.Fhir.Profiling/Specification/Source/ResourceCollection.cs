@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Api.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     public class ResourceCollection
     {

@@ -11,11 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Profiling;
 
 namespace Hl7.Fhir.Profiling
 {
+    using Hl7.Fhir.Specification.Model;
     using Model = Hl7.Fhir.Model;
     
     public class SpecificationBuilder
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Profiling
             this.provider = provider;
         }
 
-        private Specification specification = new Specification();
+        private SpecificationWorkspace specification = new SpecificationWorkspace();
         private SpecificationProvider provider;
         private Tracker tracker = new Tracker();
 
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Profiling
 
         }
 
-        public Specification ToSpecification()
+        public SpecificationWorkspace ToSpecification()
         {
             if (!specification.Sealed)
             {

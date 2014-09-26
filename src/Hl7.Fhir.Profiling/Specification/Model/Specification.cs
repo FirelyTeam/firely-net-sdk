@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.Model
 {
 
     public enum SlicingRules { OpenAtEnd };
@@ -21,14 +21,14 @@ namespace Hl7.Fhir.Profiling
     /// FHIR Profile. Basis for validation of FHIR Resources.
     /// Profile should be constructed from a ProfileBuilder
     /// </summary>
-    public class Specification
+    public class SpecificationWorkspace
     {
         private List<Structure> _structures = new List<Structure>();
         private List<ValueSet> _valueSets = new List<ValueSet>();
 
         public bool Sealed { get; internal set; }
 
-        internal Specification()
+        internal SpecificationWorkspace()
         {
             Sealed = false;
         }

@@ -14,7 +14,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Linq;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources

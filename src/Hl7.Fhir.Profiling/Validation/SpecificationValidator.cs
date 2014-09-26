@@ -11,13 +11,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Profiling
 {
 
     public class SpecificationValidator
     {
-        private Specification profile;
+        private SpecificationWorkspace profile;
         private List<string> missingStructureNames = new List<string>();
         public event OutcomeLogger LogOutcome = null;
         
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Profiling
         }
         
 
-        public SpecificationValidator(Specification profile)
+        public SpecificationValidator(SpecificationWorkspace profile)
         {
             this.profile = profile;
         }

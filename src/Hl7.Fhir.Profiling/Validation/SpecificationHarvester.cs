@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.XPath;
-using Hl7.Fhir.Api.Introspection;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Profiling
 {
@@ -41,27 +40,27 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        private void HarvestBinding(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestBinding(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
 
             if (source.Binding != null)
             {
                 var reference = source.Binding.Reference;
 
-                if (reference is ResourceReference)
+                if (reference is Hl7.Fhir.Model.ResourceReference)
                 {
                     // todo: dit deel is nog niet getest.
-                    target.BindingUri = (reference as ResourceReference).Url.ToString();
+                    target.BindingUri = (reference as Hl7.Fhir.Model.ResourceReference).Url.ToString();
                 }
-                else if (reference is FhirUri)
+                else if (reference is Hl7.Fhir.Model.FhirUri)
                 {
-                    target.BindingUri = (reference as FhirUri).Value;
+                    target.BindingUri = (reference as Hl7.Fhir.Model.FhirUri).Value;
                 }
             }
 
         }
 
-        private void HarvestFixedValue(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestFixedValue(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             target.FixedValue = null;
 
@@ -77,12 +76,12 @@ namespace Hl7.Fhir.Profiling
             }            
         }
 
-        private void HarvestConstraints(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestConstraints(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             if (source.Constraint == null)
                 return;
 
-            foreach(Profile.ElementDefinitionConstraintComponent c in source.Constraint)
+            foreach (Hl7.Fhir.Model.Profile.ElementDefinitionConstraintComponent c in source.Constraint)
             {
                 Constraint constraint = new Constraint();
                 constraint.Name = c.Name ?? c.Key;
@@ -92,7 +91,7 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        private void HarvestCardinality(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestCardinality(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             Cardinality cardinality = new Cardinality();
             cardinality.Min = source.Min.ToString();
@@ -100,12 +99,12 @@ namespace Hl7.Fhir.Profiling
             target.Cardinality = cardinality;
         }
 
-        private void HarvestElementRef(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestElementRef(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             target.ElementRefPath = source.NameReference;
         }
 
-        private TypeRef HarvestTypeRef(Profile.TypeRefComponent type)
+        private TypeRef HarvestTypeRef(Hl7.Fhir.Model.Profile.TypeRefComponent type)
         {
             TypeRef typeref = new TypeRef(type.Code, type.Profile);
                 //builder.CreateTypeRef(type.Code, type.Profile);
@@ -113,7 +112,7 @@ namespace Hl7.Fhir.Profiling
             return typeref;
         }
 
-        private void HarvestTypeRefs(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestTypeRefs(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             if (source.Type == null)
                 return;
@@ -123,23 +122,23 @@ namespace Hl7.Fhir.Profiling
                 target.TypeRefs.Add(HarvestTypeRef(type));
             }
         }
-       
-        private void HarvestSlicing(Profile.ElementComponent source, Element target)
+
+        private void HarvestSlicing(Hl7.Fhir.Model.Profile.ElementComponent source, Element target)
         {
             InjectSlice(target);
         }
 
-        private Representation TransformRepresentation(Profile.ElementComponent source)
+        private Representation TransformRepresentation(Hl7.Fhir.Model.Profile.ElementComponent source)
         {
             if (source.Representation == null)
                 return Representation.Element;
 
-            return (source.Representation.Contains(Profile.PropertyRepresentation.XmlAttr))
+            return (source.Representation.Contains(Hl7.Fhir.Model.Profile.PropertyRepresentation.XmlAttr))
                 ? Representation.Attribute
                 : Representation.Element;
         }
 
-        private void HarvestElementDefinition(Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestElementDefinition(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
         {
             if (source != null)
             {
@@ -152,7 +151,7 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        private void HarvestElement(Profile.ElementComponent source, Element target)
+        private void HarvestElement(Hl7.Fhir.Model.Profile.ElementComponent source, Element target)
         {
             target.Path = new Path(source.Path);
             target.Name = target.Path.ElementName; //source.Name; 
@@ -162,14 +161,14 @@ namespace Hl7.Fhir.Profiling
             HarvestSlicing(source, target); 
         }
 
-        private Element HarvestElement(Profile.ElementComponent source)
+        private Element HarvestElement(Hl7.Fhir.Model.Profile.ElementComponent source)
         {
             Element target = new Element();
             HarvestElement(source, target);
             return target;
         }
 
-        private void HarvestElements(Profile.ProfileStructureComponent source, Structure target)
+        private void HarvestElements(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Structure target)
         {
             foreach(var element in source.Element)
             {
@@ -178,7 +177,7 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-        private Slicing PrepareSlice(Profile.ElementComponent source)
+        private Slicing PrepareSlice(Hl7.Fhir.Model.Profile.ElementComponent source)
         {
             Slicing slicing = new Slicing();
             slicing.Path = new Path(source.Path);
@@ -186,9 +185,9 @@ namespace Hl7.Fhir.Profiling
             return slicing;
         }
 
-        public void PrepareSlices(Profile.ProfileStructureComponent source)
+        public void PrepareSlices(Hl7.Fhir.Model.Profile.ProfileStructureComponent source)
         {
-            foreach(Profile.ElementComponent e in source.Element)
+            foreach (Hl7.Fhir.Model.Profile.ElementComponent e in source.Element)
             {
                 if (e.Slicing != null)
                 {
@@ -208,8 +207,8 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-      
-        public Structure HarvestStructure(Profile.ProfileStructureComponent source, Uri uri)
+
+        public Structure HarvestStructure(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Uri uri)
         {
             Structure target = new Structure();
             target.Name = source.Name;
@@ -221,7 +220,7 @@ namespace Hl7.Fhir.Profiling
             return target;
         }
 
-        public Structure HarvestExtensionDefn(Profile.ProfileExtensionDefnComponent source)
+        public Structure HarvestExtensionDefn(Hl7.Fhir.Model.Profile.ProfileExtensionDefnComponent source)
         {
             Structure target = new Structure();
             target.Name = source.Code;
@@ -234,10 +233,10 @@ namespace Hl7.Fhir.Profiling
         }
 
 
-       
 
 
-        public void HarvestProfileExtensions(Profile source)
+
+        public void HarvestProfileExtensions(Hl7.Fhir.Model.Profile source)
         {
             foreach(var defn in source.ExtensionDefn)
             {

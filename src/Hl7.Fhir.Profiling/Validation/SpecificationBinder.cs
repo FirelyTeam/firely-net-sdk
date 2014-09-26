@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.Specification.Model;
 using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Profiling
 {
     internal class SpecificationBinder
     {
-        private Specification specification;
+        private SpecificationWorkspace specification;
 
-        private SpecificationBinder(Specification specification)
+        private SpecificationBinder(SpecificationWorkspace specification)
         {
             this.specification = specification;
         }
@@ -137,7 +138,7 @@ namespace Hl7.Fhir.Profiling
         /// <summary>
         /// Make the profile complete and usable by binding all internal structures and perform precompilation
         /// </summary>
-        public static void Bind(Specification specification)
+        public static void Bind(SpecificationWorkspace specification)
         {
             SpecificationBinder binder = new SpecificationBinder(specification);
             binder.bind();

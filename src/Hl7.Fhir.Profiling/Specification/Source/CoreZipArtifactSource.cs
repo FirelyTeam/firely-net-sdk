@@ -19,7 +19,7 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files

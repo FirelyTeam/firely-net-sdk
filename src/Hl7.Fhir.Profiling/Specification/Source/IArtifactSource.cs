@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     public interface IArtifactSource
     {

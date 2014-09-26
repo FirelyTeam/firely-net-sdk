@@ -14,6 +14,7 @@ using System.Xml;
 using System.Xml.XPath;
 using Hl7.Fhir.XPath;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 
     // todo: profile references "#lipidpanel" worden nog niet geresolved
     // todo: waar zitten de slicing fixed-values
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Profiling
     public class ResourceValidator
     {
 
-        private Specification specification = new Specification();
+        private SpecificationWorkspace specification = new SpecificationWorkspace();
         public event OutcomeLogger LogOutcome = null;
 
         private ReportBuilder reporter = new ReportBuilder();
@@ -64,7 +65,7 @@ namespace Hl7.Fhir.Profiling
             if (LogOutcome != null) LogOutcome(outcome);
         }
 
-        public ResourceValidator(Specification profile)
+        public ResourceValidator(SpecificationWorkspace profile)
         {
             this.specification = profile;
         }

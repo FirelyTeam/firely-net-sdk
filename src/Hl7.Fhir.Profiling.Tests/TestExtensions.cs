@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 
 namespace Fhir.Profiling.Tests
 {
@@ -10,7 +11,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod,Ignore]
         public void Extensions()
         {
-            Specification spec = Factory.GetExtendedPatientSpec(expand: false, online: false);
+            SpecificationWorkspace spec = Factory.GetExtendedPatientSpec(expand: false, online: false);
             var resource = FhirFile.LoadResource("TestData\\patient.extended.valid.xml");
             Report report = spec.Validate(resource);
 

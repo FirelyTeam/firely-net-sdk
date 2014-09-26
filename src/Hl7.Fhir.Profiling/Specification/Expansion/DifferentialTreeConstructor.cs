@@ -11,11 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Specification.Expansion
 {
     /// <summary>
     /// Differential structures may contain paths that "skip" over parents. For our profile expansion logic,

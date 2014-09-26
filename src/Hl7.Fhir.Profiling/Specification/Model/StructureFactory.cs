@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.XPath;
 
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.Model
 {
     public static class StructureFactory
     {

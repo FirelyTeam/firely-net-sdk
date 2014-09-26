@@ -9,15 +9,16 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
+using Hl7.Fhir.Specification.Source;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class TestAdvancedValidation
     {
-        static Specification spec;
+        static SpecificationWorkspace spec;
 
         [ClassInitialize] 
         public static void Init(TestContext context)

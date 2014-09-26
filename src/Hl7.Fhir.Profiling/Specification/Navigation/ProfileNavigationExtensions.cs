@@ -14,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
     {

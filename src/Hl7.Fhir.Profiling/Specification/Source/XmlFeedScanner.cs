@@ -15,7 +15,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Support
+namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Atom Xml feed for a given entry. The feed is

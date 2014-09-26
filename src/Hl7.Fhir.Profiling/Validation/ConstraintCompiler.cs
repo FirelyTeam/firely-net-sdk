@@ -14,6 +14,7 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using Hl7.Fhir.XPath;
+using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Profiling
 {

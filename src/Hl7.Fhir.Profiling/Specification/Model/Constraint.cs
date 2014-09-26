@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.Model
 {
     public class Constraint
     {

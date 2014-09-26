@@ -12,18 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
+using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Profiling
 {
     public static class Validation
     {
-        public static Report Validate(this Specification specification)
+        public static Report Validate(this SpecificationWorkspace specification)
         {
             SpecificationValidator pv = new SpecificationValidator(specification);
             return pv.Validate();
         }
 
-        public static Report Validate(this Specification specification, XPathNavigator root)
+        public static Report Validate(this SpecificationWorkspace specification, XPathNavigator root)
         {
             ResourceValidator validator = new ResourceValidator(specification);
             Report report = validator.Validate(root);
@@ -36,7 +37,7 @@ namespace Hl7.Fhir.Profiling
             return provider;
         }
 
-        public static Specification GetSpecification(Uri uri, bool expand)
+        public static SpecificationWorkspace GetSpecification(Uri uri, bool expand)
         {
             SpecificationProvider provider = GetSpecificationResolver();
             SpecificationBuilder builder = new SpecificationBuilder(provider);
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Profiling
             return builder.ToSpecification();
         }
 
-        public static Specification GetSpecification(XPathNavigator root, bool expand = true)
+        public static SpecificationWorkspace GetSpecification(XPathNavigator root, bool expand = true)
         {
             Uri uri = new Uri("http://hl7.org/fhir/Profile/" + root.Name.ToLower());
             
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Profiling
 
         public static Report Validate(XPathNavigator root)
         {
-            Specification spec = GetSpecification(root);
+            SpecificationWorkspace spec = GetSpecification(root);
             return spec.Validate(root);
         }
 

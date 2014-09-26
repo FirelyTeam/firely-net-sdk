@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Introspection.Source;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Profiling
 {
+    using Hl7.Fhir.Specification.Model;
     using Model = Hl7.Fhir.Model;
 
     public class SpecificationProvider

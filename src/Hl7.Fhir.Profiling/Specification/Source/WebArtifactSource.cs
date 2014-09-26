@@ -13,7 +13,7 @@ using System.Text;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Introspection.Source
             throw new NotImplementedException();        // support only url-based artifacts
         }
 
-        public Model.Resource ReadResourceArtifact(Uri artifactId)
+        public Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId)
         {
             if (artifactId == null) throw Error.ArgumentNull("artifactId");
             if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");

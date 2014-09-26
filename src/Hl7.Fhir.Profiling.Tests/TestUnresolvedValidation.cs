@@ -1,13 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class TestSimpleValidation
     {
-        static Specification spec;
+        static SpecificationWorkspace spec;
         
         [ClassInitialize]
         public static void Init(TestContext context)

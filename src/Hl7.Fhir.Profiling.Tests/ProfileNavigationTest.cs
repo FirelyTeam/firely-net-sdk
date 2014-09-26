@@ -14,11 +14,12 @@ using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Serialization;
 using System.Reflection;
 using System.Xml;
 using System.Collections.Generic;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Test.Inspection
 {

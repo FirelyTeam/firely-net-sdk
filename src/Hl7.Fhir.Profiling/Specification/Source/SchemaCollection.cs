@@ -13,9 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using Hl7.Fhir.Introspection.Source;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
 #if !PORTABLE45
     public class SchemaCollection

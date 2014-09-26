@@ -17,7 +17,7 @@ using System.Xml.Linq;
 using SharpCompress.Archive;
 #endif
 
-namespace Hl7.Fhir.Support
+namespace Hl7.Fhir.Specification.Source
 {
 #if !PORTABLE45
     /// <summary>

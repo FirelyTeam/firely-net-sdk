@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 using System.Xml;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 
 namespace Fhir.Profiling.Tests
 {
@@ -32,7 +32,7 @@ namespace Fhir.Profiling.Tests
             }
         }
 
-        public static Specification GetPatientSpec(bool expand, bool online)
+        public static SpecificationWorkspace GetPatientSpec(bool expand, bool online)
         {
             SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
@@ -46,7 +46,7 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
         }
 
-        public static Specification GetProfileSpec(bool expand, bool online)
+        public static SpecificationWorkspace GetProfileSpec(bool expand, bool online)
         {
             SpecificationProvider resolver = GetProvider(online);
             
@@ -58,7 +58,7 @@ namespace Fhir.Profiling.Tests
             return builder.ToSpecification();
         }
 
-        public static Specification GetLipidSpec(bool expand, bool online)
+        public static SpecificationWorkspace GetLipidSpec(bool expand, bool online)
         {
             SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
@@ -72,7 +72,7 @@ namespace Fhir.Profiling.Tests
 
         }
 
-        public static Specification GetExtendedPatientSpec(bool expand, bool online)
+        public static SpecificationWorkspace GetExtendedPatientSpec(bool expand, bool online)
         {
             SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
@@ -85,7 +85,7 @@ namespace Fhir.Profiling.Tests
 
         }
 
-        public static Specification GetOtherSpec(bool expand, bool online, string uri)
+        public static SpecificationWorkspace GetOtherSpec(bool expand, bool online, string uri)
         {
             SpecificationProvider resolver = GetProvider(online);
             SpecificationBuilder builder = new SpecificationBuilder(resolver);

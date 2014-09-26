@@ -10,11 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Introspection.Source;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Specification.Source
 {
     public class StructureLoader
     {

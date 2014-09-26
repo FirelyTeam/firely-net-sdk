@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Specification.Model;
 
 namespace Fhir.Profiling.Tests
 {
     [TestClass]
     public class TestBasicValidation
     {
-        static Specification spec;
+        static SpecificationWorkspace spec;
         
         [ClassInitialize]
         public static void Init(TestContext context)

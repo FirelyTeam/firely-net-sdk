@@ -1,4 +1,4 @@
-﻿using Hl7.Fhir.Introspection.Source;
+﻿using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.Introspection.Source
+namespace Hl7.Fhir.Specification.Source
 {
     public class MemoryArtifactSource : IArtifactSource
     {

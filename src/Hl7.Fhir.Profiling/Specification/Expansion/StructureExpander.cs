@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Introspection.Source;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Specification.Expansion
 {
     //TODO: relative uri's may cause problems, and are maybe better fixed by making them absolute, eventually - when serializing a full profile
     // url's relative to that profile can then be "corrected" back to relative uri's. As well, relative uri's to contained resources will need the
