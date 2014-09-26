@@ -69,7 +69,11 @@
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />
+    <Compile Include="Model\Base64Binary.cs" />
+    <Compile Include="Model\FhirString.cs" />
     <Compile Include="Model\FhirDateTime.cs" />
+    <Compile Include="Model\FhirBoolean.cs" />
+    <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
     <Compile Include="Model\Generated\Address.cs" />
     <Compile Include="Model\Generated\AdverseReaction.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="Model\Generated\XHtml.cs" />
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
+    <Compile Include="Model\FhirDecimal.cs" />
     <Compile Include="Model\Identifier.cs" />
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />

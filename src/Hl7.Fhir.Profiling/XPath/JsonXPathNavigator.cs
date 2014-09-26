@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
+using Hl7.Fhir.Support;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -20,10 +21,6 @@ namespace Hl7.Fhir.XPath
 {
     public class JsonXPathNavigator : XPathNavigator, IXPathNavigable
     {
-        public const string XHTML_NS = "http://www.w3.org/1999/xhtml";
-        public const string FHIR_NS = "http://hl7.org/fhir";
-        public const string XML_NS = "http://www.w3.org/XML/1998/namespace";
-
         public const string FHIR_PREFIX = "f";
         public const string XHTML_PREFIX = "html";
         public const string XML_PREFIX = "xml";
@@ -61,9 +58,9 @@ namespace Hl7.Fhir.XPath
                 throw new FormatException("Cannot parse json: " + e.Message);
             }
 
-            _nameTable.Add(FHIR_NS);
-            _nameTable.Add(XHTML_NS);
-            _nameTable.Add(XML_NS);
+            _nameTable.Add(XmlNs.FHIR);
+            _nameTable.Add(XmlNs.XHTML);
+            _nameTable.Add(XmlNs.NAMESPACE);
             _nameTable.Add(String.Empty);
             _nameTable.Add(FHIR_PREFIX);
             _nameTable.Add(XML_PREFIX);
@@ -91,8 +88,8 @@ namespace Hl7.Fhir.XPath
 
         private Lazy<List<Tuple<string,string>>> _namespaces = new Lazy<List<Tuple<string,string>>>( () =>
             new List<Tuple<string,string>>() { 
-                Tuple.Create(FHIR_PREFIX,FHIR_NS),
-                Tuple.Create(XHTML_PREFIX,XHTML_NS),
+                Tuple.Create(FHIR_PREFIX,XmlNs.FHIR),
+                Tuple.Create(XHTML_PREFIX,XmlNs.XHTML),
         //        Tuple.Create(XML_PREFIX,XML_NS),
             });
        
@@ -426,9 +423,9 @@ namespace Hl7.Fhir.XPath
                     // Check for the special <div> element, which comes from the xhtml namespace. Otherwise,
                     // return the FHIR namespace
                     if (LocalName == "div")
-                        return nt(XHTML_NS);
+                        return nt(XmlNs.XHTML);
                     else
-                        return nt(FHIR_NS);
+                        return nt(XmlNs.FHIR);
                 }
                 else
                     return nt(String.Empty);

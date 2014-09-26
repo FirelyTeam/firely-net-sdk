@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Profiling
             structure.Elements.Add(element);
         }
 
-        public static Structure Primitive(string name, IPrimitiveValidator validator, string nsprefix = FhirNamespaceManager.Fhir)
+        public static Structure Primitive(string name, Func<string,bool> validator, string nsprefix = FhirNamespaceManager.Fhir)
         {
             Structure structure = new Structure();
             structure.Type = name;
@@ -91,18 +91,18 @@ namespace Hl7.Fhir.Profiling
             { 
                 Primitive("instant", null),
                 Primitive("date", null),
-                Primitive("dateTime", RegExPrimitiveValidator.For(Hl7.Fhir.Model.FhirDateTime.PATTERN)),
-                Primitive("decimal", RegExPrimitiveValidator.For(@"\d+")),
+                Primitive("dateTime", Hl7.Fhir.Model.FhirDateTime.IsValidValue),
+                Primitive("decimal", Hl7.Fhir.Model.FhirDecimal.IsValidValue),
                 //Primitive("element", ".*"),
-                Primitive("boolean", RegExPrimitiveValidator.For("(true|false)")),
-                Primitive("integer", RegExPrimitiveValidator.For(@"\d+")),
-                Primitive("string", null),
-                Primitive("uri", new UriPrimitiveValidator()),
-                Primitive("base64Binary", null),
-                Primitive("code", RegExPrimitiveValidator.For(Hl7.Fhir.Model.Code.PATTERN)),
-                Primitive("id", RegExPrimitiveValidator.For(@"[a-z0-9\-\.]{1,36}")),
-                Primitive("oid", null),
-                Primitive("uuid" , null)
+                Primitive("boolean", Hl7.Fhir.Model.FhirBoolean.IsValidValue),
+                Primitive("integer", Hl7.Fhir.Model.Integer.IsValidValue),
+                Primitive("string", Hl7.Fhir.Model.FhirString.IsValidValue),
+                Primitive("uri", Hl7.Fhir.Model.FhirUri.IsValidValue),
+                Primitive("base64Binary", Hl7.Fhir.Model.Base64Binary.IsValidValue),
+                Primitive("code", Hl7.Fhir.Model.Code.IsValidValue),
+                Primitive("id", Hl7.Fhir.Model.Id.IsValidValue),
+                Primitive("oid", Hl7.Fhir.Model.Oid.IsValidValue),
+                Primitive("uuid" , Hl7.Fhir.Model.Uuid.IsValidValue)
             };
 
             return list;

@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hl7.Fhir.Profiling")]
+[assembly: AssemblyTitle("Hl7.Fhir.Specification")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("Hl7.Fhir.Profiling")]
+[assembly: AssemblyProduct("Hl7.Fhir.Specification")]
 [assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.11.2.*")]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.Profiling.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests")]
 #endif
 
 #if RELEASE

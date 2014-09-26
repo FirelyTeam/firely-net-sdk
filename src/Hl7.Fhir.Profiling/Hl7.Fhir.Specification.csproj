@@ -7,8 +7,8 @@
     <ProjectGuid>{3B6B0D98-F3F2-43EB-97F2-A20D23BE3B71}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir.Profiling</RootNamespace>
-    <AssemblyName>Hl7.Fhir.Profiling</AssemblyName>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Specification</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Profiling.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Specification.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -95,7 +95,6 @@
     <Compile Include="Validation\KindAndType.cs" />
     <Compile Include="Validation\Outcome.cs" />
     <Compile Include="Model\Path.cs" />
-    <Compile Include="Model\PrimitiveValidator.cs" />
     <Compile Include="Validation\SpecificationBuilder.cs" />
     <Compile Include="Validation\SpecificationProvider.cs" />
     <Compile Include="Validation\SpecificationBinder.cs" />
@@ -129,7 +128,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Api</Name>
+      <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

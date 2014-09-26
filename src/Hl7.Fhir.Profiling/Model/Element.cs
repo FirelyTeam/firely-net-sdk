@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Profiling
         public bool IsPrimitive { get; set; }
         public Representation Representation { get; set; }
         //public string PrimitivePattern {get; set;} // RegExPattern to validate a primite against (only in case of IsPrimitive)
-        public IPrimitiveValidator PrimitiveValidator;
+        public Func<string,bool> PrimitiveValidator;
 
         public string BindingUri;
         public ValueSet Binding;
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Profiling
         {
             if (PrimitiveValidator != null)
             {
-                return PrimitiveValidator.IsValid(value);
+                return PrimitiveValidator(value);
             }
             else return true;
         }

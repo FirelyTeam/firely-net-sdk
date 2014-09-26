@@ -6,8 +6,8 @@
     <ProjectGuid>{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir.Profiling.Tests</RootNamespace>
-    <AssemblyName>HL7.Fhir.Profiling.Tests</AssemblyName>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>HL7.Fhir.Specification.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -162,9 +162,9 @@
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Profiling\Hl7.Fhir.Profiling.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Profiling\Hl7.Fhir.Specification.csproj">
       <Project>{3b6b0d98-f3f2-43eb-97f2-a20d23be3b71}</Project>
-      <Name>Hl7.Fhir.Profiling</Name>
+      <Name>Hl7.Fhir.Specification</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

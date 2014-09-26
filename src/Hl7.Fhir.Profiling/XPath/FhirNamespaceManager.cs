@@ -14,7 +14,7 @@ using System.Xml.XPath;
 
 namespace Hl7.Fhir.XPath
 {
-    public static class FhirNamespaceManager
+    internal static class FhirNamespaceManager
     {
         public const string Fhir = "f";
         public const string Atom = "atom";

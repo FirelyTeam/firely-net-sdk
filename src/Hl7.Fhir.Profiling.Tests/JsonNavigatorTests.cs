@@ -13,6 +13,7 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(nav.IsEmptyElement);
             Assert.AreEqual("f:Patient", nav.Name);
             Assert.AreEqual("Patient", nav.LocalName);
-            Assert.AreEqual(JsonXPathNavigator.FHIR_NS , nav.NamespaceURI);
+            Assert.AreEqual(XmlNs.FHIR , nav.NamespaceURI);
             Assert.AreEqual(JsonXPathNavigator.FHIR_PREFIX, nav.Prefix);
         }
 
@@ -114,8 +115,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var nav = buildNav();
             Assert.IsTrue(nav.MoveToFirstChild());      // Patient
 
-            Assert.IsTrue(nav.MoveToChild("contact", JsonXPathNavigator.FHIR_NS));
-            Assert.IsTrue(nav.MoveToChild("name", JsonXPathNavigator.FHIR_NS));
+            Assert.IsTrue(nav.MoveToChild("contact", XmlNs.FHIR));
+            Assert.IsTrue(nav.MoveToChild("name", XmlNs.FHIR));
 
             Assert.IsTrue(nav.MoveToFirstChild());  // family #1 - null
             Assert.AreEqual("f:family", nav.Name);
@@ -149,8 +150,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var nav = buildNav();
             Assert.IsTrue(nav.MoveToFirstChild());      // Patient
 
-            Assert.IsTrue(nav.MoveToChild("text", JsonXPathNavigator.FHIR_NS)); // Move to narrative
-            Assert.IsTrue(nav.MoveToChild("div", JsonXPathNavigator.XHTML_NS)); // Move to narrative
+            Assert.IsTrue(nav.MoveToChild("text", XmlNs.FHIR)); // Move to narrative
+            Assert.IsTrue(nav.MoveToChild("div", XmlNs.XHTML)); // Move to narrative
             Assert.IsTrue(nav.Value.StartsWith("<div xmlns=\"http://www.w3.org/1999/xhtml\""));
 
         }
@@ -208,7 +209,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var nav = buildNav();
             var mgr = new XmlNamespaceManager(nav.NameTable);
-            mgr.AddNamespace("f", JsonXPathNavigator.FHIR_NS);
+            mgr.AddNamespace("f", XmlNs.FHIR);
             
             var result = nav.Select("/f:Patient/f:telecom", mgr);
             Assert.AreEqual(2, result.Count);
@@ -229,7 +230,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var nav = buildNav();
             var mgr = new XmlNamespaceManager(nav.NameTable);
-            mgr.AddNamespace("f", JsonXPathNavigator.FHIR_NS);
+            mgr.AddNamespace("f", XmlNs.FHIR);
 
             var contained = nav.Select("/f:Patient/f:contained", mgr);
             Assert.IsNotNull(contained);

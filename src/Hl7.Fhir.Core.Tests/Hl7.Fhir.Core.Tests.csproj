@@ -128,7 +128,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Api</Name>
+      <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
