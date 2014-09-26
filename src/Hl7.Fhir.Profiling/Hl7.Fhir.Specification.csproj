@@ -59,6 +59,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
       <Link>Support\ReflectionHelper.cs</Link>
     </Compile>
+    <Compile Include="IO\InvalidStructureException.cs" />
     <Compile Include="Specification\Model\Slicing.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Expansion\DifferentialTreeConstructor.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="IO\FhirDocument.cs" />
     <Compile Include="IO\FhirFeed.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
-    <Compile Include="IO\InvalidStructureException.cs" />
     <Compile Include="Specification\Model\StructureFactory.cs" />
     <Compile Include="IO\SpecificationReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

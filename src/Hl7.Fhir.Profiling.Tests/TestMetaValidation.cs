@@ -20,7 +20,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod,Ignore]
         public void LipidProfile()
         {
-            var resource = FhirFile.LoadResource("TestData\\lipid.profile.xml");
+            var resource = Factory.LoadResource("TestData\\lipid.profile.xml");
             Report report = Validation.Validate(resource);
 
             var errors = report.Errors.ToList();

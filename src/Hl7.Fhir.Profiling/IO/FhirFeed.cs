@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.IO
 {
     internal class Feed
     {

@@ -19,7 +19,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void InvalidElement()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.InvalidElement.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.InvalidElement.xml");
             Report report = spec.Validate(resource);
             
             Assert.IsFalse(report.IsValid);
@@ -30,7 +30,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void ConstraintError()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.ConstraintError.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.ConstraintError.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);

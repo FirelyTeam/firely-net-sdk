@@ -12,31 +12,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
+using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.IO
 {
     internal static class FhirFile
     {
-        public static XPathNavigator LoadResource(string filename)
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-        
-            XPathNavigator navigator = document.CreateNavigator();
-            XmlNamespaceManager manager = new XmlNamespaceManager(navigator.NameTable);
-            manager.AddNamespace("f", "http://hl7.org/fhir");
-            return navigator.SelectSingleNode("*");
-        }
-
-        public static IEnumerable<XPathNavigator> LoadResources(string filename)
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-            Feed feed = new Feed(document);
-            return feed.Resources;
-        }
-
         public static List<Structure> LoadStructuresFromXmlFile(string filename)
         {
             XmlDocument document = new XmlDocument();

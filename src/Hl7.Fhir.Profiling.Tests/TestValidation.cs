@@ -29,7 +29,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void ValidResource()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.Valid.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.Valid.xml");
             Report report = spec.Validate(resource);
             var errors = report.Errors;
             Assert.IsTrue(report.IsValid);
@@ -38,7 +38,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void ValueSet_UnknownValue()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.ErrorUse.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.ErrorUse.xml");
             Report report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.IsTrue(report.Contains(Group.Coding, Status.Failed));
@@ -48,7 +48,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void CardinalityTooMuch()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.CardinalityPlus.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.CardinalityPlus.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -59,7 +59,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void CardinalityTooLittle()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.CardinalityMinus.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.CardinalityMinus.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -71,7 +71,7 @@ namespace Fhir.Profiling.Tests
         public void Constraint()
         {
             // <constraint value="f:name or f:telecom or f:address or f:organization"/>
-            var resource = FhirFile.LoadResource("TestData\\Patient.ConstraintError.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.ConstraintError.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -82,7 +82,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void WrongRootElement()
         {
-            var resource = FhirFile.LoadResource("TestData\\invalidroot.xml");
+            var resource = Factory.LoadResource("TestData\\invalidroot.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -93,14 +93,14 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void NamespaceXHtml()
         {
-            var resource = FhirFile.LoadResource("TestData\\Patient.Narrative.correct.xml");
+            var resource = Factory.LoadResource("TestData\\Patient.Narrative.correct.xml");
             Report report = spec.Validate(resource);
             //report.Errors.ToConsole();
 
             Assert.IsTrue(report.IsValid);
 
             // In this narrative node, the div element does not contain a xhtml namespace and should not be found by the validator
-            resource = FhirFile.LoadResource("TestData\\Patient.Narrative.wrong.xml");
+            resource = Factory.LoadResource("TestData\\Patient.Narrative.wrong.xml");
             report = spec.Validate(resource);
             //report.Errors.ToConsole();
 
@@ -114,7 +114,7 @@ namespace Fhir.Profiling.Tests
         {
             var spec = Factory.GetOtherSpec(expand:true, online:false, uri: "http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
 
-            var resource = FhirFile.LoadResource("TestData\\ldlcholesterol-correct.xml");
+            var resource = Factory.LoadResource("TestData\\ldlcholesterol-correct.xml");
             var report = spec.Validate(resource);
         }
     }

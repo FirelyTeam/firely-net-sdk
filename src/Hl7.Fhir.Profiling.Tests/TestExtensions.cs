@@ -12,7 +12,7 @@ namespace Fhir.Profiling.Tests
         public void Extensions()
         {
             SpecificationWorkspace spec = Factory.GetExtendedPatientSpec(expand: false, online: false);
-            var resource = FhirFile.LoadResource("TestData\\patient.extended.valid.xml");
+            var resource = Factory.LoadResource("TestData\\patient.extended.valid.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsTrue(report.IsValid);

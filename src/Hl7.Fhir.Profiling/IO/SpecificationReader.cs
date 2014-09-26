@@ -14,7 +14,7 @@ using System.Xml.XPath;
 using Hl7.Fhir.Specification.Model;
 using Hl7.Fhir.XPath;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Specification.IO
 {
     internal class SpecificationReader
     {

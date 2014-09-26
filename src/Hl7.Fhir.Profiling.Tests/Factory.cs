@@ -15,6 +15,7 @@ using System.Xml;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
+using Hl7.Fhir.Specification.IO;
 
 namespace Fhir.Profiling.Tests
 {
@@ -99,6 +100,17 @@ namespace Fhir.Profiling.Tests
         }
 
 
+        public static XPathNavigator LoadResource(string filename)
+        {
+            XmlDocument document = new XmlDocument();
+            document.Load(filename);
+            var nav = document.CreateNavigator();
+            nav.MoveToFirstChild();
+            XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
+            manager.AddNamespace("f", "http://hl7.org/fhir");
+
+            return nav;
+        }
     }
 
 }
