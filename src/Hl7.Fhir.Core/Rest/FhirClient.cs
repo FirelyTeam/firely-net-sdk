@@ -337,8 +337,7 @@ namespace Hl7.Fhir.Rest
 				updated.Id = reqId.WithoutVersion();
 
 				// If the content location has version information, set to SelfLink to it
-				if (reqId.VersionId != null)
-					updated.SelfLink = reqId;
+				if (reqId.VersionId != null) updated.SelfLink = reqId;
 			}
 
 			if (!String.IsNullOrEmpty(response.LastModified))
@@ -349,8 +348,15 @@ namespace Hl7.Fhir.Rest
 
 			updated.Title = entry.Title;
 
-            // If asked for it, immediately get the contents *we just posted*, so use the actually created version
-            if (refresh) updated = Refresh(updated, versionSpecific: true);
+            // If asked for it, immediately get the contents *we just posted* if we have the version-specific url, or
+            // otherwise the most recent data on the server.
+            if (refresh)
+            {
+                if (updated.SelfLink != null)
+                    updated = Refresh(updated, versionSpecific: true);
+                else
+                    updated = Refresh(updated, versionSpecific: false);
+            }
 
             return updated;
         }
@@ -1250,8 +1256,7 @@ namespace Hl7.Fhir.Rest
 				updated.Id = reqId.WithoutVersion();
 
 				// If the content location has version information, set to SelfLink to it
-				if (reqId.VersionId != null)
-					updated.SelfLink = reqId;
+				if (reqId.VersionId != null) updated.SelfLink = reqId;
 			}
 
 			if (!String.IsNullOrEmpty(response.LastModified))
@@ -1262,11 +1267,15 @@ namespace Hl7.Fhir.Rest
 
 			updated.Title = entry.Title;
 
-			// If asked for it, immediately get the contents *we just posted*, so use the actually created version
-			if (refresh)
-			{
-				updated = await RefreshAsync(updated, versionSpecific: true);
-			}
+		    // If asked for it, immediately get the contents *we just posted* if we have the version-specific url, or
+            // otherwise the most recent data on the server.
+            if (refresh)
+            {
+                if (updated.SelfLink != null)
+                    updated = Refresh(updated, versionSpecific: true);
+                else
+                    updated = Refresh(updated, versionSpecific: false);
+            }
 
 			return updated;
 		}
@@ -1911,7 +1920,7 @@ namespace Hl7.Fhir.Rest
 		}
 #endregion
 #endif
-	}
+    }
 
     public enum PageDirection
     {
