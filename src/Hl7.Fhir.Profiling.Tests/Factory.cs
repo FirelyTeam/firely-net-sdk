@@ -65,8 +65,8 @@ namespace Fhir.Profiling.Tests
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.LoadXmlFile("TestData\\valueset.profile.xml");
-            builder.LoadXmlFile("TestData\\lipid.profile.xml");
+            builder.Add("http://here.there/TestData/valueset.profile.xml");
+            builder.Add("http://here.there/TestData/lipid.profile.xml");
             if (expand) builder.Expand();
             
             return builder.ToSpecification();
@@ -79,8 +79,8 @@ namespace Fhir.Profiling.Tests
             SpecificationBuilder builder = new SpecificationBuilder(resolver);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
-            builder.LoadXmlFile("TestData\\patient.extended.profile.xml");
-            builder.LoadXmlFile("TestData\\type-Extension.profile.xml");
+            builder.Add("http://here.there/patient.extended.profile.xml");
+            builder.Add("http://here.there/type-Extension.profile.xml");
             if (expand) builder.Expand();
             return builder.ToSpecification();
 

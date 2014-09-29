@@ -19,34 +19,12 @@ namespace Hl7.Fhir.Specification.IO
 {
     internal static class FhirFile
     {
-        public static List<Structure> LoadStructuresFromXmlFile(string filename)
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-            SpecificationReader reader = new SpecificationReader();
-            return reader.ReadProfiles(document);
-        }
-
-        public static void LoadXmlFile(this SpecificationBuilder builder, string filename)
-        {
-            List<Structure> structures = LoadStructuresFromXmlFile(filename);
-            builder.Add(structures);
-        }
 
         public static Feed LoadXMLFeed(string filename)
         {
             XmlDocument document = new XmlDocument();
             document.Load(filename);
             return new Feed(document);
-        }
-
-        public static void LoadXMLValueSets(this SpecificationBuilder builder, string filename)
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
-            SpecificationReader reader = new SpecificationReader();
-            List<ValueSet> valuesets = reader.ReadValueSets(document);
-            builder.Add(valuesets);
         }
 
     }
