@@ -85,9 +85,18 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var u = new RestUrl("http://www.hl7.org/svc");
 
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc"));
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/"));
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization"));
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/"));
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/search?name=eve"));
             Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/svx/Organization"));
+
+            var v = new RestUrl("http://fhirtest.uhn.ca/base");
+            Assert.IsTrue(v.IsEndpointFor("http://fhirtest.uhn.ca/base?_getpages=8bba8a5a-233f-4f00-8db4-a00418c806fd&_getpagesoffset=10&_count=10&_format=xml"));
+
+            var x = new RestUrl("http://fhirtest.uhn.ca/base/");
+            Assert.IsTrue(x.IsEndpointFor("http://fhirtest.uhn.ca/base?_getpages=8bba8a5a-233f-4f00-8db4-a00418c806fd&_getpagesoffset=10&_count=10&_format=xml"));
         }
 
         //[TestMethod]

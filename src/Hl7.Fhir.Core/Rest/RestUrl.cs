@@ -132,11 +132,20 @@ namespace Hl7.Fhir.Rest
 
             // HACK! To support Fiddler2 on Win8, localhost needs to be spelled out as localhost.fiddler, but still functions as localhost
             baseAddress = baseAddress.Replace("localhost.fiddler", "localhost");
-            var baseUri = new Uri(delimit(baseAddress));
+            other = other.Replace("localhost.fiddler", "localhost");
 
-            other = delimit(other.Replace("localhost.fiddler", "localhost"));
+            var baseUri = new Uri(baseAddress,UriKind.Absolute);
+            var otherUri = new Uri(other,UriKind.Absolute);
+            
+            if(baseUri.Authority != otherUri.Authority) return false;
+            if(baseUri.Segments.Length > otherUri.Segments.Length) return false;
+            
+            for(int index = 0; index < baseUri.Segments.Length; index++)
+            {
+                if (baseUri.Segments[index].TrimEnd('/') != otherUri.Segments[index].TrimEnd('/')) return false;
+            }
 
-            return baseUri.IsBaseOf(new Uri(other,UriKind.RelativeOrAbsolute));
+            return true;
         }
 
         /// <summary>
