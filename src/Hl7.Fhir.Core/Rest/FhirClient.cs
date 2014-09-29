@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Rest
         {
             if (resource == null) throw new ArgumentNullException("resource");
 
-            var collection = typeof(Resource).GetCollectionName();
+            var collection = typeof(TResource).GetCollectionName();
             var url = new RestUrl(_endpoint).Validate(collection);
 
             result = doValidate(url.Uri, resource, tags);
@@ -1500,7 +1500,7 @@ namespace Hl7.Fhir.Rest
 		{
 			if (resource == null) throw new ArgumentNullException("resource");
 
-			var collection = typeof(Resource).GetCollectionName();
+			var collection = typeof(TResource).GetCollectionName();
 			var url = new RestUrl(_endpoint).Validate(collection);
 
 			OperationOutcome validationResult = await doValidateAsync(url.Uri, resource, tags);
