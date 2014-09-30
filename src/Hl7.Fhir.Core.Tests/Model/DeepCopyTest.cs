@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckCopyAllFields()
         {
-            string xml = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml;
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
             var p = (Patient)FhirParser.ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();

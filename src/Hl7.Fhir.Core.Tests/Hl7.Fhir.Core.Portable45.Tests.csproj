@@ -95,11 +95,6 @@
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
     <Compile Include="Model\TagTests.cs" />
-    <Compile Include="Properties\TestResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Search\QueryTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,25 +123,29 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="TestData\examples-json.zip" />
-    <None Include="TestData\examples.zip" />
-    <None Include="TestData\TestPatient.json" />
-    <None Include="TestData\TestPatientLargeNumbers.json" />
+    <None Include="TestData\examples-json.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\examples.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\TestPatient.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\TestPatientLargeNumbers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData\TestPatient.xml" />
+    <None Include="TestData\TestPatient.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Portable45.csproj">
       <Project>{1e26fe9d-eef8-4c39-b54f-6ca12f7c7ca5}</Project>
       <Name>Hl7.Fhir.Core.Portable45</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\TestResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TestResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

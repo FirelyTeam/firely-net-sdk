@@ -33,8 +33,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void FullRoundtripOfAllExamples()
         {
-            string examplesXml = @"..\..\..\TestData\examples.zip";
-            //string examplesJson = @"..\..\..\data\examples-json.zip";
+            string examplesXml = @"TestData\examples.zip";
+            //string examplesJson = @"TestData\examples-json.zip";
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
             string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTest");

@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Rest
 
             Location = location;
             Method = method;
+            Timeout = 100000;       // Default timeout is 100 seconds
             
             _beforeRequest = beforeRequest;
             _afterRequest = afterRequest;

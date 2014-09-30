@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void ValidateDemoPatient()
         {
-            var s = new StringReader(Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml);
+            var s = new StringReader(File.ReadAllText(@"TestData\TestPatient.xml"));
 
             var patient = (Patient)FhirParser.ParseResource(XmlReader.Create(s));
 
