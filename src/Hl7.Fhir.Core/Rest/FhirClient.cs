@@ -964,20 +964,22 @@ namespace Hl7.Fhir.Rest
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
         /// <param name="request">The request as it is about to be sent to the server</param>
-        protected virtual void BeforeRequest(HttpWebRequest request) 
+        /// <param name="body">Body of the request for POST, PUT, etc</param>
+        protected virtual void BeforeRequest(HttpWebRequest request, byte[] body) 
         {
             // Default implementation: call event
-            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request));
+            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request, body));
         }
 
         /// <summary>
         /// Inspect the HttpWebResponse as it came back from the server 
         /// </summary>
-        /// <param name="response"></param>
-        protected virtual void AfterResponse(WebResponse response)
+        /// <param name="webResponse"></param>
+        /// <param name="fhirResponse"></param>
+        protected virtual void AfterResponse(WebResponse webResponse, FhirResponse fhirResponse)
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(response));
+            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, fhirResponse));
         }
 
 
@@ -1935,23 +1937,43 @@ namespace Hl7.Fhir.Rest
 
     public class BeforeRequestEventArgs : EventArgs
     {
-        public BeforeRequestEventArgs(HttpWebRequest request)
+        public BeforeRequestEventArgs(HttpWebRequest request, byte[] body)
         {
             this.Request = request;
+            this._body = body;
         }
 
         public HttpWebRequest Request { get; internal set; }
+        private readonly byte[] _body;
+
+        public string Body
+        {
+            get
+            {
+                if (_body == null)
+                    return null;
+                return Encoding.ASCII.GetString(_body);
+            }
+        }
     }
 
     public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
 
     public class AfterResponseEventArgs : EventArgs
     {
-        public AfterResponseEventArgs(WebResponse response)
+        public AfterResponseEventArgs(WebResponse webResponse, FhirResponse fhirResponse)
         {
-            this.Response = response;
+            this.WebResponse = webResponse;
+            this.FhirResponse = fhirResponse;
         }
 
-        public WebResponse Response { get; internal set; }
+        public WebResponse WebResponse { get; internal set; }
+
+        public FhirResponse FhirResponse { get; internal set; }
+
+        public string Body
+        {
+            get { return FhirResponse.BodyAsString(); }
+        }
     }
 }

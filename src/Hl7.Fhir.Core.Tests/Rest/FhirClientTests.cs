@@ -81,12 +81,12 @@ namespace Hl7.Fhir.Tests.Rest
             internal bool HitBeforeRequest { get; set; }
             internal bool HitAfterRequest { get; set; }
 
-            protected override void BeforeRequest(HttpWebRequest request)
+            protected override void BeforeRequest(HttpWebRequest request, byte[] body)
             {
                 HitBeforeRequest = true;
             }
 
-            protected override void AfterResponse(WebResponse request)
+            protected override void AfterResponse(WebResponse webResponse, FhirResponse fhirResponse)
             {
                 HitAfterRequest = true;
             }
