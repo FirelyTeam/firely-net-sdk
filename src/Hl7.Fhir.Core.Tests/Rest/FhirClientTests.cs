@@ -81,12 +81,15 @@ namespace Hl7.Fhir.Tests.Rest
             internal bool HitBeforeRequest { get; set; }
             internal bool HitAfterRequest { get; set; }
 
-            protected override void BeforeRequest(HttpWebRequest request, byte[] body)
+            internal byte[] Body { get; set; }
+
+            protected override void BeforeRequest(FhirRequest request, HttpWebRequest rawRequest)
             {
                 HitBeforeRequest = true;
+                Body = request.Body;
             }
 
-            protected override void AfterResponse(WebResponse webResponse, FhirResponse fhirResponse)
+            protected override void AfterResponse(FhirResponse fhirResponse,WebResponse webResponse)
             {
                 HitAfterRequest = true;
             }
@@ -100,9 +103,23 @@ namespace Hl7.Fhir.Tests.Rest
             var loc = client.Read("Patient/1");
 
             Assert.IsTrue(client.HitBeforeRequest);
+            Assert.IsNull(client.Body);
             Assert.IsTrue(client.HitAfterRequest);
         }
 
+        [TestMethod, TestCategory("FhirClient")]
+        public void PostCallsHookWithBody()
+        {
+            FhirClientWithHooks client = new FhirClientWithHooks(testEndpoint);
+
+            var p = new Patient();
+            p.BirthDate = "1972-11-30";
+            var loc = client.Create<Patient>(p);
+
+            Assert.IsTrue(client.HitBeforeRequest);
+            Assert.IsNotNull(client.Body);
+            Assert.IsTrue(client.HitAfterRequest);
+        }
 
         [TestMethod, TestCategory("FhirClient")]
         public void ReadCallsHookedEvents()

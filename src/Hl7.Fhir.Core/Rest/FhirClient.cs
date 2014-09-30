@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Rest
             if(entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
             // Always supply the version we are updating if we have one. Servers may require this.
-            if (entry.SelfLink != null) req.SetContentLocation(entry.SelfLink);
+            if (entry.SelfLink != null) req.ContentLocation = entry.SelfLink;
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
@@ -965,10 +965,10 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="request">The request as it is about to be sent to the server</param>
         /// <param name="body">Body of the request for POST, PUT, etc</param>
-        protected virtual void BeforeRequest(HttpWebRequest request, byte[] body) 
+        protected virtual void BeforeRequest(FhirRequest request, HttpWebRequest rawRequest) 
         {
             // Default implementation: call event
-            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request, body));
+            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request,rawRequest));
         }
 
         /// <summary>
@@ -976,10 +976,10 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="webResponse"></param>
         /// <param name="fhirResponse"></param>
-        protected virtual void AfterResponse(WebResponse webResponse, FhirResponse fhirResponse)
+        protected virtual void AfterResponse(FhirResponse fhirResponse,WebResponse webResponse )
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, fhirResponse));
+            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(fhirResponse,webResponse));
         }
 
 
@@ -1937,43 +1937,38 @@ namespace Hl7.Fhir.Rest
 
     public class BeforeRequestEventArgs : EventArgs
     {
-        public BeforeRequestEventArgs(HttpWebRequest request, byte[] body)
+        public BeforeRequestEventArgs(FhirRequest request, HttpWebRequest rawRequest)
         {
             this.Request = request;
-            this._body = body;
+            this.RawRequest = rawRequest;
         }
 
-        public HttpWebRequest Request { get; internal set; }
-        private readonly byte[] _body;
+        public FhirRequest Request { get; internal set; }
+        public HttpWebRequest RawRequest { get; internal set; }
 
         public string Body
         {
-            get
-            {
-                if (_body == null)
-                    return null;
-                return Encoding.ASCII.GetString(_body);
-            }
+            get { return Request.BodyAsString(); }
         }
+        
     }
 
     public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
 
     public class AfterResponseEventArgs : EventArgs
     {
-        public AfterResponseEventArgs(WebResponse webResponse, FhirResponse fhirResponse)
+        public AfterResponseEventArgs(FhirResponse fhirResponse, WebResponse webResponse)
         {
-            this.WebResponse = webResponse;
-            this.FhirResponse = fhirResponse;
+            this.Response = fhirResponse;
+            this.RawResponse = webResponse;
         }
 
-        public WebResponse WebResponse { get; internal set; }
-
-        public FhirResponse FhirResponse { get; internal set; }
+        public FhirResponse Response { get; internal set; }
+        public WebResponse RawResponse { get; internal set; }
 
         public string Body
         {
-            get { return FhirResponse.BodyAsString(); }
+            get { return Response.BodyAsString(); }
         }
     }
 }
