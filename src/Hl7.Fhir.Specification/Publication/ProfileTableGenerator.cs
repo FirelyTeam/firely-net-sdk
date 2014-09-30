@@ -29,17 +29,17 @@ namespace Hl7.Fhir.Publication
         }
 
 
-        public XElement generate(Profile p, String root, bool extensionsOnly)
+        public XElement generate(Profile p, bool extensionsOnly)
         {
             var gen = new HierarchicalTableGenerator(OutputPath, InlineGraphics);
             HierarchicalTableGenerator.TableModel model = gen.initNormalTable();
 
-            genProfile(gen, model.getRows(), p, root, extensionsOnly);
+            genProfile(gen, model.getRows(), p, extensionsOnly);
 
             return gen.generate(model);
         }
 
-        private void genProfile(HierarchicalTableGenerator gen, List<HierarchicalTableGenerator.Row> rows, Profile profile, String root, bool extensionsOnly)
+        private void genProfile(HierarchicalTableGenerator gen, List<HierarchicalTableGenerator.Row> rows, Profile profile, bool extensionsOnly)
         {
             if (!extensionsOnly)
             {

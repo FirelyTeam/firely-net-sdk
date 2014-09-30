@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Publication
                     new XAttribute("cellpadding", "0"),
                     new XAttribute("style", "border: 0px; font-size: 11px; font-family: verdana; vertical-align: top;"));
 
-            var tr = new XElement(XmlNs.XHTML + "tr",
+            var tr = new XElement(XmlNs.XHTMLNS + "tr",
                 new XAttribute("style", "border: 1px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top;"));
 
             table.Add(tr);

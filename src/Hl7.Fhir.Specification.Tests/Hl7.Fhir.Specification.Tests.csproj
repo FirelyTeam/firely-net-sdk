@@ -64,6 +64,7 @@
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestExtensions.cs" />
+    <Compile Include="PublishProfile.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />
@@ -163,7 +164,7 @@
       <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj">
-      <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>
+      <Project>{3b6b0d98-f3f2-43eb-97f2-a20d23be3b71}</Project>
       <Name>Hl7.Fhir.Specification</Name>
     </ProjectReference>
   </ItemGroup>
