@@ -5,31 +5,21 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11899A8A-5232-4F5D-97C7-135467A73FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model", "Hl7.Fhir.Model\Hl7.Fhir.Model.csproj", "{3CA811D7-19A7-43AC-A403-1F35E4EC2BFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{92CC9186-0A21-4E06-B11F-907584FBFD81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Net45", "Hl7.Fhir.Model\Hl7.Fhir.Model.Net45.csproj", "{2F8A060A-B12E-4AE7-AA15-5148B2711557}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Net45", "Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj", "{F3673A58-FA89-45C3-9341-79319C59B686}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Portable45", "Hl7.Fhir.Model\Hl7.Fhir.Model.Portable45.csproj", "{969D32BD-81A4-4514-9806-1671989977FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Portable45", "Hl7.Fhir.Core\Hl7.Fhir.Core.Portable45.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api", "Hl7.Fhir.Api\Hl7.Fhir.Api.csproj", "{92CC9186-0A21-4E06-B11F-907584FBFD81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Tests.csproj", "{D6CE2817-0931-4D56-B989-AAC5319B78CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api.Net45", "Hl7.Fhir.Api\Hl7.Fhir.Api.Net45.csproj", "{F3673A58-FA89-45C3-9341-79319C59B686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Portable45.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Portable45.Tests.csproj", "{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api.Portable45", "Hl7.Fhir.Api\Hl7.Fhir.Api.Portable45.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj", "{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Tests", "Hl7.Fhir.Model.Tests\Hl7.Fhir.Model.Tests.csproj", "{6739C236-29D9-4B70-BB70-B96794FCAB34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification.Net45", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.Net45.csproj", "{940CB41E-94ED-4CF6-B30B-0C2CC8F1B3D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Model.Portable45.Tests", "Hl7.Fhir.Model.Tests\Hl7.Fhir.Model.Portable45.Tests.csproj", "{32318CBB-8CCA-4D2B-8318-2116BC5E452F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api.Tests", "Hl7.Fhir.Api.Tests\Hl7.Fhir.Api.Tests.csproj", "{D6CE2817-0931-4D56-B989-AAC5319B78CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Api.Portable45.Tests", "Hl7.Fhir.Api.Tests\Hl7.Fhir.Api.Portable45.Tests.csproj", "{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Profiling", "Hl7.Fhir.Profiling\Hl7.Fhir.Profiling.csproj", "{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Profiling.Net45", "Hl7.Fhir.Profiling\Hl7.Fhir.Profiling.Net45.csproj", "{940CB41E-94ED-4CF6-B30B-0C2CC8F1B3D8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Profiling.Tests", "Hl7.Fhir.Profiling.Tests\Hl7.Fhir.Profiling.Tests.csproj", "{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.Tests.csproj", "{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -197,8 +187,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = src\Hl7.Fhir.Api.csproj
 	EndGlobalSection
 EndGlobal

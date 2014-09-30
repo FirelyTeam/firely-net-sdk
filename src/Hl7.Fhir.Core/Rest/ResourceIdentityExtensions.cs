@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Rest
 {

@@ -178,11 +178,11 @@ namespace Hl7.Fhir.Rest
 			}
 
 			// Make sure the caller disposes the HttpResponse gets disposed...
-            if (_beforeRequest != null) _beforeRequest(request);
+            if (_beforeRequest != null) _beforeRequest(null,request);
             var webResponse = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
-            if (_afterRequest != null) _afterRequest(webResponse, null);
+            if (_afterRequest != null) _afterRequest(null,webResponse);
 
-            return response;
+            return webResponse;
 		}
 #endif
 

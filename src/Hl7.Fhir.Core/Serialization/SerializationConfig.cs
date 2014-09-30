@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Serialization
 
         public static void AddModelType(Type type)
         {
-            if (type.IsEnum)
+            if (type.IsEnum())
                 Inspector.ImportEnum(type);
             else
                 Inspector.ImportType(type);

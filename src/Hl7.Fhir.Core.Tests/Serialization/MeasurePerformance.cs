@@ -27,8 +27,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void RunPerfTest()
         {
-            string xml = Properties.TestResources.TestPatientXml;
-            string json = Properties.TestResources.TestPatientJson;
+            string xml = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml;
+            string json = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientJson;
 
  //            var once = FhirParser.ParseResourceFromJson(json);
             var once = FhirParser.ParseResourceFromXml(xml);

@@ -6,8 +6,8 @@
     <ProjectGuid>{6E78C31B-1D65-4B6C-B3A3-97EF2776CA8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hl7.Fhir.Test</RootNamespace>
-    <AssemblyName>Hl7.Fhir.Test</AssemblyName>
+    <RootNamespace>Hl7.Fhir.Core.Tests</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -87,14 +87,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Inspection\ProfileExpansionTest.cs" />
-    <Compile Include="Inspection\ProfileNavigationTest.cs" />
-    <Compile Include="Inspection\SchemaCollectionTest.cs" />
-    <Compile Include="Inspection\ArtifactStorageTest.cs" />
+    <Compile Include="Introspection\ClassMappingTest.cs" />
+    <Compile Include="Introspection\EnumMappingTest.cs" />
+    <Compile Include="Introspection\ModelInspectorTest.cs" />
+    <Compile Include="Introspection\PropertyMappingTest.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
-    <Compile Include="Inspection\ClassMappingTest.cs">
-      <SubType>Code</SubType>
+    <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Model\TagTests.cs" />
+    <Compile Include="Properties\TestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Search\QueryTests.cs">
       <SubType>Code</SubType>
@@ -107,13 +111,9 @@
     <Compile Include="Serialization\BundleTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
-    <Compile Include="Inspection\EnumMappingTest.cs" />
     <Compile Include="Serialization\FhirParserTests.cs" />
-    <Compile Include="Serialization\JTokenExtensionsTests.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
-    <Compile Include="Inspection\ModelInspectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Inspection\PropertyMappingTest.cs" />
     <Compile Include="Serialization\MeasurePerformance.cs" />
     <Compile Include="JsonAssert.cs" />
     <Compile Include="Serialization\RoundtripTest.cs" />
@@ -121,36 +121,32 @@
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="Model\TagExtensionsTest.cs" />
     <Compile Include="Serialization\ResourceParsingTests.cs" />
-    <Compile Include="ValidatePatient.cs" />
+    <Compile Include="Validation\ValidatePatient.cs" />
+    <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestPatient.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestPatientLargeNumbers.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestPatient.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="TestData\examples-json.zip" />
+    <None Include="TestData\examples.zip" />
+    <None Include="TestData\TestPatient.json" />
+    <None Include="TestData\TestPatientLargeNumbers.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="patient-example.xml" />
+    <Content Include="TestData\TestPatient.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Api\Hl7.Fhir.Api.Portable45.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Portable45.csproj">
       <Project>{1e26fe9d-eef8-4c39-b54f-6ca12f7c7ca5}</Project>
-      <Name>Hl7.Fhir.Api.Portable45</Name>
+      <Name>Hl7.Fhir.Core.Portable45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Model\Hl7.Fhir.Model.Portable45.csproj">
-      <Project>{969d32bd-81a4-4514-9806-1671989977fb}</Project>
-      <Name>Hl7.Fhir.Model.Portable45</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\TestResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

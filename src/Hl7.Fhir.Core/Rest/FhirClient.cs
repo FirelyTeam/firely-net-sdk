@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Rest
 			if (entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
 			// Always supply the version we are updating if we have one. Servers may require this.
-			if (entry.SelfLink != null) req.SetContentLocation(entry.SelfLink);
+			if (entry.SelfLink != null) req.ContentLocation = entry.SelfLink;
 
 			// This might be an update of a resource that doesn't yet exist, so accept a status Created too
 			FhirResponse response = await doRequestAsync(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);

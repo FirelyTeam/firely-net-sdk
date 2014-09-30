@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F3673A58-FA89-45C3-9341-79319C59B686}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet45|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\Net45\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>3016, 3015</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\Net45\</OutputPath>
+    <DefineConstants>TRACE;RELEASE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>3016, 3015</NoWarn>
+    <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Core.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Introspection\ChoiceType.cs" />
+    <Compile Include="Introspection\EnumLiteralAttribute.cs" />
+    <Compile Include="Introspection\FhirElementAttribute.cs" />
+    <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
+    <Compile Include="Introspection\FhirTypeAttribute.cs" />
+    <Compile Include="Introspection\NotMappedAttribute.cs" />
+    <Compile Include="Introspection\ReferencesAttribute.cs" />
+    <Compile Include="Introspection\XmlSerializationHint.cs" />
+    <Compile Include="Model\Base64Binary.cs" />
+    <Compile Include="Model\Binary.cs" />
+    <Compile Include="Model\Bundle.cs" />
+    <Compile Include="Model\BundleEntry.cs" />
+    <Compile Include="Model\BundleExtensions.cs" />
+    <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\Date.cs" />
+    <Compile Include="Model\DeletedEntry.cs" />
+    <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\Extension.cs" />
+    <Compile Include="Model\FhirBoolean.cs" />
+    <Compile Include="Model\FhirDateTime.cs" />
+    <Compile Include="Model\FhirDecimal.cs" />
+    <Compile Include="Model\FhirString.cs" />
+    <Compile Include="Model\FhirUri.cs" />
+    <Compile Include="Model\Generated\Address.cs" />
+    <Compile Include="Model\Generated\AdverseReaction.cs" />
+    <Compile Include="Model\Generated\Age.cs" />
+    <Compile Include="Model\Generated\Alert.cs" />
+    <Compile Include="Model\Generated\AllergyIntolerance.cs" />
+    <Compile Include="Model\Generated\Attachment.cs" />
+    <Compile Include="Model\Generated\Base64Binary.cs" />
+    <Compile Include="Model\Generated\Binary.cs" />
+    <Compile Include="Model\Generated\Bindings.cs" />
+    <Compile Include="Model\Generated\CarePlan.cs" />
+    <Compile Include="Model\Generated\Code.cs" />
+    <Compile Include="Model\Generated\CodeableConcept.cs" />
+    <Compile Include="Model\Generated\Coding.cs" />
+    <Compile Include="Model\Generated\Composition.cs" />
+    <Compile Include="Model\Generated\ConceptMap.cs" />
+    <Compile Include="Model\Generated\Condition.cs" />
+    <Compile Include="Model\Generated\Conformance.cs" />
+    <Compile Include="Model\Generated\Contact.cs" />
+    <Compile Include="Model\Generated\Count.cs" />
+    <Compile Include="Model\Generated\Date.cs" />
+    <Compile Include="Model\Generated\Device.cs" />
+    <Compile Include="Model\Generated\DeviceObservationReport.cs" />
+    <Compile Include="Model\Generated\DiagnosticOrder.cs" />
+    <Compile Include="Model\Generated\DiagnosticReport.cs" />
+    <Compile Include="Model\Generated\Distance.cs" />
+    <Compile Include="Model\Generated\DocumentManifest.cs" />
+    <Compile Include="Model\Generated\DocumentReference.cs" />
+    <Compile Include="Model\Generated\Duration.cs" />
+    <Compile Include="Model\Generated\Element.cs" />
+    <Compile Include="Model\Generated\Encounter.cs" />
+    <Compile Include="Model\Generated\Extension.cs" />
+    <Compile Include="Model\Generated\FamilyHistory.cs" />
+    <Compile Include="Model\Generated\FhirBoolean.cs" />
+    <Compile Include="Model\Generated\FhirDateTime.cs" />
+    <Compile Include="Model\Generated\FhirDecimal.cs" />
+    <Compile Include="Model\Generated\FhirString.cs" />
+    <Compile Include="Model\Generated\FhirUri.cs" />
+    <Compile Include="Model\Generated\Group.cs" />
+    <Compile Include="Model\Generated\HumanName.cs" />
+    <Compile Include="Model\Generated\Id.cs" />
+    <Compile Include="Model\Generated\Identifier.cs" />
+    <Compile Include="Model\Generated\IdRef.cs" />
+    <Compile Include="Model\Generated\ImagingStudy.cs" />
+    <Compile Include="Model\Generated\Immunization.cs" />
+    <Compile Include="Model\Generated\ImmunizationRecommendation.cs" />
+    <Compile Include="Model\Generated\Instant.cs" />
+    <Compile Include="Model\Generated\Integer.cs" />
+    <Compile Include="Model\Generated\List.cs" />
+    <Compile Include="Model\Generated\Location.cs" />
+    <Compile Include="Model\Generated\Media.cs" />
+    <Compile Include="Model\Generated\Medication.cs" />
+    <Compile Include="Model\Generated\MedicationAdministration.cs" />
+    <Compile Include="Model\Generated\MedicationDispense.cs" />
+    <Compile Include="Model\Generated\MedicationPrescription.cs" />
+    <Compile Include="Model\Generated\MedicationStatement.cs" />
+    <Compile Include="Model\Generated\MessageHeader.cs" />
+    <Compile Include="Model\Generated\ModelInfo.cs" />
+    <Compile Include="Model\Generated\Money.cs" />
+    <Compile Include="Model\Generated\Narrative.cs" />
+    <Compile Include="Model\Generated\Observation.cs" />
+    <Compile Include="Model\Generated\Oid.cs" />
+    <Compile Include="Model\Generated\OperationOutcome.cs" />
+    <Compile Include="Model\Generated\Order.cs" />
+    <Compile Include="Model\Generated\OrderResponse.cs" />
+    <Compile Include="Model\Generated\Organization.cs" />
+    <Compile Include="Model\Generated\Other.cs" />
+    <Compile Include="Model\Generated\Patient.cs" />
+    <Compile Include="Model\Generated\Period.cs" />
+    <Compile Include="Model\Generated\Practitioner.cs" />
+    <Compile Include="Model\Generated\Procedure.cs" />
+    <Compile Include="Model\Generated\Profile.cs" />
+    <Compile Include="Model\Generated\Provenance.cs" />
+    <Compile Include="Model\Generated\Quantity.cs" />
+    <Compile Include="Model\Generated\Query.cs" />
+    <Compile Include="Model\Generated\Questionnaire.cs" />
+    <Compile Include="Model\Generated\Range.cs" />
+    <Compile Include="Model\Generated\Ratio.cs" />
+    <Compile Include="Model\Generated\RelatedPerson.cs" />
+    <Compile Include="Model\Generated\Resource.cs" />
+    <Compile Include="Model\Generated\ResourceReference.cs" />
+    <Compile Include="Model\Generated\SampledData.cs" />
+    <Compile Include="Model\Generated\Schedule.cs" />
+    <Compile Include="Model\Generated\SecurityEvent.cs" />
+    <Compile Include="Model\Generated\Specimen.cs" />
+    <Compile Include="Model\Generated\Substance.cs" />
+    <Compile Include="Model\Generated\Supply.cs" />
+    <Compile Include="Model\Generated\Uuid.cs" />
+    <Compile Include="Model\Generated\ValueSet.cs" />
+    <Compile Include="Model\Generated\XHtml.cs" />
+    <Compile Include="Model\Id.cs" />
+    <Compile Include="Model\IDeepCopyable.cs" />
+    <Compile Include="Model\Identifier.cs" />
+    <Compile Include="Model\IExtendable.cs" />
+    <Compile Include="Model\Initializers.cs" />
+    <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\Integer.cs" />
+    <Compile Include="Model\ModelInfo.cs" />
+    <Compile Include="Model\Oid.cs" />
+    <Compile Include="Model\OperationOutcome.cs" />
+    <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Model\Query.cs" />
+    <Compile Include="Model\Resource.cs" />
+    <Compile Include="Model\ResourceEntry.cs" />
+    <Compile Include="Model\ResourceReference.cs" />
+    <Compile Include="Model\TagList.cs" />
+    <Compile Include="Model\UriLinkList.cs" />
+    <Compile Include="Model\Uuid.cs" />
+    <Compile Include="Model\ValueSet.cs" />
+    <Compile Include="Model\XHtml.cs" />
+    <Compile Include="Rest\BundleExtensions.cs" />
+    <Compile Include="Rest\ContentType.cs" />
+    <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirOperationException.cs" />
+    <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\FhirRequest.cs" />
+    <Compile Include="Rest\FhirResponse.cs" />
+    <Compile Include="Rest\WebRequestExtensions.cs" />
+    <Compile Include="Introspection\ClassMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Search\Criterium.cs" />
+    <Compile Include="Search\CompositeValue.cs" />
+    <Compile Include="Search\ChoiceValue.cs" />
+    <Compile Include="Search\CriteriumBuilder.cs" />
+    <Compile Include="Search\Expression.cs" />
+    <Compile Include="Search\QueryExtensions.cs" />
+    <Compile Include="Search\ReferenceValue.cs" />
+    <Compile Include="Search\QuantityValue.cs" />
+    <Compile Include="Search\UntypedValue.cs" />
+    <Compile Include="Serialization\BundleJsonParser.cs" />
+    <Compile Include="Serialization\BundleJsonSerializer.cs" />
+    <Compile Include="Serialization\BundleXmlParser.cs" />
+    <Compile Include="Serialization\BundleXmlSerializer.cs" />
+    <Compile Include="Serialization\ComplexTypeWriter.cs" />
+    <Compile Include="Serialization\ComplexTypeReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\DefaultModelFactory.cs" />
+    <Compile Include="Serialization\DispatchingWriter.cs" />
+    <Compile Include="Serialization\DispatchingReader.cs" />
+    <Compile Include="Introspection\EnumMapping.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Serialization\FhirParser.cs" />
+    <Compile Include="Serialization\FhirSerializer.cs" />
+    <Compile Include="Serialization\IFhirReader.cs" />
+    <Compile Include="Serialization\IFhirWriter.cs" />
+    <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\PrimitiveValueWriter.cs" />
+    <Compile Include="Serialization\QueryParser.cs" />
+    <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TagListParser.cs" />
+    <Compile Include="Serialization\TagListSerializer.cs" />
+    <Compile Include="Serialization\XmlDomFhirReader.cs" />
+    <Compile Include="Serialization\JsonDomFhirReader.cs" />
+    <Compile Include="Serialization\ResourceWriter.cs" />
+    <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Rest\RestUrl.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Support\Logging.cs" />
+    <Compile Include="Serialization\ModelFactoryList.cs" />
+    <Compile Include="Introspection\ModelInspector.cs" />
+    <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
+    <Compile Include="Serialization\PrimitiveValueReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Introspection\PropertyMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\RepeatingElementReader.cs" />
+    <Compile Include="Serialization\ResourceReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\SerializationConfig.cs" />
+    <Compile Include="Serialization\SerializationUtil.cs" />
+    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
+    <Compile Include="Rest\RestOperation.cs" />
+    <Compile Include="Search\DateValue.cs" />
+    <Compile Include="Search\NumberValue.cs" />
+    <Compile Include="Search\StringValue.cs" />
+    <Compile Include="Search\TokenValue.cs" />
+    <Compile Include="Model\TagListExtensions.cs" />
+    <Compile Include="Support\ReflectionHelper.cs" />
+    <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Support\XmlNs.cs" />
+    <Compile Include="Validation\AllowedTypesAttribute.cs" />
+    <Compile Include="Validation\CardinalityAttribute.cs" />
+    <Compile Include="Validation\CodePatternAttribute.cs" />
+    <Compile Include="Validation\DatePatternAttribute.cs" />
+    <Compile Include="Validation\DateTimePatternAttribute.cs" />
+    <Compile Include="Validation\DotNetAttributeValidation.cs" />
+    <Compile Include="Validation\IdPatternAttribute.cs" />
+    <Compile Include="Validation\InstantPatternAttribute.cs" />
+    <Compile Include="Validation\InvokeIValidatableObjectAttribute.cs" />
+    <Compile Include="Validation\IValidatableObject.cs" />
+    <Compile Include="Validation\NarrativeXhtmlPatternAttribute.cs" />
+    <Compile Include="Validation\OidPatternAttribute.cs" />
+    <Compile Include="Validation\UriPatternAttribute.cs" />
+    <Compile Include="Validation\UuidPatternAttribute.cs" />
+    <Compile Include="Validation\ValidationContextExtensions.cs" />
+    <Compile Include="Validation\ValidationContextFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Validation\xhtml\fhir-xhtml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Validation\xhtml\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

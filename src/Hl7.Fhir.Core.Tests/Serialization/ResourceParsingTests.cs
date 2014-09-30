@@ -64,8 +64,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void EdgeCaseRoundtrip()
         {
-            string xml = Properties.TestResources.TestPatientXml;
-            string json = Properties.TestResources.TestPatientJson;
+            string xml = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml;
+            string json = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientJson;
 
             var poco = FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
