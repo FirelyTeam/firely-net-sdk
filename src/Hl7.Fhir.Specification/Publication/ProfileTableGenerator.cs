@@ -32,50 +32,50 @@ namespace Hl7.Fhir.Publication
         public XElement generate(Profile p, bool extensionsOnly)
         {
             var gen = new HierarchicalTableGenerator(OutputPath, InlineGraphics);
-            HierarchicalTableGenerator.TableModel model = gen.initNormalTable();
+            TableModel model = gen.initNormalTable();
 
             genProfile(model.getRows(), p, extensionsOnly);
 
             return gen.generate(model);
         }
 
-        private void genProfile(List<HierarchicalTableGenerator.Row> rows, Profile profile, bool extensionsOnly)
+        private void genProfile(List<Row> rows, Profile profile, bool extensionsOnly)
         {
             if (!extensionsOnly)
             {
-                var r = new HierarchicalTableGenerator.Row();
+                var r = new  Row();
                 rows.Add(r);
                 r.setIcon("icon_profile.png");
-                r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, profile.Name, null, null));
-                r.getCells().Add(new HierarchicalTableGenerator.Cell());
-                r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "Profile", null, null));
-                r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, profile.Description, null, null));
+                r.getCells().Add(new  Cell(null, null, profile.Name, null, null));
+                r.getCells().Add(new  Cell());
+                r.getCells().Add(new  Cell(null, null, "Profile", null, null));
+                r.getCells().Add(new  Cell(null, null, profile.Description, null, null));
 
                 foreach (var s in profile.Structure)
                 {
-                    var re = new HierarchicalTableGenerator.Row();
+                    var re = new  Row();
                     r.getSubRows().Add(re);
                     re.setIcon("icon_resource.png");
-                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Name, null, null));
-                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "", null, null));
-                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Type, null, null));
+                    re.getCells().Add(new  Cell(null, null, s.Name, null, null));
+                    re.getCells().Add(new  Cell(null, null, "", null, null));
+                    re.getCells().Add(new  Cell(null, null, s.Type, null, null));
 
-                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Element[0].Definition.Short, null, null));     // DSTU1
-                    //re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Base, null, null));       // DSTU2
+                    re.getCells().Add(new  Cell(null, null, s.Element[0].Definition.Short, null, null));     // DSTU1
+                    //re.getCells().Add(new  Cell(null, null, s.Base, null, null));       // DSTU2
                 }
             }
 
             if (profile.ExtensionDefn.Any() || extensionsOnly)
             {
-                var re = new HierarchicalTableGenerator.Row();
+                var re = new  Row();
                 rows.Add(re);
                 re.setIcon("icon_profile.png");
-                re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "Extensions", null, null));
-                re.getCells().Add(new HierarchicalTableGenerator.Cell());
-                re.getCells().Add(new HierarchicalTableGenerator.Cell());
+                re.getCells().Add(new  Cell(null, null, "Extensions", null, null));
+                re.getCells().Add(new  Cell());
+                re.getCells().Add(new  Cell());
 
-                re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "Extensions defined by this profile", null, null)); // DSTU1
-                //re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "Extensions defined by the URL \"" + profile.Url + "\"", null, null)); // DSTU2
+                re.getCells().Add(new  Cell(null, null, "Extensions defined by this profile", null, null)); // DSTU1
+                //re.getCells().Add(new  Cell(null, null, "Extensions defined by the URL \"" + profile.Url + "\"", null, null)); // DSTU2
 
                 foreach (var ext in profile.ExtensionDefn)
                 {
@@ -85,23 +85,10 @@ namespace Hl7.Fhir.Publication
 
         }
 
-        //  private void genResourceProfile(HierarchicalTableGenerator gen, List<HierarchicalTableGenerator.Row> rows, ResourceDefn res) throws Exception {
-        //    Row r = gen.new Row();
-        //    rows.add(r);
-        //    r.setIcon("icon_resource.png");
-        //    r.getCells().add(gen.new Cell(null, null, res.getRoot().getProfileName(), null, null));
-        //    r.getCells().add(gen.new Cell());
-        //    r.getCells().add(gen.new Cell(null, null, res.getRoot().getName(), null, null));
-        //    r.getCells().add(gen.new Cell(null, null, res.getDefinition(), null, null));
-        ////    r.getCells().add(gen.new Cell());
 
-        //    for (ElementDefn c : res.getRoot().getElements())
-        //      r.getSubRows().add(genElement(c, gen, false, res.getRoot().getProfileName(), true));
-        //  }
-
-        private void genExtension(List<HierarchicalTableGenerator.Row> rows, Profile.ProfileExtensionDefnComponent ext, bool root)
+        private void genExtension(List<Row> rows, Profile.ProfileExtensionDefnComponent ext, bool root)
         {
-            var r = new HierarchicalTableGenerator.Row();
+            var r = new  Row();
             rows.Add(r);
             r.setAnchor(ext.Code);
 
@@ -111,9 +98,9 @@ namespace Hl7.Fhir.Publication
             //else
             //r.setIcon("icon_extension_complex.png");
 
-            r.getCells().Add(new HierarchicalTableGenerator.Cell(null, "test.html", ext.Code, null, null));
-            r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.DescribeCardinality(), null, null));   //TODO: create rendering extension
-            r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.DescribeTypeCode(), null, null));       //TODO: create rendering extension
+            r.getCells().Add(new  Cell(null, "test.html", ext.Code, null, null));
+            r.getCells().Add(new  Cell(null, null, ext.Definition.DescribeCardinality(), null, null));   //TODO: create rendering extension
+            r.getCells().Add(new  Cell(null, null, ext.Definition.DescribeTypeCode(), null, null));       //TODO: create rendering extension
             //    r.getCells().add(gen.new Cell(null, null, ext.getDefinition().getShortDefn(), null, null));
             //    if (root)
             //      r.getCells().add(gen.new Cell(null, null, describeExtensionContext(ext), null, null));
@@ -121,13 +108,13 @@ namespace Hl7.Fhir.Publication
             //      r.getCells().add(gen.new Cell());
             if (root)
             {
-                r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.Short, null, null)
-                      .addPiece(new HierarchicalTableGenerator.Piece("br"))
-                      .addPiece(new HierarchicalTableGenerator.Piece(null, describeExtensionContext(ext), null)));
+                r.getCells().Add(new  Cell(null, null, ext.Definition.Short, null, null)
+                      .addPiece(new  Piece("br"))
+                      .addPiece(new  Piece(null, describeExtensionContext(ext), null)));
             }
             else
             {
-                r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.Short, null, null));
+                r.getCells().Add(new  Cell(null, null, ext.Definition.Short, null, null));
             }
 
             //foreach (var child in ext.Children)    // DSTU2
@@ -142,8 +129,6 @@ namespace Hl7.Fhir.Publication
             {
                 case Profile.ExtensionContext.Datatype:
                     return "Use on data type: " + ext.DescribeContext();
-                //case Profile.ExtensionContext.Elements:           // DSTU2???
-                //    return "Use on element: " + ext.getContext();
                 case Profile.ExtensionContext.Extension:
                     return "Use on extension: " + ext.DescribeContext();
                 case Profile.ExtensionContext.Resource:

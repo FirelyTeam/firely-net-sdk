@@ -39,161 +39,165 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Publication
 {
+    public class Piece
+    {
+        private String tag;
+        private String reference;
+        private String text;
+        private String hint;
+        private String style;
+
+        public Piece(String tag)
+        {
+            this.tag = tag;
+        }
+
+        public Piece(String reference, String text, String hint)
+        {
+            this.reference = reference;
+            this.text = text;
+            this.hint = hint;
+        }
+        public String getReference()
+        {
+            return reference;
+        }
+        public void setReference(String value)
+        {
+            reference = value;
+        }
+        public String getText()
+        {
+            return text;
+        }
+        public String getHint()
+        {
+            return hint;
+        }
+
+        public String getTag()
+        {
+            return tag;
+        }
+
+        public String getStyle()
+        {
+            return style;
+        }
+
+        public Piece setStyle(String style)
+        {
+            this.style = style;
+            return this;
+        }
+
+        public Piece addStyle(String style)
+        {
+            if (this.style != null)
+                this.style = this.style + ": " + style;
+            else
+                this.style = style;
+            return this;
+        }
+
+    }
+
+
+    public class Cell
+    {
+        internal List<Piece> pieces = new List<Piece>();
+
+        public Cell()
+        {
+        }
+
+        public Cell(String prefix, String reference, String text, String hint, String suffix)
+        {
+
+            if (!String.IsNullOrEmpty(prefix)) pieces.Add(new Piece(null, prefix, null));
+            pieces.Add(new Piece(reference, text, hint));
+            if (!String.IsNullOrEmpty(suffix)) pieces.Add(new Piece(null, suffix, null));
+        }
+
+        public List<Piece> getPieces()
+        {
+            return pieces;
+        }
+        public Cell addPiece(Piece piece)
+        {
+            pieces.Add(piece);
+            return this;
+        }
+    }
+
+
+
+    public class Title : Cell
+    {
+        internal int width;
+
+        public Title(String prefix, String reference, String text, String hint, String suffix, int width)
+            : base(prefix, reference, text, hint, suffix)
+        {
+
+            this.width = width;
+        }
+    }
+
+
+    public class Row
+    {
+        private List<Row> subRows = new List<Row>();
+        private List<Cell> cells = new List<Cell>();
+        private String icon;
+        private String anchor;
+
+        public List<Row> getSubRows()
+        {
+            return subRows;
+        }
+        public List<Cell> getCells()
+        {
+            return cells;
+        }
+        public String getIcon()
+        {
+            return icon;
+        }
+        public void setIcon(String icon)
+        {
+            this.icon = icon;
+        }
+        public String getAnchor()
+        {
+            return anchor;
+        }
+        public void setAnchor(String anchor)
+        {
+            this.anchor = anchor;
+        }
+
+
+    }
+
+
+    public class TableModel
+    {
+        private List<Title> titles = new List<Title>();
+        private List<Row> rows = new List<Row>();
+        public List<Title> getTitles()
+        {
+            return titles;
+        }
+        public List<Row> getRows()
+        {
+            return rows;
+        }
+    }
+
+
     public class HierarchicalTableGenerator
     {
-
-        public class Piece
-        {
-            private String tag;
-            private String reference;
-            private String text;
-            private String hint;
-            private String style;
-
-            public Piece(String tag)
-            {
-                this.tag = tag;
-            }
-
-            public Piece(String reference, String text, String hint)
-            {
-                this.reference = reference;
-                this.text = text;
-                this.hint = hint;
-            }
-            public String getReference()
-            {
-                return reference;
-            }
-            public void setReference(String value)
-            {
-                reference = value;
-            }
-            public String getText()
-            {
-                return text;
-            }
-            public String getHint()
-            {
-                return hint;
-            }
-
-            public String getTag()
-            {
-                return tag;
-            }
-
-            public String getStyle()
-            {
-                return style;
-            }
-
-            public Piece setStyle(String style)
-            {
-                this.style = style;
-                return this;
-            }
-
-            public Piece addStyle(String style)
-            {
-                if (this.style != null)
-                    this.style = this.style + ": " + style;
-                else
-                    this.style = style;
-                return this;
-            }
-
-        }
-
-        public class Cell
-        {
-            internal List<Piece> pieces = new List<HierarchicalTableGenerator.Piece>();
-
-            public Cell()
-            {
-            }
-
-            public Cell(String prefix, String reference, String text, String hint, String suffix)
-            {
-
-                if (!String.IsNullOrEmpty(prefix)) pieces.Add(new Piece(null, prefix, null));
-                pieces.Add(new Piece(reference, text, hint));
-                if (!String.IsNullOrEmpty(suffix)) pieces.Add(new Piece(null, suffix, null));
-            }
-
-            public List<Piece> getPieces()
-            {
-                return pieces;
-            }
-            public Cell addPiece(Piece piece)
-            {
-                pieces.Add(piece);
-                return this;
-            }
-        }
-
-        public class Title : Cell
-        {
-            internal int width;
-
-            public Title(String prefix, String reference, String text, String hint, String suffix, int width)
-                : base(prefix, reference, text, hint, suffix)
-            {
-
-                this.width = width;
-            }
-        }
-
-        public class Row
-        {
-            private List<Row> subRows = new List<HierarchicalTableGenerator.Row>();
-            private List<Cell> cells = new List<HierarchicalTableGenerator.Cell>();
-            private String icon;
-            private String anchor;
-
-            public List<Row> getSubRows()
-            {
-                return subRows;
-            }
-            public List<Cell> getCells()
-            {
-                return cells;
-            }
-            public String getIcon()
-            {
-                return icon;
-            }
-            public void setIcon(String icon)
-            {
-                this.icon = icon;
-            }
-            public String getAnchor()
-            {
-                return anchor;
-            }
-            public void setAnchor(String anchor)
-            {
-                this.anchor = anchor;
-            }
-
-
-        }
-
-        public class TableModel
-        {
-            private List<Title> titles = new List<HierarchicalTableGenerator.Title>();
-            private List<Row> rows = new List<HierarchicalTableGenerator.Row>();
-            public List<Title> getTitles()
-            {
-                return titles;
-            }
-            public List<Row> getRows()
-            {
-                return rows;
-            }
-        }
-
-
         private String dest;
 
         /**
@@ -339,9 +343,9 @@ namespace Hl7.Fhir.Publication
             {
                 string style = "vertical-align:top; text-align:left; padding:0px 4px 0px 4px";
                 
-                if (c is HierarchicalTableGenerator.Title)
+                if (c is Title)
                 {
-                    var width = ((HierarchicalTableGenerator.Title)c).width;
+                    var width = ((Title)c).width;
 
                     if (width != 0) style += "; width:" + width.ToString() + "px";
                 }

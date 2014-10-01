@@ -21,7 +21,8 @@ namespace Fhir.Profiling.Tests
 
             var publisher = new ProfileTableGenerator(@"c:\temp\publisher", "test page", false);
 
-            var result = File.ReadAllText(@"TestData\publish-header.xml");            result += publisher.generate(profile, false).ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+            var result = File.ReadAllText(@"TestData\publish-header.xml");
+            result += publisher.generate(profile, false).ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
             result += File.ReadAllText(@"TestData\publish-footer.xml");
 
             File.WriteAllText(@"c:\temp\publisher\publisher.html",result);
