@@ -1,0 +1,68 @@
+﻿</div>
+
+
+</div>
+<!-- /inner-wrapper -->
+</div>
+<!-- /row -->
+</div>
+<!-- /container -->
+
+</div>
+<!-- /segment-content -->
+
+
+<div id="segment-footer" class="segment">
+  <!-- segment-footer -->
+  <div class="container">
+    <!-- container -->
+    <div class="inner-wrapper">
+      <p>
+        © HL7.org 2011+. FHIR DSTU (v0.3.0-2952) generated on Wed, Oct 1, 2014 01:31+0000. <!-- <a href="qa.html">QA Report</a> --> <!-- achive note -->
+        <br/>
+        <span style="color: #FFFF77">
+          Links: <a href="dstu.html">What's a DSTU?</a> |
+          <a href="history.html">Version History</a> |
+          <a href="http://services.w3.org/htmldiff?doc1=http%3A%2F%2Fhl7.org%2Fimplement%2Fstandards%2Ffhir%2Fdiagnosticreport-profile-lipids.html&amp;doc2=http%3A%2F%2Fhl7-fhir.github.io%2F%2Fdiagnosticreport-profile-lipids.html">Compare to DSTU</a> |
+          <a rel="license" href="license.html">
+            <img src="cc0.png" style="border-style: none;" alt="CC0"/>
+          </a> |
+          <a href="http://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemAdd&amp;tracker_id=677">Propose a change</a>
+        </span>
+      </p>
+    </div>
+    <!-- /inner-wrapper -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /segment-footer -->
+<!-- disqus thread -->
+<!--disqus-->
+<!-- end disqus -->
+
+<div id="segment-post-footer" class="segment hidden">
+  <!-- segment-post-footer -->
+  <div class="container">
+    <!-- container -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /segment-post-footer -->
+
+<!-- JS and analytics only. -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="./assets/js/jquery.js"> </script>
+<!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
+<script src="./dist/js/bootstrap.min.js"> </script>
+<script src="./assets/js/respond.min.js"> </script>
+
+<script src="./assets/js/fhir.js"> </script>
+
+<!-- Analytics Below
+================================================== -->
+
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Example Lipid Profile - FHIR v0.3.0</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="http://hl7.org/fhir"/>
+
+    <link href="fhir.css" rel="stylesheet"/>
+    <link rel="Prev" href="http://hl7.org/implement/standards/fhir/diagnosticreport-profile-lipids.html"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="./assets/css/bootstrap-fhir.css" rel="stylesheet"/>
+
+    <!-- Project extras -->
+    <link href="./assets/css/project.css" rel="stylesheet"/>
+    <link href="./assets/css/pygments-manni.css" rel="stylesheet"/>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="./assets/js/html5shiv.js"></script>
+  <script src="./assets/js/respond.min.js"></script>
+  <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png"/>
+    <link rel="shortcut icon" href="./assets/ico/favicon.png"/>
+
+  </head>
+  <body>
+    <div id="segment-header" class="segment">
+      <!-- segment-header -->
+      <div class="container">
+        <!-- container -->
+        <a id="logo" href="http://hl7.org/fhir">
+          <img src="./assets/images/fhir-logo-www.png" alt="logo fhir"/>
+        </a>
+        <div id="hl7-status">
+          <b>Continuous Integration Build</b>
+        </div>
+
+        <div id="hl7-nav">
+          <a id="hl7-logo" href="http://www.hl7.org">
+            <img src="./assets/images/hl7-logo.png" width="42" height="50" alt="visit the hl7 website"/>
+          </a>
+        </div>
+        <!--hl7-search-->
+      </div>
+      <div class="container">
+        <!-- container -->
+      </div>
+    </div>
+    <!-- /segment-header -->
+
+
+    <div id="segment-navbar" class="segment">
+      <!-- segment-navbar -->
+      <div id="stripe"> </div>
+      <div class="container">
+        <!-- container -->
+        <!-- HEADER CONTENT -->
+
+
+        <nav class="navbar navbar-inverse">
+          <div class="container">
+            <button data-target=".navbar-inverse-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+            </button>
+            <a href="index.html" class="navbar-brand hidden">FHIR</a>
+            <div class="nav-collapse collapse navbar-inverse-collapse">
+              <ul class="nav navbar-nav">
+                <li>
+                  <a href="index.html">Home</a>
+                </li>
+                <li>
+                  <a href="documentation.html">Documentation</a>
+                </li>
+                <li>
+                  <a href="implementation.html">Implementation</a>
+                </li>
+                <li>
+                  <a href="resourcelist.html">Resources</a>
+                </li>
+                <li>
+                  <a href="clinical.html">Clinical</a>
+                </li>
+                <li>
+                  <a href="administration.html">Administrative</a>
+                </li>
+                <li>
+                  <a href="infrastructure.html">Infrastructure</a>
+                </li>
+
+              </ul>
+            </div>
+            <!-- /.nav-collapse -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar -->
+
+
+        <!-- /HEADER CONTENT -->
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /segment-navbar -->
+
+
+    <div id="segment-breadcrumb" class="segment">
+      <!-- segment-breadcrumb -->
+      <div class="container">
+        <!-- container -->
+        <ul class="breadcrumb">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="clinical.html">Clinical</a>
+          </li>
+          <li>
+            <a href="diagnosticreport.html">DiagnosticReport</a>
+          </li>
+          <li>
+            <b>diagnosticreport-profile-lipids</b>
+          </li>
+          <!-- diagnosticreport-profile-lipids.xml.html / profile:DiagnosticReport -->
+
+        </ul>
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /segment-breadcrumb -->
+
+
+    <div id="segment-content" class="segment">
+      <!-- segment-content -->
+      <div class="container">
+        <!-- container -->
+        <div class="row">
+          <div class="inner-wrapper">
+            <!-- CONTENT CONTENT -->
+
+
+            <div class="col-9">
+
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href="#">Content</a>
+                </li>
+                <li>
+                  <a href="diagnosticreport-profile-lipids-examples.html">Examples</a>
+                </li>
+                <li>
+                  <a href="diagnosticreport-profile-lipids-definitions.html">Formal Definitions</a>
+                </li>
+                <li>
+                  <a href="diagnosticreport-profile-lipids-mappings.html">Mappings</a>
+                </li>
+                <li>
+                  <a href="diagnosticreport-profile-lipids.profile.xml.html">XML</a>
+                </li>
+                <li>
+                  <a href="diagnosticreport-profile-lipids.profile.json.html">JSON</a>
+                </li>
+              </ul>
+
+              <h1>Example Lipid Profile</h1>
+              <p>
+                Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes
+              </p>
+              <p>
+                This profile was published on Sat, May 12, 2012 00:00+0000 as a draft by Grahame Grieve. This profile defines 1 extensions and has constraints on the following resources: <a href="diagnosticreport.html">DiagnosticReport</a>, <a href="observation.html">Observation</a>, <a href="observation.html">Observation</a>, <a href="observation.html">Observation</a>, <a href="observation.html">Observation</a>
+              </p>
+              <p>
+                The official URL for this profile is http://hl7.org/fhir/Profile/diagnosticreport-profile-lipids.
+              </p>
+              <p>
+                Use the <a href="diagnosticreport-profile-lipids-review.xmlss">Review Spreadsheet</a> to comment on this profile (note: This is an excel spreadsheet - open it using Excel, and ignore excel's complaint that the format is wrong)
+              </p>
+
+              <a name="profile"> </a>
+              <h2>
+                Content
+              </h2>
+            

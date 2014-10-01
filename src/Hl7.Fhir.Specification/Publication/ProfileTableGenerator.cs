@@ -34,12 +34,12 @@ namespace Hl7.Fhir.Publication
             var gen = new HierarchicalTableGenerator(OutputPath, InlineGraphics);
             HierarchicalTableGenerator.TableModel model = gen.initNormalTable();
 
-            genProfile(gen, model.getRows(), p, extensionsOnly);
+            genProfile(model.getRows(), p, extensionsOnly);
 
             return gen.generate(model);
         }
 
-        private void genProfile(HierarchicalTableGenerator gen, List<HierarchicalTableGenerator.Row> rows, Profile profile, bool extensionsOnly)
+        private void genProfile(List<HierarchicalTableGenerator.Row> rows, Profile profile, bool extensionsOnly)
         {
             if (!extensionsOnly)
             {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Publication
                     re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "", null, null));
                     re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Type, null, null));
 
-                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, "", null, null));     // DSTU1
+                    re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Element[0].Definition.Short, null, null));     // DSTU1
                     //re.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, s.Base, null, null));       // DSTU2
                 }
             }
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Publication
 
                 foreach (var ext in profile.ExtensionDefn)
                 {
-                    genExtension(gen, re.getSubRows(), ext, true);
+                    genExtension(re.getSubRows(), ext, true);
                 }
             }
 
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Publication
         //      r.getSubRows().add(genElement(c, gen, false, res.getRoot().getProfileName(), true));
         //  }
 
-        private void genExtension(HierarchicalTableGenerator gen, List<HierarchicalTableGenerator.Row> rows, Profile.ProfileExtensionDefnComponent ext, bool root)
+        private void genExtension(List<HierarchicalTableGenerator.Row> rows, Profile.ProfileExtensionDefnComponent ext, bool root)
         {
             var r = new HierarchicalTableGenerator.Row();
             rows.Add(r);
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Publication
             //else
             //r.setIcon("icon_extension_complex.png");
 
-            r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Code, null, null));
+            r.getCells().Add(new HierarchicalTableGenerator.Cell(null, "test.html", ext.Code, null, null));
             r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.DescribeCardinality(), null, null));   //TODO: create rendering extension
             r.getCells().Add(new HierarchicalTableGenerator.Cell(null, null, ext.Definition.DescribeTypeCode(), null, null));       //TODO: create rendering extension
             //    r.getCells().add(gen.new Cell(null, null, ext.getDefinition().getShortDefn(), null, null));
@@ -141,15 +141,15 @@ namespace Hl7.Fhir.Publication
             switch (ext.ContextType)
             {
                 case Profile.ExtensionContext.Datatype:
-                    return "Use on data type: " + ext.Context;
+                    return "Use on data type: " + ext.DescribeContext();
                 //case Profile.ExtensionContext.Elements:           // DSTU2???
                 //    return "Use on element: " + ext.getContext();
                 case Profile.ExtensionContext.Extension:
-                    return "Use on extension: " + ext.Context;
+                    return "Use on extension: " + ext.DescribeContext();
                 case Profile.ExtensionContext.Resource:
-                    return "Use on resource: " + ext.Context;
+                    return "Use on resource: " + ext.DescribeContext();
                 case Profile.ExtensionContext.Mapping:
-                    return "Use where element has mapping: " + ext.Context;
+                    return "Use where element has mapping: " + ext.DescribeContext();
             }
 
             return null;

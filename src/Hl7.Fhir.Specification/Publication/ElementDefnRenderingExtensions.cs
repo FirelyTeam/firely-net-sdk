@@ -47,19 +47,12 @@ namespace Hl7.Fhir.Publication
 
         public static string DescribeTypeCode(this Profile.ElementDefinitionComponent defn)
         {
-            StringBuilder tn = new StringBuilder();
-		
-            bool first = true;
-		
-            foreach (var t in defn.Type)
-            {
-			    if (!first) tn.Append("|");
-			    first = false;
+            return String.Join(" | ", defn.Type.Select(tr => tr.Code));
+        }
 
-			    tn.Append(t.Code);      // DSTU1 (Name in DSTU2)
-    		}
-
-    		return tn.ToString();
+        public static string DescribeContext(this Profile.ProfileExtensionDefnComponent ext)
+        {
+            return String.Join(", ", ext.Context);
         }
     }
 }

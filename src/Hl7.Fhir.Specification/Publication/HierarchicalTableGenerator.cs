@@ -239,9 +239,7 @@ namespace Hl7.Fhir.Publication
 
             foreach (Title t in model.getTitles())
             {
-                var tc = renderCell(tr, t, "th", null, null, false, null);
-                if (t.width != 0)
-                    tc.Add(new XAttribute("style", "width: " + t.width.ToString() + "px"));
+                var tc = renderCell(tr, t, "th", null, null, false, null);     
             }
 
             foreach (Row r in model.getRows())
@@ -338,7 +336,18 @@ namespace Hl7.Fhir.Publication
                 }
             }
             else
-                tc.Add(new XAttribute("style", "vertical-align: top; text-align : left; padding:0px 4px 0px 4px"));
+            {
+                string style = "vertical-align:top; text-align:left; padding:0px 4px 0px 4px";
+                
+                if (c is HierarchicalTableGenerator.Title)
+                {
+                    var width = ((HierarchicalTableGenerator.Title)c).width;
+
+                    if (width != 0) style += "; width:" + width.ToString() + "px";
+                }
+
+                tc.Add(new XAttribute("style", style));
+            }
 
             if (!String.IsNullOrEmpty(icon))
             {
@@ -502,7 +511,7 @@ namespace Hl7.Fhir.Publication
 
         private void genImage(List<Boolean> indents, bool hasChildren, Stream stream)
         {
-            var bi = new Bitmap(400,2, PixelFormat.Canonical);
+            var bi = new Bitmap(400,2);
             var graphics = Graphics.FromImage(bi);
 
             graphics.DrawRectangle(new Pen(Color.White), 0, 0, 400, 2);

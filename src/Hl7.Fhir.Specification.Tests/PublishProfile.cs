@@ -19,9 +19,12 @@ namespace Fhir.Profiling.Tests
             var source = ArtifactResolver.CreateDefault();
             var profile = (Profile)source.ReadResourceArtifact(new Uri("http://from.file/TestData/lipid.profile.xml"));
 
-            var publisher = new ProfileTableGenerator(Directory.GetCurrentDirectory(), "test page", false);
-            var result = publisher.generate(profile, false).ToString();
-            File.WriteAllText(@"c:\temp\publisher.html",result);
+            var publisher = new ProfileTableGenerator(@"c:\temp\publisher", "test page", false);
+
+            var result = File.ReadAllText(@"TestData\publish-header.xml");            result += publisher.generate(profile, false).ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+            result += File.ReadAllText(@"TestData\publish-footer.xml");
+
+            File.WriteAllText(@"c:\temp\publisher\publisher.html",result);
         }
     }
 }
