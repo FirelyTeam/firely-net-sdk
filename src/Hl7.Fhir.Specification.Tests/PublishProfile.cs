@@ -7,6 +7,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Publication;
 using System.IO;
+using Hl7.Fhir.Serialization;
 
 namespace Fhir.Profiling.Tests
 {
@@ -16,7 +17,7 @@ namespace Fhir.Profiling.Tests
         [TestMethod]
         public void PublishLipidProfile()
         {
-            var source = ArtifactResolver.CreateDefault();
+            var source = new FileArtifactSource(true);
             var profile = (Profile)source.ReadResourceArtifact(new Uri("http://from.file/TestData/lipid.profile.xml"));
 
             var publisher = new ProfileTableGenerator(@"c:\temp\publisher", "test page", false);
@@ -27,5 +28,25 @@ namespace Fhir.Profiling.Tests
 
             File.WriteAllText(@"c:\temp\publisher\publisher.html",result);
         }
+
+        [TestMethod]
+        public void PublishLipidProfileStructures()
+        {
+            var source = new FileArtifactSource(true);
+            var profile = (Profile)source.ReadResourceArtifact(new Uri("http://from.file/TestData/lipid.profile.xml"));
+
+            var publisher = new StructureGenerator();
+
+            foreach (var structure in profile.Structure)
+            {
+                var result = File.ReadAllText(@"TestData\publish-header.xml");
+                result += publisher.generateStructureTable("bla.html", structure, false, @"c:\temp\publisher", false, profile, "http://nu.nl/publisher.html", "publisher.html")
+                        .ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+                result += File.ReadAllText(@"TestData\publish-footer.xml");
+
+                File.WriteAllText(@"c:\temp\publisher\" + structure.Name + ".html", result);
+            }
+        }
+
     }
 }

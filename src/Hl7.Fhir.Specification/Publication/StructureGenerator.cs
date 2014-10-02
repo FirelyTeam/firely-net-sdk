@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Publication
                     bool inlineGraphics, Profile profile, string profileUrl, String profileBaseFileName) 
         {
             HierarchicalTableGenerator gen = new HierarchicalTableGenerator(imageFolder, inlineGraphics);
-            TableModel model = new TableModel();
+            TableModel model = gen.initNormalTable();
 
             // List<Profile.ElementComponent> list = diff ? structure.getDifferential().getElement() : structure.getSnapshot().getElement();   DSTU2
             var list = structure.Element;
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Publication
                 row.setIcon("icon_extension_simple.png");
                 ext = true;
             }
-            else if (!hasDef || element.Definition.Type.Count == 0)
+            else if (!hasDef || element.Definition.Type == null || element.Definition.Type.Count == 0)
             {
                 row.setIcon("icon_element.gif");
             }
@@ -167,6 +167,8 @@ namespace Hl7.Fhir.Publication
                     {
                         genElement(defPath, gen, row.getSubRows(), nav, profile, showMissing, profileUrl, profileBaseFileName);
                     } while (nav.MoveToNext());
+
+                   nav.MoveToParent();
                 }
             }
         }
@@ -197,6 +199,8 @@ namespace Hl7.Fhir.Publication
         {
             Cell c = new Cell();
             r.getCells().Add(c);
+
+            if (elementDefn.Type == null) return;
 
             bool first = true;
             foreach (Profile.TypeRefComponent t in elementDefn.Type)
@@ -283,18 +287,21 @@ namespace Hl7.Fhir.Publication
                         c.getPieces().Add(new Piece(reference, element.Definition.Binding.Name, null));
                     }
 
-                    foreach (Profile.ElementDefinitionConstraintComponent inv in element.Definition.Constraint)
+                    if (element.Definition.Constraint != null)
                     {
-                        if (c.getPieces().Any()) c.addPiece(new Piece("br"));
-                        c.getPieces().Add(new Piece(null, "Inv-" + inv.Key + ": ", null).addStyle("font-weight:bold"));
-                        c.getPieces().Add(new Piece(null, inv.Human, null));
+                        foreach (Profile.ElementDefinitionConstraintComponent inv in element.Definition.Constraint)
+                        {
+                            if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                            c.getPieces().Add(new Piece(null, "Inv-" + inv.Key + ": ", null).addStyle("font-weight:bold"));
+                            c.getPieces().Add(new Piece(null, inv.Human, null));
+                        }
                     }
 
                     if (element.Definition.Value != null)
                     {
                         if (c.getPieces().Any()) c.addPiece(new Piece("br"));
                         c.getPieces().Add(new Piece(null, "Fixed Value: ", null).addStyle("font-weight:bold"));
-                        c.getPieces().Add(new Piece(null, "(todo)", null));
+                        c.getPieces().Add(new Piece(null, element.Definition.Value.RenderValue(), null));
                     }
 
                     // ?? example from definition    
@@ -648,5 +655,52 @@ public XhtmlNode generateTable(String defFile, ProfileStructureComponent structu
     return null;
   }
 
+private Cell generateDescription(HeirarchicalTableGenerator gen, Row row, ElementComponent definition, ElementComponent fallback, boolean used, String baseURL, String url, ProfileKnowledgeProvider pkp, Profile profile) {
+    // TODO Auto-generated method stub
+    Cell c = gen.new Cell();
+    row.getCells().add(c);                
 
+    if (used) {
+      if (definition.getDefinition() != null && definition.getDefinition().getShort() != null) {
+        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+        c.addPiece(gen.new Piece(null, definition.getDefinition().getShortSimple(), null));
+      } else if (fallback != null && fallback.getDefinition() != null && fallback.getDefinition().getShort() != null) {
+        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+        c.addPiece(gen.new Piece(null, fallback.getDefinition().getShortSimple(), null));
+      }
+      if (url != null) {
+        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+        String fullUrl = url.startsWith("#") ? baseURL+url : url;
+        String ref = pkp.getLinkForExtension(profile, url);
+        c.getPieces().add(gen.new Piece(null, "URL: ", null).addStyle("font-weight:bold"));
+        c.getPieces().add(gen.new Piece(ref, fullUrl, null));
+      }
+
+      if (definition.getSlicing() != null) {
+        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+        c.getPieces().add(gen.new Piece(null, "Slice: ", null).addStyle("font-weight:bold"));
+        c.getPieces().add(gen.new Piece(null, describeSlice(definition.getSlicing()), null));
+      }
+      if (definition.getDefinition() != null) {
+        if (definition.getDefinition().getBinding() != null) {
+          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+          String ref = pkp.resolveBinding(definition.getDefinition().getBinding());
+          c.getPieces().add(gen.new Piece(null, "Binding: ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(gen.new Piece(ref, definition.getDefinition().getBinding().getNameSimple(), null));
+        }
+        for (ElementDefinitionConstraintComponent inv : definition.getDefinition().getConstraint()) {
+          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+          c.getPieces().add(gen.new Piece(null, "Inv-"+inv.getKeySimple()+": ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(gen.new Piece(null, inv.getHumanSimple(), null));
+        }
+        if (definition.getDefinition().getValue() != null) {        
+          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+          c.getPieces().add(gen.new Piece(null, "Fixed Value: ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(gen.new Piece(null, "(todo)", null));
+        }
+        // ?? example from definition    
+      }
+    }
+    return c;
+  }
 #endif

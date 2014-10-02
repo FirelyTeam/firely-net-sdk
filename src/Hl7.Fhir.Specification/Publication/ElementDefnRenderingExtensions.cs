@@ -54,5 +54,14 @@ namespace Hl7.Fhir.Publication
         {
             return String.Join(", ", ext.Context);
         }
+
+        public static string RenderValue(this Element value)
+        {
+            if (value is FhirUri) return ((FhirUri)value).Value;
+            if (value is FhirString) return ((FhirString)value).Value;
+            if (value is Code) return ((Code)value).Value;
+
+            return "(todo)";
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Publication
 
         internal string getLinkForProfile(Model.Profile profile, string p)
         {
-            return "todo.html";
+            return "todo.html" + "|" + profile.Name;
             //        String fn;
             //if (!url.startsWith("#")) {
             //  String[] path = url.split("#");

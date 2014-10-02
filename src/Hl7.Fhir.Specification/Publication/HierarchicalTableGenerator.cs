@@ -316,6 +316,7 @@ namespace Hl7.Fhir.Publication
                             new XAttribute("src", srcFor("tbl_vline.png")),
                             new XAttribute("class", "heirarchy"),
                             new XAttribute("alt", "."));
+                        tc.Add(vlineImage);
                     }
                 }
 
@@ -399,7 +400,8 @@ namespace Hl7.Fhir.Publication
                         var span = new XElement(XmlNs.XHTMLNS + "span");
                         tc.Add(span);
                         XElement s = addStyle(span, p);
-                        s.Add(new XText(p.getText()));
+                        var text = p.getText() ?? "(empty?)";
+                        s.Add(new XText(text));
                     }
                     else
                         tc.Add(new XText(p.getText()));
