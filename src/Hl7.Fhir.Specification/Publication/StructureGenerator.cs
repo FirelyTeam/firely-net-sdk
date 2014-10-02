@@ -10,29 +10,40 @@ namespace Hl7.Fhir.Publication
 {
     public class StructureGenerator
     {
+        ProfileKnowledgeProvider _pkp;
+
+        public StructureGenerator()
+        {
+            _pkp = new ProfileKnowledgeProvider("http://www.hl7.org/implement/standards/fhir/");
+        }
+
         private class UnusedTracker 
         {
 		    public bool used;
 	    }
 
         public XElement generateStructureTable(String defFile, Profile.ProfileStructureComponent structure, bool diff, String imageFolder, 
-                    bool inlineGraphics, Profile profile, String profileBaseFileName) 
+                    bool inlineGraphics, Profile profile, string profileUrl, String profileBaseFileName) 
         {
             HierarchicalTableGenerator gen = new HierarchicalTableGenerator(imageFolder, inlineGraphics);
             TableModel model = new TableModel();
 
             // List<Profile.ElementComponent> list = diff ? structure.getDifferential().getElement() : structure.getSnapshot().getElement();   DSTU2
             var list = structure.Element;
+            var nav = new ElementNavigator(structure);
+            nav.MoveToFirstChild();
     
-            genElement(defFile == null ? null : defFile+"#"+structure.Name+".", gen, model.getRows(), list[0], list, profile, diff, profileBaseFileName);
+            genElement(defFile == null ? null : defFile+"#"+structure.Name+".", gen, model.getRows(), nav, profile, diff, profileUrl, profileBaseFileName);
             return gen.generate(model);
         }
 
 
-        private void genElement(String defPath, HierarchicalTableGenerator gen, List<Row> rows, Profile.ElementComponent element, List<Profile.ElementComponent> all, 
-                    Profile profile, bool showMissing, String profileBaseFileName)
+        private void genElement(String defPath, HierarchicalTableGenerator gen, List<Row> rows, ElementNavigator nav, 
+                    Profile profile, bool showMissing, String profileUrl, String profileBaseFileName)
         {
-            if(onlyInformationIsMapping(all, element)) return;  // we don't even show it in this case
+            var element = nav.Current;
+
+            if(onlyInformationIsMapping(nav.Structure.Element, element)) return;  // we don't even show it in this case
 
             Row row = new Row();
             row.setAnchor(element.Path);
@@ -63,11 +74,11 @@ namespace Hl7.Fhir.Publication
                 //I am pretty sure this depends on ElementDefn.NameReference
                 row.setIcon("icon_reuse.png");
             }
-            else if (hasDef && isPrimitive(element.Definition.Type[0].Code))
+            else if (hasDef && _pkp.isPrimitive(element.Definition.Type[0].Code))
                 row.setIcon("icon_primitive.png");
-            else if (hasDef && isReference(element.Definition.Type[0].Code))
+            else if (hasDef && _pkp.isReference(element.Definition.Type[0].Code))
                 row.setIcon("icon_reference.png");
-            else if (hasDef && isDataType(element.Definition.Type[0].Code))
+            else if (hasDef && _pkp.isDataType(element.Definition.Type[0].Code))
                 row.setIcon("icon_datatype.gif");
             else
                 row.setIcon("icon_resource.png");
@@ -84,44 +95,44 @@ namespace Hl7.Fhir.Publication
                 // If this element (row) in the table is an extension...
                 if (element.Definition != null && element.Definition.Type.Count == 1 && element.Definition.Type[0].Profile != null) 
                 {
-                    Profile.ProfileExtensionDefnComponent extDefn = pkp.getExtensionDefinition(profile, element.Definition.Type[0].Profile);
+                    Profile.ProfileExtensionDefnComponent extDefn = _pkp.getExtensionDefinition(profile, element.Definition.Type[0].Profile);
         
                     if (extDefn == null) 
                     {
                         row.getCells().Add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
                         row.getCells().Add(new Cell(null, null, "?? "+element.Definition.Type[0].Profile, null, null));
-                        generateDescription(gen, row, element, null, used.used, profile.Url, element.Definition.Type[0].Profile, pkp, profile);
+                        generateDescription(gen, row, element, null, used.used, profileUrl, element.Definition.Type[0].Profile, profile);
                     }
                     else 
                     {
                         row.getCells().Add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, extDefn.Definition, used), null, null));
-                        genTypes(gen, pkp, row, extDefn.Definition, profileBaseFileName, profile);
-                        generateDescription(gen, row, element, extDefn.Definition, used.used, profile.Url, element.Definition.Type[0].Profile, pkp, profile);
+                        genTypes(gen, row, extDefn.Definition, profileBaseFileName, profile);
+                        generateDescription(gen, row, element, extDefn.Definition, used.used, profileUrl, element.Definition.Type[0].Profile, profile);
                     } 
                 }
                 else if (element.Definition != null) 
                 {
                     row.getCells().Add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
-                    genTypes(gen, pkp, row, element, profileBaseFileName, profile);
-                    generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
+                    genTypes(gen, row, element.Definition, profileBaseFileName, profile);
+                    generateDescription(gen, row, element, null, used.used, null, null, profile);
                 } 
                 else 
                 {
                     row.getCells().Add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
                     row.getCells().Add(new Cell());
-                    generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
+                    generateDescription(gen, row, element, null, used.used, null, null, profile);
                 }
             } 
             else 
             {
                 row.getCells().Add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
                 
-                if (hasDef)
-                    genTypes(gen, pkp, row, element, profileBaseFileName, profile);
+                if (element.Definition != null)
+                    genTypes(gen, row, element.Definition, profileBaseFileName, profile);
                 else
                     row.getCells().Add(new Cell());
         
-                generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
+                generateDescription(gen, row, element, null, used.used, null, null, profile);
             }
       
             if (element.Slicing != null) 
@@ -150,12 +161,17 @@ namespace Hl7.Fhir.Publication
             } 
             else
             {
-                List<Profile.ElementComponent> children = getChildren(all, element);
-                foreach (Profile.ElementComponent child in children)
-                    genElement(defPath, gen, row.getSubRows(), child, all, profile, pkp, showMissing, profileBaseFileName);
+                if (nav.MoveToFirstChild())
+                {
+                    do
+                    {
+                        genElement(defPath, gen, row.getSubRows(), nav, profile, showMissing, profileUrl, profileBaseFileName);
+                    } while (nav.MoveToNext());
+                }
             }
         }
-   
+
+  
         private bool onlyInformationIsMapping(List<Profile.ElementComponent> all, Profile.ElementComponent element)
         {
             return false;
@@ -176,22 +192,134 @@ namespace Hl7.Fhir.Publication
             return element.Path.Substring(0, element.Path.LastIndexOf(".")) + "." + element.Name;
         }
 
-        //TODO: Determine dynamically based on core profiles?
-        private bool isDataType(String value)
+
+        private void genTypes(HierarchicalTableGenerator gen, Row r, Profile.ElementDefinitionComponent elementDefn, String profileBaseFileName, Profile profile)
         {
-            return new[] { "Identifier", "HumanName", "Address", "ContactPoint", "Timing", "Quantity", "Attachment", "Range",
-                  "Period", "Ratio", "CodeableConcept", "Coding", "SampledData", "Age", "Distance", "Duration", "Count", "Money" }.Contains(value);
+            Cell c = new Cell();
+            r.getCells().Add(c);
+
+            bool first = true;
+            foreach (Profile.TypeRefComponent t in elementDefn.Type)
+            {
+                if (first)
+                    first = false;
+                else
+                    c.addPiece(new Piece(null, ", ", null));
+
+                if (t.Code == "Reference" || (t.Code == "Resource" && t.Profile != null))
+                {
+                    if (t.Profile.StartsWith("http://hl7.org/fhir/Profile/"))
+                    {
+                        String rn = t.Profile.Substring(28);
+                        c.addPiece(new Piece(_pkp.getLinkFor(rn), rn, null));
+                    }
+                    else if (t.Profile.StartsWith("#"))
+                        c.addPiece(new Piece(profileBaseFileName + "." + t.Profile.Substring(1).ToLower() + ".html", t.Profile, null));
+                    else
+                        c.addPiece(new Piece(t.Profile, t.Profile, null));
+                }
+                else if (t.Profile != null)
+                { // a profiled type
+                    String reference = _pkp.getLinkForProfile(profile, t.Profile);
+                    if (reference != null)
+                    {
+                        String[] parts = reference.Split('|');      //TODO: Not too sure, was: String[] parts = ref.split("\\|"); in Java
+                        c.addPiece(new Piece(parts[0], parts[1], t.Code));
+                    }
+                    else
+                        c.addPiece(new Piece(reference, t.Code, null));
+                }
+                else if (_pkp.hasLinkFor(t.Code))
+                {
+                    c.addPiece(new Piece(_pkp.getLinkFor(t.Code), t.Code, null));
+                }
+                else
+                    c.addPiece(new Piece(null, t.Code, null));
+            }
         }
 
-        private bool isReference(String value)
+
+        private Cell generateDescription(HierarchicalTableGenerator gen, Row row, Profile.ElementComponent element, Profile.ElementDefinitionComponent fallback, bool used, String baseURL, String profileUrl, Profile profile)
         {
-            return value == "Reference";
+            Cell c = new Cell();
+            row.getCells().Add(c);
+
+            if (used)
+            {
+                if (element.Definition != null && element.Definition.Short != null)
+                {
+                    if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                    c.addPiece(new Piece(null, element.Definition.Short, null));
+                }
+                else if (fallback != null && fallback.Short != null)
+                {
+                    if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                    c.addPiece(new Piece(null, fallback.Short, null));
+                }
+
+                if (profileUrl != null)
+                {
+                    if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                    String fullUrl = profileUrl.StartsWith("#") ? baseURL + profileUrl : profileUrl;
+                    String reference = _pkp.getLinkForExtension(profile, profileUrl);
+                    c.getPieces().Add(new Piece(null, "URL: ", null).addStyle("font-weight:bold"));
+                    c.getPieces().Add(new Piece(reference, fullUrl, null));
+                }
+
+                if (element.Slicing != null)
+                {
+                    if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                    c.getPieces().Add(new Piece(null, "Slice: ", null).addStyle("font-weight:bold"));
+                    c.getPieces().Add(new Piece(null, describeSlice(element.Slicing), null));
+                }
+
+                if (element.Definition != null)
+                {
+                    if (element.Definition.Binding != null)
+                    {
+                        if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                        String reference = _pkp.resolveBinding(element.Definition.Binding);
+                        c.getPieces().Add(new Piece(null, "Binding: ", null).addStyle("font-weight:bold"));
+                        c.getPieces().Add(new Piece(reference, element.Definition.Binding.Name, null));
+                    }
+
+                    foreach (Profile.ElementDefinitionConstraintComponent inv in element.Definition.Constraint)
+                    {
+                        if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                        c.getPieces().Add(new Piece(null, "Inv-" + inv.Key + ": ", null).addStyle("font-weight:bold"));
+                        c.getPieces().Add(new Piece(null, inv.Human, null));
+                    }
+
+                    if (element.Definition.Value != null)
+                    {
+                        if (c.getPieces().Any()) c.addPiece(new Piece("br"));
+                        c.getPieces().Add(new Piece(null, "Fixed Value: ", null).addStyle("font-weight:bold"));
+                        c.getPieces().Add(new Piece(null, "(todo)", null));
+                    }
+
+                    // ?? example from definition    
+                }
+            }
+
+            return c;
         }
 
-        private bool isPrimitive(String value)
+
+        private String describeSlice(Profile.ElementSlicingComponent slicing)
         {
-            return new[] { "boolean", "integer", "decimal", "base64Binary", "instant", "string", "date", "dateTime", "code", "oid", "uuid", "id" }.Contains(value);
+            string rules;
+
+            switch (slicing.Rules)
+            {
+                case Profile.SlicingRules.Closed: rules = "Closed"; break;
+                case Profile.SlicingRules.Open: rules = "Open"; break;
+                case Profile.SlicingRules.OpenAtEnd: rules = "Open At End"; break;
+                default: rules = "??"; break;
+            }
+
+            return (slicing.Ordered == true ? "Ordered, " : "Unordered, ") + rules + ", by " + slicing.Discriminator;
         }
+
 
         private String describeCardinality(Profile.ElementDefinitionComponent definition, Profile.ElementDefinitionComponent fallback, UnusedTracker tracker)
         {
@@ -208,7 +336,7 @@ namespace Hl7.Fhir.Publication
             if (min == null && max == null)
                 return null;
             else
-                return (min == null ? "" : min.ToString() + ".." + (max == null ? "" : Max));
+                return (min == null ? "" : min.ToString() + ".." + (max == null ? "" : max));
         }
     }
 }
@@ -225,7 +353,7 @@ public XhtmlNode generateTable(String defFile, ProfileStructureComponent structu
 
   private void genElement(String defPath, HeirarchicalTableGenerator gen, List<Row> rows, ElementComponent element, List<ElementComponent> all, Profile profile, ProfileKnowledgeProvider pkp, boolean showMissing, String profileBaseFileName) throws Exception {
     if (!onlyInformationIsMapping(all, element)) { // we don't even show it in this case
-    Row row = gen.new Row();
+    Row row = new Row();
     row.setAnchor(element.getPathSimple());
     String s = tail(element.getPathSimple());
     boolean hasDef = element.Definition != null;
@@ -253,35 +381,35 @@ public XhtmlNode generateTable(String defFile, ProfileStructureComponent structu
     String ref = defPath == null ? null : defPath + makePathLink(element);
     UnusedTracker used = new UnusedTracker();
     used.used = true;
-    Cell left = gen.new Cell(null, ref, s, !hasDef ? null : element.Definition.getFormalSimple(), null);
+    Cell left = new Cell(null, ref, s, !hasDef ? null : element.Definition.getFormalSimple(), null);
     row.getCells().add(left);
     if (ext) {
       if (element.Definition != null && element.Definition.getType().size() == 1 && element.Definition.Type[0].getProfile() != null) {
         ExtensionDefinition extDefn = pkp.getExtensionDefinition(profile, element.Definition.Type[0].Profile);
         if (extDefn == null) {
-            row.getCells().add(gen.new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
-            row.getCells().add(gen.new Cell(null, null, "?? "+element.Definition.Type[0].Profile, null, null));
+            row.getCells().add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
+            row.getCells().add(new Cell(null, null, "?? "+element.Definition.Type[0].Profile, null, null));
             generateDescription(gen, row, element, null, used.used, profile.getUrlSimple(), element.Definition.Type[0].Profile, pkp, profile);
           } else {
-            row.getCells().add(gen.new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, extDefn.getDefn().getElement().get(0).getDefinition(), used), null, null));
+            row.getCells().add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, extDefn.getDefn().getElement().get(0).getDefinition(), used), null, null));
             genTypes(gen, pkp, row, extDefn.getDefn().getElement().get(0), profileBaseFileName, profile);
             generateDescription(gen, row, element, extDefn.getDefn().getElement().get(0), used.used, profile.getUrlSimple(), element.Definition.Type[0].Profile, pkp, profile);
         }
       } else if (element.Definition != null) {
-          row.getCells().add(gen.new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
+          row.getCells().add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
           genTypes(gen, pkp, row, element, profileBaseFileName, profile);
           generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
       } else {
-          row.getCells().add(gen.new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
-          row.getCells().add(gen.new Cell());
+          row.getCells().add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
+          row.getCells().add(new Cell());
           generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
       }
     } else {
-        row.getCells().add(gen.new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
+        row.getCells().add(new Cell(null, null, !hasDef ? null : describeCardinality(element.Definition, null, used), null, null));
         if (hasDef)
           genTypes(gen, pkp, row, element, profileBaseFileName, profile);
         else
-          row.getCells().add(gen.new Cell());
+          row.getCells().add(new Cell());
         generateDescription(gen, row, element, null, used.used, null, null, pkp, profile);
       }
       if (element.getSlicing() != null) {
@@ -320,46 +448,46 @@ public XhtmlNode generateTable(String defFile, ProfileStructureComponent structu
 
   private Cell generateDescription(HeirarchicalTableGenerator gen, Row row, ElementComponent definition, ElementComponent fallback, boolean used, String baseURL, String url, ProfileKnowledgeProvider pkp, Profile profile) {
     // TODO Auto-generated method stub
-    Cell c = gen.new Cell();
+    Cell c = new Cell();
     row.getCells().add(c);                
 
     if (used) {
       if (definition.getDefinition() != null && definition.getDefinition().getShort() != null) {
-        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
-        c.addPiece(gen.new Piece(null, definition.getDefinition().getShortSimple(), null));
+        if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
+        c.addPiece(new Piece(null, definition.getDefinition().Short, null));
       } else if (fallback != null && fallback.getDefinition() != null && fallback.getDefinition().getShort() != null) {
-        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
-        c.addPiece(gen.new Piece(null, fallback.getDefinition().getShortSimple(), null));
+        if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
+        c.addPiece(new Piece(null, fallback.getDefinition().Short, null));
       }
       if (url != null) {
-        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+        if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
         String fullUrl = url.startsWith("#") ? baseURL+url : url;
         String ref = pkp.getLinkForExtension(profile, url);
-        c.getPieces().add(gen.new Piece(null, "URL: ", null).addStyle("font-weight:bold"));
-        c.getPieces().add(gen.new Piece(ref, fullUrl, null));
+        c.getPieces().add(new Piece(null, "URL: ", null).addStyle("font-weight:bold"));
+        c.getPieces().add(new Piece(ref, fullUrl, null));
       }
 
       if (definition.getSlicing() != null) {
-        if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
-        c.getPieces().add(gen.new Piece(null, "Slice: ", null).addStyle("font-weight:bold"));
-        c.getPieces().add(gen.new Piece(null, describeSlice(definition.getSlicing()), null));
+        if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
+        c.getPieces().add(new Piece(null, "Slice: ", null).addStyle("font-weight:bold"));
+        c.getPieces().add(new Piece(null, describeSlice(definition.getSlicing()), null));
       }
       if (definition.getDefinition() != null) {
         if (definition.getDefinition().getBinding() != null) {
-          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
+          if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
           String ref = pkp.resolveBinding(definition.getDefinition().getBinding());
-          c.getPieces().add(gen.new Piece(null, "Binding: ", null).addStyle("font-weight:bold"));
-          c.getPieces().add(gen.new Piece(ref, definition.getDefinition().getBinding().getNameSimple(), null));
+          c.getPieces().add(new Piece(null, "Binding: ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(new Piece(ref, definition.getDefinition().getBinding().getNameSimple(), null));
         }
         for (ElementDefinitionConstraintComponent inv : definition.getDefinition().getConstraint()) {
-          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
-          c.getPieces().add(gen.new Piece(null, "Inv-"+inv.getKeySimple()+": ", null).addStyle("font-weight:bold"));
-          c.getPieces().add(gen.new Piece(null, inv.getHumanSimple(), null));
+          if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
+          c.getPieces().add(new Piece(null, "Inv-"+inv.getKeySimple()+": ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(new Piece(null, inv.getHumanSimple(), null));
         }
         if (definition.getDefinition().getValue() != null) {        
-          if (!c.getPieces().isEmpty()) c.addPiece(gen.new Piece("br"));
-          c.getPieces().add(gen.new Piece(null, "Fixed Value: ", null).addStyle("font-weight:bold"));
-          c.getPieces().add(gen.new Piece(null, "(todo)", null));
+          if (!c.getPieces().isEmpty()) c.addPiece(new Piece("br"));
+          c.getPieces().add(new Piece(null, "Fixed Value: ", null).addStyle("font-weight:bold"));
+          c.getPieces().add(new Piece(null, "(todo)", null));
         }
         // ?? example from definition    
       }
@@ -397,7 +525,7 @@ public XhtmlNode generateTable(String defFile, ProfileStructureComponent structu
 
   private boolean allTypesAre(List<TypeRefComponent> types, String name) {
     for (TypeRefComponent t : types) {
-      if (!t.getCodeSimple().equals(name))
+      if (!t.Code.equals(name))
         return false;
     }
     return true;

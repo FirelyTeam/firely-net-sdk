@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Publication\ElementDefnRenderingExtensions.cs" />
     <Compile Include="Publication\HierarchicalTableGenerator.cs" />
+    <Compile Include="Publication\ProfileKnowledgeProvider.cs" />
     <Compile Include="Publication\ProfileTableGenerator.cs" />
     <Compile Include="Publication\StructureGenerator.cs" />
     <Compile Include="Specification\Model\Slicing.cs" />

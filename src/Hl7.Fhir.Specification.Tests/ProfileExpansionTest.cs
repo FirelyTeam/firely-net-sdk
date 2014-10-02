@@ -98,18 +98,18 @@ namespace Hl7.Fhir.Test.Inspection
             var locator = new StructureLoader(ArtifactResolver.CreateDefault());
             var profileUri = new Uri("http://hl7.org/fhir/Profile/Profile");
 
-            var prof = locator.Locate(profileUri, new Code("Profile"));
+            var prof = locator.LocateStructure(profileUri, new Code("Profile"));
             Assert.IsNotNull(prof);
             Assert.AreEqual("Profile", prof.Type);
             //Assert.AreEqual(profileUri.ToString(), prof.GetProfileLocation());
 
             // Try to locate a structure that cannot be found in the given profile
-            prof = locator.Locate(profileUri, new Code("Patient"));
+            prof = locator.LocateStructure(profileUri, new Code("Patient"));
             Assert.IsNull(prof);
 
             profileUri = new Uri("http://take.from.disk/Profile/example-lipid-profile");
             var profileUriWithFrag = new Uri(profileUri.ToString() + "#lipidResultMessage");
-            prof = locator.Locate(profileUriWithFrag, new Code("MessageHeader"));
+            prof = locator.LocateStructure(profileUriWithFrag, new Code("MessageHeader"));
             Assert.IsNotNull(prof);
             Assert.AreEqual("MessageHeader", prof.Type);
             Assert.AreEqual("lipidResultMessage", prof.Name);
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Test.Inspection
 
             // Try to locate a structure that cannot be found in the profile by name
             profileUriWithFrag = new Uri(profileUri.ToString() + "#XXX");
-            prof = locator.Locate(profileUriWithFrag, new Code("Profile"));
+            prof = locator.LocateStructure(profileUriWithFrag, new Code("Profile"));
             Assert.IsNull(prof);
         }
 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Test.Inspection
         public void TestExpandChild()
         {
             var loader = new StructureLoader(ArtifactResolver.CreateDefault());
-            var profStruct = loader.Locate(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
+            var profStruct = loader.LocateStructure(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
 
             var nav = new ElementNavigator(profStruct);
             

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Profiling
         
         private T Resolve<T>(Uri uri) where T : Model.Resource
         {
-            loader.Locate(uri);
+            loader.LocateStructure(uri);
             Model.Resource resource = source.ReadResourceArtifact(uri);
             return (T)resource;
         }
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Profiling
 
         public Structure GetStructure(Uri uri)
         {
-            Model.Profile.ProfileStructureComponent component = loader.Locate(uri);
+            Model.Profile.ProfileStructureComponent component = loader.LocateStructure(uri);
             if (component != null)
             {
                 Structure structure = harvester.HarvestStructure(component, uri);
