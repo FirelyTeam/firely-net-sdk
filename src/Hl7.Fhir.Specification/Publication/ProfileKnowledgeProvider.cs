@@ -38,6 +38,8 @@ namespace Hl7.Fhir.Publication
                 return _baseUrl + "datatypes.html#" + typename.ToLower();
             else if(ModelInfo.IsKnownResource(typename))
                 return _baseUrl + typename.ToLower() + ".html";
+            else if(typename == "Extension")
+                return _baseUrl + "extensibility.html#Extension";
             else
                 return "todo.html";
         }
@@ -52,7 +54,7 @@ namespace Hl7.Fhir.Publication
 
         internal bool isReference(String value)
         {
-            return value == "Reference";
+            return value == "ResourceReference";
         }
 
         internal bool isPrimitive(String value)
@@ -136,7 +138,7 @@ namespace Hl7.Fhir.Publication
 
         internal bool hasLinkFor(string typeRefCode)
         {
-            return isDataType(typeRefCode) || ModelInfo.IsKnownResource(typeRefCode);
+            return isDataType(typeRefCode) || isPrimitive(typeRefCode) || typeRefCode == "Extension" || ModelInfo.IsKnownResource(typeRefCode);
         }
     }
 

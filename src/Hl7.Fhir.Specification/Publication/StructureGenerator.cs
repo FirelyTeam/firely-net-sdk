@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Publication
             }
             else if (hasDef && element.Definition.Type.Count > 1)
             {
-                if (allTypesAre(element.Definition.Type, "Reference"))
+                if (allTypesAre(element.Definition.Type, "ResourceReference"))
                     row.setIcon("icon_reference.png");
                 else
                     row.setIcon("icon_choice.gif");
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Publication
                 else
                     c.addPiece(new Piece(null, ", ", null));
 
-                if (t.Code == "Reference" || (t.Code == "Resource" && t.Profile != null))
+                if (t.Code == "ResourceReference" || (t.Code == "Resource" && t.Profile != null))
                 {
                     if (t.Profile.StartsWith("http://hl7.org/fhir/Profile/"))
                     {

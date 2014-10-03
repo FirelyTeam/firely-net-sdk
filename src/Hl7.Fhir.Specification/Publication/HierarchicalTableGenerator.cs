@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Publication
 
     public class HierarchicalTableGenerator
     {
-        private String dest;
+        private String imageDirectory;
 
         /**
          * There are circumstances where the table has to present in the absence of a stable supporting infrastructure.
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Publication
 
         public HierarchicalTableGenerator(String dest, bool inlineGraphics)
         {
-            this.dest = dest;
+            this.imageDirectory = dest;
             this.inLineGraphics = inlineGraphics;
         }
 
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Publication
             {
                 StringBuilder b = new StringBuilder();
                 b.Append("data: image/png;base64,");
-                byte[] bytes = File.ReadAllBytes(Path.Combine(dest, filename));
+                byte[] bytes = File.ReadAllBytes(Path.Combine(imageDirectory, filename));
 
                 b.Append(Convert.ToBase64String(bytes));
                 return b.ToString();
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Publication
 
                 b.Append(".png");
             
-                String file = Path.Combine(dest, b.ToString());
+                String file = Path.Combine(imageDirectory, b.ToString());
 
                 if (!File.Exists(file))
                 {

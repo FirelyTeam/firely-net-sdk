@@ -64,7 +64,6 @@
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="TestAdvancedValidation.cs" />
     <Compile Include="TestExtensions.cs" />
-    <Compile Include="PublishProfile.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
     <Compile Include="Factory.cs" />

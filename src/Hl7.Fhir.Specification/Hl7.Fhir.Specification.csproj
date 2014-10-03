@@ -60,11 +60,6 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
       <Link>Support\ReflectionHelper.cs</Link>
     </Compile>
-    <Compile Include="Publication\ElementDefnRenderingExtensions.cs" />
-    <Compile Include="Publication\HierarchicalTableGenerator.cs" />
-    <Compile Include="Publication\ProfileKnowledgeProvider.cs" />
-    <Compile Include="Publication\ProfileTableGenerator.cs" />
-    <Compile Include="Publication\StructureGenerator.cs" />
     <Compile Include="Specification\Model\Slicing.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Expansion\DifferentialTreeConstructor.cs" />

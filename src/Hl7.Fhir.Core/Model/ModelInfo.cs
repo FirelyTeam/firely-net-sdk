@@ -57,31 +57,52 @@ namespace Hl7.Fhir.Model
             public string[] Path { get; set; }
         }
 
-        public static Type GetTypeForResourceName(string name)
+
+        public static Type GetTypeForFhirType(string name)
         {
-            if( !FhirTypeToCsType.ContainsKey(name) )
+            if (!FhirTypeToCsType.ContainsKey(name))
                 return null;
             else
                 return FhirTypeToCsType[name];
         }
 
 
-        public static string GetResourceNameForType(Type resourceType)
+        public static string GetFhirTypeForType(Type type)
         {
-            if( !FhirCsTypeToString.ContainsKey(resourceType) )
+            if (!FhirCsTypeToString.ContainsKey(type))
                 return null;
             else
-                return FhirCsTypeToString[resourceType];
+                return FhirCsTypeToString[type];
         }
+
 
         public static bool IsKnownResource(string name)
         {
-            return GetTypeForResourceName(name) != null;
+            return SupportedResources.Contains(name);
         }
 
         public static bool IsKnownResource(Type type)
         {
-            return GetResourceNameForType(type) != null;
+            var name = GetFhirTypeForType(type);
+
+            return name != null && IsKnownResource(name);
+        }
+
+        public static Type GetTypeForResourceName(string name)
+        {
+            if (!IsKnownResource(name)) return null;
+
+            return GetTypeForFhirType(name);
+        }
+
+        public static string GetResourceNameForType(Type type)
+        {
+            var name = GetFhirTypeForType(type);
+
+            if (name != null && IsKnownResource(name))
+                return name;
+            else
+                return null;
         }
     }
 }
