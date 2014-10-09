@@ -96,6 +96,11 @@ namespace Hl7.Fhir.Serialization
                 return XmlConvert.ToString((DateTimeOffset)value, FMT_FULL);
             if (value is Uri)
                 return ((Uri)value).ToString();
+            if (value is Enum)
+            {
+                var attr = ((Enum)value).GetAttributeOnEnum<EnumLiteralAttribute>();
+                if (attr != null) return attr.Literal;
+            }
 
             throw Error.NotSupported("Cannot convert {0} value '{1}' to string", value.GetType().Name, value);
         }

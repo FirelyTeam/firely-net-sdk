@@ -56,6 +56,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("3.141592653589", PrimitiveTypeConverter.ConvertTo<string>(result));
         }
 
+        [TestMethod]
+        public void TestEnumToString()
+        {
+            var x = Quantity.QuantityCompararator.LessOrEqual;
+
+            Assert.AreEqual("<=", x.ConvertTo<string>());
+        }
 
         [TestMethod]
         public void TestStringToInstant()

@@ -184,6 +184,7 @@
     <Compile Include="Model\Uuid.cs" />
     <Compile Include="Model\ValueSet.cs" />
     <Compile Include="Model\XHtml.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />

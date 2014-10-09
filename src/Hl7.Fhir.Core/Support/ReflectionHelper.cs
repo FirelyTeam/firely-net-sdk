@@ -18,6 +18,25 @@ namespace Hl7.Fhir.Support
 {
     internal static class ReflectionHelper
     {
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        public static T GetAttributeOnEnum<T>(this Enum enumVal) where T : System.Attribute
+        {
+            var type = enumVal.GetType();
+#if PORTABLE45
+            var memInfo = type.GetTypeInfo().GetDeclaredField(enumVal.ToString());
+#else
+            var memInfo = type.GetMember(enumVal.ToString())[0];
+#endif
+            var attributes = memInfo.GetCustomAttributes(typeof(T), false);
+            return (attributes.Count() > 0) ? (T)attributes.First() : null;
+        }
+
+
         public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {
             if(t == null) throw Error.ArgumentNull("t");
