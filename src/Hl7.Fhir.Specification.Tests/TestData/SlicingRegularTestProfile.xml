@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Profile xmlns="http://hl7.org/fhir">
+  <identifier value="urn:hl7.org:lipid-profile:v1"/>
+  <version value="1.0.0"/>
+  <name value="Example Lipid Profile"/>
+  <publisher value="HL7 International"/>
+  <telecom>
+    <system value="email"/>
+    <value value="e.kramer@furore.com"/>
+  </telecom>
+  <description
+    value="Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes&#xD;&#xA;"/>
+  <code>
+    <system value="http://loinc.org/"/>
+    <code value="58239-5"/>
+    <display value="lipid profile"/>
+  </code>
+  <status value="draft"/>
+  <experimental value="true"/>
+  <date value="2014-04-17"/>
+  <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial"/>
+  <fhirVersion value="0.80"/>
+
+  <!-- ====================================================================================
+       First, the MessageHeader representing a "newLipidResult" message      
+       It the "data" element to exactly 1, and references the DiagnosticReport "lipidPanel", 
+       as defined in this profile
+       ==================================================================================== -->
+  <structure>
+    <type value="MessageHeader"/>
+    <name value="newLipidResult"/>
+    <publish value="true"/>
+    <element>
+      <path value="MessageHeader.data"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#lipidPanel"/>
+          <aggregation value="bundled"/>
+        </type>
+        <isModifier value="false"/>
+      </definition>
+    </element>
+  </structure>
+
+
+  <!-- ====================================================================================
+       Then, the DiagnosticReport used by MessageHeader, "lipidPanel"      
+       ==================================================================================== -->
+  <structure>
+    <type value="DiagnosticReport"/>
+    <name value="lipidPanel"/>
+    <publish value="true"/>
+    <element>
+      <path value="DiagnosticReport"/>
+      <definition>
+        <short value="Lipid Lab Report"/>
+        <formal value="The findings and interpretation of a general lipd lab profile"/>
+        <comments
+          value="Note that this profile doesn't mention workflow  elements - it's solely concerned with the semantics of a lipid report. Things that are ignored are not constrained"
+        />
+      </definition>
+    </element>
+
+
+    <element>
+      <path value="DiagnosticReport.name"/>
+      <definition>
+        <short value="LOINC Code for Lipid Panel with LDL"/>
+        <formal value="LOINC Code for Lipid Panel with LDL."/>
+        <comments value="LOINC code includes &quot;direct&quot; LDL - does this mean LDL derived by measuring VLDL
+          by ultracentrifugation? This panel includes both measured and calculated LDL."/>
+      </definition>
+    </element>
+
+    <element>
+      <!-- I wonder whether this means *all* codings under "name" must now conform to the constraints below, or just *any* ? -->
+      <!-- If we'd allow non-primitive valueXXX, we'd need only one fixed value at DiagnosticReport.name, but then, how do we define equality for complex types? -->
+      <path value="DiagnosticReport.name.coding.system"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueUri value="http://loinc.org/"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.name.coding.version"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.name.coding.code"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueCode value="57698-3"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.name.coding.display"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueString value="Lipid Panel with direct LDL"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.name.coding.primary"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.name.coding.valueSet"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- So, all I did in the above was fixing a code. This currently takes more effort than I would like
+      In DSTU2, we can probably do things like:
+
+    <element>
+      <path value="DiagnosticReport.name" />
+      <definition>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://loinc.org/"/>
+            <code value="57698-3" />
+            <display value="Lipid Panel with direct LDL" />  
+          </coding>
+        </valueCodeableConcept>
+      </definition>
+      
+      Though we'd have to define whether this means you can still add other codings to CodeableConcept
+    </element>  -->
+
+    <element>
+      <!-- Note that "subject" can originally refer to Group, Device, Location and Patient, but only Patient is allowed here -->
+      <path value="DiagnosticReport.subject"/>
+      <definition>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <aggregation value="referenced"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+
+    <element>
+      <!-- Limit performer to just Practitioner -->
+      <path value="DiagnosticReport.performer"/>
+      <definition>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+          <aggregation value="referenced"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+
+    <!-- requestDetail remains unchanged by the profile -->
+
+    <element>
+      <path value="DiagnosticReport.requestDetail"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="DiagnosticReport.serviceCategory"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    
+    <!-- <element>
+      <path value="DiagnosticReport.diagnostic[x]"/>
+      <slicing>
+        
+        
+        <discriminator value="type"/>
+        <ordered value="false"/>
+        <rules value="closed"/>
+      </slicing>
+    
+    
+      <definition>
+        <comments value="If you use period, you have to provide a begin and end date"/>
+        <min value="1"/>
+        <max value="1"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.diagnostic[x]"/>    
+      <name value="date"/>
+      <definition>
+        <short value="Physiologically Relevant time for report"/>
+        <formal value="The time the observed values are related to. This is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself."/>
+        <comments value="If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="dateTime"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="effectiveTime"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="OBR-7-Observation Date/Time"/>
+        </mapping>        
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.diagnostic[x]"/>    
+      <name value="period"/>
+      <definition>
+        <short value="Physiologically Relevant time-period for report"/>
+        <formal value="The time or time-period the observed values are related to. This is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself."/>
+        <comments value="If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic."/>
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Period"/>
+        </type>
+        <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="effectiveTime"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <map value="OBR-7-Observation Date/Time"/>
+        </mapping>        
+      </definition>
+    </element> 
+    <element>
+      <path value="DiagnosticReport.diagnostic[x].start"/>
+      <name value = "diagnosticPeriodStart"/>
+      <definition>
+        <short value="start date diagnostic report"/>
+        <formal value="start date of the diagnostic report"/>
+        <comments value="A period of a diagnostic report has to have a start date"/>
+        <min value="1"/>
+        <max value="1"/>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.diagnostic[x].end"/>
+      <name value = "diagnosticPeriodEnd"/>
+      <definition>
+        <short value="end date diagnostic report"/>
+        <formal value="end date of the diagnostic report"/>
+        <comments value="A period of a diagnostic report has to have an end date"/>
+        <min value="1"/>
+        <max value="1"/>
+      </definition>
+    </element> -->
+
+    
+
+    <!-- diagnostic[x] remains untouched too -->
+
+    <element>
+      <path value="DiagnosticReport.specimen"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- So, I start to see (another) use for a kind of macro expressions to
+      limit the amount of boilerplate typing work, e.g.:
+      
+      <pm:disallow path="DiagnosticReport.specimen" /> 
+      <pm:fix path="DiagnosticReport.name">
+        <valueCodeableConcept> etc etc </valueCodeableConcept>
+      </pm:fix>
+      
+      Just have to find out how to make this work with json and our parsers ;-0
+    -->
+
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <slicing>
+        <discriminator value="name"/>
+        <ordered value="true"/>
+        <rules value="closed"/>
+      </slicing>
+      <definition>
+        <comments value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional"/>
+        <min value="3"/>
+        <max value="4"/>
+      </definition>
+    </element> 
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="cholesterol"/>
+      <definition>
+        <short value="Cholesterol Result"/>
+        <formal value="Reference to Cholesterol Result."/>        
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#cholesterol"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="triglyceride"/>
+      <definition>
+        <short value="Triglyceride Result"/>
+        <formal value="Group of elements for Triglyceride result."/>        
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#triglyceride"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="hdlCholesterol"/>
+      <definition>
+        <short value="HDL Cholesterol Result"/>
+        <formal value="Group of elements for HDL Cholesterol result."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#hdlCholesterol"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="DiagnosticReport.result"/>
+      <name value="ldlCholesterol"/>
+      <definition>
+        <short value="LDL Cholesterol result, if reported"/>
+        <formal value="LDL Cholesterol result, if reported."/>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="#ldlCholesterol"/>
+          <aggregation value="bundled"/>
+        </type>
+      </definition>
+    </element>
+
+    <element>
+      <path value="DiagnosticReport.imagingStudy"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="DiagnosticReport.image"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- conclusion is left intact -->
+
+    <element>
+      <path value="DiagnosticReport.codedDiagnosis"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="DiagnosticReport.presentedForm"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- For test purposes, it would be nice to have a specially designed new search param here -->
+  </structure>
+
+
+  <!-- ====================================================================================
+       The first of the Observations referenced by DiagnosticReport, #cholesterol      
+       ==================================================================================== -->
+
+  <structure>
+    <type value="Observation"/>
+    <name value="cholesterol"/>
+    <publish value="true"/>
+
+    <element>
+      <path value="Observation"/>
+      <definition>
+        <short value="Cholesterol measurement"/>
+        <formal value="Cholesterol measurement"/>
+        <constraint>
+          <key value="chol-01"/>
+          <name value="Must have valueQuantity or comment"/>
+          <severity value="error"/>
+          <human value="If a Cholesterol value result is not available, use the comments field"/>
+          <!-- notice how the xpath actually refers to valueQuantity, not value[x] -->
+          <xpath value="exists(f:valueQuantity) or exists(f:comment)"/>
+        </constraint>
+      </definition>
+    </element>
+
+    <!-- TODO: For the sake of testing I am putting the calculated extension here -mandatory- on Cholesterol's
+        value, although this should be placed on LDLC's. Actually it should be on the "value" element, this
+        value element needs to be sliced by type (Quantity) and then this extension added. Running out of time to do that.
+        
+         <slicing>
+        <discriminator value="type"/>
+        <ordered value="true"/>
+        <rules value="open"/>
+      </slicing>
+      
+      Also of note: "open" slices will no longer contain the original "base" definition of extension (0..* "extension" elements of type Extension), which will make it harder
+      for validators to know what can go into the open slots. Repeat the original definition in open slices?  Do we need to specify "open" if we explicitly add the base definition?
+      -->
+    <element>
+      <path value="Observation.extension"/>
+      <name value="LDLCalculated"/>
+      <definition>
+        <short value="Whether LDL value is calculated"/>
+        <formal value="Whether LDL value is calculated."/>        
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Extension"/>
+          <profile value="#calculated"/>
+        </type>
+      </definition>
+    </element>
+
+
+    <!-- Below, fixing the Observation.name -->
+    <element>
+      <path value="Observation.name.coding.system"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueUri value="http://loinc.org/"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.version"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.code"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueCode value="35200-5"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.display"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueString value="Cholesterol"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.name.coding.primary"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- We want the value[x] to be limited to just "Quantity", and it is part of the #chol-01 constraint -->
+    <element>
+      <path value="Observation.value[x]"/>
+      <definition>
+        <short value="Actual result"/>
+        <formal value="The actual value of the cholesterol measurement"/>
+        <comments value="If not available, a comment should be given"/>
+
+        <!-- Was already 0..1 in base, but it's good to restate it, chol-01 controls the actual optionality -->
+        <min value="0"/>
+        <max value="1"/>
+        <type>
+          <code value="Quantity"/>
+          <profile value="#lipidQuantity"/>
+        </type>
+        <condition value="chol-01"/>
+        <mustSupport value="true"/>
+      </definition>
+    </element>
+
+    <!-- Interpretation is changed so it gets a new binding with a specific ValueSet -->
+    <!-- TODO: Inline the valueset using <contained>, to make sure this works correctly -->
+    <element>
+      <path value="Observation.interpretation"/>
+      <definition>
+        <binding>
+          <name value="LipidInterpretation-v1"/>
+          <isExtensible value="true"/>
+          <conformance value="required"/>
+          <description value="This is an example valueset for the Lipid Profile example"/>
+          <referenceResource>
+            <reference value="http://fhir.healthintersections.com.au/open/ValueSet/644"/>
+          </referenceResource>
+        </binding>
+      </definition>
+    </element>
+
+    <!-- Comments is governed by #chol-01 -->
+    <element>
+      <path value="Observation.comments"/>
+      <definition>
+        <min value="0"/>
+        <max value="1"/>
+        <condition value="chol-01"/>
+      </definition>
+    </element>
+
+    <!-- applies[x] - no changes -->
+    <!-- no changes to issued either -->
+    <!-- no changes to status -->
+    <!-- no changes to reliability -->
+
+    <element>
+      <path value="Observation.bodySite"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="Observation.method"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <!-- Identifier must be present -->
+    <element>
+      <path value="Observation.identifier"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+      </definition>
+    </element>
+
+    <!-- So must the Patient subject -->
+    <element>
+      <path value="Observation.subject"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+        </type>
+      </definition>
+    </element>
+
+    <element>
+      <path value="Observation.referenceRange"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.referenceRange.low"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.referenceRange.high"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <!-- Note, the 'high' reference range is governed by the constraints formulated
+          in lipidQuantity AND the extra constraints below -->
+        <type>
+          <code value="Quantity"/>
+          <profile value="#lipidQuantity"/>
+        </type>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.referenceRange.high.value"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueDecimal value="4.5"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.referenceRange.meaning"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Observation.referenceRange.age"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="Observation.related"/>
+      <definition>
+        <min value="0"/>
+        <max value="0"/>
+      </definition>
+    </element>
+  </structure>
+
+
+  <!-- ====================================================================================
+       The first of the Observation.valueQuantity is a lipidQuantity, a profile on
+       the FHIR Quantity datatype
+       ==================================================================================== -->
+  <structure>
+    <type value="Quantity"/>
+    <name value="lipidQuantity"/>
+
+    <element>
+      <path value="Quantity"/>
+      <definition>
+        <short value="Quantity as used in lipid measurements"/>
+        <formal value="Quantity as used in lipid measurements"/>
+        <comments value="Lipid measurements are expressed in mmol/L"/>
+      </definition>
+    </element>
+
+    <element>
+      <path value="Quantity.units"/>
+      <definition>
+        <min value="0"/>
+        <max value="1"/>
+        <valueString value="mmol/L"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Quantity.system"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueUri value="http://unitsofmeasure.org/"/>
+      </definition>
+    </element>
+    <element>
+      <path value="Quantity.code"/>
+      <definition>
+        <min value="1"/>
+        <max value="1"/>
+        <valueCode value="mmol/L"/>
+      </definition>
+    </element>
+  </structure>
+
+
+  <!-- ====================================================================================
+       Extensions defined by this Profile      
+       ==================================================================================== -->
+
+  <extensionDefn>
+    <code value="calculated"/>
+    <display value="LDL is Calculated"/>
+    <contextType value="resource"/>
+    <!-- Don't know which of these two are correct -->
+    <!-- <context value="Observation.value[x]"/> -->
+    <!-- <context value="Observation.valueQuantity"/> -->
+    <context value="Observation"/>
+    <definition>
+      <short value="LDL is Calculated"/>
+      <formal value="True if the LDL value is calculated from Chol, Trig, and HDLC"/>
+      <comments value="It's definitely better that whether the LDL was calculated or not comes from the LOINC code. But this is defined to exercise the extension machinery in the publication tooling, and to make this comment. Actually, the location is odd too - it would probably be on the root observation, but this is for testing purposes"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>      
+    </definition>
+  </extensionDefn>
+</Profile>

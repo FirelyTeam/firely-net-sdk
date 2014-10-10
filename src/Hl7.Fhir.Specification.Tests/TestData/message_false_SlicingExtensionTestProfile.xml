@@ -1,0 +1,299 @@
+﻿<feed xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2005/Atom ../../Documents/FHIR/Schemas/DSTU1_1/fhir-atom.xsd"
+    xmlns="http://www.w3.org/2005/Atom">
+    <title>A sample FHIR diagnostic report message</title>
+    <id>urn:uuid:612bee81-d973-4afe-b592-d39fe71e39</id>
+    <updated>2014-09-08T11:34:00+02:00</updated> 
+    <author>
+        <name>Doctor Faustus</name>
+    </author>
+    <category  term="http://hl7.org/fhir/tag/message" scheme="http://hl7.org/fhir/tag" />
+ 
+    <entry>
+        <title>MessageHeader for DiagnosticReport</title>
+        <id>http://lab03.ielab.nl/lm/fhir/MessageHeader/1cbdfb97-5859-48a4-8301-d54eab818d69</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#lipidResultMessage" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <MessageHeader xmlns="http://hl7.org/fhir">               
+                <identifier value="1cbdfb97-5859-48a4-8301-d54eab818d69"/>
+                <timestamp value="2014-09-08T11:47:14+02:00"/>
+                <event>
+                    <system value="http://hl7.org/fhir/message-type"/>
+                    <code value="diagnosticreport-provide"/>
+                </event>  
+                <source>
+                    <name value="Acme Laboratory System"/>
+                    <software value="Laboris LabMaster"/>
+                    <version value="3.1.45.AABB"/>
+                    <contact>
+                        <system value="phone"/>
+                        <value value="+1 (555) 123 4567"/>
+                    </contact>
+                    <endpoint value="http://lab03.ielab.nl/lm/fhir"/>
+                </source>
+                <destination>
+                    <name value="Acme Lab Message Gateway"/>
+                    <endpoint value="http://broker.ielab.nl/fhir/Mailbox"/>
+                </destination>
+                <author>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/Performer/1153X33"/>
+                </author>               
+                <data>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/PQ-274664"/>
+                </data>
+            </MessageHeader>
+        </content>
+    </entry>
+
+
+    <entry>
+        <title>The DiagnosticReport itself</title>
+        <id>http://lab03.ielab.nl/lm/fhir/DiagnosticReport/2A7BB4664</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#lipidPanel" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <DiagnosticReport xmlns="http://hl7.org/fhir">
+                <name>
+                    <coding>
+                        <system value="http://loinc.org/"/>
+                        <code value="57698-3" />
+                        <display value="Lipid Panel with direct LDL" />
+                    </coding>
+                </name>
+                <status value="corrected" />
+                <issued value="2014-09-08T11:47:14+02:00" />
+                <subject>
+                    <reference value="Patient/example" />
+                </subject>
+                <performer>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/Performer/1153X33" />
+                </performer>
+                <identifier>
+                    <system value="http://ielab.nl/ids/reports"/>
+                    <value value="LAB3-2014-3123"/>
+                </identifier>
+                <diagnosticDateTime value="2014-09-07T16:22:56+02:00" />
+                <result>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA331" />    
+                    <display value="The cholesterol result"/>
+                </result>
+                <!-- <result>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA332" />
+                    <display value="The triglyceride result"/>
+                </result>
+                <result>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA333" />
+                    <display value="The HDL-Cholesterol result"/>
+                </result>
+                <result>
+                    <reference value="http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA334" />
+                    <display value="The LDL-Cholesterol result"/>
+                </result>  -->  
+            </DiagnosticReport>  
+        </content>
+    </entry>   
+  
+    <!--
+    <entry>
+        <title>A Cholesterol result</title>
+        <id>http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA331</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#cholesterol" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <Observation xmlns="http://hl7.org/fhir">
+                <name>
+                    <coding>
+                        <system value="http://loinc.org/"/>
+                        <code value="35200-5" />
+                        <display value="Cholesterol" />
+                    </coding>                    
+                </name>
+                <interpretation>
+                    <coding>
+                        <system value="http://hl7.org/fhir/v2/0078" />
+                        <code value="N"/>
+                    </coding>
+                </interpretation>
+                <comments value="Not measured because of equipment failure" />
+                <appliesDateTime value="2014-09-07T16:22:56+02:00" />                
+                <status value="cancelled" />
+                <reliability value="ok" />
+                <identifier>
+                    <system value="http://ielab.nl/ids/observations"/>
+                    <value value="LAB3-2014-O5544"/>
+                </identifier>
+                <subject>
+                    <reference value="Patient/example" />
+                </subject>
+                <referenceRange>
+                    <high>
+                        <value value="4.5" />
+                        <system value="http://unitsofmeasure.org/" />
+                        <code value="mmol/L" />
+                    </high>
+                </referenceRange>
+            </Observation>
+        </content>
+    </entry>
+
+
+    <entry>
+        <title>A Triglyceride result</title>
+        <id>http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA332</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#triglyceride" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <Observation xmlns="http://hl7.org/fhir">
+                <name>
+                    <coding>
+                        <system value="http://loinc.org/"/>
+                        <code value="35217-9" />
+                        <display value="Triglyceride" />
+                    </coding>                    
+                </name>
+                <valueQuantity>
+                    <value value="2.0" />
+                    <system value="http://unitsofmeasure.org/" />
+                    <code value="mmol/L" />
+                </valueQuantity>
+                <interpretation>
+                    <coding>
+                        <system value="http://hl7.org/fhir/v2/0078" />
+                        <code value="N"/>
+                    </coding>
+                </interpretation>
+                <appliesDateTime value="2014-09-07T16:22:56+02:00" />                
+                <status value="cancelled" />
+                <reliability value="ok" />
+                <identifier>
+                    <system value="http://ielab.nl/ids/observations"/>
+                    <value value="LAB3-2014-O5545"/>
+                </identifier>
+                <subject>
+                    <reference value="Patient/example" />
+                </subject>
+                <referenceRange>
+                    <high>
+                        <value value="2.0" />
+                        <system value="http://unitsofmeasure.org/" />
+                        <code value="mmol/L" />
+                    </high>
+                </referenceRange>
+            </Observation>
+        </content>
+    </entry>
+
+
+    <entry>
+        <title>A HDL Cholesterol result</title>
+        <id>http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA333</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#hdlCholesterol" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <Observation xmlns="http://hl7.org/fhir">
+                <name>
+                    <coding>
+                        <system value="http://loinc.org/"/>
+                        <code value="2085-9" />
+                        <display value="HDL Cholesterol" />
+                    </coding>                    
+                </name>
+                <valueQuantity>
+                    <value value="1.0" />
+                    <system value="http://unitsofmeasure.org/" />
+                    <code value="mmol/L" />
+                </valueQuantity>
+                <interpretation>
+                    <coding>
+                        <system value="http://hl7.org/fhir/v2/0078" />
+                        <code value="L"/>
+                    </coding>
+                </interpretation>
+                <appliesDateTime value="2014-09-07T16:22:56+02:00" />                
+                <status value="cancelled" />
+                <reliability value="ok" />
+                <identifier>
+                    <system value="http://ielab.nl/ids/observations"/>
+                    <value value="LAB3-2014-O5546"/>
+                </identifier>
+                <subject>
+                    <reference value="Patient/example" />
+                </subject>
+                <referenceRange>
+                    <low>
+                        <value value="1.5" />
+                        <system value="http://unitsofmeasure.org/" />
+                        <code value="mmol/L" />
+                    </low>
+                </referenceRange>
+            </Observation>
+        </content>
+    </entry>
+    -->
+
+    <entry>
+        <title>An LDL Cholesterol result</title>
+        <id>http://lab03.ielab.nl/lm/fhir/DiagnosticReport/453AA334</id>
+        <updated>2014-09-08T11:47:14+02:00</updated>
+        <category term="http://hl7.org/fhir/Profile/example-lipid-profile#ldlCholesterol" scheme="http://hl7.org/fhir/tag/profile"/>
+        <content type="text/xml">
+            <Observation xmlns="http://hl7.org/fhir">
+                <extension url="http://hl7.org/fhir/Profile/example-lipid-profile#calculated">
+                    <valueBoolean value="false" />
+                </extension>
+                <name>
+                    <coding>
+                        <system value="http://loinc.org/"/>
+                        <code value="18262-6" />
+                        <display value="LDL Cholesterol - direct assay" />
+                    </coding>                    
+                </name>
+                <valueQuantity>
+                    <value value="2.5" />
+                    <system value="http://unitsofmeasure.org/" />
+                    <code value="mmol/L" />
+                </valueQuantity>
+                <interpretation>
+                    <coding>
+                        <system value="http://hl7.org/fhir/v2/0078" />
+                        <code value="N"/>
+                    </coding>
+                </interpretation>
+                <appliesDateTime value="2014-09-07T16:22:56+02:00" />                
+                <status value="cancelled" />
+                <reliability value="ok" />
+                <identifier>
+                    <system value="http://ielab.nl/ids/observations"/>
+                    <value value="LAB3-2014-O5547"/>
+                </identifier>
+                <subject>
+                    <reference value="Patient/example" />
+                </subject>
+                <referenceRange>
+                    <high>
+                        <value value="3.0" />
+                        <system value="http://unitsofmeasure.org/" />
+                        <code value="mmol/L" />
+                    </high>
+                </referenceRange>
+            </Observation>
+        </content>
+    </entry>
+    
+
+    <entry>
+        <title>Performer - Dr. Faustus</title>
+        <id>http://lab03.ielab.nl/lm/fhir/Performer/1153X33</id>
+        <updated>2013-05-28T22:12:21Z</updated>        
+        <content type="text/xml">
+            <Practitioner xmlns="http://hl7.org/fhir">
+                <text>
+                    <status value="generated"/>
+                    <div xmlns="http://www.w3.org/1999/xhtml">Dr. Faustus</div>
+                </text>
+                <!-- All the other details of the Performer -->
+            </Practitioner>
+        </content>
+    </entry>
+</feed>
