@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Specification.Expansion
                     throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
 
                 // In this case we insert a "prefab" extension slice.
-                slicingEntry = createExtensionSlicingEntry(snap.Path);
+                slicingEntry = createExtensionSlicingEntry(snap.Path, snap.Current);
                 snap.InsertBefore(slicingEntry);
             }
 
@@ -175,22 +175,24 @@ namespace Hl7.Fhir.Specification.Expansion
             }
             while (diff.MoveToNext(slicingName));
 
-            if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
-            {
-                // Slices that are open in some form need to repeat the original "base" definition,
-                // so that the open slices have a place to "fit in"
-                snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
-            }
+            //if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
+            //{
+            //    // Slices that are open in some form need to repeat the original "base" definition,
+            //    // so that the open slices have a place to "fit in"
+            //    snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
+            //}
 
             //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
         }
 
 
-        private Profile.ElementComponent createExtensionSlicingEntry(string path)
+        private Profile.ElementComponent createExtensionSlicingEntry(string path, Profile.ElementComponent template)
         {
             // Create a pre-fab extension slice, filled with sensible defaults
-            var result = new Profile.ElementComponent();
-            result.Path = path;
+            // Extensions will repeat their definitions in their slicing entry
+            var result = (Profile.ElementComponent)template.DeepCopy();
+            //var result = new Profile.ElementComponent();
+            //result.Path = path;
             result.Slicing = new Profile.ElementSlicingComponent();
             result.Slicing.Discriminator = "url";
             result.Slicing.Ordered = false;
@@ -256,12 +258,13 @@ namespace Hl7.Fhir.Specification.Expansion
             if (diff.Name != null) slicingEntry.NameElement = (FhirString)diff.NameElement.DeepCopy();
 
             if (diff.Slicing != null) slicingEntry.Slicing = (Profile.ElementSlicingComponent)diff.Slicing.DeepCopy();
+            
+            slicingEntry.Definition = (Profile.ElementDefinitionComponent)diff.Definition.DeepCopy();
 
-            // A slicing entry only has an ElementDefinition if the differential overrides the elementdefn
-            // and then, only some of the fields go into the slicing entry
+            // If the differential overrides the elementdefn, only some of the fields go into the slicing entry
             if (diff.Definition != null)
             {
-                slicingEntry.Definition = (Profile.ElementDefinitionComponent)diff.Definition.DeepCopy();
+             
                 if (slicingEntry.Definition.ShortElement == null) slicingEntry.Definition.ShortElement = (FhirString)baseDefn.Definition.ShortElement.DeepCopy();
                 if (slicingEntry.Definition.FormalElement == null) slicingEntry.Definition.FormalElement = (FhirString)baseDefn.Definition.FormalElement.DeepCopy();
                 if (slicingEntry.Definition.MinElement == null) slicingEntry.Definition.MinElement = (Integer)baseDefn.Definition.MinElement.DeepCopy();
