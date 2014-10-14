@@ -35,8 +35,8 @@ namespace Hl7.Fhir.Profiling
             Slicing slicing = GetSlicingForElement(element);
             if (slicing != null)
             {
-               element.Discriminator = slicing.Discriminator;
-               slicing.Count++;
+                element.Discriminator = slicing.Discriminator;
+                element.Slice = ++slicing.Count;
             }
         }
 
@@ -170,10 +170,14 @@ namespace Hl7.Fhir.Profiling
 
         private void HarvestElements(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Structure target)
         {
-            foreach(var element in source.Element)
+            foreach(Hl7.Fhir.Model.Profile.ElementComponent component in source.Element)
             {
-                if(element.Slicing == null)
-                    target.Elements.Add(HarvestElement(element));
+                if (component.Slicing == null)
+                {
+                    var element = HarvestElement(component);
+                    target.Elements.Add(element);
+                }
+                    
             }
         }
 

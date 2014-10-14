@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Profiling
         {
             // Because Vector.Count en Vector.MatchingNodes make use of Element.XPath
             // and Element.XPath takes the Slice discriminator into account,
-            // Slicing can be validated within ValidateCardinality en ValidateElementChildren
+            // Slicing can be validated within ValidateCardinality and ValidateElementChildren
 
         } 
 
