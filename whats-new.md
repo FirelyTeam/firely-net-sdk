@@ -7,14 +7,16 @@ title: What's new?
 * More model/metadata support
 * Profile Validation
 
-### In 0.11.0
+### In 0.11.1
+* Project now contains two assemblies: a "lightweight" core assembly (available across all platforms) and an additional library with profile and validation support.
+* Added an XmlNs class with constants for all relevant xml namespaces used in FHIR
 * Added `JsonXPathNavigator` to execute XPath statements over a FHIR-Json based document
 * Added a new `Hl7.Fhir.Specification.Source` namespace that contains an `ArtifactResolver` class to obtain schema files, profiles and valuesets by uri or id. This class will read the provided validation.zip for the core artifacts. For more info see [here](artifacts.html).
 * Changed `FhirUri` to use string internally, rather than the Uri class to guarantee round-trips and avoid url normalization issues
 * All Resources and datatypes now support deep-copying using the `DeepCopy()` and `CopyTo()` methods.
 * FhirClient supports `OnBeforeRequest` and `OnAfterRequest` hooks to enable the developer to plug in authentication.
 * All primitives support `IsValidValue()` to check input against the constraints for FHIR primitives
-* Models are up-to-date with FHIR 0.81
+* Models are up-to-date with FHIR 0.82
 * And of course we fixed numerous bugs brought forward by the community
 
 ### In 0.10.0
