@@ -6,14 +6,16 @@ title: What's new?
 * ValueSet expansion
 * More model/metadata support
 * Profile Validation
-* UCUM calculations support
 
 ### In 0.11.0
 * Added `JsonXPathNavigator` to execute XPath statements over a FHIR-Json based document
-* Added a new Hl7.Fhir.Introspection.Source namespace that contains an `ArtifactResolver` class to obtain schema files, profiles and valuesets by uri or id. This class will read the provided validation.zip for the core artifacts. For more info see [here](artifacts.html).
+* Added a new `Hl7.Fhir.Specification.Source` namespace that contains an `ArtifactResolver` class to obtain schema files, profiles and valuesets by uri or id. This class will read the provided validation.zip for the core artifacts. For more info see [here](artifacts.html).
 * Changed `FhirUri` to use string internally, rather than the Uri class to guarantee round-trips and avoid url normalization issues
 * All Resources and datatypes now support deep-copying using the `DeepCopy()` and `CopyTo()` methods.
+* FhirClient supports `OnBeforeRequest` and `OnAfterRequest` hooks to enable the developer to plug in authentication.
+* All primitives support `IsValidValue()` to check input against the constraints for FHIR primitives
 * Models are up-to-date with FHIR 0.81
+* And of course we fixed numerous bugs brought forward by the community
 
 ### In 0.10.0
 * There's a new `FhirParser.ParseQueryFromUriParameters()` function to parse URL parameters into a FHIR `Query` resource
