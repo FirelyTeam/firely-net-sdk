@@ -107,8 +107,7 @@
     <Compile Include="Validation\Validation.cs" />
     <Compile Include="Specification\Model\ValueSet.cs" />
     <Compile Include="Specification\Model\Vector.cs" />
-    <Compile Include="IO\FhirDocument.cs" />
-    <Compile Include="IO\FhirFeed.cs" />
+    <Compile Include="IO\FhirFile.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
     <Compile Include="Specification\Model\StructureFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
