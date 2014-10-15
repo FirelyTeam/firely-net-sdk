@@ -1466,7 +1466,15 @@
             value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional"/>
         <min value="3"/>
         <max value="4"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/Profile/Observation"/>
+        </type>
         <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="outboundRelationship[typeCode=COMP].target"/>
+        </mapping>
       </definition>
     </element>
     <element>

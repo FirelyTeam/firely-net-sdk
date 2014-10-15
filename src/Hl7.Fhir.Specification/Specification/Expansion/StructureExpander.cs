@@ -259,16 +259,16 @@ namespace Hl7.Fhir.Specification.Expansion
 
             if (diff.Slicing != null) slicingEntry.Slicing = (Profile.ElementSlicingComponent)diff.Slicing.DeepCopy();
             
-            slicingEntry.Definition = (Profile.ElementDefinitionComponent)diff.Definition.DeepCopy();
+            slicingEntry.Definition = (Profile.ElementDefinitionComponent)baseDefn.Definition.DeepCopy();
 
             // If the differential overrides the elementdefn, only some of the fields go into the slicing entry
             if (diff.Definition != null)
             {
-             
-                if (slicingEntry.Definition.ShortElement == null) slicingEntry.Definition.ShortElement = (FhirString)baseDefn.Definition.ShortElement.DeepCopy();
-                if (slicingEntry.Definition.FormalElement == null) slicingEntry.Definition.FormalElement = (FhirString)baseDefn.Definition.FormalElement.DeepCopy();
-                if (slicingEntry.Definition.MinElement == null) slicingEntry.Definition.MinElement = (Integer)baseDefn.Definition.MinElement.DeepCopy();
-                if (slicingEntry.Definition.MaxElement == null) slicingEntry.Definition.MaxElement = (FhirString)baseDefn.Definition.MaxElement.DeepCopy();
+                if (diff.Definition.CommentsElement != null) slicingEntry.Definition.CommentsElement = (FhirString)diff.Definition.CommentsElement.DeepCopy();
+                if (diff.Definition.ShortElement != null) slicingEntry.Definition.ShortElement = (FhirString)diff.Definition.ShortElement.DeepCopy();
+                if (diff.Definition.FormalElement != null) slicingEntry.Definition.FormalElement = (FhirString)diff.Definition.FormalElement.DeepCopy();
+                if (diff.Definition.MinElement != null) slicingEntry.Definition.MinElement = (Integer)diff.Definition.MinElement.DeepCopy();
+                if (diff.Definition.MaxElement != null) slicingEntry.Definition.MaxElement = (FhirString)diff.Definition.MaxElement.DeepCopy();
                 slicingEntry.Definition.IsModifierElement = (FhirBoolean)baseDefn.Definition.IsModifierElement.DeepCopy();
             }
 
