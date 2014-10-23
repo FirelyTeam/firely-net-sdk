@@ -19,7 +19,7 @@
   <experimental value="true"/>
   <date value="2014-04-17"/>
   <requirements value="Covers example areas of Profile authoring and was created to serve as an example in the specification and during this tutorial"/>
-  <fhirVersion value="0.80"/>
+  <fhirVersion value="0.0.82"/>
 
   <!-- ====================================================================================
        First, the MessageHeader representing a "newLipidResult" message      
