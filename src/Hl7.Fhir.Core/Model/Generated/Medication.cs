@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -115,6 +115,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationPackageContentComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as MedicationPackageContentComponent;
@@ -127,10 +139,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -183,6 +191,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationPackageComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Container, otherT.Container)) return false;
+                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as MedicationPackageComponent;
@@ -195,10 +215,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -252,6 +268,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationProductIngredientComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductIngredientComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as MedicationProductIngredientComponent;
@@ -264,10 +292,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -320,6 +344,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationProductComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Form, otherT.Form)) return false;
+                if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as MedicationProductComponent;
@@ -332,10 +368,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -506,6 +538,23 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Medication());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Medication;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(IsBrandElement, otherT.IsBrandElement)) return false;
+            if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
+            if( !DeepComparable.Matches(Product, otherT.Product)) return false;
+            if( !DeepComparable.Matches(Package, otherT.Package)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Medication;
@@ -523,10 +572,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

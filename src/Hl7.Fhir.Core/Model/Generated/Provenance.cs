@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -190,6 +190,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProvenanceAgentComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProvenanceAgentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+                if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ProvenanceAgentComponent;
@@ -204,10 +218,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -358,6 +368,21 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProvenanceEntityComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProvenanceEntityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(RoleElement, otherT.RoleElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+                if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ProvenanceEntityComponent;
@@ -373,10 +398,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -579,6 +600,25 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Provenance());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Provenance;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+            if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
+            if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
+            if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
+            if( !DeepComparable.Matches(IntegritySignatureElement, otherT.IntegritySignatureElement)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Provenance;
@@ -598,10 +638,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

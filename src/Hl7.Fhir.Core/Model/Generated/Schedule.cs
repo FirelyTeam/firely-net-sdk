@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -364,6 +364,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ScheduleRepeatComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ScheduleRepeatComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(FrequencyElement, otherT.FrequencyElement)) return false;
+                if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
+                if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
+                if( !DeepComparable.Matches(UnitsElement, otherT.UnitsElement)) return false;
+                if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
+                if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ScheduleRepeatComponent;
@@ -380,10 +396,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -432,6 +444,18 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Schedule());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Schedule;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(Repeat, otherT.Repeat)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Schedule;
@@ -444,10 +468,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

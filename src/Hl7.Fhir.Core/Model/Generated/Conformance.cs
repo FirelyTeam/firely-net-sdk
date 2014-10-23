@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -420,6 +420,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestQueryComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestQueryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestQueryComponent;
@@ -434,10 +448,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -616,6 +626,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(Security, otherT.Security)) return false;
+                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+                if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
+                if( !DeepComparable.Matches(Query, otherT.Query)) return false;
+                if( !DeepComparable.Matches(DocumentMailboxElement, otherT.DocumentMailboxElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestComponent;
@@ -633,10 +660,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -759,6 +782,19 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceSoftwareComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceSoftwareComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+                if( !DeepComparable.Matches(ReleaseDateElement, otherT.ReleaseDateElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceSoftwareComponent;
@@ -772,10 +808,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -911,6 +943,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceMessagingComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceMessagingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
+                if( !DeepComparable.Matches(ReliableCacheElement, otherT.ReliableCacheElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceMessagingComponent;
@@ -925,10 +971,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1034,6 +1076,19 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceDocumentComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceDocumentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceDocumentComponent;
@@ -1047,10 +1102,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1248,6 +1299,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestResourceComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestResourceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
+                if( !DeepComparable.Matches(ReadHistoryElement, otherT.ReadHistoryElement)) return false;
+                if( !DeepComparable.Matches(UpdateCreateElement, otherT.UpdateCreateElement)) return false;
+                if( !DeepComparable.Matches(SearchIncludeElement, otherT.SearchIncludeElement)) return false;
+                if( !DeepComparable.Matches(SearchParam, otherT.SearchParam)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestResourceComponent;
@@ -1265,10 +1333,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1359,6 +1423,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceImplementationComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceImplementationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceImplementationComponent;
@@ -1371,10 +1447,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1465,6 +1537,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestResourceOperationComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestResourceOperationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestResourceOperationComponent;
@@ -1477,10 +1561,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1694,6 +1774,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceMessagingEventComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceMessagingEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(Protocol, otherT.Protocol)) return false;
+                if( !DeepComparable.Matches(FocusElement, otherT.FocusElement)) return false;
+                if( !DeepComparable.Matches(Request, otherT.Request)) return false;
+                if( !DeepComparable.Matches(Response, otherT.Response)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceMessagingEventComponent;
@@ -1712,10 +1810,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1833,6 +1927,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestSecurityComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestSecurityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CorsElement, otherT.CorsElement)) return false;
+                if( !DeepComparable.Matches(Service, otherT.Service)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Certificate, otherT.Certificate)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestSecurityComponent;
@@ -1847,10 +1955,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1940,6 +2044,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestSecurityCertificateComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestSecurityCertificateComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestSecurityCertificateComponent;
@@ -1952,10 +2068,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -2046,6 +2158,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestOperationComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestOperationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestOperationComponent;
@@ -2058,10 +2182,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -2283,6 +2403,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ConformanceRestResourceSearchParamComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceRestResourceSearchParamComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
+                if( !DeepComparable.Matches(ChainElement, otherT.ChainElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ConformanceRestResourceSearchParamComponent;
@@ -2299,10 +2435,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -2778,6 +2910,34 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Conformance());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Conformance;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(Software, otherT.Software)) return false;
+            if( !DeepComparable.Matches(Implementation, otherT.Implementation)) return false;
+            if( !DeepComparable.Matches(FhirVersionElement, otherT.FhirVersionElement)) return false;
+            if( !DeepComparable.Matches(AcceptUnknownElement, otherT.AcceptUnknownElement)) return false;
+            if( !DeepComparable.Matches(FormatElement, otherT.FormatElement)) return false;
+            if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+            if( !DeepComparable.Matches(Rest, otherT.Rest)) return false;
+            if( !DeepComparable.Matches(Messaging, otherT.Messaging)) return false;
+            if( !DeepComparable.Matches(Document, otherT.Document)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Conformance;
@@ -2806,10 +2966,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

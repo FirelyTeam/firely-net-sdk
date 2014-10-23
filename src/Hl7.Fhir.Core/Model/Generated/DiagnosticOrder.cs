@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -238,6 +238,21 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DiagnosticOrderItemComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosticOrderItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
+                if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as DiagnosticOrderItemComponent;
@@ -253,10 +268,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -375,6 +386,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DiagnosticOrderEventComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosticOrderEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+                if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
+                if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as DiagnosticOrderEventComponent;
@@ -389,10 +414,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -610,6 +631,26 @@ namespace Hl7.Fhir.Model
             return CopyTo(new DiagnosticOrder());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as DiagnosticOrder;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(ClinicalNotesElement, otherT.ClinicalNotesElement)) return false;
+            if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as DiagnosticOrder;
@@ -630,10 +671,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

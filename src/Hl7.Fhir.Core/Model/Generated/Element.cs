@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,6 +100,18 @@ namespace Hl7.Fhir.Model
             	throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
+        public virtual bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Element;
+            if(otherT == null) return false;
+            
+            if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
+            if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
+            if( Id != otherT.Id ) return false;
+            
+            return true;
+        }
+        
         public virtual bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Element;
@@ -112,10 +124,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public virtual bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(String property)
         {

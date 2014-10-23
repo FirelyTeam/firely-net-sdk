@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,6 +96,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DeviceObservationReportVirtualDeviceComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DeviceObservationReportVirtualDeviceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Channel, otherT.Channel)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as DeviceObservationReportVirtualDeviceComponent;
@@ -108,10 +120,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -152,6 +160,17 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DeviceObservationReportVirtualDeviceChannelMetricComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DeviceObservationReportVirtualDeviceChannelMetricComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Observation, otherT.Observation)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as DeviceObservationReportVirtualDeviceChannelMetricComponent;
@@ -163,10 +182,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -219,6 +234,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DeviceObservationReportVirtualDeviceChannelComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DeviceObservationReportVirtualDeviceChannelComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Metric, otherT.Metric)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as DeviceObservationReportVirtualDeviceChannelComponent;
@@ -231,10 +258,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -345,6 +368,21 @@ namespace Hl7.Fhir.Model
             return CopyTo(new DeviceObservationReport());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as DeviceObservationReport;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(InstantElement, otherT.InstantElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(VirtualDevice, otherT.VirtualDevice)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as DeviceObservationReport;
@@ -360,10 +398,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

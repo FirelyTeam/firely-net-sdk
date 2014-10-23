@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -245,6 +245,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ObservationReferenceRangeComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ObservationReferenceRangeComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Low, otherT.Low)) return false;
+                if( !DeepComparable.Matches(High, otherT.High)) return false;
+                if( !DeepComparable.Matches(Meaning, otherT.Meaning)) return false;
+                if( !DeepComparable.Matches(Age, otherT.Age)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ObservationReferenceRangeComponent;
@@ -259,10 +273,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -335,6 +345,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ObservationRelatedComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ObservationRelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ObservationRelatedComponent;
@@ -347,10 +369,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -667,6 +685,32 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Observation());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Observation;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+            if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+            if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
+            if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
+            if( !DeepComparable.Matches(Applies, otherT.Applies)) return false;
+            if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(ReliabilityElement, otherT.ReliabilityElement)) return false;
+            if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+            if( !DeepComparable.Matches(Related, otherT.Related)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Observation;
@@ -693,10 +737,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

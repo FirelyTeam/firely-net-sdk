@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,6 +116,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationDateCriterionComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
@@ -128,10 +140,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -267,6 +275,20 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationProtocolComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationProtocolComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
+                if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ImmunizationRecommendationRecommendationProtocolComponent;
@@ -281,10 +303,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -460,6 +478,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.Matches(VaccineType, otherT.VaccineType)) return false;
+                if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
+                if( !DeepComparable.Matches(ForecastStatus, otherT.ForecastStatus)) return false;
+                if( !DeepComparable.Matches(DateCriterion, otherT.DateCriterion)) return false;
+                if( !DeepComparable.Matches(Protocol, otherT.Protocol)) return false;
+                if( !DeepComparable.Matches(SupportingImmunization, otherT.SupportingImmunization)) return false;
+                if( !DeepComparable.Matches(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ImmunizationRecommendationRecommendationComponent;
@@ -478,10 +514,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -546,6 +578,19 @@ namespace Hl7.Fhir.Model
             return CopyTo(new ImmunizationRecommendation());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as ImmunizationRecommendation;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Recommendation, otherT.Recommendation)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as ImmunizationRecommendation;
@@ -559,10 +604,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

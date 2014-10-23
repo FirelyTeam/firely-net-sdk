@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -373,6 +373,29 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Device());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Device;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(ManufacturerElement, otherT.ManufacturerElement)) return false;
+            if( !DeepComparable.Matches(ModelElement, otherT.ModelElement)) return false;
+            if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+            if( !DeepComparable.Matches(ExpiryElement, otherT.ExpiryElement)) return false;
+            if( !DeepComparable.Matches(UdiElement, otherT.UdiElement)) return false;
+            if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
+            if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Device;
@@ -396,10 +419,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

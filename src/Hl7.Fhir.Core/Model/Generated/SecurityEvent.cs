@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -468,6 +468,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventObjectDetailComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectDetailComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventObjectDetailComponent;
@@ -480,10 +492,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -755,6 +763,26 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventObjectComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(RoleElement, otherT.RoleElement)) return false;
+                if( !DeepComparable.Matches(LifecycleElement, otherT.LifecycleElement)) return false;
+                if( !DeepComparable.Matches(Sensitivity, otherT.Sensitivity)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(QueryElement, otherT.QueryElement)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventObjectComponent;
@@ -775,10 +803,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -883,6 +907,19 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventSourceComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventSourceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SiteElement, otherT.SiteElement)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventSourceComponent;
@@ -896,10 +933,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1082,6 +1115,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventEventComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
+                if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
+                if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
+                if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
+                if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventEventComponent;
@@ -1098,10 +1147,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1191,6 +1236,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventParticipantNetworkComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantNetworkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventParticipantNetworkComponent;
@@ -1203,10 +1260,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1415,6 +1468,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventParticipantComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(UserIdElement, otherT.UserIdElement)) return false;
+                if( !DeepComparable.Matches(AltIdElement, otherT.AltIdElement)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(RequestorElement, otherT.RequestorElement)) return false;
+                if( !DeepComparable.Matches(Media, otherT.Media)) return false;
+                if( !DeepComparable.Matches(Network, otherT.Network)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SecurityEventParticipantComponent;
@@ -1433,10 +1504,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -1514,6 +1581,20 @@ namespace Hl7.Fhir.Model
             return CopyTo(new SecurityEvent());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as SecurityEvent;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Object, otherT.Object)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as SecurityEvent;
@@ -1528,10 +1609,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

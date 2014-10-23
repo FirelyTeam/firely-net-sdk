@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -173,6 +173,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ContactComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+                if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as ContactComponent;
@@ -189,10 +205,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -258,6 +270,19 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new AnimalComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
+                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as AnimalComponent;
@@ -271,10 +296,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -348,6 +369,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new PatientLinkComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PatientLinkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Other, otherT.Other)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as PatientLinkComponent;
@@ -360,10 +393,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -657,6 +686,33 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Patient());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Patient;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
+            if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
+            if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+            if( !DeepComparable.Matches(MaritalStatus, otherT.MaritalStatus)) return false;
+            if( !DeepComparable.Matches(MultipleBirth, otherT.MultipleBirth)) return false;
+            if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Animal, otherT.Animal)) return false;
+            if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
+            if( !DeepComparable.Matches(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.Matches(Link, otherT.Link)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Patient;
@@ -684,10 +740,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

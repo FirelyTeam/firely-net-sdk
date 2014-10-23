@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -331,6 +331,24 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Address());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Address;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+            if( !DeepComparable.Matches(LineElement, otherT.LineElement)) return false;
+            if( !DeepComparable.Matches(CityElement, otherT.CityElement)) return false;
+            if( !DeepComparable.Matches(StateElement, otherT.StateElement)) return false;
+            if( !DeepComparable.Matches(ZipElement, otherT.ZipElement)) return false;
+            if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Address;
@@ -349,10 +367,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

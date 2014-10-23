@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -187,6 +187,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SpecimenCollectionComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SpecimenCollectionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Collector, otherT.Collector)) return false;
+                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.Matches(Collected, otherT.Collected)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(SourceSite, otherT.SourceSite)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SpecimenCollectionComponent;
@@ -203,10 +219,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -280,6 +292,18 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SpecimenSourceComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SpecimenSourceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SpecimenSourceComponent;
@@ -292,10 +316,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -381,6 +401,19 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SpecimenTreatmentComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SpecimenTreatmentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
+                if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SpecimenTreatmentComponent;
@@ -394,10 +427,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -522,6 +551,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SpecimenContainerComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SpecimenContainerComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Capacity, otherT.Capacity)) return false;
+                if( !DeepComparable.Matches(SpecimenQuantity, otherT.SpecimenQuantity)) return false;
+                if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as SpecimenContainerComponent;
@@ -538,10 +583,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -706,6 +747,25 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Specimen());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Specimen;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(AccessionIdentifier, otherT.AccessionIdentifier)) return false;
+            if( !DeepComparable.Matches(ReceivedTimeElement, otherT.ReceivedTimeElement)) return false;
+            if( !DeepComparable.Matches(Collection, otherT.Collection)) return false;
+            if( !DeepComparable.Matches(Treatment, otherT.Treatment)) return false;
+            if( !DeepComparable.Matches(Container, otherT.Container)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Specimen;
@@ -725,10 +785,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

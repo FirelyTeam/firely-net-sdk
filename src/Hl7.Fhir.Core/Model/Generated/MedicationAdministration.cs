@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -208,6 +208,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationAdministrationDosageComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationAdministrationDosageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+                if( !DeepComparable.Matches(Route, otherT.Route)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+                if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as MedicationAdministrationDosageComponent;
@@ -226,10 +244,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -460,6 +474,28 @@ namespace Hl7.Fhir.Model
             return CopyTo(new MedicationAdministration());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as MedicationAdministration;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Practitioner, otherT.Practitioner)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(Prescription, otherT.Prescription)) return false;
+            if( !DeepComparable.Matches(WasNotGivenElement, otherT.WasNotGivenElement)) return false;
+            if( !DeepComparable.Matches(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
+            if( !DeepComparable.Matches(WhenGiven, otherT.WhenGiven)) return false;
+            if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
+            if( !DeepComparable.Matches(Device, otherT.Device)) return false;
+            if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as MedicationAdministration;
@@ -482,10 +518,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

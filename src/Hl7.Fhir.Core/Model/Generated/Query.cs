@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -280,6 +280,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new QueryResponseComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as QueryResponseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
+                if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
+                if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
+                if( !DeepComparable.Matches(First, otherT.First)) return false;
+                if( !DeepComparable.Matches(Previous, otherT.Previous)) return false;
+                if( !DeepComparable.Matches(Next, otherT.Next)) return false;
+                if( !DeepComparable.Matches(Last, otherT.Last)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as QueryResponseComponent;
@@ -299,10 +318,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -384,6 +399,19 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Query());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Query;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
+            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Query;
@@ -397,10 +425,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }

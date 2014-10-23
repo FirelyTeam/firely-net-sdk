@@ -21,20 +21,21 @@ namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
 #if PORTABLE45
-	public class PortableDeepCompareTest
+	public class PortableDeepMatchTest
 #else
-    public class DeepCompareTest
+    public class DeepMatchTest
 #endif
     {
         [TestMethod]
-        public void CheckCompareDeepCopied()
+        public void CheckMatchDeepCopied()
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
             var p = (Patient)FhirParser.ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
-            Assert.IsTrue(p2.IsExactly(p));
+            Assert.IsTrue(p2.Matches(p));
+            Assert.IsTrue(p.Matches(p2));
         }
 
         [TestMethod]
@@ -45,14 +46,22 @@ namespace Hl7.Fhir.Tests.Model
             var p = (Patient)FhirParser.ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
-            p2.ActiveElement.Value = true;
-            Assert.IsFalse(p2.IsExactly(p));
-            p2.ActiveElement.Value = null;
-            Assert.IsTrue(p2.IsExactly(p));
+            var orig = p2.BirthDate;
+
+            // If you set an element to null in the pattern, it need not be set in the source
+            p2.BirthDate = null;
+            Assert.IsFalse(p2.Matches(p));
+            Assert.IsTrue(p.Matches(p2));
+            
+            // If both are null, we're fine
+            p.BirthDate = null;
+            Assert.IsTrue(p2.Matches(p));
+            Assert.IsTrue(p.Matches(p2));
 
             p2.Contact[0].Relationship[0].Coding[0].System = "http://nu.nl/different";
 
-            Assert.IsFalse(p2.IsExactly(p));
+            Assert.IsFalse(p2.Matches(p));
+            Assert.IsFalse(p.Matches(p2));
         }
 
         [TestMethod]
@@ -67,7 +76,8 @@ namespace Hl7.Fhir.Tests.Model
 
             p2.Contact[0].Relationship.Add(rel);
 
-            Assert.IsFalse(p2.IsExactly(p));
+            Assert.IsTrue(p2.Matches(p));
+            Assert.IsTrue(p2.Matches(p));
         }
 
     }

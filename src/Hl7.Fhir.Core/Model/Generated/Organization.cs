@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -135,6 +135,21 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new OrganizationContactComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OrganizationContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
+                if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+                if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+                
+                return true;
+            }
+            
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as OrganizationContactComponent;
@@ -150,10 +165,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
             
-            public override bool Matches(IDeepComparable other)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         
@@ -337,6 +348,25 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Organization());
         }
         
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Organization;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+            if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+            
+            return true;
+        }
+        
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Organization;
@@ -356,10 +386,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
         
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 }
