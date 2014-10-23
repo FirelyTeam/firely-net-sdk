@@ -41,7 +41,8 @@ namespace Hl7.Fhir.Model
     // Resource is not a subclass of Composite, since it
     // cannot be used in places where you can use composites.
     [InvokeIValidatableObject]
-    public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable
+    public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, 
+                IDeepCopyable, IDeepComparable
     {
         public abstract IDeepCopyable DeepCopy();
 

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -346,6 +346,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new OperationOutcomeIssueComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OperationOutcomeIssueComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(DetailsElement, otherT.DetailsElement)) return false;
+                if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -381,6 +399,21 @@ namespace Hl7.Fhir.Model
             return CopyTo(new OperationOutcome());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as OperationOutcome;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Issue, otherT.Issue)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

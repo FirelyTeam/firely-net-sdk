@@ -73,6 +73,7 @@
     <Compile Include="Model\FhirString.cs" />
     <Compile Include="Model\FhirDateTime.cs" />
     <Compile Include="Model\FhirBoolean.cs" />
+    <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
     <Compile Include="Model\Generated\Address.cs" />

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -194,6 +194,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new AdverseReactionSymptomComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AdverseReactionSymptomComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -329,6 +345,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new AdverseReactionExposureComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AdverseReactionExposureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(CausalityExpectationElement, otherT.CausalityExpectationElement)) return false;
+                if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -486,6 +520,27 @@ namespace Hl7.Fhir.Model
             return CopyTo(new AdverseReaction());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as AdverseReaction;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(DidNotOccurFlagElement, otherT.DidNotOccurFlagElement)) return false;
+            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.IsExactly(Symptom, otherT.Symptom)) return false;
+            if( !DeepComparable.IsExactly(Exposure, otherT.Exposure)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

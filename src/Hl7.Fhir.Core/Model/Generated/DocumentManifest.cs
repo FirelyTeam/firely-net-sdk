@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -322,6 +322,33 @@ namespace Hl7.Fhir.Model
             return CopyTo(new DocumentManifest());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as DocumentManifest;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(MasterIdentifier, otherT.MasterIdentifier)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Supercedes, otherT.Supercedes)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Confidentiality, otherT.Confidentiality)) return false;
+            if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

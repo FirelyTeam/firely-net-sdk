@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -694,6 +694,38 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementDefinitionComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
+                if( !DeepComparable.IsExactly(FormalElement, otherT.FormalElement)) return false;
+                if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
+                if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+                if( !DeepComparable.IsExactly(SynonymElement, otherT.SynonymElement)) return false;
+                if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
+                if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(NameReferenceElement, otherT.NameReferenceElement)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Example, otherT.Example)) return false;
+                if( !DeepComparable.IsExactly(MaxLengthElement, otherT.MaxLengthElement)) return false;
+                if( !DeepComparable.IsExactly(ConditionElement, otherT.ConditionElement)) return false;
+                if( !DeepComparable.IsExactly(Constraint, otherT.Constraint)) return false;
+                if( !DeepComparable.IsExactly(MustSupportElement, otherT.MustSupportElement)) return false;
+                if( !DeepComparable.IsExactly(IsModifierElement, otherT.IsModifierElement)) return false;
+                if( !DeepComparable.IsExactly(Binding, otherT.Binding)) return false;
+                if( !DeepComparable.IsExactly(Mapping, otherT.Mapping)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -818,6 +850,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementSlicingComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementSlicingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DiscriminatorElement, otherT.DiscriminatorElement)) return false;
+                if( !DeepComparable.IsExactly(OrderedElement, otherT.OrderedElement)) return false;
+                if( !DeepComparable.IsExactly(RulesElement, otherT.RulesElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1000,6 +1049,26 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProfileStructureComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProfileStructureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(PublishElement, otherT.PublishElement)) return false;
+                if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
+                if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
+                if( !DeepComparable.IsExactly(SearchParam, otherT.SearchParam)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1189,6 +1258,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProfileStructureSearchParamComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProfileStructureSearchParamComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
+                if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1294,6 +1382,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProfileQueryComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProfileQueryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1417,6 +1522,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new TypeRefComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TypeRefComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
+                if( !DeepComparable.IsExactly(AggregationElement, otherT.AggregationElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1571,6 +1693,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProfileMappingComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProfileMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1662,6 +1802,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementDefinitionMappingComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1831,6 +1987,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementDefinitionBindingComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionBindingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(IsExtensibleElement, otherT.IsExtensibleElement)) return false;
+                if( !DeepComparable.IsExactly(ConformanceElement, otherT.ConformanceElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -2020,6 +2195,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementDefinitionConstraintComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionConstraintComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
+                if( !DeepComparable.IsExactly(HumanElement, otherT.HumanElement)) return false;
+                if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -2169,6 +2363,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ElementComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(RepresentationElement, otherT.RepresentationElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -2339,6 +2552,25 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ProfileExtensionDefnComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProfileExtensionDefnComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.IsExactly(ContextTypeElement, otherT.ContextTypeElement)) return false;
+                if( !DeepComparable.IsExactly(ContextElement, otherT.ContextElement)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -2766,6 +2998,36 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Profile());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Profile;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
+            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.IsExactly(FhirVersionElement, otherT.FhirVersionElement)) return false;
+            if( !DeepComparable.IsExactly(Mapping, otherT.Mapping)) return false;
+            if( !DeepComparable.IsExactly(Structure, otherT.Structure)) return false;
+            if( !DeepComparable.IsExactly(ExtensionDefn, otherT.ExtensionDefn)) return false;
+            if( !DeepComparable.IsExactly(Query, otherT.Query)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -115,6 +115,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationPackageContentComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -167,6 +183,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationPackageComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
+                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -220,6 +252,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationProductIngredientComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductIngredientComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -272,6 +320,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new MedicationProductComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
+                if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -442,6 +506,27 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Medication());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Medication;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(IsBrandElement, otherT.IsBrandElement)) return false;
+            if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
+            if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
+            if( !DeepComparable.IsExactly(Package, otherT.Package)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

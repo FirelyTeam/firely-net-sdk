@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -280,6 +280,29 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new QueryResponseComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as QueryResponseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
+                if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
+                if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
+                if( !DeepComparable.IsExactly(First, otherT.First)) return false;
+                if( !DeepComparable.IsExactly(Previous, otherT.Previous)) return false;
+                if( !DeepComparable.IsExactly(Next, otherT.Next)) return false;
+                if( !DeepComparable.IsExactly(Last, otherT.Last)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -361,6 +384,23 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Query());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Query;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
+            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

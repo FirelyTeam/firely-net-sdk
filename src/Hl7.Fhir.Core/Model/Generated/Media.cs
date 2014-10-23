@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -395,6 +395,33 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Media());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Media;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Operator, otherT.Operator)) return false;
+            if( !DeepComparable.IsExactly(View, otherT.View)) return false;
+            if( !DeepComparable.IsExactly(DeviceNameElement, otherT.DeviceNameElement)) return false;
+            if( !DeepComparable.IsExactly(HeightElement, otherT.HeightElement)) return false;
+            if( !DeepComparable.IsExactly(WidthElement, otherT.WidthElement)) return false;
+            if( !DeepComparable.IsExactly(FramesElement, otherT.FramesElement)) return false;
+            if( !DeepComparable.IsExactly(LengthElement, otherT.LengthElement)) return false;
+            if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

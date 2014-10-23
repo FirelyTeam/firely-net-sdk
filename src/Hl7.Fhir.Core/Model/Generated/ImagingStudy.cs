@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -577,6 +577,30 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImagingStudySeriesComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImagingStudySeriesComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
+                if( !DeepComparable.IsExactly(ModalityElement, otherT.ModalityElement)) return false;
+                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
+                if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
+                if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -810,6 +834,27 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImagingStudySeriesInstanceComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImagingStudySeriesInstanceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
+                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.IsExactly(SopclassElement, otherT.SopclassElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(Attachment, otherT.Attachment)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -1236,6 +1281,37 @@ namespace Hl7.Fhir.Model
             return CopyTo(new ImagingStudy());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as ImagingStudy;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+            if( !DeepComparable.IsExactly(AccessionNo, otherT.AccessionNo)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Order, otherT.Order)) return false;
+            if( !DeepComparable.IsExactly(Modality_Element, otherT.Modality_Element)) return false;
+            if( !DeepComparable.IsExactly(Referrer, otherT.Referrer)) return false;
+            if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(NumberOfSeriesElement, otherT.NumberOfSeriesElement)) return false;
+            if( !DeepComparable.IsExactly(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
+            if( !DeepComparable.IsExactly(ClinicalInformationElement, otherT.ClinicalInformationElement)) return false;
+            if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
+            if( !DeepComparable.IsExactly(Interpreter, otherT.Interpreter)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

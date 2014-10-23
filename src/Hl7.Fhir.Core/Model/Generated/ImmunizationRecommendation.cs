@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,6 +116,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationDateCriterionComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -251,6 +267,24 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationProtocolComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationProtocolComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
+                if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -426,6 +460,28 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationRecommendationRecommendationComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationRecommendationRecommendationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.IsExactly(VaccineType, otherT.VaccineType)) return false;
+                if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
+                if( !DeepComparable.IsExactly(ForecastStatus, otherT.ForecastStatus)) return false;
+                if( !DeepComparable.IsExactly(DateCriterion, otherT.DateCriterion)) return false;
+                if( !DeepComparable.IsExactly(Protocol, otherT.Protocol)) return false;
+                if( !DeepComparable.IsExactly(SupportingImmunization, otherT.SupportingImmunization)) return false;
+                if( !DeepComparable.IsExactly(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -490,6 +546,23 @@ namespace Hl7.Fhir.Model
             return CopyTo(new ImmunizationRecommendation());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as ImmunizationRecommendation;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Recommendation, otherT.Recommendation)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

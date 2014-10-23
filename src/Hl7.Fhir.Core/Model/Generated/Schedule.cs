@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -364,6 +364,26 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ScheduleRepeatComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ScheduleRepeatComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(FrequencyElement, otherT.FrequencyElement)) return false;
+                if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
+                if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
+                if( !DeepComparable.IsExactly(UnitsElement, otherT.UnitsElement)) return false;
+                if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
+                if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -412,6 +432,22 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Schedule());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Schedule;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
+            if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -164,6 +164,22 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DiagnosticReportImageComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosticReportImageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -470,6 +486,36 @@ namespace Hl7.Fhir.Model
             return CopyTo(new DiagnosticReport());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as DiagnosticReport;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
+            if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.IsExactly(Diagnostic, otherT.Diagnostic)) return false;
+            if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
+            if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
+            if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;
+            if( !DeepComparable.IsExactly(Image, otherT.Image)) return false;
+            if( !DeepComparable.IsExactly(ConclusionElement, otherT.ConclusionElement)) return false;
+            if( !DeepComparable.IsExactly(CodedDiagnosis, otherT.CodedDiagnosis)) return false;
+            if( !DeepComparable.IsExactly(PresentedForm, otherT.PresentedForm)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

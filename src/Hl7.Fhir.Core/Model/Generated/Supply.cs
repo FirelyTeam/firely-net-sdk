@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -279,6 +279,30 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SupplyDispenseComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SupplyDispenseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(SuppliedItem, otherT.SuppliedItem)) return false;
+                if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
+                if( !DeepComparable.IsExactly(WhenPrepared, otherT.WhenPrepared)) return false;
+                if( !DeepComparable.IsExactly(WhenHandedOver, otherT.WhenHandedOver)) return false;
+                if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
+                if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -400,6 +424,26 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Supply());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Supply;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Kind, otherT.Kind)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(OrderedItem, otherT.OrderedItem)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Dispense, otherT.Dispense)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

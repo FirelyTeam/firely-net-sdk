@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 13:04+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -208,6 +208,23 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new LocationPositionComponent());
             }
             
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as LocationPositionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(LongitudeElement, otherT.LongitudeElement)) return false;
+                if( !DeepComparable.IsExactly(LatitudeElement, otherT.LatitudeElement)) return false;
+                if( !DeepComparable.IsExactly(AltitudeElement, otherT.AltitudeElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                throw new NotImplementedException();
+            }
         }
         
         
@@ -464,6 +481,32 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Location());
         }
         
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Location;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
+            if( !DeepComparable.IsExactly(PhysicalType, otherT.PhysicalType)) return false;
+            if( !DeepComparable.IsExactly(Position, otherT.Position)) return false;
+            if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+            
+            return true;
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }
