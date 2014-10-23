@@ -10,15 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Serialization
 {
-    public interface IPostitionInfo
-    {
-        int LineNumber { get; }
-        int LinePosition { get; }
-    }
-
     public interface IFhirReader : IPostitionInfo
     {
         string GetResourceTypeName(bool nested);
