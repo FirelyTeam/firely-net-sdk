@@ -177,7 +177,9 @@ namespace Hl7.Fhir.Profiling
                     var element = HarvestElement(component);
                     target.Elements.Add(element);
                 }
-                    
+                /*if (!target.Root.HasElements)
+                    target.Root.IsPrimitive == true; */
+                // of moet structure zelf een IsPrimitive krijgen?
             }
         }
 
@@ -211,7 +213,6 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
-
         public Structure HarvestStructure(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Uri uri)
         {
             Structure target = new Structure();
@@ -235,10 +236,6 @@ namespace Hl7.Fhir.Profiling
             target.Elements.Add(element);
             return target;
         }
-
-
-
-
 
         public void HarvestProfileExtensions(Hl7.Fhir.Model.Profile source)
         {

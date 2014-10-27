@@ -87,32 +87,29 @@ namespace Hl7.Fhir.Specification.Model
         public bool Sliced { get { return Discriminator != null; } }
     
         
-        public string XFilter
+        public string GetXPathFilter()
         {
-            get
-            {
-                string xpath;
+            string xpath;
 
-                if (TailSegment.Multi)
-                {
-                    xpath = string.Format("*[starts-with(name(),'{0}')]", TailSegment.Name);
-                }
-                else if (Representation == Representation.Element)
-                {
-                    xpath = string.Format("{0}:{1}", this.NameSpacePrefix, TailSegment.Name);
-                }
-                else 
-                {
-                    xpath = string.Format("@{0}", TailSegment.Name);
-                }
+            if (TailSegment.Multi)
+            {
+                xpath = string.Format("*[starts-with(name(),'{0}')]", TailSegment.Name);
+            }
+            else if (Representation == Representation.Element)
+            {
+                xpath = string.Format("{0}:{1}", this.NameSpacePrefix, TailSegment.Name);
+            }
+            else 
+            {
+                xpath = string.Format("@{0}", TailSegment.Name);
+            }
 
                  
-                if (Sliced)
-                {
-                    xpath += string.Format("[{0}]", DiscriminatorXPath());
-                }
-                return xpath;
+            if (Sliced)
+            {
+                xpath += string.Format("[{0}]", DiscriminatorXPath());
             }
+            return xpath;
         }
 
         public string DiscriminatorXPath()

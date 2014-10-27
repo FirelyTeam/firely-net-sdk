@@ -61,6 +61,7 @@
       <Link>Support\ReflectionHelper.cs</Link>
     </Compile>
     <Compile Include="Specification\Model\Slicing.cs" />
+    <Compile Include="Specification\Model\XPathNavigatorExtensions.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Expansion\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />

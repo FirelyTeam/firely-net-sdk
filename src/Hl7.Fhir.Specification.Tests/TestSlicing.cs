@@ -44,7 +44,8 @@ namespace Hl7.Fhir
             Report report = spec.Validate(diagnosticreport);
             var errors = report.Errors.ToList();
             Assert.IsTrue(report.Errors.Count() == 0);
-
         }
+
     }
 }
+

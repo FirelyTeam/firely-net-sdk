@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification.Model
 
         public int Count()
         {
-            string xpath = Element.XFilter;
+            string xpath = Element.GetXPathFilter();
             XPathNodeIterator iterator = Node.Select(xpath, NSM);
             return iterator.Count;
         }
@@ -108,7 +108,6 @@ namespace Hl7.Fhir.Specification.Model
             if (Element.Representation == Representation.Element)
             {
                 return this.GetValue("@value"); 
-                
             }
             else
             {
@@ -118,16 +117,19 @@ namespace Hl7.Fhir.Specification.Model
 
         }
         
-        public string NodePath()
+        public string NodePath
         {
-            XPathNavigator n = Node.CreateNavigator();
-            string s = n.Name;
-            while (!n.IsSamePosition(Origin.Node) && n.MoveToParent())
+            get
             {
-                if (!string.IsNullOrEmpty(n.Name))
-                    s = n.Name + "." + s;
+                XPathNavigator n = Node.CreateNavigator();
+                string s = n.Name;
+                while (!n.IsSamePosition(Origin.Node) && n.MoveToParent())
+                {
+                    if (!string.IsNullOrEmpty(n.Name))
+                        s = n.Name + "." + s;
+                }
+                return s;
             }
-            return s;
         }
         
         public IEnumerable<Vector> ElementChildren
@@ -141,11 +143,45 @@ namespace Hl7.Fhir.Specification.Model
             }
         }
 
+        public IEnumerable<XPathNavigator> GetNodeAttributes()
+        {
+            XPathNavigator node = this.Node.CreateNavigator();
+            bool ok = node.MoveToFirstAttribute();
+
+            while (ok)
+            {
+                yield return node;
+                ok = node.MoveToNextAttribute();
+            }
+
+        }
+
+        public IEnumerable<Vector> NodeAttributes
+        {
+            get
+            {
+                foreach(XPathNavigator node in GetNodeAttributes())
+                {
+                    yield return this.MoveTo(node);
+                }
+            }
+        }
+
+        public bool NodeHasAttribute(string name)
+        {
+            return GetNodeAttributes().Any(n => n.Name == name);
+        }
+
+        public bool NodeHasValue()
+        {
+            return GetNodeAttributes().Any(n => n.Name == "value");
+        }
+
         public IEnumerable<Vector> MatchingNodes
         {
             get
             {
-                string xfilter = this.Element.XFilter;
+                string xfilter = this.Element.GetXPathFilter();
 
                 foreach (XPathNavigator node in Node.Select(xfilter, NSM))
                 {
@@ -162,6 +198,7 @@ namespace Hl7.Fhir.Specification.Model
                 {
                     yield return this.MoveTo(node);
                 }
+
             }
         }
         
@@ -198,14 +235,23 @@ namespace Hl7.Fhir.Specification.Model
             }
         }
         
-        public bool ElementHasChild(string name)
+        public bool ElementHasChild(string name, Representation representation)
         {
-            return Element.Children.FirstOrDefault(c => c.Name == name) != null;
+            Element element = Element.Children.FirstOrDefault(c => c.Name == name);
+            if (element != null)
+            {
+                return (element.Representation == representation);
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public override string ToString()
         {
-            return string.Format("{0} × {1}", Element, NodePath());
+            return string.Format("{0} × {1}", Element, NodePath);
         }
     }
 

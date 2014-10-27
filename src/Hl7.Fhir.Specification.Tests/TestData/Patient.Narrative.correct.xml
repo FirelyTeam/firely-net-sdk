@@ -8,7 +8,9 @@
     </div>
   </text>
   <contact>
-    <name value="John"/>
+    <name>
+      <given value="John" />
+    </name>
   </contact>
   <identifier>
     <system value="http://hl7.org/fhir/sid/us-ssn"/>

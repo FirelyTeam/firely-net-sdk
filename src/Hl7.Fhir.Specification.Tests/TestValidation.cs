@@ -68,6 +68,31 @@ namespace Fhir.Profiling.Tests
         }
 
         [TestMethod]
+        public void UnknownAttribute()
+        {
+            var resource = Factory.LoadResource("TestData\\Patient.UnknownAttribute.xml");
+            Report report = spec.Validate(resource);
+
+            Assert.IsFalse(report.IsValid);
+            Assert.IsTrue(report.Contains(Group.Attribute, Status.Unknown));
+            Assert.AreEqual(1, report.ErrorCount);
+        }
+
+        [TestMethod]
+        public void ComplexTypeValueAttribute()
+        {
+            // A complex type should not have a value attribute at the root element
+            var resource = Factory.LoadResource("TestData\\Patient.ValueAttribute.xml");
+            Report report = spec.Validate(resource);
+
+            Assert.IsFalse(report.IsValid);
+            Assert.IsTrue(report.Contains(Group.Attribute, Status.Failed));
+            Assert.AreEqual(1, report.ErrorCount);
+        }
+
+
+
+        [TestMethod]
         public void Constraint()
         {
             // <constraint value="f:name or f:telecom or f:address or f:organization"/>

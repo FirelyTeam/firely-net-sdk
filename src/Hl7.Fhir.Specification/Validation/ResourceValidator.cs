@@ -101,6 +101,10 @@ namespace Hl7.Fhir.Profiling
 
         public void ValidateCardinality(Vector vector)
         {
+            if (vector.Element.Sliced)
+            {
+                Log(Group.Slice, Status.Info, vector, "Validating a slice");
+            }
             string slice = (vector.Element.Sliced) ? string.Format("Slice {0}: ", vector.Element.Slice) : string.Empty;
             int count = vector.Count(); 
             if (vector.Element.Cardinality.InRange(count))
@@ -117,13 +121,13 @@ namespace Hl7.Fhir.Profiling
                 if (count == 0)
                 {
                     Log(Group.Cardinality, Status.Failed, vector, "{0}Node [{1}] has missing child node [{2}] ",
-                            slice, vector.NodePath(), vector.Element.Name);
+                            slice, vector.NodePath, vector.Element.Name);
                 }
                 else
                 {
                     Log(Group.Cardinality, Status.Failed, vector,
                         "{0}The occurence {1} of node [{2}] under [{3}] is out of range ({4})",
-                        slice, count, vector.Element.Name, vector.NodePath(), vector.Element.Cardinality);
+                        slice, count, vector.Element.Name, vector.NodePath, vector.Element.Cardinality);
                 }
             }
         }
@@ -178,7 +182,8 @@ namespace Hl7.Fhir.Profiling
 
             if (vector.Element.Representation == Representation.Attribute) 
                 // todo: HACK: the standard contradicts itself here. 
-                // Extension.uri is defined as uri (which we modeled as a structure a primitive element containing extensions. And the root element is defined as Representation=Element
+                // Extension.uri is defined as uri (which we modeled as a structure a primitive element containing extensions. 
+                // And the root element is defined as Representation=Element
                 // but on a higher level, it is already defined as Representation=Attribute.
                 return; 
 
@@ -191,9 +196,6 @@ namespace Hl7.Fhir.Profiling
 
         public void ValidatePrimitive(Vector vector)
         {
-            if (!vector.Element.IsPrimitive)
-                return;
-
             if (vector.Element.NameSpacePrefix != FhirNamespaceManager.Fhir)
                 return;
 
@@ -214,6 +216,28 @@ namespace Hl7.Fhir.Profiling
             catch
             {
                 Log(Group.Primitive, Status.Failed, vector, "The value of primitive [{0}] was not present.", vector.Node.Name);
+            }
+        }
+
+        public void ValidateNoValue(Vector vector)
+        {
+            bool exists = vector.NodeHasAttribute("value");
+            if (exists)
+                Log(Group.Attribute, Status.Failed, vector,
+                        "A value attribute is not allowd on non primitive element {0}", vector.Element);
+        }
+
+
+        public void ValidateContent(Vector vector)
+        {
+            // if it's a primitive, validate the value attribute, otherwise assert there is no value attribute
+            if (vector.Element.IsPrimitive)
+            {
+                ValidatePrimitive(vector);
+            }
+            else
+            {
+                ValidateNoValue(vector);
             }
         }
 
@@ -317,13 +341,31 @@ namespace Hl7.Fhir.Profiling
             }
         }
 
+        public void ValidateAttribute(Vector vector)
+        {
+            if (vector.Node.Name == "value")
+                return; // Value attributes cannot be validated on element level.
+
+            bool existing = vector.ElementHasChild(vector.Node.Name, Representation.Attribute);
+            if (!existing)
+                Log(Group.Attribute, Status.Unknown, vector, "Attribute [{0}] does not exist.", vector.Node.Name);
+        }
+
+        public void ValidateAttributes(Vector vector)
+        {
+            foreach(Vector attribute in vector.NodeAttributes)
+            {
+                ValidateAttribute(attribute);
+            }
+        }
+
         public void ValidateElement(Vector vector)
         {
             Start(Group.Element, vector);
             {
+                ValidateAttributes(vector);
                 ValidateCode(vector);
                 ValidateConstraints(vector);
-                ValidatePrimitive(vector);
                 ValidateFixedValue(vector); // except when slicing
                 ValidateForMissingStructures(vector);
                 ValidateChildren(vector);
@@ -341,6 +383,7 @@ namespace Hl7.Fhir.Profiling
             else
             {
                 Start(Group.Structure, vector);
+                ValidateContent(vector);
                 ValidateElement(vector);
                 Stop(Group.Structure);
             }
