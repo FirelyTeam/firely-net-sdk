@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -246,6 +246,38 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new Identifier());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Identifier;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+            if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(Assigner, otherT.Assigner)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Identifier;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+            if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            if( !DeepComparable.IsExactly(Assigner, otherT.Assigner)) return false;
+            
+            return true;
         }
         
     }

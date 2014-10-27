@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -315,6 +315,40 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new HumanName());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as HumanName;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+            if( !DeepComparable.Matches(FamilyElement, otherT.FamilyElement)) return false;
+            if( !DeepComparable.Matches(GivenElement, otherT.GivenElement)) return false;
+            if( !DeepComparable.Matches(PrefixElement, otherT.PrefixElement)) return false;
+            if( !DeepComparable.Matches(SuffixElement, otherT.SuffixElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as HumanName;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+            if( !DeepComparable.IsExactly(FamilyElement, otherT.FamilyElement)) return false;
+            if( !DeepComparable.IsExactly(GivenElement, otherT.GivenElement)) return false;
+            if( !DeepComparable.IsExactly(PrefixElement, otherT.PrefixElement)) return false;
+            if( !DeepComparable.IsExactly(SuffixElement, otherT.SuffixElement)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            
+            return true;
         }
         
     }

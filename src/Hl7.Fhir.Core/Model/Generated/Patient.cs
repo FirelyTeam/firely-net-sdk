@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -173,6 +173,38 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ContactComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+                if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+                if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
+                if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+                if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -236,6 +268,32 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new AnimalComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
+                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Species, otherT.Species)) return false;
+                if( !DeepComparable.IsExactly(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
             }
             
         }
@@ -309,6 +367,30 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new PatientLinkComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PatientLinkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Other, otherT.Other)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PatientLinkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Other, otherT.Other)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
             }
             
         }
@@ -602,6 +684,60 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new Patient());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Patient;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
+            if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
+            if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+            if( !DeepComparable.Matches(MaritalStatus, otherT.MaritalStatus)) return false;
+            if( !DeepComparable.Matches(MultipleBirth, otherT.MultipleBirth)) return false;
+            if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Animal, otherT.Animal)) return false;
+            if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
+            if( !DeepComparable.Matches(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.Matches(Link, otherT.Link)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Patient;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.IsExactly(BirthDateElement, otherT.BirthDateElement)) return false;
+            if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
+            if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
+            if( !DeepComparable.IsExactly(MaritalStatus, otherT.MaritalStatus)) return false;
+            if( !DeepComparable.IsExactly(MultipleBirth, otherT.MultipleBirth)) return false;
+            if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(Animal, otherT.Animal)) return false;
+            if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
+            if( !DeepComparable.IsExactly(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
+            
+            return true;
         }
         
     }

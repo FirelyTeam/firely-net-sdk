@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -140,6 +140,34 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new FamilyHistoryRelationConditionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as FamilyHistoryRelationConditionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.Matches(Onset, otherT.Onset)) return false;
+                if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as FamilyHistoryRelationConditionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.IsExactly(Onset, otherT.Onset)) return false;
+                if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+                
+                return true;
             }
             
         }
@@ -287,6 +315,38 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new FamilyHistoryRelationComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as FamilyHistoryRelationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.Matches(Born, otherT.Born)) return false;
+                if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
+                if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+                if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as FamilyHistoryRelationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.IsExactly(Born, otherT.Born)) return false;
+                if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
+                if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+                if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -381,6 +441,34 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new FamilyHistory());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as FamilyHistory;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.Matches(Relation, otherT.Relation)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as FamilyHistory;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.IsExactly(Relation, otherT.Relation)) return false;
+            
+            return true;
         }
         
     }

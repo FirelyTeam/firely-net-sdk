@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -288,6 +288,40 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new Attachment());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Attachment;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
+            if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(SizeElement, otherT.SizeElement)) return false;
+            if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
+            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Attachment;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
+            if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(SizeElement, otherT.SizeElement)) return false;
+            if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
+            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+            
+            return true;
         }
         
     }

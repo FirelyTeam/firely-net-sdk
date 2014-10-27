@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -360,6 +360,46 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new AllergyIntolerance());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as AllergyIntolerance;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Criticality_Element, otherT.Criticality_Element)) return false;
+            if( !DeepComparable.Matches(SensitivityType_Element, otherT.SensitivityType_Element)) return false;
+            if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.Matches(SensitivityTest, otherT.SensitivityTest)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as AllergyIntolerance;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Criticality_Element, otherT.Criticality_Element)) return false;
+            if( !DeepComparable.IsExactly(SensitivityType_Element, otherT.SensitivityType_Element)) return false;
+            if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.IsExactly(SensitivityTest, otherT.SensitivityTest)) return false;
+            
+            return true;
         }
         
     }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -253,6 +253,42 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new ImmunizationVaccinationProtocolComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
+                if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
+                if( !DeepComparable.Matches(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
+                if( !DeepComparable.Matches(DoseTarget, otherT.DoseTarget)) return false;
+                if( !DeepComparable.Matches(DoseStatus, otherT.DoseStatus)) return false;
+                if( !DeepComparable.Matches(DoseStatusReason, otherT.DoseStatusReason)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
+                if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
+                if( !DeepComparable.IsExactly(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
+                if( !DeepComparable.IsExactly(DoseTarget, otherT.DoseTarget)) return false;
+                if( !DeepComparable.IsExactly(DoseStatus, otherT.DoseStatus)) return false;
+                if( !DeepComparable.IsExactly(DoseStatusReason, otherT.DoseStatusReason)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -304,6 +340,30 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new ImmunizationExplanationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationExplanationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.Matches(RefusalReason, otherT.RefusalReason)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationExplanationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.IsExactly(RefusalReason, otherT.RefusalReason)) return false;
+                
+                return true;
             }
             
         }
@@ -407,6 +467,32 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new ImmunizationReactionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationReactionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                if( !DeepComparable.Matches(ReportedElement, otherT.ReportedElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ImmunizationReactionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+                if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
+                
+                return true;
             }
             
         }
@@ -770,6 +856,62 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new Immunization());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Immunization;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(VaccineType, otherT.VaccineType)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(RefusedIndicatorElement, otherT.RefusedIndicatorElement)) return false;
+            if( !DeepComparable.Matches(ReportedElement, otherT.ReportedElement)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
+            if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+            if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
+            if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
+            if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+            if( !DeepComparable.Matches(Route, otherT.Route)) return false;
+            if( !DeepComparable.Matches(DoseQuantity, otherT.DoseQuantity)) return false;
+            if( !DeepComparable.Matches(Explanation, otherT.Explanation)) return false;
+            if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.Matches(VaccinationProtocol, otherT.VaccinationProtocol)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Immunization;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(VaccineType, otherT.VaccineType)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(RefusedIndicatorElement, otherT.RefusedIndicatorElement)) return false;
+            if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
+            if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+            if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
+            if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
+            if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
+            if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
+            if( !DeepComparable.IsExactly(DoseQuantity, otherT.DoseQuantity)) return false;
+            if( !DeepComparable.IsExactly(Explanation, otherT.Explanation)) return false;
+            if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.IsExactly(VaccinationProtocol, otherT.VaccinationProtocol)) return false;
+            
+            return true;
         }
         
     }

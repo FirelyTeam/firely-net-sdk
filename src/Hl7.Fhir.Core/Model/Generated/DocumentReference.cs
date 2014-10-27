@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -160,6 +160,32 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DocumentReferenceContextComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceContextComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(FacilityType, otherT.FacilityType)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceContextComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(FacilityType, otherT.FacilityType)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -231,6 +257,30 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new DocumentReferenceRelatesToComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceRelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceRelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
             }
             
         }
@@ -323,6 +373,30 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new DocumentReferenceServiceParameterComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceServiceParameterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceServiceParameterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -406,6 +480,32 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new DocumentReferenceServiceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceServiceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(AddressElement, otherT.AddressElement)) return false;
+                if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceServiceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(AddressElement, otherT.AddressElement)) return false;
+                if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
+                
+                return true;
             }
             
         }
@@ -963,6 +1063,74 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new DocumentReference());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as DocumentReference;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(MasterIdentifier, otherT.MasterIdentifier)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Class, otherT.Class)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.Matches(PolicyManagerElement, otherT.PolicyManagerElement)) return false;
+            if( !DeepComparable.Matches(Authenticator, otherT.Authenticator)) return false;
+            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(IndexedElement, otherT.IndexedElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(DocStatus, otherT.DocStatus)) return false;
+            if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
+            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Confidentiality, otherT.Confidentiality)) return false;
+            if( !DeepComparable.Matches(PrimaryLanguageElement, otherT.PrimaryLanguageElement)) return false;
+            if( !DeepComparable.Matches(MimeTypeElement, otherT.MimeTypeElement)) return false;
+            if( !DeepComparable.Matches(FormatElement, otherT.FormatElement)) return false;
+            if( !DeepComparable.Matches(SizeElement, otherT.SizeElement)) return false;
+            if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
+            if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
+            if( !DeepComparable.Matches(Service, otherT.Service)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as DocumentReference;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(MasterIdentifier, otherT.MasterIdentifier)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.IsExactly(PolicyManagerElement, otherT.PolicyManagerElement)) return false;
+            if( !DeepComparable.IsExactly(Authenticator, otherT.Authenticator)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(IndexedElement, otherT.IndexedElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(DocStatus, otherT.DocStatus)) return false;
+            if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Confidentiality, otherT.Confidentiality)) return false;
+            if( !DeepComparable.IsExactly(PrimaryLanguageElement, otherT.PrimaryLanguageElement)) return false;
+            if( !DeepComparable.IsExactly(MimeTypeElement, otherT.MimeTypeElement)) return false;
+            if( !DeepComparable.IsExactly(FormatElement, otherT.FormatElement)) return false;
+            if( !DeepComparable.IsExactly(SizeElement, otherT.SizeElement)) return false;
+            if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
+            if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
+            if( !DeepComparable.IsExactly(Service, otherT.Service)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            
+            return true;
         }
         
     }

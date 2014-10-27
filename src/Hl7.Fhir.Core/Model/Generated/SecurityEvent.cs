@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jul 15, 2014 15:45+0200 for FHIR v0.0.81
+// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
 //
 namespace Hl7.Fhir.Model
 {
@@ -468,6 +468,30 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventObjectDetailComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectDetailComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectDetailComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -739,6 +763,46 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventObjectComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(RoleElement, otherT.RoleElement)) return false;
+                if( !DeepComparable.Matches(LifecycleElement, otherT.LifecycleElement)) return false;
+                if( !DeepComparable.Matches(Sensitivity, otherT.Sensitivity)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(QueryElement, otherT.QueryElement)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventObjectComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(RoleElement, otherT.RoleElement)) return false;
+                if( !DeepComparable.IsExactly(LifecycleElement, otherT.LifecycleElement)) return false;
+                if( !DeepComparable.IsExactly(Sensitivity, otherT.Sensitivity)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(QueryElement, otherT.QueryElement)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -841,6 +905,32 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new SecurityEventSourceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventSourceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SiteElement, otherT.SiteElement)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventSourceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SiteElement, otherT.SiteElement)) return false;
+                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                
+                return true;
             }
             
         }
@@ -1025,6 +1115,38 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventEventComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
+                if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
+                if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
+                if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
+                if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
+                if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
+                if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
+                if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
+                if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -1112,6 +1234,30 @@ namespace Hl7.Fhir.Model
             public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new SecurityEventParticipantNetworkComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantNetworkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantNetworkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
             }
             
         }
@@ -1322,6 +1468,42 @@ namespace Hl7.Fhir.Model
                 return CopyTo(new SecurityEventParticipantComponent());
             }
             
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(UserIdElement, otherT.UserIdElement)) return false;
+                if( !DeepComparable.Matches(AltIdElement, otherT.AltIdElement)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(RequestorElement, otherT.RequestorElement)) return false;
+                if( !DeepComparable.Matches(Media, otherT.Media)) return false;
+                if( !DeepComparable.Matches(Network, otherT.Network)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SecurityEventParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(UserIdElement, otherT.UserIdElement)) return false;
+                if( !DeepComparable.IsExactly(AltIdElement, otherT.AltIdElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(RequestorElement, otherT.RequestorElement)) return false;
+                if( !DeepComparable.IsExactly(Media, otherT.Media)) return false;
+                if( !DeepComparable.IsExactly(Network, otherT.Network)) return false;
+                
+                return true;
+            }
+            
         }
         
         
@@ -1397,6 +1579,34 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new SecurityEvent());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as SecurityEvent;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Object, otherT.Object)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as SecurityEvent;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
+            if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(Object, otherT.Object)) return false;
+            
+            return true;
         }
         
     }

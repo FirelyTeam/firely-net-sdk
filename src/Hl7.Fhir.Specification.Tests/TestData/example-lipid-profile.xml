@@ -1280,7 +1280,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <profile value="http://hl7.org/fhir/Profile/Patient"/>
           <aggregation value="referenced"/>
           <aggregation value="bundled"/>
         </type>
@@ -1306,7 +1306,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Practitioner"/>
+          <profile value="http://hl7.org/fhir/Profile/Practitioner"/>
           <aggregation value="referenced"/>
           <aggregation value="bundled"/>
         </type>
@@ -1466,7 +1466,15 @@
             value="Cardinality 3..4, since chol, trig, hdlc are mandatory, ldlc is optional"/>
         <min value="3"/>
         <max value="4"/>
+        <type>
+          <code value="ResourceReference"/>
+          <profile value="http://hl7.org/fhir/Profile/Observation"/>
+        </type>
         <isModifier value="false"/>
+        <mapping>
+          <identity value="rim"/>
+          <map value="outboundRelationship[typeCode=COMP].target"/>
+        </mapping>
       </definition>
     </element>
     <element>
@@ -2540,7 +2548,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <profile value="http://hl7.org/fhir/Profile/Patient"/>
         </type>
         <isModifier value="false"/>
         <mapping>
@@ -3844,7 +3852,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <profile value="http://hl7.org/fhir/Profile/Patient"/>
         </type>
         <isModifier value="false"/>
         <mapping>
@@ -5148,7 +5156,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <profile value="http://hl7.org/fhir/Profile/Patient"/>
         </type>
         <isModifier value="false"/>
         <mapping>
@@ -6475,7 +6483,7 @@
         <max value="1"/>
         <type>
           <code value="ResourceReference"/>
-          <profile value="http://hl7.org/fhir/profiles/Patient"/>
+          <profile value="http://hl7.org/fhir/Profile/Patient"/>
         </type>
         <isModifier value="false"/>
         <mapping>

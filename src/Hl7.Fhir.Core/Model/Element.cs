@@ -35,7 +35,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Model
 {
-    public abstract partial class Element : IExtendable, IDeepCopyable
+    public abstract partial class Element : IExtendable, IDeepCopyable, IDeepComparable
     {
         public abstract IDeepCopyable DeepCopy();
     }

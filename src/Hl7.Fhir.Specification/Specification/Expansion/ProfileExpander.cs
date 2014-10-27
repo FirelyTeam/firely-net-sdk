@@ -72,14 +72,16 @@ namespace Hl7.Fhir.Specification.Expansion
         private void finalizeExtensions(Profile snapshot)
         {
             // Just a friendly helper method to add mandatory fields that are more or less boilerplate
-
-            foreach (var extensionDefn in snapshot.ExtensionDefn)
+            if (snapshot.ExtensionDefn != null)
             {
-                if (extensionDefn.Definition != null)
+                foreach (var extensionDefn in snapshot.ExtensionDefn)
                 {
-                    if (extensionDefn.Definition.Min == null) extensionDefn.Definition.Min = 0;
-                    if (extensionDefn.Definition.Max == null) extensionDefn.Definition.Max = "1";
-                    if (extensionDefn.Definition.IsModifier == null) extensionDefn.Definition.IsModifier = false;
+                    if (extensionDefn.Definition != null)
+                    {
+                        if (extensionDefn.Definition.Min == null) extensionDefn.Definition.Min = 0;
+                        if (extensionDefn.Definition.Max == null) extensionDefn.Definition.Max = "1";
+                        if (extensionDefn.Definition.IsModifier == null) extensionDefn.Definition.IsModifier = false;
+                    }
                 }
             }
         }
