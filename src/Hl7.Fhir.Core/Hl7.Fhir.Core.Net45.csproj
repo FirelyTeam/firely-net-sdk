@@ -165,6 +165,7 @@
     <Compile Include="Model\Generated\ValueSet.cs" />
     <Compile Include="Model\Generated\XHtml.cs" />
     <Compile Include="Model\Id.cs" />
+    <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
     <Compile Include="Model\Identifier.cs" />
     <Compile Include="Model\IExtendable.cs" />
