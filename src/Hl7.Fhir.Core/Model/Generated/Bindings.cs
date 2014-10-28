@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,10 +36,38 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// The gender of a person used for administrative purposes
+    /// </summary>
+    [FhirEnumeration("AdministrativeGender")]
+    public enum AdministrativeGender
+    {
+        /// <summary>
+        /// Male
+        /// </summary>
+        [EnumLiteral("male")]
+        Male,
+        /// <summary>
+        /// Female
+        /// </summary>
+        [EnumLiteral("female")]
+        Female,
+        /// <summary>
+        /// Other
+        /// </summary>
+        [EnumLiteral("other")]
+        Other,
+        /// <summary>
+        /// Unknown
+        /// </summary>
+        [EnumLiteral("unknown")]
+        Unknown,
+    }
+    
     /// <summary>
     /// Used to specify why the normally expected content of the data element is missing
     /// </summary>
@@ -143,6 +171,11 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("AdverseReaction")]
         AdverseReaction,
         /// <summary>
+        /// The AdverseReactionRisk resource
+        /// </summary>
+        [EnumLiteral("AdverseReactionRisk")]
+        AdverseReactionRisk,
+        /// <summary>
         /// The Alert resource
         /// </summary>
         [EnumLiteral("Alert")]
@@ -153,10 +186,40 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("AllergyIntolerance")]
         AllergyIntolerance,
         /// <summary>
+        /// The Appointment resource
+        /// </summary>
+        [EnumLiteral("Appointment")]
+        Appointment,
+        /// <summary>
+        /// The AppointmentResponse resource
+        /// </summary>
+        [EnumLiteral("AppointmentResponse")]
+        AppointmentResponse,
+        /// <summary>
+        /// The Availability resource
+        /// </summary>
+        [EnumLiteral("Availability")]
+        Availability,
+        /// <summary>
+        /// The Basic resource
+        /// </summary>
+        [EnumLiteral("Basic")]
+        Basic,
+        /// <summary>
+        /// The Binary resource
+        /// </summary>
+        [EnumLiteral("Binary")]
+        Binary,
+        /// <summary>
         /// The CarePlan resource
         /// </summary>
         [EnumLiteral("CarePlan")]
         CarePlan,
+        /// <summary>
+        /// The ClaimResponse resource
+        /// </summary>
+        [EnumLiteral("ClaimResponse")]
+        ClaimResponse,
         /// <summary>
         /// The Composition resource
         /// </summary>
@@ -177,6 +240,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Conformance")]
         Conformance,
+        /// <summary>
+        /// The Contract resource
+        /// </summary>
+        [EnumLiteral("Contract")]
+        Contract,
+        /// <summary>
+        /// The Contraindication resource
+        /// </summary>
+        [EnumLiteral("Contraindication")]
+        Contraindication,
+        /// <summary>
+        /// The Coverage resource
+        /// </summary>
+        [EnumLiteral("Coverage")]
+        Coverage,
+        /// <summary>
+        /// The DataElement resource
+        /// </summary>
+        [EnumLiteral("DataElement")]
+        DataElement,
         /// <summary>
         /// The Device resource
         /// </summary>
@@ -222,6 +305,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Group")]
         Group,
+        /// <summary>
+        /// The HealthcareService resource
+        /// </summary>
+        [EnumLiteral("HealthcareService")]
+        HealthcareService,
         /// <summary>
         /// The ImagingStudy resource
         /// </summary>
@@ -283,15 +371,40 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("MessageHeader")]
         MessageHeader,
         /// <summary>
+        /// The NamingSystem resource
+        /// </summary>
+        [EnumLiteral("NamingSystem")]
+        NamingSystem,
+        /// <summary>
+        /// The NewBundle resource
+        /// </summary>
+        [EnumLiteral("NewBundle")]
+        NewBundle,
+        /// <summary>
+        /// The NutritionOrder resource
+        /// </summary>
+        [EnumLiteral("NutritionOrder")]
+        NutritionOrder,
+        /// <summary>
         /// The Observation resource
         /// </summary>
         [EnumLiteral("Observation")]
         Observation,
         /// <summary>
+        /// The OperationDefinition resource
+        /// </summary>
+        [EnumLiteral("OperationDefinition")]
+        OperationDefinition,
+        /// <summary>
         /// The OperationOutcome resource
         /// </summary>
         [EnumLiteral("OperationOutcome")]
         OperationOutcome,
+        /// <summary>
+        /// The OralHealthClaim resource
+        /// </summary>
+        [EnumLiteral("OralHealthClaim")]
+        OralHealthClaim,
         /// <summary>
         /// The Order resource
         /// </summary>
@@ -348,20 +461,45 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Questionnaire")]
         Questionnaire,
         /// <summary>
+        /// The QuestionnaireAnswers resource
+        /// </summary>
+        [EnumLiteral("QuestionnaireAnswers")]
+        QuestionnaireAnswers,
+        /// <summary>
+        /// The ReferralRequest resource
+        /// </summary>
+        [EnumLiteral("ReferralRequest")]
+        ReferralRequest,
+        /// <summary>
         /// The RelatedPerson resource
         /// </summary>
         [EnumLiteral("RelatedPerson")]
         RelatedPerson,
+        /// <summary>
+        /// The RiskAssessment resource
+        /// </summary>
+        [EnumLiteral("RiskAssessment")]
+        RiskAssessment,
         /// <summary>
         /// The SecurityEvent resource
         /// </summary>
         [EnumLiteral("SecurityEvent")]
         SecurityEvent,
         /// <summary>
+        /// The Slot resource
+        /// </summary>
+        [EnumLiteral("Slot")]
+        Slot,
+        /// <summary>
         /// The Specimen resource
         /// </summary>
         [EnumLiteral("Specimen")]
         Specimen,
+        /// <summary>
+        /// The Subscription resource
+        /// </summary>
+        [EnumLiteral("Subscription")]
+        Subscription,
         /// <summary>
         /// The Substance resource
         /// </summary>
@@ -377,11 +515,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ValueSet")]
         ValueSet,
-        /// <summary>
-        /// The Binary resource
-        /// </summary>
-        [EnumLiteral("Binary")]
-        Binary,
     }
     
 }

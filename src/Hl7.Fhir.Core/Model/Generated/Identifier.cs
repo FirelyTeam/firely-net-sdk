@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -217,12 +217,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("assigner", InSummary=true, Order=90)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Assigner
+        public Hl7.Fhir.Model.Reference Assigner
         {
             get { return _Assigner; }
             set { _Assigner = value; OnPropertyChanged("Assigner"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Assigner;
+        private Hl7.Fhir.Model.Reference _Assigner;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)Assigner.DeepCopy();
+                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.Reference)Assigner.DeepCopy();
                 return dest;
             }
             else

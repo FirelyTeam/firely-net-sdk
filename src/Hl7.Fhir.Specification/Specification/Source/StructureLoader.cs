@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Specification.Source
             // Determine the anchor, which we use to locate the structure by comparing it to Structure.name
             var anchor = extensionUri.Fragment.TrimStart('#');
 
-            return profile.ExtensionDefn.Where(ext => ext.Code == anchor).FirstOrDefault();
+            return profile.ExtensionDefn.Where(ext => ext.Name == anchor).FirstOrDefault();
         }
 
 

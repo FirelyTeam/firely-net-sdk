@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -134,12 +134,12 @@ namespace Hl7.Fhir.Model
             [References("Observation")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Observation
+            public Hl7.Fhir.Model.Reference Observation
             {
                 get { return _Observation; }
                 set { _Observation = value; OnPropertyChanged("Observation"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Observation;
+            private Hl7.Fhir.Model.Reference _Observation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Observation != null) dest.Observation = (Hl7.Fhir.Model.ResourceReference)Observation.DeepCopy();
+                    if(Observation != null) dest.Observation = (Hl7.Fhir.Model.Reference)Observation.DeepCopy();
                     return dest;
                 }
                 else
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the data values are reported
         /// </summary>
-        [FhirElement("instant", Order=70)]
+        [FhirElement("instant", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant InstantElement
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// As assigned by the source device
         /// </summary>
-        [FhirElement("identifier", Order=80)]
+        [FhirElement("identifier", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -308,34 +308,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies/describes where the data came from
         /// </summary>
-        [FhirElement("source", Order=90)]
+        [FhirElement("source", Order=80)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Source
+        public Hl7.Fhir.Model.Reference Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Source;
+        private Hl7.Fhir.Model.Reference _Source;
         
         /// <summary>
         /// Subject of the measurement
         /// </summary>
-        [FhirElement("subject", Order=100)]
+        [FhirElement("subject", Order=90)]
         [References("Patient","Device","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// A medical-related subsystem of a medical device
         /// </summary>
-        [FhirElement("virtualDevice", Order=110)]
+        [FhirElement("virtualDevice", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> VirtualDevice
@@ -354,8 +354,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(InstantElement != null) dest.InstantElement = (Hl7.Fhir.Model.Instant)InstantElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.Reference)Source.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
                 if(VirtualDevice != null) dest.VirtualDevice = new List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent>(VirtualDevice.DeepCopy());
                 return dest;
             }

@@ -76,22 +76,20 @@ namespace Hl7.Fhir.Specification.Expansion
             {
                 foreach (var extensionDefn in snapshot.ExtensionDefn)
                 {
-                    if (extensionDefn.Definition != null)
+                    if (extensionDefn.Element != null && extensionDefn.Element[0].Definition != null)
                     {
-                        if (extensionDefn.Definition.Min == null) extensionDefn.Definition.Min = 0;
-                        if (extensionDefn.Definition.Max == null) extensionDefn.Definition.Max = "1";
-                        if (extensionDefn.Definition.IsModifier == null) extensionDefn.Definition.IsModifier = false;
+                        if (extensionDefn.Element[0].Definition.Min == null) extensionDefn.Element[0].Definition.Min = 0;
+                        if (extensionDefn.Element[0].Definition.Max == null) extensionDefn.Element[0].Definition.Max = "1";
+                        if (extensionDefn.Element[0].Definition.IsModifier == null) extensionDefn.Element[0].Definition.IsModifier = false;
                     }
                 }
             }
         }
 
-        private Profile.ProfileStructureComponent expandStructure(Profile.ProfileStructureComponent structure)
+        private void expandStructure(Profile.ProfileStructureComponent structure)
         {
-            var expander = new StructureExpander(structure, _loader);
-            var snapshot = expander.Expand(structure);
-
-            return snapshot;
+            var expander = new StructureExpander(_loader);
+            expander.Expand(structure);
         }
 
         private void stashDifferentialStructure(Profile differential, Profile.ProfileStructureComponent structure)

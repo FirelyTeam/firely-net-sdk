@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -402,23 +402,23 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Target resource(s) (usually version specific)
+        /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", Order=70)]
+        [FhirElement("target", Order=60)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Target
+        public List<Hl7.Fhir.Model.Reference> Target
         {
             get { return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Target;
+        private List<Hl7.Fhir.Model.Reference> _Target;
         
         /// <summary>
         /// When the activity occurred
         /// </summary>
-        [FhirElement("period", Order=80)]
+        [FhirElement("period", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", Order=90)]
+        [FhirElement("recorded", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the activity is occurring
         /// </summary>
-        [FhirElement("reason", Order=100)]
+        [FhirElement("reason", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -474,20 +474,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the activity occurred, if relevant
         /// </summary>
-        [FhirElement("location", Order=110)]
+        [FhirElement("location", Order=100)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Location
+        public Hl7.Fhir.Model.Reference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Location;
+        private Hl7.Fhir.Model.Reference _Location;
         
         /// <summary>
         /// Policy or plan the activity was defined by
         /// </summary>
-        [FhirElement("policy", Order=120)]
+        [FhirElement("policy", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person, organization, records, etc. involved in creating resource
         /// </summary>
-        [FhirElement("agent", Order=130)]
+        [FhirElement("agent", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> Agent
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An entity used in this activity
         /// </summary>
-        [FhirElement("entity", Order=140)]
+        [FhirElement("entity", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> Entity
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base64 signature (DigSig) - integrity check
         /// </summary>
-        [FhirElement("integritySignature", Order=150)]
+        [FhirElement("integritySignature", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString IntegritySignatureElement
         {
@@ -580,11 +580,11 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
+                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.Reference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.Reference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(Agent.DeepCopy());
                 if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(Entity.DeepCopy());

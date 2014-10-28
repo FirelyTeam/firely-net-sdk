@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// fatal | high | medium | low
         /// </summary>
-        [FhirElement("criticality", Order=80)]
+        [FhirElement("criticality", Order=70)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality> Criticality_Element
         {
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// allergy | intolerance | unknown
         /// </summary>
-        [FhirElement("sensitivityType", Order=90)]
+        [FhirElement("sensitivityType", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType> SensitivityType_Element
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedDate", Order=100)]
+        [FhirElement("recordedDate", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
         {
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// suspected | confirmed | refuted | resolved
         /// </summary>
-        [FhirElement("status", Order=110)]
+        [FhirElement("status", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus> StatusElement
@@ -268,71 +268,71 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the sensitivity is for
         /// </summary>
-        [FhirElement("subject", Order=120)]
+        [FhirElement("subject", Order=110)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Who recorded the sensitivity
         /// </summary>
-        [FhirElement("recorder", Order=130)]
+        [FhirElement("recorder", Order=120)]
         [References("Practitioner","Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Recorder
+        public Hl7.Fhir.Model.Reference Recorder
         {
             get { return _Recorder; }
             set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Recorder;
+        private Hl7.Fhir.Model.Reference _Recorder;
         
         /// <summary>
         /// The substance that causes the sensitivity
         /// </summary>
-        [FhirElement("substance", Order=140)]
+        [FhirElement("substance", Order=130)]
         [References("Substance")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Substance
+        public Hl7.Fhir.Model.Reference Substance
         {
             get { return _Substance; }
             set { _Substance = value; OnPropertyChanged("Substance"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Substance;
+        private Hl7.Fhir.Model.Reference _Substance;
         
         /// <summary>
         /// Reactions associated with the sensitivity
         /// </summary>
-        [FhirElement("reaction", Order=150)]
+        [FhirElement("reaction", Order=140)]
         [References("AdverseReaction")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Reaction
+        public List<Hl7.Fhir.Model.Reference> Reaction
         {
             get { return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Reaction;
+        private List<Hl7.Fhir.Model.Reference> _Reaction;
         
         /// <summary>
         /// Observations that confirm or refute
         /// </summary>
-        [FhirElement("sensitivityTest", Order=160)]
+        [FhirElement("sensitivityTest", Order=150)]
         [References("Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> SensitivityTest
+        public List<Hl7.Fhir.Model.Reference> SensitivityTest
         {
             get { return _SensitivityTest; }
             set { _SensitivityTest = value; OnPropertyChanged("SensitivityTest"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _SensitivityTest;
+        private List<Hl7.Fhir.Model.Reference> _SensitivityTest;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -346,11 +346,11 @@ namespace Hl7.Fhir.Model
                 if(SensitivityType_Element != null) dest.SensitivityType_Element = (Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType>)SensitivityType_Element.DeepCopy();
                 if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
-                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.ResourceReference>(Reaction.DeepCopy());
-                if(SensitivityTest != null) dest.SensitivityTest = new List<Hl7.Fhir.Model.ResourceReference>(SensitivityTest.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.Reference)Recorder.DeepCopy();
+                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Reference)Substance.DeepCopy();
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Reference>(Reaction.DeepCopy());
+                if(SensitivityTest != null) dest.SensitivityTest = new List<Hl7.Fhir.Model.Reference>(SensitivityTest.DeepCopy());
                 return dest;
             }
             else

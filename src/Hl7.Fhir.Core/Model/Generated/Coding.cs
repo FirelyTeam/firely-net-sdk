@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -208,12 +208,12 @@ namespace Hl7.Fhir.Model
         [FhirElement("valueSet", InSummary=true, Order=90)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ValueSet
+        public Hl7.Fhir.Model.Reference ValueSet
         {
             get { return _ValueSet; }
             set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _ValueSet;
+        private Hl7.Fhir.Model.Reference _ValueSet;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 if(PrimaryElement != null) dest.PrimaryElement = (Hl7.Fhir.Model.FhirBoolean)PrimaryElement.DeepCopy();
-                if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.ResourceReference)ValueSet.DeepCopy();
+                if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Reference)ValueSet.DeepCopy();
                 return dest;
             }
             else

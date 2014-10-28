@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,8 +50,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How the Quantity should be understood and represented
         /// </summary>
-        [FhirEnumeration("QuantityCompararator")]
-        public enum QuantityCompararator
+        [FhirEnumeration("QuantityComparator")]
+        public enum QuantityComparator
         {
             /// <summary>
             /// The actual value is less than the given value.
@@ -111,12 +111,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("comparator", InSummary=true, Order=50)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> ComparatorElement
+        public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
         {
             get { return _ComparatorElement; }
             set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
         }
-        private Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> _ComparatorElement;
+        private Code<Hl7.Fhir.Model.Quantity.QuantityComparator> _ComparatorElement;
         
         /// <summary>
         /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Quantity.QuantityCompararator? Comparator
+        public Hl7.Fhir.Model.Quantity.QuantityComparator? Comparator
         {
             get { return ComparatorElement != null ? ComparatorElement.Value : null; }
             set
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   ComparatorElement = null; 
                 else
-                  ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>(value);
+                  ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
                 OnPropertyChanged("Comparator");
             }
         }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
-                if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>)ComparatorElement.DeepCopy();
+                if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)ComparatorElement.DeepCopy();
                 if(UnitsElement != null) dest.UnitsElement = (Hl7.Fhir.Model.FhirString)UnitsElement.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();

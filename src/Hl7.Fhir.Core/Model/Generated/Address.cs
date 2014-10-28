@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -234,14 +234,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Postal code for area
         /// </summary>
-        [FhirElement("zip", InSummary=true, Order=90)]
+        [FhirElement("postalCode", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString ZipElement
+        public Hl7.Fhir.Model.FhirString PostalCodeElement
         {
-            get { return _ZipElement; }
-            set { _ZipElement = value; OnPropertyChanged("ZipElement"); }
+            get { return _PostalCodeElement; }
+            set { _PostalCodeElement = value; OnPropertyChanged("PostalCodeElement"); }
         }
-        private Hl7.Fhir.Model.FhirString _ZipElement;
+        private Hl7.Fhir.Model.FhirString _PostalCodeElement;
         
         /// <summary>
         /// Postal code for area
@@ -249,16 +249,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Zip
+        public string PostalCode
         {
-            get { return ZipElement != null ? ZipElement.Value : null; }
+            get { return PostalCodeElement != null ? PostalCodeElement.Value : null; }
             set
             {
                 if(value == null)
-                  ZipElement = null; 
+                  PostalCodeElement = null; 
                 else
-                  ZipElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Zip");
+                  PostalCodeElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("PostalCode");
             }
         }
         
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
                 if(LineElement != null) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(LineElement.DeepCopy());
                 if(CityElement != null) dest.CityElement = (Hl7.Fhir.Model.FhirString)CityElement.DeepCopy();
                 if(StateElement != null) dest.StateElement = (Hl7.Fhir.Model.FhirString)StateElement.DeepCopy();
-                if(ZipElement != null) dest.ZipElement = (Hl7.Fhir.Model.FhirString)ZipElement.DeepCopy();
+                if(PostalCodeElement != null) dest.PostalCodeElement = (Hl7.Fhir.Model.FhirString)PostalCodeElement.DeepCopy();
                 if(CountryElement != null) dest.CountryElement = (Hl7.Fhir.Model.FhirString)CountryElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 return dest;
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(LineElement, otherT.LineElement)) return false;
             if( !DeepComparable.Matches(CityElement, otherT.CityElement)) return false;
             if( !DeepComparable.Matches(StateElement, otherT.StateElement)) return false;
-            if( !DeepComparable.Matches(ZipElement, otherT.ZipElement)) return false;
+            if( !DeepComparable.Matches(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(LineElement, otherT.LineElement)) return false;
             if( !DeepComparable.IsExactly(CityElement, otherT.CityElement)) return false;
             if( !DeepComparable.IsExactly(StateElement, otherT.StateElement)) return false;
-            if( !DeepComparable.IsExactly(ZipElement, otherT.ZipElement)) return false;
+            if( !DeepComparable.IsExactly(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.IsExactly(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -235,9 +235,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Born;
             
             /// <summary>
+            /// (approximate) age
+            /// </summary>
+            [FhirElement("age", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Age
+            {
+                get { return _Age; }
+                set { _Age = value; OnPropertyChanged("Age"); }
+            }
+            private Hl7.Fhir.Model.Element _Age;
+            
+            /// <summary>
             /// Dead? How old/when?
             /// </summary>
-            [FhirElement("deceased", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("deceased", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Deceased
@@ -250,7 +263,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// General note about related person
             /// </summary>
-            [FhirElement("note", InSummary=true, Order=80)]
+            [FhirElement("note", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NoteElement
             {
@@ -281,7 +294,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition that the related person had
             /// </summary>
-            [FhirElement("condition", InSummary=true, Order=90)]
+            [FhirElement("condition", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationConditionComponent> Condition
@@ -301,6 +314,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                     if(Born != null) dest.Born = (Hl7.Fhir.Model.Element)Born.DeepCopy();
+                    if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
                     if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                     if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationConditionComponent>(Condition.DeepCopy());
@@ -324,6 +338,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
                 if( !DeepComparable.Matches(Born, otherT.Born)) return false;
+                if( !DeepComparable.Matches(Age, otherT.Age)) return false;
                 if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
                 if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
                 if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
@@ -340,6 +355,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
                 if( !DeepComparable.IsExactly(Born, otherT.Born)) return false;
+                if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
                 if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
                 if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
                 if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
@@ -353,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Id(s) for this record
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -366,16 +382,47 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient history is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=80)]
+        [FhirElement("subject", InSummary=true, Order=70)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
+        
+        /// <summary>
+        /// When history was captured/updated
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=80)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// When history was captured/updated
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
         
         /// <summary>
         /// Additional details not covered elsewhere
@@ -429,7 +476,8 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 if(Relation != null) dest.Relation = new List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationComponent>(Relation.DeepCopy());
                 return dest;
@@ -451,6 +499,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.Matches(Relation, otherT.Relation)) return false;
             
@@ -465,6 +514,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.IsExactly(Relation, otherT.Relation)) return false;
             

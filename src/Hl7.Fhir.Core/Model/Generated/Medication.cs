@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -76,12 +76,12 @@ namespace Hl7.Fhir.Model
             [References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
+            public Hl7.Fhir.Model.Reference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Item;
+            private Hl7.Fhir.Model.Reference _Item;
             
             /// <summary>
             /// How many are in the package?
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Reference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
@@ -229,12 +229,12 @@ namespace Hl7.Fhir.Model
             [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
+            public Hl7.Fhir.Model.Reference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Item;
+            private Hl7.Fhir.Model.Reference _Item;
             
             /// <summary>
             /// How much ingredient in product
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Reference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                     return dest;
                 }
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Common / Commercial name
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=70)]
+        [FhirElement("name", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=80)]
+        [FhirElement("code", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", InSummary=true, Order=90)]
+        [FhirElement("isBrand", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsBrandElement
         {
@@ -448,20 +448,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=100)]
+        [FhirElement("manufacturer", InSummary=true, Order=90)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Manufacturer
+        public Hl7.Fhir.Model.Reference Manufacturer
         {
             get { return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Manufacturer;
+        private Hl7.Fhir.Model.Reference _Manufacturer;
         
         /// <summary>
         /// product | package
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=110)]
+        [FhirElement("kind", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
         {
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Administrable medication details
         /// </summary>
-        [FhirElement("product", Order=120)]
+        [FhirElement("product", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
         {
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("package", Order=130)]
+        [FhirElement("package", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
         {
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(IsBrandElement != null) dest.IsBrandElement = (Hl7.Fhir.Model.FhirBoolean)IsBrandElement.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.Reference)Manufacturer.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.Medication.MedicationKind>)KindElement.DeepCopy();
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Medication.MedicationProductComponent)Product.DeepCopy();
                 if(Package != null) dest.Package = (Hl7.Fhir.Model.Medication.MedicationPackageComponent)Package.DeepCopy();

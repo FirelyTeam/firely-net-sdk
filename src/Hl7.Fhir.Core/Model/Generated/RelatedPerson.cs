@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A Human identifier for this person
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -63,21 +63,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The patient this person is related to
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=80)]
+        [FhirElement("patient", InSummary=true, Order=70)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.Reference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.Reference _Patient;
         
         /// <summary>
         /// The nature of the relationship
         /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=90)]
+        [FhirElement("relationship", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Relationship
         {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.HumanName Name
         {
@@ -101,32 +101,51 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the person
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=110)]
+        [FhirElement("telecom", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contact> Telecom
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
             get { return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
-        private List<Hl7.Fhir.Model.Contact> _Telecom;
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
-        /// Gender for administrative purposes
+        /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=120)]
+        [FhirElement("gender", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Gender
+        public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
-            get { return _Gender; }
-            set { _Gender = value; OnPropertyChanged("Gender"); }
+            get { return _GenderElement; }
+            set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
         }
-        private Hl7.Fhir.Model.CodeableConcept _Gender;
+        private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
+        
+        /// <summary>
+        /// male | female | other | unknown
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.AdministrativeGender? Gender
+        {
+            get { return GenderElement != null ? GenderElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  GenderElement = null; 
+                else
+                  GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+                OnPropertyChanged("Gender");
+            }
+        }
         
         /// <summary>
         /// Address where the related person can be contacted or visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=130)]
+        [FhirElement("address", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Address Address
         {
@@ -138,7 +157,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=140)]
+        [FhirElement("photo", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -156,11 +175,11 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                 if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.Contact>(Telecom.DeepCopy());
-                if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 return dest;
@@ -185,7 +204,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(Name, otherT.Name)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-            if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
             
@@ -203,7 +222,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-            if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
             

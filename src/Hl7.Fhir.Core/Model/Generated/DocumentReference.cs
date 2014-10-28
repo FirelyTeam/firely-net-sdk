@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -232,12 +232,12 @@ namespace Hl7.Fhir.Model
             [References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Target
+            public Hl7.Fhir.Model.Reference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Target;
+            private Hl7.Fhir.Model.Reference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType>)CodeElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Reference)Target.DeepCopy();
                     return dest;
                 }
                 else
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Master Version Specific Identifier
         /// </summary>
-        [FhirElement("masterIdentifier", Order=70)]
+        [FhirElement("masterIdentifier", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other identifiers for the document
         /// </summary>
-        [FhirElement("identifier", Order=80)]
+        [FhirElement("identifier", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -540,21 +540,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who|what is the subject of the document
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", Order=80)]
         [References("Patient","Practitioner","Group","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// What kind of document this is (LOINC if possible)
         /// </summary>
-        [FhirElement("type", Order=100)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Categorization of Document
         /// </summary>
-        [FhirElement("class", Order=110)]
+        [FhirElement("class", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -579,34 +579,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", Order=120)]
+        [FhirElement("author", Order=110)]
         [References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Author
+        public List<Hl7.Fhir.Model.Reference> Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Author;
+        private List<Hl7.Fhir.Model.Reference> _Author;
         
         /// <summary>
         /// Org which maintains the document
         /// </summary>
-        [FhirElement("custodian", Order=130)]
+        [FhirElement("custodian", Order=120)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Custodian
+        public Hl7.Fhir.Model.Reference Custodian
         {
             get { return _Custodian; }
             set { _Custodian = value; OnPropertyChanged("Custodian"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Custodian;
+        private Hl7.Fhir.Model.Reference _Custodian;
         
         /// <summary>
         /// Manages access policies for the document
         /// </summary>
-        [FhirElement("policyManager", Order=140)]
+        [FhirElement("policyManager", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri PolicyManagerElement
         {
@@ -637,20 +637,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/What authenticated the document
         /// </summary>
-        [FhirElement("authenticator", Order=150)]
+        [FhirElement("authenticator", Order=140)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Authenticator
+        public Hl7.Fhir.Model.Reference Authenticator
         {
             get { return _Authenticator; }
             set { _Authenticator = value; OnPropertyChanged("Authenticator"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Authenticator;
+        private Hl7.Fhir.Model.Reference _Authenticator;
         
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", Order=160)]
+        [FhirElement("created", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this document reference created
         /// </summary>
-        [FhirElement("indexed", Order=170)]
+        [FhirElement("indexed", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IndexedElement
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// current | superceded | entered in error
         /// </summary>
-        [FhirElement("status", Order=180)]
+        [FhirElement("status", Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus> StatusElement
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// preliminary | final | appended | amended | entered in error
         /// </summary>
-        [FhirElement("docStatus", Order=190)]
+        [FhirElement("docStatus", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DocStatus
         {
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", Order=200)]
+        [FhirElement("relatesTo", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> RelatesTo
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", Order=210)]
+        [FhirElement("description", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sensitivity of source document
         /// </summary>
-        [FhirElement("confidentiality", Order=220)]
+        [FhirElement("confidentiality", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Confidentiality
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The marked primary language for the document
         /// </summary>
-        [FhirElement("primaryLanguage", Order=230)]
+        [FhirElement("primaryLanguage", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Code PrimaryLanguageElement
         {
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Mime type, + maybe character encoding
         /// </summary>
-        [FhirElement("mimeType", Order=240)]
+        [FhirElement("mimeType", Order=230)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code MimeTypeElement
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Format/content rules for the document
         /// </summary>
-        [FhirElement("format", Order=250)]
+        [FhirElement("format", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> FormatElement
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Size of the document in bytes
         /// </summary>
-        [FhirElement("size", Order=260)]
+        [FhirElement("size", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SizeElement
         {
@@ -938,24 +938,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// HexBinary representation of SHA1
+        /// Base64 representation of SHA1
         /// </summary>
-        [FhirElement("hash", Order=270)]
+        [FhirElement("hash", Order=260)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString HashElement
+        public Hl7.Fhir.Model.Base64Binary HashElement
         {
             get { return _HashElement; }
             set { _HashElement = value; OnPropertyChanged("HashElement"); }
         }
-        private Hl7.Fhir.Model.FhirString _HashElement;
+        private Hl7.Fhir.Model.Base64Binary _HashElement;
         
         /// <summary>
-        /// HexBinary representation of SHA1
+        /// Base64 representation of SHA1
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Hash
+        public byte[] Hash
         {
             get { return HashElement != null ? HashElement.Value : null; }
             set
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   HashElement = null; 
                 else
-                  HashElement = new Hl7.Fhir.Model.FhirString(value);
+                  HashElement = new Hl7.Fhir.Model.Base64Binary(value);
                 OnPropertyChanged("Hash");
             }
         }
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where to access the document
         /// </summary>
-        [FhirElement("location", Order=280)]
+        [FhirElement("location", Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri LocationElement
         {
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If access is not fully described by location
         /// </summary>
-        [FhirElement("service", Order=290)]
+        [FhirElement("service", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceComponent Service
         {
@@ -1014,7 +1014,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", Order=300)]
+        [FhirElement("context", Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent Context
         {
@@ -1032,13 +1032,13 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(MasterIdentifier != null) dest.MasterIdentifier = (Hl7.Fhir.Model.Identifier)MasterIdentifier.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
-                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
+                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.Reference>(Author.DeepCopy());
+                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.Reference)Custodian.DeepCopy();
                 if(PolicyManagerElement != null) dest.PolicyManagerElement = (Hl7.Fhir.Model.FhirUri)PolicyManagerElement.DeepCopy();
-                if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.ResourceReference)Authenticator.DeepCopy();
+                if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.Reference)Authenticator.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>)StatusElement.DeepCopy();
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
                 if(MimeTypeElement != null) dest.MimeTypeElement = (Hl7.Fhir.Model.Code)MimeTypeElement.DeepCopy();
                 if(FormatElement != null) dest.FormatElement = new List<Hl7.Fhir.Model.FhirUri>(FormatElement.DeepCopy());
                 if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.Integer)SizeElement.DeepCopy();
-                if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.FhirString)HashElement.DeepCopy();
+                if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
                 if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopy();
                 if(Service != null) dest.Service = (Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceComponent)Service.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent)Context.DeepCopy();

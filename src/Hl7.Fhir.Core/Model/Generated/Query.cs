@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -246,12 +246,12 @@ namespace Hl7.Fhir.Model
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Reference
+            public List<Hl7.Fhir.Model.Reference> Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _Reference;
+            private List<Hl7.Fhir.Model.Reference> _Reference;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
                     if(Previous != null) dest.Previous = new List<Hl7.Fhir.Model.Extension>(Previous.DeepCopy());
                     if(Next != null) dest.Next = new List<Hl7.Fhir.Model.Extension>(Next.DeepCopy());
                     if(Last != null) dest.Last = new List<Hl7.Fhir.Model.Extension>(Last.DeepCopy());
-                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.ResourceReference>(Reference.DeepCopy());
+                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.Reference>(Reference.DeepCopy());
                     return dest;
                 }
                 else
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links query and its response(s)
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri IdentifierElement
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Set of query parameters with values
         /// </summary>
-        [FhirElement("parameter", Order=80)]
+        [FhirElement("parameter", Order=70)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Parameter
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a response to a query
         /// </summary>
-        [FhirElement("response", Order=90)]
+        [FhirElement("response", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Query.QueryResponseComponent Response
         {

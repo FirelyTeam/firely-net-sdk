@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,14 +54,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When/how often was medication taken?
             /// </summary>
-            [FhirElement("timing", InSummary=true, Order=40)]
+            [FhirElement("schedule", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Schedule Timing
+            public Hl7.Fhir.Model.Timing Schedule
             {
-                get { return _Timing; }
-                set { _Timing = value; OnPropertyChanged("Timing"); }
+                get { return _Schedule; }
+                set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
-            private Hl7.Fhir.Model.Schedule _Timing;
+            private Hl7.Fhir.Model.Timing _Schedule;
             
             /// <summary>
             /// Take "as needed" f(or x)
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Schedule)Timing.DeepCopy();
+                    if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
                     if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.Matches(Site, otherT.Site)) return false;
                 if( !DeepComparable.Matches(Route, otherT.Route)) return false;
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
                 if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -229,20 +229,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who was/is taking medication
         /// </summary>
-        [FhirElement("patient", Order=80)]
+        [FhirElement("patient", Order=70)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.Reference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.Reference _Patient;
         
         /// <summary>
         /// True if medication is/was not being taken
         /// </summary>
-        [FhirElement("wasNotGiven", Order=90)]
+        [FhirElement("wasNotGiven", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean WasNotGivenElement
         {
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if asserting medication was not given
         /// </summary>
-        [FhirElement("reasonNotGiven", Order=100)]
+        [FhirElement("reasonNotGiven", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Over what period was medication consumed?
         /// </summary>
-        [FhirElement("whenGiven", Order=110)]
+        [FhirElement("whenGiven", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenGiven
         {
@@ -298,34 +298,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What medication was taken?
         /// </summary>
-        [FhirElement("medication", Order=120)]
+        [FhirElement("medication", Order=110)]
         [References("Medication")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Medication
+        public Hl7.Fhir.Model.Reference Medication
         {
             get { return _Medication; }
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Medication;
+        private Hl7.Fhir.Model.Reference _Medication;
         
         /// <summary>
         /// E.g. infusion pump
         /// </summary>
-        [FhirElement("device", Order=130)]
+        [FhirElement("device", Order=120)]
         [References("Device")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Device
+        public List<Hl7.Fhir.Model.Reference> Device
         {
             get { return _Device; }
             set { _Device = value; OnPropertyChanged("Device"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Device;
+        private List<Hl7.Fhir.Model.Reference> _Device;
         
         /// <summary>
         /// Details of how medication was taken
         /// </summary>
-        [FhirElement("dosage", Order=140)]
+        [FhirElement("dosage", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> Dosage
@@ -343,12 +343,12 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
                 if(WasNotGivenElement != null) dest.WasNotGivenElement = (Hl7.Fhir.Model.FhirBoolean)WasNotGivenElement.DeepCopy();
                 if(ReasonNotGiven != null) dest.ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotGiven.DeepCopy());
                 if(WhenGiven != null) dest.WhenGiven = (Hl7.Fhir.Model.Period)WhenGiven.DeepCopy();
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
-                if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Reference)Medication.DeepCopy();
+                if(Device != null) dest.Device = new List<Hl7.Fhir.Model.Reference>(Device.DeepCopy());
                 if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent>(Dosage.DeepCopy());
                 return dest;
             }

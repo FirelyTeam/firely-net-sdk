@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -180,12 +180,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("suppliedItem", InSummary=true, Order=80)]
             [References("Medication","Substance","Device")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference SuppliedItem
+            public Hl7.Fhir.Model.Reference SuppliedItem
             {
                 get { return _SuppliedItem; }
                 set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
+            private Hl7.Fhir.Model.Reference _SuppliedItem;
             
             /// <summary>
             /// Dispenser
@@ -193,12 +193,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("supplier", InSummary=true, Order=90)]
             [References("Practitioner")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Supplier
+            public Hl7.Fhir.Model.Reference Supplier
             {
                 get { return _Supplier; }
                 set { _Supplier = value; OnPropertyChanged("Supplier"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Supplier;
+            private Hl7.Fhir.Model.Reference _Supplier;
             
             /// <summary>
             /// Dispensing time
@@ -230,12 +230,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("destination", InSummary=true, Order=120)]
             [References("Location")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Destination
+            public Hl7.Fhir.Model.Reference Destination
             {
                 get { return _Destination; }
                 set { _Destination = value; OnPropertyChanged("Destination"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Destination;
+            private Hl7.Fhir.Model.Reference _Destination;
             
             /// <summary>
             /// Who collected the Supply
@@ -244,12 +244,12 @@ namespace Hl7.Fhir.Model
             [References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Receiver
+            public List<Hl7.Fhir.Model.Reference> Receiver
             {
                 get { return _Receiver; }
                 set { _Receiver = value; OnPropertyChanged("Receiver"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
+            private List<Hl7.Fhir.Model.Reference> _Receiver;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -262,12 +262,12 @@ namespace Hl7.Fhir.Model
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus>)StatusElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
-                    if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
+                    if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.Reference)SuppliedItem.DeepCopy();
+                    if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.Reference)Supplier.DeepCopy();
                     if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();
                     if(WhenHandedOver != null) dest.WhenHandedOver = (Hl7.Fhir.Model.Period)WhenHandedOver.DeepCopy();
-                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
+                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.Reference)Destination.DeepCopy();
+                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.Reference>(Receiver.DeepCopy());
                     return dest;
                 }
                 else
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The kind of supply (central, non-stock, etc)
         /// </summary>
-        [FhirElement("kind", Order=70)]
+        [FhirElement("kind", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Kind
         {
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=80)]
+        [FhirElement("identifier", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | dispensed | received | failed | cancelled
         /// </summary>
-        [FhirElement("status", Order=90)]
+        [FhirElement("status", Order=80)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Supply.SupplyStatus> StatusElement
         {
@@ -380,33 +380,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", Order=100)]
+        [FhirElement("orderedItem", Order=90)]
         [References("Medication","Substance","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference OrderedItem
+        public Hl7.Fhir.Model.Reference OrderedItem
         {
             get { return _OrderedItem; }
             set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _OrderedItem;
+        private Hl7.Fhir.Model.Reference _OrderedItem;
         
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", Order=110)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.Reference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.Reference _Patient;
         
         /// <summary>
         /// Supply details
         /// </summary>
-        [FhirElement("dispense", Order=120)]
+        [FhirElement("dispense", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> Dispense
@@ -426,8 +426,8 @@ namespace Hl7.Fhir.Model
                 if(Kind != null) dest.Kind = (Hl7.Fhir.Model.CodeableConcept)Kind.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Supply.SupplyStatus>)StatusElement.DeepCopy();
-                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.ResourceReference)OrderedItem.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.Reference)OrderedItem.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
                 if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent>(Dispense.DeepCopy());
                 return dest;
             }

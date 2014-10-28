@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -81,12 +81,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("telecom", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Contact> Telecom
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
             {
                 get { return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
-            private List<Hl7.Fhir.Model.Contact> _Telecom;
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             /// <summary>
             /// Visiting or postal addresses for the contact
@@ -101,16 +101,35 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Address _Address;
             
             /// <summary>
-            /// Gender for administrative purposes
+            /// male | female | other | unknown
             /// </summary>
             [FhirElement("gender", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Gender
+            public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
             {
-                get { return _Gender; }
-                set { _Gender = value; OnPropertyChanged("Gender"); }
+                get { return _GenderElement; }
+                set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
             }
-            private Hl7.Fhir.Model.CodeableConcept _Gender;
+            private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
+            
+            /// <summary>
+            /// male | female | other | unknown
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.AdministrativeGender? Gender
+            {
+                get { return GenderElement != null ? GenderElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      GenderElement = null; 
+                    else
+                      GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+                    OnPropertyChanged("Gender");
+                }
+            }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -121,9 +140,9 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.CodeableConcept)Purpose.DeepCopy();
                     if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.Contact>(Telecom.DeepCopy());
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                     if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
-                    if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
+                    if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -145,7 +164,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Name, otherT.Name)) return false;
                 if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
                 if( !DeepComparable.Matches(Address, otherT.Address)) return false;
-                if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+                if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
                 
                 return true;
             }
@@ -160,7 +179,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
                 if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
-                if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+                if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
                 
                 return true;
             }
@@ -171,7 +190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies this organization  across multiple systems
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -184,7 +203,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name used for the organization
         /// </summary>
-        [FhirElement("name", Order=80)]
+        [FhirElement("name", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -215,7 +234,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of organization
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -227,20 +246,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=100)]
+        [FhirElement("telecom", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contact> Telecom
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
             get { return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
-        private List<Hl7.Fhir.Model.Contact> _Telecom;
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=110)]
+        [FhirElement("address", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -253,20 +272,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", Order=120)]
+        [FhirElement("partOf", Order=110)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference PartOf
+        public Hl7.Fhir.Model.Reference PartOf
         {
             get { return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _PartOf;
+        private Hl7.Fhir.Model.Reference _PartOf;
         
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=130)]
+        [FhirElement("contact", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> Contact
@@ -279,21 +298,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location(s) the organization uses to provide services
         /// </summary>
-        [FhirElement("location", Order=140)]
+        [FhirElement("location", Order=130)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Location
+        public List<Hl7.Fhir.Model.Reference> Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Location;
+        private List<Hl7.Fhir.Model.Reference> _Location;
         
         /// <summary>
         /// Whether the organization's record is still in active use
         /// </summary>
-        [FhirElement("active", Order=150)]
+        [FhirElement("active", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -331,11 +350,11 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.Contact>(Telecom.DeepCopy());
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
-                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
+                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.Reference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(Contact.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Reference>(Location.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 return dest;
             }

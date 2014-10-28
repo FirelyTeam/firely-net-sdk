@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -156,12 +156,12 @@ namespace Hl7.Fhir.Model
             [References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
+            public Hl7.Fhir.Model.Reference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Item;
+            private Hl7.Fhir.Model.Reference _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
                     if(Flag != null) dest.Flag = new List<Hl7.Fhir.Model.CodeableConcept>(Flag.DeepCopy());
                     if(DeletedElement != null) dest.DeletedElement = (Hl7.Fhir.Model.FhirBoolean)DeletedElement.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Reference)Item.DeepCopy();
                     return dest;
                 }
                 else
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What the purpose of this list is
         /// </summary>
-        [FhirElement("code", Order=80)]
+        [FhirElement("code", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -244,33 +244,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If all resources have the same subject
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", Order=80)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Who and/or what defined the list contents
         /// </summary>
-        [FhirElement("source", Order=100)]
+        [FhirElement("source", Order=90)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Source
+        public Hl7.Fhir.Model.Reference Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Source;
+        private Hl7.Fhir.Model.Reference _Source;
         
         /// <summary>
         /// When the list was prepared
         /// </summary>
-        [FhirElement("date", Order=110)]
+        [FhirElement("date", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether items in the list have a meaningful order
         /// </summary>
-        [FhirElement("ordered", Order=120)]
+        [FhirElement("ordered", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean OrderedElement
         {
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// working | snapshot | changes
         /// </summary>
-        [FhirElement("mode", Order=130)]
+        [FhirElement("mode", Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.List.ListMode> ModeElement
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entries in the list
         /// </summary>
-        [FhirElement("entry", Order=140)]
+        [FhirElement("entry", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why list is empty
         /// </summary>
-        [FhirElement("emptyReason", Order=150)]
+        [FhirElement("emptyReason", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept EmptyReason
         {
@@ -395,8 +395,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.Reference)Source.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(OrderedElement != null) dest.OrderedElement = (Hl7.Fhir.Model.FhirBoolean)OrderedElement.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.List.ListMode>)ModeElement.DeepCopy();

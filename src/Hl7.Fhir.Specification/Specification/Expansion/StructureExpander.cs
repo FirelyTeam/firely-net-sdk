@@ -23,28 +23,30 @@ namespace Hl7.Fhir.Specification.Expansion
     // contained resource to be copied over to the snapshot.
     internal class StructureExpander
     {
-        public StructureExpander(Profile.ProfileStructureComponent structure, StructureLoader loader)
+        public StructureExpander(StructureLoader loader)
         {
-            Structure = structure;
             _loader = loader;
         }
 
-        public Profile.ProfileStructureComponent Structure {get; private set; }
-
         private StructureLoader _loader;
 
-        public Profile.ProfileStructureComponent Expand(Profile.ProfileStructureComponent differential)
+        public void Expand(Profile.ProfileStructureComponent structure)
         {
-            var baseStructure = _loader.LocateBaseStructure(differential.TypeElement);
-            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base profile for type {0}", differential.TypeElement.ToString());
+            if (structure.Differential == null) throw Error.Argument("structure", "structure does not contain a differential specification");
+            var differential = structure.Differential;
+            
+            var baseStructure = _loader.LocateBaseStructure(structure.TypeElement);
+            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base profile for type {0}", structure.TypeElement.ToString());
+            if(baseStructure.Snapshot == null) throw Error.InvalidOperation("Base definition to use for expansion lacks a snapshot representation");
 
-            var baseUri = StructureLoader.BuildBaseStructureUri(differential.TypeElement).ToString();
+            var baseUri = StructureLoader.BuildBaseStructureUri(structure.TypeElement).ToString();
 
-            var snapshot = (Profile.ProfileStructureComponent)baseStructure.DeepCopy();
-            snapshot.SetStructureForm(StructureForm.Snapshot);
-            snapshot.SetStructureBaseUri(baseUri.ToString());
+            var snapshot = (Profile.ConstraintComponent)baseStructure.Snapshot.DeepCopy();
 
-            mergeStructure(snapshot, differential);
+            //DSTU1
+            //snapshot.SetStructureForm(StructureForm.Snapshot);
+            //snapshot.SetStructureBaseUri(baseUri.ToString());
+            //mergeStructure(snapshot, differential);
 
             var fullDifferential = new DifferentialTreeConstructor(differential).MakeTree();
 
@@ -59,16 +61,16 @@ namespace Hl7.Fhir.Specification.Expansion
             //TODO: Merge search params?
 
             snapNav.CommitChanges();
-            return snapshot;
+            structure.Snapshot = snapNav.Elements;
         }
 
 
-        private static void mergeStructure(Profile.ProfileStructureComponent snapshot, Profile.ProfileStructureComponent differential)
-        {
-            if (differential.Name != null) snapshot.Name = differential.Name;
-            if (differential.Publish != null) snapshot.Publish = differential.Publish;
-            if (differential.Purpose != null) snapshot.Purpose = differential.Purpose;
-        }
+        //private static void mergeStructure(Profile.ConstraintComponent snapshot, Profile.ConstraintComponent differential)
+        //{
+        //    if (differential.Name != null) snapshot.Name = differential.Name;
+        //    if (differential.Publish != null) snapshot.Publish = differential.Publish;
+        //    if (differential.Purpose != null) snapshot.Purpose = differential.Purpose;
+        //}
 
 
         private void merge(ElementNavigator snap, ElementNavigator diff)
@@ -194,7 +196,7 @@ namespace Hl7.Fhir.Specification.Expansion
             //var result = new Profile.ElementComponent();
             //result.Path = path;
             result.Slicing = new Profile.ElementSlicingComponent();
-            result.Slicing.Discriminator = "url";
+            result.Slicing.Discriminator = new[] {"url"};
             result.Slicing.Ordered = false;
             result.Slicing.Rules = Profile.SlicingRules.Open;
 

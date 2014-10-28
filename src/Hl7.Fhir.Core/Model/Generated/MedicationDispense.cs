@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -99,15 +99,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When medication should be administered
             /// </summary>
-            [FhirElement("timing", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Schedule))]
+            [FhirElement("schedule", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Timing
+            public Hl7.Fhir.Model.Element Schedule
             {
-                get { return _Timing; }
-                set { _Timing = value; OnPropertyChanged("Timing"); }
+                get { return _Schedule; }
+                set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
-            private Hl7.Fhir.Model.Element _Timing;
+            private Hl7.Fhir.Model.Element _Schedule;
             
             /// <summary>
             /// Take "as needed" f(or x)
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(AdditionalInstructions != null) dest.AdditionalInstructions = (Hl7.Fhir.Model.CodeableConcept)AdditionalInstructions.DeepCopy();
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                    if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Element)Schedule.DeepCopy();
                     if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.Matches(Site, otherT.Site)) return false;
                 if( !DeepComparable.Matches(Route, otherT.Route)) return false;
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
                 if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
@@ -299,12 +299,12 @@ namespace Hl7.Fhir.Model
             [References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> ResponsibleParty
+            public List<Hl7.Fhir.Model.Reference> ResponsibleParty
             {
                 get { return _ResponsibleParty; }
                 set { _ResponsibleParty = value; OnPropertyChanged("ResponsibleParty"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _ResponsibleParty;
+            private List<Hl7.Fhir.Model.Reference> _ResponsibleParty;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                    if(ResponsibleParty != null) dest.ResponsibleParty = new List<Hl7.Fhir.Model.ResourceReference>(ResponsibleParty.DeepCopy());
+                    if(ResponsibleParty != null) dest.ResponsibleParty = new List<Hl7.Fhir.Model.Reference>(ResponsibleParty.DeepCopy());
                     return dest;
                 }
                 else
@@ -433,12 +433,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("medication", InSummary=true, Order=80)]
             [References("Medication")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Medication
+            public Hl7.Fhir.Model.Reference Medication
             {
                 get { return _Medication; }
                 set { _Medication = value; OnPropertyChanged("Medication"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Medication;
+            private Hl7.Fhir.Model.Reference _Medication;
             
             /// <summary>
             /// Dispense processing time
@@ -508,12 +508,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("destination", InSummary=true, Order=110)]
             [References("Location")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Destination
+            public Hl7.Fhir.Model.Reference Destination
             {
                 get { return _Destination; }
                 set { _Destination = value; OnPropertyChanged("Destination"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Destination;
+            private Hl7.Fhir.Model.Reference _Destination;
             
             /// <summary>
             /// Who collected the medication
@@ -522,12 +522,12 @@ namespace Hl7.Fhir.Model
             [References("Patient","Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Receiver
+            public List<Hl7.Fhir.Model.Reference> Receiver
             {
                 get { return _Receiver; }
                 set { _Receiver = value; OnPropertyChanged("Receiver"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
+            private List<Hl7.Fhir.Model.Reference> _Receiver;
             
             /// <summary>
             /// Medicine administration instructions to the patient/carer
@@ -553,11 +553,11 @@ namespace Hl7.Fhir.Model
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>)StatusElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
+                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Reference)Medication.DeepCopy();
                     if(WhenPreparedElement != null) dest.WhenPreparedElement = (Hl7.Fhir.Model.FhirDateTime)WhenPreparedElement.DeepCopy();
                     if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
-                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
+                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.Reference)Destination.DeepCopy();
+                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.Reference>(Receiver.DeepCopy());
                     if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseDosageComponent>(Dosage.DeepCopy());
                     return dest;
                 }
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in progress | on hold | completed | entered in error | stopped
         /// </summary>
-        [FhirElement("status", Order=80)]
+        [FhirElement("status", Order=70)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
         {
@@ -659,47 +659,47 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the dispense is for
         /// </summary>
-        [FhirElement("patient", Order=90)]
+        [FhirElement("patient", Order=80)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.Reference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.Reference _Patient;
         
         /// <summary>
         /// Practitioner responsible for dispensing medication
         /// </summary>
-        [FhirElement("dispenser", Order=100)]
+        [FhirElement("dispenser", Order=90)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Dispenser
+        public Hl7.Fhir.Model.Reference Dispenser
         {
             get { return _Dispenser; }
             set { _Dispenser = value; OnPropertyChanged("Dispenser"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Dispenser;
+        private Hl7.Fhir.Model.Reference _Dispenser;
         
         /// <summary>
         /// Medication order that authorizes the dispense
         /// </summary>
-        [FhirElement("authorizingPrescription", Order=110)]
+        [FhirElement("authorizingPrescription", Order=100)]
         [References("MedicationPrescription")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> AuthorizingPrescription
+        public List<Hl7.Fhir.Model.Reference> AuthorizingPrescription
         {
             get { return _AuthorizingPrescription; }
             set { _AuthorizingPrescription = value; OnPropertyChanged("AuthorizingPrescription"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _AuthorizingPrescription;
+        private List<Hl7.Fhir.Model.Reference> _AuthorizingPrescription;
         
         /// <summary>
         /// Details for individual dispensed medicationdetails
         /// </summary>
-        [FhirElement("dispense", Order=120)]
+        [FhirElement("dispense", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseComponent> Dispense
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Deals with substitution of one medicine for another
         /// </summary>
-        [FhirElement("substitution", Order=130)]
+        [FhirElement("substitution", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent Substitution
         {
@@ -730,9 +730,9 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>)StatusElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Dispenser != null) dest.Dispenser = (Hl7.Fhir.Model.ResourceReference)Dispenser.DeepCopy();
-                if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
+                if(Dispenser != null) dest.Dispenser = (Hl7.Fhir.Model.Reference)Dispenser.DeepCopy();
+                if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.Reference>(AuthorizingPrescription.DeepCopy());
                 if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseComponent>(Dispense.DeepCopy());
                 if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent)Substitution.DeepCopy();
                 return dest;

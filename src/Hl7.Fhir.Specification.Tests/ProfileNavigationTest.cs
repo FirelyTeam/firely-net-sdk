@@ -287,11 +287,11 @@ namespace Hl7.Fhir.Test.Inspection
 
             struc.Rebase("Parent.child1");
 
-            Assert.AreEqual("Parent.child1", struc.Element[0].Path);
-            Assert.AreEqual("Parent.child1.B", struc.Element[1].Path);
-            Assert.AreEqual("Parent.child1.B.C1", struc.Element[2].Path);
-            Assert.AreEqual("Parent.child1.B.C2", struc.Element[3].Path);
-            Assert.AreEqual("Parent.child1.B", struc.Element[4].Path);
+            Assert.AreEqual("Parent.child1", struc.Snapshot.Element[0].Path);
+            Assert.AreEqual("Parent.child1.B", struc.Snapshot.Element[1].Path);
+            Assert.AreEqual("Parent.child1.B.C1", struc.Snapshot.Element[2].Path);
+            Assert.AreEqual("Parent.child1.B.C2", struc.Snapshot.Element[3].Path);
+            Assert.AreEqual("Parent.child1.B", struc.Snapshot.Element[4].Path);
         }
 
 
@@ -390,12 +390,15 @@ namespace Hl7.Fhir.Test.Inspection
             var dest = createTestNav();
 
             var struc = new Profile.ProfileStructureComponent();
-            struc.Element = new List<Profile.ElementComponent>();
-            struc.Element.Add(new Profile.ElementComponent() { Path = "X" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2.Z1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "X.Y2.Z2" });
+            struc.Differential = new Profile.ConstraintComponent();
+            struc.Differential.Element = new List<Profile.ElementComponent>();
+            var e = struc.Differential.Element;
+
+            e.Add(new Profile.ElementComponent() { Path = "X" });
+            e.Add(new Profile.ElementComponent() { Path = "X.Y1" });
+            e.Add(new Profile.ElementComponent() { Path = "X.Y2" });
+            e.Add(new Profile.ElementComponent() { Path = "X.Y2.Z1" });
+            e.Add(new Profile.ElementComponent() { Path = "X.Y2.Z2" });
             var source = new ElementNavigator(struc);
 
             Assert.IsTrue(dest.JumpToFirst("A.D"));
@@ -458,17 +461,19 @@ namespace Hl7.Fhir.Test.Inspection
         private static Profile.ProfileStructureComponent createTestStructure()
         {
             var struc = new Profile.ProfileStructureComponent();
-            struc.Element = new List<Profile.ElementComponent>();
+            struc.Differential = new Profile.ConstraintComponent();
+            struc.Differential.Element = new List<Profile.ElementComponent>();
+            var e = struc.Differential.Element;
 
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.D" });
+            e.Add(new Profile.ElementComponent() { Path = "A" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
+            e.Add(new Profile.ElementComponent() { Path = "A.D" });
             return struc;
         }
     }

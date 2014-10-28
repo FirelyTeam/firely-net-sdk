@@ -58,14 +58,16 @@ namespace Hl7.Fhir.Test.Inspection
         public void MakeDifferentialTree()
         {
             var struc = new Profile.ProfileStructureComponent();
-            struc.Element = new List<Profile.ElementComponent>();
+            struc.Snapshot = new Profile.ConstraintComponent();
+            struc.Snapshot.Element = new List<Profile.ElementComponent>();
+            var e = struc.Snapshot.Element;
 
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
-            struc.Element.Add(new Profile.ElementComponent() { Path = "A.D.F" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B" });
+            e.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
+            e.Add(new Profile.ElementComponent() { Path = "A.D.F" });
 
             var tree = new DifferentialTreeConstructor(struc).MakeTree();
             Assert.IsNotNull(tree);

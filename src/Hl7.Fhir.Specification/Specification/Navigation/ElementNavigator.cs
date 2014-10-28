@@ -17,16 +17,29 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public class ElementNavigator : BaseElementNavigator
     {
-        public ElementNavigator(Profile.ProfileStructureComponent structure)
+        public ElementNavigator(Profile.ConstraintComponent elements)
         {
-            setupElems(structure.Element);
-            Structure = structure;
+            if (elements == null) throw Error.ArgumentNull("elements");
+            setupElems(elements.Element);
+            Elements = elements;
         }
+
+
+        //public ElementNavigator(Profile.ProfileStructureComponent structure)
+        //{
+        //    if (structure == null) throw Error.ArgumentNull("structure");
+        //    if (structure.Snapshot == null) throw Error.Argument("structure", "structure must have a 'snapshot' representation included");
+            
+        //    setupElems(structure.Snapshot.Element);
+        //    Elements = structure.Snapshot;
+        //}
 
         public ElementNavigator(ElementNavigator other)
         {
+            if (other == null) throw Error.ArgumentNull("other");
+
             setupElems(other._elements);
-            Structure = other.Structure;
+            Elements = other.Elements;
             OrdinalPosition = other.OrdinalPosition;
         }
 
@@ -40,7 +53,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         internal int? OrdinalPosition { get; private set;  }
 
-        public Profile.ProfileStructureComponent Structure { get; private set; }
+        public Profile.ConstraintComponent Elements { get; private set; }
 
         private IList<Profile.ElementComponent> _elements;
 
@@ -398,7 +411,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public void CommitChanges()
         {
-            Structure.Element = new List<Profile.ElementComponent>(_elements);
+            Elements.Element = new List<Profile.ElementComponent>(_elements);
         }
 
         private static bool isDeeperPath(string me, string that)

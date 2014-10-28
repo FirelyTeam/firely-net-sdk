@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -324,12 +324,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("substance", InSummary=true, Order=70)]
             [References("Substance")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Substance
+            public Hl7.Fhir.Model.Reference Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Substance;
+            private Hl7.Fhir.Model.Reference _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AdverseReaction.ExposureType>)TypeElement.DeepCopy();
                     if(CausalityExpectationElement != null) dest.CausalityExpectationElement = (Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation>)CausalityExpectationElement.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Reference)Substance.DeepCopy();
                     return dest;
                 }
                 else
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this adverse reaction
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the reaction occurred
         /// </summary>
-        [FhirElement("date", Order=80)]
+        [FhirElement("date", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -431,21 +431,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who had the reaction
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", Order=80)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Indicates lack of reaction
         /// </summary>
-        [FhirElement("didNotOccurFlag", Order=100)]
+        [FhirElement("didNotOccurFlag", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean DidNotOccurFlagElement
@@ -477,20 +477,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the reaction
         /// </summary>
-        [FhirElement("recorder", Order=110)]
+        [FhirElement("recorder", Order=100)]
         [References("Practitioner","Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Recorder
+        public Hl7.Fhir.Model.Reference Recorder
         {
             get { return _Recorder; }
             set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Recorder;
+        private Hl7.Fhir.Model.Reference _Recorder;
         
         /// <summary>
         /// What was reaction?
         /// </summary>
-        [FhirElement("symptom", Order=120)]
+        [FhirElement("symptom", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionSymptomComponent> Symptom
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Suspected substance
         /// </summary>
-        [FhirElement("exposure", Order=130)]
+        [FhirElement("exposure", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionExposureComponent> Exposure
@@ -522,9 +522,9 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
                 if(DidNotOccurFlagElement != null) dest.DidNotOccurFlagElement = (Hl7.Fhir.Model.FhirBoolean)DidNotOccurFlagElement.DeepCopy();
-                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
+                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.Reference)Recorder.DeepCopy();
                 if(Symptom != null) dest.Symptom = new List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionSymptomComponent>(Symptom.DeepCopy());
                 if(Exposure != null) dest.Exposure = new List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionExposureComponent>(Exposure.DeepCopy());
                 return dest;

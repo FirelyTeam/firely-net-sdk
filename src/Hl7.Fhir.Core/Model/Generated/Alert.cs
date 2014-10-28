@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical, administrative, etc.
         /// </summary>
-        [FhirElement("category", Order=80)]
+        [FhirElement("category", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered in error
         /// </summary>
-        [FhirElement("status", Order=90)]
+        [FhirElement("status", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement
@@ -130,34 +130,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is alert about?
         /// </summary>
-        [FhirElement("subject", Order=100)]
+        [FhirElement("subject", Order=90)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Alert creator
         /// </summary>
-        [FhirElement("author", Order=110)]
+        [FhirElement("author", Order=100)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
+        public Hl7.Fhir.Model.Reference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Author;
+        private Hl7.Fhir.Model.Reference _Author;
         
         /// <summary>
         /// Text of alert
         /// </summary>
-        [FhirElement("note", Order=120)]
+        [FhirElement("note", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Alert.AlertStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 return dest;
             }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -517,12 +517,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("reference", InSummary=true, Order=50)]
             [References()]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Reference
+            public Hl7.Fhir.Model.Reference Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Reference;
+            private Hl7.Fhir.Model.Reference _Reference;
             
             /// <summary>
             /// Object type being audited
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.Reference)Reference.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType>)TypeElement.DeepCopy();
                     if(RoleElement != null) dest.RoleElement = (Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole>)RoleElement.DeepCopy();
                     if(LifecycleElement != null) dest.LifecycleElement = (Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle>)LifecycleElement.DeepCopy();
@@ -1286,12 +1286,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("reference", InSummary=true, Order=50)]
             [References("Practitioner","Patient","Device")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Reference
+            public Hl7.Fhir.Model.Reference Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Reference;
+            private Hl7.Fhir.Model.Reference _Reference;
             
             /// <summary>
             /// Unique identifier for the user
@@ -1450,7 +1450,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.Reference)Reference.DeepCopy();
                     if(UserIdElement != null) dest.UserIdElement = (Hl7.Fhir.Model.FhirString)UserIdElement.DeepCopy();
                     if(AltIdElement != null) dest.AltIdElement = (Hl7.Fhir.Model.FhirString)AltIdElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -1510,7 +1510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was done
         /// </summary>
-        [FhirElement("event", Order=70)]
+        [FhirElement("event", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.SecurityEvent.SecurityEventEventComponent Event
@@ -1523,7 +1523,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A person, a hardware device or software process
         /// </summary>
-        [FhirElement("participant", Order=80)]
+        [FhirElement("participant", Order=70)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantComponent> Participant
@@ -1536,7 +1536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Application systems and processes
         /// </summary>
-        [FhirElement("source", Order=90)]
+        [FhirElement("source", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.SecurityEvent.SecurityEventSourceComponent Source
@@ -1549,7 +1549,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific instances of data or objects that have been accessed
         /// </summary>
-        [FhirElement("object", Order=100)]
+        [FhirElement("object", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectComponent> Object

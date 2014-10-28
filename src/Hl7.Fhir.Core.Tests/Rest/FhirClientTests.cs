@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Name = "Furore",
                 Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
-                Telecom = new List<Contact> { new Contact { System = Contact.ContactSystem.Phone, Value = "+31-20-3467171" } }
+                Telecom = new List<ContactPoint> { new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Value = "+31-20-3467171" } }
             };
 
             FhirClient client = new FhirClient(testEndpoint);

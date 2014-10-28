@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -215,12 +215,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("authority", InSummary=true, Order=60)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Authority
+            public Hl7.Fhir.Model.Reference Authority
             {
                 get { return _Authority; }
                 set { _Authority = value; OnPropertyChanged("Authority"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Authority;
+            private Hl7.Fhir.Model.Reference _Authority;
             
             /// <summary>
             /// Name of vaccination series
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.Integer)DoseSequenceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
+                    if(Authority != null) dest.Authority = (Hl7.Fhir.Model.Reference)Authority.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
                     return dest;
                 }
@@ -431,12 +431,12 @@ namespace Hl7.Fhir.Model
             [References("Immunization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
+            public List<Hl7.Fhir.Model.Reference> SupportingImmunization
             {
                 get { return _SupportingImmunization; }
                 set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
+            private List<Hl7.Fhir.Model.Reference> _SupportingImmunization;
             
             /// <summary>
             /// Patient observations supporting recommendation
@@ -445,12 +445,12 @@ namespace Hl7.Fhir.Model
             [References("Observation","AdverseReaction","AllergyIntolerance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
+            public List<Hl7.Fhir.Model.Reference> SupportingPatientInformation
             {
                 get { return _SupportingPatientInformation; }
                 set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
+            private List<Hl7.Fhir.Model.Reference> _SupportingPatientInformation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -465,8 +465,8 @@ namespace Hl7.Fhir.Model
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(DateCriterion.DeepCopy());
                     if(Protocol != null) dest.Protocol = (Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent)Protocol.DeepCopy();
-                    if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
-                    if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
+                    if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.Reference>(SupportingImmunization.DeepCopy());
+                    if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.Reference>(SupportingPatientInformation.DeepCopy());
                     return dest;
                 }
                 else
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -533,21 +533,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", Order=70)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", Order=90)]
+        [FhirElement("recommendation", Order=80)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> Recommendation
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
                 if(Recommendation != null) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent>(Recommendation.DeepCopy());
                 return dest;
             }

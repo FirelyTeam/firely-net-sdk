@@ -26,9 +26,9 @@ namespace Hl7.Fhir.Specification.Expansion
     /// </summary>
     internal class DifferentialTreeConstructor
     {
-        private Profile.ProfileStructureComponent _source;
+        private Profile.ConstraintComponent _source;
 
-        public DifferentialTreeConstructor(Profile.ProfileStructureComponent source)
+        public DifferentialTreeConstructor(Profile.ConstraintComponent source)
         {
             _source = source;
         }
@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Specification.Expansion
         /// <param name="differential"></param>
         /// <returns>The full tree structure representing the differential</returns>
         /// <remarks>This operation will not touch the source differential, but instead will return a new structure.</remarks>
-        public Profile.ProfileStructureComponent MakeTree()
+        public Profile.ConstraintComponent MakeTree()
         {
-            var diff = (Profile.ProfileStructureComponent)_source.DeepCopy();   // We're going to modify the differential
+            var diff = (Profile.ConstraintComponent)_source.DeepCopy();   // We're going to modify the differential
 
             if (diff.Element == null || diff.Element.Count == 0) return diff;        // nothing to do
 

@@ -63,8 +63,10 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
-                for (var i = 0; i < root.Element.Count; i++)
-                    root.Element[i].Path = newPaths[i];
+                for (var i = 0; i < root.Differential.Element.Count; i++)
+                    root.Differential.Element[i].Path = newPaths[i];
+
+                root.Snapshot = null;       // Has not been updated, so is now invalid
             }
         }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,19 +36,33 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Resource for capturing binary data
+    /// Pure binary content defined by sime other format than FHIR
     /// </summary>
     [FhirType("Binary", IsResource=true)]
     [DataContract]
     public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
-        /// Binary contents
+        /// MimeType of the binary content
+        /// </summary>
+        [FhirElement("contentType", XmlSerialization=XmlSerializationHint.Attribute, Order=60)]
+        [Cardinality(Min=1,Max=1)]
+        [CodePattern]
+        [DataMember]
+        public string ContentType
+        {
+            get { return _ContentType; }
+            set { _ContentType = value; OnPropertyChanged("ContentType"); }
+        }
+        private string _ContentType;
+        
+        /// <summary>
+        /// The actual content
         /// </summary>
         [FhirElement("content", XmlSerialization=XmlSerializationHint.TextNode, Order=70)]
         [Cardinality(Min=1,Max=1)]
@@ -60,19 +74,6 @@ namespace Hl7.Fhir.Model
         }
         private byte[] _Content;
         
-        /// <summary>
-        /// Media type of contents
-        /// </summary>
-        [FhirElement("contentType", XmlSerialization=XmlSerializationHint.Attribute, Order=80)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public string ContentType
-        {
-            get { return _ContentType; }
-            set { _ContentType = value; OnPropertyChanged("ContentType"); }
-        }
-        private string _ContentType;
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Binary;
@@ -80,8 +81,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Content != null) dest.Content = Content;
                 if(ContentType != null) dest.ContentType = ContentType;
+                if(Content != null) dest.Content = Content;
                 return dest;
             }
             else
@@ -99,8 +100,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( Content != otherT.Content ) return false;
             if( ContentType != otherT.ContentType ) return false;
+            if( Content != otherT.Content ) return false;
             
             return true;
         }
@@ -111,8 +112,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( Content != otherT.Content ) return false;
             if( ContentType != otherT.ContentType ) return false;
+            if( Content != otherT.Content ) return false;
             
             return true;
         }

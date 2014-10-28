@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A statement of relationships from one set of concepts to one or more other concept systems
+    /// A statement of relationships from one set of concepts to one or more other concepts - either code systems or data elements, or classes in class models
     /// </summary>
     [FhirType("ConceptMap", IsResource=true)]
     [DataContract]
@@ -100,43 +100,44 @@ namespace Hl7.Fhir.Model
             Disjoint,
         }
         
-        [FhirType("ConceptMapConceptMapComponent")]
+        [FhirType("ConceptMapElementComponent")]
         [DataContract]
-        public partial class ConceptMapConceptMapComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConceptMapElementComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
-            /// System of the target
+            /// Code System (if value set crosses code systems)
             /// </summary>
-            [FhirElement("system", InSummary=true, Order=40)]
+            [FhirElement("codeSystem", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement
+            public Hl7.Fhir.Model.FhirUri CodeSystemElement
             {
-                get { return _SystemElement; }
-                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+                get { return _CodeSystemElement; }
+                set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
             }
-            private Hl7.Fhir.Model.FhirUri _SystemElement;
+            private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
             
             /// <summary>
-            /// System of the target
+            /// Code System (if value set crosses code systems)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string System
+            public string CodeSystem
             {
-                get { return SystemElement != null ? SystemElement.Value : null; }
+                get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      SystemElement = null; 
+                      CodeSystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("System");
+                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("CodeSystem");
                 }
             }
             
             /// <summary>
-            /// Code that identifies the target concept
+            /// Identifies element being mapped
             /// </summary>
             [FhirElement("code", InSummary=true, Order=50)]
             [DataMember]
@@ -148,7 +149,152 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
-            /// Code that identifies the target concept
+            /// Identifies element being mapped
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CodeElement = null; 
+                    else
+                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Other elements required for this mapping (from context)
+            /// </summary>
+            [FhirElement("dependsOn", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
+            {
+                get { return _DependsOn; }
+                set { _DependsOn = value; OnPropertyChanged("DependsOn"); }
+            }
+            private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _DependsOn;
+            
+            /// <summary>
+            /// A concept from the target value set that this concept maps to
+            /// </summary>
+            [FhirElement("map", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent> Map
+            {
+                get { return _Map; }
+                set { _Map = value; OnPropertyChanged("Map"); }
+            }
+            private List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent> _Map;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ConceptMapElementComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(CodeSystemElement != null) dest.CodeSystemElement = (Hl7.Fhir.Model.FhirUri)CodeSystemElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(DependsOn.DeepCopy());
+                    if(Map != null) dest.Map = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent>(Map.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ConceptMapElementComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConceptMapElementComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeSystemElement, otherT.CodeSystemElement)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DependsOn, otherT.DependsOn)) return false;
+                if( !DeepComparable.Matches(Map, otherT.Map)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ConceptMapElementComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeSystemElement, otherT.CodeSystemElement)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(DependsOn, otherT.DependsOn)) return false;
+                if( !DeepComparable.IsExactly(Map, otherT.Map)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ConceptMapElementMapComponent")]
+        [DataContract]
+        public partial class ConceptMapElementMapComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        {
+            /// <summary>
+            /// System of the target (if necessary)
+            /// </summary>
+            [FhirElement("codeSystem", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri CodeSystemElement
+            {
+                get { return _CodeSystemElement; }
+                set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
+            }
+            private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
+            
+            /// <summary>
+            /// System of the target (if necessary)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string CodeSystem
+            {
+                get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CodeSystemElement = null; 
+                    else
+                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("CodeSystem");
+                }
+            }
+            
+            /// <summary>
+            /// Code that identifies the target element
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _CodeElement;
+            
+            /// <summary>
+            /// Code that identifies the target element
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -235,25 +381,25 @@ namespace Hl7.Fhir.Model
             [FhirElement("product", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent> Product
+            public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
             {
                 get { return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
-            private List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent> _Product;
+            private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _Product;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConceptMapConceptMapComponent;
+                var dest = other as ConceptMapElementMapComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
+                    if(CodeSystemElement != null) dest.CodeSystemElement = (Hl7.Fhir.Model.FhirUri)CodeSystemElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
                     if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
-                    if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent>(Product.DeepCopy());
+                    if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(Product.DeepCopy());
                     return dest;
                 }
                 else
@@ -262,16 +408,16 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConceptMapConceptMapComponent());
+                return CopyTo(new ConceptMapElementMapComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConceptMapConceptMapComponent;
+                var otherT = other as ConceptMapElementMapComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.Matches(CodeSystemElement, otherT.CodeSystemElement)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(EquivalenceElement, otherT.EquivalenceElement)) return false;
                 if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
@@ -282,11 +428,11 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConceptMapConceptMapComponent;
+                var otherT = other as ConceptMapElementMapComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.IsExactly(CodeSystemElement, otherT.CodeSystemElement)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(EquivalenceElement, otherT.EquivalenceElement)) return false;
                 if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
@@ -298,89 +444,89 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OtherConceptComponent")]
+        [FhirType("OtherElementComponent")]
         [DataContract]
-        public partial class OtherConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class OtherElementComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
-            /// Reference to element/field/valueset provides the context
+            /// Reference to element/field/valueset mapping depends on
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=40)]
+            [FhirElement("element", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri ConceptElement
+            public Hl7.Fhir.Model.FhirUri ElementElement
             {
-                get { return _ConceptElement; }
-                set { _ConceptElement = value; OnPropertyChanged("ConceptElement"); }
+                get { return _ElementElement; }
+                set { _ElementElement = value; OnPropertyChanged("ElementElement"); }
             }
-            private Hl7.Fhir.Model.FhirUri _ConceptElement;
+            private Hl7.Fhir.Model.FhirUri _ElementElement;
             
             /// <summary>
-            /// Reference to element/field/valueset provides the context
+            /// Reference to element/field/valueset mapping depends on
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Concept
+            public string Element
             {
-                get { return ConceptElement != null ? ConceptElement.Value : null; }
+                get { return ElementElement != null ? ElementElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      ConceptElement = null; 
+                      ElementElement = null; 
                     else
-                      ConceptElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Concept");
+                      ElementElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Element");
                 }
             }
             
             /// <summary>
-            /// System for a concept in the referenced concept
+            /// Code System (if necessary)
             /// </summary>
-            [FhirElement("system", InSummary=true, Order=50)]
+            [FhirElement("codeSystem", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement
+            public Hl7.Fhir.Model.FhirUri CodeSystemElement
             {
-                get { return _SystemElement; }
-                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+                get { return _CodeSystemElement; }
+                set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
             }
-            private Hl7.Fhir.Model.FhirUri _SystemElement;
+            private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
             
             /// <summary>
-            /// System for a concept in the referenced concept
+            /// Code System (if necessary)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string System
+            public string CodeSystem
             {
-                get { return SystemElement != null ? SystemElement.Value : null; }
+                get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      SystemElement = null; 
+                      CodeSystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("System");
+                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("CodeSystem");
                 }
             }
             
             /// <summary>
-            /// Code for a concept in the referenced concept
+            /// Value of the referenced element
             /// </summary>
             [FhirElement("code", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code CodeElement
+            public Hl7.Fhir.Model.FhirString CodeElement
             {
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
-            private Hl7.Fhir.Model.Code _CodeElement;
+            private Hl7.Fhir.Model.FhirString _CodeElement;
             
             /// <summary>
-            /// Code for a concept in the referenced concept
+            /// Value of the referenced element
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -393,21 +539,21 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                      CodeElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Code");
                 }
             }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OtherConceptComponent;
+                var dest = other as OtherElementComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ConceptElement != null) dest.ConceptElement = (Hl7.Fhir.Model.FhirUri)ConceptElement.DeepCopy();
-                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(ElementElement != null) dest.ElementElement = (Hl7.Fhir.Model.FhirUri)ElementElement.DeepCopy();
+                    if(CodeSystemElement != null) dest.CodeSystemElement = (Hl7.Fhir.Model.FhirUri)CodeSystemElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.FhirString)CodeElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -416,17 +562,17 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OtherConceptComponent());
+                return CopyTo(new OtherElementComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OtherConceptComponent;
+                var otherT = other as OtherElementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ConceptElement, otherT.ConceptElement)) return false;
-                if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.Matches(ElementElement, otherT.ElementElement)) return false;
+                if( !DeepComparable.Matches(CodeSystemElement, otherT.CodeSystemElement)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 
                 return true;
@@ -434,159 +580,13 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OtherConceptComponent;
+                var otherT = other as OtherElementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ConceptElement, otherT.ConceptElement)) return false;
-                if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.IsExactly(ElementElement, otherT.ElementElement)) return false;
+                if( !DeepComparable.IsExactly(CodeSystemElement, otherT.CodeSystemElement)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ConceptMapConceptComponent")]
-        [DataContract]
-        public partial class ConceptMapConceptComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            /// <summary>
-            /// System that defines the concept being mapped
-            /// </summary>
-            [FhirElement("system", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement
-            {
-                get { return _SystemElement; }
-                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-            }
-            private Hl7.Fhir.Model.FhirUri _SystemElement;
-            
-            /// <summary>
-            /// System that defines the concept being mapped
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string System
-            {
-                get { return SystemElement != null ? SystemElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SystemElement = null; 
-                    else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("System");
-                }
-            }
-            
-            /// <summary>
-            /// Identifies concept being mapped
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Code CodeElement
-            {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
-            }
-            private Hl7.Fhir.Model.Code _CodeElement;
-            
-            /// <summary>
-            /// Identifies concept being mapped
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Code
-            {
-                get { return CodeElement != null ? CodeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      CodeElement = null; 
-                    else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("Code");
-                }
-            }
-            
-            /// <summary>
-            /// Other concepts required for this mapping (from context)
-            /// </summary>
-            [FhirElement("dependsOn", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent> DependsOn
-            {
-                get { return _DependsOn; }
-                set { _DependsOn = value; OnPropertyChanged("DependsOn"); }
-            }
-            private List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent> _DependsOn;
-            
-            /// <summary>
-            /// A concept from the target value set that this concept maps to
-            /// </summary>
-            [FhirElement("map", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptMapComponent> Map
-            {
-                get { return _Map; }
-                set { _Map = value; OnPropertyChanged("Map"); }
-            }
-            private List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptMapComponent> _Map;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ConceptMapConceptComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                    if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherConceptComponent>(DependsOn.DeepCopy());
-                    if(Map != null) dest.Map = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptMapComponent>(Map.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ConceptMapConceptComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ConceptMapConceptComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(DependsOn, otherT.DependsOn)) return false;
-                if( !DeepComparable.Matches(Map, otherT.Map)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ConceptMapConceptComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(DependsOn, otherT.DependsOn)) return false;
-                if( !DeepComparable.IsExactly(Map, otherT.Map)) return false;
                 
                 return true;
             }
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this concept map
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString IdentifierElement
         {
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of the concept map
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=80)]
+        [FhirElement("version", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Informal name for this concept map
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
+        [FhirElement("name", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=100)]
+        [FhirElement("publisher", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -722,20 +722,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=110)]
+        [FhirElement("telecom", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contact> Telecom
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
             get { return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
-        private List<Hl7.Fhir.Model.Contact> _Telecom;
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
         /// Human language description of the concept map
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=120)]
+        [FhirElement("description", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// About the concept map or its content
         /// </summary>
-        [FhirElement("copyright", Order=130)]
+        [FhirElement("copyright", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=150)]
+        [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -889,45 +889,45 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Identifies the source value set which is being mapped
+        /// Identifies the source of the concepts which are being mapped
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=170)]
-        [References("ValueSet")]
+        [FhirElement("source", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Reference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Source
+        public Hl7.Fhir.Model.Element Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Source;
+        private Hl7.Fhir.Model.Element _Source;
         
         /// <summary>
         /// Provides context to the mappings
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=180)]
-        [References("ValueSet")]
+        [FhirElement("target", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Reference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Target
+        public Hl7.Fhir.Model.Element Target
         {
             get { return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Target;
+        private Hl7.Fhir.Model.Element _Target;
         
         /// <summary>
-        /// Mappings for a concept from the source valueset
+        /// Mappings for a concept from the source set
         /// </summary>
-        [FhirElement("concept", Order=190)]
+        [FhirElement("element", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptComponent> Concept
+        public List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent> Element
         {
-            get { return _Concept; }
-            set { _Concept = value; OnPropertyChanged("Concept"); }
+            get { return _Element; }
+            set { _Element = value; OnPropertyChanged("Element"); }
         }
-        private List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptComponent> _Concept;
+        private List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent> _Element;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -940,15 +940,15 @@ namespace Hl7.Fhir.Model
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.Contact>(Telecom.DeepCopy());
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-                if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-                if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapConceptComponent>(Concept.DeepCopy());
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
+                if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                if(Element != null) dest.Element = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent>(Element.DeepCopy());
                 return dest;
             }
             else
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-            if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
+            if( !DeepComparable.Matches(Element, otherT.Element)) return false;
             
             return true;
         }
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-            if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
+            if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
             
             return true;
         }

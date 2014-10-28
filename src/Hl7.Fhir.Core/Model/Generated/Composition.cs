@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
         public partial class SectionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             /// <summary>
-            /// Label for section
+            /// Label for section (e.g. for ToC)
             /// </summary>
             [FhirElement("title", InSummary=true, Order=40)]
             [DataMember]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
-            /// Label for section
+            /// Label for section (e.g. for ToC)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -156,35 +156,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// If section different to composition
-            /// </summary>
-            [FhirElement("subject", InSummary=true, Order=60)]
-            [References("Patient","Group","Device")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Subject
-            {
-                get { return _Subject; }
-                set { _Subject = value; OnPropertyChanged("Subject"); }
-            }
-            private Hl7.Fhir.Model.ResourceReference _Subject;
-            
-            /// <summary>
-            /// The actual data for the section
-            /// </summary>
-            [FhirElement("content", InSummary=true, Order=70)]
-            [References()]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Content
-            {
-                get { return _Content; }
-                set { _Content = value; OnPropertyChanged("Content"); }
-            }
-            private Hl7.Fhir.Model.ResourceReference _Content;
-            
-            /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", InSummary=true, Order=80)]
+            [FhirElement("section", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -193,6 +167,20 @@ namespace Hl7.Fhir.Model
                 set { _Section = value; OnPropertyChanged("Section"); }
             }
             private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
+            
+            /// <summary>
+            /// The Content of the section
+            /// </summary>
+            [FhirElement("content", InSummary=true, Order=70)]
+            [References()]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Reference Content
+            {
+                get { return _Content; }
+                set { _Content = value; OnPropertyChanged("Content"); }
+            }
+            private Hl7.Fhir.Model.Reference _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -203,9 +191,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.ResourceReference)Content.DeepCopy();
                     if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Reference)Content.DeepCopy();
                     return dest;
                 }
                 else
@@ -225,9 +212,8 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
                 if( !DeepComparable.Matches(Section, otherT.Section)) return false;
+                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
                 
                 return true;
             }
@@ -240,9 +226,8 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
+                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
             }
@@ -286,12 +271,12 @@ namespace Hl7.Fhir.Model
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Detail
+            public List<Hl7.Fhir.Model.Reference> Detail
             {
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
-            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+            private List<Hl7.Fhir.Model.Reference> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -302,7 +287,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.Reference>(Detail.DeepCopy());
                     return dest;
                 }
                 else
@@ -416,12 +401,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("party", InSummary=true, Order=60)]
             [References("Patient","Practitioner","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Party
+            public Hl7.Fhir.Model.Reference Party
             {
                 get { return _Party; }
                 set { _Party = value; OnPropertyChanged("Party"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Party;
+            private Hl7.Fhir.Model.Reference _Party;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -432,7 +417,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(ModeElement != null) dest.ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(ModeElement.DeepCopy());
                     if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-                    if(Party != null) dest.Party = (Hl7.Fhir.Model.ResourceReference)Party.DeepCopy();
+                    if(Party != null) dest.Party = (Hl7.Fhir.Model.Reference)Party.DeepCopy();
                     return dest;
                 }
                 else
@@ -476,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical identifier of composition (version-independent)
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -488,7 +473,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition editing time
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=80)]
+        [FhirElement("date", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -520,7 +505,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of composition (LOINC if possible)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
+        [FhirElement("type", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -533,7 +518,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Categorization of Composition
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=100)]
+        [FhirElement("class", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -545,7 +530,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human Readable name/title
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=110)]
+        [FhirElement("title", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -576,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// preliminary | final | appended | amended | entered in error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Composition.CompositionStatus> StatusElement
@@ -608,7 +593,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// As defined by affinity domain
         /// </summary>
-        [FhirElement("confidentiality", InSummary=true, Order=130)]
+        [FhirElement("confidentiality", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Confidentiality
@@ -621,35 +606,35 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what the composition is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=true, Order=130)]
         [References("Patient","Practitioner","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.Reference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.Reference _Subject;
         
         /// <summary>
         /// Who and/or what authored the composition
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=150)]
+        [FhirElement("author", InSummary=true, Order=140)]
         [References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Author
+        public List<Hl7.Fhir.Model.Reference> Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private List<Hl7.Fhir.Model.ResourceReference> _Author;
+        private List<Hl7.Fhir.Model.Reference> _Author;
         
         /// <summary>
         /// Attests to accuracy of composition
         /// </summary>
-        [FhirElement("attester", InSummary=true, Order=160)]
+        [FhirElement("attester", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> Attester
@@ -662,45 +647,46 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Org which maintains the composition
         /// </summary>
-        [FhirElement("custodian", InSummary=true, Order=170)]
+        [FhirElement("custodian", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Custodian
+        public Hl7.Fhir.Model.Reference Custodian
         {
             get { return _Custodian; }
             set { _Custodian = value; OnPropertyChanged("Custodian"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Custodian;
+        private Hl7.Fhir.Model.Reference _Custodian;
         
         /// <summary>
-        /// The clinical event/act/item being documented
+        /// The clinical service(s) being documented
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=180)]
+        [FhirElement("event", InSummary=true, Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Composition.CompositionEventComponent Event
+        public List<Hl7.Fhir.Model.Composition.CompositionEventComponent> Event
         {
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
-        private Hl7.Fhir.Model.Composition.CompositionEventComponent _Event;
+        private List<Hl7.Fhir.Model.Composition.CompositionEventComponent> _Event;
         
         /// <summary>
         /// Context of the conposition
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=190)]
+        [FhirElement("encounter", InSummary=true, Order=180)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
+        public Hl7.Fhir.Model.Reference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.Reference _Encounter;
         
         /// <summary>
         /// Composition is broken into sections
         /// </summary>
-        [FhirElement("section", Order=200)]
+        [FhirElement("section", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -724,12 +710,12 @@ namespace Hl7.Fhir.Model
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Composition.CompositionStatus>)StatusElement.DeepCopy();
                 if(Confidentiality != null) dest.Confidentiality = (Hl7.Fhir.Model.Coding)Confidentiality.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.Reference>(Author.DeepCopy());
                 if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(Attester.DeepCopy());
-                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Composition.CompositionEventComponent)Event.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.Reference)Custodian.DeepCopy();
+                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.CompositionEventComponent>(Event.DeepCopy());
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.Reference)Encounter.DeepCopy();
                 if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                 return dest;
             }

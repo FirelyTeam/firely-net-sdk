@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 23, 2014 14:22+0200 for FHIR v0.0.82
+// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,12 +70,12 @@ namespace Hl7.Fhir.Model
             [References("Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Substance
+            public Hl7.Fhir.Model.Reference Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Substance;
+            private Hl7.Fhir.Model.Reference _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Reference)Substance.DeepCopy();
                     return dest;
                 }
                 else
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of substance this is
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
-        [FhirElement("description", Order=80)]
+        [FhirElement("description", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific package/container of the substance
         /// </summary>
-        [FhirElement("instance", Order=90)]
+        [FhirElement("instance", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
         {
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition information about the substance
         /// </summary>
-        [FhirElement("ingredient", Order=100)]
+        [FhirElement("ingredient", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
