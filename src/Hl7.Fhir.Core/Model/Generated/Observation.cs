@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// No observation value was available.
+            /// No observation  reliability value was available.
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,
@@ -586,7 +586,6 @@ namespace Hl7.Fhir.Model
         /// ok | ongoing | early | questionable | calibrating | error +
         /// </summary>
         [FhirElement("reliability", Order=140)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationReliability> ReliabilityElement
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:46+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,9 +96,40 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
         
         /// <summary>
+        /// Language of the resource
+        /// </summary>
+        [FhirElement("language", Order=50)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code LanguageElement
+        {
+            get { return _LanguageElement; }
+            set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+        }
+        private Hl7.Fhir.Model.Code _LanguageElement;
+        
+        /// <summary>
+        /// Language of the resource
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Language
+        {
+            get { return LanguageElement != null ? LanguageElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  LanguageElement = null; 
+                else
+                  LanguageElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Language");
+            }
+        }
+        
+        /// <summary>
         /// Local id for element
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=50)]
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=60)]
         [IdPattern]
         [DataMember]
         public string Id
@@ -118,6 +149,7 @@ namespace Hl7.Fhir.Model
                 if(Contained != null) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
                 if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
                 if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+                if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                 if(Id != null) dest.Id = Id;
                 return dest;
             }
@@ -134,6 +166,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Contained, otherT.Contained)) return false;
             if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
             if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
+            if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
             if( Id != otherT.Id ) return false;
             
             return true;
@@ -148,6 +181,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Contained, otherT.Contained)) return false;
             if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
             if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
+            if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
             if( Id != otherT.Id ) return false;
             
             return true;

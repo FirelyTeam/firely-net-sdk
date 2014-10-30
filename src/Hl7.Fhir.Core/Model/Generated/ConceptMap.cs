@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A statement of relationships from one set of concepts to one or more other concepts - either code systems or data elements, or classes in class models
+    /// A map from one set of concepts to one or more other concepts
     /// </summary>
     [FhirType("ConceptMap", IsResource=true)]
     [DataContract]
@@ -108,7 +108,6 @@ namespace Hl7.Fhir.Model
             /// Code System (if value set crosses code systems)
             /// </summary>
             [FhirElement("codeSystem", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri CodeSystemElement
             {
@@ -181,7 +180,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _DependsOn;
             
             /// <summary>
-            /// A concept from the target value set that this concept maps to
+            /// Target of this map
             /// </summary>
             [FhirElement("map", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
@@ -660,7 +659,6 @@ namespace Hl7.Fhir.Model
         /// Informal name for this concept map
         /// </summary>
         [FhirElement("name", InSummary=true, Order=80)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {

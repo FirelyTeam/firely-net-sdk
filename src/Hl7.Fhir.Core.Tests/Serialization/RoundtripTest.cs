@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var data = new String(buffer);
 
                 if (data.Contains("<feed")) return true;
-                if (data.Contains("resourceType") && data.Contains("Bundle")) return true;
+                if (data.Contains("resourceType") && data.Contains("Bundle") && !data.Contains("NewBundle")) return true;
 
                 return false;
             }

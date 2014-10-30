@@ -85,13 +85,7 @@
     <value value="(03) 5555 6473"/>
     <use value="work"/>
   </telecom>
-  <gender>
-    <coding>
-      <system value="http://hl7.org/fhir/v3/AdministrativeGender"/>
-      <code value="M"/>
-      <display value="Male"/>
-    </coding>
-  </gender>
+  <gender value="male" />
   <birthDate value="1974-12"/>
   <deceasedBoolean value="true"/>
   <address>
@@ -99,7 +93,7 @@
     <line value="534 Erewhon St"/>
     <city value="PleasantVille"/>
     <state value="Vic"/>
-    <zip value="3999"/>
+    <postalCode value="3999"/>
   </address>
   <maritalStatus>
     <extension url="http://hl7.org/fhir/Profileiso-21090#nullFlavor">

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -467,15 +467,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value must be exactly this
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("fixed", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.Element Fixed
             {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
+                get { return _Fixed; }
+                set { _Fixed = value; OnPropertyChanged("Fixed"); }
             }
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.Element _Fixed;
             
             /// <summary>
             /// Value must have at least these property values
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Profile.TypeRefComponent>(Type.DeepCopy());
                     if(NameReferenceElement != null) dest.NameReferenceElement = (Hl7.Fhir.Model.FhirString)NameReferenceElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Fixed != null) dest.Fixed = (Hl7.Fhir.Model.Element)Fixed.DeepCopy();
                     if(Pattern != null) dest.Pattern = (Hl7.Fhir.Model.Element)Pattern.DeepCopy();
                     if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
                     if(MaxLengthElement != null) dest.MaxLengthElement = (Hl7.Fhir.Model.Integer)MaxLengthElement.DeepCopy();
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(NameReferenceElement, otherT.NameReferenceElement)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Fixed, otherT.Fixed)) return false;
                 if( !DeepComparable.Matches(Pattern, otherT.Pattern)) return false;
                 if( !DeepComparable.Matches(Example, otherT.Example)) return false;
                 if( !DeepComparable.Matches(MaxLengthElement, otherT.MaxLengthElement)) return false;
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(NameReferenceElement, otherT.NameReferenceElement)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Fixed, otherT.Fixed)) return false;
                 if( !DeepComparable.IsExactly(Pattern, otherT.Pattern)) return false;
                 if( !DeepComparable.IsExactly(Example, otherT.Example)) return false;
                 if( !DeepComparable.IsExactly(MaxLengthElement, otherT.MaxLengthElement)) return false;
@@ -835,9 +835,40 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Text description of how slicing works (or not)
+            /// </summary>
+            [FhirElement("description", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Text description of how slicing works (or not)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
             /// If elements must be in same order as slices
             /// </summary>
-            [FhirElement("ordered", InSummary=true, Order=50)]
+            [FhirElement("ordered", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean OrderedElement
             {
@@ -868,7 +899,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// closed | open | openAtEnd
             /// </summary>
-            [FhirElement("rules", InSummary=true, Order=60)]
+            [FhirElement("rules", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Profile.SlicingRules> RulesElement
@@ -905,6 +936,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(DiscriminatorElement != null) dest.DiscriminatorElement = new List<Hl7.Fhir.Model.Id>(DiscriminatorElement.DeepCopy());
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(OrderedElement != null) dest.OrderedElement = (Hl7.Fhir.Model.FhirBoolean)OrderedElement.DeepCopy();
                     if(RulesElement != null) dest.RulesElement = (Code<Hl7.Fhir.Model.Profile.SlicingRules>)RulesElement.DeepCopy();
                     return dest;
@@ -925,6 +957,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(DiscriminatorElement, otherT.DiscriminatorElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(OrderedElement, otherT.OrderedElement)) return false;
                 if( !DeepComparable.Matches(RulesElement, otherT.RulesElement)) return false;
                 
@@ -938,6 +971,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(DiscriminatorElement, otherT.DiscriminatorElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(OrderedElement, otherT.OrderedElement)) return false;
                 if( !DeepComparable.IsExactly(RulesElement, otherT.RulesElement)) return false;
                 

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -431,12 +431,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("goal", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.IdRef> GoalElement
+            public List<Hl7.Fhir.Model.FhirUri> GoalElement
             {
                 get { return _GoalElement; }
                 set { _GoalElement = value; OnPropertyChanged("GoalElement"); }
             }
-            private List<Hl7.Fhir.Model.IdRef> _GoalElement;
+            private List<Hl7.Fhir.Model.FhirUri> _GoalElement;
             
             /// <summary>
             /// Goals this activity relates to
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       GoalElement = null; 
                     else
-                      GoalElement = new List<Hl7.Fhir.Model.IdRef>(value.Select(elem=>new Hl7.Fhir.Model.IdRef(elem)));
+                      GoalElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                     OnPropertyChanged("Goal");
                 }
             }
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(GoalElement != null) dest.GoalElement = new List<Hl7.Fhir.Model.IdRef>(GoalElement.DeepCopy());
+                    if(GoalElement != null) dest.GoalElement = new List<Hl7.Fhir.Model.FhirUri>(GoalElement.DeepCopy());
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>)StatusElement.DeepCopy();
                     if(ProhibitedElement != null) dest.ProhibitedElement = (Hl7.Fhir.Model.FhirBoolean)ProhibitedElement.DeepCopy();
                     if(ActionResulting != null) dest.ActionResulting = new List<Hl7.Fhir.Model.Reference>(ActionResulting.DeepCopy());

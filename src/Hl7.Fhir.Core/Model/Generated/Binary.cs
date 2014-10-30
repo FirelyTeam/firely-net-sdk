@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,29 +50,66 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// MimeType of the binary content
         /// </summary>
-        [FhirElement("contentType", XmlSerialization=XmlSerializationHint.Attribute, Order=60)]
+        [FhirElement("contentType", Order=60)]
         [Cardinality(Min=1,Max=1)]
-        [CodePattern]
         [DataMember]
+        public Hl7.Fhir.Model.Code ContentTypeElement
+        {
+            get { return _ContentTypeElement; }
+            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+        }
+        private Hl7.Fhir.Model.Code _ContentTypeElement;
+        
+        /// <summary>
+        /// MimeType of the binary content
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public string ContentType
         {
-            get { return _ContentType; }
-            set { _ContentType = value; OnPropertyChanged("ContentType"); }
+            get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ContentTypeElement = null; 
+                else
+                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("ContentType");
+            }
         }
-        private string _ContentType;
         
         /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", XmlSerialization=XmlSerializationHint.TextNode, Order=70)]
+        [FhirElement("content", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
+        public Hl7.Fhir.Model.Base64Binary ContentElement
+        {
+            get { return _ContentElement; }
+            set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
+        }
+        private Hl7.Fhir.Model.Base64Binary _ContentElement;
+        
+        /// <summary>
+        /// The actual content
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
         public byte[] Content
         {
-            get { return _Content; }
-            set { _Content = value; OnPropertyChanged("Content"); }
+            get { return ContentElement != null ? ContentElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ContentElement = null; 
+                else
+                  ContentElement = new Hl7.Fhir.Model.Base64Binary(value);
+                OnPropertyChanged("Content");
+            }
         }
-        private byte[] _Content;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -81,8 +118,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(ContentType != null) dest.ContentType = ContentType;
-                if(Content != null) dest.Content = Content;
+                if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
+                if(ContentElement != null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)ContentElement.DeepCopy();
                 return dest;
             }
             else
@@ -100,8 +137,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( ContentType != otherT.ContentType ) return false;
-            if( Content != otherT.Content ) return false;
+            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
             
             return true;
         }
@@ -112,8 +149,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( ContentType != otherT.ContentType ) return false;
-            if( Content != otherT.Content ) return false;
+            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
             
             return true;
         }
