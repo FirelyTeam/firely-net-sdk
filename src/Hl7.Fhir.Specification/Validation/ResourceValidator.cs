@@ -246,12 +246,17 @@ namespace Hl7.Fhir.Profiling
             // todo: op dit moment gaan we er vanuit dat de fixedvalue een andere betekenis heeft in het geval van een slice.
             if (!vector.Element.Sliced) 
             {
-                string fixvalue = vector.Element.FixedValue;
+                var fixvalue = vector.Element.FixedValue;
                 XPathNavigator node = vector.Node.SelectSingleNode("@value");
                 string value = (node != null) ? node.Value : null;
 
                 if (fixvalue != null)
                 {
+                    //TODO: This will never be equal. We need to call the IDeepCompare functions to compare FHIR primitives/datatypes (complex). For this
+                    //to work, we need to parse the whole Node (not @value), and compare POCO objects. Fortunately the FhirParser has methods to do this,
+                    //but they are as yet internal.
+                    throw new NotImplementedException("Fixed value validation not yet supported in DSTU2");
+
                     bool equal = fixvalue.Equals(value);
                     if (equal)
                     {

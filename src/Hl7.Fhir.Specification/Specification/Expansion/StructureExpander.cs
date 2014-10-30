@@ -308,7 +308,8 @@ namespace Hl7.Fhir.Specification.Expansion
 
             // ElementDefinition.nameReference cannot be overridden by a derived profile
 
-            if(diff.Value != null) snap.Value = (Element)diff.Value.DeepCopy();
+            if(diff.Fixed != null) snap.Fixed = (Element)diff.Fixed.DeepCopy();            
+            if (diff.Pattern != null) snap.Pattern = (Element)diff.Pattern.DeepCopy();
             if(diff.Example != null) snap.Example = (Element)diff.Example.DeepCopy();
             if(diff.MaxLengthElement != null) snap.MaxLengthElement =  (Integer)diff.MaxLengthElement.DeepCopy();
 
@@ -322,6 +323,7 @@ namespace Hl7.Fhir.Specification.Expansion
             if(diff.MustSupportElement != null) snap.MustSupportElement = (FhirBoolean)diff.MustSupportElement.DeepCopy();
 
             // ElementDefinition.isModifier cannot be overridden by a derived profle
+            if (diff.IsSummaryElement != null) snap.IsSummaryElement = (FhirBoolean)diff.IsSummaryElement.DeepCopy();
 
             if(diff.Binding != null) snap.Binding = (Profile.ElementDefinitionBindingComponent)diff.Binding.DeepCopy();
 

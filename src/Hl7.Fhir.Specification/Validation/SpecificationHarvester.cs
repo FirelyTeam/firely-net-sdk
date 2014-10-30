@@ -64,16 +64,11 @@ namespace Hl7.Fhir.Profiling
         {
             target.FixedValue = null;
 
-            if (source.Value != null)
-            {
-                //if(source.Value is FhirString) target.FixedValue = ((FhirString)source.Value).Value;
-                //if (source.Value is Code) target.FixedValue = ((Code)source.Value).Value;
-                //if (source.Value is FhirBoolean) target.FixedValue = PrimitiveConverter ((FhirBoolean)source.Value).Value;
-                //if (source.Value is FhirBoolean) target.FixedValue = ((FhirBoolean)source.Value).Value;
-                var valMember = ReflectionHelper.FindPublicProperty(source.Value.GetType(), "Value");
-                var value = valMember.GetValue(source.Value, null);
-                target.FixedValue = value.ConvertTo<string>();
-            }            
+            if (source.Fixed != null)
+                target.FixedValue = source.Fixed;
+
+            if (source.Pattern != null)
+                target.PatternValue = source.Pattern;
         }
 
         private void HarvestConstraints(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)

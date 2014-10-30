@@ -39,7 +39,8 @@ namespace Hl7.Fhir.Specification.Model
         public string ElementRefPath { get; set; }
         public Element ElementRef { get; set; }
         public List<Element> Children = new List<Element>();
-        public string FixedValue { get; set; }
+        public Hl7.Fhir.Model.Element FixedValue { get; set; }
+        public Hl7.Fhir.Model.Element PatternValue { get; set; }
         public string SliceValue { get; set; }
         public Cardinality Cardinality;
         public List<Constraint> Constraints = new List<Constraint>();
