@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var defn = nav.Current.Definition;
                 if (!String.IsNullOrEmpty(defn.NameReference))
                 {
-                    var sourceNav = resolveNameReference(nav.Structure, defn.NameReference);
+                    var sourceNav = resolveNameReference(nav.Elements, defn.NameReference);
                     nav.CopyChildren(sourceNav);
                 }
                 else if (defn.Type != null && defn.Type.Count > 0)
@@ -150,13 +150,13 @@ namespace Hl7.Fhir.Specification.Navigation
         private static ElementNavigator resolveStructureReference(StructureLoader loader, Code code)
         {
             var result = loader.LocateBaseStructure(code);
-            return result != null ? new ElementNavigator(result) : null;
+            return result != null ? new ElementNavigator(result.Snapshot) : null;
         }
 
 
-        private static ElementNavigator resolveNameReference(Profile.ProfileStructureComponent structure, string nameReference)
+        private static ElementNavigator resolveNameReference(Profile.ConstraintComponent elements, string nameReference)
         {
-            return structure.JumpToNameReference(nameReference);
+            return elements.JumpToNameReference(nameReference);
         }
     }
 }

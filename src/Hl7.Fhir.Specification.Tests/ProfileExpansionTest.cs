@@ -47,10 +47,9 @@ namespace Hl7.Fhir.Test.Inspection
             var diff = (Profile)_source.ReadResourceArtifact(new Uri("http://test.nu/Profile/example-lipid-profile-differential"));
             Assert.IsNotNull(diff);
 
-            var snapshot = expander.Expand(diff);
-            Assert.IsNotNull(diff);
+            expander.Expand(diff);
 
-            var xml = FhirSerializer.SerializeResourceToXml(snapshot);
+            var xml = FhirSerializer.SerializeResourceToXml(diff);
             File.WriteAllText("c:\\temp\\expanded.xml", xml);
         }
 
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Test.Inspection
             e.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
             e.Add(new Profile.ElementComponent() { Path = "A.D.F" });
 
-            var tree = new DifferentialTreeConstructor(struc).MakeTree();
+            var tree = new DifferentialTreeConstructor(struc.Differential).MakeTree();
             Assert.IsNotNull(tree);
 
             var nav = new ElementNavigator(tree);
@@ -130,7 +129,7 @@ namespace Hl7.Fhir.Test.Inspection
             var loader = new StructureLoader(ArtifactResolver.CreateDefault());
             var profStruct = loader.LocateStructure(new Uri("http://hl7.org/fhir/Profile/Profile"), new Code("Profile"));
 
-            var nav = new ElementNavigator(profStruct);
+            var nav = new ElementNavigator(profStruct.Snapshot);
             
             nav.JumpToFirst("Profile.telecom");
             Assert.IsTrue(nav.ExpandElement(loader));

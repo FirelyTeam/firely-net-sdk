@@ -170,7 +170,9 @@ namespace Hl7.Fhir.Profiling
 
         private void HarvestElements(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Structure target)
         {
-            foreach(Hl7.Fhir.Model.Profile.ElementComponent component in source.Element)
+            if (source.Snapshot == null) throw Error.Argument("source", "Structure must have a differential representation");
+            
+            foreach(Hl7.Fhir.Model.Profile.ElementComponent component in source.Snapshot.Element)
             {
                 if (component.Slicing == null)
                 {
@@ -187,13 +189,20 @@ namespace Hl7.Fhir.Profiling
         {
             Slicing slicing = new Slicing();
             slicing.Path = new Path(source.Path);
-            slicing.Discriminator = new Path(source.Slicing.Discriminator);
+
+            //TODO: Support multiple discriminators
+            if (source.Slicing.Discriminator.Count() > 1)
+                throw Error.NotImplemented("Multiple discriminators not yet implemented");
+            
+            //TODO: Support discriminator-less matching!
+            slicing.Discriminator = new Path(source.Slicing.Discriminator.First());
             return slicing;
         }
 
         public void PrepareSlices(Hl7.Fhir.Model.Profile.ProfileStructureComponent source)
         {
-            foreach (Hl7.Fhir.Model.Profile.ElementComponent e in source.Element)
+            if (source.Snapshot == null) throw Error.Argument("source", "Structure must have a differential representation");
+            foreach (Hl7.Fhir.Model.Profile.ElementComponent e in source.Snapshot.Element)
             {
                 if (e.Slicing != null)
                 {
@@ -228,10 +237,15 @@ namespace Hl7.Fhir.Profiling
         public Structure HarvestExtensionDefn(Hl7.Fhir.Model.Profile.ProfileExtensionDefnComponent source)
         {
             Structure target = new Structure();
-            target.Name = source.Code;
+            target.Name = source.Name;
             Element element = new Element();
-            element.Name = source.Code;
-            HarvestElementDefinition(source.Definition, element);
+            element.Name = source.Name;
+
+            //TODO: Add support for complex extensions
+            if (source.Element.Count > 0)
+                throw new NotImplementedException("Complex extensions are not supported by the harvester");
+
+            HarvestElementDefinition(source.Element[0].Definition, element);
             
             target.Elements.Add(element);
             return target;

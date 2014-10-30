@@ -73,8 +73,8 @@ namespace Hl7.Fhir.Specification.IO
             
             string xml = File.ReadAllText(inputfile);
             var diff = (Profile)FhirParser.ParseResourceFromXml(xml);
-            var snapshot = expander.Expand(diff);
-            xml = FhirSerializer.SerializeResourceToXml(snapshot);
+            expander.Expand(diff);
+            xml = FhirSerializer.SerializeResourceToXml(diff);
             File.WriteAllText(outputfile, xml);
         }
 

@@ -18,9 +18,9 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
     {
-        public static ElementNavigator JumpToNameReference(this Profile.ProfileStructureComponent structure, string nameReference)
+        public static ElementNavigator JumpToNameReference(this Profile.ConstraintComponent elements, string nameReference)
         {
-            var nav = new ElementNavigator(structure);
+            var nav = new ElementNavigator(elements);
 
             //TODO: In the current DSTU1 base profiles, nameReference is actually a path, not a name (to Element.Name)
             //this is a problem, since when doing slicing, the path may no longer point to a single set of constraints
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="root">The structure that will be rebased on the path</param>
         /// <param name="path">The path to rebase the structure on</param>
-        public static void Rebase(this Profile.ProfileStructureComponent root, string path)
+        public static void Rebase(this Profile.ConstraintComponent root, string path)
         {
             var nav = new ElementNavigator(root);
 
@@ -63,10 +63,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
-                for (var i = 0; i < root.Differential.Element.Count; i++)
-                    root.Differential.Element[i].Path = newPaths[i];
-
-                root.Snapshot = null;       // Has not been updated, so is now invalid
+                for (var i = 0; i < root.Element.Count; i++)
+                    root.Element[i].Path = newPaths[i];
             }
         }
 
