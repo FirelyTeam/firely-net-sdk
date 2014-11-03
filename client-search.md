@@ -5,8 +5,6 @@ title: Searching for Resources
 
 FHIR has extensive support for searching resources through the use of the REST interface. Describing all the possibilities is outside the scope of this document, but much more details can be found online in the [specification][fhir-search].
 
-Resources, Bundles, even individual Elements and BundleEntries can be validated using the `FhirValidator` class from the Hl7.Model.Validation namespace:
-
 The FHIR client has a few operations to do basic search.
 
 ### Searching within a specific type of resource
@@ -16,16 +14,17 @@ The most basic search is the client's `Search<T>(string[] criteria = null, strin
 Bundle results = client.Search<Patient>(new string[] { "family:exact=Eve" });
 ```
 
-The search will return a Bundle containing entries for each resource found. It is even possible to leave out all criteria, effectively resulting in a search that returns all resources of the given type. Additionally, there is a Search() overload that does not use the generic `T` argument, you can pass the type of resource as a string in the first parameter instead. 
+The search will return a Bundle containing entries for each resource found. It is even possible to leave out all criteria, effectively resulting in a search that returns all resources of the given type. Additionally, there is a `Search()` overload that does not use the generic `T` argument, you can pass the type of resource as a string in the first parameter instead. 
 
 
 ### Searching for a resource with a specific id
-In some cases you may already have the id of a specific resource (e.g. a Observation with logical id `123`, corresponding to the url `Observation/123`). In this case you can use `SearchById<T>(string id, string[] includes = null, int? pageSize = null)`.
+In some cases you may already have the id of a specific resource (e.g. an Observation with logical id `123`, corresponding to the url `Observation/123`). In this case you can use `SearchById<T>(string id, string[] includes = null, int? pageSize = null)`.
 
 Note that this function still returns a Bundle. The operation differs from a `Read<T>()` operation because it can return *included* resources as well. E.g. given an id `123` for an Observation, you can ask a FHIR server to not only look for the indicated Observation but to return the associated `subject` as well:
 
 ```csharp
-Bundle results = client.SearchById<Patient>("123", new string[] { "Observation.subject" });
+var incl = new string[] { "Observation.subject" };
+Bundle results = client.SearchById<Observation>("123", incl);
 
 ``` 
 
@@ -45,14 +44,15 @@ An alternative way to specify a query is by creating a `Query` resource and pass
 
 ```csharp
 var q = new Query()
-         .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
+         .For("Patient").Where("name:exact=ewout")
+         .OrderBy("birthDate", SortOrder.Descending)
          .SummaryOnly().Include("Patient.managingOrganization")
          .LimitTo(20);
 
 Bundle result = client.Search(q);
  ```
 
-Note that unlike the search options shown before, you can specify search ordering and the use of a summary result. As well, this syntax avoids the need to create arrays of strings as paramters and tends to be more readable. 
+Note that unlike the search options shown before, you can specify search ordering and the use of a summary result. As well, this syntax avoids the need to create arrays of strings as parameters and tends to be more readable. 
 
 ### Paged Results
 Normally, any FHIR server will limit the number of search results returned. In the previous example, we explicitly limited the number of results per page to 20.
@@ -70,5 +70,9 @@ while( result != null )
 ```
 
 Note that `Continue` supports a second parameter that allows you to browse forward, backward, or go immediately to the first or last page of the search result.
+
+###Further reading
+* [Back to index](docu-index.html)
+* [Next topic: Getting history]
 
 [fhir-search]: http://www.hl7.org/implement/standards/fhir/search.html
