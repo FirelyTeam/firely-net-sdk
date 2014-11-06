@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 using Hl7.Fhir.XPath;
-using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
 
     // todo: profile references "#lipidpanel" worden nog niet geresolved
@@ -36,7 +35,7 @@ using Hl7.Fhir.Specification.Model;
     // done: extensions
 
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
   
     public class ResourceValidator

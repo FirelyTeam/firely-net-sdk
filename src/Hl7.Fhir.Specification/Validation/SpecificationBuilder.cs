@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Profiling;
 
-namespace Hl7.Fhir.Profiling
+
+namespace Hl7.Fhir.Validation
 {
     using Hl7.Fhir.Specification.Model;
     using Model = Hl7.Fhir.Model;

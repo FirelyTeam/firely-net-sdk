@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
     public class Outcome
     {

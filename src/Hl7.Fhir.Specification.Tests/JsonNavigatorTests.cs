@@ -18,7 +18,7 @@ using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace Hl7.Fhir.Tests.Serialization
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class JsonNavigatorTests

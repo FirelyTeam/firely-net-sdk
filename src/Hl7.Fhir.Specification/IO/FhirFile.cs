@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
 using Hl7.Fhir.Specification.Expansion;
 using Hl7.Fhir.Specification.Source;
@@ -20,7 +19,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.IO;
 
-namespace Hl7.Fhir.Specification.IO
+namespace Hl7.Fhir.IO
 {
     public static class FhirFile
     {

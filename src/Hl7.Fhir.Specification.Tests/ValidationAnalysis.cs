@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fhir.Profiling.Tests;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Profiling.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class ValidationAnalysis

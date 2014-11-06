@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Model;
 using System.Xml.XPath;
 using System.Xml;
 using System.Linq;
-using Hl7.Fhir.Specification.IO;
+using Hl7.Fhir.IO;
+using Hl7.Fhir.Validation;
 
 
-namespace Hl7.Fhir
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class TestSlicing

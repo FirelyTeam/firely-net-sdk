@@ -4,12 +4,11 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Hl7.Fhir.Profiling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Hl7.Fhir.XPath;
 
-namespace Fhir.Profiling.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class XsltContextTests

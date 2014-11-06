@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
-    public static class Validation
+    public static class Validator
     {
         public static Report Validate(this SpecificationWorkspace specification)
         {

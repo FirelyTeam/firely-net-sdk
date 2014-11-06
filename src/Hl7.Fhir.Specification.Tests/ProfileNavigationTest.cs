@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 
-namespace Hl7.Fhir.Test.Inspection
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
 #if PORTABLE45

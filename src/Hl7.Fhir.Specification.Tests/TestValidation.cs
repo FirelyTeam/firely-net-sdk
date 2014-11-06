@@ -10,10 +10,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
+using Hl7.Fhir.Validation;
 
-namespace Fhir.Profiling.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class TestBasicValidation

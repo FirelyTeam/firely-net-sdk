@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
     public delegate void OutcomeLogger(Outcome outcome);
 

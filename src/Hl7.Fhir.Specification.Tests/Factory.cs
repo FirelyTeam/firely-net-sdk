@@ -13,11 +13,10 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 using System.Xml;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Profiling;
+using Hl7.Fhir.Validation;
 using Hl7.Fhir.Specification.Model;
-using Hl7.Fhir.Specification.IO;
 
-namespace Fhir.Profiling.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     public static class Factory
     {

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
     /// <summary>
     /// The possible outcomes of a validation fragment

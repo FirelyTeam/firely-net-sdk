@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
+using Hl7.Fhir.Validation;
 
-namespace Fhir.Profiling.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class TestCustomProfiles
@@ -21,7 +21,7 @@ namespace Fhir.Profiling.Tests
         public void LipidProfile()
         {
             var resource = Factory.LoadResource("TestData\\lipid.profile.xml");
-            Report report = Validation.Validate(resource);
+            Report report = Validator.Validate(resource);
 
             var errors = report.Errors.ToList();
             Assert.IsTrue(report.IsValid);

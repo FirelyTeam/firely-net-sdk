@@ -20,7 +20,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Expansion;
 using Hl7.Fhir.Specification.Navigation;
 
-namespace Hl7.Fhir.Test.Inspection
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
 #if PORTABLE45

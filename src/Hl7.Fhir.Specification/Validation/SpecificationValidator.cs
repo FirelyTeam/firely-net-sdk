@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
 
     public class SpecificationValidator

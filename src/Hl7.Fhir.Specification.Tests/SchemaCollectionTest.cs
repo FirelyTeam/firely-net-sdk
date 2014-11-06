@@ -19,7 +19,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Hl7.Fhir.Specification.Source;
 
-namespace Hl7.Fhir.Test.Inspection
+namespace Hl7.Fhir.Specification.Tests
 {
 #if !PORTABLE45
     [TestClass]

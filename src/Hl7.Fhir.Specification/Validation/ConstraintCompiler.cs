@@ -4,7 +4,6 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
-using Hl7.Fhir.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ using System.Xml.Xsl;
 using Hl7.Fhir.XPath;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
     public static class ConstraintCompiler
     {

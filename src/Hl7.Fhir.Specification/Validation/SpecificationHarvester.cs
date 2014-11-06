@@ -16,7 +16,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Specification.Model;
 
-namespace Hl7.Fhir.Profiling
+namespace Hl7.Fhir.Validation
 {
 
     internal class SpecificationHarvester
