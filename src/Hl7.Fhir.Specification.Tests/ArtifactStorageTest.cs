@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Test.Inspection
                 Assert.IsNotNull(a);
             }
 
-            using (var a = za.ReadContentArtifact("core-valuesets-v3.xml"))
+            using (var a = za.ReadContentArtifact("v3-codesystems.xml"))
             {
                 Assert.IsNotNull(a);
             }

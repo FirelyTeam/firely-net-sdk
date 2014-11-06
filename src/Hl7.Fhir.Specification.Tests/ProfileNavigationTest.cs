@@ -390,9 +390,9 @@ namespace Hl7.Fhir.Test.Inspection
             var dest = createTestNav();
 
             var struc = new Profile.ProfileStructureComponent();
-            struc.Differential = new Profile.ConstraintComponent();
-            struc.Differential.Element = new List<Profile.ElementComponent>();
-            var e = struc.Differential.Element;
+            struc.Snapshot = new Profile.ConstraintComponent();
+            struc.Snapshot.Element = new List<Profile.ElementComponent>();
+            var e = struc.Snapshot.Element;
 
             e.Add(new Profile.ElementComponent() { Path = "X" });
             e.Add(new Profile.ElementComponent() { Path = "X.Y1" });
@@ -461,9 +461,9 @@ namespace Hl7.Fhir.Test.Inspection
         private static Profile.ProfileStructureComponent createTestStructure()
         {
             var struc = new Profile.ProfileStructureComponent();
-            struc.Differential = new Profile.ConstraintComponent();
-            struc.Differential.Element = new List<Profile.ElementComponent>();
-            var e = struc.Differential.Element;
+            struc.Snapshot = new Profile.ConstraintComponent();
+            struc.Snapshot.Element = new List<Profile.ElementComponent>();
+            var e = struc.Snapshot.Element;
 
             e.Add(new Profile.ElementComponent() { Path = "A" });
             e.Add(new Profile.ElementComponent() { Path = "A.B" });

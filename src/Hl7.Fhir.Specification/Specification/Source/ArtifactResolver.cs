@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Specification.Source
 
                     if (result != null) return result;
                 }
-                catch
+                catch(NotImplementedException)
                 {
                     // Don't do anything, just try the next IArtifactSource
                 }

@@ -21,6 +21,7 @@ namespace Hl7.Fhir.Specification.Expansion
     //TODO: relative uri's may cause problems, and are maybe better fixed by making them absolute, eventually - when serializing a full profile
     // url's relative to that profile can then be "corrected" back to relative uri's. As well, relative uri's to contained resources will need the
     // contained resource to be copied over to the snapshot.
+    //TODO: Copy mappings used in this structure into the parent Profile (not fixed for now, since the changes to Profile in DSTU2 will change how this works)
     internal class StructureExpander
     {
         public StructureExpander(StructureLoader loader)
@@ -39,7 +40,7 @@ namespace Hl7.Fhir.Specification.Expansion
             if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base profile for type {0}", structure.TypeElement.ToString());
             if(baseStructure.Snapshot == null) throw Error.InvalidOperation("Base definition to use for expansion lacks a snapshot representation");
 
-            var baseUri = StructureLoader.BuildBaseStructureUri(structure.TypeElement).ToString();
+         //   var baseUri = StructureLoader.BuildBaseStructureUri(structure.TypeElement).ToString();
 
             var snapshot = (Profile.ConstraintComponent)baseStructure.Snapshot.DeepCopy();
 
@@ -271,7 +272,6 @@ namespace Hl7.Fhir.Specification.Expansion
                 if (diff.Definition.FormalElement != null) slicingEntry.Definition.FormalElement = (FhirString)diff.Definition.FormalElement.DeepCopy();
                 if (diff.Definition.MinElement != null) slicingEntry.Definition.MinElement = (Integer)diff.Definition.MinElement.DeepCopy();
                 if (diff.Definition.MaxElement != null) slicingEntry.Definition.MaxElement = (FhirString)diff.Definition.MaxElement.DeepCopy();
-                slicingEntry.Definition.IsModifierElement = (FhirBoolean)baseDefn.Definition.IsModifierElement.DeepCopy();
             }
 
             return slicingEntry;

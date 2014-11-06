@@ -71,6 +71,7 @@
     <Compile Include="TypeRefUniform.cs" />
     <Compile Include="TestSlicing.cs" />
     <Compile Include="ValidationAnalysis.cs" />
+    <Compile Include="XmlAssert.cs" />
     <Compile Include="XsltContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -128,11 +129,6 @@
     <Content Include="TestData\ldlcholesterol-correct.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\lipid.profile.manual.differential.xml" />
-    <Content Include="TestData\lipid.profile.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\lipid.profile.valueset.xml" />
     <Content Include="TestData\patient.extended.profile.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -162,13 +158,6 @@
     <Content Include="TestData\Patient.Narrative.correct.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\patient.profile.full.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\patient.profile.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TestData\Patient.ConstraintError.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -188,9 +177,6 @@
     <Content Include="TestData\Patient.ErrorUse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="TestData\valuesets.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">

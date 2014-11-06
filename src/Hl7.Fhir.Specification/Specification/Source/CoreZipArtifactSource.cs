@@ -26,12 +26,10 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class CoreZipArtifactSource : IArtifactSource
     {
-        public const string CORE_SPEC_URI_PREFIX = "http://hl7.org/fhir/";
         public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/Profile/";
         public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/conformance/";
         public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
         public const string CORE_SPEC_V2_VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
-        public const string CORE_SPEC_DICOMVS_URI_PREFIX = "http://nema.org/dicom/vs/";
         public const string CORE_SPEC_V3_VS_URI_PREFIX = "http://hl7.org/fhir/v3/vs/";
         public const string CORE_SPEC_NAMESPACE_URI_PREFIX = "http://hl7.org/fhir/ns/";      //TODO: check prefix
         public const string CORE_SPEC_CONCEPTMAP_URI_PREFIX = "http://hl7.org/fhir/conceptmap/";     //TODO: check prefix
@@ -72,17 +70,24 @@ namespace Hl7.Fhir.Specification.Source
 #if !PORTABLE45
             _artifactFiles = new List<string>();
 
-            var zips = Directory.GetFiles(_contentDirectory, "*.zip");
+            //var zips = Directory.GetFiles(_contentDirectory, "*.zip");
 
-            // Get the files in each *.zip files present in the content directory
-            // The ZipCacher will avoid re-extracting these files.
-            foreach (string zipPath in zips)
+            //// Get the files in each *.zip files present in the content directory
+            //// The ZipCacher will avoid re-extracting these files.
+            //foreach (string zipPath in zips)
+            //{
+            //    ZipCacher zc = new ZipCacher(zipPath, CACHE_KEY);
+            //    _artifactFiles.AddRange(zc.GetContents());
+            //}
+
+            var zipPath = Path.Combine(_contentDirectory, "validation.zip");
+            if (File.Exists(zipPath))
             {
-                ZipCacher zc = new ZipCacher(zipPath, CACHE_KEY);
+                var zc = new ZipCacher(zipPath, CACHE_KEY);
                 _artifactFiles.AddRange(zc.GetContents());
+                _isPrepared = true;
             }
 
-            _isPrepared = true;
 #else
             throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
 #endif
@@ -109,6 +114,8 @@ namespace Hl7.Fhir.Specification.Source
             ensurePrepared();
 
             var searchString = (Path.DirectorySeparatorChar + name).ToLower();
+
+            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
             var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
@@ -134,85 +141,53 @@ namespace Hl7.Fhir.Specification.Source
             string artifactXml;
 
             // Core artifacts come from specific bundles files in the validation.zip
-            if (IsCoreArtifact(artifactId))
-            {
-                artifactXml = loadCoreArtifactXml(artifactId);
+            // We're assuming the validation.zip contains xml files
+            artifactXml = loadCoreArtifactXml(artifactId);
 
-                // We're assuming the validation.zip contains xml files
-                if (artifactXml != null)
-                {
-                    var result = FhirParser.ParseResourceFromXml(artifactXml);
-                 //   if (result is Profile) cleanupProfile((Profile)result);
-
-                    return result; 
-                }
-            }
-
-            return null;
+            if (artifactXml != null)
+                return FhirParser.ParseResourceFromXml(artifactXml);
+            else
+                return null;
         }
+        
 
-        //private void cleanupProfile(Profile result)
+        ///// <summary>
+        ///// Given the Url for an artifact (e.g. http://hl7.org/fhir/Profile/AdverseReaction), determines whether this is
+        ///// a core artifact that is pre-packaged in core files from the validation.zip
+        ///// </summary>
+        ///// <param name="artifactId">The location on the hl7.org repository of the core artifact</param>
+        ///// <returns></returns>
+        //public static bool IsCoreArtifact(Uri artifactId)
         //{
-        //    // Correct errors present in the current DSTU1 profiles
-        //    foreach (var structure in result.Structure)
-        //    {
-        //        var structNav = new ElementNavigator(structure);
-        //        if(structNav.MoveToFirstChild()) cleanupStructure(structNav);
-        //    }
+        //    if(artifactId == null) throw Error.ArgumentNull("artifactId");
+
+        //    //var normalized = artifactId.ToString().ToLower();
+
+        //    //return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
+        //    return artifactId.ToString().StartsWith(CORE_SPEC_URI_PREFIX);
         //}
-
-        //private void cleanupStructure(ElementNavigator structNav)
-        //{
-        //    if (structNav.Current.Definition != null)
-        //    {
-        //        var typeRef = structNav.Current.Definition.Type;
-        //        if(typeRef != null && (typeRef.Count > 1 || (typeRef[0].Code == "Resource" || typeRef.Code == "
-        //    }
-        //}
-
-
-        /// <summary>
-        /// Given the Url for an artifact (e.g. http://hl7.org/fhir/Profile/AdverseReaction), determines whether this is
-        /// a core artifact that is pre-packaged in core files from the validation.zip
-        /// </summary>
-        /// <param name="artifactId">The location on the hl7.org repository of the core artifact</param>
-        /// <returns></returns>
-        public static bool IsCoreArtifact(Uri artifactId)
-        {
-            if(artifactId == null) throw Error.ArgumentNull("artifactId");
-
-            //var normalized = artifactId.ToString().ToLower();
-
-            //return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
-            return artifactId.ToString().StartsWith(CORE_SPEC_URI_PREFIX);
-        }
 
 
         private string loadCoreArtifactXml(Uri artifactId)
         {
            // var normalized = artifactId.ToString().ToLower();
-            var normalized = artifactId.ToString();
+            var normalized = artifactId.ToString();     // do case-sensitive search
 
             // Depending on the actual artifact uri, determine in which supplied bundled
             // file these artifacts should be found
             if (normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-profiles-datatypes.xml", "core-profiles-resources.xml");
-            else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-conformances-base.xml");
-            else if (normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX))
-                throw Error.NotImplemented("Don't know where to locate core ConceptMaps, so this feature has not yet been implemented");
-            else if (normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
-                throw Error.NotImplemented("Namespaces are a DSTU2 feature, so this feature has not yet been implemented");
+                return readXmlEntryFromCoreBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
+            else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX) ||
+                            normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
+                return readXmlEntryFromCoreBundle(artifactId, "profiles-resources.xml");
             else if (normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-fhir.xml");
+                return readXmlEntryFromCoreBundle(artifactId, "valuesets.xml");
             else if (normalized.StartsWith(CORE_SPEC_V2_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-v2.xml");
+                return readXmlEntryFromCoreBundle(artifactId, "v2-tables.xml");
             else if (normalized.StartsWith(CORE_SPEC_V3_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-v3.xml");
-            else if (normalized.StartsWith(CORE_SPEC_DICOMVS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "core-valuesets-dicom.xml");
+                return readXmlEntryFromCoreBundle(artifactId, "v3-codesystems.xml");
             else
-                throw Error.NotImplemented("Url {0} was recognized as a core artifact, but I don't know where to locate it within validation.zip", normalized);
+                return readXmlEntryFromCoreBundle(artifactId, "valuesets.xml"); 
         }
 
         public static readonly XName ENTRY_CONTENT = XmlNs.XATOM + "content";

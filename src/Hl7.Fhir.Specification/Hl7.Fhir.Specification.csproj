@@ -130,18 +130,6 @@
       <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Specification\Source\core-conformances-base.xml" />
-    <Content Include="Specification\Source\core-profiles-datatypes.xml" />
-    <Content Include="Specification\Source\core-profiles-resources.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Specification\Source\core-valuesets-dicom.xml" />
-    <Content Include="Specification\Source\core-valuesets-fhir.xml" />
-    <Content Include="Specification\Source\core-valuesets-v2.xml" />
-    <Content Include="Specification\Source\core-valuesets-v3.xml" />
-    <Content Include="Specification\Source\README.txt" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

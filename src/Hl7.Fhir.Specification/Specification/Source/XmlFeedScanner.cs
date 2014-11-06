@@ -33,31 +33,49 @@ namespace Hl7.Fhir.Specification.Source
             _input = stream;
         }
 
-        // Scan a supplied bundle (atom) file with the core artifacts for an entry with the given uri
+        /// <summary>
+        /// Scan a supplied bundle (atom) file with the core artifacts for an entry with an id equal to the given uri 
+        /// </summary>
+        /// <param name="entryUri"></param>
+        /// <returns></returns>
         public XElement FindEntryById(Uri entryUri)
         {
             if(entryUri == null) throw Error.ArgumentNull("entryUri");
 
-            var entryId = entryUri.ToString();
-
-            if(_input.Position != 0)
-            {
-                if(_input.CanSeek)
-                    _input.Seek(0,SeekOrigin.Begin);
-                else
-                    throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
-            }
-                
-            var reader = XmlReader.Create(_input);
+            var reader = xmlReaderFromStream(_input);
+            var entries = streamFeedEntries(reader);
 
             // We're a bit lenient here, but find 0..1 entry which has ANY entry.id that
             // matches the artifactId we're looking for
-            var entries = streamFeedEntries(reader);
+            var entryId = entryUri.ToString();
             var matchingEntry = entries
-                    .SingleOrDefault(entry => entry.Elements(ENTRY_ID)
-                        .Any(idElem => idElem.Value == entryId));
+                    .SingleOrDefault(entry => entry.Elements(ENTRY_ID).Any(idElem => idElem.Value == entryId));
 
             return matchingEntry;
+        }
+
+
+        public IEnumerable<string> ListEntryIds()
+        {
+            var reader = xmlReaderFromStream(_input);
+            var entries = streamFeedEntries(reader);
+
+            return entries.Elements(ENTRY_ID).Select(idElem => idElem.Value);
+        }
+
+
+        private static XmlReader xmlReaderFromStream(Stream input)
+        {
+            if (input.Position != 0)
+            {
+                if (input.CanSeek)
+                    input.Seek(0, SeekOrigin.Begin);
+                else
+                    throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
+            }
+
+            var reader = XmlReader.Create(input);
+            return reader;
         }
 
 
