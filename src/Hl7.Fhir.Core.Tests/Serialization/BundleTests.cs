@@ -345,7 +345,8 @@ namespace Hl7.Fhir.Tests.Serialization
            @"<id>http://test.com/fhir/binary/@99</id><updated>2012-10-31T13:04:14Z</updated><published>2012-11-02T14:17:21Z</published>" +
            @"<link rel=""self"" href=""http://test.com/fhir/binary/@99/history/@1"" />" +
            @"<content type=""text/xml"">" +
-           @"<Binary contentType=""application/x-test"" xmlns=""http://hl7.org/fhir"">AAECAw==</Binary></content><summary type=""xhtml""><div xmlns=""http://www.w3.org/1999/xhtml"">" +
+           @"<Binary xmlns=""http://hl7.org/fhir""><contentType value=""application/x-test"" /><content value=""AAECAw=="" /></Binary>" +
+           @"</content><summary type=""xhtml""><div xmlns=""http://www.w3.org/1999/xhtml"">" +
            @"Binary content (mediatype application/x-test)</div></summary></entry>";
 
         private static string testBundleAsXml =

@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Rest
 			System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint.OriginalString);
 		}
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), Ignore]
         public void FetchConformance()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void ReadWithFormat()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(client.HitAfterRequest);
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void ReadCallsHookedEvents()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void Read()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void Search()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
      
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void ReadTags()
         {
             FhirClient client = new FhirClient(testEndpoint);
