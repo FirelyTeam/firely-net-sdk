@@ -54,9 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSchemaCollectionValidation()
         {
-            // This kind of test is also done in Introspection/SchemaCollectionTest....
-
-            var s = File.ReadAllText(@"TestData\TestPatient.xml");
+            var s = File.ReadAllText(@"TestData\example-lipid-profile-testmessage.xml");
             var doc = XDocument.Parse(s);
 
             bool hasError = false;

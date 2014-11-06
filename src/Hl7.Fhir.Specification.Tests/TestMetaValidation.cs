@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
             spec = Factory.GetProfileSpec(expand: true, online: false);
         }
        
-        [TestMethod,Ignore]
+        [TestMethod]
         public void LipidProfile()
         {
             var resource = Factory.LoadResource("TestData\\lipid.profile.xml");

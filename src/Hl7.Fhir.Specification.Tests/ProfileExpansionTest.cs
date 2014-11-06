@@ -61,9 +61,9 @@ namespace Hl7.Fhir.Specification.Tests
         public void MakeDifferentialTree()
         {
             var struc = new Profile.ProfileStructureComponent();
-            struc.Snapshot = new Profile.ConstraintComponent();
-            struc.Snapshot.Element = new List<Profile.ElementComponent>();
-            var e = struc.Snapshot.Element;
+            struc.Differential = new Profile.ConstraintComponent();
+            struc.Differential.Element = new List<Profile.ElementComponent>();
+            var e = struc.Differential.Element;
 
             e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
             e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
@@ -139,9 +139,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.ExpandElement(loader));
             Assert.IsTrue(nav.MoveToChild("period"));
 
-            nav.JumpToFirst("Profile.extensionDefn.definition");
+            nav.JumpToFirst("Profile.structure.differential");
             Assert.IsTrue(nav.ExpandElement(loader));
-            Assert.IsTrue(nav.MoveToChild("max"));
+            Assert.IsTrue(nav.MoveToChild("element"));
         }
 
     }

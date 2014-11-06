@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class TestExtensions
     {
-        [TestMethod,Ignore]
+        [TestMethod]
         public void Extensions()
         {
             SpecificationWorkspace spec = Factory.GetExtendedPatientSpec(expand: false, online: false);

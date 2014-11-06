@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
             spec =  builder.ToSpecification();
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void CorrectFixedValue()
         {
             var resource = Factory.LoadResource("TestData\\lipid.fixvalue.xml");
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(report.IsValid);
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void IncorrectFixedValue()
         {
             var resource = Factory.LoadResource("TestData\\lipid.fixvalue.wrong.xml");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void SlicingValid()
         {
             var resource = Factory.LoadResource("TestData\\lipid.slice.valid.xml");
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void SlicingInvalid()
         {
             var resource = Factory.LoadResource("TestData\\lipid.slice.invalid.xml");

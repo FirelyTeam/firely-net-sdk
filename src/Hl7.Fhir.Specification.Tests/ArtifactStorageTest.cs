@@ -192,7 +192,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(dt is Profile);
         }
 
-        [TestMethod]
+        //Re-enable when servers support DSTU2
+        [TestMethod,Ignore]
         public void RetrieveWebArtifact()
         {
             var wa = new WebArtifactSource();
@@ -221,11 +222,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
 
-            var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+            //TODO: Re-enable when servers support DSTU2
 
-            Assert.IsNotNull(artifact);
-            Assert.IsTrue(artifact is Profile);
-            Assert.AreEqual("alert", ((Profile)artifact).Name);
+            //var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+
+            //Assert.IsNotNull(artifact);
+            //Assert.IsTrue(artifact is Profile);
+            //Assert.AreEqual("alert", ((Profile)artifact).Name);
         }
 
         [TestMethod]

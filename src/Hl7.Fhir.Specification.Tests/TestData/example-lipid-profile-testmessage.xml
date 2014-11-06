@@ -1,6 +1,4 @@
-﻿<feed xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.w3.org/2005/Atom file:/C:/SVN/FHIR-DSTU/schema/fhir-atom.xsd"
- xmlns="http://www.w3.org/2005/Atom">
+﻿<feed xmlns="http://www.w3.org/2005/Atom">
     <title>A sample FHIR diagnostic report message</title>
     <id>urn:uuid:612bee81-d973-4afe-b592-d39fe71e39</id>
     <updated>2014-09-08T11:34:00+02:00</updated> 

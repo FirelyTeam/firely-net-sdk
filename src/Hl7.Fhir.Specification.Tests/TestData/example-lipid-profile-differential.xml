@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://hl7.org/fhir schemas/profile.xsd" xmlns="http://hl7.org/fhir">
+<Profile xmlns="http://hl7.org/fhir">
   <url value="http://hl7.org/fhir/Profile/example-lipid-profile-differential"/>
   <identifier>
     <system value="urn:ietf:rfc:3986"/>

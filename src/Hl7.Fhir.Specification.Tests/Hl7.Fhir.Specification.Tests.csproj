@@ -120,7 +120,9 @@
     <Content Include="TestData\example-lipid-profile-differential.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\example-lipid-profile-testmessage.xml" />
+    <Content Include="TestData\example-lipid-profile-testmessage.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\example-lipid-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
