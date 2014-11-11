@@ -9,7 +9,7 @@ The documentation is currently under construction. As of april 2014, we have:
 * Working with the FhirClient
 	* [Creating, updating and deleting resources][clientcrud] 
 	* [Searching for resources][clientsearch]
-	* Getting history (previous versions)
+	* [Getting history (previous versions)][clienthistory]
 	* Tag operations
 	* [Validating instances][validation]
 * The FHIR Model
@@ -31,4 +31,5 @@ The documentation is currently under construction. As of april 2014, we have:
 [clientcrud]: client-crud.html
 [validation]: validation.html
 [clientsearch]: client-search.html
+[clienthistory]: client-history.html
 [FHIR artifacts]: artifacts.html
