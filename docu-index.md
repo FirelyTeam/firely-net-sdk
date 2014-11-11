@@ -7,6 +7,7 @@ The documentation is currently under construction. As of april 2014, we have:
 
 * [Overview] of the supplied assemblies
 * Working with the FhirClient
+	* [Setting up a FhirClient][clientsetup]
 	* [Creating, updating and deleting resources][clientcrud] 
 	* [Searching for resources][clientsearch]
 	* [Getting history (previous versions)][clienthistory]
@@ -26,10 +27,11 @@ The documentation is currently under construction. As of april 2014, we have:
 
 
 [Overview]: assemblies-overview.html
-[tagsbundles]: tags-in-bundles.html
-[ResourceIdentity]: resource-identity.html
+[clientsetup]: client-setup.html
 [clientcrud]: client-crud.html
-[validation]: validation.html
 [clientsearch]: client-search.html
 [clienthistory]: client-history.html
+[validation]: validation.html
+[tagsbundles]: tags-in-bundles.html
+[ResourceIdentity]: resource-identity.html
 [FHIR artifacts]: artifacts.html

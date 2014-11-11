@@ -3,17 +3,10 @@ layout: default
 title: Doing basic CRUD with FhirClient
 ---
 
-### Create a FhirClient
-Before we do anything else, we have to create a new FhirClient. This is done by passing the url of the FHIR server's endpoint as a parameter to the constructor:
-
-```csharp
-var client = new FhirClient("http://spark.furore.com/fhir");
-```
-
-You'll create an instance of a client for every server you want to work with. In fact, every call we'll do on this client will be for resources and operations on this server. Since resources may reference other resources on a different FHIR server, you'll have to inspect any references and direct them to the right FhirClient. Of course, if you're dealing with a single server within your organization or a single cloud-based FHIR server, you don't have to worry about this.
+A FhirClient named `client` has been setup in the previous topic, now let's do something with it.
 
 ### Create a new Resource
-Next, assume we have created a new `Patient` and now we want to ask the server to store it for us. This is done using `Create()`:
+Assume we have created a new `Patient` and now we want to ask the server to store it for us. This is done using `Create()`:
 
 ```csharp
 var pat = new Patient() { /* set up data */ };
