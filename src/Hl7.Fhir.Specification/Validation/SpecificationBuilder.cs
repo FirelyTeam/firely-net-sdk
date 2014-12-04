@@ -18,6 +18,7 @@ namespace Hl7.Fhir.Profiling
     using Hl7.Fhir.Specification.Model;
     using Model = Hl7.Fhir.Model;
     
+    
     public class SpecificationBuilder
     {
         public SpecificationBuilder(SpecificationProvider provider)

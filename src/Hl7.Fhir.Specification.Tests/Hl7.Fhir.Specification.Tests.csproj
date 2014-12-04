@@ -66,15 +66,19 @@
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TestUnresolvedValidation.cs" />
     <Compile Include="TestValidation.cs" />
-    <Compile Include="Factory.cs" />
+    <Compile Include="TestProvider.cs" />
     <Compile Include="TestMetaValidation.cs" />
     <Compile Include="TypeRefUniform.cs" />
     <Compile Include="TestSlicing.cs" />
+    <Compile Include="TestValuesets.cs" />
     <Compile Include="ValidationAnalysis.cs" />
     <Compile Include="XsltContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestData\dunmail.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\message_false_SlicingExtensionTestProfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

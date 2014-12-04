@@ -14,13 +14,13 @@ namespace Fhir.Profiling.Tests
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            spec = Factory.GetProfileSpec(expand: true, online: false);
+            spec = SpecificationFactory.Create("http://hl7.org/fhir/Profile/Profile");
         }
        
         [TestMethod,Ignore]
         public void LipidProfile()
         {
-            var resource = Factory.LoadResource("TestData\\lipid.profile.xml");
+            var resource = TestProvider.LoadResource("TestData\\lipid.profile.xml");
             Report report = Validation.Validate(resource);
 
             var errors = report.Errors.ToList();

@@ -10,6 +10,7 @@ namespace Hl7.Fhir.Profiling
 {
     using Hl7.Fhir.Specification.Model;
     using Model = Hl7.Fhir.Model;
+    
 
     public class SpecificationProvider
     {
@@ -110,13 +111,14 @@ namespace Hl7.Fhir.Profiling
         public ValueSet GetValueSet(Uri uri)
         {
             var valueset = source.ReadResourceArtifact(uri) as Model.ValueSet;
-            
+           
             if (valueset != null)
             {
                 ValueSet target = harvester.HarvestValueSet(valueset, uri);
                 return target;
             }
             return null;
+            
         }
 
         public IEnumerable<ValueSet> GetValueSets(IEnumerable<Uri> uris)

@@ -66,13 +66,18 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns></returns>
         public bool IsActual()
         {
+            return false;
+            // todo: Previous logic had loopholes, for example when switching from git branch.
+            // This is only for performance, but the hit is small, so for now it is disabled.
+            /*
             var dir = getCachedZipDirectory();
 
             if (!dir.Exists) return false;
 
             var currentZipFileTime = File.GetLastWriteTimeUtc(_zipPath);
 
-            return dir.CreationTimeUtc >= currentZipFileTime;
+            return (dir.CreationTimeUtc >= currentZipFileTime);
+            */
         }
 
 

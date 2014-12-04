@@ -84,6 +84,7 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Specification\Expansion\StructureExpander.cs" />
     <Compile Include="Specification\Source\StructureLoader.cs" />
+    <Compile Include="Validation\SpecificationFactory.cs" />
     <Compile Include="XPath\NavigatorState.cs" />
     <Compile Include="XPath\JsonXPathNavigator.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />

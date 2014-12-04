@@ -1,4 +1,5 @@
-﻿/*
+﻿using Hl7.Fhir.Model;
+/*
 * Copyright (c) 2014, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *
@@ -78,9 +79,19 @@ namespace Hl7.Fhir.Specification.Model
             return Structures.Where(s => s.Type == name);
         }
 
+        public ValueSet GetValueSetByUri(Uri uri)
+        {
+            foreach(ValueSet valueset in ValueSets)
+            {
+                if (valueset.System == uri) return valueset;
+                
+            }
+            return null;
+        }
+
         public ValueSet GetValueSetByUri(string uri)
         {
-            return ValueSets.FirstOrDefault(v => v.System == uri);
+            return GetValueSetByUri(new Uri(uri));
         }
        
         public Element GetElementByPath(Structure structure, string path)
@@ -216,7 +227,7 @@ namespace Hl7.Fhir.Specification.Model
         {
             get
             {
-                return ValueSets.Select(v => new Uri(v.System));
+                return ValueSets.Select(v => v.System);
             }
         }
 
