@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -27,15 +26,13 @@ namespace Hl7.Fhir.Search
 
 		public static Query For<TResource>(this Query qry)
 		{
-			qry.ResourceType = typeof(TResource).GetCollectionName();
+            qry.ResourceSearchType = ModelInfo.GetResourceNameForType(typeof(TResource));
 			return qry;
 		}
 		
 		public static Query For(this Query qry, string resourceName)
         {
-            qry.ResourceType = resourceName;
-
-            
+            qry.ResourceSearchType = resourceName;
             return qry;
         }
 

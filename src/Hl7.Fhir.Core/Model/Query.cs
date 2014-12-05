@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
         /// across all resources.</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string ResourceType
+        public string ResourceSearchType
         {
             get
             {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DiagnosticOrder", IsResource=true)]
     [DataContract]
-    public partial class DiagnosticOrder : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DiagnosticOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.DiagnosticOrder; } }
+        public override string TypeName { get { return "DiagnosticOrder"; } }
+        
         /// <summary>
         /// The status of a diagnostic order
         /// </summary>
@@ -130,12 +133,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DiagnosticOrderItemComponent")]
         [DataContract]
-        public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DiagnosticOrderItemComponent"; } }
+            
             /// <summary>
             /// Code to indicate the item (test or panel) being ordered
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -148,21 +153,21 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If this item relates to specific specimens
             /// </summary>
-            [FhirElement("specimen", InSummary=true, Order=50)]
+            [FhirElement("specimen", InSummary=true, Order=30)]
             [References("Specimen")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Reference> Specimen
+            public List<Hl7.Fhir.Model.ResourceReference> Specimen
             {
-                get { return _Specimen; }
+                get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
                 set { _Specimen = value; OnPropertyChanged("Specimen"); }
             }
-            private List<Hl7.Fhir.Model.Reference> _Specimen;
+            private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
             
             /// <summary>
             /// Location of requested test (if applicable)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=60)]
+            [FhirElement("bodySite", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {
@@ -174,7 +179,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=70)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
             {
@@ -205,12 +210,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Events specific to this item
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=80)]
+            [FhirElement("event", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
             {
-                get { return _Event; }
+                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
                 set { _Event = value; OnPropertyChanged("Event"); }
             }
             private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
@@ -223,7 +228,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.Reference>(Specimen.DeepCopy());
+                    if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
@@ -273,12 +278,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DiagnosticOrderEventComponent")]
         [DataContract]
-        public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DiagnosticOrderEventComponent"; } }
+            
             /// <summary>
             /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=40)]
+            [FhirElement("status", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
@@ -310,7 +317,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// More information about the event and its context
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Description
             {
@@ -322,7 +329,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The date at which the event happened
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=60)]
+            [FhirElement("dateTime", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -354,15 +361,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who recorded or did this
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=70)]
+            [FhirElement("actor", InSummary=true, Order=50)]
             [References("Practitioner","Device")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Actor
+            public Hl7.Fhir.Model.ResourceReference Actor
             {
                 get { return _Actor; }
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
-            private Hl7.Fhir.Model.Reference _Actor;
+            private Hl7.Fhir.Model.ResourceReference _Actor;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -374,7 +381,7 @@ namespace Hl7.Fhir.Model
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                     if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopy();
                     if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
-                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.Reference)Actor.DeepCopy();
+                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     return dest;
                 }
                 else
@@ -420,39 +427,39 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what test is about
         /// </summary>
-        [FhirElement("subject", Order=60)]
+        [FhirElement("subject", Order=50)]
         [References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Who ordered the test
         /// </summary>
-        [FhirElement("orderer", Order=70)]
+        [FhirElement("orderer", Order=60)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Orderer
+        public Hl7.Fhir.Model.ResourceReference Orderer
         {
             get { return _Orderer; }
             set { _Orderer = value; OnPropertyChanged("Orderer"); }
         }
-        private Hl7.Fhir.Model.Reference _Orderer;
+        private Hl7.Fhir.Model.ResourceReference _Orderer;
         
         /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", Order=80)]
+        [FhirElement("identifier", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -460,20 +467,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter that this diagnostic order is associated with
         /// </summary>
-        [FhirElement("encounter", Order=90)]
+        [FhirElement("encounter", Order=80)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
-        private Hl7.Fhir.Model.Reference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Explanation/Justification for test
         /// </summary>
-        [FhirElement("clinicalNotes", Order=100)]
+        [FhirElement("clinicalNotes", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ClinicalNotesElement
         {
@@ -504,35 +511,35 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting observations or conditions for this request
         /// </summary>
-        [FhirElement("supportingInformation", Order=110)]
+        [FhirElement("supportingInformation", Order=100)]
         [References("Observation","Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> SupportingInformation
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
         {
-            get { return _SupportingInformation; }
+            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
             set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _SupportingInformation;
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
         
         /// <summary>
         /// If the whole order relates to specific specimens
         /// </summary>
-        [FhirElement("specimen", Order=120)]
+        [FhirElement("specimen", Order=110)]
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Specimen
+        public List<Hl7.Fhir.Model.ResourceReference> Specimen
         {
-            get { return _Specimen; }
+            get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Specimen;
+        private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
         
         /// <summary>
         /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
         {
@@ -563,7 +570,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=140)]
+        [FhirElement("priority", Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement
         {
@@ -594,12 +601,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A list of events of interest in the lifecycle
         /// </summary>
-        [FhirElement("event", Order=150)]
+        [FhirElement("event", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
         {
-            get { return _Event; }
+            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
@@ -607,12 +614,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The items the orderer requested
         /// </summary>
-        [FhirElement("item", Order=160)]
+        [FhirElement("item", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> Item
         {
-            get { return _Item; }
+            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent>(); return _Item; }
             set { _Item = value; OnPropertyChanged("Item"); }
         }
         private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> _Item;
@@ -624,13 +631,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
-                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.Reference)Orderer.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.Reference)Encounter.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ClinicalNotesElement != null) dest.ClinicalNotesElement = (Hl7.Fhir.Model.FhirString)ClinicalNotesElement.DeepCopy();
-                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.Reference>(SupportingInformation.DeepCopy());
-                if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.Reference>(Specimen.DeepCopy());
+                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
+                if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>)PriorityElement.DeepCopy();
                 if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());

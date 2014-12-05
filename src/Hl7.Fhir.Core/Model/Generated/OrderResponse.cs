@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("OrderResponse", IsResource=true)]
     [DataContract]
-    public partial class OrderResponse : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OrderResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.OrderResponse; } }
+        public override string TypeName { get { return "OrderResponse"; } }
+        
         /// <summary>
         /// The status of the response to an order
         /// </summary>
@@ -103,12 +106,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -116,21 +119,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The order that this is a response to
         /// </summary>
-        [FhirElement("request", Order=70)]
+        [FhirElement("request", Order=60)]
         [References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Request
+        public Hl7.Fhir.Model.ResourceReference Request
         {
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
-        private Hl7.Fhir.Model.Reference _Request;
+        private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
         /// When the response was made
         /// </summary>
-        [FhirElement("date", Order=80)]
+        [FhirElement("date", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -161,21 +164,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who made the response
         /// </summary>
-        [FhirElement("who", Order=90)]
+        [FhirElement("who", Order=80)]
         [References("Practitioner","Organization","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Who
+        public Hl7.Fhir.Model.ResourceReference Who
         {
             get { return _Who; }
             set { _Who = value; OnPropertyChanged("Who"); }
         }
-        private Hl7.Fhir.Model.Reference _Who;
+        private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
         /// If required by policy
         /// </summary>
-        [FhirElement("authority", Order=100, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Reference))]
+        [FhirElement("authority", Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Authority
         {
@@ -187,7 +190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
         /// </summary>
-        [FhirElement("code", Order=110)]
+        [FhirElement("code", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> CodeElement
@@ -219,7 +222,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional description of the response
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -250,16 +253,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of the outcome of performing the order
         /// </summary>
-        [FhirElement("fulfillment", Order=130)]
+        [FhirElement("fulfillment", Order=120)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Fulfillment
+        public List<Hl7.Fhir.Model.ResourceReference> Fulfillment
         {
-            get { return _Fulfillment; }
+            get { if(_Fulfillment==null) _Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Fulfillment; }
             set { _Fulfillment = value; OnPropertyChanged("Fulfillment"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Fulfillment;
+        private List<Hl7.Fhir.Model.ResourceReference> _Fulfillment;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -269,13 +272,13 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Request != null) dest.Request = (Hl7.Fhir.Model.Reference)Request.DeepCopy();
+                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Who != null) dest.Who = (Hl7.Fhir.Model.Reference)Who.DeepCopy();
+                if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
                 if(Authority != null) dest.Authority = (Hl7.Fhir.Model.Element)Authority.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus>)CodeElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.Reference>(Fulfillment.DeepCopy());
+                if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(Fulfillment.DeepCopy());
                 return dest;
             }
             else

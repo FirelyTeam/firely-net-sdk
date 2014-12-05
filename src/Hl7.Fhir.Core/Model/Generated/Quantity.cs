@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Quantity"; } }
+        
         /// <summary>
         /// How the Quantity should be understood and represented
         /// </summary>
@@ -78,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Numerical value (with implicit precision)
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=40)]
+        [FhirElement("value", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal ValueElement
         {
@@ -109,7 +111,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
         /// </summary>
-        [FhirElement("comparator", InSummary=true, Order=50)]
+        [FhirElement("comparator", InSummary=true, Order=40)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
         {
@@ -140,7 +142,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unit representation
         /// </summary>
-        [FhirElement("units", InSummary=true, Order=60)]
+        [FhirElement("units", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UnitsElement
         {
@@ -171,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// System that defines coded unit form
         /// </summary>
-        [FhirElement("system", InSummary=true, Order=70)]
+        [FhirElement("system", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SystemElement
         {
@@ -202,7 +204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coded form of the unit
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=80)]
+        [FhirElement("code", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Code CodeElement
         {

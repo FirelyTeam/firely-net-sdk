@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -44,10 +44,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Extension : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Extension"; } }
+        
         /// <summary>
         /// identifies the meaning of the extension
         /// </summary>
-        [FhirElement("url", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
+        [FhirElement("url", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [UriPattern]
         [DataMember]
@@ -61,7 +63,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value of extension
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value

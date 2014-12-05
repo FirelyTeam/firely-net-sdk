@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Condition", IsResource=true)]
     [DataContract]
-    public partial class Condition : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Condition; } }
+        public override string TypeName { get { return "Condition"; } }
+        
         /// <summary>
         /// The clinical status of the Condition or diagnosis
         /// </summary>
@@ -75,143 +78,16 @@ namespace Hl7.Fhir.Model
             Refuted,
         }
         
-        /// <summary>
-        /// The type of relationship between a condition and its related item
-        /// </summary>
-        [FhirEnumeration("ConditionRelationshipType")]
-        public enum ConditionRelationshipType
-        {
-            /// <summary>
-            /// this condition follows the identified condition/procedure/substance and is a consequence of it.
-            /// </summary>
-            [EnumLiteral("due-to")]
-            DueTo,
-            /// <summary>
-            /// this condition follows the identified condition/procedure/substance, but it is not known whether they are causually linked.
-            /// </summary>
-            [EnumLiteral("following")]
-            Following,
-        }
-        
-        [FhirType("ConditionRelatedItemComponent")]
-        [DataContract]
-        public partial class ConditionRelatedItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            /// <summary>
-            /// due-to | following
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            private Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> _TypeElement;
-            
-            /// <summary>
-            /// due-to | following
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Condition.ConditionRelationshipType? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TypeElement = null; 
-                    else
-                      TypeElement = new Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
-            /// Relationship target by means of a predefined code
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Relationship target resource
-            /// </summary>
-            [FhirElement("target", InSummary=true, Order=60)]
-            [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
-            [DataMember]
-            public Hl7.Fhir.Model.Reference Target
-            {
-                get { return _Target; }
-                set { _Target = value; OnPropertyChanged("Target"); }
-            }
-            private Hl7.Fhir.Model.Reference _Target;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ConditionRelatedItemComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType>)TypeElement.DeepCopy();
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Reference)Target.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ConditionRelatedItemComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ConditionRelatedItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ConditionRelatedItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("ConditionEvidenceComponent")]
         [DataContract]
-        public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ConditionEvidenceComponent"; } }
+            
             /// <summary>
             /// Manifestation/symptom
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -223,16 +99,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supporting information found elsewhere
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=50)]
+            [FhirElement("detail", InSummary=true, Order=30)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Reference> Detail
+            public List<Hl7.Fhir.Model.ResourceReference> Detail
             {
-                get { return _Detail; }
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
-            private List<Hl7.Fhir.Model.Reference> _Detail;
+            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -242,7 +118,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.Reference>(Detail.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                     return dest;
                 }
                 else
@@ -281,14 +157,172 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ConditionDueToComponent")]
+        [DataContract]
+        public partial class ConditionDueToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            public override string TypeName { get { return "ConditionDueToComponent"; } }
+            
+            /// <summary>
+            /// Relationship target by means of a predefined code
+            /// </summary>
+            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept CodeableConcept
+            {
+                get { return _CodeableConcept; }
+                set { _CodeableConcept = value; OnPropertyChanged("CodeableConcept"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _CodeableConcept;
+            
+            /// <summary>
+            /// Relationship target resource
+            /// </summary>
+            [FhirElement("target", InSummary=true, Order=30)]
+            [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Target;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ConditionDueToComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(CodeableConcept != null) dest.CodeableConcept = (Hl7.Fhir.Model.CodeableConcept)CodeableConcept.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ConditionDueToComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConditionDueToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeableConcept, otherT.CodeableConcept)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ConditionDueToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeableConcept, otherT.CodeableConcept)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ConditionOccurredFollowingComponent")]
+        [DataContract]
+        public partial class ConditionOccurredFollowingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            public override string TypeName { get { return "ConditionOccurredFollowingComponent"; } }
+            
+            /// <summary>
+            /// Relationship target by means of a predefined code
+            /// </summary>
+            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept CodeableConcept
+            {
+                get { return _CodeableConcept; }
+                set { _CodeableConcept = value; OnPropertyChanged("CodeableConcept"); }
+            }
+            private Hl7.Fhir.Model.CodeableConcept _CodeableConcept;
+            
+            /// <summary>
+            /// Relationship target resource
+            /// </summary>
+            [FhirElement("target", InSummary=true, Order=30)]
+            [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Target;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ConditionOccurredFollowingComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(CodeableConcept != null) dest.CodeableConcept = (Hl7.Fhir.Model.CodeableConcept)CodeableConcept.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ConditionOccurredFollowingComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConditionOccurredFollowingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeableConcept, otherT.CodeableConcept)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ConditionOccurredFollowingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeableConcept, otherT.CodeableConcept)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("ConditionStageComponent")]
         [DataContract]
-        public partial class ConditionStageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionStageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ConditionStageComponent"; } }
+            
             /// <summary>
             /// Simple summary (disease specific)
             /// </summary>
-            [FhirElement("summary", InSummary=true, Order=40)]
+            [FhirElement("summary", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Summary
             {
@@ -300,16 +334,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formal record of assessment
             /// </summary>
-            [FhirElement("assessment", InSummary=true, Order=50)]
+            [FhirElement("assessment", InSummary=true, Order=30)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Reference> Assessment
+            public List<Hl7.Fhir.Model.ResourceReference> Assessment
             {
-                get { return _Assessment; }
+                get { if(_Assessment==null) _Assessment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Assessment; }
                 set { _Assessment = value; OnPropertyChanged("Assessment"); }
             }
-            private List<Hl7.Fhir.Model.Reference> _Assessment;
+            private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -319,7 +353,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Summary != null) dest.Summary = (Hl7.Fhir.Model.CodeableConcept)Summary.DeepCopy();
-                    if(Assessment != null) dest.Assessment = new List<Hl7.Fhir.Model.Reference>(Assessment.DeepCopy());
+                    if(Assessment != null) dest.Assessment = new List<Hl7.Fhir.Model.ResourceReference>(Assessment.DeepCopy());
                     return dest;
                 }
                 else
@@ -360,12 +394,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConditionLocationComponent")]
         [DataContract]
-        public partial class ConditionLocationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ConditionLocationComponent"; } }
+            
             /// <summary>
             /// Location - may include laterality
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -377,7 +413,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Precise location details
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=50)]
+            [FhirElement("detail", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailElement
             {
@@ -455,12 +491,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this condition
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -468,47 +504,47 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who has the condition?
         /// </summary>
-        [FhirElement("subject", Order=70)]
+        [FhirElement("subject", Order=60)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("encounter", Order=80)]
+        [FhirElement("encounter", Order=70)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
-        private Hl7.Fhir.Model.Reference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Person who asserts this condition
         /// </summary>
-        [FhirElement("asserter", Order=90)]
+        [FhirElement("asserter", Order=80)]
         [References("Practitioner","Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Asserter
+        public Hl7.Fhir.Model.ResourceReference Asserter
         {
             get { return _Asserter; }
             set { _Asserter = value; OnPropertyChanged("Asserter"); }
         }
-        private Hl7.Fhir.Model.Reference _Asserter;
+        private Hl7.Fhir.Model.ResourceReference _Asserter;
         
         /// <summary>
         /// When first detected/suspected/entered
         /// </summary>
-        [FhirElement("dateAsserted", Order=100)]
+        [FhirElement("dateAsserted", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Date DateAssertedElement
         {
@@ -539,7 +575,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identification of the condition, problem or diagnosis
         /// </summary>
-        [FhirElement("code", Order=110)]
+        [FhirElement("code", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -552,7 +588,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. complaint | symptom | finding | diagnosis
         /// </summary>
-        [FhirElement("category", Order=120)]
+        [FhirElement("category", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -564,7 +600,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// provisional | working | confirmed | refuted
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionStatus> StatusElement
@@ -596,7 +632,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Degree of confidence
         /// </summary>
-        [FhirElement("certainty", Order=140)]
+        [FhirElement("certainty", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Certainty
         {
@@ -608,7 +644,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", Order=150)]
+        [FhirElement("severity", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
@@ -618,10 +654,10 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Severity;
         
         /// <summary>
-        /// Estimated or actual date, or age
+        /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Age))]
+        [FhirElement("onset", Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
         {
@@ -633,7 +669,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", Order=160, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
@@ -646,7 +682,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", Order=180)]
+        [FhirElement("stage", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
         {
@@ -658,12 +694,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", Order=190)]
+        [FhirElement("evidence", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
         {
-            get { return _Evidence; }
+            get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent>(); return _Evidence; }
             set { _Evidence = value; OnPropertyChanged("Evidence"); }
         }
         private List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> _Evidence;
@@ -671,28 +707,41 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("location", Order=200)]
+        [FhirElement("location", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> Location
         {
-            get { return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Condition.ConditionLocationComponent>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         private List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> _Location;
         
         /// <summary>
-        /// Causes or precedents for this Condition
+        /// Causes for this Condition
         /// </summary>
-        [FhirElement("relatedItem", Order=210)]
+        [FhirElement("dueTo", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent> RelatedItem
+        public List<Hl7.Fhir.Model.Condition.ConditionDueToComponent> DueTo
         {
-            get { return _RelatedItem; }
-            set { _RelatedItem = value; OnPropertyChanged("RelatedItem"); }
+            get { if(_DueTo==null) _DueTo = new List<Hl7.Fhir.Model.Condition.ConditionDueToComponent>(); return _DueTo; }
+            set { _DueTo = value; OnPropertyChanged("DueTo"); }
         }
-        private List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent> _RelatedItem;
+        private List<Hl7.Fhir.Model.Condition.ConditionDueToComponent> _DueTo;
+        
+        /// <summary>
+        /// Precedent for this Condition
+        /// </summary>
+        [FhirElement("occurredFollowing", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent> OccurredFollowing
+        {
+            get { if(_OccurredFollowing==null) _OccurredFollowing = new List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent>(); return _OccurredFollowing; }
+            set { _OccurredFollowing = value; OnPropertyChanged("OccurredFollowing"); }
+        }
+        private List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent> _OccurredFollowing;
         
         /// <summary>
         /// Additional information about the Condition
@@ -733,9 +782,9 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.Reference)Encounter.DeepCopy();
-                if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.Reference)Asserter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
                 if(DateAssertedElement != null) dest.DateAssertedElement = (Hl7.Fhir.Model.Date)DateAssertedElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
@@ -747,7 +796,8 @@ namespace Hl7.Fhir.Model
                 if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.ConditionStageComponent)Stage.DeepCopy();
                 if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent>(Evidence.DeepCopy());
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Condition.ConditionLocationComponent>(Location.DeepCopy());
-                if(RelatedItem != null) dest.RelatedItem = new List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent>(RelatedItem.DeepCopy());
+                if(DueTo != null) dest.DueTo = new List<Hl7.Fhir.Model.Condition.ConditionDueToComponent>(DueTo.DeepCopy());
+                if(OccurredFollowing != null) dest.OccurredFollowing = new List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent>(OccurredFollowing.DeepCopy());
                 if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
                 return dest;
             }
@@ -781,7 +831,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Stage, otherT.Stage)) return false;
             if( !DeepComparable.Matches(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-            if( !DeepComparable.Matches(RelatedItem, otherT.RelatedItem)) return false;
+            if( !DeepComparable.Matches(DueTo, otherT.DueTo)) return false;
+            if( !DeepComparable.Matches(OccurredFollowing, otherT.OccurredFollowing)) return false;
             if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
             
             return true;
@@ -808,7 +859,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Stage, otherT.Stage)) return false;
             if( !DeepComparable.IsExactly(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-            if( !DeepComparable.IsExactly(RelatedItem, otherT.RelatedItem)) return false;
+            if( !DeepComparable.IsExactly(DueTo, otherT.DueTo)) return false;
+            if( !DeepComparable.IsExactly(OccurredFollowing, otherT.OccurredFollowing)) return false;
             if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
             
             return true;

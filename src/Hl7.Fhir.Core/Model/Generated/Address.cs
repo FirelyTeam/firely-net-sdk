@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Address : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Address"; } }
+        
         /// <summary>
         /// The use of an address
         /// </summary>
@@ -78,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// home | work | temp | old - purpose of this address
         /// </summary>
-        [FhirElement("use", InSummary=true, Order=40)]
+        [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
         {
@@ -109,7 +111,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text representation of the address
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=50)]
+        [FhirElement("text", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {
@@ -140,12 +142,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Street name, number, direction &amp; P.O. Box etc
         /// </summary>
-        [FhirElement("line", InSummary=true, Order=60)]
+        [FhirElement("line", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> LineElement
         {
-            get { return _LineElement; }
+            get { if(_LineElement==null) _LineElement = new List<Hl7.Fhir.Model.FhirString>(); return _LineElement; }
             set { _LineElement = value; OnPropertyChanged("LineElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _LineElement;
@@ -172,7 +174,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of city, town etc.
         /// </summary>
-        [FhirElement("city", InSummary=true, Order=70)]
+        [FhirElement("city", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CityElement
         {
@@ -203,7 +205,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sub-unit of country (abreviations ok)
         /// </summary>
-        [FhirElement("state", InSummary=true, Order=80)]
+        [FhirElement("state", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString StateElement
         {
@@ -234,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Postal code for area
         /// </summary>
-        [FhirElement("postalCode", InSummary=true, Order=90)]
+        [FhirElement("postalCode", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PostalCodeElement
         {
@@ -265,7 +267,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Country (can be ISO 3166 3 letter code)
         /// </summary>
-        [FhirElement("country", InSummary=true, Order=100)]
+        [FhirElement("country", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CountryElement
         {
@@ -296,7 +298,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when address was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Time : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "time"; } }
+        
         // Must conform to the pattern "([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?"
         public const string PATTERN = @"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?";
         
@@ -60,7 +62,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
         [DataMember]
         public string Value
         {

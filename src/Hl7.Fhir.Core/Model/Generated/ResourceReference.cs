@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -36,21 +36,23 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 10:39+0100 for FHIR v0.0.82
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// A reference from one resource to another
     /// </summary>
-    [FhirType("ResourceReference")]
+    [FhirType("Reference")]
     [DataContract]
     public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Reference"; } }
+        
         /// <summary>
         /// Relative, internal or absolute URL reference
         /// </summary>
-        [FhirElement("reference", InSummary=true, Order=40)]
+        [FhirElement("reference", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReferenceElement
         {
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=50)]
+        [FhirElement("display", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {

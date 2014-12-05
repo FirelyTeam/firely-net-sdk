@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Coding"; } }
+        
         /// <summary>
         /// Identity of the terminology system
         /// </summary>
-        [FhirElement("system", InSummary=true, Order=40)]
+        [FhirElement("system", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SystemElement
         {
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version of the system - if relevant
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=50)]
+        [FhirElement("version", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -112,7 +114,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Symbol in syntax defined by the system
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=60)]
+        [FhirElement("code", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Code CodeElement
         {
@@ -143,7 +145,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Representation defined by the system
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=70)]
+        [FhirElement("display", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -174,7 +176,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this code was chosen directly by the user
         /// </summary>
-        [FhirElement("primary", InSummary=true, Order=80)]
+        [FhirElement("primary", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean PrimaryElement
         {
@@ -205,15 +207,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Set this coding was chosen from
         /// </summary>
-        [FhirElement("valueSet", InSummary=true, Order=90)]
+        [FhirElement("valueSet", InSummary=true, Order=80)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference ValueSet
+        public Hl7.Fhir.Model.ResourceReference ValueSet
         {
             get { return _ValueSet; }
             set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
         }
-        private Hl7.Fhir.Model.Reference _ValueSet;
+        private Hl7.Fhir.Model.ResourceReference _ValueSet;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -227,7 +229,7 @@ namespace Hl7.Fhir.Model
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 if(PrimaryElement != null) dest.PrimaryElement = (Hl7.Fhir.Model.FhirBoolean)PrimaryElement.DeepCopy();
-                if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Reference)ValueSet.DeepCopy();
+                if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.ResourceReference)ValueSet.DeepCopy();
                 return dest;
             }
             else

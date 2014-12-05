@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Questionnaire", IsResource=true)]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
+        public override string TypeName { get { return "Questionnaire"; } }
+        
         /// <summary>
         /// Lifecycle status of the questionnaire
         /// </summary>
@@ -150,12 +153,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QuestionComponent")]
         [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "QuestionComponent"; } }
+            
             /// <summary>
             /// To link questionnaire with questionnaire answers
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=40)]
+            [FhirElement("linkId", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -184,14 +189,14 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Concept that represents this section on a questionnaire
+            /// Concept that represents this question on a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=50)]
+            [FhirElement("concept", InSummary=true, Order=30)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
             {
-                get { return _Concept; }
+                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
             private List<Hl7.Fhir.Model.Coding> _Concept;
@@ -199,7 +204,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text of the question as it is shown to the user
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
+            [FhirElement("text", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -230,7 +235,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// boolean | decimal | integer | date | dateTime +
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> TypeElement
             {
@@ -261,7 +266,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Must group be included in data results?
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=80)]
+            [FhirElement("required", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -292,7 +297,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group may repeat
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=90)]
+            [FhirElement("repeats", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -323,25 +328,25 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Valueset containing the possible options
             /// </summary>
-            [FhirElement("options", InSummary=true, Order=100)]
+            [FhirElement("options", InSummary=true, Order=80)]
             [References("ValueSet")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Options
+            public Hl7.Fhir.Model.ResourceReference Options
             {
                 get { return _Options; }
                 set { _Options = value; OnPropertyChanged("Options"); }
             }
-            private Hl7.Fhir.Model.Reference _Options;
+            private Hl7.Fhir.Model.ResourceReference _Options;
             
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=110)]
+            [FhirElement("group", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
             {
-                get { return _Group; }
+                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
@@ -359,7 +364,7 @@ namespace Hl7.Fhir.Model
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat>)TypeElement.DeepCopy();
                     if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
                     if(RepeatsElement != null) dest.RepeatsElement = (Hl7.Fhir.Model.FhirBoolean)RepeatsElement.DeepCopy();
-                    if(Options != null) dest.Options = (Hl7.Fhir.Model.Reference)Options.DeepCopy();
+                    if(Options != null) dest.Options = (Hl7.Fhir.Model.ResourceReference)Options.DeepCopy();
                     if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(Group.DeepCopy());
                     return dest;
                 }
@@ -413,12 +418,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "GroupComponent"; } }
+            
             /// <summary>
             /// To link questionnaire with questionnaire answers
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=40)]
+            [FhirElement("linkId", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -449,7 +456,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name to be displayed for group
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=50)]
+            [FhirElement("title", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -480,12 +487,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Concept that represents this section on a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=60)]
+            [FhirElement("concept", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
             {
-                get { return _Concept; }
+                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
             private List<Hl7.Fhir.Model.Coding> _Concept;
@@ -493,7 +500,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional text for the group
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=70)]
+            [FhirElement("text", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -524,7 +531,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Must group be included in data results?
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=80)]
+            [FhirElement("required", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -555,7 +562,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group may repeat
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=90)]
+            [FhirElement("repeats", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -586,12 +593,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=100)]
+            [FhirElement("group", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
             {
-                get { return _Group; }
+                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
@@ -599,12 +606,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", InSummary=true, Order=110)]
+            [FhirElement("question", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question
             {
-                get { return _Question; }
+                get { if(_Question==null) _Question = new List<Hl7.Fhir.Model.Questionnaire.QuestionComponent>(); return _Question; }
                 set { _Question = value; OnPropertyChanged("Question"); }
             }
             private List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> _Question;
@@ -677,12 +684,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this questionnaire
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -690,7 +697,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of Questionnaire
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=70)]
+        [FhirElement("version", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -721,7 +728,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | published | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=80)]
+        [FhirElement("status", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> StatusElement
@@ -753,7 +760,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=90)]
+        [FhirElement("date", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -784,7 +791,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization who designed the questionnaire
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=100)]
+        [FhirElement("publisher", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -815,7 +822,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=110)]
+        [FhirElement("group", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Questionnaire.GroupComponent Group

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class SampledData : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "SampledData"; } }
+        
         /// <summary>
         /// Zero value and units
         /// </summary>
-        [FhirElement("origin", InSummary=true, Order=40)]
+        [FhirElement("origin", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Origin
@@ -63,7 +65,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of milliseconds between samples
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=50)]
+        [FhirElement("period", InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal PeriodElement
@@ -95,7 +97,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Multiply data by this before adding to origin
         /// </summary>
-        [FhirElement("factor", InSummary=true, Order=60)]
+        [FhirElement("factor", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal FactorElement
         {
@@ -126,7 +128,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Lower limit of detection
         /// </summary>
-        [FhirElement("lowerLimit", InSummary=true, Order=70)]
+        [FhirElement("lowerLimit", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal LowerLimitElement
         {
@@ -157,7 +159,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit of detection
         /// </summary>
-        [FhirElement("upperLimit", InSummary=true, Order=80)]
+        [FhirElement("upperLimit", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal UpperLimitElement
         {
@@ -188,7 +190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of sample points at each time point
         /// </summary>
-        [FhirElement("dimensions", InSummary=true, Order=90)]
+        [FhirElement("dimensions", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Integer DimensionsElement
@@ -220,7 +222,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=100)]
+        [FhirElement("data", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DataElement

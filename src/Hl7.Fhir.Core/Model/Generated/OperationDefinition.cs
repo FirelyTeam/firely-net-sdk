@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("OperationDefinition", IsResource=true)]
     [DataContract]
-    public partial class OperationDefinition : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.OperationDefinition; } }
+        public override string TypeName { get { return "OperationDefinition"; } }
+        
         /// <summary>
         /// Whether an operation parameter is an input or an output parameter
         /// </summary>
@@ -83,14 +86,16 @@ namespace Hl7.Fhir.Model
             Query,
         }
         
-        [FhirType("OperationDefinitionParameterComponent")]
+        [FhirType("OperationDefinitionParameterPartComponent")]
         [DataContract]
-        public partial class OperationDefinitionParameterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationDefinitionParameterPartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "OperationDefinitionParameterPartComponent"; } }
+            
             /// <summary>
             /// Name of the parameter
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code NameElement
@@ -120,41 +125,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// in | out
-            /// </summary>
-            [FhirElement("use", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> UseElement
-            {
-                get { return _UseElement; }
-                set { _UseElement = value; OnPropertyChanged("UseElement"); }
-            }
-            private Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> _UseElement;
-            
-            /// <summary>
-            /// in | out
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.OperationDefinition.OperationParameterUse? Use
-            {
-                get { return UseElement != null ? UseElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UseElement = null; 
-                    else
-                      UseElement = new Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse>(value);
-                    OnPropertyChanged("Use");
-                }
-            }
-            
-            /// <summary>
             /// Minimum Cardinality
             /// </summary>
-            [FhirElement("min", InSummary=true, Order=60)]
+            [FhirElement("min", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer MinElement
@@ -186,7 +159,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Maximum Cardinality (a number or *)
             /// </summary>
-            [FhirElement("max", InSummary=true, Order=70)]
+            [FhirElement("max", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MaxElement
@@ -218,7 +191,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of meaning/use
             /// </summary>
-            [FhirElement("documentation", InSummary=true, Order=80)]
+            [FhirElement("documentation", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DocumentationElement
             {
@@ -249,28 +222,328 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What type this parameter hs
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=90)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Type
+            public Hl7.Fhir.Model.Code TypeElement
             {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
-            private Hl7.Fhir.Model.Coding _Type;
+            private Hl7.Fhir.Model.Code _TypeElement;
+            
+            /// <summary>
+            /// What type this parameter hs
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Type");
+                }
+            }
             
             /// <summary>
             /// Profile on the type
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=100)]
+            [FhirElement("profile", InSummary=true, Order=70)]
             [References("Profile")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
-            private Hl7.Fhir.Model.Reference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OperationDefinitionParameterPartComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Code)NameElement.DeepCopy();
+                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
+                    if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
+                    if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OperationDefinitionParameterPartComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionParameterPartComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
+                if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
+                if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionParameterPartComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
+                if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
+                if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("OperationDefinitionParameterComponent")]
+        [DataContract]
+        public partial class OperationDefinitionParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            public override string TypeName { get { return "OperationDefinitionParameterComponent"; } }
+            
+            /// <summary>
+            /// Name of the parameter
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=20)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            private Hl7.Fhir.Model.Code _NameElement;
+            
+            /// <summary>
+            /// Name of the parameter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// in | out
+            /// </summary>
+            [FhirElement("use", InSummary=true, Order=30)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> UseElement
+            {
+                get { return _UseElement; }
+                set { _UseElement = value; OnPropertyChanged("UseElement"); }
+            }
+            private Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> _UseElement;
+            
+            /// <summary>
+            /// in | out
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.OperationDefinition.OperationParameterUse? Use
+            {
+                get { return UseElement != null ? UseElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UseElement = null; 
+                    else
+                      UseElement = new Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse>(value);
+                    OnPropertyChanged("Use");
+                }
+            }
+            
+            /// <summary>
+            /// Minimum Cardinality
+            /// </summary>
+            [FhirElement("min", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer MinElement
+            {
+                get { return _MinElement; }
+                set { _MinElement = value; OnPropertyChanged("MinElement"); }
+            }
+            private Hl7.Fhir.Model.Integer _MinElement;
+            
+            /// <summary>
+            /// Minimum Cardinality
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Min
+            {
+                get { return MinElement != null ? MinElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      MinElement = null; 
+                    else
+                      MinElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Min");
+                }
+            }
+            
+            /// <summary>
+            /// Maximum Cardinality (a number or *)
+            /// </summary>
+            [FhirElement("max", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString MaxElement
+            {
+                get { return _MaxElement; }
+                set { _MaxElement = value; OnPropertyChanged("MaxElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _MaxElement;
+            
+            /// <summary>
+            /// Maximum Cardinality (a number or *)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Max
+            {
+                get { return MaxElement != null ? MaxElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      MaxElement = null; 
+                    else
+                      MaxElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Max");
+                }
+            }
+            
+            /// <summary>
+            /// Description of meaning/use
+            /// </summary>
+            [FhirElement("documentation", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DocumentationElement
+            {
+                get { return _DocumentationElement; }
+                set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
+            }
+            private Hl7.Fhir.Model.FhirString _DocumentationElement;
+            
+            /// <summary>
+            /// Description of meaning/use
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Documentation
+            {
+                get { return DocumentationElement != null ? DocumentationElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DocumentationElement = null; 
+                    else
+                      DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Documentation");
+                }
+            }
+            
+            /// <summary>
+            /// What type this parameter hs
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            private Hl7.Fhir.Model.Code _TypeElement;
+            
+            /// <summary>
+            /// What type this parameter hs
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Type");
+                }
+            }
+            
+            /// <summary>
+            /// Profile on the type
+            /// </summary>
+            [FhirElement("profile", InSummary=true, Order=80)]
+            [References("Profile")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Profile
+            {
+                get { return _Profile; }
+                set { _Profile = value; OnPropertyChanged("Profile"); }
+            }
+            private Hl7.Fhir.Model.ResourceReference _Profile;
+            
+            /// <summary>
+            /// Parts of a Tuple Parameter
+            /// </summary>
+            [FhirElement("part", InSummary=true, Order=90)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterPartComponent> Part
+            {
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterPartComponent>(); return _Part; }
+                set { _Part = value; OnPropertyChanged("Part"); }
+            }
+            private List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterPartComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -284,8 +557,9 @@ namespace Hl7.Fhir.Model
                     if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.Reference)Profile.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterPartComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else
@@ -308,8 +582,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.Matches(Part, otherT.Part)) return false;
                 
                 return true;
             }
@@ -325,8 +600,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.IsExactly(Part, otherT.Part)) return false;
                 
                 return true;
             }
@@ -337,7 +613,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this operation definition
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri IdentifierElement
         {
@@ -368,7 +644,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of the operation definition
         /// </summary>
-        [FhirElement("version", Order=70)]
+        [FhirElement("version", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -399,7 +675,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Informal name for this profile
         /// </summary>
-        [FhirElement("title", Order=80)]
+        [FhirElement("title", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -431,7 +707,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", Order=90)]
+        [FhirElement("publisher", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -462,12 +738,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", Order=100)]
+        [FhirElement("telecom", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -475,7 +751,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the operation
         /// </summary>
-        [FhirElement("description", Order=110)]
+        [FhirElement("description", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -506,12 +782,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assist with indexing and finding
         /// </summary>
-        [FhirElement("code", Order=120)]
+        [FhirElement("code", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
         {
-            get { return _Code; }
+            get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         private List<Hl7.Fhir.Model.Coding> _Code;
@@ -519,7 +795,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -551,7 +827,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", Order=140)]
+        [FhirElement("experimental", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -582,7 +858,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for this version of the operation definition
         /// </summary>
-        [FhirElement("date", Order=150)]
+        [FhirElement("date", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -613,7 +889,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// operation | query
         /// </summary>
-        [FhirElement("kind", Order=160)]
+        [FhirElement("kind", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.OperationDefinition.OperationKind> KindElement
@@ -645,7 +921,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name used to invoke the operation
         /// </summary>
-        [FhirElement("name", Order=170)]
+        [FhirElement("name", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code NameElement
@@ -677,7 +953,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about use
         /// </summary>
-        [FhirElement("notes", Order=180)]
+        [FhirElement("notes", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {
@@ -708,20 +984,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marks this as a profile of the base
         /// </summary>
-        [FhirElement("base", Order=190)]
+        [FhirElement("base", Order=180)]
         [References("OperationDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Base
+        public Hl7.Fhir.Model.ResourceReference Base
         {
             get { return _Base; }
             set { _Base = value; OnPropertyChanged("Base"); }
         }
-        private Hl7.Fhir.Model.Reference _Base;
+        private Hl7.Fhir.Model.ResourceReference _Base;
         
         /// <summary>
         /// Invoke at the system level?
         /// </summary>
-        [FhirElement("system", Order=200)]
+        [FhirElement("system", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean SystemElement
@@ -753,12 +1029,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Invoke at resource level for these type
         /// </summary>
-        [FhirElement("type", Order=210)]
+        [FhirElement("type", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> TypeElement
         {
-            get { return _TypeElement; }
+            get { if(_TypeElement==null) _TypeElement = new List<Hl7.Fhir.Model.Code>(); return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         private List<Hl7.Fhir.Model.Code> _TypeElement;
@@ -785,7 +1061,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Invoke on an instance?
         /// </summary>
-        [FhirElement("instance", Order=220)]
+        [FhirElement("instance", Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean InstanceElement
@@ -817,12 +1093,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parameters for the operation/query
         /// </summary>
-        [FhirElement("parameter", Order=230)]
+        [FhirElement("parameter", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> Parameter
         {
-            get { return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         private List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> _Parameter;
@@ -847,7 +1123,7 @@ namespace Hl7.Fhir.Model
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.OperationDefinition.OperationKind>)KindElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Code)NameElement.DeepCopy();
                 if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
-                if(Base != null) dest.Base = (Hl7.Fhir.Model.Reference)Base.DeepCopy();
+                if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirBoolean)SystemElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = new List<Hl7.Fhir.Model.Code>(TypeElement.DeepCopy());
                 if(InstanceElement != null) dest.InstanceElement = (Hl7.Fhir.Model.FhirBoolean)InstanceElement.DeepCopy();

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Group", IsResource=true)]
     [DataContract]
-    public partial class Group : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Group : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Group; } }
+        public override string TypeName { get { return "Group"; } }
+        
         /// <summary>
         /// Types of resources that are part of group
         /// </summary>
@@ -87,12 +90,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GroupCharacteristicComponent")]
         [DataContract]
-        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "GroupCharacteristicComponent"; } }
+            
             /// <summary>
             /// Kind of characteristic
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -105,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value held by characteristic
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -119,7 +124,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Group includes or excludes
             /// </summary>
-            [FhirElement("exclude", InSummary=true, Order=60)]
+            [FhirElement("exclude", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExcludeElement
@@ -201,7 +206,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique id
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -213,7 +218,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -245,7 +250,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptive or actual
         /// </summary>
-        [FhirElement("actual", InSummary=true, Order=80)]
+        [FhirElement("actual", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -277,7 +282,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Group members
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=90)]
+        [FhirElement("code", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -289,7 +294,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Label for Group
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -320,7 +325,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of members
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=110)]
+        [FhirElement("quantity", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Integer QuantityElement
         {
@@ -351,12 +356,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trait of group members
         /// </summary>
-        [FhirElement("characteristic", Order=120)]
+        [FhirElement("characteristic", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic
         {
-            get { return _Characteristic; }
+            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(); return _Characteristic; }
             set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
         private List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> _Characteristic;
@@ -364,16 +369,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is in group
         /// </summary>
-        [FhirElement("member", Order=130)]
+        [FhirElement("member", Order=120)]
         [References("Patient","Practitioner","Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Member
+        public List<Hl7.Fhir.Model.ResourceReference> Member
         {
-            get { return _Member; }
+            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.ResourceReference>(); return _Member; }
             set { _Member = value; OnPropertyChanged("Member"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Member;
+        private List<Hl7.Fhir.Model.ResourceReference> _Member;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -389,7 +394,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(Characteristic.DeepCopy());
-                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Reference>(Member.DeepCopy());
+                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.ResourceReference>(Member.DeepCopy());
                 return dest;
             }
             else

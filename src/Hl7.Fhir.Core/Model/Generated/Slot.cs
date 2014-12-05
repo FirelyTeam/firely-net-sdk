@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Slot", IsResource=true)]
     [DataContract]
-    public partial class Slot : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Slot : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Slot; } }
+        public override string TypeName { get { return "Slot"; } }
+        
         /// <summary>
         /// The free/busy status of an appointment
         /// </summary>
@@ -78,12 +81,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -91,7 +94,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -103,21 +106,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The availability resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("availability", Order=80)]
+        [FhirElement("availability", Order=70)]
         [References("Availability")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Availability
+        public Hl7.Fhir.Model.ResourceReference Availability
         {
             get { return _Availability; }
             set { _Availability = value; OnPropertyChanged("Availability"); }
         }
-        private Hl7.Fhir.Model.Reference _Availability;
+        private Hl7.Fhir.Model.ResourceReference _Availability;
         
         /// <summary>
         /// BUSY | FREE | BUSY-UNAVAILABLE | BUSY-TENTATIVE
         /// </summary>
-        [FhirElement("freeBusyType", Order=90)]
+        [FhirElement("freeBusyType", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Slot.SlotStatus> FreeBusyTypeElement
@@ -149,7 +152,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the slot is to begin
         /// </summary>
-        [FhirElement("start", Order=100)]
+        [FhirElement("start", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
@@ -181,7 +184,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the slot is to conclude
         /// </summary>
-        [FhirElement("end", Order=110)]
+        [FhirElement("end", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
@@ -213,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// This slot has already been overbooked, appointments are unlikely to be accepted for this time
         /// </summary>
-        [FhirElement("overbooked", Order=120)]
+        [FhirElement("overbooked", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean OverbookedElement
         {
@@ -244,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the slot to describe any extended information. Such as custom constraints on the slot
         /// </summary>
-        [FhirElement("comment", Order=130)]
+        [FhirElement("comment", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -275,7 +278,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this slot was created, or last revised
         /// </summary>
-        [FhirElement("lastModified", Order=140)]
+        [FhirElement("lastModified", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {
@@ -312,7 +315,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Availability != null) dest.Availability = (Hl7.Fhir.Model.Reference)Availability.DeepCopy();
+                if(Availability != null) dest.Availability = (Hl7.Fhir.Model.ResourceReference)Availability.DeepCopy();
                 if(FreeBusyTypeElement != null) dest.FreeBusyTypeElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>)FreeBusyTypeElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();

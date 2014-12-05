@@ -19,156 +19,103 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class FhirSerializer
+    public class FhirSerializer
     {
-        internal static void Serialize(object instance, IFhirWriter writer, bool summary=false)
-        {
-            new ResourceWriter(writer).Serialize(instance, summary);
-        }
-
-        internal static string SerializeToXml(object instance, bool summary=false)
-        {
-            return xmlWriterToString(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw), summary));
-        }
-
-        internal static string SerializeToJson(object instance, bool summary=false)
-        {
-            return jsonWriterToString(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw), summary));
-        }
-
-        internal static byte[] SerializeToXmlBytes(object instance, bool summary=false)
-        {
-            return xmlWriterToBytes(xw => FhirSerializer.Serialize(instance, new XmlFhirWriter(xw), summary));
-        }
-
-        internal static byte[] SerializeToJsonBytes(object instance, bool summary=false)
-        {
-            return jsonWriterToBytes(jw => FhirSerializer.Serialize(instance, new JsonDomFhirWriter(jw), summary));
-        }
-
-        public static string SerializeResourceToXml(Resource resource, bool summary=false)
+        public string SerializeResourceToXml(Resource resource, bool summary = false)
         {
             return SerializeToXml(resource, summary);
         }
 
-        public static string SerializeTagListToXml(TagList list)
-        {
-            return SerializeToXml(list,false);
-        }
-
-        public static byte[] SerializeResourceToXmlBytes(Resource resource, bool summary=false)
+        public byte[] SerializeResourceToXmlBytes(Resource resource, bool summary = false)
         {
             return SerializeToXmlBytes(resource, summary);
         }
 
-        public static byte[] SerializeTagListToXmlBytes(TagList list)
-        {
-            return SerializeToXmlBytes(list, false);
-        }
-
-        public static string SerializeResourceToJson(Resource resource, bool summary=false)
+        public string SerializeResourceToJson(Resource resource, bool summary = false)
         {
             return SerializeToJson(resource, summary);
         }
 
-        public static string SerializeTagListToJson(TagList list)
-        {
-            return SerializeToJson(list,false);
-        }
-
-        public static byte[] SerializeResourceToJsonBytes(Resource resource, bool summary=false)
+        public byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
         {
             return SerializeToJsonBytes(resource, summary);
         }
 
-        public static byte[] SerializeTagListToJsonBytes(TagList list)
+        public void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
         {
-            return SerializeToJsonBytes(list, false);
+            Serialize(resource, new XmlFhirWriter(writer), summary);
+        }
+
+        public void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
+        {
+            Serialize(resource, new JsonDomFhirWriter(writer), summary);
         }
 
 
-        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary=false)
+        public string SerializeMetaToXml(Resource.ResourceMetaComponent meta)
         {
-            FhirSerializer.Serialize(resource, new JsonDomFhirWriter(writer), summary);
+            throw Error.NotImplemented("Serializing <meta> is not yet implemented");
+            //return SerializeToXml(list,false);
         }
 
-        public static void SerializeTagList(TagList list, JsonWriter jw)
+        public byte[] SerializeMetaToXmlBytes(Resource.ResourceMetaComponent meta)
         {
-            FhirSerializer.Serialize(list, new JsonDomFhirWriter(jw), false);
+            throw Error.NotImplemented("Serializing <meta> is not yet implemented");
+            //return SerializeToXmlBytes(list, false);
         }
 
-        public static void SerializeTagList(TagList list, XmlWriter xw)
+        public string SerializeMetaToJson(Resource.ResourceMetaComponent meta)
         {
-            FhirSerializer.Serialize(list, new XmlFhirWriter(xw), false);
-        }
-
-        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary=false)
-        {
-            FhirSerializer.Serialize(resource, new XmlFhirWriter(writer), summary);
+            throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
+            //return SerializeToJson(list,false);
         }
 
 
-        public static void SerializeBundle(Bundle bundle, JsonWriter writer, bool summary=false)
+        public byte[] SerializeMetaToJsonBytes(Resource.ResourceMetaComponent meta)
         {
-            BundleJsonSerializer.WriteTo(bundle, writer, summary);
+            throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
+            //return SerializeToJsonBytes(list, false);
         }
 
-        public static void SerializeBundle(Bundle bundle, XmlWriter writer, bool summary=false)
+        public void SerializeMeta(Resource.ResourceMetaComponent meta, XmlWriter xw)
         {
-            BundleXmlSerializer.WriteTo(bundle, writer, summary);
+            throw Error.NotImplemented("Serializing <meta> is not yet implemented");
+            //FhirSerializer.Serialize(list, new XmlFhirWriter(xw), false);
         }
 
-        public static string SerializeBundleToJson(Bundle bundle, bool summary=false)
+        public void SerializeMeta(Resource.ResourceMetaComponent meta, JsonWriter jw)
         {
-            return jsonWriterToString(jw => BundleJsonSerializer.WriteTo(bundle, jw, summary));
+            throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
+            //FhirSerializer.Serialize(list, new JsonDomFhirWriter(jw), false);
         }
 
-        public static string SerializeBundleToXml(Bundle bundle, bool summary=false)
+
+        internal void Serialize(Resource instance, IFhirWriter writer, bool summary = false)
         {
-            return xmlWriterToString(xw => BundleXmlSerializer.WriteTo(bundle, xw, summary));
+            new ResourceWriter(writer).Serialize(instance, summary);
         }
 
-        public static byte[] SerializeBundleToJsonBytes(Bundle bundle, bool summary=false)
+        internal string SerializeToXml(Resource instance, bool summary = false)
         {
-            return jsonWriterToBytes(jw => BundleJsonSerializer.WriteTo(bundle, jw, summary));
+            return xmlWriterToString(xw => Serialize(instance, new XmlFhirWriter(xw), summary));
         }
 
-        public static byte[] SerializeBundleToXmlBytes(Bundle bundle, bool summary=false)
+        internal string SerializeToJson(Resource instance, bool summary = false)
         {
-            return xmlWriterToBytes(xw => BundleXmlSerializer.WriteTo(bundle, xw, summary));
+            return jsonWriterToString(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary));
         }
 
-        public static void SerializeBundleEntry(BundleEntry entry, JsonWriter writer, bool summary=false)
+        internal byte[] SerializeToXmlBytes(Resource instance, bool summary = false)
         {
-            BundleJsonSerializer.WriteTo(entry, writer, summary);
+            return xmlWriterToBytes(xw => Serialize(instance, new XmlFhirWriter(xw), summary));
         }
 
-        public static void SerializeBundleEntry(BundleEntry entry, XmlWriter writer, bool summary=false)
+        internal byte[] SerializeToJsonBytes(Resource instance, bool summary = false)
         {
-            BundleXmlSerializer.WriteTo(entry, writer,summary);
+            return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary));
         }
 
-        public static string SerializeBundleEntryToJson(BundleEntry entry, bool summary=false)
-        {
-            return jsonWriterToString(jw=>BundleJsonSerializer.WriteTo(entry, jw, summary));
-        }
-
-        public static string SerializeBundleEntryToXml(BundleEntry entry, bool summary=false)
-        {
-            return xmlWriterToString(xw => BundleXmlSerializer.WriteTo(entry, xw, summary));
-        }
-
-        public static byte[] SerializeBundleEntryToJsonBytes(BundleEntry entry, bool summary=false)
-        {
-            return jsonWriterToBytes(jw => BundleJsonSerializer.WriteTo(entry, jw, summary));
-        }
-
-        public static byte[] SerializeBundleEntryToXmlBytes(BundleEntry entry, bool summary=false)
-        {
-            return xmlWriterToBytes(xw => BundleXmlSerializer.WriteTo(entry, xw, summary));
-        }
-
-        private static byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
+        private byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();
             XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true };
@@ -181,8 +128,7 @@ namespace Hl7.Fhir.Serialization
             return stream.ToArray();
         }
 
-
-        private static byte[] jsonWriterToBytes(Action<JsonWriter> serializer)
+        private byte[] jsonWriterToBytes(Action<JsonWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();
 
@@ -194,7 +140,6 @@ namespace Hl7.Fhir.Serialization
             jw.Flush();
 
             return stream.ToArray();
-
         }
 
         private static string jsonWriterToString(Action<JsonWriter> serializer)

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,17 +45,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Device", IsResource=true)]
     [DataContract]
-    public partial class Device : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Device : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Device; } }
+        public override string TypeName { get { return "Device"; } }
+        
         /// <summary>
         /// Instance id from manufacturer, owner and others
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -63,7 +66,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of device this is
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -76,7 +79,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of device manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=80)]
+        [FhirElement("manufacturer", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ManufacturerElement
         {
@@ -107,7 +110,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Model id assigned by the manufacturer
         /// </summary>
-        [FhirElement("model", Order=90)]
+        [FhirElement("model", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ModelElement
         {
@@ -138,7 +141,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version number (i.e. software)
         /// </summary>
-        [FhirElement("version", Order=100)]
+        [FhirElement("version", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -169,7 +172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date of expiry of this device (if applicable)
         /// </summary>
-        [FhirElement("expiry", Order=110)]
+        [FhirElement("expiry", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Date ExpiryElement
         {
@@ -200,7 +203,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FDA Mandated Unique Device Identifier
         /// </summary>
-        [FhirElement("udi", Order=120)]
+        [FhirElement("udi", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UdiElement
         {
@@ -231,7 +234,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Lot number of manufacture
         /// </summary>
-        [FhirElement("lotNumber", Order=130)]
+        [FhirElement("lotNumber", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LotNumberElement
         {
@@ -262,51 +265,51 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization responsible for device
         /// </summary>
-        [FhirElement("owner", Order=140)]
+        [FhirElement("owner", Order=130)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Owner
+        public Hl7.Fhir.Model.ResourceReference Owner
         {
             get { return _Owner; }
             set { _Owner = value; OnPropertyChanged("Owner"); }
         }
-        private Hl7.Fhir.Model.Reference _Owner;
+        private Hl7.Fhir.Model.ResourceReference _Owner;
         
         /// <summary>
         /// Where the resource is found
         /// </summary>
-        [FhirElement("location", Order=150)]
+        [FhirElement("location", Order=140)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
-        private Hl7.Fhir.Model.Reference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// If the resource is affixed to a person
         /// </summary>
-        [FhirElement("patient", Order=160)]
+        [FhirElement("patient", Order=150)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.Reference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Details for human/organization for support
         /// </summary>
-        [FhirElement("contact", Order=170)]
+        [FhirElement("contact", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
         {
-            get { return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
@@ -314,7 +317,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Network address to contact device
         /// </summary>
-        [FhirElement("url", Order=180)]
+        [FhirElement("url", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -357,9 +360,9 @@ namespace Hl7.Fhir.Model
                 if(ExpiryElement != null) dest.ExpiryElement = (Hl7.Fhir.Model.Date)ExpiryElement.DeepCopy();
                 if(UdiElement != null) dest.UdiElement = (Hl7.Fhir.Model.FhirString)UdiElement.DeepCopy();
                 if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
-                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.Reference)Owner.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.Reference)Location.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
+                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 return dest;

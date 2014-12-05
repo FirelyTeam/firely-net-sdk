@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,16 +45,21 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Organization", IsResource=true)]
     [DataContract]
-    public partial class Organization : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Organization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Organization; } }
+        public override string TypeName { get { return "Organization"; } }
+        
         [FhirType("OrganizationContactComponent")]
         [DataContract]
-        public partial class OrganizationContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class OrganizationContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "OrganizationContactComponent"; } }
+            
             /// <summary>
             /// The type of contact
             /// </summary>
-            [FhirElement("purpose", InSummary=true, Order=40)]
+            [FhirElement("purpose", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Purpose
             {
@@ -66,7 +71,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the contact
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -78,12 +83,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact details (telephone, email, etc)  for a contact
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=60)]
+            [FhirElement("telecom", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
             {
-                get { return _Telecom; }
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -91,7 +96,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Visiting or postal addresses for the contact
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=70)]
+            [FhirElement("address", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {
@@ -103,7 +108,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// male | female | other | unknown
             /// </summary>
-            [FhirElement("gender", InSummary=true, Order=80)]
+            [FhirElement("gender", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
             {
@@ -190,12 +195,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies this organization  across multiple systems
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -203,7 +208,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name used for the organization
         /// </summary>
-        [FhirElement("name", Order=70)]
+        [FhirElement("name", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -234,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of organization
         /// </summary>
-        [FhirElement("type", Order=80)]
+        [FhirElement("type", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -246,12 +251,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=90)]
+        [FhirElement("telecom", Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -259,12 +264,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=100)]
+        [FhirElement("address", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
         {
-            get { return _Address; }
+            get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         private List<Hl7.Fhir.Model.Address> _Address;
@@ -272,25 +277,25 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", Order=110)]
+        [FhirElement("partOf", Order=100)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference PartOf
+        public Hl7.Fhir.Model.ResourceReference PartOf
         {
             get { return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
-        private Hl7.Fhir.Model.Reference _PartOf;
+        private Hl7.Fhir.Model.ResourceReference _PartOf;
         
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=120)]
+        [FhirElement("contact", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> Contact
         {
-            get { return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         private List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> _Contact;
@@ -298,21 +303,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location(s) the organization uses to provide services
         /// </summary>
-        [FhirElement("location", Order=130)]
+        [FhirElement("location", Order=120)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Location
+        public List<Hl7.Fhir.Model.ResourceReference> Location
         {
-            get { return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Location;
+        private List<Hl7.Fhir.Model.ResourceReference> _Location;
         
         /// <summary>
         /// Whether the organization's record is still in active use
         /// </summary>
-        [FhirElement("active", Order=140)]
+        [FhirElement("active", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -352,9 +357,9 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
-                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.Reference)PartOf.DeepCopy();
+                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(Contact.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Reference>(Location.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 return dest;
             }

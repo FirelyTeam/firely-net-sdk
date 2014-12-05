@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Patient", IsResource=true)]
     [DataContract]
-    public partial class Patient : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Patient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Patient; } }
+        public override string TypeName { get { return "Patient"; } }
+        
         /// <summary>
         /// The type of link between this patient resource and another patient resource.
         /// </summary>
@@ -72,17 +75,19 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ContactComponent"; } }
+            
             /// <summary>
             /// The kind of relationship
             /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=40)]
+            [FhirElement("relationship", InSummary=true, Order=20)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Relationship
             {
-                get { return _Relationship; }
+                get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Relationship; }
                 set { _Relationship = value; OnPropertyChanged("Relationship"); }
             }
             private List<Hl7.Fhir.Model.CodeableConcept> _Relationship;
@@ -90,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the person
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -102,12 +107,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A contact detail for the person
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=60)]
+            [FhirElement("telecom", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
             {
-                get { return _Telecom; }
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -115,7 +120,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Address for the contact person
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=70)]
+            [FhirElement("address", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {
@@ -127,7 +132,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// male | female | other | unknown
             /// </summary>
-            [FhirElement("gender", InSummary=true, Order=80)]
+            [FhirElement("gender", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
             {
@@ -158,20 +163,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Organization that is associated with the contact
             /// </summary>
-            [FhirElement("organization", InSummary=true, Order=90)]
+            [FhirElement("organization", InSummary=true, Order=70)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Organization
+            public Hl7.Fhir.Model.ResourceReference Organization
             {
                 get { return _Organization; }
                 set { _Organization = value; OnPropertyChanged("Organization"); }
             }
-            private Hl7.Fhir.Model.Reference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
             /// The period during which this person or organisation is valid to be contacted relating to this patient
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=100)]
+            [FhirElement("period", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -192,7 +197,7 @@ namespace Hl7.Fhir.Model
                     if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                     if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                     if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.Reference)Organization.DeepCopy();
+                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -244,12 +249,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnimalComponent")]
         [DataContract]
-        public partial class AnimalComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "AnimalComponent"; } }
+            
             /// <summary>
             /// E.g. Dog, Cow
             /// </summary>
-            [FhirElement("species", InSummary=true, Order=40)]
+            [FhirElement("species", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Species
@@ -262,7 +269,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. Poodle, Angus
             /// </summary>
-            [FhirElement("breed", InSummary=true, Order=50)]
+            [FhirElement("breed", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Breed
             {
@@ -274,7 +281,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. Neutered, Intact
             /// </summary>
-            [FhirElement("genderStatus", InSummary=true, Order=60)]
+            [FhirElement("genderStatus", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept GenderStatus
             {
@@ -335,26 +342,28 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PatientLinkComponent")]
         [DataContract]
-        public partial class PatientLinkComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class PatientLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "PatientLinkComponent"; } }
+            
             /// <summary>
             /// The other patient resource that the link refers to
             /// </summary>
-            [FhirElement("other", InSummary=true, Order=40)]
+            [FhirElement("other", InSummary=true, Order=20)]
             [References("Patient")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Other
+            public Hl7.Fhir.Model.ResourceReference Other
             {
                 get { return _Other; }
                 set { _Other = value; OnPropertyChanged("Other"); }
             }
-            private Hl7.Fhir.Model.Reference _Other;
+            private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
             /// replace | refer | seealso - type of link
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -390,7 +399,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Other != null) dest.Other = (Hl7.Fhir.Model.Reference)Other.DeepCopy();
+                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopy();
                     return dest;
                 }
@@ -433,12 +442,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the person as this patient
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -446,12 +455,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A name associated with the patient
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=70)]
+        [FhirElement("name", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HumanName> Name
         {
-            get { return _Name; }
+            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         private List<Hl7.Fhir.Model.HumanName> _Name;
@@ -459,12 +468,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the individual
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=80)]
+        [FhirElement("telecom", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -472,7 +481,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=90)]
+        [FhirElement("gender", InSummary=true, Order=80)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -503,7 +512,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date and time of birth for the individual
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=100)]
+        [FhirElement("birthDate", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime BirthDateElement
         {
@@ -534,7 +543,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates if the individual is deceased or not
         /// </summary>
-        [FhirElement("deceased", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
@@ -547,12 +556,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Addresses for the individual
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=120)]
+        [FhirElement("address", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
         {
-            get { return _Address; }
+            get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         private List<Hl7.Fhir.Model.Address> _Address;
@@ -560,7 +569,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marital (civil) status of a person
         /// </summary>
-        [FhirElement("maritalStatus", InSummary=true, Order=130)]
+        [FhirElement("maritalStatus", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept MaritalStatus
         {
@@ -572,7 +581,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether patient is part of a multiple birth
         /// </summary>
-        [FhirElement("multipleBirth", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("multipleBirth", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
         [DataMember]
         public Hl7.Fhir.Model.Element MultipleBirth
@@ -585,12 +594,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=150)]
+        [FhirElement("photo", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
         {
-            get { return _Photo; }
+            get { if(_Photo==null) _Photo = new List<Hl7.Fhir.Model.Attachment>(); return _Photo; }
             set { _Photo = value; OnPropertyChanged("Photo"); }
         }
         private List<Hl7.Fhir.Model.Attachment> _Photo;
@@ -598,12 +607,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact party (e.g. guardian, partner, friend) for the patient
         /// </summary>
-        [FhirElement("contact", Order=160)]
+        [FhirElement("contact", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
         {
-            get { return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         private List<Hl7.Fhir.Model.Patient.ContactComponent> _Contact;
@@ -611,7 +620,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this patient is an animal (non-human)
         /// </summary>
-        [FhirElement("animal", InSummary=true, Order=170)]
+        [FhirElement("animal", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Patient.AnimalComponent Animal
         {
@@ -623,12 +632,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Languages which may be used to communicate with the patient about his or her health
         /// </summary>
-        [FhirElement("communication", Order=180)]
+        [FhirElement("communication", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
         {
-            get { return _Communication; }
+            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Communication; }
             set { _Communication = value; OnPropertyChanged("Communication"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
@@ -636,39 +645,39 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated care provider
         /// </summary>
-        [FhirElement("careProvider", Order=190)]
+        [FhirElement("careProvider", Order=180)]
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> CareProvider
+        public List<Hl7.Fhir.Model.ResourceReference> CareProvider
         {
-            get { return _CareProvider; }
+            get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareProvider; }
             set { _CareProvider = value; OnPropertyChanged("CareProvider"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _CareProvider;
+        private List<Hl7.Fhir.Model.ResourceReference> _CareProvider;
         
         /// <summary>
         /// Organization that is the custodian of the patient record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=200)]
+        [FhirElement("managingOrganization", InSummary=true, Order=190)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
-        private Hl7.Fhir.Model.Reference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=210)]
+        [FhirElement("link", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.PatientLinkComponent> Link
         {
-            get { return _Link; }
+            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         private List<Hl7.Fhir.Model.Patient.PatientLinkComponent> _Link;
@@ -676,7 +685,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether this patient's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=220)]
+        [FhirElement("active", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -724,8 +733,8 @@ namespace Hl7.Fhir.Model
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
-                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.Reference>(CareProvider.DeepCopy());
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.Reference)ManagingOrganization.DeepCopy();
+                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(Link.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 return dest;

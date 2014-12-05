@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DocumentReference", IsResource=true)]
     [DataContract]
-    public partial class DocumentReference : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.DocumentReference; } }
+        public override string TypeName { get { return "DocumentReference"; } }
+        
         /// <summary>
         /// The type of relationship between documents
         /// </summary>
@@ -100,17 +103,19 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DocumentReferenceContextComponent")]
         [DataContract]
-        public partial class DocumentReferenceContextComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentReferenceContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DocumentReferenceContextComponent"; } }
+            
             /// <summary>
             /// Main Clinical Acts Documented
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=40)]
+            [FhirElement("event", InSummary=true, Order=20)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Event
             {
-                get { return _Event; }
+                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Event; }
                 set { _Event = value; OnPropertyChanged("Event"); }
             }
             private List<Hl7.Fhir.Model.CodeableConcept> _Event;
@@ -118,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Time of service that is being documented
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -130,7 +135,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Kind of facility where patient was seen
             /// </summary>
-            [FhirElement("facilityType", InSummary=true, Order=60)]
+            [FhirElement("facilityType", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FacilityType
             {
@@ -191,12 +196,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DocumentReferenceRelatesToComponent")]
         [DataContract]
-        public partial class DocumentReferenceRelatesToComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentReferenceRelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DocumentReferenceRelatesToComponent"; } }
+            
             /// <summary>
             /// replaces | transforms | signs | appends
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType> CodeElement
@@ -228,16 +235,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
+            [FhirElement("target", InSummary=true, Order=30)]
             [References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Target
+            public Hl7.Fhir.Model.ResourceReference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
-            private Hl7.Fhir.Model.Reference _Target;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -247,7 +254,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType>)CodeElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Reference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     return dest;
                 }
                 else
@@ -288,12 +295,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DocumentReferenceServiceParameterComponent")]
         [DataContract]
-        public partial class DocumentReferenceServiceParameterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentReferenceServiceParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DocumentReferenceServiceParameterComponent"; } }
+            
             /// <summary>
             /// Parameter name in service call
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -325,7 +334,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Parameter value for the name
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50)]
+            [FhirElement("value", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
             {
@@ -402,12 +411,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DocumentReferenceServiceComponent")]
         [DataContract]
-        public partial class DocumentReferenceServiceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentReferenceServiceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DocumentReferenceServiceComponent"; } }
+            
             /// <summary>
             /// Type of service (i.e. XDS.b)
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -420,7 +431,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where service is located (usually a URL)
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=50)]
+            [FhirElement("address", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AddressElement
             {
@@ -451,12 +462,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service call parameters
             /// </summary>
-            [FhirElement("parameter", InSummary=true, Order=60)]
+            [FhirElement("parameter", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceParameterComponent> Parameter
             {
-                get { return _Parameter; }
+                get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceParameterComponent>(); return _Parameter; }
                 set { _Parameter = value; OnPropertyChanged("Parameter"); }
             }
             private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceParameterComponent> _Parameter;
@@ -514,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Master Version Specific Identifier
         /// </summary>
-        [FhirElement("masterIdentifier", Order=60)]
+        [FhirElement("masterIdentifier", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -527,12 +538,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other identifiers for the document
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -540,21 +551,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who|what is the subject of the document
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", Order=70)]
         [References("Patient","Practitioner","Group","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// What kind of document this is (LOINC if possible)
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -567,7 +578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Categorization of Document
         /// </summary>
-        [FhirElement("class", Order=100)]
+        [FhirElement("class", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -579,34 +590,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", Order=110)]
+        [FhirElement("author", Order=100)]
         [References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Author
+        public List<Hl7.Fhir.Model.ResourceReference> Author
         {
-            get { return _Author; }
+            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Author;
+        private List<Hl7.Fhir.Model.ResourceReference> _Author;
         
         /// <summary>
         /// Org which maintains the document
         /// </summary>
-        [FhirElement("custodian", Order=120)]
+        [FhirElement("custodian", Order=110)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Custodian
+        public Hl7.Fhir.Model.ResourceReference Custodian
         {
             get { return _Custodian; }
             set { _Custodian = value; OnPropertyChanged("Custodian"); }
         }
-        private Hl7.Fhir.Model.Reference _Custodian;
+        private Hl7.Fhir.Model.ResourceReference _Custodian;
         
         /// <summary>
         /// Manages access policies for the document
         /// </summary>
-        [FhirElement("policyManager", Order=130)]
+        [FhirElement("policyManager", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri PolicyManagerElement
         {
@@ -637,20 +648,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/What authenticated the document
         /// </summary>
-        [FhirElement("authenticator", Order=140)]
+        [FhirElement("authenticator", Order=130)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Authenticator
+        public Hl7.Fhir.Model.ResourceReference Authenticator
         {
             get { return _Authenticator; }
             set { _Authenticator = value; OnPropertyChanged("Authenticator"); }
         }
-        private Hl7.Fhir.Model.Reference _Authenticator;
+        private Hl7.Fhir.Model.ResourceReference _Authenticator;
         
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", Order=150)]
+        [FhirElement("created", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -681,7 +692,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this document reference created
         /// </summary>
-        [FhirElement("indexed", Order=160)]
+        [FhirElement("indexed", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IndexedElement
@@ -713,7 +724,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// current | superceded | entered in error
         /// </summary>
-        [FhirElement("status", Order=170)]
+        [FhirElement("status", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus> StatusElement
@@ -745,7 +756,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// preliminary | final | appended | amended | entered in error
         /// </summary>
-        [FhirElement("docStatus", Order=180)]
+        [FhirElement("docStatus", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DocStatus
         {
@@ -757,12 +768,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", Order=190)]
+        [FhirElement("relatesTo", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> RelatesTo
         {
-            get { return _RelatesTo; }
+            get { if(_RelatesTo==null) _RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent>(); return _RelatesTo; }
             set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
         }
         private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> _RelatesTo;
@@ -770,7 +781,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", Order=200)]
+        [FhirElement("description", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -801,12 +812,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sensitivity of source document
         /// </summary>
-        [FhirElement("confidentiality", Order=210)]
+        [FhirElement("confidentiality", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Confidentiality
         {
-            get { return _Confidentiality; }
+            get { if(_Confidentiality==null) _Confidentiality = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Confidentiality; }
             set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _Confidentiality;
@@ -814,7 +825,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The marked primary language for the document
         /// </summary>
-        [FhirElement("primaryLanguage", Order=220)]
+        [FhirElement("primaryLanguage", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Code PrimaryLanguageElement
         {
@@ -845,7 +856,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Mime type, + maybe character encoding
         /// </summary>
-        [FhirElement("mimeType", Order=230)]
+        [FhirElement("mimeType", Order=220)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code MimeTypeElement
@@ -877,12 +888,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Format/content rules for the document
         /// </summary>
-        [FhirElement("format", Order=240)]
+        [FhirElement("format", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> FormatElement
         {
-            get { return _FormatElement; }
+            get { if(_FormatElement==null) _FormatElement = new List<Hl7.Fhir.Model.FhirUri>(); return _FormatElement; }
             set { _FormatElement = value; OnPropertyChanged("FormatElement"); }
         }
         private List<Hl7.Fhir.Model.FhirUri> _FormatElement;
@@ -909,7 +920,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Size of the document in bytes
         /// </summary>
-        [FhirElement("size", Order=250)]
+        [FhirElement("size", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SizeElement
         {
@@ -940,7 +951,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base64 representation of SHA1
         /// </summary>
-        [FhirElement("hash", Order=260)]
+        [FhirElement("hash", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary HashElement
         {
@@ -971,7 +982,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where to access the document
         /// </summary>
-        [FhirElement("location", Order=270)]
+        [FhirElement("location", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri LocationElement
         {
@@ -1002,7 +1013,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If access is not fully described by location
         /// </summary>
-        [FhirElement("service", Order=280)]
+        [FhirElement("service", Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.DocumentReference.DocumentReferenceServiceComponent Service
         {
@@ -1014,7 +1025,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", Order=290)]
+        [FhirElement("context", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent Context
         {
@@ -1032,13 +1043,13 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(MasterIdentifier != null) dest.MasterIdentifier = (Hl7.Fhir.Model.Identifier)MasterIdentifier.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.Reference>(Author.DeepCopy());
-                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.Reference)Custodian.DeepCopy();
+                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
                 if(PolicyManagerElement != null) dest.PolicyManagerElement = (Hl7.Fhir.Model.FhirUri)PolicyManagerElement.DeepCopy();
-                if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.Reference)Authenticator.DeepCopy();
+                if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.ResourceReference)Authenticator.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>)StatusElement.DeepCopy();

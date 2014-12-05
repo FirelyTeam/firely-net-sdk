@@ -36,90 +36,77 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Basetype for all composite-typed elements
+    /// Base for all elements
     /// </summary>
     [DataContract]
-    public abstract partial class Element : System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class Element : Base
     {
+        public override string TypeName { get { return "Element"; } }
+        
+        /// <summary>
+        /// xml:id (or equivalent in JSON)
+        /// </summary>
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
+        [IdPattern]
+        [DataMember]
+        public string ElementId
+        {
+            get { return _ElementId; }
+            set { _ElementId = value; OnPropertyChanged("ElementId"); }
+        }
+        private string _ElementId;
+        
         /// <summary>
         /// Additional Content defined by implementations
         /// </summary>
-        [FhirElement("extension", Order=10)]
+        [FhirElement("extension", InSummary=true, Order=20)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension
         {
-            get { return _Extension; }
+            get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
         private List<Hl7.Fhir.Model.Extension> _Extension;
         
-        /// <summary>
-        /// Extensions that cannot be ignored
-        /// </summary>
-        [FhirElement("modifierExtension", Order=20)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Extension> ModifierExtension
-        {
-            get { return _ModifierExtension; }
-            set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
-        }
-        private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
-        
-        /// <summary>
-        /// Local id for element
-        /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
-        [IdPattern]
-        [DataMember]
-        public string Id
-        {
-            get { return _Id; }
-            set { _Id = value; OnPropertyChanged("Id"); }
-        }
-        private string _Id;
-        
-        public virtual IDeepCopyable CopyTo(IDeepCopyable other)
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Element;
             
             if (dest != null)
             {
+                base.CopyTo(dest);
+                if(ElementId != null) dest.ElementId = ElementId;
                 if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-                if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
-                if(Id != null) dest.Id = Id;
                 return dest;
             }
             else
             	throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
-        public virtual bool Matches(IDeepComparable other)
+        public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Element;
             if(otherT == null) return false;
             
+            if( ElementId != otherT.ElementId ) return false;
             if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
-            if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
-            if( Id != otherT.Id ) return false;
             
             return true;
         }
         
-        public virtual bool IsExactly(IDeepComparable other)
+        public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Element;
             if(otherT == null) return false;
             
+            if( ElementId != otherT.ElementId ) return false;
             if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
-            if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
-            if( Id != otherT.Id ) return false;
             
             return true;
         }

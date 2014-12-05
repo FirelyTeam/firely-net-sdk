@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Subscription", IsResource=true)]
     [DataContract]
-    public partial class Subscription : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Subscription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Subscription; } }
+        public override string TypeName { get { return "Subscription"; } }
+        
         /// <summary>
         /// The status of a subscription
         /// </summary>
@@ -110,12 +113,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubscriptionChannelComponent")]
         [DataContract]
-        public partial class SubscriptionChannelComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubscriptionChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "SubscriptionChannelComponent"; } }
+            
             /// <summary>
             /// rest-hook | websocket | email | sms | message
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> TypeElement
@@ -147,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the channel points to
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=50)]
+            [FhirElement("url", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
             {
@@ -178,7 +183,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Mimetype to send, or blank for no payload
             /// </summary>
-            [FhirElement("payload", InSummary=true, Order=60)]
+            [FhirElement("payload", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PayloadElement
@@ -210,7 +215,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Usage depends on the channel type
             /// </summary>
-            [FhirElement("header", InSummary=true, Order=70)]
+            [FhirElement("header", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString HeaderElement
             {
@@ -293,12 +298,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubscriptionTagComponent")]
         [DataContract]
-        public partial class SubscriptionTagComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubscriptionTagComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "SubscriptionTagComponent"; } }
+            
             /// <summary>
             /// The term that identifies the tag
             /// </summary>
-            [FhirElement("term", InSummary=true, Order=40)]
+            [FhirElement("term", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri TermElement
@@ -330,7 +337,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The scheme for the tag (kind of tag)
             /// </summary>
-            [FhirElement("scheme", InSummary=true, Order=50)]
+            [FhirElement("scheme", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SchemeElement
@@ -362,7 +369,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Tag description label
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=60)]
+            [FhirElement("description", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -443,7 +450,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Rule for server push criteria
         /// </summary>
-        [FhirElement("criteria", Order=60)]
+        [FhirElement("criteria", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CriteriaElement
@@ -475,12 +482,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for source (e.g. troubleshooting)
         /// </summary>
-        [FhirElement("contact", Order=70)]
+        [FhirElement("contact", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
         {
-            get { return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
@@ -488,7 +495,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of why this subscription was created
         /// </summary>
-        [FhirElement("reason", Order=80)]
+        [FhirElement("reason", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReasonElement
@@ -520,7 +527,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | active | error | off
         /// </summary>
-        [FhirElement("status", Order=90)]
+        [FhirElement("status", Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement
@@ -552,7 +559,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Latest error note
         /// </summary>
-        [FhirElement("error", Order=100)]
+        [FhirElement("error", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ErrorElement
         {
@@ -583,7 +590,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The channel on which to report matches to the criteria
         /// </summary>
-        [FhirElement("channel", Order=110)]
+        [FhirElement("channel", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent Channel
@@ -596,7 +603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When to automatically delete the subscription
         /// </summary>
-        [FhirElement("end", Order=120)]
+        [FhirElement("end", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -627,12 +634,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A tag to add to matching resources
         /// </summary>
-        [FhirElement("tag", Order=130)]
+        [FhirElement("tag", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent> Tag
         {
-            get { return _Tag; }
+            get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent>(); return _Tag; }
             set { _Tag = value; OnPropertyChanged("Tag"); }
         }
         private List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent> _Tag;

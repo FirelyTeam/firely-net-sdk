@@ -35,17 +35,7 @@ namespace Hl7.Fhir.Validation
 
             // Note, if you pass a null validationResults, you will *not* get results (it's not an out param!)
         }
-
-
-        private static void assertSupportedInstanceType(object value)
-        {
-            if (value is Resource || value is Element || value is Bundle || value is ResourceEntry)
-                return;
-
-            else
-                throw new ArgumentException("Validation works on the basic FHIR types, not on '" + value.GetType().Name + "'");
-        }
-
+     
 
         internal static IEnumerable<string> SingleMemberName(string name)
         {

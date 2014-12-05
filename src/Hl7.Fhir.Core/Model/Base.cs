@@ -1,5 +1,5 @@
 ﻿/*
-  Copyright (c) 2011-2013, HL7, Inc.
+  Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -25,64 +25,74 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
   
-
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
+
 
 using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
     [InvokeIValidatableObject]
-    public abstract class BundleEntry : Hl7.Fhir.Validation.IValidatableObject
+    public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable
     {
-        public BundleEntry()
-        {
-            Links = new UriLinkList();
-            Tags = new List<Tag>();
-        }
-
-        [Required]
-        public Uri Id { get; set; }
-        public UriLinkList Links { get; set; }
-        public ICollection<Tag> Tags { get; set; }
-
-        public Uri SelfLink
-        {
-            get { return Links.SelfLink; }
-            set { Links.SelfLink = value; }
-        }
+        public abstract bool IsExactly(IDeepComparable other);
+        public abstract bool Matches(IDeepComparable pattern);
 
         /// <summary>
-        /// Read-only property getting a summary from a Resource or a descriptive text in other cases.
+        /// 
         /// </summary>
-        public abstract string Summary { get; }
+        /// <param name="other"></param>
+        /// <remarks>Does a deep-copy of all elements, except UserData</remarks>
+        /// <returns></returns>
+        public virtual IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as Base;
 
+            if (dest != null)
+            {
+                if (UserData != null) dest.UserData = new Dictionary<string,object>(UserData);
+                if (FormatComments != null) dest.FormatComments = new List<string>(FormatComments);
+                return dest;
+            }
+            else
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+
+        public abstract IDeepCopyable DeepCopy();
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var result = new List<ValidationResult>();
-
-            if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
-
-            if (Bundle.UriHasValue(SelfLink) && !SelfLink.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
-
-            if (Links.FirstLink != null || Links.LastLink != null || Links.PreviousLink != null || Links.NextLink != null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Paging links can only be used on feeds, not entries"));
-
-            if (Tags != null && validationContext.ValidateRecursively())
-                DotNetAttributeValidation.TryValidate(Tags,result,true);
-
-            return result;
+            return Enumerable.Empty<ValidationResult>();
         }
+
+        private Dictionary<string, object> _userData = new Dictionary<string, object>();
+
+        public Dictionary<string, object> UserData
+        {
+            get { return _userData; }
+            private set { _userData = value; }
+        }
+        
+        /**
+         * Round tracking xml comments for testing convenience
+         */
+        private List<string> FormatComments { get; set; }
+
+
+        public bool HasFormatComment()
+        {
+            return (FormatComments != null && FormatComments.Any());
+        }
+
+        public abstract string TypeName { get; }
     }
 }
+
+

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,17 +45,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Availability", IsResource=true)]
     [DataContract]
-    public partial class Availability : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Availability : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Availability; } }
+        public override string TypeName { get { return "Availability"; } }
+        
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -63,12 +66,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The schedule type can be used for the categorization of healthcare services or other appointment types
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
         {
-            get { return _Type; }
+            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
@@ -76,21 +79,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The resource this availability resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
-        [FhirElement("actor", Order=80)]
+        [FhirElement("actor", Order=70)]
         [References()]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Actor
+        public Hl7.Fhir.Model.ResourceReference Actor
         {
             get { return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
-        private Hl7.Fhir.Model.Reference _Actor;
+        private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
         /// The period of time that the slots that are attached to this availability resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
         /// </summary>
-        [FhirElement("planningHorizon", Order=90)]
+        [FhirElement("planningHorizon", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
         {
@@ -102,7 +105,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
         /// </summary>
-        [FhirElement("comment", Order=100)]
+        [FhirElement("comment", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -133,7 +136,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this availability was created, or last revised
         /// </summary>
-        [FhirElement("lastModified", Order=110)]
+        [FhirElement("lastModified", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {
@@ -170,7 +173,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.Reference)Actor.DeepCopy();
+                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                 if(PlanningHorizon != null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)PlanningHorizon.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();

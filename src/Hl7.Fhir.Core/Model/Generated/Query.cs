@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Query", IsResource=true)]
     [DataContract]
-    public partial class Query : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Query : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Query; } }
+        public override string TypeName { get { return "Query"; } }
+        
         /// <summary>
         /// The outcome of processing a query request
         /// </summary>
@@ -77,12 +80,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QueryResponseComponent")]
         [DataContract]
-        public partial class QueryResponseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class QueryResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "QueryResponseComponent"; } }
+            
             /// <summary>
             /// Links response to source query
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri IdentifierElement
@@ -114,7 +119,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// ok | limited | refused | error
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=50)]
+            [FhirElement("outcome", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Query.QueryOutcome> OutcomeElement
@@ -146,7 +151,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Total number of matching records
             /// </summary>
-            [FhirElement("total", InSummary=true, Order=60)]
+            [FhirElement("total", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Integer TotalElement
             {
@@ -177,12 +182,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Parameters server used
             /// </summary>
-            [FhirElement("parameter", InSummary=true, Order=70)]
+            [FhirElement("parameter", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Extension> Parameter
             {
-                get { return _Parameter; }
+                get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Extension>(); return _Parameter; }
                 set { _Parameter = value; OnPropertyChanged("Parameter"); }
             }
             private List<Hl7.Fhir.Model.Extension> _Parameter;
@@ -190,12 +195,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To get first page (if paged)
             /// </summary>
-            [FhirElement("first", InSummary=true, Order=80)]
+            [FhirElement("first", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Extension> First
             {
-                get { return _First; }
+                get { if(_First==null) _First = new List<Hl7.Fhir.Model.Extension>(); return _First; }
                 set { _First = value; OnPropertyChanged("First"); }
             }
             private List<Hl7.Fhir.Model.Extension> _First;
@@ -203,12 +208,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To get previous page (if paged)
             /// </summary>
-            [FhirElement("previous", InSummary=true, Order=90)]
+            [FhirElement("previous", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Extension> Previous
             {
-                get { return _Previous; }
+                get { if(_Previous==null) _Previous = new List<Hl7.Fhir.Model.Extension>(); return _Previous; }
                 set { _Previous = value; OnPropertyChanged("Previous"); }
             }
             private List<Hl7.Fhir.Model.Extension> _Previous;
@@ -216,12 +221,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To get next page (if paged)
             /// </summary>
-            [FhirElement("next", InSummary=true, Order=100)]
+            [FhirElement("next", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Extension> Next
             {
-                get { return _Next; }
+                get { if(_Next==null) _Next = new List<Hl7.Fhir.Model.Extension>(); return _Next; }
                 set { _Next = value; OnPropertyChanged("Next"); }
             }
             private List<Hl7.Fhir.Model.Extension> _Next;
@@ -229,12 +234,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To get last page (if paged)
             /// </summary>
-            [FhirElement("last", InSummary=true, Order=110)]
+            [FhirElement("last", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Extension> Last
             {
-                get { return _Last; }
+                get { if(_Last==null) _Last = new List<Hl7.Fhir.Model.Extension>(); return _Last; }
                 set { _Last = value; OnPropertyChanged("Last"); }
             }
             private List<Hl7.Fhir.Model.Extension> _Last;
@@ -242,16 +247,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resources that are the results of the search
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=120)]
+            [FhirElement("reference", InSummary=true, Order=100)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Reference> Reference
+            public List<Hl7.Fhir.Model.ResourceReference> Reference
             {
-                get { return _Reference; }
+                get { if(_Reference==null) _Reference = new List<Hl7.Fhir.Model.ResourceReference>(); return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
-            private List<Hl7.Fhir.Model.Reference> _Reference;
+            private List<Hl7.Fhir.Model.ResourceReference> _Reference;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -268,7 +273,7 @@ namespace Hl7.Fhir.Model
                     if(Previous != null) dest.Previous = new List<Hl7.Fhir.Model.Extension>(Previous.DeepCopy());
                     if(Next != null) dest.Next = new List<Hl7.Fhir.Model.Extension>(Next.DeepCopy());
                     if(Last != null) dest.Last = new List<Hl7.Fhir.Model.Extension>(Last.DeepCopy());
-                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.Reference>(Reference.DeepCopy());
+                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.ResourceReference>(Reference.DeepCopy());
                     return dest;
                 }
                 else
@@ -324,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links query and its response(s)
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri IdentifierElement
@@ -356,12 +361,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Set of query parameters with values
         /// </summary>
-        [FhirElement("parameter", Order=70)]
+        [FhirElement("parameter", Order=60)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Parameter
         {
-            get { return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Extension>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         private List<Hl7.Fhir.Model.Extension> _Parameter;
@@ -369,7 +374,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a response to a query
         /// </summary>
-        [FhirElement("response", Order=80)]
+        [FhirElement("response", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Query.QueryResponseComponent Response
         {

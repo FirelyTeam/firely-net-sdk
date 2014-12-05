@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,13 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Binary; } }
+        public override string TypeName { get { return "Binary"; } }
+        
         /// <summary>
         /// MimeType of the binary content
         /// </summary>
-        [FhirElement("contentType", Order=60)]
+        [FhirElement("contentType", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
@@ -82,7 +85,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", Order=70)]
+        [FhirElement("content", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary ContentElement

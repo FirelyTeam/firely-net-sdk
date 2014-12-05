@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Narrative"; } }
+        
         /// <summary>
         /// The status of a resource narrative
         /// </summary>
@@ -78,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// generated | extensions | additional
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=40)]
+        [FhirElement("status", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
@@ -110,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Limited xhtml content
         /// </summary>
-        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=50)]
+        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]
         [DataMember]

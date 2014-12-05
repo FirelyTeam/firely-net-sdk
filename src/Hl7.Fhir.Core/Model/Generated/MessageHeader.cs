@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MessageHeader", IsResource=true)]
     [DataContract]
-    public partial class MessageHeader : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MessageHeader : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.MessageHeader; } }
+        public override string TypeName { get { return "MessageHeader"; } }
+        
         /// <summary>
         /// The kind of response to a message
         /// </summary>
@@ -72,12 +75,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MessageDestinationComponent")]
         [DataContract]
-        public partial class MessageDestinationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MessageDestinationComponent"; } }
+            
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -108,20 +113,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
+            [FhirElement("target", InSummary=true, Order=30)]
             [References("Device")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Target
+            public Hl7.Fhir.Model.ResourceReference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
-            private Hl7.Fhir.Model.Reference _Target;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// Actual destination address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [FhirElement("endpoint", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -158,7 +163,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Reference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     return dest;
                 }
@@ -202,12 +207,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MessageSourceComponent")]
         [DataContract]
-        public partial class MessageSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MessageSourceComponent"; } }
+            
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -238,7 +245,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of software running the system
             /// </summary>
-            [FhirElement("software", InSummary=true, Order=50)]
+            [FhirElement("software", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SoftwareElement
             {
@@ -269,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Version of software running
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=60)]
+            [FhirElement("version", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -300,7 +307,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human contact for problems
             /// </summary>
-            [FhirElement("contact", InSummary=true, Order=70)]
+            [FhirElement("contact", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.ContactPoint Contact
             {
@@ -312,7 +319,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual message source address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=80)]
+            [FhirElement("endpoint", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -399,12 +406,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MessageHeaderResponseComponent")]
         [DataContract]
-        public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MessageHeaderResponseComponent"; } }
+            
             /// <summary>
             /// Id of original message
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentifierElement
@@ -436,7 +445,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// ok | transient-error | fatal-error
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
@@ -468,15 +477,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific list of hints/warnings/errors
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=60)]
+            [FhirElement("details", InSummary=true, Order=40)]
             [References("OperationOutcome")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Details
+            public Hl7.Fhir.Model.ResourceReference Details
             {
                 get { return _Details; }
                 set { _Details = value; OnPropertyChanged("Details"); }
             }
-            private Hl7.Fhir.Model.Reference _Details;
+            private Hl7.Fhir.Model.ResourceReference _Details;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -487,7 +496,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.MessageHeader.ResponseType>)CodeElement.DeepCopy();
-                    if(Details != null) dest.Details = (Hl7.Fhir.Model.Reference)Details.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.ResourceReference)Details.DeepCopy();
                     return dest;
                 }
                 else
@@ -531,7 +540,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Id of this message
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id IdentifierElement
@@ -563,7 +572,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time that the message was sent
         /// </summary>
-        [FhirElement("timestamp", Order=70)]
+        [FhirElement("timestamp", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant TimestampElement
@@ -595,7 +604,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Code for the event this message represents
         /// </summary>
-        [FhirElement("event", Order=80)]
+        [FhirElement("event", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Event
@@ -608,7 +617,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", Order=90)]
+        [FhirElement("response", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response
         {
@@ -620,7 +629,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Source Application
         /// </summary>
-        [FhirElement("source", Order=100)]
+        [FhirElement("source", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -633,12 +642,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Destination Application(s)
         /// </summary>
-        [FhirElement("destination", Order=110)]
+        [FhirElement("destination", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
         {
-            get { return _Destination; }
+            get { if(_Destination==null) _Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(); return _Destination; }
             set { _Destination = value; OnPropertyChanged("Destination"); }
         }
         private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
@@ -646,59 +655,59 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", Order=120)]
+        [FhirElement("enterer", Order=110)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Enterer
+        public Hl7.Fhir.Model.ResourceReference Enterer
         {
             get { return _Enterer; }
             set { _Enterer = value; OnPropertyChanged("Enterer"); }
         }
-        private Hl7.Fhir.Model.Reference _Enterer;
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", Order=130)]
+        [FhirElement("author", Order=120)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private Hl7.Fhir.Model.Reference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Intended "real-world" recipient for the data
         /// </summary>
-        [FhirElement("receiver", Order=140)]
+        [FhirElement("receiver", Order=130)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Receiver
+        public Hl7.Fhir.Model.ResourceReference Receiver
         {
             get { return _Receiver; }
             set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
-        private Hl7.Fhir.Model.Reference _Receiver;
+        private Hl7.Fhir.Model.ResourceReference _Receiver;
         
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", Order=150)]
+        [FhirElement("responsible", Order=140)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Responsible
+        public Hl7.Fhir.Model.ResourceReference Responsible
         {
             get { return _Responsible; }
             set { _Responsible = value; OnPropertyChanged("Responsible"); }
         }
-        private Hl7.Fhir.Model.Reference _Responsible;
+        private Hl7.Fhir.Model.ResourceReference _Responsible;
         
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", Order=160)]
+        [FhirElement("reason", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -710,16 +719,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("data", Order=170)]
+        [FhirElement("data", Order=160)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Data
+        public List<Hl7.Fhir.Model.ResourceReference> Data
         {
-            get { return _Data; }
+            get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.ResourceReference>(); return _Data; }
             set { _Data = value; OnPropertyChanged("Data"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Data;
+        private List<Hl7.Fhir.Model.ResourceReference> _Data;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -734,12 +743,12 @@ namespace Hl7.Fhir.Model
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent)Response.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent)Source.DeepCopy();
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
-                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.Reference)Enterer.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
-                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.Reference)Receiver.DeepCopy();
-                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.Reference)Responsible.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
+                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.ResourceReference)Responsible.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.Reference>(Data.DeepCopy());
+                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.ResourceReference>(Data.DeepCopy());
                 return dest;
             }
             else

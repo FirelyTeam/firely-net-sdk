@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Ratio : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Ratio"; } }
+        
         /// <summary>
         /// Numerator value
         /// </summary>
-        [FhirElement("numerator", InSummary=true, Order=40)]
+        [FhirElement("numerator", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Numerator
         {
@@ -62,7 +64,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Denominator value
         /// </summary>
-        [FhirElement("denominator", InSummary=true, Order=50)]
+        [FhirElement("denominator", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Denominator
         {

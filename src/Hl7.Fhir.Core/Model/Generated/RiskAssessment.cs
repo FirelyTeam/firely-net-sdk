@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,16 +45,21 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("RiskAssessment", IsResource=true)]
     [DataContract]
-    public partial class RiskAssessment : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.RiskAssessment; } }
+        public override string TypeName { get { return "RiskAssessment"; } }
+        
         [FhirType("RiskAssessmentPredictionComponent")]
         [DataContract]
-        public partial class RiskAssessmentPredictionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class RiskAssessmentPredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "RiskAssessmentPredictionComponent"; } }
+            
             /// <summary>
             /// Possible outcome for the subject
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=40)]
+            [FhirElement("outcome", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Outcome
@@ -67,7 +72,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Likelihood of specified outcome
             /// </summary>
-            [FhirElement("probability", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("probability", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
@@ -80,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relative likelihood
             /// </summary>
-            [FhirElement("relativeRisk", InSummary=true, Order=60)]
+            [FhirElement("relativeRisk", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RelativeRiskElement
             {
@@ -111,7 +116,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Timeframe or age range
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("when", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element When
@@ -124,7 +129,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Explanation of prediction
             /// </summary>
-            [FhirElement("rationale", InSummary=true, Order=80)]
+            [FhirElement("rationale", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RationaleElement
             {
@@ -211,20 +216,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/what does assessment apply to?
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=60)]
+        [FhirElement("subject", InSummary=true, Order=50)]
         [References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// When was assessment made?
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=70)]
+        [FhirElement("date", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -255,33 +260,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Condition assessed
         /// </summary>
-        [FhirElement("condition", InSummary=true, Order=80)]
+        [FhirElement("condition", InSummary=true, Order=70)]
         [References("Condition")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Condition
+        public Hl7.Fhir.Model.ResourceReference Condition
         {
             get { return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
-        private Hl7.Fhir.Model.Reference _Condition;
+        private Hl7.Fhir.Model.ResourceReference _Condition;
         
         /// <summary>
         /// Who did assessment?
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=90)]
+        [FhirElement("performer", InSummary=true, Order=80)]
         [References("Practitioner","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Performer
+        public Hl7.Fhir.Model.ResourceReference Performer
         {
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
-        private Hl7.Fhir.Model.Reference _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// Unique identifier for the assessment
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -293,7 +298,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Evaluation mechanism
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=110)]
+        [FhirElement("method", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -305,26 +310,26 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information used in assessment
         /// </summary>
-        [FhirElement("basis", Order=120)]
+        [FhirElement("basis", Order=110)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Basis
+        public List<Hl7.Fhir.Model.ResourceReference> Basis
         {
-            get { return _Basis; }
+            get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.ResourceReference>(); return _Basis; }
             set { _Basis = value; OnPropertyChanged("Basis"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Basis;
+        private List<Hl7.Fhir.Model.ResourceReference> _Basis;
         
         /// <summary>
         /// Outcome predicted
         /// </summary>
-        [FhirElement("prediction", Order=130)]
+        [FhirElement("prediction", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> Prediction
         {
-            get { return _Prediction; }
+            get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(); return _Prediction; }
             set { _Prediction = value; OnPropertyChanged("Prediction"); }
         }
         private List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> _Prediction;
@@ -332,7 +337,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How to reduce risk
         /// </summary>
-        [FhirElement("mitigation", Order=140)]
+        [FhirElement("mitigation", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MitigationElement
         {
@@ -367,13 +372,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Reference)Condition.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.Reference)Performer.DeepCopy();
+                if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.Reference>(Basis.DeepCopy());
+                if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
                 if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
                 return dest;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,8 +47,10 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Id : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
-        // Must conform to the pattern "[a-z0-9\-\.]{1,36}"
-        public const string PATTERN = @"[a-z0-9\-\.]{1,36}";
+        public override string TypeName { get { return "id"; } }
+        
+        // Must conform to the pattern "[A-Za-z0-9\-\.]{1,64}"
+        public const string PATTERN = @"[A-Za-z0-9\-\.]{1,64}";
         
         public Id(string value)
         {
@@ -60,7 +62,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
         [IdPattern]
         [DataMember]
         public string Value

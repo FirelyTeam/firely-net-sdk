@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,17 +45,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Basic", IsResource=true)]
     [DataContract]
-    public partial class Basic : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Basic : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Basic; } }
+        public override string TypeName { get { return "Basic"; } }
+        
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -63,7 +66,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Resource
         /// </summary>
-        [FhirElement("code", Order=70)]
+        [FhirElement("code", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -76,33 +79,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies the
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", Order=70)]
         [References()]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Who created
         /// </summary>
-        [FhirElement("author", Order=90)]
+        [FhirElement("author", Order=80)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private Hl7.Fhir.Model.Reference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", Order=100)]
+        [FhirElement("created", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {
@@ -139,8 +142,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.Date)CreatedElement.DeepCopy();
                 return dest;
             }

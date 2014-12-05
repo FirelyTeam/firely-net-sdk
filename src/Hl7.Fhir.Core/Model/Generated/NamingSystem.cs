@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("NamingSystem", IsResource=true)]
     [DataContract]
-    public partial class NamingSystem : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NamingSystem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
+        public override string TypeName { get { return "NamingSystem"; } }
+        
         /// <summary>
         /// Indicates whether the namingsystem should be used
         /// </summary>
@@ -123,12 +126,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NamingSystemContactComponent")]
         [DataContract]
-        public partial class NamingSystemContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class NamingSystemContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "NamingSystemContactComponent"; } }
+            
             /// <summary>
             /// Name of person
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -140,12 +145,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Phone, email, etc.
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=50)]
+            [FhirElement("telecom", InSummary=true, Order=30)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
             {
-                get { return _Telecom; }
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -199,12 +204,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NamingSystemUniqueIdComponent")]
         [DataContract]
-        public partial class NamingSystemUniqueIdComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class NamingSystemUniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "NamingSystemUniqueIdComponent"; } }
+            
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -236,7 +243,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50)]
+            [FhirElement("value", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -268,7 +275,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this the id that should be used for this type
             /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=60)]
+            [FhirElement("preferred", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean PreferredElement
             {
@@ -299,7 +306,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -364,7 +371,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// codesystem | identifier | root
         /// </summary>
-        [FhirElement("type", Order=60)]
+        [FhirElement("type", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> TypeElement
@@ -396,7 +403,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", Order=70)]
+        [FhirElement("name", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -428,7 +435,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | active | retired
         /// </summary>
-        [FhirElement("status", Order=80)]
+        [FhirElement("status", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> StatusElement
@@ -460,7 +467,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ISO 3-char country code
         /// </summary>
-        [FhirElement("country", Order=90)]
+        [FhirElement("country", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Code CountryElement
         {
@@ -491,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// driver | provider | patient | bank
         /// </summary>
-        [FhirElement("category", Order=100)]
+        [FhirElement("category", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -503,7 +510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who maintains system namespace?
         /// </summary>
-        [FhirElement("responsible", Order=110)]
+        [FhirElement("responsible", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ResponsibleElement
         {
@@ -534,7 +541,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What does namingsystem identify?
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -565,7 +572,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How/where is it used
         /// </summary>
-        [FhirElement("usage", Order=130)]
+        [FhirElement("usage", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UsageElement
         {
@@ -596,12 +603,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", Order=140)]
+        [FhirElement("uniqueId", Order=130)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
         {
-            get { return _UniqueId; }
+            get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(); return _UniqueId; }
             set { _UniqueId = value; OnPropertyChanged("UniqueId"); }
         }
         private List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> _UniqueId;
@@ -609,7 +616,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who should be contacted for questions about namingsystem
         /// </summary>
-        [FhirElement("contact", Order=150)]
+        [FhirElement("contact", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent Contact
         {
@@ -621,15 +628,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use this instead
         /// </summary>
-        [FhirElement("replacedBy", Order=160)]
+        [FhirElement("replacedBy", Order=150)]
         [References("NamingSystem")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference ReplacedBy
+        public Hl7.Fhir.Model.ResourceReference ReplacedBy
         {
             get { return _ReplacedBy; }
             set { _ReplacedBy = value; OnPropertyChanged("ReplacedBy"); }
         }
-        private Hl7.Fhir.Model.Reference _ReplacedBy;
+        private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -648,7 +655,7 @@ namespace Hl7.Fhir.Model
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
                 if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(UniqueId.DeepCopy());
                 if(Contact != null) dest.Contact = (Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent)Contact.DeepCopy();
-                if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.Reference)ReplacedBy.DeepCopy();
+                if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }
             else

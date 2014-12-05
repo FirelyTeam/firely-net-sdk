@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Alert", IsResource=true)]
     [DataContract]
-    public partial class Alert : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Alert : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Alert; } }
+        public override string TypeName { get { return "Alert"; } }
+        
         /// <summary>
         /// Indicates whether this alert is active and needs to be displayed to a user, or whether it is no longer needed or entered in error
         /// </summary>
@@ -73,12 +76,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -86,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical, administrative, etc.
         /// </summary>
-        [FhirElement("category", Order=70)]
+        [FhirElement("category", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -98,7 +101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered in error
         /// </summary>
-        [FhirElement("status", Order=80)]
+        [FhirElement("status", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement
@@ -130,34 +133,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is alert about?
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", Order=80)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Alert creator
         /// </summary>
-        [FhirElement("author", Order=100)]
+        [FhirElement("author", Order=90)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private Hl7.Fhir.Model.Reference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Text of alert
         /// </summary>
-        [FhirElement("note", Order=110)]
+        [FhirElement("note", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
@@ -196,8 +199,8 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Alert.AlertStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 return dest;
             }

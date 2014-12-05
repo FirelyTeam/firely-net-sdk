@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class HumanName : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "HumanName"; } }
+        
         /// <summary>
         /// The use of a human name
         /// </summary>
@@ -93,7 +95,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// usual | official | temp | nickname | anonymous | old | maiden
         /// </summary>
-        [FhirElement("use", InSummary=true, Order=40)]
+        [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
         public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement
         {
@@ -124,7 +126,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text representation of the full name
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=50)]
+        [FhirElement("text", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {
@@ -155,12 +157,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Family name (often called 'Surname')
         /// </summary>
-        [FhirElement("family", InSummary=true, Order=60)]
+        [FhirElement("family", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> FamilyElement
         {
-            get { return _FamilyElement; }
+            get { if(_FamilyElement==null) _FamilyElement = new List<Hl7.Fhir.Model.FhirString>(); return _FamilyElement; }
             set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
@@ -187,12 +189,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Given names (not always 'first'). Includes middle names
         /// </summary>
-        [FhirElement("given", InSummary=true, Order=70)]
+        [FhirElement("given", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> GivenElement
         {
-            get { return _GivenElement; }
+            get { if(_GivenElement==null) _GivenElement = new List<Hl7.Fhir.Model.FhirString>(); return _GivenElement; }
             set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _GivenElement;
@@ -219,12 +221,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parts that come before the name
         /// </summary>
-        [FhirElement("prefix", InSummary=true, Order=80)]
+        [FhirElement("prefix", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> PrefixElement
         {
-            get { return _PrefixElement; }
+            get { if(_PrefixElement==null) _PrefixElement = new List<Hl7.Fhir.Model.FhirString>(); return _PrefixElement; }
             set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _PrefixElement;
@@ -251,12 +253,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parts that come after the name
         /// </summary>
-        [FhirElement("suffix", InSummary=true, Order=90)]
+        [FhirElement("suffix", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SuffixElement
         {
-            get { return _SuffixElement; }
+            get { if(_SuffixElement==null) _SuffixElement = new List<Hl7.Fhir.Model.FhirString>(); return _SuffixElement; }
             set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _SuffixElement;
@@ -283,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when name was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=100)]
+        [FhirElement("period", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {

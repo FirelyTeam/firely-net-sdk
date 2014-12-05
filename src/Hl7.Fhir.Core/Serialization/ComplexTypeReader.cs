@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        internal object Deserialize(ClassMapping mapping, object existing=null)
+        internal Base Deserialize(ClassMapping mapping, Base existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, object existing)
+        private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, Base existing)
         {
             //bool hasMember;
 

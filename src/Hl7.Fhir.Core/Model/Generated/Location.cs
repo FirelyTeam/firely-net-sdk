@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Location", IsResource=true)]
     [DataContract]
-    public partial class Location : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Location : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Location; } }
+        public override string TypeName { get { return "Location"; } }
+        
         /// <summary>
         /// Indicates whether the location is still in use
         /// </summary>
@@ -90,12 +93,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LocationPositionComponent")]
         [DataContract]
-        public partial class LocationPositionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class LocationPositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "LocationPositionComponent"; } }
+            
             /// <summary>
             /// Longitude as expressed in KML
             /// </summary>
-            [FhirElement("longitude", InSummary=true, Order=40)]
+            [FhirElement("longitude", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LongitudeElement
@@ -127,7 +132,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Latitude as expressed in KML
             /// </summary>
-            [FhirElement("latitude", InSummary=true, Order=50)]
+            [FhirElement("latitude", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LatitudeElement
@@ -159,7 +164,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Altitude as expressed in KML
             /// </summary>
-            [FhirElement("altitude", InSummary=true, Order=60)]
+            [FhirElement("altitude", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AltitudeElement
             {
@@ -240,12 +245,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique code or number identifying the location to its users
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -253,7 +258,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the location as used by humans
         /// </summary>
-        [FhirElement("name", Order=70)]
+        [FhirElement("name", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -284,7 +289,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of the Location, which helps in finding or referencing the place
         /// </summary>
-        [FhirElement("description", Order=80)]
+        [FhirElement("description", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -315,7 +320,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates the type of function performed at the location
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -327,12 +332,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the location
         /// </summary>
-        [FhirElement("telecom", Order=100)]
+        [FhirElement("telecom", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -340,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical location
         /// </summary>
-        [FhirElement("address", Order=110)]
+        [FhirElement("address", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Address Address
         {
@@ -352,7 +357,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical form of the location
         /// </summary>
-        [FhirElement("physicalType", Order=120)]
+        [FhirElement("physicalType", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysicalType
         {
@@ -364,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The absolute geographic location
         /// </summary>
-        [FhirElement("position", Order=130)]
+        [FhirElement("position", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Location.LocationPositionComponent Position
         {
@@ -376,20 +381,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization that is responsible for the provisioning and upkeep of the location
         /// </summary>
-        [FhirElement("managingOrganization", Order=140)]
+        [FhirElement("managingOrganization", Order=130)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
-        private Hl7.Fhir.Model.Reference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// active | suspended | inactive
         /// </summary>
-        [FhirElement("status", Order=150)]
+        [FhirElement("status", Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
         {
@@ -420,20 +425,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Location which this Location is physically part of
         /// </summary>
-        [FhirElement("partOf", Order=160)]
+        [FhirElement("partOf", Order=150)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference PartOf
+        public Hl7.Fhir.Model.ResourceReference PartOf
         {
             get { return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
-        private Hl7.Fhir.Model.Reference _PartOf;
+        private Hl7.Fhir.Model.ResourceReference _PartOf;
         
         /// <summary>
         /// instance | kind
         /// </summary>
-        [FhirElement("mode", Order=170)]
+        [FhirElement("mode", Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
         {
@@ -476,9 +481,9 @@ namespace Hl7.Fhir.Model
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(PhysicalType != null) dest.PhysicalType = (Hl7.Fhir.Model.CodeableConcept)PhysicalType.DeepCopy();
                 if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.LocationPositionComponent)Position.DeepCopy();
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.Reference)ManagingOrganization.DeepCopy();
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Location.LocationStatus>)StatusElement.DeepCopy();
-                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.Reference)PartOf.DeepCopy();
+                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Location.LocationMode>)ModeElement.DeepCopy();
                 return dest;
             }

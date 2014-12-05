@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,16 +45,21 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Contraindication", IsResource=true)]
     [DataContract]
-    public partial class Contraindication : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Contraindication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Contraindication; } }
+        public override string TypeName { get { return "Contraindication"; } }
+        
         [FhirType("ContraindicationMitigationComponent")]
         [DataContract]
-        public partial class ContraindicationMitigationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContraindicationMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ContraindicationMitigationComponent"; } }
+            
             /// <summary>
             /// What mitigation?
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
+            [FhirElement("action", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Action
@@ -67,7 +72,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date committed
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=50)]
+            [FhirElement("date", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -98,15 +103,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is committing?
             /// </summary>
-            [FhirElement("author", InSummary=true, Order=60)]
+            [FhirElement("author", InSummary=true, Order=40)]
             [References("Practitioner")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Author
+            public Hl7.Fhir.Model.ResourceReference Author
             {
                 get { return _Author; }
                 set { _Author = value; OnPropertyChanged("Author"); }
             }
-            private Hl7.Fhir.Model.Reference _Author;
+            private Hl7.Fhir.Model.ResourceReference _Author;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -117,7 +122,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Action != null) dest.Action = (Hl7.Fhir.Model.CodeableConcept)Action.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                    if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
+                    if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                     return dest;
                 }
                 else
@@ -161,20 +166,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated patient
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=60)]
+        [FhirElement("patient", InSummary=true, Order=50)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.Reference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// E.g. Drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=70)]
+        [FhirElement("category", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -186,7 +191,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// high | medium | low
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=80)]
+        [FhirElement("severity", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Code SeverityElement
         {
@@ -217,21 +222,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Problem resource
         /// </summary>
-        [FhirElement("implicated", InSummary=true, Order=90)]
+        [FhirElement("implicated", InSummary=true, Order=80)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Implicated
+        public List<Hl7.Fhir.Model.ResourceReference> Implicated
         {
-            get { return _Implicated; }
+            get { if(_Implicated==null) _Implicated = new List<Hl7.Fhir.Model.ResourceReference>(); return _Implicated; }
             set { _Implicated = value; OnPropertyChanged("Implicated"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Implicated;
+        private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
         
         /// <summary>
         /// Description and context
         /// </summary>
-        [FhirElement("detail", Order=100)]
+        [FhirElement("detail", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DetailElement
         {
@@ -262,7 +267,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -293,20 +298,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who found issue?
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=120)]
+        [FhirElement("author", InSummary=true, Order=110)]
         [References("Practitioner","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
-        private Hl7.Fhir.Model.Reference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Unique id for the contraindication
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=130)]
+        [FhirElement("identifier", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -318,7 +323,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authority for issue
         /// </summary>
-        [FhirElement("reference", Order=140)]
+        [FhirElement("reference", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ReferenceElement
         {
@@ -349,12 +354,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Step taken to address
         /// </summary>
-        [FhirElement("mitigation", Order=150)]
+        [FhirElement("mitigation", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> Mitigation
         {
-            get { return _Mitigation; }
+            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
         private List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> _Mitigation;
@@ -366,13 +371,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(SeverityElement != null) dest.SeverityElement = (Hl7.Fhir.Model.Code)SeverityElement.DeepCopy();
-                if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.Reference>(Implicated.DeepCopy());
+                if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
                 if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.Reference)Author.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
                 if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(Mitigation.DeepCopy());

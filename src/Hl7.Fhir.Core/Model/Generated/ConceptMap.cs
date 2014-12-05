@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ConceptMap", IsResource=true)]
     [DataContract]
-    public partial class ConceptMap : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.ConceptMap; } }
+        public override string TypeName { get { return "ConceptMap"; } }
+        
         /// <summary>
         /// The degree of equivalence between concepts
         /// </summary>
@@ -54,15 +57,15 @@ namespace Hl7.Fhir.Model
         public enum ConceptMapEquivalence
         {
             /// <summary>
-            /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical).
-            /// </summary>
-            [EnumLiteral("equal")]
-            Equal,
-            /// <summary>
             /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
             /// </summary>
             [EnumLiteral("equivalent")]
             Equivalent,
+            /// <summary>
+            /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical).
+            /// </summary>
+            [EnumLiteral("equal")]
+            Equal,
             /// <summary>
             /// The target mapping is wider in meaning than the source concept.
             /// </summary>
@@ -84,7 +87,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("specialises")]
             Specialises,
             /// <summary>
-            /// The target mapping overlaps with the source concept, but both source and target cover additional meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
+            /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally.
             /// </summary>
             [EnumLiteral("inexact")]
             Inexact,
@@ -102,12 +105,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConceptMapElementComponent")]
         [DataContract]
-        public partial class ConceptMapElementComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConceptMapElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ConceptMapElementComponent"; } }
+            
             /// <summary>
             /// Code System (if value set crosses code systems)
             /// </summary>
-            [FhirElement("codeSystem", InSummary=true, Order=40)]
+            [FhirElement("codeSystem", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri CodeSystemElement
             {
@@ -138,7 +143,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifies element being mapped
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Code CodeElement
             {
@@ -169,12 +174,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Other elements required for this mapping (from context)
             /// </summary>
-            [FhirElement("dependsOn", InSummary=true, Order=60)]
+            [FhirElement("dependsOn", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
             {
-                get { return _DependsOn; }
+                get { if(_DependsOn==null) _DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(); return _DependsOn; }
                 set { _DependsOn = value; OnPropertyChanged("DependsOn"); }
             }
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _DependsOn;
@@ -182,12 +187,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Target of this map
             /// </summary>
-            [FhirElement("map", InSummary=true, Order=70)]
+            [FhirElement("map", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent> Map
             {
-                get { return _Map; }
+                get { if(_Map==null) _Map = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent>(); return _Map; }
                 set { _Map = value; OnPropertyChanged("Map"); }
             }
             private List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementMapComponent> _Map;
@@ -247,12 +252,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConceptMapElementMapComponent")]
         [DataContract]
-        public partial class ConceptMapElementMapComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConceptMapElementMapComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ConceptMapElementMapComponent"; } }
+            
             /// <summary>
             /// System of the target (if necessary)
             /// </summary>
-            [FhirElement("codeSystem", InSummary=true, Order=40)]
+            [FhirElement("codeSystem", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri CodeSystemElement
             {
@@ -283,7 +290,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code that identifies the target element
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Code CodeElement
             {
@@ -312,9 +319,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// equal | equivalent | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint
+            /// equivalent | equal | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint
             /// </summary>
-            [FhirElement("equivalence", InSummary=true, Order=60)]
+            [FhirElement("equivalence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
@@ -325,7 +332,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> _EquivalenceElement;
             
             /// <summary>
-            /// equal | equivalent | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint
+            /// equivalent | equal | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -346,7 +353,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of status/issues in mapping
             /// </summary>
-            [FhirElement("comments", InSummary=true, Order=70)]
+            [FhirElement("comments", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentsElement
             {
@@ -377,12 +384,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Other concepts that this mapping also produces
             /// </summary>
-            [FhirElement("product", InSummary=true, Order=80)]
+            [FhirElement("product", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
             {
-                get { return _Product; }
+                get { if(_Product==null) _Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(); return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _Product;
@@ -445,12 +452,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OtherElementComponent")]
         [DataContract]
-        public partial class OtherElementComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "OtherElementComponent"; } }
+            
             /// <summary>
             /// Reference to element/field/valueset mapping depends on
             /// </summary>
-            [FhirElement("element", InSummary=true, Order=40)]
+            [FhirElement("element", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ElementElement
@@ -482,7 +491,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code System (if necessary)
             /// </summary>
-            [FhirElement("codeSystem", InSummary=true, Order=50)]
+            [FhirElement("codeSystem", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri CodeSystemElement
@@ -514,7 +523,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value of the referenced element
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=60)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CodeElement
@@ -596,7 +605,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this concept map
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString IdentifierElement
         {
@@ -627,7 +636,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of the concept map
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=70)]
+        [FhirElement("version", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -658,7 +667,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Informal name for this concept map
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=80)]
+        [FhirElement("name", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -689,7 +698,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=90)]
+        [FhirElement("publisher", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -720,12 +729,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=100)]
+        [FhirElement("telecom", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -733,7 +742,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human language description of the concept map
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=110)]
+        [FhirElement("description", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -764,7 +773,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// About the concept map or its content
         /// </summary>
-        [FhirElement("copyright", Order=120)]
+        [FhirElement("copyright", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -795,7 +804,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -827,7 +836,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -858,7 +867,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -889,8 +898,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies the source of the concepts which are being mapped
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Reference))]
+        [FhirElement("source", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Source
@@ -903,8 +912,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Provides context to the mappings
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Reference))]
+        [FhirElement("target", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
@@ -917,12 +926,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Mappings for a concept from the source set
         /// </summary>
-        [FhirElement("element", Order=180)]
+        [FhirElement("element", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent> Element
         {
-            get { return _Element; }
+            get { if(_Element==null) _Element = new List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent>(); return _Element; }
             set { _Element = value; OnPropertyChanged("Element"); }
         }
         private List<Hl7.Fhir.Model.ConceptMap.ConceptMapElementComponent> _Element;

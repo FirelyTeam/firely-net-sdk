@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataElement", IsResource=true)]
     [DataContract]
-    public partial class DataElement : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataElement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.DataElement; } }
+        public override string TypeName { get { return "DataElement"; } }
+        
         /// <summary>
         /// The lifecycle status of a Resource data element
         /// </summary>
@@ -72,12 +75,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DataElementMappingComponent")]
         [DataContract]
-        public partial class DataElementMappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DataElementMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DataElementMappingComponent"; } }
+            
             /// <summary>
             /// Identifies what this mapping refers to
             /// </summary>
-            [FhirElement("uri", InSummary=true, Order=40)]
+            [FhirElement("uri", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UriElement
             {
@@ -106,9 +111,40 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// True if mapping defines element
+            /// </summary>
+            [FhirElement("definitional", InSummary=true, Order=30)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean DefinitionalElement
+            {
+                get { return _DefinitionalElement; }
+                set { _DefinitionalElement = value; OnPropertyChanged("DefinitionalElement"); }
+            }
+            private Hl7.Fhir.Model.FhirBoolean _DefinitionalElement;
+            
+            /// <summary>
+            /// True if mapping defines element
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Definitional
+            {
+                get { return DefinitionalElement != null ? DefinitionalElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DefinitionalElement = null; 
+                    else
+                      DefinitionalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Definitional");
+                }
+            }
+            
+            /// <summary>
             /// Names what this mapping refers to
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -139,7 +175,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Versions, Issues, Scope limitations etc
             /// </summary>
-            [FhirElement("comments", InSummary=true, Order=60)]
+            [FhirElement("comments", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentsElement
             {
@@ -170,7 +206,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Details of the mapping
             /// </summary>
-            [FhirElement("map", InSummary=true, Order=70)]
+            [FhirElement("map", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MapElement
@@ -207,6 +243,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
+                    if(DefinitionalElement != null) dest.DefinitionalElement = (Hl7.Fhir.Model.FhirBoolean)DefinitionalElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                     if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
@@ -228,6 +265,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.Matches(DefinitionalElement, otherT.DefinitionalElement)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
                 if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
@@ -242,6 +280,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.IsExactly(DefinitionalElement, otherT.DefinitionalElement)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
                 if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
@@ -254,12 +293,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DataElementBindingComponent")]
         [DataContract]
-        public partial class DataElementBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DataElementBindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "DataElementBindingComponent"; } }
+            
             /// <summary>
             /// Can additional codes be used?
             /// </summary>
-            [FhirElement("isExtensible", InSummary=true, Order=40)]
+            [FhirElement("isExtensible", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsExtensibleElement
@@ -291,7 +332,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// required | preferred | example
             /// </summary>
-            [FhirElement("conformance", InSummary=true, Order=50)]
+            [FhirElement("conformance", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Code ConformanceElement
             {
@@ -322,7 +363,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human explanation of the value set
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=60)]
+            [FhirElement("description", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -353,15 +394,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Source of value set
             /// </summary>
-            [FhirElement("valueSet", InSummary=true, Order=70)]
+            [FhirElement("valueSet", InSummary=true, Order=50)]
             [References("ValueSet")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference ValueSet
+            public Hl7.Fhir.Model.ResourceReference ValueSet
             {
                 get { return _ValueSet; }
                 set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
             }
-            private Hl7.Fhir.Model.Reference _ValueSet;
+            private Hl7.Fhir.Model.ResourceReference _ValueSet;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -373,7 +414,7 @@ namespace Hl7.Fhir.Model
                     if(IsExtensibleElement != null) dest.IsExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)IsExtensibleElement.DeepCopy();
                     if(ConformanceElement != null) dest.ConformanceElement = (Hl7.Fhir.Model.Code)ConformanceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Reference)ValueSet.DeepCopy();
+                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.ResourceReference)ValueSet.DeepCopy();
                     return dest;
                 }
                 else
@@ -419,7 +460,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id to reference this data element
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -431,7 +472,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of the data element
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=70)]
+        [FhirElement("version", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -462,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=80)]
+        [FhirElement("publisher", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -493,12 +534,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=90)]
+        [FhirElement("telecom", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
         {
-            get { return _Telecom; }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
@@ -506,7 +547,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DataElement.ResourceDataElementStatus> StatusElement
@@ -538,7 +579,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for this version of the data element
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -569,7 +610,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptive label for this element definition
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
+        [FhirElement("name", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -600,12 +641,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assist with indexing and finding
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=130)]
+        [FhirElement("category", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { return _Category; }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
@@ -613,12 +654,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifying concept
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=140)]
+        [FhirElement("code", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
         {
-            get { return _Code; }
+            get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         private List<Hl7.Fhir.Model.Coding> _Code;
@@ -626,7 +667,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How to ask for element
         /// </summary>
-        [FhirElement("question", InSummary=true, Order=150)]
+        [FhirElement("question", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString QuestionElement
         {
@@ -655,9 +696,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Full formal definition in human language
+        /// Definition/description as narrative text
         /// </summary>
-        [FhirElement("definition", Order=160)]
+        [FhirElement("definition", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DefinitionElement
         {
@@ -667,7 +708,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DefinitionElement;
         
         /// <summary>
-        /// Full formal definition in human language
+        /// Definition/description as narrative text
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -688,7 +729,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the use of this element
         /// </summary>
-        [FhirElement("comments", Order=170)]
+        [FhirElement("comments", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentsElement
         {
@@ -719,7 +760,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why is this needed?
         /// </summary>
-        [FhirElement("requirements", Order=180)]
+        [FhirElement("requirements", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -750,12 +791,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other names
         /// </summary>
-        [FhirElement("synonym", Order=190)]
+        [FhirElement("synonym", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SynonymElement
         {
-            get { return _SynonymElement; }
+            get { if(_SynonymElement==null) _SynonymElement = new List<Hl7.Fhir.Model.FhirString>(); return _SynonymElement; }
             set { _SynonymElement = value; OnPropertyChanged("SynonymElement"); }
         }
         private List<Hl7.Fhir.Model.FhirString> _SynonymElement;
@@ -782,7 +823,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of Data type
         /// </summary>
-        [FhirElement("type", Order=200)]
+        [FhirElement("type", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Code TypeElement
         {
@@ -813,7 +854,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Example value: [as defined for type]
         /// </summary>
-        [FhirElement("example", Order=210, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("example", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Example
@@ -826,7 +867,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Length for strings
         /// </summary>
-        [FhirElement("maxLength", Order=220)]
+        [FhirElement("maxLength", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Integer MaxLengthElement
         {
@@ -857,7 +898,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Units to use for measured value
         /// </summary>
-        [FhirElement("units", Order=230)]
+        [FhirElement("units", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Units
         {
@@ -869,7 +910,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ValueSet details if this is coded
         /// </summary>
-        [FhirElement("binding", Order=240)]
+        [FhirElement("binding", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.DataElement.DataElementBindingComponent Binding
         {
@@ -881,12 +922,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Map element to another set of definitions
         /// </summary>
-        [FhirElement("mapping", Order=250)]
+        [FhirElement("mapping", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent> Mapping
         {
-            get { return _Mapping; }
+            get { if(_Mapping==null) _Mapping = new List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent>(); return _Mapping; }
             set { _Mapping = value; OnPropertyChanged("Mapping"); }
         }
         private List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent> _Mapping;

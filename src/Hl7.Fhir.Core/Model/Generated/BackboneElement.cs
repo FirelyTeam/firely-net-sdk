@@ -36,73 +36,63 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Oct 28, 2014 16:11+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Typed element containing the primitive idref
+    /// Base for elements defined inside a resource
     /// </summary>
-    [FhirType("idref")]
     [DataContract]
-    public partial class IdRef : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class BackboneElement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
-        public IdRef(string value)
-        {
-            Value = value; 
-        }
-        
-        public IdRef(): this((string)null) {}
+        public override string TypeName { get { return "BackboneElement"; } }
         
         /// <summary>
-        /// Primitive value of the element
+        /// Extensions that cannot be ignored
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
+        [FhirElement("modifierExtension", InSummary=true, Order=30)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public string Value
+        public List<Hl7.Fhir.Model.Extension> ModifierExtension
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+            set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
         }
-        private string _Value;
+        private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as IdRef;
+            var dest = other as BackboneElement;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Value != null) dest.Value = Value;
+                if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
                 return dest;
             }
             else
             	throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new IdRef());
-        }
-        
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as IdRef;
+            var otherT = other as BackboneElement;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( Value != otherT.Value ) return false;
+            if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
             
             return true;
         }
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as IdRef;
+            var otherT = other as BackboneElement;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( Value != otherT.Value ) return false;
+            if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
             
             return true;
         }

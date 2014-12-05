@@ -80,6 +80,25 @@ namespace Hl7.Fhir.Model
             return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
         }
 
+        /// <summary>
+        /// Converts this Fhir DateTime as a .NET DateTimeOffset
+        /// </summary>
+        /// <param name="zone">Optional. Ensures the returned DateTimeOffset uses the the specified zone.</param>
+        /// <returns>A DateTimeOffset filled out to midnight, january 1 in case of a partial date/time. If the Fhir DateTime
+        /// does not specify a timezone, the local timezone of the machine is assumed. Note that the zone parameter has no 
+        /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
+        public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null)
+        {
+            // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1
+            // When there's no timezone, the local timezone is assumed
+            var dto = XmlConvert.ToDateTimeOffset(this.Value);
+
+            //NB: There's a useful TimeZone class, but Portable45 does not support it
+            if (zone != null) dto = dto.ToOffset(zone.Value);
+
+            return dto;
+        }
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value as string, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);

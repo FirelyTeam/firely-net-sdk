@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Provenance", IsResource=true)]
     [DataContract]
-    public partial class Provenance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Provenance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Provenance; } }
+        public override string TypeName { get { return "Provenance"; } }
+        
         /// <summary>
         /// How an entity was used in an activity
         /// </summary>
@@ -77,12 +80,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProvenanceAgentComponent")]
         [DataContract]
-        public partial class ProvenanceAgentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProvenanceAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ProvenanceAgentComponent"; } }
+            
             /// <summary>
             /// e.g. author | overseer | enterer | attester | source | cc: +
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("role", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Role
@@ -95,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// e.g. Resource | Person | Application | Record | Document +
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -108,7 +113,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of agent (urn or url)
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=60)]
+            [FhirElement("reference", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ReferenceElement
@@ -140,7 +145,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human description of participant
             /// </summary>
-            [FhirElement("display", InSummary=true, Order=70)]
+            [FhirElement("display", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DisplayElement
             {
@@ -223,12 +228,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProvenanceEntityComponent")]
         [DataContract]
-        public partial class ProvenanceEntityComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProvenanceEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "ProvenanceEntityComponent"; } }
+            
             /// <summary>
             /// derivation | revision | quotation | source
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("role", InSummary=true, Order=20)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement
@@ -260,7 +267,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource Type, or something else
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -273,7 +280,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of participant (urn or url)
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=60)]
+            [FhirElement("reference", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ReferenceElement
@@ -305,7 +312,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human description of participant
             /// </summary>
-            [FhirElement("display", InSummary=true, Order=70)]
+            [FhirElement("display", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DisplayElement
             {
@@ -336,7 +343,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Entity is attributed to this agent
             /// </summary>
-            [FhirElement("agent", InSummary=true, Order=80)]
+            [FhirElement("agent", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent Agent
             {
@@ -404,21 +411,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", Order=60)]
+        [FhirElement("target", Order=50)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Target
+        public List<Hl7.Fhir.Model.ResourceReference> Target
         {
-            get { return _Target; }
+            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Target;
+        private List<Hl7.Fhir.Model.ResourceReference> _Target;
         
         /// <summary>
         /// When the activity occurred
         /// </summary>
-        [FhirElement("period", Order=70)]
+        [FhirElement("period", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -430,7 +437,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", Order=80)]
+        [FhirElement("recorded", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement
@@ -462,7 +469,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the activity is occurring
         /// </summary>
-        [FhirElement("reason", Order=90)]
+        [FhirElement("reason", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -474,25 +481,25 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the activity occurred, if relevant
         /// </summary>
-        [FhirElement("location", Order=100)]
+        [FhirElement("location", Order=90)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
-        private Hl7.Fhir.Model.Reference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Policy or plan the activity was defined by
         /// </summary>
-        [FhirElement("policy", Order=110)]
+        [FhirElement("policy", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> PolicyElement
         {
-            get { return _PolicyElement; }
+            get { if(_PolicyElement==null) _PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(); return _PolicyElement; }
             set { _PolicyElement = value; OnPropertyChanged("PolicyElement"); }
         }
         private List<Hl7.Fhir.Model.FhirUri> _PolicyElement;
@@ -519,12 +526,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person, organization, records, etc. involved in creating resource
         /// </summary>
-        [FhirElement("agent", Order=120)]
+        [FhirElement("agent", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> Agent
         {
-            get { return _Agent; }
+            get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(); return _Agent; }
             set { _Agent = value; OnPropertyChanged("Agent"); }
         }
         private List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> _Agent;
@@ -532,12 +539,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An entity used in this activity
         /// </summary>
-        [FhirElement("entity", Order=130)]
+        [FhirElement("entity", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> Entity
         {
-            get { return _Entity; }
+            get { if(_Entity==null) _Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(); return _Entity; }
             set { _Entity = value; OnPropertyChanged("Entity"); }
         }
         private List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> _Entity;
@@ -545,7 +552,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base64 signature (DigSig) - integrity check
         /// </summary>
-        [FhirElement("integritySignature", Order=140)]
+        [FhirElement("integritySignature", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString IntegritySignatureElement
         {
@@ -580,11 +587,11 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.Reference>(Target.DeepCopy());
+                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.Reference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(Agent.DeepCopy());
                 if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(Entity.DeepCopy());

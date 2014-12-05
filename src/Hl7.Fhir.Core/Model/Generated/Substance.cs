@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,16 +45,21 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Substance", IsResource=true)]
     [DataContract]
-    public partial class Substance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Substance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Substance; } }
+        public override string TypeName { get { return "Substance"; } }
+        
         [FhirType("SubstanceIngredientComponent")]
         [DataContract]
-        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "SubstanceIngredientComponent"; } }
+            
             /// <summary>
             /// Optional amount (concentration)
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=40)]
+            [FhirElement("quantity", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Quantity
             {
@@ -66,16 +71,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A component of the substance
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=50)]
+            [FhirElement("substance", InSummary=true, Order=30)]
             [References("Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Substance
+            public Hl7.Fhir.Model.ResourceReference Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
-            private Hl7.Fhir.Model.Reference _Substance;
+            private Hl7.Fhir.Model.ResourceReference _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -85,7 +90,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Reference)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
                     return dest;
                 }
                 else
@@ -126,12 +131,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstanceInstanceComponent")]
         [DataContract]
-        public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "SubstanceInstanceComponent"; } }
+            
             /// <summary>
             /// Identifier of the package/container
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -143,7 +150,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When no longer valid to use
             /// </summary>
-            [FhirElement("expiry", InSummary=true, Order=50)]
+            [FhirElement("expiry", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ExpiryElement
             {
@@ -174,7 +181,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of substance in the package
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=60)]
+            [FhirElement("quantity", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -236,7 +243,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of substance this is
         /// </summary>
-        [FhirElement("type", Order=60)]
+        [FhirElement("type", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -249,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
-        [FhirElement("description", Order=70)]
+        [FhirElement("description", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -280,7 +287,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific package/container of the substance
         /// </summary>
-        [FhirElement("instance", Order=80)]
+        [FhirElement("instance", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
         {
@@ -292,12 +299,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition information about the substance
         /// </summary>
-        [FhirElement("ingredient", Order=90)]
+        [FhirElement("ingredient", Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
         {
-            get { return _Ingredient; }
+            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent>(); return _Ingredient; }
             set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
         }
         private List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> _Ingredient;

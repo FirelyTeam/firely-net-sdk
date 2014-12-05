@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -40,8 +41,9 @@ namespace Hl7.Fhir.Serialization
             // nesting series of dispatcher calls
             if (!_arrayMode && prop.IsCollection)
             {
+                if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
                 var reader = new RepeatingElementReader(_current);
-                return reader.Deserialize(prop, memberName, existing);
+                return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
             // If this is a primitive type, no classmappings and reflection is involved,
@@ -58,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
                 var reader = new ResourceReader(_current);
-                return reader.Deserialize(existing, nested:true);
+                return reader.Deserialize(null, nested:true);
             }
 
             ClassMapping mapping;
@@ -77,8 +79,9 @@ namespace Hl7.Fhir.Serialization
                 mapping = _inspector.ImportType(prop.ElementType);
             }
 
+            if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument("existing", "Can only read complex elements into types that are Element or Resource");
             var cplxReader = new ComplexTypeReader(_current);
-            return cplxReader.Deserialize(mapping, existing);
+            return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
         private ClassMapping determineElementPropertyType(PropertyMapping mappedProperty, string memberName)

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization
         internal static Query Load (String resource, IEnumerable<Tuple<String, String>> parameters)
         {
             Query result = new Query();
-            result.ResourceType = resource;
+            result.ResourceSearchType = resource;
             foreach (var p in parameters)
             {
                 result.AddParameter(p.Item1, p.Item2);

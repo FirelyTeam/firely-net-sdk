@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("AppointmentResponse", IsResource=true)]
     [DataContract]
-    public partial class AppointmentResponse : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.AppointmentResponse; } }
+        public override string TypeName { get { return "AppointmentResponse"; } }
+        
         /// <summary>
         /// The Participation status of an appointment
         /// </summary>
@@ -88,12 +91,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -101,26 +104,26 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parent appointment that this response is replying to
         /// </summary>
-        [FhirElement("appointment", Order=70)]
+        [FhirElement("appointment", Order=60)]
         [References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Appointment
+        public Hl7.Fhir.Model.ResourceReference Appointment
         {
             get { return _Appointment; }
             set { _Appointment = value; OnPropertyChanged("Appointment"); }
         }
-        private Hl7.Fhir.Model.Reference _Appointment;
+        private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
         /// Role of participant in the appointment
         /// </summary>
-        [FhirElement("participantType", Order=80)]
+        [FhirElement("participantType", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
         {
-            get { return _ParticipantType; }
+            get { if(_ParticipantType==null) _ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ParticipantType; }
             set { _ParticipantType = value; OnPropertyChanged("ParticipantType"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
@@ -128,21 +131,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A Person of device that is participating in the appointment, usually Practitioner, Patient, RelatedPerson or Device
         /// </summary>
-        [FhirElement("individual", Order=90)]
+        [FhirElement("individual", Order=80)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Individual
+        public List<Hl7.Fhir.Model.ResourceReference> Individual
         {
-            get { return _Individual; }
+            get { if(_Individual==null) _Individual = new List<Hl7.Fhir.Model.ResourceReference>(); return _Individual; }
             set { _Individual = value; OnPropertyChanged("Individual"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Individual;
+        private List<Hl7.Fhir.Model.ResourceReference> _Individual;
         
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
         /// </summary>
-        [FhirElement("participantStatus", Order=100)]
+        [FhirElement("participantStatus", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> ParticipantStatus_Element
@@ -174,7 +177,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments about the appointment
         /// </summary>
-        [FhirElement("comment", Order=110)]
+        [FhirElement("comment", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -205,7 +208,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to take place
         /// </summary>
-        [FhirElement("start", Order=120)]
+        [FhirElement("start", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
         {
@@ -236,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to conclude
         /// </summary>
-        [FhirElement("end", Order=130)]
+        [FhirElement("end", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -267,20 +270,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the appointment response
         /// </summary>
-        [FhirElement("lastModifiedBy", Order=140)]
+        [FhirElement("lastModifiedBy", Order=130)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference LastModifiedBy
+        public Hl7.Fhir.Model.ResourceReference LastModifiedBy
         {
             get { return _LastModifiedBy; }
             set { _LastModifiedBy = value; OnPropertyChanged("LastModifiedBy"); }
         }
-        private Hl7.Fhir.Model.Reference _LastModifiedBy;
+        private Hl7.Fhir.Model.ResourceReference _LastModifiedBy;
         
         /// <summary>
         /// Date when the response was recorded or last updated
         /// </summary>
-        [FhirElement("lastModified", Order=150)]
+        [FhirElement("lastModified", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {
@@ -316,14 +319,14 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.Reference)Appointment.DeepCopy();
+                if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(ParticipantType != null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopy());
-                if(Individual != null) dest.Individual = new List<Hl7.Fhir.Model.Reference>(Individual.DeepCopy());
+                if(Individual != null) dest.Individual = new List<Hl7.Fhir.Model.ResourceReference>(Individual.DeepCopy());
                 if(ParticipantStatus_Element != null) dest.ParticipantStatus_Element = (Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>)ParticipantStatus_Element.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
-                if(LastModifiedBy != null) dest.LastModifiedBy = (Hl7.Fhir.Model.Reference)LastModifiedBy.DeepCopy();
+                if(LastModifiedBy != null) dest.LastModifiedBy = (Hl7.Fhir.Model.ResourceReference)LastModifiedBy.DeepCopy();
                 if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();
                 return dest;
             }

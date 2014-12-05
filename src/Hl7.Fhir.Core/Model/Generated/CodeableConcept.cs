@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,15 +47,17 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class CodeableConcept : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "CodeableConcept"; } }
+        
         /// <summary>
         /// Code defined by a terminology system
         /// </summary>
-        [FhirElement("coding", InSummary=true, Order=40)]
+        [FhirElement("coding", InSummary=true, Order=30)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Coding
         {
-            get { return _Coding; }
+            get { if(_Coding==null) _Coding = new List<Hl7.Fhir.Model.Coding>(); return _Coding; }
             set { _Coding = value; OnPropertyChanged("Coding"); }
         }
         private List<Hl7.Fhir.Model.Coding> _Coding;
@@ -63,7 +65,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plain text representation of the concept
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=50)]
+        [FhirElement("text", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {

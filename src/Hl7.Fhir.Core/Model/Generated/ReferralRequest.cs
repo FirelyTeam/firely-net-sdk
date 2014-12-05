@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ReferralRequest", IsResource=true)]
     [DataContract]
-    public partial class ReferralRequest : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.ReferralRequest; } }
+        public override string TypeName { get { return "ReferralRequest"; } }
+        
         /// <summary>
         /// The status of the referral
         /// </summary>
@@ -88,7 +91,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | sent | active | cancelled | refused | completed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=60)]
+        [FhirElement("status", InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus> StatusElement
@@ -120,12 +123,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier of request
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
@@ -133,7 +136,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Referral/Transition of care request type
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=80)]
+        [FhirElement("type", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -145,7 +148,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The clinical specialty (discipline) that the referral is requested for
         /// </summary>
-        [FhirElement("specialty", Order=90)]
+        [FhirElement("specialty", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Specialty
         {
@@ -157,7 +160,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Urgency of referral / transfer of care request
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=100)]
+        [FhirElement("priority", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -167,62 +170,62 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Priority;
         
         /// <summary>
-        /// Patient/subject of referral or care transfer request
+        /// Patient referred to care or transfer
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=110)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Subject
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.Reference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Requester of referral / transfer of care
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=120)]
+        [FhirElement("requester", InSummary=true, Order=110)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Requester
+        public Hl7.Fhir.Model.ResourceReference Requester
         {
             get { return _Requester; }
             set { _Requester = value; OnPropertyChanged("Requester"); }
         }
-        private Hl7.Fhir.Model.Reference _Requester;
+        private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
         /// Receiver of referral / transfer of care request
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=130)]
+        [FhirElement("recipient", InSummary=true, Order=120)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> Recipient
+        public List<Hl7.Fhir.Model.ResourceReference> Recipient
         {
-            get { return _Recipient; }
+            get { if(_Recipient==null) _Recipient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recipient; }
             set { _Recipient = value; OnPropertyChanged("Recipient"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _Recipient;
+        private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
         /// Encounter
         /// </summary>
-        [FhirElement("encounter", Order=140)]
+        [FhirElement("encounter", Order=130)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
-        private Hl7.Fhir.Model.Reference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Date referral/transfer of care request is sent
         /// </summary>
-        [FhirElement("dateSent", InSummary=true, Order=150)]
+        [FhirElement("dateSent", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateSentElement
         {
@@ -253,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for referral / Transfer of care request
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=160)]
+        [FhirElement("reason", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -265,7 +268,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A textual description of the referral
         /// </summary>
-        [FhirElement("description", Order=170)]
+        [FhirElement("description", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -296,12 +299,12 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Service(s) requested
         /// </summary>
-        [FhirElement("serviceRequested", InSummary=true, Order=180)]
+        [FhirElement("serviceRequested", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
         {
-            get { return _ServiceRequested; }
+            get { if(_ServiceRequested==null) _ServiceRequested = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceRequested; }
             set { _ServiceRequested = value; OnPropertyChanged("ServiceRequested"); }
         }
         private List<Hl7.Fhir.Model.CodeableConcept> _ServiceRequested;
@@ -309,21 +312,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additonal information to support referral or transfer of care request
         /// </summary>
-        [FhirElement("supportingInformation", InSummary=true, Order=190)]
+        [FhirElement("supportingInformation", InSummary=true, Order=180)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Reference> SupportingInformation
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
         {
-            get { return _SupportingInformation; }
+            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
             set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
         }
-        private List<Hl7.Fhir.Model.Reference> _SupportingInformation;
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
         
         /// <summary>
         /// Requested service(s) fulfillment time
         /// </summary>
-        [FhirElement("fulfillmentTime", InSummary=true, Order=200)]
+        [FhirElement("fulfillmentTime", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Period FulfillmentTime
         {
@@ -344,15 +347,15 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Specialty != null) dest.Specialty = (Hl7.Fhir.Model.CodeableConcept)Specialty.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Reference)Subject.DeepCopy();
-                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.Reference)Requester.DeepCopy();
-                if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.Reference>(Recipient.DeepCopy());
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.Reference)Encounter.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
+                if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateSentElement != null) dest.DateSentElement = (Hl7.Fhir.Model.FhirDateTime)DateSentElement.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(ServiceRequested != null) dest.ServiceRequested = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceRequested.DeepCopy());
-                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.Reference>(SupportingInformation.DeepCopy());
+                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(FulfillmentTime != null) dest.FulfillmentTime = (Hl7.Fhir.Model.Period)FulfillmentTime.DeepCopy();
                 return dest;
             }
@@ -376,7 +379,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
@@ -401,7 +404,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;

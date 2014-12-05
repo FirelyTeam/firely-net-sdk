@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Period"; } }
+        
         /// <summary>
         /// Starting time with inclusive boundary
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=40)]
+        [FhirElement("start", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StartElement
         {
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// End time with inclusive boundary, if not ongoing
         /// </summary>
-        [FhirElement("end", InSummary=true, Order=50)]
+        [FhirElement("end", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime EndElement
         {

@@ -18,6 +18,18 @@ namespace Hl7.Fhir.Support
 {
     internal static class ReflectionHelper
     {
+        public static bool CanBeTreatedAsType(this Type CurrentType, Type TypeToCompareWith)
+        {
+            // Always return false if either Type is null
+            if (CurrentType == null || TypeToCompareWith == null)
+                return false;
+
+
+            // Return the result of the assignability test
+            return TypeToCompareWith.IsAssignableFrom(CurrentType);
+        }
+
+
         /// <summary>
         /// Gets an attribute on an enum field value
         /// </summary>

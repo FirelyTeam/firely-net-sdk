@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource for capturing binary data
     /// </summary>
-    public partial class Binary : Hl7.Fhir.Model.Resource, Hl7.Fhir.Validation.IValidatableObject
+    public partial class Binary
     {
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Medication", IsResource=true)]
     [DataContract]
-    public partial class Medication : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Medication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Medication; } }
+        public override string TypeName { get { return "Medication"; } }
+        
         /// <summary>
         /// Whether the medication is a product or a package
         /// </summary>
@@ -67,26 +70,28 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MedicationPackageContentComponent")]
         [DataContract]
-        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MedicationPackageContentComponent"; } }
+            
             /// <summary>
             /// A product in the package
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
+            [FhirElement("item", InSummary=true, Order=20)]
             [References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Item
+            public Hl7.Fhir.Model.ResourceReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
-            private Hl7.Fhir.Model.Reference _Item;
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// How many are in the package?
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=50)]
+            [FhirElement("amount", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Amount
             {
@@ -102,7 +107,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Reference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
@@ -144,12 +149,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MedicationPackageComponent")]
         [DataContract]
-        public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MedicationPackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MedicationPackageComponent"; } }
+            
             /// <summary>
             /// E.g. box, vial, blister-pack
             /// </summary>
-            [FhirElement("container", InSummary=true, Order=40)]
+            [FhirElement("container", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Container
             {
@@ -161,12 +168,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What is  in the package?
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=50)]
+            [FhirElement("content", InSummary=true, Order=30)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
             {
-                get { return _Content; }
+                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent>(); return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             private List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> _Content;
@@ -220,26 +227,28 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MedicationProductIngredientComponent")]
         [DataContract]
-        public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MedicationProductIngredientComponent"; } }
+            
             /// <summary>
             /// The product contained
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
+            [FhirElement("item", InSummary=true, Order=20)]
             [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Item
+            public Hl7.Fhir.Model.ResourceReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
-            private Hl7.Fhir.Model.Reference _Item;
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// How much ingredient in product
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=50)]
+            [FhirElement("amount", InSummary=true, Order=30)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Amount
             {
@@ -255,7 +264,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Reference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                     return dest;
                 }
@@ -297,12 +306,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MedicationProductComponent")]
         [DataContract]
-        public partial class MedicationProductComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MedicationProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "MedicationProductComponent"; } }
+            
             /// <summary>
             /// powder | tablets | carton +
             /// </summary>
-            [FhirElement("form", InSummary=true, Order=40)]
+            [FhirElement("form", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Form
             {
@@ -314,12 +325,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Active or inactive ingredient
             /// </summary>
-            [FhirElement("ingredient", InSummary=true, Order=50)]
+            [FhirElement("ingredient", InSummary=true, Order=30)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
             {
-                get { return _Ingredient; }
+                get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent>(); return _Ingredient; }
                 set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
             }
             private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
@@ -374,7 +385,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Common / Commercial name
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -405,7 +416,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=70)]
+        [FhirElement("code", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -417,7 +428,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", InSummary=true, Order=80)]
+        [FhirElement("isBrand", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsBrandElement
         {
@@ -448,20 +459,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=90)]
+        [FhirElement("manufacturer", InSummary=true, Order=80)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Manufacturer
+        public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
             get { return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
-        private Hl7.Fhir.Model.Reference _Manufacturer;
+        private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
         /// product | package
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=100)]
+        [FhirElement("kind", InSummary=true, Order=90)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
         {
@@ -492,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Administrable medication details
         /// </summary>
-        [FhirElement("product", Order=110)]
+        [FhirElement("product", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
         {
@@ -504,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("package", Order=120)]
+        [FhirElement("package", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
         {
@@ -523,7 +534,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(IsBrandElement != null) dest.IsBrandElement = (Hl7.Fhir.Model.FhirBoolean)IsBrandElement.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.Reference)Manufacturer.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.Medication.MedicationKind>)KindElement.DeepCopy();
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Medication.MedicationProductComponent)Product.DeepCopy();
                 if(Package != null) dest.Package = (Hl7.Fhir.Model.Medication.MedicationPackageComponent)Package.DeepCopy();

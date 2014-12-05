@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -43,6 +44,6 @@ namespace Hl7.Fhir.Serialization
     public interface IModelClassFactory
     {
         bool CanCreate(Type type);
-        object Create(Type type);
+        Base Create(Type type);
     }
 }

@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Hl7.Fhir.Serialization;
 
 
 namespace Hl7.Fhir.Support

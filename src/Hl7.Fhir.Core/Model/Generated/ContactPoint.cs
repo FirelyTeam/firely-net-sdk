@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ContactPoint : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "ContactPoint"; } }
+        
         /// <summary>
         /// Telecommunications form for contact point
         /// </summary>
@@ -111,7 +113,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// phone | fax | email | url
         /// </summary>
-        [FhirElement("system", InSummary=true, Order=40)]
+        [FhirElement("system", InSummary=true, Order=30)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> SystemElement
         {
@@ -142,7 +144,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual contact point details
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=50)]
+        [FhirElement("value", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ValueElement
         {
@@ -173,7 +175,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// home | work | temp | old | mobile - purpose of this contact point
         /// </summary>
-        [FhirElement("use", InSummary=true, Order=60)]
+        [FhirElement("use", InSummary=true, Order=50)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> UseElement
         {
@@ -204,7 +206,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when the contact point was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=70)]
+        [FhirElement("period", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {

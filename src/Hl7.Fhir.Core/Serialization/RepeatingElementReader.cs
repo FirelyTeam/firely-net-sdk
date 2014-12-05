@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Hl7.Fhir.Model;
 
 
 namespace Hl7.Fhir.Serialization
@@ -31,13 +32,13 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
+        public IList Deserialize(PropertyMapping prop, string memberName, IList existing=null)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
-            if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+            //IList result = existing as IList;
 
-            IList result = existing as IList;
+            IList result = existing;
 
             bool overwriteMode;
             IEnumerable<IFhirReader> elements;

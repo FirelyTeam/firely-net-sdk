@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,8 +45,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Supply", IsResource=true)]
     [DataContract]
-    public partial class Supply : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Supply : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        public override ResourceType ResourceType { get { return ResourceType.Supply; } }
+        public override string TypeName { get { return "Supply"; } }
+        
         /// <summary>
         /// Status of the dispense
         /// </summary>
@@ -105,12 +108,14 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SupplyDispenseComponent")]
         [DataContract]
-        public partial class SupplyDispenseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SupplyDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            public override string TypeName { get { return "SupplyDispenseComponent"; } }
+            
             /// <summary>
             /// External identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=true, Order=20)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -122,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// in progress | dispensed | abandoned
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=50)]
+            [FhirElement("status", InSummary=true, Order=30)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> StatusElement
             {
@@ -153,7 +158,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Category of dispense event
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=60)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -165,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount dispensed
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
+            [FhirElement("quantity", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -177,33 +182,33 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication, Substance, or Device supplied
             /// </summary>
-            [FhirElement("suppliedItem", InSummary=true, Order=80)]
+            [FhirElement("suppliedItem", InSummary=true, Order=60)]
             [References("Medication","Substance","Device")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference SuppliedItem
+            public Hl7.Fhir.Model.ResourceReference SuppliedItem
             {
                 get { return _SuppliedItem; }
                 set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
             }
-            private Hl7.Fhir.Model.Reference _SuppliedItem;
+            private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
             
             /// <summary>
             /// Dispenser
             /// </summary>
-            [FhirElement("supplier", InSummary=true, Order=90)]
+            [FhirElement("supplier", InSummary=true, Order=70)]
             [References("Practitioner")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Supplier
+            public Hl7.Fhir.Model.ResourceReference Supplier
             {
                 get { return _Supplier; }
                 set { _Supplier = value; OnPropertyChanged("Supplier"); }
             }
-            private Hl7.Fhir.Model.Reference _Supplier;
+            private Hl7.Fhir.Model.ResourceReference _Supplier;
             
             /// <summary>
             /// Dispensing time
             /// </summary>
-            [FhirElement("whenPrepared", InSummary=true, Order=100)]
+            [FhirElement("whenPrepared", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Period WhenPrepared
             {
@@ -215,7 +220,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Handover time
             /// </summary>
-            [FhirElement("whenHandedOver", InSummary=true, Order=110)]
+            [FhirElement("whenHandedOver", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Period WhenHandedOver
             {
@@ -227,29 +232,29 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the Supply was sent
             /// </summary>
-            [FhirElement("destination", InSummary=true, Order=120)]
+            [FhirElement("destination", InSummary=true, Order=100)]
             [References("Location")]
             [DataMember]
-            public Hl7.Fhir.Model.Reference Destination
+            public Hl7.Fhir.Model.ResourceReference Destination
             {
                 get { return _Destination; }
                 set { _Destination = value; OnPropertyChanged("Destination"); }
             }
-            private Hl7.Fhir.Model.Reference _Destination;
+            private Hl7.Fhir.Model.ResourceReference _Destination;
             
             /// <summary>
             /// Who collected the Supply
             /// </summary>
-            [FhirElement("receiver", InSummary=true, Order=130)]
+            [FhirElement("receiver", InSummary=true, Order=110)]
             [References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Reference> Receiver
+            public List<Hl7.Fhir.Model.ResourceReference> Receiver
             {
-                get { return _Receiver; }
+                get { if(_Receiver==null) _Receiver = new List<Hl7.Fhir.Model.ResourceReference>(); return _Receiver; }
                 set { _Receiver = value; OnPropertyChanged("Receiver"); }
             }
-            private List<Hl7.Fhir.Model.Reference> _Receiver;
+            private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -262,12 +267,12 @@ namespace Hl7.Fhir.Model
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus>)StatusElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.Reference)SuppliedItem.DeepCopy();
-                    if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.Reference)Supplier.DeepCopy();
+                    if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
+                    if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                     if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();
                     if(WhenHandedOver != null) dest.WhenHandedOver = (Hl7.Fhir.Model.Period)WhenHandedOver.DeepCopy();
-                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.Reference)Destination.DeepCopy();
-                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.Reference>(Receiver.DeepCopy());
+                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
+                    if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
                     return dest;
                 }
                 else
@@ -325,7 +330,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The kind of supply (central, non-stock, etc)
         /// </summary>
-        [FhirElement("kind", Order=60)]
+        [FhirElement("kind", Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Kind
         {
@@ -337,7 +342,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -349,7 +354,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | dispensed | received | failed | cancelled
         /// </summary>
-        [FhirElement("status", Order=80)]
+        [FhirElement("status", Order=70)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Supply.SupplyStatus> StatusElement
         {
@@ -380,38 +385,38 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", Order=90)]
+        [FhirElement("orderedItem", Order=80)]
         [References("Medication","Substance","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference OrderedItem
+        public Hl7.Fhir.Model.ResourceReference OrderedItem
         {
             get { return _OrderedItem; }
             set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
         }
-        private Hl7.Fhir.Model.Reference _OrderedItem;
+        private Hl7.Fhir.Model.ResourceReference _OrderedItem;
         
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", Order=100)]
+        [FhirElement("patient", Order=90)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.Reference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Supply details
         /// </summary>
-        [FhirElement("dispense", Order=110)]
+        [FhirElement("dispense", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> Dispense
         {
-            get { return _Dispense; }
+            get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
         private List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> _Dispense;
@@ -426,8 +431,8 @@ namespace Hl7.Fhir.Model
                 if(Kind != null) dest.Kind = (Hl7.Fhir.Model.CodeableConcept)Kind.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Supply.SupplyStatus>)StatusElement.DeepCopy();
-                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.Reference)OrderedItem.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Reference)Patient.DeepCopy();
+                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.ResourceReference)OrderedItem.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent>(Dispense.DeepCopy());
                 return dest;
             }

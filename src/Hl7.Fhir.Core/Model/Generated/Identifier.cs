@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Identifier : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Identifier"; } }
+        
         /// <summary>
         /// Identifies the purpose for this identifier, if known
         /// </summary>
@@ -78,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// usual | official | temp | secondary (If known)
         /// </summary>
-        [FhirElement("use", InSummary=true, Order=40)]
+        [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement
         {
@@ -109,7 +111,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of identifier
         /// </summary>
-        [FhirElement("label", InSummary=true, Order=50)]
+        [FhirElement("label", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LabelElement
         {
@@ -140,7 +142,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The namespace for the identifier
         /// </summary>
-        [FhirElement("system", InSummary=true, Order=60)]
+        [FhirElement("system", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SystemElement
         {
@@ -171,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The value that is unique
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=70)]
+        [FhirElement("value", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ValueElement
         {
@@ -202,7 +204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when id is/was valid for use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=80)]
+        [FhirElement("period", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -214,15 +216,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization that issued id (may be just text)
         /// </summary>
-        [FhirElement("assigner", InSummary=true, Order=90)]
+        [FhirElement("assigner", InSummary=true, Order=80)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.Reference Assigner
+        public Hl7.Fhir.Model.ResourceReference Assigner
         {
             get { return _Assigner; }
             set { _Assigner = value; OnPropertyChanged("Assigner"); }
         }
-        private Hl7.Fhir.Model.Reference _Assigner;
+        private Hl7.Fhir.Model.ResourceReference _Assigner;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -236,7 +238,7 @@ namespace Hl7.Fhir.Model
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.Reference)Assigner.DeepCopy();
+                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)Assigner.DeepCopy();
                 return dest;
             }
             else

@@ -41,51 +41,94 @@ using System.ComponentModel.DataAnnotations;
 namespace Hl7.Fhir.Model
 {    
     [InvokeIValidatableObject]
-    public class Bundle : Hl7.Fhir.Validation.IValidatableObject
+    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
-        [Required(AllowEmptyStrings=false)]
-        public string Title { get; set; }
+        public const string ATOM_LINKREL_SELF = "self";
+        public const string ATOM_LINKREL_PREVIOUS = "previous";
+        public const string ATOM_LINKREL_NEXT = "next";
+        public const string ATOM_LINKREL_FIRST = "first";
+        public const string ATOM_LINKREL_LAST = "last";
+        public const string ATOM_LINKREL_SEARCH = "search";
+        public const string ATOM_LINKREL_PREDVERSION = "predecessor-version";
+        public const string ATOM_LINKREL_ALTERNATE = "alternate";
 
-        [Required]
-        public DateTimeOffset? LastUpdated { get; set; }
-
-        [Required(AllowEmptyStrings=false)]
-        public Uri Id { get; set; }
-        public UriLinkList Links { get; set; }
-        public IList<Tag> Tags { get; set; }
-
-        public string AuthorName { get; set; }
-        public string AuthorUri { get; set; }
-
-        public int? TotalResults { get; set; }
-
-        public IList<BundleEntry> Entries { get; set; }
-
-        public Bundle()
+        public Uri SelfLink
         {
-            Entries = new List<BundleEntry>();
-            Links = new UriLinkList();
-            Tags = new List<Tag>();
+            get { return getEntry(ATOM_LINKREL_SELF); }
+            set { setEntry(ATOM_LINKREL_SELF, value); }
         }
 
-        public Bundle(Uri id, string title, DateTimeOffset lastUpdated) : this()
+        public Uri FirstLink
         {
-            Id = id;
-            Title = title;
-            LastUpdated = lastUpdated;
+            get { return getEntry(ATOM_LINKREL_FIRST); }
+            set { setEntry(ATOM_LINKREL_FIRST, value); }
         }
 
-        public Bundle(string title, DateTimeOffset lastUpdated)
-            : this()
+        public Uri PreviousLink
         {
-            Id = new Uri("urn:uuid:" + Guid.NewGuid());
-            Title = title;
-            LastUpdated = lastUpdated;
+            get { return getEntry(ATOM_LINKREL_PREVIOUS); }
+            set { setEntry(ATOM_LINKREL_PREVIOUS, value); }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public Uri NextLink
+        {
+            get { return getEntry(ATOM_LINKREL_NEXT); }
+            set { setEntry(ATOM_LINKREL_NEXT, value); }
+        }
+
+        public Uri LastLink
+        {
+            get { return getEntry(ATOM_LINKREL_LAST); }
+            set { setEntry(ATOM_LINKREL_LAST, value); }
+        }
+
+        public Uri SearchLink
+        {
+            get { return getEntry(ATOM_LINKREL_SEARCH); }
+            set { setEntry(ATOM_LINKREL_SEARCH, value); }
+        }
+
+        public Uri PredecessorVersionLink
+        {
+            get { return getEntry(ATOM_LINKREL_PREDVERSION); }
+            set { setEntry(ATOM_LINKREL_PREDVERSION, value); }
+        }
+
+        public Uri Alternate
+        {
+            get { return getEntry(ATOM_LINKREL_ALTERNATE); }
+            set { setEntry(ATOM_LINKREL_ALTERNATE, value); }
+        }
+
+        private Uri getEntry(string rel)
+        {
+            if (Link == null) return null;
+
+            var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
+
+            if (entry != null)
+                return new Uri(entry.Url, UriKind.RelativeOrAbsolute);
+            else
+                return null;
+        }
+
+        private void setEntry(string rel, Uri uri)
+        {
+            if (Link == null) Link = new List<BundleLinkComponent>();
+
+            var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
+
+            if (entry != null)
+                entry.Url = uri.ToString();
+            else
+                Link.Add(new BundleLinkComponent() { Relation = rel, Url = uri.ToString() });
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>();
+
+            result.AddRange(base.Validate(validationContext));
 
             //if (String.IsNullOrWhiteSpace(Title))
             //    result.Add(new ValidationResult("Feed must contain a title", FhirValidator.SingleMemberName("Title"));
@@ -96,27 +139,19 @@ namespace Hl7.Fhir.Model
             //    if (!Id.IsAbsoluteUri)
             //        result.Add(new ValidationResult("Feed id must be an absolute URI"));
 
-            if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
+            if (Id != null)
+            {
+                var idAsUri = new Uri(Id, UriKind.RelativeOrAbsolute);
+
+                 if(!idAsUri.IsAbsoluteUri)
+                    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
+            }
 
             //if (LastUpdated == null)
             //    result.Add(new ValidationResult("Feed must have a updated date"));
 
-            if (Links.SearchLink != null)
+            if (SearchLink != null)
                 result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
-
-            bool feedHasAuthor = !String.IsNullOrEmpty(this.AuthorName);
-
-            if (Entries != null && validationContext.ValidateRecursively())
-            {
-                foreach (var entry in Entries.Where(e => e != null))
-                {
-                    if (!feedHasAuthor && entry is ResourceEntry && String.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
-                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Bundle's author and Entry author cannot both be empty"));
-
-                    DotNetAttributeValidation.TryValidate(entry, result, validationContext.ValidateRecursively());
-                }
-            }
 
             return result;
         }
@@ -125,6 +160,8 @@ namespace Hl7.Fhir.Model
         {
             return u != null && !String.IsNullOrEmpty(u.ToString());
         }
+
+
 
     }  
 }

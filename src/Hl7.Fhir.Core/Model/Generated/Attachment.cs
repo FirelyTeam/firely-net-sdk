@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,10 +47,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Attachment : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        public override string TypeName { get { return "Attachment"; } }
+        
         /// <summary>
         /// Mime type of the content, with charset etc.
         /// </summary>
-        [FhirElement("contentType", InSummary=true, Order=40)]
+        [FhirElement("contentType", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
         {
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human language of the content (BCP-47)
         /// </summary>
-        [FhirElement("language", InSummary=true, Order=50)]
+        [FhirElement("language", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.Code LanguageElement
         {
@@ -112,7 +114,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=60)]
+        [FhirElement("data", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary DataElement
         {
@@ -143,7 +145,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Uri where the data can be found
         /// </summary>
-        [FhirElement("url", InSummary=true, Order=70)]
+        [FhirElement("url", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -174,7 +176,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of bytes of content (if url provided)
         /// </summary>
-        [FhirElement("size", InSummary=true, Order=80)]
+        [FhirElement("size", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SizeElement
         {
@@ -205,7 +207,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Hash of the data (sha-1, base64ed )
         /// </summary>
-        [FhirElement("hash", InSummary=true, Order=90)]
+        [FhirElement("hash", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary HashElement
         {
@@ -236,7 +238,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Label to display in place of the data
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=100)]
+        [FhirElement("title", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -35,9 +36,10 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public object Create(Type type)
+        public Base Create(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
+            if (!type.CanBeTreatedAsType(typeof(Base))) throw Error.Argument("type argument must be a subclass of Base");
 
            // var typeToCreate = findTypeSubstitution(type);
             var typeToCreate = type;
@@ -60,7 +62,7 @@ namespace Hl7.Fhir.Serialization
                 typeToCreate = typeof(List<>).MakeGenericType(elementType);
             }
                              
-            return Activator.CreateInstance(typeToCreate);
+            return (Base)Activator.CreateInstance(typeToCreate);
         }
     }
 }

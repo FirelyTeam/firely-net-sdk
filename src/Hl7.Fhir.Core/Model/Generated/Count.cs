@@ -36,13 +36,15 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Oct 30, 2014 17:26+0100 for FHIR v0.3.0
+// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     [FhirType("Count")]
     public partial class Count : Quantity
     {
+        public override string TypeName { get { return "Count"; } }
+        
         // TODO: Add code to enforce these constraints:
         // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
     }
