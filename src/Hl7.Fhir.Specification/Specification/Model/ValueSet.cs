@@ -10,28 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Hl7.Fhir.Specification.Model
 {
-    public static class ValueSetExtensions
-    {
-        
-
-
-    }
-
-    
+   
     public class ValueSet
     {
+
         Hl7.Fhir.Model.ValueSet valueset;
         public Uri System { get; set; }
+
         public ValueSet(Uri system, Hl7.Fhir.Model.ValueSet inner)
         {
             this.valueset = inner;
             this.System = system;
         }
 
-        
         private bool ConceptContains(List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> concepts, string value)
         {
             if (concepts != null)
@@ -53,8 +46,6 @@ namespace Hl7.Fhir.Specification.Model
             return false;
         }
 
-
-
         public bool Contains(string code)
         {
             if (valueset.Define != null)
@@ -67,12 +58,13 @@ namespace Hl7.Fhir.Specification.Model
                 if (ComposeContains(valueset.Compose, code)) return true;
             }
             return false;
-            
         }
+
         public override string ToString()
         {
             return System.ToString();
         }
+
     }
      
 }
