@@ -180,16 +180,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
-      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj">
-      <Project>{3b6b0d98-f3f2-43eb-97f2-a20d23be3b71}</Project>
-      <Name>Hl7.Fhir.Specification</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

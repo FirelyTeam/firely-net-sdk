@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Serialization
             //string json = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientJson;
 
  //            var once = FhirParser.ParseResourceFromJson(json);
-            var once = FhirParser.ParseResourceFromXml(xml);
+            var once = (new FhirParser()).ParseResourceFromXml(xml);
 
             Stopwatch x = new Stopwatch();
 
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Tests.Serialization
             for (int i = 0; i < 1000; i++)
             {
               //  var result = FhirParser.ParseResourceFromJson(json);
-              var result = FhirParser.ParseResourceFromXml(xml);
+              var result = (new FhirParser()).ParseResourceFromXml(xml);
             }
             x.Stop();
 

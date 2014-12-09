@@ -9,6 +9,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -65,7 +66,7 @@ namespace Hl7.Fhir.Tests.Serialization
             return type == typeof(SpecificModelClass);
         }
 
-        public object Create(Type type)
+        public Base Create(Type type)
         {
             throw new NotImplementedException();
         }

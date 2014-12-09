@@ -39,15 +39,6 @@ namespace Hl7.Fhir.Serialization
                 var resourceType = _reader.GetResourceTypeName(nested);
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
-                if (mappedType == null)
-                {
-                    // Special courtesy case
-                    if (resourceType == "feed" || resourceType == "Bundle")
-                        throw Error.Format("Encountered a feed instead of a resource", _reader);
-                    else
-                        throw Error.Format("Encountered unknown resource type {0}", _reader, resourceType);
-                }
-
                 if (existing == null)
                 {
                     var fac = new DefaultModelFactory();

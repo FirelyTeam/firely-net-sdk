@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                FhirParser.ParseResourceFromXml(xml);
+                (new FhirParser()).ParseResourceFromXml(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
             catch (FormatException)
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             SerializationConfig.AcceptUnknownMembers = true;
-            FhirParser.ParseResourceFromXml(xml);
+            (new FhirParser()).ParseResourceFromXml(xml);
         }
 
 
@@ -46,13 +46,13 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
 
-            FhirParser.ParseResourceFromXml(xml);
+            (new FhirParser()).ParseResourceFromXml(xml);
 
             SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
 
             try
             {
-                FhirParser.ParseResourceFromXml(xml);
+                (new FhirParser()).ParseResourceFromXml(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
             catch (FormatException)
@@ -67,15 +67,15 @@ namespace Hl7.Fhir.Tests.Serialization
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
             string json = File.ReadAllText(@"TestData\TestPatient.json");
 
-            var poco = FhirParser.ParseResourceFromXml(xml);
+            var poco = (new FhirParser()).ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
-            var output = FhirSerializer.SerializeResourceToXml(poco);
+            var output = (new FhirSerializer()).SerializeResourceToXml(poco);
             Assert.IsNotNull(output);
             XmlAssert.AreSame(xml, output);
 
-            poco = FhirParser.ParseResourceFromJson(json);
+            poco = (new FhirParser()).ParseResourceFromJson(json);
             Assert.IsNotNull(poco);
-            output = FhirSerializer.SerializeResourceToJson(poco);
+            output = (new FhirSerializer()).SerializeResourceToJson(poco);
             Assert.IsNotNull(output);
             JsonAssert.AreSame(json, output);
         }
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                var prof = FhirParser.ParseResourceFromJson(json);
+                var prof = (new FhirParser()).ParseResourceFromJson(json);
                 Assert.Fail("Should have failed parsing");
             }
             catch (FormatException)

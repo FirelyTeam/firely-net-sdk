@@ -27,18 +27,18 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             Bundle b = new Bundle();
 
-            var data = FhirSerializer.SerializeBundleToJsonBytes(b);
+            var data = (new FhirSerializer()).SerializeResourceToJsonBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = FhirSerializer.SerializeBundleToXmlBytes(b);
+            data = (new FhirSerializer()).SerializeResourceToXmlBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
             Patient p = new Patient();
 
-            data = FhirSerializer.SerializeResourceToJsonBytes(p);
+            data = (new FhirSerializer()).SerializeResourceToJsonBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = FhirSerializer.SerializeResourceToXmlBytes(p);
+            data = (new FhirSerializer()).SerializeResourceToXmlBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
         }
 
@@ -66,11 +66,11 @@ namespace Hl7.Fhir.Tests.Serialization
             p.BirthDate = "1972-11-30";     // present in both summary and full
             p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
 
-            var full = FhirSerializer.SerializeResourceToXml(p);
+            var full = (new FhirSerializer()).SerializeResourceToXml(p);
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
 
-            var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
+            var summ = (new FhirSerializer()).SerializeResourceToXml(p, summary: true);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
         }

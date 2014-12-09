@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = (Patient)(new FhirParser()).ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
             Assert.IsTrue(p2.IsExactly(p));
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = (Patient)(new FhirParser()).ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
             p2.ActiveElement.Value = true;
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = (Patient)(new FhirParser()).ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
             var rel = (CodeableConcept)p.Contact[0].Relationship[0].DeepCopy();
