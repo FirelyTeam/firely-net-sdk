@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Group : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Group; } }
+        [NotMapped]
         public override string TypeName { get { return "Group"; } }
         
         /// <summary>
@@ -92,6 +94,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "GroupCharacteristicComponent"; } }
             
             /// <summary>

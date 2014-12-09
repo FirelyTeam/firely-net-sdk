@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Model
 
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 
-            return bundle.Entry.Where(be => (includeDeleted && be.Deleted != null && be.Deleted.Id == id && be.Deleted.Type == type) || 
+            return bundle.Entry.Where(be => (includeDeleted && be.Deleted != null && be.Deleted.ResourceId == id && be.Deleted.Type == type) || 
                 (be.Resource != null && be.Resource.Id == id && be.Resource.TypeName == type));
         }
 
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
 
             if (entry.Deleted != null)
             {
-                return url + entry.Deleted.Type + "/" + entry.Deleted.Id;
+                return url + entry.Deleted.Type + "/" + entry.Deleted.ResourceId;
             }
             else
             {

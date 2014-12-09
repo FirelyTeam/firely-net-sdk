@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Conformance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Conformance; } }
+        [NotMapped]
         public override string TypeName { get { return "Conformance"; } }
         
         /// <summary>
@@ -316,6 +318,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestComponent"; } }
             
             /// <summary>
@@ -530,6 +533,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceSoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceSoftwareComponent"; } }
             
             /// <summary>
@@ -680,6 +684,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceMessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceMessagingComponent"; } }
             
             /// <summary>
@@ -845,6 +850,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceDocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceDocumentComponent"; } }
             
             /// <summary>
@@ -978,6 +984,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestResourceComponent"; } }
             
             /// <summary>
@@ -1245,6 +1252,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceImplementationComponent"; } }
             
             /// <summary>
@@ -1361,6 +1369,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceMessagingEventComponent"; } }
             
             /// <summary>
@@ -1612,6 +1621,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "SystemInteractionComponent"; } }
             
             /// <summary>
@@ -1728,6 +1738,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ResourceInteractionComponent"; } }
             
             /// <summary>
@@ -1844,6 +1855,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestSecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestSecurityComponent"; } }
             
             /// <summary>
@@ -1991,6 +2003,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestSecurityCertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestSecurityCertificateComponent"; } }
             
             /// <summary>
@@ -2106,6 +2119,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestOperationComponent"; } }
             
             /// <summary>
@@ -2205,6 +2219,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConformanceRestResourceSearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConformanceRestResourceSearchParamComponent"; } }
             
             /// <summary>

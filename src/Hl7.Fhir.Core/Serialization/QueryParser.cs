@@ -14,17 +14,18 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal static class QueryParser
+    internal static class ParametersParser
     {
-        internal static Query Load (String resource, IEnumerable<Tuple<String, String>> parameters)
+        internal static Parameters Load (String resource, IEnumerable<Tuple<String, String>> parameters)
         {
-            Query result = new Query();
-            result.ResourceSearchType = resource;
-            foreach (var p in parameters)
-            {
-                result.AddParameter(p.Item1, p.Item2);
-            };
-            return result;
+            throw new NotImplementedException();
+            //Query result = new Query();
+            //result.ResourceSearchType = resource;
+            //foreach (var p in parameters)
+            //{
+            //    result.AddParameter(p.Item1, p.Item2);
+            //};
+            //return result;
         }
     }
 }

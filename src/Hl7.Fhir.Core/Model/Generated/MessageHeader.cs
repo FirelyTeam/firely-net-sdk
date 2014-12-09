@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class MessageHeader : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MessageHeader; } }
+        [NotMapped]
         public override string TypeName { get { return "MessageHeader"; } }
         
         /// <summary>
@@ -77,6 +79,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MessageDestinationComponent"; } }
             
             /// <summary>
@@ -209,6 +212,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MessageSourceComponent"; } }
             
             /// <summary>
@@ -408,6 +412,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MessageHeaderResponseComponent"; } }
             
             /// <summary>

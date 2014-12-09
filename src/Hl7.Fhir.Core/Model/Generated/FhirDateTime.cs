@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,7 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class FhirDateTime : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override string TypeName { get { return "dateTime"; } }
         
         // Must conform to the pattern "-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?"

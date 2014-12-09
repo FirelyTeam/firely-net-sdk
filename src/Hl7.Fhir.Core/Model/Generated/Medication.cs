@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Medication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Medication; } }
+        [NotMapped]
         public override string TypeName { get { return "Medication"; } }
         
         /// <summary>
@@ -72,6 +74,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MedicationPackageContentComponent"; } }
             
             /// <summary>
@@ -151,6 +154,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MedicationPackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MedicationPackageComponent"; } }
             
             /// <summary>
@@ -229,6 +233,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MedicationProductIngredientComponent"; } }
             
             /// <summary>
@@ -308,6 +313,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MedicationProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MedicationProductComponent"; } }
             
             /// <summary>

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ClaimResponse; } }
+        [NotMapped]
         public override string TypeName { get { return "ClaimResponse"; } }
         
         /// <summary>
@@ -95,6 +97,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NotesComponent"; } }
             
             /// <summary>
@@ -225,6 +228,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
             
             /// <summary>
@@ -374,6 +378,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemSubdetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ItemSubdetailComponent"; } }
             
             /// <summary>
@@ -472,6 +477,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AddedItemDetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "AddedItemDetailAdjudicationComponent"; } }
             
             /// <summary>
@@ -584,6 +590,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AddedItemAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "AddedItemAdjudicationComponent"; } }
             
             /// <summary>
@@ -696,6 +703,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "DetailAdjudicationComponent"; } }
             
             /// <summary>
@@ -808,6 +816,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ErrorsComponent"; } }
             
             /// <summary>
@@ -973,6 +982,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "AddedItemComponent"; } }
             
             /// <summary>
@@ -1153,6 +1163,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ItemAdjudicationComponent"; } }
             
             /// <summary>
@@ -1265,6 +1276,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "AddedItemsDetailComponent"; } }
             
             /// <summary>
@@ -1359,6 +1371,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SubdetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "SubdetailAdjudicationComponent"; } }
             
             /// <summary>
@@ -1471,6 +1484,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ItemDetailComponent"; } }
             
             /// <summary>

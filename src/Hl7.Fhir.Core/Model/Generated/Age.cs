@@ -36,13 +36,14 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     [FhirType("Age")]
     public partial class Age : Quantity
     {
+        [NotMapped]
         public override string TypeName { get { return "Age"; } }
         
         // TODO: Add code to enforce these constraints:

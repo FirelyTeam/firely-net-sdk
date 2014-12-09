@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Encounter : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Encounter; } }
+        [NotMapped]
         public override string TypeName { get { return "Encounter"; } }
         
         /// <summary>
@@ -135,6 +137,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EncounterHospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "EncounterHospitalizationComponent"; } }
             
             /// <summary>
@@ -387,6 +390,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EncounterHospitalizationAccomodationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "EncounterHospitalizationAccomodationComponent"; } }
             
             /// <summary>
@@ -465,6 +469,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EncounterLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "EncounterLocationComponent"; } }
             
             /// <summary>
@@ -544,6 +549,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EncounterParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "EncounterParticipantComponent"; } }
             
             /// <summary>

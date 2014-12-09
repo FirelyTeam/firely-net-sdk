@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Bundle : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Bundle; } }
+        [NotMapped]
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>
@@ -125,6 +127,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class BundleEntryDeletedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "BundleEntryDeletedComponent"; } }
             
             /// <summary>
@@ -162,15 +165,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Id of resource that was deleted
             /// </summary>
-            [FhirElement("id", InSummary=true, Order=30)]
+            [FhirElement("resourceId", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Id IdElement
+            public Hl7.Fhir.Model.Id ResourceIdElement
             {
-                get { return _IdElement; }
-                set { _IdElement = value; OnPropertyChanged("IdElement"); }
+                get { return _ResourceIdElement; }
+                set { _ResourceIdElement = value; OnPropertyChanged("ResourceIdElement"); }
             }
-            private Hl7.Fhir.Model.Id _IdElement;
+            private Hl7.Fhir.Model.Id _ResourceIdElement;
             
             /// <summary>
             /// Id of resource that was deleted
@@ -178,16 +181,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Id
+            public string ResourceId
             {
-                get { return IdElement != null ? IdElement.Value : null; }
+                get { return ResourceIdElement != null ? ResourceIdElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      IdElement = null; 
+                      ResourceIdElement = null; 
                     else
-                      IdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("Id");
+                      ResourceIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("ResourceId");
                 }
             }
             
@@ -263,7 +266,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
-                    if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopy();
+                    if(ResourceIdElement != null) dest.ResourceIdElement = (Hl7.Fhir.Model.Id)ResourceIdElement.DeepCopy();
                     if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
                     if(InstantElement != null) dest.InstantElement = (Hl7.Fhir.Model.Instant)InstantElement.DeepCopy();
                     return dest;
@@ -284,7 +287,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(IdElement, otherT.IdElement)) return false;
+                if( !DeepComparable.Matches(ResourceIdElement, otherT.ResourceIdElement)) return false;
                 if( !DeepComparable.Matches(VersionIdElement, otherT.VersionIdElement)) return false;
                 if( !DeepComparable.Matches(InstantElement, otherT.InstantElement)) return false;
                 
@@ -298,7 +301,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(IdElement, otherT.IdElement)) return false;
+                if( !DeepComparable.IsExactly(ResourceIdElement, otherT.ResourceIdElement)) return false;
                 if( !DeepComparable.IsExactly(VersionIdElement, otherT.VersionIdElement)) return false;
                 if( !DeepComparable.IsExactly(InstantElement, otherT.InstantElement)) return false;
                 
@@ -312,6 +315,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class BundleEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "BundleEntryComponent"; } }
             
             /// <summary>
@@ -526,6 +530,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class BundleLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "BundleLinkComponent"; } }
             
             /// <summary>

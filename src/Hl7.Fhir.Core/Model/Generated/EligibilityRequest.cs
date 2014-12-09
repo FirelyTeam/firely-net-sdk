@@ -36,19 +36,21 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Eligibility request
     /// </summary>
-    [FhirType("Eligibility", IsResource=true)]
+    [FhirType("EligibilityRequest", IsResource=true)]
     [DataContract]
-    public partial class Eligibility : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
-        public override ResourceType ResourceType { get { return ResourceType.Eligibility; } }
-        public override string TypeName { get { return "Eligibility"; } }
+        [NotMapped]
+        public override ResourceType ResourceType { get { return ResourceType.EligibilityRequest; } }
+        [NotMapped]
+        public override string TypeName { get { return "EligibilityRequest"; } }
         
         /// <summary>
         /// Business Identifier
@@ -159,7 +161,7 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Eligibility;
+            var dest = other as EligibilityRequest;
             
             if (dest != null)
             {
@@ -179,12 +181,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Eligibility());
+            return CopyTo(new EligibilityRequest());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Eligibility;
+            var otherT = other as EligibilityRequest;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -201,7 +203,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Eligibility;
+            var otherT = other as EligibilityRequest;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

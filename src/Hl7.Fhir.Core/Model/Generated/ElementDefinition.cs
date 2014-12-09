@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,7 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ElementDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override string TypeName { get { return "ElementDefinition"; } }
         
         /// <summary>
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ElementDefinitionSlicingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ElementDefinitionSlicingComponent"; } }
             
             /// <summary>
@@ -338,6 +340,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "TypeRefComponent"; } }
             
             /// <summary>
@@ -489,6 +492,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ElementDefinitionMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ElementDefinitionMappingComponent"; } }
             
             /// <summary>
@@ -606,6 +610,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ElementDefinitionBindingComponent"; } }
             
             /// <summary>
@@ -807,6 +812,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ElementDefinitionConstraintComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ElementDefinitionConstraintComponent"; } }
             
             /// <summary>

@@ -36,19 +36,21 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Enrollment request
     /// </summary>
-    [FhirType("Enrollment", IsResource=true)]
+    [FhirType("EnrollmentRequest", IsResource=true)]
     [DataContract]
-    public partial class Enrollment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EnrollmentRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
-        public override ResourceType ResourceType { get { return ResourceType.Enrollment; } }
-        public override string TypeName { get { return "Enrollment"; } }
+        [NotMapped]
+        public override ResourceType ResourceType { get { return ResourceType.EnrollmentRequest; } }
+        [NotMapped]
+        public override string TypeName { get { return "EnrollmentRequest"; } }
         
         /// <summary>
         /// Business Identifier
@@ -200,7 +202,7 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Enrollment;
+            var dest = other as EnrollmentRequest;
             
             if (dest != null)
             {
@@ -223,12 +225,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Enrollment());
+            return CopyTo(new EnrollmentRequest());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Enrollment;
+            var otherT = other as EnrollmentRequest;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -248,7 +250,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Enrollment;
+            var otherT = other as EnrollmentRequest;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

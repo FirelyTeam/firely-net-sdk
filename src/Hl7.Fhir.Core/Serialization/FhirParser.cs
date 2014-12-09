@@ -98,9 +98,9 @@ namespace Hl7.Fhir.Serialization
             //return ParseFromXml<TagList>(xml);
         }
 
-        public Query ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
+        public Parameters ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
         {
-            return QueryParser.Load(resource, parameters);
+            return ParametersParser.Load(resource, parameters);
         }
     }
 }

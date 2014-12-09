@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -216,15 +216,35 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Bundle")]
         Bundle,
         /// <summary>
+        /// The CareActivity resource
+        /// </summary>
+        [EnumLiteral("CareActivity")]
+        CareActivity,
+        /// <summary>
         /// The CarePlan resource
         /// </summary>
         [EnumLiteral("CarePlan")]
         CarePlan,
         /// <summary>
+        /// The CarePlan2 resource
+        /// </summary>
+        [EnumLiteral("CarePlan2")]
+        CarePlan2,
+        /// <summary>
         /// The ClaimResponse resource
         /// </summary>
         [EnumLiteral("ClaimResponse")]
         ClaimResponse,
+        /// <summary>
+        /// The ClinicalAssessment resource
+        /// </summary>
+        [EnumLiteral("ClinicalAssessment")]
+        ClinicalAssessment,
+        /// <summary>
+        /// The Communication resource
+        /// </summary>
+        [EnumLiteral("Communication")]
+        Communication,
         /// <summary>
         /// The CommunicationRequest resource
         /// </summary>
@@ -281,6 +301,11 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("DeviceComponent")]
         DeviceComponent,
         /// <summary>
+        /// The DeviceMetric resource
+        /// </summary>
+        [EnumLiteral("DeviceMetric")]
+        DeviceMetric,
+        /// <summary>
         /// The DeviceUseRequest resource
         /// </summary>
         [EnumLiteral("DeviceUseRequest")]
@@ -311,10 +336,10 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("DocumentReference")]
         DocumentReference,
         /// <summary>
-        /// The Eligibility resource
+        /// The EligibilityRequest resource
         /// </summary>
-        [EnumLiteral("Eligibility")]
-        Eligibility,
+        [EnumLiteral("EligibilityRequest")]
+        EligibilityRequest,
         /// <summary>
         /// The EligibilityResponse resource
         /// </summary>
@@ -326,10 +351,10 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Encounter")]
         Encounter,
         /// <summary>
-        /// The Enrollment resource
+        /// The EnrollmentRequest resource
         /// </summary>
-        [EnumLiteral("Enrollment")]
-        Enrollment,
+        [EnumLiteral("EnrollmentRequest")]
+        EnrollmentRequest,
         /// <summary>
         /// The EnrollmentResponse resource
         /// </summary>
@@ -350,6 +375,16 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("FamilyHistory")]
         FamilyHistory,
+        /// <summary>
+        /// The Goal resource
+        /// </summary>
+        [EnumLiteral("Goal")]
+        Goal,
+        /// <summary>
+        /// The GoalRequest resource
+        /// </summary>
+        [EnumLiteral("GoalRequest")]
+        GoalRequest,
         /// <summary>
         /// The Group resource
         /// </summary>
@@ -521,11 +556,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Provenance")]
         Provenance,
         /// <summary>
-        /// The Query resource
-        /// </summary>
-        [EnumLiteral("Query")]
-        Query,
-        /// <summary>
         /// The Questionnaire resource
         /// </summary>
         [EnumLiteral("Questionnaire")]
@@ -615,6 +645,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ValueSet")]
         ValueSet,
+        /// <summary>
+        /// The VisionClaim resource
+        /// </summary>
+        [EnumLiteral("VisionClaim")]
+        VisionClaim,
     }
     
 }

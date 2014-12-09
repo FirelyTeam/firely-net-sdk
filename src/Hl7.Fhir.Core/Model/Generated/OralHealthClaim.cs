@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -44,7 +44,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class OralHealthClaim : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.OralHealthClaim; } }
+        [NotMapped]
         public override string TypeName { get { return "OralHealthClaim"; } }
         
         /// <summary>
@@ -79,6 +81,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
             
             /// <summary>
@@ -140,9 +143,41 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Provider;
             
             /// <summary>
+            /// Diagnosis Link
+            /// </summary>
+            [FhirElement("diagnosisLinkId", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> DiagnosisLinkIdElement
+            {
+                get { if(_DiagnosisLinkIdElement==null) _DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(); return _DiagnosisLinkIdElement; }
+                set { _DiagnosisLinkIdElement = value; OnPropertyChanged("DiagnosisLinkIdElement"); }
+            }
+            private List<Hl7.Fhir.Model.Integer> _DiagnosisLinkIdElement;
+            
+            /// <summary>
+            /// Diagnosis Link
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> DiagnosisLinkId
+            {
+                get { return DiagnosisLinkIdElement != null ? DiagnosisLinkIdElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      DiagnosisLinkIdElement = null; 
+                    else
+                      DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("DiagnosisLinkId");
+                }
+            }
+            
+            /// <summary>
             /// Item Code
             /// </summary>
-            [FhirElement("service", InSummary=true, Order=50)]
+            [FhirElement("service", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Service
@@ -155,7 +190,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date of Service
             /// </summary>
-            [FhirElement("serviceDate", InSummary=true, Order=60)]
+            [FhirElement("serviceDate", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Date ServiceDateElement
             {
@@ -186,7 +221,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Count of Products or Services
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
+            [FhirElement("quantity", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -198,7 +233,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", InSummary=true, Order=80)]
+            [FhirElement("unitPrice", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Money UnitPrice
             {
@@ -210,7 +245,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Price scaling factor
             /// </summary>
-            [FhirElement("factor", InSummary=true, Order=90)]
+            [FhirElement("factor", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
             {
@@ -241,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Difficulty scaling factor
             /// </summary>
-            [FhirElement("points", InSummary=true, Order=100)]
+            [FhirElement("points", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
             {
@@ -272,7 +307,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Total item cost
             /// </summary>
-            [FhirElement("net", InSummary=true, Order=110)]
+            [FhirElement("net", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Money Net
             {
@@ -284,7 +319,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Unique Device Identifier
             /// </summary>
-            [FhirElement("udi", InSummary=true, Order=120)]
+            [FhirElement("udi", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Udi
             {
@@ -296,7 +331,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service Location
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=130)]
+            [FhirElement("bodySite", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.Coding BodySite
             {
@@ -308,7 +343,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service Sub-location
             /// </summary>
-            [FhirElement("subsite", InSummary=true, Order=140)]
+            [FhirElement("subsite", InSummary=true, Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Subsite
@@ -321,7 +356,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service/Product billing modifiers
             /// </summary>
-            [FhirElement("modifier", InSummary=true, Order=150)]
+            [FhirElement("modifier", InSummary=true, Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Modifier
@@ -334,7 +369,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional items
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=160)]
+            [FhirElement("detail", InSummary=true, Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.OralHealthClaim.DetailComponent> Detail
@@ -347,7 +382,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Prosthetic details
             /// </summary>
-            [FhirElement("prosthesis", InSummary=true, Order=170)]
+            [FhirElement("prosthesis", InSummary=true, Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.OralHealthClaim.ProsthesisComponent Prosthesis
             {
@@ -366,6 +401,7 @@ namespace Hl7.Fhir.Model
                     if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
+                    if(DiagnosisLinkIdElement != null) dest.DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(DiagnosisLinkIdElement.DeepCopy());
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(ServiceDateElement != null) dest.ServiceDateElement = (Hl7.Fhir.Model.Date)ServiceDateElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -399,6 +435,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
+                if( !DeepComparable.Matches(DiagnosisLinkIdElement, otherT.DiagnosisLinkIdElement)) return false;
                 if( !DeepComparable.Matches(Service, otherT.Service)) return false;
                 if( !DeepComparable.Matches(ServiceDateElement, otherT.ServiceDateElement)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
@@ -425,6 +462,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
+                if( !DeepComparable.IsExactly(DiagnosisLinkIdElement, otherT.DiagnosisLinkIdElement)) return false;
                 if( !DeepComparable.IsExactly(Service, otherT.Service)) return false;
                 if( !DeepComparable.IsExactly(ServiceDateElement, otherT.ServiceDateElement)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
@@ -449,6 +487,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OrthodonticPlanComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "OrthodonticPlanComponent"; } }
             
             /// <summary>
@@ -658,6 +697,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
@@ -916,6 +956,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "CoverageComponent"; } }
             
             /// <summary>
@@ -1166,6 +1207,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "PayeeComponent"; } }
             
             /// <summary>
@@ -1276,6 +1318,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
             
             /// <summary>
@@ -1374,6 +1417,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ProsthesisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ProsthesisComponent"; } }
             
             /// <summary>
@@ -1504,6 +1548,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "SubDetailComponent"; } }
             
             /// <summary>
@@ -1746,6 +1791,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MissingTeethComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "MissingTeethComponent"; } }
             
             /// <summary>

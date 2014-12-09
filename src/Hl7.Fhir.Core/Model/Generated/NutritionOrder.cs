@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.NutritionOrder; } }
+        [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
         
         /// <summary>
@@ -87,6 +89,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemSupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemSupplementComponent"; } }
             
             /// <summary>
@@ -198,6 +201,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemOralDietTextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemOralDietTextureComponent"; } }
             
             /// <summary>
@@ -275,6 +279,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemComponent"; } }
             
             /// <summary>
@@ -418,6 +423,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemEnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemEnteralFormulaComponent"; } }
             
             /// <summary>
@@ -578,12 +584,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("rate", InSummary=true, Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Rate
+            public Hl7.Fhir.Model.Ratio Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
-            private Hl7.Fhir.Model.Quantity _Rate;
+            private Hl7.Fhir.Model.Ratio _Rate;
             
             /// <summary>
             /// Change in the rate of administration over a given time
@@ -624,7 +630,7 @@ namespace Hl7.Fhir.Model
                     if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Quantity)Rate.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Ratio)Rate.DeepCopy();
                     if(RateAdjustment != null) dest.RateAdjustment = (Hl7.Fhir.Model.Quantity)RateAdjustment.DeepCopy();
                     if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)MaxVolumeToDeliver.DeepCopy();
                     return dest;
@@ -687,6 +693,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemOralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemOralDietComponent"; } }
             
             /// <summary>
@@ -832,6 +839,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NutritionOrderItemOralDietNutrientsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NutritionOrderItemOralDietNutrientsComponent"; } }
             
             /// <summary>

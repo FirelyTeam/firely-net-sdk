@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.AllergyIntolerance; } }
+        [NotMapped]
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
@@ -121,15 +123,20 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceCriticality
         {
             /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as low risk. Future exposure to the Substance is considered a relative contra-indication.
+            /// The potential clinical impact of a future reaction is estimated as low risk: exposure to substance is unlikely to result in a life threatening or organ system threatening outcome. Future exposure to the Substance is considered a relative contra-indication.
             /// </summary>
             [EnumLiteral("low")]
             Low,
             /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as high risk. Future exposure to the Substance may be considered an absolute contra-indication.
+            /// The potential clinical impact of a future reaction is estimated as high risk: exposure to substance may result in a life threatening or organ system threatening outcome. Future exposure to the Substance may be considered an absolute contra-indication.
             /// </summary>
             [EnumLiteral("high")]
             High,
+            /// <summary>
+            /// Unable to assess the potential clinical impact with the information available.
+            /// </summary>
+            [EnumLiteral("unassessible")]
+            Unassessible,
         }
         
         /// <summary>
@@ -187,6 +194,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AllergyIntoleranceEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "AllergyIntoleranceEventComponent"; } }
             
             /// <summary>
@@ -577,7 +585,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// low | high - Estimated potential clinical harm
+        /// low | high | unassessible - Estimated potential clinical harm
         /// </summary>
         [FhirElement("criticality", InSummary=true, Order=110)]
         [DataMember]
@@ -589,7 +597,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> _CriticalityElement;
         
         /// <summary>
-        /// low | high - Estimated potential clinical harm
+        /// low | high | unassessible - Estimated potential clinical harm
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

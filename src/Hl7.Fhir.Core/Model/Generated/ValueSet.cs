@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,7 +47,9 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ValueSet; } }
+        [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
         
         /// <summary>
@@ -115,6 +117,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ValueSetDefineComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ValueSetDefineComponent"; } }
             
             /// <summary>
@@ -281,6 +284,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ValueSetExpansionContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ValueSetExpansionContainsComponent"; } }
             
             /// <summary>
@@ -514,6 +518,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConceptDefinitionDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConceptDefinitionDesignationComponent"; } }
             
             /// <summary>
@@ -645,6 +650,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConceptDefinitionComponent"; } }
             
             /// <summary>
@@ -861,6 +867,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConceptSetComponent"; } }
             
             /// <summary>
@@ -1009,6 +1016,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConceptReferenceComponent"; } }
             
             /// <summary>
@@ -1141,6 +1149,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ConceptSetFilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ConceptSetFilterComponent"; } }
             
             /// <summary>
@@ -1293,6 +1302,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ValueSetComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ValueSetComposeComponent"; } }
             
             /// <summary>
@@ -1407,6 +1417,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ValueSetExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ValueSetExpansionComponent"; } }
             
             /// <summary>

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,13 +47,16 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.PaymentReconciliation; } }
+        [NotMapped]
         public override string TypeName { get { return "PaymentReconciliation"; } }
         
         [FhirType("NotesComponent")]
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "NotesComponent"; } }
             
             /// <summary>
@@ -150,6 +153,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "DetailsComponent"; } }
             
             /// <summary>
@@ -339,7 +343,7 @@ namespace Hl7.Fhir.Model
         /// Claim reference
         /// </summary>
         [FhirElement("request", Order=60)]
-        [References("Enrollment")]
+        [References("PendedRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {

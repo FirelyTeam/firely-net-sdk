@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Fri, Dec 5, 2014 10:08+0100 for FHIR v0.3.0
+// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -44,40 +44,43 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Contract : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
+        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Contract; } }
+        [NotMapped]
         public override string TypeName { get { return "Contract"; } }
         
         [FhirType("ContractSignerComponent")]
         [DataContract]
         public partial class ContractSignerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ContractSignerComponent"; } }
             
             /// <summary>
             /// Signer Type
             /// </summary>
             [FhirElement("type", InSummary=true, Order=20)]
-            [Cardinality(Min=1,Max=1)]
+            [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Type
+            public List<Hl7.Fhir.Model.Coding> Type
             {
-                get { return _Type; }
+                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.Coding>(); return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
-            private Hl7.Fhir.Model.Coding _Type;
+            private List<Hl7.Fhir.Model.Coding> _Type;
             
             /// <summary>
             /// Documentation Signature
             /// </summary>
-            [FhirElement("singnature", InSummary=true, Order=30)]
+            [FhirElement("signature", InSummary=true, Order=30)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString SingnatureElement
+            public Hl7.Fhir.Model.FhirString SignatureElement
             {
-                get { return _SingnatureElement; }
-                set { _SingnatureElement = value; OnPropertyChanged("SingnatureElement"); }
+                get { return _SignatureElement; }
+                set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
             }
-            private Hl7.Fhir.Model.FhirString _SingnatureElement;
+            private Hl7.Fhir.Model.FhirString _SignatureElement;
             
             /// <summary>
             /// Documentation Signature
@@ -85,16 +88,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Singnature
+            public string Signature
             {
-                get { return SingnatureElement != null ? SingnatureElement.Value : null; }
+                get { return SignatureElement != null ? SignatureElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      SingnatureElement = null; 
+                      SignatureElement = null; 
                     else
-                      SingnatureElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Singnature");
+                      SignatureElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Signature");
                 }
             }
             
@@ -105,8 +108,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(SingnatureElement != null) dest.SingnatureElement = (Hl7.Fhir.Model.FhirString)SingnatureElement.DeepCopy();
+                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
+                    if(SignatureElement != null) dest.SignatureElement = (Hl7.Fhir.Model.FhirString)SignatureElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -125,7 +128,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(SingnatureElement, otherT.SingnatureElement)) return false;
+                if( !DeepComparable.Matches(SignatureElement, otherT.SignatureElement)) return false;
                 
                 return true;
             }
@@ -137,7 +140,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(SingnatureElement, otherT.SingnatureElement)) return false;
+                if( !DeepComparable.IsExactly(SignatureElement, otherT.SignatureElement)) return false;
                 
                 return true;
             }
@@ -149,6 +152,7 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ContractTermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
             public override string TypeName { get { return "ContractTermComponent"; } }
             
             /// <summary>
@@ -231,6 +235,147 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// When this was issued
+            /// </summary>
+            [FhirElement("issued", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime IssuedElement
+            {
+                get { return _IssuedElement; }
+                set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
+            
+            /// <summary>
+            /// When this was issued
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Issued
+            {
+                get { return IssuedElement != null ? IssuedElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IssuedElement = null; 
+                    else
+                      IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("Issued");
+                }
+            }
+            
+            /// <summary>
+            /// Effective time
+            /// </summary>
+            [FhirElement("applies", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Applies
+            {
+                get { return _Applies; }
+                set { _Applies = value; OnPropertyChanged("Applies"); }
+            }
+            private Hl7.Fhir.Model.Period _Applies;
+            
+            /// <summary>
+            /// Count of Products or Services
+            /// </summary>
+            [FhirElement("quantity", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.Quantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            private Hl7.Fhir.Model.Quantity _Quantity;
+            
+            /// <summary>
+            /// Fee, charge or cost per point
+            /// </summary>
+            [FhirElement("unitPrice", InSummary=true, Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.Money UnitPrice
+            {
+                get { return _UnitPrice; }
+                set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
+            }
+            private Hl7.Fhir.Model.Money _UnitPrice;
+            
+            /// <summary>
+            /// Price scaling factor
+            /// </summary>
+            [FhirElement("factor", InSummary=true, Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal FactorElement
+            {
+                get { return _FactorElement; }
+                set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDecimal _FactorElement;
+            
+            /// <summary>
+            /// Price scaling factor
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Factor
+            {
+                get { return FactorElement != null ? FactorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      FactorElement = null; 
+                    else
+                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Factor");
+                }
+            }
+            
+            /// <summary>
+            /// Difficulty scaling factor
+            /// </summary>
+            [FhirElement("points", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal PointsElement
+            {
+                get { return _PointsElement; }
+                set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
+            }
+            private Hl7.Fhir.Model.FhirDecimal _PointsElement;
+            
+            /// <summary>
+            /// Difficulty scaling factor
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Points
+            {
+                get { return PointsElement != null ? PointsElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PointsElement = null; 
+                    else
+                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Points");
+                }
+            }
+            
+            /// <summary>
+            /// Total item cost
+            /// </summary>
+            [FhirElement("net", InSummary=true, Order=130)]
+            [DataMember]
+            public Hl7.Fhir.Model.Money Net
+            {
+                get { return _Net; }
+                set { _Net = value; OnPropertyChanged("Net"); }
+            }
+            private Hl7.Fhir.Model.Money _Net;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ContractTermComponent;
@@ -243,6 +388,13 @@ namespace Hl7.Fhir.Model
                     if(Subtype != null) dest.Subtype = (Hl7.Fhir.Model.CodeableConcept)Subtype.DeepCopy();
                     if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                    if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
+                    if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Period)Applies.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
+                    if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
                     return dest;
                 }
                 else
@@ -265,6 +417,13 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
                 if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
+                if( !DeepComparable.Matches(Applies, otherT.Applies)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.Matches(FactorElement, otherT.FactorElement)) return false;
+                if( !DeepComparable.Matches(PointsElement, otherT.PointsElement)) return false;
+                if( !DeepComparable.Matches(Net, otherT.Net)) return false;
                 
                 return true;
             }
@@ -280,6 +439,13 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
                 if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
+                if( !DeepComparable.IsExactly(Applies, otherT.Applies)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.IsExactly(FactorElement, otherT.FactorElement)) return false;
+                if( !DeepComparable.IsExactly(PointsElement, otherT.PointsElement)) return false;
+                if( !DeepComparable.IsExactly(Net, otherT.Net)) return false;
                 
                 return true;
             }
@@ -315,9 +481,37 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
+        /// Authority
+        /// </summary>
+        [FhirElement("authority", Order=70)]
+        [References("Organization")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Authority
+        {
+            get { if(_Authority==null) _Authority = new List<Hl7.Fhir.Model.ResourceReference>(); return _Authority; }
+            set { _Authority = value; OnPropertyChanged("Authority"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Authority;
+        
+        /// <summary>
+        /// Domain
+        /// </summary>
+        [FhirElement("domain", Order=80)]
+        [References("Location")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Domain
+        {
+            get { if(_Domain==null) _Domain = new List<Hl7.Fhir.Model.ResourceReference>(); return _Domain; }
+            set { _Domain = value; OnPropertyChanged("Domain"); }
+        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Domain;
+        
+        /// <summary>
         /// Type of contract
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -329,7 +523,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Subtype of contract
         /// </summary>
-        [FhirElement("subtype", InSummary=true, Order=80)]
+        [FhirElement("subtype", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Subtype
@@ -342,7 +536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this was issued
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=90)]
+        [FhirElement("issued", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {
@@ -373,7 +567,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Effective time
         /// </summary>
-        [FhirElement("applies", InSummary=true, Order=100)]
+        [FhirElement("applies", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Applies
         {
@@ -385,7 +579,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Count of Products or Services
         /// </summary>
-        [FhirElement("quantity", Order=110)]
+        [FhirElement("quantity", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Quantity
         {
@@ -397,7 +591,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Fee, charge or cost per point
         /// </summary>
-        [FhirElement("unitPrice", Order=120)]
+        [FhirElement("unitPrice", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Money UnitPrice
         {
@@ -409,7 +603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Price scaling factor
         /// </summary>
-        [FhirElement("factor", Order=130)]
+        [FhirElement("factor", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal FactorElement
         {
@@ -440,7 +634,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Difficulty scaling factor
         /// </summary>
-        [FhirElement("points", Order=140)]
+        [FhirElement("points", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal PointsElement
         {
@@ -471,7 +665,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Total item cost
         /// </summary>
-        [FhirElement("net", Order=150)]
+        [FhirElement("net", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Money Net
         {
@@ -483,7 +677,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract author or responsible party
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=160)]
+        [FhirElement("author", InSummary=true, Order=180)]
         [References("Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -497,7 +691,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// First Party or delegator
         /// </summary>
-        [FhirElement("grantor", InSummary=true, Order=170)]
+        [FhirElement("grantor", InSummary=true, Order=190)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -511,7 +705,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Second Party or delegatee
         /// </summary>
-        [FhirElement("grantee", InSummary=true, Order=180)]
+        [FhirElement("grantee", InSummary=true, Order=200)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -525,7 +719,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Witness to the contract
         /// </summary>
-        [FhirElement("witness", Order=190)]
+        [FhirElement("witness", Order=210)]
         [References("Practitioner","RelatedPerson","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -539,7 +733,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trustee
         /// </summary>
-        [FhirElement("executor", InSummary=true, Order=200)]
+        [FhirElement("executor", InSummary=true, Order=220)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -553,7 +747,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notary Public
         /// </summary>
-        [FhirElement("notary", InSummary=true, Order=210)]
+        [FhirElement("notary", InSummary=true, Order=230)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -567,7 +761,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Signer
         /// </summary>
-        [FhirElement("signer", Order=220)]
+        [FhirElement("signer", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ContractSignerComponent> Signer
@@ -580,7 +774,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract provisions
         /// </summary>
-        [FhirElement("term", Order=230)]
+        [FhirElement("term", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ContractTermComponent> Term
@@ -591,40 +785,179 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Contract.ContractTermComponent> _Term;
         
         /// <summary>
+        /// Binding Contract
+        /// </summary>
+        [FhirElement("binding", Order=260)]
+        [DataMember]
+        public Hl7.Fhir.Model.Attachment Binding
+        {
+            get { return _Binding; }
+            set { _Binding = value; OnPropertyChanged("Binding"); }
+        }
+        private Hl7.Fhir.Model.Attachment _Binding;
+        
+        /// <summary>
+        /// Binding Contract effective time
+        /// </summary>
+        [FhirElement("bindingDateTime", Order=270)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime BindingDateTimeElement
+        {
+            get { return _BindingDateTimeElement; }
+            set { _BindingDateTimeElement = value; OnPropertyChanged("BindingDateTimeElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _BindingDateTimeElement;
+        
+        /// <summary>
+        /// Binding Contract effective time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string BindingDateTime
+        {
+            get { return BindingDateTimeElement != null ? BindingDateTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  BindingDateTimeElement = null; 
+                else
+                  BindingDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("BindingDateTime");
+            }
+        }
+        
+        /// <summary>
         /// Human readable contract text
         /// </summary>
-        [FhirElement("friendly", Order=240)]
+        [FhirElement("friendly", Order=280)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Attachment Friendly
+        public List<Hl7.Fhir.Model.Attachment> Friendly
         {
-            get { return _Friendly; }
+            get { if(_Friendly==null) _Friendly = new List<Hl7.Fhir.Model.Attachment>(); return _Friendly; }
             set { _Friendly = value; OnPropertyChanged("Friendly"); }
         }
-        private Hl7.Fhir.Model.Attachment _Friendly;
+        private List<Hl7.Fhir.Model.Attachment> _Friendly;
+        
+        /// <summary>
+        /// Human readable contract text effective time
+        /// </summary>
+        [FhirElement("friendlyDateTime", Order=290)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime FriendlyDateTimeElement
+        {
+            get { return _FriendlyDateTimeElement; }
+            set { _FriendlyDateTimeElement = value; OnPropertyChanged("FriendlyDateTimeElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _FriendlyDateTimeElement;
+        
+        /// <summary>
+        /// Human readable contract text effective time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string FriendlyDateTime
+        {
+            get { return FriendlyDateTimeElement != null ? FriendlyDateTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  FriendlyDateTimeElement = null; 
+                else
+                  FriendlyDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("FriendlyDateTime");
+            }
+        }
         
         /// <summary>
         /// Legal contract text
         /// </summary>
-        [FhirElement("legal", Order=250)]
+        [FhirElement("legal", Order=300)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Attachment Legal
+        public List<Hl7.Fhir.Model.Attachment> Legal
         {
-            get { return _Legal; }
+            get { if(_Legal==null) _Legal = new List<Hl7.Fhir.Model.Attachment>(); return _Legal; }
             set { _Legal = value; OnPropertyChanged("Legal"); }
         }
-        private Hl7.Fhir.Model.Attachment _Legal;
+        private List<Hl7.Fhir.Model.Attachment> _Legal;
+        
+        /// <summary>
+        /// Legal contract text date time
+        /// </summary>
+        [FhirElement("legalDateTime", Order=310)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime LegalDateTimeElement
+        {
+            get { return _LegalDateTimeElement; }
+            set { _LegalDateTimeElement = value; OnPropertyChanged("LegalDateTimeElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _LegalDateTimeElement;
+        
+        /// <summary>
+        /// Legal contract text date time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string LegalDateTime
+        {
+            get { return LegalDateTimeElement != null ? LegalDateTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  LegalDateTimeElement = null; 
+                else
+                  LegalDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("LegalDateTime");
+            }
+        }
         
         /// <summary>
         /// Computable contract text
         /// </summary>
-        [FhirElement("rule", Order=260)]
+        [FhirElement("rule", Order=320)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Attachment Rule
+        public List<Hl7.Fhir.Model.Attachment> Rule
         {
-            get { return _Rule; }
+            get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.Attachment>(); return _Rule; }
             set { _Rule = value; OnPropertyChanged("Rule"); }
         }
-        private Hl7.Fhir.Model.Attachment _Rule;
+        private List<Hl7.Fhir.Model.Attachment> _Rule;
+        
+        /// <summary>
+        /// Computable contract text effect time
+        /// </summary>
+        [FhirElement("ruleDateTime", Order=330)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime RuleDateTimeElement
+        {
+            get { return _RuleDateTimeElement; }
+            set { _RuleDateTimeElement = value; OnPropertyChanged("RuleDateTimeElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _RuleDateTimeElement;
+        
+        /// <summary>
+        /// Computable contract text effect time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string RuleDateTime
+        {
+            get { return RuleDateTimeElement != null ? RuleDateTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RuleDateTimeElement = null; 
+                else
+                  RuleDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("RuleDateTime");
+            }
+        }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -635,6 +968,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+                if(Authority != null) dest.Authority = new List<Hl7.Fhir.Model.ResourceReference>(Authority.DeepCopy());
+                if(Domain != null) dest.Domain = new List<Hl7.Fhir.Model.ResourceReference>(Domain.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Subtype != null) dest.Subtype = new List<Hl7.Fhir.Model.CodeableConcept>(Subtype.DeepCopy());
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
@@ -652,9 +987,14 @@ namespace Hl7.Fhir.Model
                 if(Notary != null) dest.Notary = new List<Hl7.Fhir.Model.ResourceReference>(Notary.DeepCopy());
                 if(Signer != null) dest.Signer = new List<Hl7.Fhir.Model.Contract.ContractSignerComponent>(Signer.DeepCopy());
                 if(Term != null) dest.Term = new List<Hl7.Fhir.Model.Contract.ContractTermComponent>(Term.DeepCopy());
-                if(Friendly != null) dest.Friendly = (Hl7.Fhir.Model.Attachment)Friendly.DeepCopy();
-                if(Legal != null) dest.Legal = (Hl7.Fhir.Model.Attachment)Legal.DeepCopy();
-                if(Rule != null) dest.Rule = (Hl7.Fhir.Model.Attachment)Rule.DeepCopy();
+                if(Binding != null) dest.Binding = (Hl7.Fhir.Model.Attachment)Binding.DeepCopy();
+                if(BindingDateTimeElement != null) dest.BindingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)BindingDateTimeElement.DeepCopy();
+                if(Friendly != null) dest.Friendly = new List<Hl7.Fhir.Model.Attachment>(Friendly.DeepCopy());
+                if(FriendlyDateTimeElement != null) dest.FriendlyDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)FriendlyDateTimeElement.DeepCopy();
+                if(Legal != null) dest.Legal = new List<Hl7.Fhir.Model.Attachment>(Legal.DeepCopy());
+                if(LegalDateTimeElement != null) dest.LegalDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)LegalDateTimeElement.DeepCopy();
+                if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.Attachment>(Rule.DeepCopy());
+                if(RuleDateTimeElement != null) dest.RuleDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)RuleDateTimeElement.DeepCopy();
                 return dest;
             }
             else
@@ -674,6 +1014,8 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
+            if( !DeepComparable.Matches(Domain, otherT.Domain)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
@@ -691,9 +1033,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Notary, otherT.Notary)) return false;
             if( !DeepComparable.Matches(Signer, otherT.Signer)) return false;
             if( !DeepComparable.Matches(Term, otherT.Term)) return false;
+            if( !DeepComparable.Matches(Binding, otherT.Binding)) return false;
+            if( !DeepComparable.Matches(BindingDateTimeElement, otherT.BindingDateTimeElement)) return false;
             if( !DeepComparable.Matches(Friendly, otherT.Friendly)) return false;
+            if( !DeepComparable.Matches(FriendlyDateTimeElement, otherT.FriendlyDateTimeElement)) return false;
             if( !DeepComparable.Matches(Legal, otherT.Legal)) return false;
+            if( !DeepComparable.Matches(LegalDateTimeElement, otherT.LegalDateTimeElement)) return false;
             if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
+            if( !DeepComparable.Matches(RuleDateTimeElement, otherT.RuleDateTimeElement)) return false;
             
             return true;
         }
@@ -706,6 +1053,8 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
+            if( !DeepComparable.IsExactly(Domain, otherT.Domain)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
@@ -723,9 +1072,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Notary, otherT.Notary)) return false;
             if( !DeepComparable.IsExactly(Signer, otherT.Signer)) return false;
             if( !DeepComparable.IsExactly(Term, otherT.Term)) return false;
+            if( !DeepComparable.IsExactly(Binding, otherT.Binding)) return false;
+            if( !DeepComparable.IsExactly(BindingDateTimeElement, otherT.BindingDateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Friendly, otherT.Friendly)) return false;
+            if( !DeepComparable.IsExactly(FriendlyDateTimeElement, otherT.FriendlyDateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Legal, otherT.Legal)) return false;
+            if( !DeepComparable.IsExactly(LegalDateTimeElement, otherT.LegalDateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
+            if( !DeepComparable.IsExactly(RuleDateTimeElement, otherT.RuleDateTimeElement)) return false;
             
             return true;
         }

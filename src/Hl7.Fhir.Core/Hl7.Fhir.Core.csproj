@@ -77,7 +77,11 @@
     <Compile Include="Model\Generated\BackboneElement.cs" />
     <Compile Include="Model\Generated\Basic.cs" />
     <Compile Include="Model\Generated\Bundle.cs" />
+    <Compile Include="Model\Generated\CareActivity.cs" />
+    <Compile Include="Model\Generated\CarePlan2.cs" />
     <Compile Include="Model\Generated\ClaimResponse.cs" />
+    <Compile Include="Model\Generated\ClinicalAssessment.cs" />
+    <Compile Include="Model\Generated\Communication.cs" />
     <Compile Include="Model\Generated\CommunicationRequest.cs" />
     <Compile Include="Model\Generated\ContactPoint.cs" />
     <Compile Include="Model\Generated\Contract.cs" />
@@ -85,16 +89,19 @@
     <Compile Include="Model\Generated\Coverage.cs" />
     <Compile Include="Model\Generated\DataElement.cs" />
     <Compile Include="Model\Generated\DeviceComponent.cs" />
+    <Compile Include="Model\Generated\DeviceMetric.cs" />
     <Compile Include="Model\Generated\DeviceUseRequest.cs" />
     <Compile Include="Model\Generated\DeviceUseStatement.cs" />
     <Compile Include="Model\Generated\DomainResource.cs" />
     <Compile Include="Model\Generated\ElementDefinition.cs" />
-    <Compile Include="Model\Generated\Eligibility.cs" />
+    <Compile Include="Model\Generated\EligibilityRequest.cs" />
     <Compile Include="Model\Generated\EligibilityResponse.cs" />
-    <Compile Include="Model\Generated\Enrollment.cs" />
+    <Compile Include="Model\Generated\EnrollmentRequest.cs" />
     <Compile Include="Model\Generated\EnrollmentResponse.cs" />
     <Compile Include="Model\Generated\ExplanationOfBenefit.cs" />
     <Compile Include="Model\Generated\ExtensionDefinition.cs" />
+    <Compile Include="Model\Generated\Goal.cs" />
+    <Compile Include="Model\Generated\GoalRequest.cs" />
     <Compile Include="Model\Generated\HealthcareService.cs" />
     <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
     <Compile Include="Model\Generated\NamingSystem.cs" />
@@ -119,6 +126,7 @@
     <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
+    <Compile Include="Model\Generated\VisionClaim.cs" />
     <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
@@ -191,7 +199,6 @@
     <Compile Include="Model\Generated\Profile.cs" />
     <Compile Include="Model\Generated\Provenance.cs" />
     <Compile Include="Model\Generated\Quantity.cs" />
-    <Compile Include="Model\Generated\Query.cs" />
     <Compile Include="Model\Generated\Questionnaire.cs" />
     <Compile Include="Model\Generated\Range.cs" />
     <Compile Include="Model\Generated\Ratio.cs" />
@@ -217,7 +224,6 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
-    <Compile Include="Model\Query.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceReference.cs" />
     <Compile Include="Model\Uuid.cs" />
@@ -231,12 +237,9 @@
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Search\Criterium.cs" />
     <Compile Include="Search\CompositeValue.cs" />
     <Compile Include="Search\ChoiceValue.cs" />
-    <Compile Include="Search\CriteriumBuilder.cs" />
     <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\QueryExtensions.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
     <Compile Include="Search\QuantityValue.cs" />
     <Compile Include="Search\UntypedValue.cs" />
