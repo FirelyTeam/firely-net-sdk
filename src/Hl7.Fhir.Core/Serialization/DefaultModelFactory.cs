@@ -36,10 +36,10 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public Base Create(Type type)
+        public object Create(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
-            if (!type.CanBeTreatedAsType(typeof(Base))) throw Error.Argument("type argument must be a subclass of Base");
+         //   if (!type.CanBeTreatedAsType(typeof(Base))) throw Error.Argument("type argument must be a subclass of Base");
 
            // var typeToCreate = findTypeSubstitution(type);
             var typeToCreate = type;
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
                 typeToCreate = typeof(List<>).MakeGenericType(elementType);
             }
                              
-            return (Base)Activator.CreateInstance(typeToCreate);
+            return Activator.CreateInstance(typeToCreate);
         }
     }
 }

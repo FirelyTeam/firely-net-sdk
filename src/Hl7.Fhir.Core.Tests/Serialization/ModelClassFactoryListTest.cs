@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Tests.Serialization
             return type == typeof(SpecificModelClass);
         }
 
-        public Base Create(Type type)
+        public object Create(Type type)
         {
             throw new NotImplementedException();
         }

@@ -84,11 +84,11 @@ namespace Hl7.Fhir.Tests.Serialization
     [FhirType("Patient")]   // implicitly, this is a resource
     public class NewPatient : Patient { }
 
-    public class TestCreate
+    public class TestCreate 
     {
     }
 
-    public class TestCreatePublicConstructor
+    public class TestCreatePublicConstructor 
     {
         public TestCreatePublicConstructor()
         {

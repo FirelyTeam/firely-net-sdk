@@ -44,6 +44,6 @@ namespace Hl7.Fhir.Serialization
     public interface IModelClassFactory
     {
         bool CanCreate(Type type);
-        Base Create(Type type);
+        object Create(Type type);
     }
 }

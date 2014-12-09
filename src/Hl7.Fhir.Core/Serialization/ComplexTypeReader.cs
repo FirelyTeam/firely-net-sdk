@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 var fac = new DefaultModelFactory();
-                existing = fac.Create(mapping.NativeType);
+                existing = (Base)fac.Create(mapping.NativeType);
             }
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;
