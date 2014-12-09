@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Tests.Search
             q.ResourceType = "Patient";
             q.Count = 31;
             q.Summary = true;
-            q.Sort = Tuple.Create("sorted", SortOrder.Descending);
+            q.Sort = new List<Tuple<string,SortOrder>>() { Tuple.Create("sorted", SortOrder.Descending) };
             q.Includes.Add("Patient.name");
             q.Includes.Add("Observation.subject");
 
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual("Patient", q.ResourceType);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(true, q.Summary);
-            Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort);
+            Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
             Assert.AreEqual(2, q.Includes.Count);
             Assert.AreEqual("Patient.name", q.Includes.First());
             Assert.AreEqual("Observation.subject", q.Includes.Skip(1).First());
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests.Search
             q.ResourceType = "Observation";
             q.Count = 32;
             q.Summary = false;
-            q.Sort = Tuple.Create("sorted2", SortOrder.Ascending);
+            q.Sort = new List<Tuple<string,SortOrder>>() { Tuple.Create("sorted2", SortOrder.Ascending) };
             q.Includes.Add("Patient.name2");
             q.Includes.Remove("Patient.name");
             q.Includes.Add("Observation.subject2");
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual("Observation", q.ResourceType);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(false, q.Summary);
-            Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort);
+            Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Single());
             Assert.AreEqual(3, q.Includes.Count);
             Assert.IsTrue(q.Includes.Contains("Patient.name2"));
             Assert.IsFalse(q.Includes.Contains("Patient.name"));

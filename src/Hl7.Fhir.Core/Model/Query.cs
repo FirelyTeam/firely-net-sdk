@@ -196,28 +196,38 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Tuple<string, SortOrder> Sort
+        public List<Tuple<string, SortOrder>> Sort
         {
             get
             {
-                var ext = Parameter.SingleWithName(Query.SEARCH_PARAM_SORT);
+                var ext = Parameter.WithName(Query.SEARCH_PARAM_SORT);
                 if (ext == null) return null;
 
-                var key = ExtractParamKey(ext);
-                var sort = key.EndsWith(Query.SEARCH_MODIF_DESCENDING) ? SortOrder.Descending : SortOrder.Ascending;
-                var name = ExtractParamValue(ext);
+                var result = new List<Tuple<string,SortOrder>>();
 
-                return Tuple.Create(name, sort);
+                foreach (var extension in ext)
+                {
+                    var key = ExtractParamKey(extension);
+                    var sort = key.EndsWith(Query.SEARCH_MODIF_DESCENDING) ? SortOrder.Descending : SortOrder.Ascending;
+                    var name = ExtractParamValue(extension);
+
+                    result.Add(Tuple.Create(name, sort));
+                }
+
+                return result;
             }
             set
             {
                 RemoveParameter(Query.SEARCH_PARAM_SORT);
 
-                var modif = value.Item2 == SortOrder.Ascending ?
-                    Query.SEARCH_MODIF_ASCENDING : Query.SEARCH_MODIF_DESCENDING;
-                var name = value.Item1;
+                foreach (var sort in value)
+                {
+                    var modif = sort.Item2 == SortOrder.Ascending ?
+                        Query.SEARCH_MODIF_ASCENDING : Query.SEARCH_MODIF_DESCENDING;
+                    var name = sort.Item1;
 
-                AddParameter(Query.SEARCH_PARAM_SORT + Query.SEARCH_MODIFIERSEPARATOR + modif, name);
+                    AddParameter(Query.SEARCH_PARAM_SORT + Query.SEARCH_MODIFIERSEPARATOR + modif, name);
+                }                
             }
         }
 

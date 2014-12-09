@@ -83,7 +83,9 @@ namespace Hl7.Fhir.Search
         {
             if (paramName == null) throw Error.ArgumentNull("paramName");
 
-            qry.Sort = Tuple.Create(paramName, order);
+            var sort = qry.Sort ?? new List<Tuple<string, SortOrder>>();
+            sort.Add(Tuple.Create(paramName, order));
+            qry.Sort = sort;
             return qry;
         }
 

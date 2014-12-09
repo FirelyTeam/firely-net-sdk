@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual("name:exact", Query.ExtractParamKey(p));
             Assert.AreEqual("ewout", Query.ExtractParamValue(p));
 
-            var o = q.Sort;
+            var o = q.Sort.Single();
             Assert.AreEqual("birthDate", o.Item1);
             Assert.AreEqual(SortOrder.Descending, o.Item2);
 
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Tests.Search
         }
 
         [TestMethod]
-        public void ReapplySingleParam()
+        public void ReapplyParam()
         {
             var q = new Query()
                 .Custom("mySearch").OrderBy("adsfadf").OrderBy("q", SortOrder.Descending)
@@ -61,7 +61,11 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual("miSearch", q.QueryName);
             Assert.IsFalse(q.Summary);
 
-            var o = q.Sort;
+            var o = q.Sort.First();
+            Assert.AreEqual("adsfadf", o.Item1);
+            Assert.AreEqual(SortOrder.Ascending, o.Item2);
+
+            o = q.Sort.Skip(1).First();
             Assert.AreEqual("q", o.Item1);
             Assert.AreEqual(SortOrder.Descending, o.Item2);
 
