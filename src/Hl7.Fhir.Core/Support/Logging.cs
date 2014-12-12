@@ -175,12 +175,4 @@ namespace Hl7.Fhir.Support
             return new NotImplementedException();
         }
     }
-
-
-    public interface IPostitionInfo
-    {
-        int LineNumber { get; }
-        int LinePosition { get; }
-    }
-
 }
