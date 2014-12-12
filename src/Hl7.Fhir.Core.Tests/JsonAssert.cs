@@ -54,8 +54,8 @@ namespace Hl7.Fhir.Tests
                 var lo = (JObject)left;
                 var ro = (JObject)right;
 
-                if (lo.Count != ro.Count)
-                    throw new AssertFailedException("Object does not have same membercount at " + right.Path);
+                //if (lo.Count != ro.Count)
+                //    throw new AssertFailedException("Object does not have same membercount at " + lo.Path);
 
                 foreach (var lMember in lo)
                 {
@@ -66,6 +66,17 @@ namespace Hl7.Fhir.Tests
 
                     areSame(lMember.Value, rMember);
                 }
+
+                foreach (var rMember in ro)
+                {
+                    JToken lMember;
+
+                    if (!lo.TryGetValue(rMember.Key, out lMember))
+                        throw new AssertFailedException(String.Format("Expected member {0} not found in expected at " + right.Path, rMember.Key));
+
+                    areSame(rMember.Value, lMember);
+                }
+
             }
 
             else

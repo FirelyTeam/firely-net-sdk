@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used", _current, memberName);
 
             // Exception: valueResource actually means the element is of type ResourceReference
-            if (typeName == "Resource") typeName = "ResourceReference";
+            if (typeName == "Resource") typeName = "Reference";
 
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now

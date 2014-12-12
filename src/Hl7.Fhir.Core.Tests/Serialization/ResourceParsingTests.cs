@@ -62,22 +62,23 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public void EdgeCaseRoundtrip()
+        public void EdgecaseRoundtrip()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
-            string json = File.ReadAllText(@"TestData\TestPatient.json");
+            string json = File.ReadAllText(@"TestData\edgecases.json");
 
-            var poco = (new FhirParser()).ParseResourceFromXml(xml);
+            var poco = (new FhirParser()).ParseResourceFromJson(json);
             Assert.IsNotNull(poco);
-            var output = (new FhirSerializer()).SerializeResourceToXml(poco);
-            Assert.IsNotNull(output);
-            XmlAssert.AreSame(xml, output);
+            var xml = (new FhirSerializer()).SerializeResourceToXml(poco);
+            Assert.IsNotNull(xml);
+            File.WriteAllText(@"c:\temp\edgecase.xml", xml);
 
-            poco = (new FhirParser()).ParseResourceFromJson(json);
+            poco = (new FhirParser()).ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
-            output = (new FhirSerializer()).SerializeResourceToJson(poco);
-            Assert.IsNotNull(output);
-            JsonAssert.AreSame(json, output);
+            var json2 = (new FhirSerializer()).SerializeResourceToJson(poco);
+            Assert.IsNotNull(json2);
+            File.WriteAllText(@"c:\temp\edgecase.json", json2);
+           
+            JsonAssert.AreSame(json, json2);
         }
 
 

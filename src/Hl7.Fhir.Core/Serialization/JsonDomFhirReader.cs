@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -45,22 +46,33 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private void rewriteExtensionProperties(JToken current)
+        private void rewriteExtensionProperties(JToken current, bool nested=false)
         {
             if (current is JObject)
-                rewriteExtensionProperties((JObject)current);
+                rewriteExtensionProperties((JObject)current, nested);
             else if (current is JArray)
-                rewriteExtensionProperties((JArray)current);
+                rewriteExtensionProperties((JArray)current, nested);
         }
 
-        private void rewriteExtensionProperties(JObject current)
+
+        private bool isExtensionProperty(string name, bool nested)
+        {
+            if(name.StartsWith("http://") || name.StartsWith("urn:")) return true;
+
+            if (!nested) 
+                return false;
+            else
+                return name != "url" && name != "id" && !name.StartsWith("value");
+        }
+
+        private void rewriteExtensionProperties(JObject current, bool nested=false)
         {
             var extensionMembers = new List<JProperty>();
             var modifierExtensionMembers = new List<JProperty>();
 
             foreach (var property in current.Properties()) 
             {
-                if (property.Name.StartsWith("http://"))
+                if (isExtensionProperty(property.Name,nested))
                 {
                     if(!(property.Value is JArray))
                         throw Error.Format("Found extension '{0}', but its value is not an array", this, property.Name);
@@ -68,18 +80,23 @@ namespace Hl7.Fhir.Serialization
                 }
                 else if (property.Name == "modifier")
                 {
-                    if(!(property.Value is JObject)) throw Error.Format("A 'modifier' property should contain a json object",this);
-                    
+                    if (nested) throw Error.Format("'modifier' cannot be used within an extension", this);
+                    if (!(property.Value is JObject)) throw Error.Format("A 'modifier' property should contain a json object", this);
+
                     var modifiers = (JObject)property.Value;
 
                     foreach (var modifier in modifiers.Properties())
                     {
-                        if (!modifier.Name.StartsWith("http://")) throw Error.Format("All properties within 'modifier' should have a url as its name", this);
+                        if (!isExtensionProperty(modifier.Name, nested: false)) throw Error.Format("All properties within 'modifier' should have a url as its name", this);
                         modifierExtensionMembers.Add(modifier);
                     }
                 }
                 else
-                    rewriteExtensionProperties(property.Value);
+                {
+                    // not an extension property, so this is an actual element, and introduces a new scope
+                    // for extensions...we're no longer looking for nested extension names
+                    rewriteExtensionProperties(property.Value, nested: false);
+                }
             }
 
             if(extensionMembers.Any())
@@ -87,14 +104,14 @@ namespace Hl7.Fhir.Serialization
                 extensionMembers.ForEach(prop => current.Remove(prop.Name));
                 var extProp = convertToExtensionProperty("extension",extensionMembers); 
                 current.Add(extProp);
-                rewriteExtensionProperties(extProp.Value);      // The Extension.value[x] themselves might contain data that has extension, so recurse
+                rewriteExtensionProperties(extProp.Value, nested:true);      // The Extension.value[x] themselves might contain data that has extension, so recurse
             }
             if(modifierExtensionMembers.Any())
             {
                 current.Remove("modifier");
                 var mextProp = convertToExtensionProperty("modifierExtension", modifierExtensionMembers);
                 current.Add(mextProp);
-                rewriteExtensionProperties(mextProp.Value); // The Extension.value[x] themselves might contain data that has extension, so recurse
+                rewriteExtensionProperties(mextProp.Value, nested:true); // The Extension.value[x] themselves might contain data that has extension, so recurse
             }
         }
 
@@ -112,8 +129,6 @@ namespace Hl7.Fhir.Serialization
                         throw Error.Format("Extension '{0}' contains an array element that is not a complex object", this, ext.Name);
 
                     var extensionJObject = (JObject)extensionObject;
-                    rewriteNestedExtensions(extensionJObject);
-
                     extensionJObject.Add(new JProperty("url", ext.Name));
                     extArray.Add(extensionJObject);
                 }
@@ -123,16 +138,10 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private void rewriteNestedExtensions(JObject extension)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        private void rewriteExtensionProperties(JArray current)
+        private void rewriteExtensionProperties(JArray current, bool nested=false)
         {
             foreach (var element in current.Children())
-                rewriteExtensionProperties(element);
+                rewriteExtensionProperties(element,nested);
         }
 
         public TokenType CurrentToken
@@ -244,9 +253,8 @@ namespace Hl7.Fhir.Serialization
             {
                 var li = (IJsonLineInfo)_current;
 
-                if (!li.HasLineInfo())
-                    throw Error.InvalidOperation("No lineinfo available. Please read the Json document using...");
-
+                if (!li.HasLineInfo()) return -1;
+                    
                 return li.LineNumber;
             }
         }
@@ -257,8 +265,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var li = (IJsonLineInfo)_current;
 
-                if (!li.HasLineInfo())
-                    throw Error.InvalidOperation("No lineinfo available. Please read the Json document using...");
+                if (!li.HasLineInfo()) return -1;
 
                 return li.LinePosition;
             }

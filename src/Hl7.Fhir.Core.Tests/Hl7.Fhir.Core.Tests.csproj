@@ -87,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\edgecases.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\examples-json.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
