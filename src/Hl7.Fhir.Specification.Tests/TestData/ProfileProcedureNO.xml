@@ -1,0 +1,4443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Profile xmlns="http://hl7.org/fhir">
+  <identifier value="http://hl7.no/fhir/Profile/OperationNotes" />
+  <version value="0.1" />
+  <name value="OperationNotes" />
+  <publisher value="Hl7 Norge" />
+  <status value="draft" />
+  <date value="2015-01-01T00:00:00+01:00" />
+  <fhirVersion value="0.0.82" />
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2" />
+  </mapping>
+  <mapping>
+    <identity value="servd" />
+    <uri value="http://www.omg.org/spec/ServD/1.0/" />
+    <name value="ServD" />
+  </mapping>
+  <mapping>
+    <identity value="vcard" />
+    <uri value="http://w3.org/vcard" />
+    <name value="vCard" />
+  </mapping>
+  <structure>
+    <type value="Procedure" />
+    <name value="Operation" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <ordered value="true" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="phase" />
+      <definition>
+        <short value="a phase of the operation" />
+        <formal value="Refers to a &quot;child procedure&quot; of the operation, which describes information about a certain phase" />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Extension" />
+          <profile value="#Phase" />
+        </type>
+        <isModifier value="true" />
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="operatingRoom" />
+      <definition>
+        <short value="Reference to a location" />
+        <formal value="Reference to a location" />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Extension" />
+          <profile value="#LocationReference" />
+        </type>
+        <isModifier value="true" />
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="sequenceNumber" />
+      <definition>
+        <short value="Used to distinguish the relative importance of the procedures" />
+        <formal value="Used to distinguish the relative importance of the procedures; if the value equals 1, the procedure is considered to be the main (Norwegian: Hoved) procedure. If the value is larger than 1 it is a supporting procedure." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Extension" />
+          <profile value="#sequenceNumber" />
+        </type>
+        <isModifier value="true" />
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.subject" />
+      <definition>
+        <short value="Who procedure was performed on" />
+        <formal value="The person on whom the procedure was performed." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#PatientNorway" />
+          <aggregation value="contained" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=SBJ].role" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="urn:oid:2.16.840.1.113883.6.1" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="10215-2" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.display" />
+      <definition>
+        <short value="Representation defined by the system" />
+        <formal value="A representation of the meaning of the code in the system, following the rules of the system." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="string" />
+        </type>
+        <valueString value="surgical operation note findings" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="CV.displayName" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.2 - but note this is not well followed" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="Diagnosis codes that were the underlying reason for performing the operation. There may not be any known/relevant diagnosis codes related to the operation. If diagnosis codes are know they have to be sent. " />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="OID for ICD-10 NO" />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="urn:oid:2.16.578.1.12.4.1.1.7110" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <slicing>
+        <discriminator value="role.coding.code" />
+        <ordered value="false" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="1" />
+        <max value="*" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <name value="primaryPerformer" />
+      <slicing>
+        <discriminator value="role.coding.code" />
+        <ordered value="false" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="1" />
+        <max value="1" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.person" />
+      <definition>
+        <short value="The reference to the practitioner" />
+        <formal value="The practitioner who was involved in the procedure." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#PerformerNorway" />
+          <aggregation value="contained" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".role" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role" />
+      <definition>
+        <short value="The role the person was in" />
+        <formal value="E.g. surgeon, anaethetist, endoscopist." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".functionCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="PPRF" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <name value="Secondary Performer" />
+      <slicing>
+        <discriminator value="role.coding.code" />
+        <ordered value="false" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="*" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.person" />
+      <definition>
+        <short value="The reference to the practitioner" />
+        <formal value="The practitioner who was involved in the procedure." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="#PerformerNorway" />
+          <aggregation value="contained" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".role" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role" />
+      <definition>
+        <short value="The role the person was in" />
+        <formal value="E.g. surgeon, anaethetist, endoscopist." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".functionCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="SPRF" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="OppholdPhase" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="hv-operation-phases-v1" />
+          <isExtensible value="false" />
+          <referenceResource>
+            <reference value="hv-operation-phases-v1" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/fhir/operation-phases" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="opphold" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.start" />
+      <definition>
+        <short value="Starting time with inclusive boundary" />
+        <formal value="The start of the period. The boundary is inclusive." />
+        <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./low" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.end" />
+      <definition>
+        <short value="End time with inclusive boundary, if not ongoing" />
+        <formal value="The end of the period. If the end of the period is missing, it means that the period is ongoing." />
+        <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./high" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="ForberedelsePhase" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="hv-operation-phases-v1" />
+          <isExtensible value="false" />
+          <referenceResource>
+            <reference value="hv-operation-phases-v1" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/fhir/operation-phases" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="forberedelse" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.start" />
+      <definition>
+        <short value="Starting time with inclusive boundary" />
+        <formal value="The start of the period. The boundary is inclusive." />
+        <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./low" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.end" />
+      <definition>
+        <short value="End time with inclusive boundary, if not ongoing" />
+        <formal value="The end of the period. If the end of the period is missing, it means that the period is ongoing." />
+        <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./high" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="AnestesiPhase" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="hv-operation-phases-v1" />
+          <isExtensible value="false" />
+          <referenceResource>
+            <reference value="hv-operation-phases-v1" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/fhir/operation-phases" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="anestesi" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.start" />
+      <definition>
+        <short value="Starting time with inclusive boundary" />
+        <formal value="The start of the period. The boundary is inclusive." />
+        <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./low" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.end" />
+      <definition>
+        <short value="End time with inclusive boundary, if not ongoing" />
+        <formal value="The end of the period. If the end of the period is missing, it means that the period is ongoing." />
+        <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./high" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="KnivtidPhase" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <ordered value="true" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="performedProcedure" />
+      <definition>
+        <short value="Procedure that were carried out during the operation. " />
+        <formal value="Procedure that were carried out during the operation. One of the procedures will be identified as being the ‘main’ procedure" />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Extension" />
+          <profile value="#performedProcedure" />
+        </type>
+        <isModifier value="true" />
+      </definition>
+    </element>
+
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="2" />
+        <max value="2" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <isExtensible value="false" />
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/fhir/operation-phases" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="knivtid" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.start" />
+      <definition>
+        <short value="Starting time with inclusive boundary" />
+        <formal value="The start of the period. The boundary is inclusive." />
+        <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./low" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.end" />
+      <definition>
+        <short value="End time with inclusive boundary, if not ongoing" />
+        <formal value="The end of the period. If the end of the period is missing, it means that the period is ongoing." />
+        <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./high" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="TransportPhase" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="An action that is performed on a patient" />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="*" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="hv-operation-phases-v1" />
+          <isExtensible value="false" />
+          <referenceResource>
+            <reference value="hv-operation-phases-v1" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/fhir/operation-phases" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.code" />
+      <definition>
+        <short value="Symbol in syntax defined by the system" />
+        <formal value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="transport" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.start" />
+      <definition>
+        <short value="Starting time with inclusive boundary" />
+        <formal value="The start of the period. The boundary is inclusive." />
+        <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./low" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.1" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date.end" />
+      <definition>
+        <short value="End time with inclusive boundary, if not ongoing" />
+        <formal value="The end of the period. If the end of the period is missing, it means that the period is ongoing." />
+        <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./high" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="DR.2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <ordered value="true" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="transportLocation" />
+      <definition>
+        <short value="Reference to a location" />
+        <formal value="Reference to a location" />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Extension" />
+          <profile value="#LocationReference" />
+        </type>
+        <isModifier value="true" />
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Location" />
+    <name value="LocationInformation" />
+    <publish value="true" />
+    <element>
+      <path value="Location" />
+      <definition>
+        <short value="Details and position information for a physical place" />
+        <formal value="Details and position information for a physical place where services are provided  and resources and participants may be stored, found, contained or accommodated." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Role[classCode=SDLC]." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.identifier" />
+      <definition>
+        <short value="Unique code or number identifying the location to its users" />
+        <formal value="Unique code or number identifying the location to its users." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.identifier.system" />
+      <definition>
+        <short value="The namespace for the identifier" />
+        <formal value="Establishes the namespace in which set of possible id values is unique." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="urn:oid:2.16.578.1.34.1000.4" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.root" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.4 / EI-2-4" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./IdentifierType" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.description" />
+      <definition>
+        <short value="Description of the Location, which helps in finding or referencing the place" />
+        <formal value="Description of the Location, which helps in finding or referencing the place." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="playingEntity[classCode=PLC determinerCode=INSTANCE].desc" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.type" />
+      <definition>
+        <short value="Indicates the type of function performed at the location" />
+        <formal value="Indicates the type of function performed at the location." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="LocationType" />
+          <isExtensible value="true" />
+          <conformance value="preferred" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/v3/vs/ServiceDeliveryLocationRoleType" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.telecom" />
+      <definition>
+        <short value="Contact details of the location" />
+        <formal value="The contact details of communication devices available at the location. This can include phone numbers, fax numbers, mobile numbers, email addresses and web sites." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Contact" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="telecom" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.address" />
+      <definition>
+        <short value="Physical location" />
+        <formal value="Physical location." />
+        <comments value="This was kept as 0..1 as there is no use property on the address, so wouldn't be able to identify different address types." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Address" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="addr" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.physicalType" />
+      <definition>
+        <short value="Physical form of the location" />
+        <formal value="Physical form of the location, e.g. building, room, vehicle, road." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="PhysicalType" />
+          <isExtensible value="true" />
+          <conformance value="example" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/location-physical-type" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="playingEntity [classCode=PLC].code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.position" />
+      <definition>
+        <short value="The absolute geographic location" />
+        <formal value="The absolute geographic location of the Location, expressed in a KML compatible manner (see notes below for KML)." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="playingEntity [classCode=PLC determinerCode=INSTANCE].positionText" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.managingOrganization" />
+      <definition>
+        <short value="The organization that is responsible for the provisioning and upkeep of the location" />
+        <formal value="The organization that is responsible for the provisioning and upkeep of the location." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Organization" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="scopingEntity[classCode=ORG determinerKind=INSTANCE]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.status" />
+      <definition>
+        <short value="active | suspended | inactive" />
+        <formal value="active | suspended | inactive." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="code" />
+        </type>
+        <isModifier value="true" />
+        <binding>
+          <name value="LocationStatus" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/location-status" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="statusCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.partOf" />
+      <definition>
+        <short value="Another Location which this Location is physically part of" />
+        <formal value="Another Location which this Location is physically part of." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Location" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="inboundLink[typeCode=PART].source[classCode=SDLC]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Location.mode" />
+      <definition>
+        <short value="instance | kind" />
+        <formal value="Indicates whether a resource instance represents a specific location or a class of locations." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="code" />
+        </type>
+        <isModifier value="true" />
+        <binding>
+          <name value="LocationMode" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/location-mode" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="playingEntity[classCode=PLC].determinerCode" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Patient" />
+    <name value="PatientNorway" />
+    <publish value="true" />
+    <element>
+      <path value="Patient" />
+      <definition>
+        <short value="Information about a person or animal receiving health care services" />
+        <formal value="Demographics and other administrative information about a person or animal receiving care or other health-related services." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Patient[classCode=PAT]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier" />
+      <slicing>
+        <discriminator value="system" />
+        <ordered value="false" />
+        <rules value="closed" />
+      </slicing>
+      <definition>
+        <short value="An identifier for the person as this patient" />
+        <formal value="An identifier that applies to this person as a patient. A patient shall have at least 1, and at most 2 identifiers: Either the F-number or the D-number (in that order of preference; if both a F-number and a D-number are known, only the F-number shall be sent here),  and the temporary identifier. " />
+        <min value="1" />
+        <max value="2" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="id" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier" />
+      <name value="F-Number" />
+      <definition>
+        <short value="An identifier for the person as this patient" />
+        <formal value="An identifier that applies to this person as a patient. This identifier is used to identify the patient. The F-Number is assigned to persons living in Norway on a permanent basis." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="id" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier.system" />
+      <definition>
+        <short value="The namespace for the identifier" />
+        <formal value="Establishes the namespace in which set of possible id values is unique." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/Fhir/Fnumber" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.root" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.4 / EI-2-4" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./IdentifierType" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier" />
+      <name value="D-Number" />
+      <definition>
+        <short value="An identifier for the person as this patient" />
+        <formal value="An identifier that applies to this person as a patient. Persons that are not living in Norway on a permanent basis can in some circumstance be registered in NNPR with a unique eleven digit number (a D-number)." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="id" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier.system" />
+      <definition>
+        <short value="The namespace for the identifier" />
+        <formal value="Establishes the namespace in which set of possible id values is unique." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/Fhir/Dnumber" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.root" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.4 / EI-2-4" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./IdentifierType" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier.value" />
+      <definition>
+        <short value="The value that is unique" />
+        <formal value="The portion of the identifier typically displayed to the user and which is unique within the context of the system." />
+        <comments value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="string" />
+        </type>
+        <maxLength value="11" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.extension or II.root if system indicates OID or GUID" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.1 / EI.1" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Value" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier" />
+      <name value="H-Number" />
+      <definition>
+        <short value="An identifier for the person as this patient" />
+        <formal value="An application within the organization may assign an emergency/temporary identifier (H-Number) to a patient. Most of these identifiers are linked to either an F-number, a D-number or a PAS-identifier at a later point in time." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="id" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.identifier.system" />
+      <definition>
+        <short value="The namespace for the identifier" />
+        <formal value="Establishes the namespace in which set of possible id values is unique." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/Fhir/Hnumber" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.root" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.4 / EI-2-4" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./IdentifierType" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name" />
+      <definition>
+        <short value="A name associated with the patient" />
+        <formal value="A name associated with the individual." />
+        <comments value="Person may have multiple names with different uses or applicable periods.For animals, the name is a &quot;HumanName&quot; in the sense that is assigned and used by humans and has the same patterns." />
+        <min value="1" />
+        <max value="*" />
+        <type>
+          <code value="HumanName" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="name" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-5, PID-9" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name.use" />
+      <definition>
+        <short value="usual | official | temp | nickname | anonymous | old | maiden" />
+        <formal value="Identifies the purpose for this name." />
+        <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <isModifier value="true" />
+        <binding>
+          <name value="NameUse" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/name-use" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="unique(./use)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.7, but often indicated by which field contains the name" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./NamePurpose" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name.family" />
+      <definition>
+        <short value="Family name (often called 'Surname')" />
+        <formal value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father." />
+        <comments value="For family name, hyphenated names such as &quot;Smith-Jones&quot; are a single name, but names with spaces such as &quot;Smith Jones&quot; are broken into multiple parts." />
+        <min value="1" />
+        <max value="*" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./part[partType = FAM]" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.1" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./FamilyName" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.name.given" />
+      <definition>
+        <short value="Given names (not always 'first'). Includes middle names" />
+        <formal value="Given name." />
+        <comments value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first." />
+        <min value="1" />
+        <max value="*" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./part[partType = GIV]" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.2 + XPN.3" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./GivenNames" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.telecom" />
+      <definition>
+        <short value="A contact detail for the individual" />
+        <formal value="A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted." />
+        <comments value="Person may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently and also to help with identification. The address may not go directly to the individual, but may reach another party that is able to proxy for the patient (i.e. home phone, or pet owner's phone)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Contact" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="telecom" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-13, PID-14, PID-40" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.gender" />
+      <definition>
+        <short value="Gender for administrative purposes" />
+        <formal value="Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes." />
+        <comments value="The gender may not match the biological sex as determined by genetics, or the individual's preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than M and F, though the vast majority of systems and contexts only support M and F." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="AdministrativeGender" />
+          <isExtensible value="true" />
+          <conformance value="preferred" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/administrative-gender" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/administrativeGender" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-8" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.birthDate" />
+      <definition>
+        <short value="The date and time of birth for the individual" />
+        <formal value="The date and time of birth for the individual." />
+        <comments value="At least an estimated year should be provided as a guess if the real dob is unknown." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/birthTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-7" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.deceased[x]" />
+      <definition>
+        <short value="Indicates if the individual is deceased or not" />
+        <formal value="Indicates if the individual is deceased or not." />
+        <comments value="If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="boolean" />
+        </type>
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="true" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedInd, player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-30  (bool) and PID-29 (datetime)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.address" />
+      <definition>
+        <short value="Addresses for the individual" />
+        <formal value="Addresses for the individual." />
+        <comments value="Person may have multiple addresses with different uses or applicable periods." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Address" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="addr" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-11" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus" />
+      <definition>
+        <short value="Marital (civil) status of a person" />
+        <formal value="This field contains a patient's most recent marital (civil) status." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="MaritalStatus" />
+          <isExtensible value="true" />
+          <conformance value="preferred" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/marital-status" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN]/maritalStatusCode" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-16" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.multipleBirth[x]" />
+      <definition>
+        <short value="Whether patient is part of a multiple birth" />
+        <formal value="Indicates whether the patient is part of a multiple or indicates the actual birth order." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="boolean" />
+        </type>
+        <type>
+          <code value="integer" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthInd,  player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthOrderNumber" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-24 (bool), PID-25 (integer)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.photo" />
+      <definition>
+        <short value="Image of the person" />
+        <formal value="Image of the person." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Attachment" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/desc" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="OBX-5 - needs a profile" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.contact" />
+      <definition>
+        <short value="A contact party (e.g. guardian, partner, friend) for the patient" />
+        <formal value="A contact party (e.g. guardian, partner, friend) for the patient." />
+        <comments value="Contact covers all kinds of contact parties: family members, business contacts, guardians, caregivers. Not applicable to register pedigree and family ties beyond use of having contact." />
+        <min value="0" />
+        <max value="0" />
+        <constraint>
+          <key value="1" />
+          <name value="ContactNeedsDetails" />
+          <severity value="error" />
+          <human value="SHALL at least contain a contact's details or a reference to an organization" />
+          <xpath value="f:name or f:telecom or f:address or f:organization" />
+        </constraint>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/scopedRole[classCode=CON]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.animal" />
+      <definition>
+        <short value="If this patient is an animal (non-human)" />
+        <formal value="This element has a value if the patient is an animal." />
+        <comments value="The animal element is labeled &quot;Is Modifier&quot; since patients may be non-human. Systems SHALL either handle patient details appropriately (e.g. inform users patient is not human) or reject non-human patient records." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="true" />
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=ANM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.communication" />
+      <definition>
+        <short value="Languages which may be used to communicate with the patient about his or her health" />
+        <formal value="Languages which may be used to communicate with the patient about his or her health." />
+        <comments value="If no language is specified, this *implies* that the default local language is spoken. For animals, language is not a relevant field, and should be absent from the instance." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="Language" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceUri value="http://tools.ietf.org/html/bcp47" />
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/languageCommunication/code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="LAN-2" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.careProvider" />
+      <definition>
+        <short value="Patient's nominated care provider" />
+        <formal value="Patient's nominated care provider." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Organization" />
+        </type>
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Practitioner" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="subjectOf.CareEvent.performer.AssignedEntity" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.managingOrganization" />
+      <definition>
+        <short value="Organization that is the custodian of the patient record" />
+        <formal value="Organization that is the custodian of the patient record." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Organization" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="scoper" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.link" />
+      <definition>
+        <short value="Link to another patient resource that concerns the same actual person" />
+        <formal value="Link to another patient resource that concerns the same actual person." />
+        <comments value="There is no assumption that linked patient records have mutual links." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="true" />
+        <mapping>
+          <identity value="rim" />
+          <map value="outboundLink" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Patient.active" />
+      <definition>
+        <short value="Whether this patient's record is in active use" />
+        <formal value="Whether this patient record is in active use." />
+        <comments value="Default is true. If a record is inactive, and linked to an active record, then future patient/person/record updates should occur on the other patient." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="boolean" />
+        </type>
+        <isModifier value="true" />
+        <mapping>
+          <identity value="rim" />
+          <map value="statusCode" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Practitioner" />
+    <name value="PerformerNorway" />
+    <publish value="true" />
+    <element>
+      <path value="Practitioner" />
+      <definition>
+        <short value="A person with a  formal responsibility in the provisioning of healthcare or related services" />
+        <formal value="A person who is directly or indirectly involved in the provisioning of healthcare." />
+        <comments value="Note that a cab driver no longer fits the bill. You probably would be interested in the organization rather than the individual?." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Role" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRD (as one example)" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="Provider" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.identifier" />
+      <definition>
+        <short value="A identifier for the person as this agent" />
+        <formal value="An identifier that applies to this person in this role." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./id" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRD-7 (or XCN.1 Person Identifier)" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Identifiers" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.identifier.system" />
+      <definition>
+        <short value="The namespace for the identifier" />
+        <formal value="Establishes the namespace in which set of possible id values is unique." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.no/Fhir/HPRnumber" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="II.root" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CX.4 / EI-2-4" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./IdentifierType" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.name" />
+      <definition>
+        <short value="A name associated with the person" />
+        <formal value="A name associated with the person." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="HumanName" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./name" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XCN Components" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./PreferredName (GivenNames, FamilyName, TitleCode)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.name.use" />
+      <definition>
+        <short value="usual | official | temp | nickname | anonymous | old | maiden" />
+        <formal value="Identifies the purpose for this name." />
+        <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="code" />
+        </type>
+        <valueCode value="official" />
+        <isModifier value="true" />
+        <binding>
+          <name value="NameUse" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/name-use" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="unique(./use)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.7, but often indicated by which field contains the name" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./NamePurpose" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.name.family" />
+      <definition>
+        <short value="Family name (often called 'Surname')" />
+        <formal value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father." />
+        <comments value="For family name, hyphenated names such as &quot;Smith-Jones&quot; are a single name, but names with spaces such as &quot;Smith Jones&quot; are broken into multiple parts." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./part[partType = FAM]" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.1" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./FamilyName" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.name.given" />
+      <definition>
+        <short value="Given names (not always 'first'). Includes middle names" />
+        <formal value="Given name." />
+        <comments value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./part[partType = GIV]" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="XPN.2 + XPN.3" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./GivenNames" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.telecom" />
+      <definition>
+        <short value="A contact detail for the practitioner" />
+        <formal value="A contact detail for the practitioner, e.g. a telephone number or an email address." />
+        <comments value="Person may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Contact" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./telecom" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRT-15, STF-10, ROL-12" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./ContactPoints" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.address" />
+      <definition>
+        <short value="Where practitioner can be found/visited" />
+        <formal value="The postal address where the practitioner can be found or visited or to which mail can be delivered." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Address" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./addr" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="ORC-24, STF-11, ROL-11, PRT-14" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Addresses" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.gender" />
+      <definition>
+        <short value="Gender for administrative purposes" />
+        <formal value="Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="AdministrativeGender" />
+          <isExtensible value="true" />
+          <conformance value="preferred" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/administrative-gender" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="./administrativeGender" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="STF-5" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./GenderCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.birthDate" />
+      <definition>
+        <short value="The date and time of birth for the practitioner" />
+        <formal value="The date and time of birth for the practitioner." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="dateTime" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./birthTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="STF-6" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="(not represented in ServD)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.photo" />
+      <definition>
+        <short value="Image of the person" />
+        <formal value="Image of the person." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Attachment" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./subjectOf/ObservationEvent[code=&quot;photo&quot;]/value" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./ImageURI (only supports the URI reference)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.organization" />
+      <definition>
+        <short value="The represented organization" />
+        <formal value="The organization that the practitioner represents." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Organization" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./scoper" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRD-10 (-&gt; 14) / PRA-9-Institution / PRT-8-Participation Organization for person participation" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="(ServD maps Practitioners and Organizations via another entity, so this concept is not available)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.role" />
+      <definition>
+        <short value="Roles which this practitioner may perform" />
+        <formal value="Roles which this practitioner is authorized to perform for the organization." />
+        <comments value="A person may have more than one role. At least one role is required." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="PractitionerRole" />
+          <isExtensible value="true" />
+          <conformance value="example" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/practitioner-role" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="./code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRD-1 / STF-18-job title / PRA-3-practitioner category  / PRT-4-Participation / ROL-3-role-ROL / ORC-12-ordering provider / OBR-16-ordering provider / PV1-7-attending doctor / PV1-8-referring doctor / PV1-9-consulting doctor / PV1-17-admitting doctor" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="(ServD maps Practitioners and Organizations via another entity, so this concept is not available)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.specialty" />
+      <definition>
+        <short value="Specific specialty of the practitioner" />
+        <formal value="Specific specialty of the practitioner." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="PractitionerSpecialty" />
+          <isExtensible value="true" />
+          <conformance value="example" />
+          <referenceResource>
+            <reference value="http://hl7.org/fhir/vs/practitioner-specialty" />
+          </referenceResource>
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="indirectAuthority/QualifiedEntity[code &lt; Speciality]/code" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRA-5-specialty" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Specialty" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.period" />
+      <definition>
+        <short value="The period during which the practitioner is authorized to perform in these role(s)" />
+        <formal value="The period during which the person is authorized to act as a practitioner in these role(s) for the organization." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PRD-8/9 / PRA-5.4-date of certification" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="(ServD maps Practitioners and Organizations via another entity, so this concept is not available)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.location" />
+      <definition>
+        <short value="The location(s) at which this practitioner provides care" />
+        <formal value="The location(s) at which this practitioner provides care." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Location" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./target[classCode=&quot;indirectAuthority].source[classCode=SDLOC]" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="(ServD maps Practitioners and Organizations via another entity, so this concept is not available)&lt;br/&gt; However these are accessed via the Site.ServiceSite.ServiceSiteProvider record. (The Site has the location)" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.qualification" />
+      <definition>
+        <short value="Qualifications obtained by training and certification" />
+        <formal value="Qualifications obtained by training and certification." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./indirectAuthority/QualifiedEntity[code &lt; qualifiedEntity]" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="CER?" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Qualifications" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Practitioner.communication" />
+      <definition>
+        <short value="A language the practitioner is able to use in patient communication" />
+        <formal value="A language the practitioner is able to use in patient communication." />
+        <comments value="The structure aa-BB with this exact casing is one the most widely used notations for locale. However not all systems actually code this but instead have it as free text. Hence CodeableConcept instead of code as the data type." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <binding>
+          <name value="Language" />
+          <isExtensible value="false" />
+          <conformance value="required" />
+          <referenceUri value="http://tools.ietf.org/html/bcp47" />
+        </binding>
+        <mapping>
+          <identity value="rim" />
+          <map value="./languageCode" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="PID-15, NK1-20, LAN-2" />
+        </mapping>
+        <mapping>
+          <identity value="servd" />
+          <map value="./Languages.LanguageSpokenCode" />
+        </mapping>
+      </definition>
+    </element>
+  </structure>
+  <structure>
+    <type value="Procedure" />
+    <name value="PerformedProcedure" />
+    <publish value="true" />
+    <element>
+      <path value="Procedure" />
+      <definition>
+        <short value="Procedure that were carried out during the operation. " />
+        <formal value="An action that is performed on a patient. This can be a physical 'thing' like an operation, or less invasive like counseling or hypnotherapy." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Resource" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Procedure[moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.identifier" />
+      <definition>
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Identifier" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type" />
+      <definition>
+        <short value="Identification of the procedure" />
+        <formal value="The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".code" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <slicing>
+        <discriminator value="system" />
+        <ordered value="false" />
+        <rules value="closed" />
+      </slicing>
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <name value="NCPM Norwegian" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="unr:oid:2.16.578.1.12.4.1.1.7210" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding" />
+      <name value="NSMP Norwegian" />
+      <definition>
+        <short value="Code defined by a terminology system" />
+        <formal value="A reference to a code defined by a terminology system." />
+        <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the V3 Core Principles for more information.  Ordering of codings is undefined and SHALL not be used to infer meaning." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Coding" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="union(., ./translation)" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.type.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="urn:oid:2.16.578.1.12.4.1.1.7220" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <definition>
+        <short value="Precise location details" />
+        <formal value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".approachSiteCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.indication" />
+      <definition>
+        <short value="Reason procedure performed" />
+        <formal value="The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text." />
+        <comments value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapuetic." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".reasonCode" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <definition>
+        <short value="The people who performed the procedure" />
+        <formal value="Limited to 'real' people rather than equipment." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".participation[typeCode=PFM]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.date" />
+      <definition>
+        <short value="The date the procedure was performed" />
+        <formal value="The dates over which the procedure was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="Period" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".effectiveTime" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="This should be choice of dateTime|Period" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.encounter" />
+      <definition>
+        <short value="The encounter when procedure performed" />
+        <formal value="The encounter during which the procedure was performed." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/Encounter" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.outcome" />
+      <definition>
+        <short value="What was result of procedure?" />
+        <formal value="What was the outcome of the procedure - did it resolve reasons why the procedure was performed?." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=OUT].target.text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.report" />
+      <definition>
+        <short value="Any report that results from the procedure" />
+        <formal value="This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="ResourceReference" />
+          <profile value="http://hl7.org/fhir/Profile/DiagnosticReport" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.complication" />
+      <definition>
+        <short value="Complication following the procedure" />
+        <formal value="Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="CodeableConcept" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="Need specialization of OUT for this." />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.followUp" />
+      <definition>
+        <short value="Instructions for follow up" />
+        <formal value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=COMP].target[classCode=ACT, moodCode=INT].text" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.relatedItem" />
+      <definition>
+        <short value="A procedure that is related to this one" />
+        <formal value="Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure." />
+        <min value="0" />
+        <max value="0" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".outboundRelationship[typeCode=TRIG and target[classCode=PROC, moodCode=EVN]]" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.notes" />
+      <definition>
+        <short value="Additional information about procedure" />
+        <formal value="Any other notes about the procedure - e.g. the operative notes." />
+        <min value="0" />
+        <max value="0" />
+        <type>
+          <code value="string" />
+        </type>
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
+        </mapping>
+      </definition>
+    </element>  
+    <searchParam>
+      <name value="_id" />
+      <type value="token" />
+      <documentation value="The logical resource id associated with the resource (must be supported by all servers)" />
+    </searchParam>
+    <searchParam>
+      <name value="_language" />
+      <type value="token" />
+      <documentation value="The language of the resource" />
+    </searchParam>
+    <searchParam>
+      <name value="date" />
+      <type value="date" />
+      <documentation value="The date the procedure was performed on" />
+      <xpath value="f:Procedure/f:date" />
+    </searchParam>
+    <searchParam>
+      <name value="subject" />
+      <type value="reference" />
+      <documentation value="The identity of a patient to list procedures  for" />
+      <xpath value="f:Procedure/f:subject" />
+    </searchParam>
+    <searchParam>
+      <name value="type" />
+      <type value="token" />
+      <documentation value="Type of procedure" />
+      <xpath value="f:Procedure/f:type" />
+    </searchParam>
+  </structure>
+  <extensionDefn>
+    <code value="Phase" />
+    <contextType value="resource" />
+    <context value="Procedure" />
+    <definition>
+      <short value="a phase of the operation" />
+      <formal value="Refers to a &quot;child procedure&quot; of the operation, which describes information about a certain phase" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#OppholdPhase" />
+        <aggregation value="contained" />
+      </type>
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#ForberedelsePhase" />
+        <aggregation value="contained" />
+      </type>
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#AnestesiPhase" />
+        <aggregation value="contained" />
+      </type>
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#KnivtidPhase" />
+        <aggregation value="contained" />
+      </type>
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#TransportPhase" />
+        <aggregation value="contained" />
+      </type>
+      <isModifier value="true" />
+    </definition>
+  </extensionDefn>
+  <extensionDefn>
+    <code value="LocationReference" />
+    <contextType value="resource" />
+    <context value="Procedure" />
+    <definition>
+      <short value="Reference to a location" />
+      <formal value="Reference to a location" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#LocationInformation" />
+        <aggregation value="contained" />
+      </type>
+      <isModifier value="false" />
+    </definition>
+  </extensionDefn>
+  <extensionDefn>
+    <code value="sequenceNumber" />
+    <contextType value="resource" />
+    <context value="Procedure" />
+    <definition>
+      <short value="Used to distinguish the relative importance of the procedures" />
+      <formal value="Used to distinguish the relative importance of the procedures; if the value equals 1, the procedure is considered to be the main (Norwegian: Hoved) procedure. If the value is larger than 1 it is a supporting procedure." />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="integer" />
+      </type>
+      <isModifier value="false" />
+    </definition>
+  </extensionDefn>
+  <extensionDefn>
+    <code value="performedProcedure" />
+    <contextType value="resource" />
+    <context value="Procedure" />
+    <definition>
+      <short value="Procedure that were carried out during the operation. " />
+      <formal value="Procedure that were carried out during the operation. One of the procedures will be identified as being the ‘main’ procedure" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="ResourceReference" />
+        <profile value="#PerformedProcedure" />
+        <aggregation value="contained" />
+      </type>
+      <isModifier value="false" />
+    </definition>
+  </extensionDefn>
+</Profile>

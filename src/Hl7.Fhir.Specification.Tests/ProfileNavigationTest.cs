@@ -435,6 +435,38 @@ namespace Hl7.Fhir.Test.Inspection
         }
 
 
+        [TestMethod]
+        public void TestNodeDuplication()
+        {
+            var nav = createTestNav();
+            nav.JumpToFirst("A.B");
+
+            var count = nav.Count;
+            var pos = nav.OrdinalPosition;
+            nav.Duplicate();
+            
+            Assert.AreEqual(count + 3, nav.Count);
+            Assert.AreEqual(pos, nav.OrdinalPosition);
+
+            // Check original
+            Assert.AreEqual("A.B", nav.Path);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual("A.B.C1", nav.Path);
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("A.B.C2", nav.Path);
+            Assert.IsFalse(nav.MoveToNext());
+            nav.MoveToParent();
+
+            // Check copy
+            nav.MoveToNext();
+            Assert.AreEqual("A.B", nav.Path);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual("A.B.C1", nav.Path);
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("A.B.C2", nav.Path);
+            Assert.IsFalse(nav.MoveToNext());
+        }
+
 
         [TestMethod]
         public void TestChildDeletions()
