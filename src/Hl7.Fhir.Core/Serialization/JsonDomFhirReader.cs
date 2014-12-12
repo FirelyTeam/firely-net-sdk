@@ -45,37 +45,93 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
-        private void rewriteExtensionProperties(JToken _current)
+        private void rewriteExtensionProperties(JToken current)
         {
-            if (_current is JObject)
-                rewriteExtensionProperties((JObject)_current);
-            else if (_current is JArray)
-                rewriteExtensionProperties((JArray)_current);
+            if (current is JObject)
+                rewriteExtensionProperties((JObject)current);
+            else if (current is JArray)
+                rewriteExtensionProperties((JArray)current);
         }
 
-        private void rewriteExtensionProperties(JObject _current)
+        private void rewriteExtensionProperties(JObject current)
         {
             var extensionMembers = new List<JProperty>();
+            var modifierExtensionMembers = new List<JProperty>();
 
-            foreach (var property in _current.Properties()) 
+            foreach (var property in current.Properties()) 
             {
-                if (property.Name.StartsWith("http://")) 
+                if (property.Name.StartsWith("http://"))
+                {
+                    if(!(property.Value is JArray))
+                        throw Error.Format("Found extension '{0}', but its value is not an array", this, property.Name);
                     extensionMembers.Add(property);
+                }
+                else if (property.Name == "modifier")
+                {
+                    if(!(property.Value is JObject)) throw Error.Format("A 'modifier' property should contain a json object",this);
+                    
+                    var modifiers = (JObject)property.Value;
+
+                    foreach (var modifier in modifiers.Properties())
+                    {
+                        if (!modifier.Name.StartsWith("http://")) throw Error.Format("All properties within 'modifier' should have a url as its name", this);
+                        modifierExtensionMembers.Add(modifier);
+                    }
+                }
                 else
                     rewriteExtensionProperties(property.Value);
             }
 
             if(extensionMembers.Any())
             {
-                var extProperty = new JProperty("extension");
-                //_current.Add(new 
+                extensionMembers.ForEach(prop => current.Remove(prop.Name));
+                var extProp = convertToExtensionProperty("extension",extensionMembers); 
+                current.Add(extProp);
+                rewriteExtensionProperties(extProp.Value);      // The Extension.value[x] themselves might contain data that has extension, so recurse
+            }
+            if(modifierExtensionMembers.Any())
+            {
+                current.Remove("modifier");
+                var mextProp = convertToExtensionProperty("modifierExtension", modifierExtensionMembers);
+                current.Add(mextProp);
+                rewriteExtensionProperties(mextProp.Value); // The Extension.value[x] themselves might contain data that has extension, so recurse
             }
         }
 
-        private void rewriteExtensionProperties(JArray _current)
+        private JProperty convertToExtensionProperty(string name, List<JProperty> extensionMembers)
         {
-            foreach (var element in _current.Values())
+            var extArray = new JArray();
+            var extProperty = new JProperty(name, extArray);
+
+            foreach (var ext in extensionMembers)
+            {
+                var extensionObjectArray = (JArray)ext.Value;
+                foreach (var extensionObject in extensionObjectArray)
+                {
+                    if (!(extensionObject is JObject))
+                        throw Error.Format("Extension '{0}' contains an array element that is not a complex object", this, ext.Name);
+
+                    var extensionJObject = (JObject)extensionObject;
+                    rewriteNestedExtensions(extensionJObject);
+
+                    extensionJObject.Add(new JProperty("url", ext.Name));
+                    extArray.Add(extensionJObject);
+                }
+            }
+
+            return extProperty;
+        }
+
+
+        private void rewriteNestedExtensions(JObject extension)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void rewriteExtensionProperties(JArray current)
+        {
+            foreach (var element in current.Children())
                 rewriteExtensionProperties(element);
         }
 
