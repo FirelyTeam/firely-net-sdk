@@ -45,10 +45,10 @@ namespace Hl7.Fhir.Tests.Model
             var p = (Patient)(new FhirParser()).ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
 
-            p2.ActiveElement.Value = true;
+            p2.ActiveElement.Value = !p2.ActiveElement.Value;
             Assert.IsFalse(p2.IsExactly(p));
             p2.ActiveElement.Value = null;
-            Assert.IsTrue(p2.IsExactly(p));
+            Assert.IsFalse(p2.IsExactly(p));
 
             p2.Contact[0].Relationship[0].Coding[0].System = "http://nu.nl/different";
 

@@ -37,11 +37,46 @@ namespace Hl7.Fhir.Serialization
             try
             {
                 _current = JObject.Load(reader);
+                rewriteExtensionProperties(_current);
             }
             catch (Exception e)
             {
                 throw Error.Format("Cannot parse json: " + e.Message, null);
             }
+        }
+
+
+        private void rewriteExtensionProperties(JToken _current)
+        {
+            if (_current is JObject)
+                rewriteExtensionProperties((JObject)_current);
+            else if (_current is JArray)
+                rewriteExtensionProperties((JArray)_current);
+        }
+
+        private void rewriteExtensionProperties(JObject _current)
+        {
+            var extensionMembers = new List<JProperty>();
+
+            foreach (var property in _current.Properties()) 
+            {
+                if (property.Name.StartsWith("http://")) 
+                    extensionMembers.Add(property);
+                else
+                    rewriteExtensionProperties(property.Value);
+            }
+
+            if(extensionMembers.Any())
+            {
+                var extProperty = new JProperty("extension");
+                //_current.Add(new 
+            }
+        }
+
+        private void rewriteExtensionProperties(JArray _current)
+        {
+            foreach (var element in _current.Values())
+                rewriteExtensionProperties(element);
         }
 
         public TokenType CurrentToken

@@ -37,6 +37,7 @@ using System.IO;
 
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {    
@@ -52,48 +53,56 @@ namespace Hl7.Fhir.Model
         public const string ATOM_LINKREL_PREDVERSION = "predecessor-version";
         public const string ATOM_LINKREL_ALTERNATE = "alternate";
 
+        [NotMapped]
         public Uri SelfLink
         {
             get { return getEntry(ATOM_LINKREL_SELF); }
             set { setEntry(ATOM_LINKREL_SELF, value); }
         }
 
+        [NotMapped]
         public Uri FirstLink
         {
             get { return getEntry(ATOM_LINKREL_FIRST); }
             set { setEntry(ATOM_LINKREL_FIRST, value); }
         }
 
+        [NotMapped]
         public Uri PreviousLink
         {
             get { return getEntry(ATOM_LINKREL_PREVIOUS); }
             set { setEntry(ATOM_LINKREL_PREVIOUS, value); }
         }
 
+        [NotMapped]
         public Uri NextLink
         {
             get { return getEntry(ATOM_LINKREL_NEXT); }
             set { setEntry(ATOM_LINKREL_NEXT, value); }
         }
 
+        [NotMapped]
         public Uri LastLink
         {
             get { return getEntry(ATOM_LINKREL_LAST); }
             set { setEntry(ATOM_LINKREL_LAST, value); }
         }
 
+        [NotMapped]
         public Uri SearchLink
         {
             get { return getEntry(ATOM_LINKREL_SEARCH); }
             set { setEntry(ATOM_LINKREL_SEARCH, value); }
         }
 
+        [NotMapped]
         public Uri PredecessorVersionLink
         {
             get { return getEntry(ATOM_LINKREL_PREDVERSION); }
             set { setEntry(ATOM_LINKREL_PREDVERSION, value); }
         }
 
+        [NotMapped]
         public Uri Alternate
         {
             get { return getEntry(ATOM_LINKREL_ALTERNATE); }

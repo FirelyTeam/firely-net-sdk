@@ -39,6 +39,9 @@ namespace Hl7.Fhir.Serialization
                 var resourceType = _reader.GetResourceTypeName(nested);
                 var mappedType = _inspector.FindClassMappingForResource(resourceType);
 
+                if (mappedType == null)
+                    throw Error.Format("Encountered an unknown resource '" + resourceType + "'",_reader);
+
                 if (existing == null)
                 {
                     var fac = new DefaultModelFactory();

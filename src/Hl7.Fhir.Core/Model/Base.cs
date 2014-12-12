@@ -36,6 +36,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -74,6 +75,7 @@ namespace Hl7.Fhir.Model
 
         private Dictionary<string, object> _userData = new Dictionary<string, object>();
 
+        [NotMapped]
         public Dictionary<string, object> UserData
         {
             get { return _userData; }

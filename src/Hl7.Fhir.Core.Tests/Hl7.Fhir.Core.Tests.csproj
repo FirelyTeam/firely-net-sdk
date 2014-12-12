@@ -87,7 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestData\examples-json.zip" />
+    <None Include="TestData\examples-json.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\examples.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

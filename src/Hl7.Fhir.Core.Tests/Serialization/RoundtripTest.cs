@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void FullRoundtripOfAllExamples()
         {
             string examplesXml = @"TestData\examples.zip";
-            //string examplesJson = @"TestData\examples-json.zip";
+            string examplesJson = @"TestData\examples-json.zip";
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
             string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTest");
@@ -45,10 +45,10 @@ namespace Hl7.Fhir.Tests.Serialization
             createEmptyDir(baseTestPathXml);
             doRoundTrip(examplesXml, baseTestPathXml);
 
-            //Debug.WriteLine("Then, roundtripping json->xml->json");
-            //var baseTestPathJson = Path.Combine(baseTestPath, "FromJson");
-            //createEmptyDir(baseTestPathJson);
-            //doRoundTrip(examplesJson, baseTestPathJson);
+            Debug.WriteLine("Then, roundtripping json->xml->json");
+            var baseTestPathJson = Path.Combine(baseTestPath, "FromJson");
+            createEmptyDir(baseTestPathJson);
+            doRoundTrip(examplesJson, baseTestPathJson);
 
         }
 

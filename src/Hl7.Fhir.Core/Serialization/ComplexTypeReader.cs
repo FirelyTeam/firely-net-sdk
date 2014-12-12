@@ -85,38 +85,49 @@ namespace Hl7.Fhir.Serialization
                 //hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member
 
-                // Find a property on the instance that matches the element found in the data
-                // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
-                var mappedProperty = mapping.FindMappedElementByName(memberName);
-
-                if (mappedProperty != null)
+                if (memberName.StartsWith("http:"))
                 {
-                 //   Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
+                    // This is the special json-style extension
+                    var mappedProperty = mapping.FindMappedElementByName("extension");
+                    var value = (List<Extension>)mappedProperty.GetValue(existing);
 
-                    object value = null;
-
-                    // For primitive members we can save time by not calling the getter
-                    if (!mappedProperty.IsPrimitive)
-                        value = mappedProperty.GetValue(existing);
-                   
                     var reader = new DispatchingReader(memberData.Item2);
-                    value = reader.Deserialize(mappedProperty, memberName, value);
+                    value = (List<Extension>)reader.Deserialize(mappedProperty, "extension", value);
 
+                    foreach (var ext in value) ext.Url = memberName;
                     mappedProperty.SetValue(existing, value);
                 }
                 else
                 {
-                    if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format("Encountered unknown member '{0}' while deserializing", _current, memberName);
+                    // Find a property on the instance that matches the element found in the data
+                    // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
+                    var mappedProperty = mapping.FindMappedElementByName(memberName);
+
+                    if (mappedProperty != null)
+                    {
+                        //   Message.Info("Handling member {0}.{1}", mapping.Name, memberName);
+
+                        object value = null;
+
+                        // For primitive members we can save time by not calling the getter
+                        if (!mappedProperty.IsPrimitive)
+                            value = mappedProperty.GetValue(existing);
+
+                        var reader = new DispatchingReader(memberData.Item2);
+                        value = reader.Deserialize(mappedProperty, memberName, value);
+
+                        mappedProperty.SetValue(existing, value);
+                    }
                     else
-                        Message.Info("Skipping unknown member " + memberName);
+                    {
+                        if (SerializationConfig.AcceptUnknownMembers == false)
+                            throw Error.Format("Encountered unknown member '{0}' while deserializing", _current, memberName);
+                        else
+                            Message.Info("Skipping unknown member " + memberName);
+                    }
                 }
             }
 
-            // Not sure if the reader needs to verify this. Certainly, I want to accept empty elements for the
-            // pseudo-resource TagList (no tags) and probably others.
-            //if (!hasMember)
-            //    throw Error.Format("Fhir serialization does not allow nor support empty elements");
         }
     }
 }
