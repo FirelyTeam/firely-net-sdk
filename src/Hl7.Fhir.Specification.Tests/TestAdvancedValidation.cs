@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CorrectFixedValue()
         {
-            var resource = Factory.LoadResource("TestData\\lipid.fixvalue.xml");
+            var resource = TestProvider.LoadResource("TestData\\lipid.fixvalue.xml");
             Report report = spec.Validate(resource);
             var errors = report.Errors;
             Assert.IsTrue(report.IsValid);
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void IncorrectFixedValue()
         {
-            var resource = Factory.LoadResource("TestData\\lipid.fixvalue.wrong.xml");
+            var resource = TestProvider.LoadResource("TestData\\lipid.fixvalue.wrong.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void SlicingValid()
         {
-            var resource = Factory.LoadResource("TestData\\lipid.slice.valid.xml");
+            var resource = TestProvider.LoadResource("TestData\\lipid.slice.valid.xml");
             Report report = spec.Validate(resource);
             Assert.IsTrue(report.IsValid);
         }
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void SlicingInvalid()
         {
-            var resource = Factory.LoadResource("TestData\\lipid.slice.invalid.xml");
+            var resource = TestProvider.LoadResource("TestData\\lipid.slice.invalid.xml");
             Report report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.AreEqual(4, report.ErrorCount);

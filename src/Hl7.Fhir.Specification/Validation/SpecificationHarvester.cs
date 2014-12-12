@@ -256,7 +256,9 @@ namespace Hl7.Fhir.Validation
 
         public ValueSet HarvestValueSet(Hl7.Fhir.Model.ValueSet source, Uri system)
         {
-            ValueSet valueset = new ValueSet();
+            ValueSet valueset = new ValueSet(system, source);
+            return valueset;
+            /*
             // todo: This now only works with "defines". 
             valueset.System = system.ToString();
 
@@ -268,6 +270,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
             return valueset;
+            */
         }
              
     }

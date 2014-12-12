@@ -18,18 +18,18 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class TestBasicValidation
     {
-        static SpecificationWorkspace spec;
+        static SpecificationWorkspace spec; 
         
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            spec = Factory.GetPatientSpec(expand: true, online: false);
+            spec = SpecificationFactory.Create("http://hl7.org/fhir/Profile/Patient");
         }
 
         [TestMethod]
         public void ValidResource()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.Valid.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.Valid.xml");
             Report report = spec.Validate(resource);
             var errors = report.Errors;
             Assert.IsTrue(report.IsValid);
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ValueSet_UnknownValue()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.ErrorUse.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.ErrorUse.xml");
             Report report = spec.Validate(resource);
             Assert.IsFalse(report.IsValid);
             Assert.IsTrue(report.Contains(Group.Coding, Status.Failed));
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CardinalityTooMuch()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.CardinalityPlus.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.CardinalityPlus.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CardinalityTooLittle()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.CardinalityMinus.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.CardinalityMinus.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UnknownAttribute()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.UnknownAttribute.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.UnknownAttribute.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ComplexTypeValueAttribute()
         {
             // A complex type should not have a value attribute at the root element
-            var resource = Factory.LoadResource("TestData\\Patient.ValueAttribute.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.ValueAttribute.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void Constraint()
         {
             // <constraint value="f:name or f:telecom or f:address or f:organization"/>
-            var resource = Factory.LoadResource("TestData\\Patient.ConstraintError.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.ConstraintError.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void WrongRootElement()
         {
-            var resource = Factory.LoadResource("TestData\\invalidroot.xml");
+            var resource = TestProvider.LoadResource("TestData\\invalidroot.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
@@ -118,14 +118,14 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void NamespaceXHtml()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.Narrative.correct.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.Narrative.correct.xml");
             Report report = spec.Validate(resource);
             //report.Errors.ToConsole();
 
             Assert.IsTrue(report.IsValid);
 
             // In this narrative node, the div element does not contain a xhtml namespace and should not be found by the validator
-            resource = Factory.LoadResource("TestData\\Patient.Narrative.wrong.xml");
+            resource = TestProvider.LoadResource("TestData\\Patient.Narrative.wrong.xml");
             report = spec.Validate(resource);
             //report.Errors.ToConsole();
 
@@ -137,9 +137,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void OtherProfile()
         {
-            var spec = Factory.GetOtherSpec(expand:true, online:false, uri: "http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
-
-            var resource = Factory.LoadResource("TestData\\ldlcholesterol-correct.xml");
+            var spec = SpecificationFactory.Create("http://someserver.nl/Profile/lipid.profile.xml#ldlCholesterol");
+            var resource = TestProvider.LoadResource("TestData\\ldlcholesterol-correct.xml");
             var report = spec.Validate(resource);
         }
     }

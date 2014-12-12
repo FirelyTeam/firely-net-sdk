@@ -1,4 +1,5 @@
-﻿/*
+﻿using Hl7.Fhir.Model;
+/*
 * Copyright (c) 2014, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *

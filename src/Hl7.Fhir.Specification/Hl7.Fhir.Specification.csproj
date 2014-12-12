@@ -9,41 +9,36 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir</RootNamespace>
     <AssemblyName>Hl7.Fhir.Specification</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet45|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\Net40\</OutputPath>
+    <OutputPath>bin\Debug\Net45\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net40\</OutputPath>
+    <OutputPath>bin\Release\Net45\</OutputPath>
     <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Specification.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Specification.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpCompress, Version=0.10.3.0, Culture=neutral, PublicKeyToken=64eb6448c87dfed9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\p3-sharpcompress.0.10.5.2\lib\net40\SharpCompress.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -56,10 +51,17 @@
   <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Core\Support\Logging.cs">
       <Link>Support\Logging.cs</Link>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
       <Link>Support\ReflectionHelper.cs</Link>
+      <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Publication\ElementDefnRenderingExtensions.cs" />
+    <Compile Include="Publication\HierarchicalTableGenerator.cs" />
+    <Compile Include="Publication\ProfileKnowledgeProvider.cs" />
+    <Compile Include="Publication\ProfileTableGenerator.cs" />
+    <Compile Include="Publication\StructureGenerator.cs" />
     <Compile Include="Specification\Model\Slicing.cs" />
     <Compile Include="Specification\Model\XPathNavigatorExtensions.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Specification\Expansion\StructureExpander.cs" />
     <Compile Include="Specification\Source\StructureLoader.cs" />
+    <Compile Include="Validation\SpecificationFactory.cs" />
     <Compile Include="XPath\NavigatorState.cs" />
     <Compile Include="XPath\JsonXPathNavigator.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />
@@ -119,12 +122,28 @@
     <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <Content Include="validation.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
+      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
+      <Name>Hl7.Fhir.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Specification\Source\core-conformances-base.xml" />
+    <Content Include="Specification\Source\core-profiles-datatypes.xml" />
+    <Content Include="Specification\Source\core-profiles-resources.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Specification\Source\core-valuesets-dicom.xml" />
+    <Content Include="Specification\Source\core-valuesets-fhir.xml" />
+    <Content Include="Specification\Source\core-valuesets-v2.xml" />
+    <Content Include="Specification\Source\core-valuesets-v3.xml" />
+    <Content Include="Specification\Source\README.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

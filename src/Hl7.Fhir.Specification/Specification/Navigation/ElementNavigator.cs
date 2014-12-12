@@ -372,6 +372,21 @@ namespace Hl7.Fhir.Specification.Navigation
             }
         }
 
+
+        public bool Duplicate()
+        {
+            if (OrdinalPosition == null) return false;
+
+            var start = OrdinalPosition.Value;
+            var end = positionAfter();
+
+            var source = _elements.Skip(start).Take(end-start).ToList();
+
+            foreach (var elem in source.Reverse<Profile.ElementComponent>())
+                _elements.Insert(start, (Profile.ElementComponent)elem.DeepCopy());
+
+            return true;
+        }
     
         public override bool Delete()
         {
@@ -445,6 +460,19 @@ namespace Hl7.Fhir.Specification.Navigation
                 if (path[i] == '.') count++;
 
             return count;
+        }
+
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            foreach (var elem in _elements)
+            {
+                output.AppendFormat("{0}{1}" + Environment.NewLine, elem == Current ? "*" : "", elem.Path);
+            }
+
+            return output.ToString();
         }
 
     } 

@@ -99,11 +99,11 @@ namespace Hl7.Fhir.Specification.Expansion
                 {
                     if( (firstEntry && !snap.MoveToChild(diff.PathName)) ||
                         (!firstEntry && !snap.MoveToNext(diff.PathName)) )
-                             throw Error.InvalidOperation("Differential has a constraint for path {0}, which does not exist in its base", diff.PathName);                   
+                             throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base", diff.PathName);                   
                     firstEntry = false;
 
                     // Child found in both, merge them
-                    if (childNameRepeats(diff) || diff.Current.IsExtension())
+                    if (countChildNameRepeats(diff) > 1 || diff.Current.IsExtension())
                     {
                         // The child in the diff repeats or we recognize it as an extension slice -> we're on the first element of a slice!
                         mergeSlice(snap, diff); 
@@ -154,29 +154,18 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.MoveToNext();  
 
             // The differential and the snapshot are now both positioned on the first "real" slicing content element
-            // Start by getting an unaltered copy of the current base definition, we need to re-insert a fresh copy
-            // of it every time we encounter a new slice in the differential
+            // Start by duplicating the current unsliced base definition as many times as we have slices, so we can
+            // update these copies for each slice.
+            var numSlices = countChildNameRepeats(diff);
+            for (var count = 0; count < numSlices-1; count++) snap.Duplicate();
 
-            var slicingTemplate = (Profile.ElementComponent)snap.Current.DeepCopy();
             var slicingName = snap.PathName;
-            var first = true;
 
             do
             {
-                if(first)
-                {
-                    // The first time, we still have the original base definition available to slice
-                    first = false;
-                }
-                else
-                {
-                    snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
-                    //snap.MoveToNext();
-                }
-
                 merge(snap, diff);
             }
-            while (diff.MoveToNext(slicingName));
+            while (diff.MoveToNext(slicingName) && snap.MoveToNext(slicingName));
 
             //if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
             //{
@@ -215,20 +204,24 @@ namespace Hl7.Fhir.Specification.Expansion
             }
         }
 
-        private static bool childNameRepeats(ElementNavigator diff)
+        private static int countChildNameRepeats(ElementNavigator diff)
         {
-            var isSliced = false;
+            var repeats = 1;
 
             var currentPath = diff.PathName;
-            if (diff.MoveToNext())
+            var bm = diff.Bookmark();
+            while(diff.MoveToNext())
             {
                 // check whether the next sibling in the differential has the same name,
                 // that means we're looking at a slice
-                isSliced = diff.PathName == currentPath;
-                diff.MoveToPrevious();
+                if (diff.PathName == currentPath)
+                    repeats++;
+                else
+                    break;
             }
 
-            return isSliced;
+            diff.ReturnToBookmark(bm);
+            return repeats;
         }
 
         private void mergeElementAttributes(Profile.ElementComponent dest, Profile.ElementComponent src)

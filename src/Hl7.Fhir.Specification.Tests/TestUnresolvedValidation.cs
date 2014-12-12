@@ -13,13 +13,13 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            spec = Factory.GetPatientSpec(expand: false, online: false);
+            spec = SpecificationFactory.Create("http://hl7.org/fhir/Profile/Patient");
         }
 
         [TestMethod]
         public void InvalidElement()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.InvalidElement.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.InvalidElement.xml");
             Report report = spec.Validate(resource);
             
             Assert.IsFalse(report.IsValid);
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ConstraintError()
         {
-            var resource = Factory.LoadResource("TestData\\Patient.ConstraintError.xml");
+            var resource = TestProvider.LoadResource("TestData\\Patient.ConstraintError.xml");
             Report report = spec.Validate(resource);
 
             Assert.IsFalse(report.IsValid);
