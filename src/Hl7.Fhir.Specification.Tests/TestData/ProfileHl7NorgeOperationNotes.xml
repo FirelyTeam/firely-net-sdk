@@ -68,7 +68,7 @@
           <code value="Extension" />
           <profile value="#Phase" />
         </type>
-        <isModifier value="true" />
+        <isModifier value="false" />
       </definition>
     </element>
     <element>
@@ -83,22 +83,24 @@
           <code value="Extension" />
           <profile value="#LocationReference" />
         </type>
-        <isModifier value="true" />
+        <isModifier value="false" />
       </definition>
     </element>
     <element>
-      <path value="Procedure.extension" />
-      <name value="sequenceNumber" />
+      <path value="Procedure.identifier" />
       <definition>
-        <short value="Used to distinguish the relative importance of the procedures" />
-        <formal value="Used to distinguish the relative importance of the procedures; if the value equals 1, the procedure is considered to be the main (Norwegian: Hoved) procedure. If the value is larger than 1 it is a supporting procedure." />
-        <min value="1" />
-        <max value="1" />
+        <short value="External Ids for this procedure" />
+        <formal value="This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+        <min value="0" />
+        <max value="0" />
         <type>
-          <code value="Extension" />
-          <profile value="#sequenceNumber" />
+          <code value="Identifier" />
         </type>
-        <isModifier value="true" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value=".id" />
+        </mapping>
       </definition>
     </element>
     <element>
@@ -170,7 +172,7 @@
         <type>
           <code value="uri" />
         </type>
-        <valueUri value="urn:oid:2.16.840.1.113883.6.1" />
+        <valueUri value="http://loinc.org" />
         <isModifier value="false" />
         <mapping>
           <identity value="rim" />
@@ -404,6 +406,29 @@
       </definition>
     </element>
     <element>
+      <path value="Procedure.performer.role.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.org/fhir/v3/ParticipationType" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
       <path value="Procedure.performer.role.coding.code" />
       <definition>
         <short value="Symbol in syntax defined by the system" />
@@ -427,7 +452,7 @@
     </element>
     <element>
       <path value="Procedure.performer" />
-      <name value="Secondary Performer" />
+      <name value="secondaryPerformer" />
       <slicing>
         <discriminator value="role.coding.code" />
         <ordered value="false" />
@@ -500,6 +525,29 @@
         <mapping>
           <identity value="v2" />
           <map value="C*E.1-8, C*E.10-22" />
+        </mapping>
+      </definition>
+    </element>
+    <element>
+      <path value="Procedure.performer.role.coding.system" />
+      <definition>
+        <short value="Identity of the terminology system" />
+        <formal value="The identification of the code system that defines the meaning of the symbol in the code." />
+        <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="uri" />
+        </type>
+        <valueUri value="http://hl7.org/fhir/v3/ParticipationType" />
+        <isModifier value="false" />
+        <mapping>
+          <identity value="rim" />
+          <map value="./codeSystem" />
+        </mapping>
+        <mapping>
+          <identity value="v2" />
+          <map value="C*E.3" />
         </mapping>
       </definition>
     </element>
@@ -1786,16 +1834,15 @@
       <definition>
         <short value="Procedure that were carried out during the operation. " />
         <formal value="Procedure that were carried out during the operation. One of the procedures will be identified as being the ‘main’ procedure" />
-        <min value="0" />
-        <max value="*" />
+        <min value="1" />
+        <max value="1" />
         <type>
           <code value="Extension" />
-          <profile value="#performedProcedure" />
+          <profile value="#PerformedProcedure" />
         </type>
-        <isModifier value="true" />
+        <isModifier value="false" />
       </definition>
     </element>
-
     <element>
       <path value="Procedure.identifier" />
       <definition>
@@ -2155,6 +2202,29 @@
       </definition>
     </element>
     <element>
+      <path value="Procedure.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <ordered value="true" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="transportLocation" />
+      <definition>
+        <short value="Reference to a location" />
+        <formal value="Reference to a location" />
+        <min value="0" />
+        <max value="1" />
+        <type>
+          <code value="Extension" />
+          <profile value="#LocationReference" />
+        </type>
+        <isModifier value="false" />
+      </definition>
+    </element>
+    <element>
       <path value="Procedure.identifier" />
       <definition>
         <short value="External Ids for this procedure" />
@@ -2494,29 +2564,6 @@
         </mapping>
       </definition>
     </element>
-    <element>
-      <path value="Procedure.extension" />
-      <slicing>
-        <discriminator value="url" />
-        <ordered value="true" />
-        <rules value="openAtEnd" />
-      </slicing>
-    </element>
-    <element>
-      <path value="Procedure.extension" />
-      <name value="transportLocation" />
-      <definition>
-        <short value="Reference to a location" />
-        <formal value="Reference to a location" />
-        <min value="0" />
-        <max value="1" />
-        <type>
-          <code value="Extension" />
-          <profile value="#LocationReference" />
-        </type>
-        <isModifier value="true" />
-      </definition>
-    </element>
   </structure>
   <structure>
     <type value="Location" />
@@ -2815,7 +2862,7 @@
       </slicing>
       <definition>
         <short value="An identifier for the person as this patient" />
-        <formal value="An identifier that applies to this person as a patient. A patient shall have at least 1, and at most 2 identifiers: Either the F-number or the D-number (in that order of preference; if both a F-number and a D-number are known, only the F-number shall be sent here),  and the temporary identifier. " />
+        <formal value="An identifier that applies to this person as a patient. A patient shall have at least 1, and at most 2 identifiers: Either the F-number or the D-number (in that order of preference; if both a F-number and a D-number are known, only the F-number shall be sent here),  and the temporary identifier (H-number). " />
         <min value="1" />
         <max value="2" />
         <type>
@@ -3985,6 +4032,29 @@
       </definition>
     </element>
     <element>
+      <path value="Procedure.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <ordered value="true" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.extension" />
+      <name value="sequenceNumber" />
+      <definition>
+        <short value="Used to distinguish the relative importance of the procedures" />
+        <formal value="Used to distinguish the relative importance of the procedures; if the value equals 1, the procedure is considered to be the main (Norwegian: Hoved) procedure. If the value is larger than 1 it is a supporting procedure." />
+        <min value="1" />
+        <max value="1" />
+        <type>
+          <code value="Extension" />
+          <profile value="#SequenceNumber" />
+        </type>
+        <isModifier value="false" />
+      </definition>
+    </element>
+    <element>
       <path value="Procedure.identifier" />
       <definition>
         <short value="External Ids for this procedure" />
@@ -4324,35 +4394,7 @@
           <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value" />
         </mapping>
       </definition>
-    </element>  
-    <searchParam>
-      <name value="_id" />
-      <type value="token" />
-      <documentation value="The logical resource id associated with the resource (must be supported by all servers)" />
-    </searchParam>
-    <searchParam>
-      <name value="_language" />
-      <type value="token" />
-      <documentation value="The language of the resource" />
-    </searchParam>
-    <searchParam>
-      <name value="date" />
-      <type value="date" />
-      <documentation value="The date the procedure was performed on" />
-      <xpath value="f:Procedure/f:date" />
-    </searchParam>
-    <searchParam>
-      <name value="subject" />
-      <type value="reference" />
-      <documentation value="The identity of a patient to list procedures  for" />
-      <xpath value="f:Procedure/f:subject" />
-    </searchParam>
-    <searchParam>
-      <name value="type" />
-      <type value="token" />
-      <documentation value="Type of procedure" />
-      <xpath value="f:Procedure/f:type" />
-    </searchParam>
+    </element>
   </structure>
   <extensionDefn>
     <code value="Phase" />
@@ -4409,14 +4451,14 @@
     </definition>
   </extensionDefn>
   <extensionDefn>
-    <code value="sequenceNumber" />
+    <code value="SequenceNumber" />
     <contextType value="resource" />
     <context value="Procedure" />
     <definition>
       <short value="Used to distinguish the relative importance of the procedures" />
       <formal value="Used to distinguish the relative importance of the procedures; if the value equals 1, the procedure is considered to be the main (Norwegian: Hoved) procedure. If the value is larger than 1 it is a supporting procedure." />
-      <min value="0" />
-      <max value="*" />
+      <min value="1" />
+      <max value="1" />
       <type>
         <code value="integer" />
       </type>
@@ -4424,7 +4466,7 @@
     </definition>
   </extensionDefn>
   <extensionDefn>
-    <code value="performedProcedure" />
+    <code value="PerformedProcedure" />
     <contextType value="resource" />
     <context value="Procedure" />
     <definition>

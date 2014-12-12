@@ -103,6 +103,9 @@
     <Content Include="TestData\Patient.UnknownAttribute.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\ProfileHl7NorgeOperationNotes.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\SlicingExtensionTestProfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

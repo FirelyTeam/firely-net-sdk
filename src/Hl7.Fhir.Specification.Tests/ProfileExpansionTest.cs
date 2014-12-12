@@ -44,8 +44,8 @@ namespace Hl7.Fhir.Test.Inspection
             var expander = new ProfileExpander(_source);
             
             // This file will be found local to the test DLL, based on its it, not its url
-            //var diff = (Profile)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\ProfileProcedureNO.xml"));
-            var diff = (Profile)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\example-lipid-profile-differential.xml"));
+            var diff = (Profile)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\ProfileHl7NorgeOperationNotes.xml"));
+            //var diff = (Profile)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\example-lipid-profile-differential.xml"));
             Assert.IsNotNull(diff);
 
             var snapshot = expander.Expand(diff);
