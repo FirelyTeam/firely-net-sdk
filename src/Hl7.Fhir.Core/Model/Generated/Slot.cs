@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// (informative) A slot of time on a schedule that may be available for booking appointments
+    /// A slot of time on a schedule that may be available for booking appointments
     /// </summary>
     [FhirType("Slot", IsResource=true)]
     [DataContract]
@@ -106,18 +106,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// The availability resource that this slot defines an interval of status information
+        /// The schedule resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("availability", Order=70)]
-        [References("Availability")]
+        [FhirElement("schedule", Order=70)]
+        [References("Schedule")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Availability
+        public Hl7.Fhir.Model.ResourceReference Schedule
         {
-            get { return _Availability; }
-            set { _Availability = value; OnPropertyChanged("Availability"); }
+            get { return _Schedule; }
+            set { _Schedule = value; OnPropertyChanged("Schedule"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Availability;
+        private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
         /// BUSY | FREE | BUSY-UNAVAILABLE | BUSY-TENTATIVE
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Availability != null) dest.Availability = (Hl7.Fhir.Model.ResourceReference)Availability.DeepCopy();
+                if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.ResourceReference)Schedule.DeepCopy();
                 if(FreeBusyTypeElement != null) dest.FreeBusyTypeElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>)FreeBusyTypeElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Availability, otherT.Availability)) return false;
+            if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
             if( !DeepComparable.Matches(FreeBusyTypeElement, otherT.FreeBusyTypeElement)) return false;
             if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Availability, otherT.Availability)) return false;
+            if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
             if( !DeepComparable.IsExactly(FreeBusyTypeElement, otherT.FreeBusyTypeElement)) return false;
             if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;

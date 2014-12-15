@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,44 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.DataElement; } }
         [NotMapped]
         public override string TypeName { get { return "DataElement"; } }
+        
+        /// <summary>
+        /// Indicates the degree of precision of the data element definition
+        /// </summary>
+        [FhirEnumeration("DataElementGranularity")]
+        public enum DataElementGranularity
+        {
+            /// <summary>
+            /// The data element is sufficiently well-constrained that multiple pieces of data captured according to the constraints of the data element will be comparable (though in some cases, a degree of automated conversion/normalization may be required).
+            /// </summary>
+            [EnumLiteral("comparable")]
+            Comparable,
+            /// <summary>
+            /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully compareable.
+            /// </summary>
+            [EnumLiteral("fully specified")]
+            FullySpecified,
+            /// <summary>
+            /// The data element allows multiple units of measure having equivalent meaning.  E.g. "cc" (cubic centimeter) and "mL".
+            /// </summary>
+            [EnumLiteral("equivalent")]
+            Equivalent,
+            /// <summary>
+            /// The data element allows multiple units of measure that are convertable between each other (e.g. Inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
+            /// </summary>
+            [EnumLiteral("convertable")]
+            Convertable,
+            /// <summary>
+            /// A convertable data element where unit conversions are different only by a power of 10.  E.g. g, mg, kg.
+            /// </summary>
+            [EnumLiteral("scaleable")]
+            Scaleable,
+            /// <summary>
+            /// The data element is unconstrained in units, choice of data types and/or choice of vocabulary such that automated comparison of data captured using the data element is not possible.
+            /// </summary>
+            [EnumLiteral("flexible")]
+            Flexible,
+        }
         
         /// <summary>
         /// The lifecycle status of a Resource data element
@@ -656,9 +694,40 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
+        /// comparable | fully specified | equivalent | convertable | scaleable | flexible
+        /// </summary>
+        [FhirElement("granularity", InSummary=true, Order=130)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.DataElement.DataElementGranularity> GranularityElement
+        {
+            get { return _GranularityElement; }
+            set { _GranularityElement = value; OnPropertyChanged("GranularityElement"); }
+        }
+        private Code<Hl7.Fhir.Model.DataElement.DataElementGranularity> _GranularityElement;
+        
+        /// <summary>
+        /// comparable | fully specified | equivalent | convertable | scaleable | flexible
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.DataElement.DataElementGranularity? Granularity
+        {
+            get { return GranularityElement != null ? GranularityElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  GranularityElement = null; 
+                else
+                  GranularityElement = new Code<Hl7.Fhir.Model.DataElement.DataElementGranularity>(value);
+                OnPropertyChanged("Granularity");
+            }
+        }
+        
+        /// <summary>
         /// Identifying concept
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
@@ -669,9 +738,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Coding> _Code;
         
         /// <summary>
-        /// How to ask for element
+        /// Prompt for element phrased as question
         /// </summary>
-        [FhirElement("question", InSummary=true, Order=140)]
+        [FhirElement("question", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString QuestionElement
         {
@@ -681,7 +750,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _QuestionElement;
         
         /// <summary>
-        /// How to ask for element
+        /// Prompt for element phrased as question
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -700,9 +769,40 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Name for element to display with or prompt for element
+        /// </summary>
+        [FhirElement("label", InSummary=true, Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString LabelElement
+        {
+            get { return _LabelElement; }
+            set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+        }
+        private Hl7.Fhir.Model.FhirString _LabelElement;
+        
+        /// <summary>
+        /// Name for element to display with or prompt for element
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Label
+        {
+            get { return LabelElement != null ? LabelElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  LabelElement = null; 
+                else
+                  LabelElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Label");
+            }
+        }
+        
+        /// <summary>
         /// Definition/description as narrative text
         /// </summary>
-        [FhirElement("definition", Order=150)]
+        [FhirElement("definition", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DefinitionElement
         {
@@ -733,7 +833,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the use of this element
         /// </summary>
-        [FhirElement("comments", Order=160)]
+        [FhirElement("comments", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentsElement
         {
@@ -764,7 +864,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why is this needed?
         /// </summary>
-        [FhirElement("requirements", Order=170)]
+        [FhirElement("requirements", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -795,7 +895,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other names
         /// </summary>
-        [FhirElement("synonym", Order=180)]
+        [FhirElement("synonym", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SynonymElement
@@ -827,7 +927,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of Data type
         /// </summary>
-        [FhirElement("type", Order=190)]
+        [FhirElement("type", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Code TypeElement
         {
@@ -858,7 +958,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Example value: [as defined for type]
         /// </summary>
-        [FhirElement("example", Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("example", Order=220, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Example
@@ -871,7 +971,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Length for strings
         /// </summary>
-        [FhirElement("maxLength", Order=210)]
+        [FhirElement("maxLength", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Integer MaxLengthElement
         {
@@ -902,19 +1002,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Units to use for measured value
         /// </summary>
-        [FhirElement("units", Order=220)]
+        [FhirElement("units", Order=240, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Units
+        public Hl7.Fhir.Model.Element Units
         {
             get { return _Units; }
             set { _Units = value; OnPropertyChanged("Units"); }
         }
-        private Hl7.Fhir.Model.CodeableConcept _Units;
+        private Hl7.Fhir.Model.Element _Units;
         
         /// <summary>
         /// ValueSet details if this is coded
         /// </summary>
-        [FhirElement("binding", Order=230)]
+        [FhirElement("binding", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.DataElement.DataElementBindingComponent Binding
         {
@@ -926,7 +1027,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Map element to another set of definitions
         /// </summary>
-        [FhirElement("mapping", Order=240)]
+        [FhirElement("mapping", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent> Mapping
@@ -951,8 +1052,10 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(GranularityElement != null) dest.GranularityElement = (Code<Hl7.Fhir.Model.DataElement.DataElementGranularity>)GranularityElement.DeepCopy();
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                 if(QuestionElement != null) dest.QuestionElement = (Hl7.Fhir.Model.FhirString)QuestionElement.DeepCopy();
+                if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
                 if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
@@ -960,7 +1063,7 @@ namespace Hl7.Fhir.Model
                 if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                 if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
                 if(MaxLengthElement != null) dest.MaxLengthElement = (Hl7.Fhir.Model.Integer)MaxLengthElement.DeepCopy();
-                if(Units != null) dest.Units = (Hl7.Fhir.Model.CodeableConcept)Units.DeepCopy();
+                if(Units != null) dest.Units = (Hl7.Fhir.Model.Element)Units.DeepCopy();
                 if(Binding != null) dest.Binding = (Hl7.Fhir.Model.DataElement.DataElementBindingComponent)Binding.DeepCopy();
                 if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent>(Mapping.DeepCopy());
                 return dest;
@@ -988,8 +1091,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(GranularityElement, otherT.GranularityElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(QuestionElement, otherT.QuestionElement)) return false;
+            if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
             if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
@@ -1018,8 +1123,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(GranularityElement, otherT.GranularityElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(QuestionElement, otherT.QuestionElement)) return false;
+            if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
             if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;

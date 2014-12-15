@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -358,9 +358,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Assessor;
         
         /// <summary>
+        /// When the assessment occurred
+        /// </summary>
+        [FhirElement("date", Order=70)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// When the assessment occurred
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// Why/how the assessment was performed
         /// </summary>
-        [FhirElement("description", Order=70)]
+        [FhirElement("description", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -391,7 +423,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to last assessment
         /// </summary>
-        [FhirElement("previous", Order=80)]
+        [FhirElement("previous", Order=90)]
         [References("ClinicalAssessment")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Previous
@@ -404,7 +436,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// General assessment of patient state
         /// </summary>
-        [FhirElement("problem", Order=90)]
+        [FhirElement("problem", Order=100)]
         [References("Condition","AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -418,7 +450,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A specific careplan that prompted this assessment
         /// </summary>
-        [FhirElement("careplan", Order=100)]
+        [FhirElement("careplan", Order=110)]
         [References("CarePlan")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Careplan
@@ -431,7 +463,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A specific referral that lead to this assessment
         /// </summary>
-        [FhirElement("referral", Order=110)]
+        [FhirElement("referral", Order=120)]
         [References("ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referral
@@ -444,7 +476,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// One or more sets of investigations (signs, symptions, etc)
         /// </summary>
-        [FhirElement("investigations", Order=120)]
+        [FhirElement("investigations", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentInvestigationsComponent> Investigations
@@ -457,7 +489,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical Protocol followed
         /// </summary>
-        [FhirElement("protocol", Order=130)]
+        [FhirElement("protocol", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ProtocolElement
         {
@@ -488,7 +520,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Summary of the assessment
         /// </summary>
-        [FhirElement("summary", Order=140)]
+        [FhirElement("summary", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SummaryElement
         {
@@ -519,7 +551,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Possible or likely diagnosis
         /// </summary>
-        [FhirElement("diagnosis", Order=150)]
+        [FhirElement("diagnosis", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent> Diagnosis
@@ -530,9 +562,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent> _Diagnosis;
         
         /// <summary>
-        /// Diagnosies/conditions resolved since assessment
+        /// Diagnosies/conditions resolved since previous assessment
         /// </summary>
-        [FhirElement("resolved", Order=160)]
+        [FhirElement("resolved", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Resolved
@@ -545,7 +577,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Diagnosis considered not possible
         /// </summary>
-        [FhirElement("ruledOut", Order=170)]
+        [FhirElement("ruledOut", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentRuledOutComponent> RuledOut
@@ -558,7 +590,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimate of likely outcome
         /// </summary>
-        [FhirElement("prognosis", Order=180)]
+        [FhirElement("prognosis", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PrognosisElement
         {
@@ -589,7 +621,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plan of action after assessment
         /// </summary>
-        [FhirElement("plan", Order=190)]
+        [FhirElement("plan", Order=200)]
         [References("CarePlan")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Plan
@@ -602,7 +634,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actions taken during assessment
         /// </summary>
-        [FhirElement("action", Order=200)]
+        [FhirElement("action", Order=210)]
         [References("ReferralRequest","ProcedureRequest","Procedure","MedicationPrescription","DiagnosticOrder","NutritionOrder","Supply","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -622,6 +654,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Assessor != null) dest.Assessor = (Hl7.Fhir.Model.ResourceReference)Assessor.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Previous != null) dest.Previous = (Hl7.Fhir.Model.ResourceReference)Previous.DeepCopy();
                 if(Problem != null) dest.Problem = new List<Hl7.Fhir.Model.ResourceReference>(Problem.DeepCopy());
@@ -655,6 +688,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Assessor, otherT.Assessor)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Previous, otherT.Previous)) return false;
             if( !DeepComparable.Matches(Problem, otherT.Problem)) return false;
@@ -681,6 +715,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Assessor, otherT.Assessor)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Previous, otherT.Previous)) return false;
             if( !DeepComparable.IsExactly(Problem, otherT.Problem)) return false;

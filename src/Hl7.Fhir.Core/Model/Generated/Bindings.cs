@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -196,11 +196,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("AppointmentResponse")]
         AppointmentResponse,
         /// <summary>
-        /// The Availability resource
-        /// </summary>
-        [EnumLiteral("Availability")]
-        Availability,
-        /// <summary>
         /// The Basic resource
         /// </summary>
         [EnumLiteral("Basic")]
@@ -215,11 +210,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Bundle")]
         Bundle,
-        /// <summary>
-        /// The CareActivity resource
-        /// </summary>
-        [EnumLiteral("CareActivity")]
-        CareActivity,
         /// <summary>
         /// The CarePlan resource
         /// </summary>
@@ -361,6 +351,11 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("EnrollmentResponse")]
         EnrollmentResponse,
         /// <summary>
+        /// The EpisodeOfCare resource
+        /// </summary>
+        [EnumLiteral("EpisodeOfCare")]
+        EpisodeOfCare,
+        /// <summary>
         /// The ExplanationOfBenefit resource
         /// </summary>
         [EnumLiteral("ExplanationOfBenefit")]
@@ -380,11 +375,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Goal")]
         Goal,
-        /// <summary>
-        /// The GoalRequest resource
-        /// </summary>
-        [EnumLiteral("GoalRequest")]
-        GoalRequest,
         /// <summary>
         /// The Group resource
         /// </summary>
@@ -415,6 +405,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ImmunizationRecommendation")]
         ImmunizationRecommendation,
+        /// <summary>
+        /// The InstitutionalClaim resource
+        /// </summary>
+        [EnumLiteral("InstitutionalClaim")]
+        InstitutionalClaim,
         /// <summary>
         /// The List resource
         /// </summary>
@@ -531,6 +526,16 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("PendedRequest")]
         PendedRequest,
         /// <summary>
+        /// The Person resource
+        /// </summary>
+        [EnumLiteral("Person")]
+        Person,
+        /// <summary>
+        /// The PharmacyClaim resource
+        /// </summary>
+        [EnumLiteral("PharmacyClaim")]
+        PharmacyClaim,
+        /// <summary>
         /// The Practitioner resource
         /// </summary>
         [EnumLiteral("Practitioner")]
@@ -545,6 +550,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ProcedureRequest")]
         ProcedureRequest,
+        /// <summary>
+        /// The ProfessionalClaim resource
+        /// </summary>
+        [EnumLiteral("ProfessionalClaim")]
+        ProfessionalClaim,
         /// <summary>
         /// The Profile resource
         /// </summary>
@@ -590,6 +600,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("RiskAssessment")]
         RiskAssessment,
+        /// <summary>
+        /// The Schedule resource
+        /// </summary>
+        [EnumLiteral("Schedule")]
+        Schedule,
         /// <summary>
         /// The SearchParameter resource
         /// </summary>
@@ -650,6 +665,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("VisionClaim")]
         VisionClaim,
+        /// <summary>
+        /// The VisionPrescription resource
+        /// </summary>
+        [EnumLiteral("VisionPrescription")]
+        VisionPrescription,
     }
     
 }

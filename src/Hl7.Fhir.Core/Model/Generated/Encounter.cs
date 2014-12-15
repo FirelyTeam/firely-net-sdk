@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -98,6 +98,34 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("virtual")]
             Virtual,
+            /// <summary>
+            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
+            /// </summary>
+            [EnumLiteral("other")]
+            Other,
+        }
+        
+        /// <summary>
+        /// The status of the location
+        /// </summary>
+        [FhirEnumeration("EncounterLocationStatus")]
+        public enum EncounterLocationStatus
+        {
+            /// <summary>
+            /// The patient is planned to be moved to this location at some point in the future.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
+            /// <summary>
+            /// The patient is currently at this location, or was between the period specified.
+            /// </summary>
+            [EnumLiteral("present")]
+            Present,
+            /// <summary>
+            /// This location is held empty for this patient.
+            /// </summary>
+            [EnumLiteral("reserved")]
+            Reserved,
         }
         
         /// <summary>
@@ -111,6 +139,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
+            /// <summary>
+            /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
+            /// </summary>
+            [EnumLiteral("arrived")]
+            Arrived,
             /// <summary>
             /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
             /// </summary>
@@ -178,34 +211,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
             
             /// <summary>
-            /// Period during which the patient was admitted
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// Where the patient stays during this encounter
-            /// </summary>
-            [FhirElement("accomodation", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Encounter.EncounterHospitalizationAccomodationComponent> Accomodation
-            {
-                get { if(_Accomodation==null) _Accomodation = new List<Hl7.Fhir.Model.Encounter.EncounterHospitalizationAccomodationComponent>(); return _Accomodation; }
-                set { _Accomodation = value; OnPropertyChanged("Accomodation"); }
-            }
-            private List<Hl7.Fhir.Model.Encounter.EncounterHospitalizationAccomodationComponent> _Accomodation;
-            
-            /// <summary>
             /// Dietary restrictions for the patient
             /// </summary>
-            [FhirElement("diet", InSummary=true, Order=70)]
+            [FhirElement("diet", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Diet
             {
@@ -217,7 +225,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Special courtesies (VIP, board member)
             /// </summary>
-            [FhirElement("specialCourtesy", InSummary=true, Order=80)]
+            [FhirElement("specialCourtesy", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
@@ -230,7 +238,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Wheelchair, translator, stretcher, etc
             /// </summary>
-            [FhirElement("specialArrangement", InSummary=true, Order=90)]
+            [FhirElement("specialArrangement", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
@@ -243,7 +251,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location to which the patient is discharged
             /// </summary>
-            [FhirElement("destination", InSummary=true, Order=100)]
+            [FhirElement("destination", InSummary=true, Order=80)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Destination
@@ -256,7 +264,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Category or kind of location after discharge
             /// </summary>
-            [FhirElement("dischargeDisposition", InSummary=true, Order=110)]
+            [FhirElement("dischargeDisposition", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
             {
@@ -268,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
             /// </summary>
-            [FhirElement("dischargeDiagnosis", InSummary=true, Order=120)]
+            [FhirElement("dischargeDiagnosis", InSummary=true, Order=100)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference DischargeDiagnosis
@@ -281,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this hospitalization a readmission?
             /// </summary>
-            [FhirElement("reAdmission", InSummary=true, Order=130)]
+            [FhirElement("reAdmission", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ReAdmissionElement
             {
@@ -319,8 +327,6 @@ namespace Hl7.Fhir.Model
                     if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
                     if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
                     if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Accomodation != null) dest.Accomodation = new List<Hl7.Fhir.Model.Encounter.EncounterHospitalizationAccomodationComponent>(Accomodation.DeepCopy());
                     if(Diet != null) dest.Diet = (Hl7.Fhir.Model.CodeableConcept)Diet.DeepCopy();
                     if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
                     if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
@@ -348,8 +354,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Accomodation, otherT.Accomodation)) return false;
                 if( !DeepComparable.Matches(Diet, otherT.Diet)) return false;
                 if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
@@ -370,8 +374,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Accomodation, otherT.Accomodation)) return false;
                 if( !DeepComparable.IsExactly(Diet, otherT.Diet)) return false;
                 if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
@@ -386,30 +388,50 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EncounterHospitalizationAccomodationComponent")]
+        [FhirType("EncounterStatusHistoryComponent")]
         [DataContract]
-        public partial class EncounterHospitalizationAccomodationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EncounterStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterHospitalizationAccomodationComponent"; } }
+            public override string TypeName { get { return "EncounterStatusHistoryComponent"; } }
             
             /// <summary>
-            /// The bed that is assigned to the patient
+            /// planned | arrived | in progress | onleave | finished | cancelled
             /// </summary>
-            [FhirElement("bed", InSummary=true, Order=20)]
-            [References("Location")]
+            [FhirElement("status", InSummary=true, Order=20)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Bed
+            public Code<Hl7.Fhir.Model.Encounter.EncounterState> StatusElement
             {
-                get { return _Bed; }
-                set { _Bed = value; OnPropertyChanged("Bed"); }
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
-            private Hl7.Fhir.Model.ResourceReference _Bed;
+            private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
             
             /// <summary>
-            /// Period during which the patient was assigned the bed
+            /// planned | arrived | in progress | onleave | finished | cancelled
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Encounter.EncounterState? Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterState>(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
+            /// The time that the episode was in the specified status
             /// </summary>
             [FhirElement("period", InSummary=true, Order=30)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -420,12 +442,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterHospitalizationAccomodationComponent;
+                var dest = other as EncounterStatusHistoryComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Bed != null) dest.Bed = (Hl7.Fhir.Model.ResourceReference)Bed.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -435,16 +457,16 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterHospitalizationAccomodationComponent());
+                return CopyTo(new EncounterStatusHistoryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterHospitalizationAccomodationComponent;
+                var otherT = other as EncounterStatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Bed, otherT.Bed)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 
                 return true;
@@ -452,11 +474,11 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterHospitalizationAccomodationComponent;
+                var otherT = other as EncounterStatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Bed, otherT.Bed)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
@@ -487,9 +509,40 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Location;
             
             /// <summary>
+            /// planned | present | reserved
+            /// </summary>
+            [FhirElement("status", InSummary=true, Order=30)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
+            {
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            }
+            private Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> _StatusElement;
+            
+            /// <summary>
+            /// planned | present | reserved
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Encounter.EncounterLocationStatus? Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
             /// Time period during which the patient was present at the location
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=30)]
+            [FhirElement("period", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -506,6 +559,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>)StatusElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -525,6 +579,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 
                 return true;
@@ -537,6 +592,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
@@ -566,9 +622,21 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
+            /// Period of time during the encounter participant was present
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=30)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
             /// Persons involved in the encounter other than the patient
             /// </summary>
-            [FhirElement("individual", InSummary=true, Order=30)]
+            [FhirElement("individual", InSummary=true, Order=40)]
             [References("Practitioner","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Individual
@@ -586,6 +654,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopy();
                     return dest;
                 }
@@ -605,6 +674,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 if( !DeepComparable.Matches(Individual, otherT.Individual)) return false;
                 
                 return true;
@@ -617,6 +687,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
                 
                 return true;
@@ -639,7 +710,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | in progress | onleave | finished | cancelled
+        /// planned | arrived | in progress | onleave | finished | cancelled
         /// </summary>
         [FhirElement("status", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
@@ -652,7 +723,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
         
         /// <summary>
-        /// planned | in progress | onleave | finished | cancelled
+        /// planned | arrived | in progress | onleave | finished | cancelled
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -671,9 +742,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// List of Encounter statuses
+        /// </summary>
+        [FhirElement("statusHistory", Order=70)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> StatusHistory
+        {
+            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(); return _StatusHistory; }
+            set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
+        }
+        private List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> _StatusHistory;
+        
+        /// <summary>
         /// inpatient | outpatient | ambulatory | emergency +
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=70)]
+        [FhirElement("class", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Encounter.EncounterClass> ClassElement
@@ -705,7 +789,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific type of encounter
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=80)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -718,20 +802,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The patient present at the encounter
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=90)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// An episode of care that this encounter should be recorded against
+        /// </summary>
+        [FhirElement("episodeOfCare", InSummary=true, Order=110)]
+        [References("EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference EpisodeOfCare
+        {
+            get { return _EpisodeOfCare; }
+            set { _EpisodeOfCare = value; OnPropertyChanged("EpisodeOfCare"); }
+        }
+        private Hl7.Fhir.Model.ResourceReference _EpisodeOfCare;
         
         /// <summary>
         /// List of participants involved in the encounter
         /// </summary>
-        [FhirElement("participant", InSummary=true, Order=100)]
+        [FhirElement("participant", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent> Participant
@@ -744,7 +841,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The appointment that scheduled this encounter
         /// </summary>
-        [FhirElement("fulfills", InSummary=true, Order=110)]
+        [FhirElement("fulfills", InSummary=true, Order=130)]
         [References("Appointment")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Fulfills
@@ -757,7 +854,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The start and end time of the encounter
         /// </summary>
-        [FhirElement("period", Order=120)]
+        [FhirElement("period", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -769,7 +866,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Quantity of time the encounter lasted
         /// </summary>
-        [FhirElement("length", Order=130)]
+        [FhirElement("length", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Duration Length
         {
@@ -781,7 +878,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the encounter takes place (code)
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=140)]
+        [FhirElement("reason", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -793,20 +890,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the encounter takes place (resource)
         /// </summary>
-        [FhirElement("indication", Order=150)]
+        [FhirElement("indication", Order=170)]
         [References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Indication
+        public List<Hl7.Fhir.Model.ResourceReference> Indication
         {
-            get { return _Indication; }
+            get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Indication; }
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
-        private Hl7.Fhir.Model.ResourceReference _Indication;
+        private List<Hl7.Fhir.Model.ResourceReference> _Indication;
         
         /// <summary>
         /// Indicates the urgency of the encounter
         /// </summary>
-        [FhirElement("priority", Order=160)]
+        [FhirElement("priority", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -818,7 +916,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about an admission to a clinic
         /// </summary>
-        [FhirElement("hospitalization", Order=170)]
+        [FhirElement("hospitalization", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent Hospitalization
         {
@@ -830,7 +928,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of locations the patient has been at
         /// </summary>
-        [FhirElement("location", Order=180)]
+        [FhirElement("location", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent> Location
@@ -843,7 +941,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Department or team providing care
         /// </summary>
-        [FhirElement("serviceProvider", Order=190)]
+        [FhirElement("serviceProvider", Order=210)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ServiceProvider
@@ -856,7 +954,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Encounter this encounter is part of
         /// </summary>
-        [FhirElement("partOf", Order=200)]
+        [FhirElement("partOf", Order=220)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -875,15 +973,17 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
+                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(ClassElement != null) dest.ClassElement = (Code<Hl7.Fhir.Model.Encounter.EncounterClass>)ClassElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(EpisodeOfCare != null) dest.EpisodeOfCare = (Hl7.Fhir.Model.ResourceReference)EpisodeOfCare.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(Participant.DeepCopy());
                 if(Fulfills != null) dest.Fulfills = (Hl7.Fhir.Model.ResourceReference)Fulfills.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Indication != null) dest.Indication = (Hl7.Fhir.Model.ResourceReference)Indication.DeepCopy();
+                if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent)Hospitalization.DeepCopy();
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent>(Location.DeepCopy());
@@ -908,9 +1008,11 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.Matches(ClassElement, otherT.ClassElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             if( !DeepComparable.Matches(Fulfills, otherT.Fulfills)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -934,9 +1036,11 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.IsExactly(ClassElement, otherT.ClassElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             if( !DeepComparable.IsExactly(Fulfills, otherT.Fulfills)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;

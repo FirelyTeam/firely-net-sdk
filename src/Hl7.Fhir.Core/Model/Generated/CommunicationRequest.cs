@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,34 +53,21 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "CommunicationRequest"; } }
         
         /// <summary>
-        /// The type of request
-        /// </summary>
-        [FhirEnumeration("CommunicationRequestMode")]
-        public enum CommunicationRequestMode
-        {
-            /// <summary>
-            /// planned.
-            /// </summary>
-            [EnumLiteral("planned")]
-            Planned,
-            /// <summary>
-            /// proposed.
-            /// </summary>
-            [EnumLiteral("proposed")]
-            Proposed,
-            /// <summary>
-            /// ordered.
-            /// </summary>
-            [EnumLiteral("ordered")]
-            Ordered,
-        }
-        
-        /// <summary>
         /// The status of the communication
         /// </summary>
         [FhirEnumeration("CommunicationRequestStatus")]
         public enum CommunicationRequestStatus
         {
+            /// <summary>
+            /// The request has been proposed.
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
+            /// <summary>
+            /// The request has been planned.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
             /// <summary>
             /// The request has been placed.
             /// </summary>
@@ -102,11 +89,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in progress")]
             InProgress,
             /// <summary>
-            /// The work is complete, and the outcomes are being reviewed for approval.
-            /// </summary>
-            [EnumLiteral("review")]
-            Review,
-            /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
             /// </summary>
             [EnumLiteral("completed")]
@@ -122,18 +104,18 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
+            /// The communication was attempted, but due to some procedural error, it could not be completed.
             /// </summary>
             [EnumLiteral("failed")]
             Failed,
         }
         
-        [FhirType("CommunicationRequestMessagePartComponent")]
+        [FhirType("CommunicationRequestPayloadComponent")]
         [DataContract]
-        public partial class CommunicationRequestMessagePartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationRequestPayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CommunicationRequestMessagePartComponent"; } }
+            public override string TypeName { get { return "CommunicationRequestPayloadComponent"; } }
             
             /// <summary>
             /// Message part content
@@ -151,7 +133,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CommunicationRequestMessagePartComponent;
+                var dest = other as CommunicationRequestPayloadComponent;
                 
                 if (dest != null)
                 {
@@ -165,12 +147,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CommunicationRequestMessagePartComponent());
+                return CopyTo(new CommunicationRequestPayloadComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CommunicationRequestMessagePartComponent;
+                var otherT = other as CommunicationRequestPayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -181,7 +163,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CommunicationRequestMessagePartComponent;
+                var otherT = other as CommunicationRequestPayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -248,15 +230,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("messagePart", Order=90)]
+        [FhirElement("payload", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMessagePartComponent> MessagePart
+        public List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> Payload
         {
-            get { if(_MessagePart==null) _MessagePart = new List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMessagePartComponent>(); return _MessagePart; }
-            set { _MessagePart = value; OnPropertyChanged("MessagePart"); }
+            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent>(); return _Payload; }
+            set { _Payload = value; OnPropertyChanged("Payload"); }
         }
-        private List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMessagePartComponent> _MessagePart;
+        private List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> _Payload;
         
         /// <summary>
         /// Communication medium
@@ -285,7 +267,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | failed
         /// </summary>
         [FhirElement("status", Order=120)]
         [DataMember]
@@ -297,7 +279,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus> _StatusElement;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | failed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -316,40 +298,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        [FhirElement("mode", Order=130)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMode> ModeElement
-        {
-            get { return _ModeElement; }
-            set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
-        }
-        private Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMode> _ModeElement;
-        
-        /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMode? Mode
-        {
-            get { return ModeElement != null ? ModeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ModeElement = null; 
-                else
-                  ModeElement = new Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMode>(value);
-                OnPropertyChanged("Mode");
-            }
-        }
-        
-        /// <summary>
         /// Encounter leading to message
         /// </summary>
-        [FhirElement("encounter", Order=140)]
+        [FhirElement("encounter", Order=130)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -362,7 +313,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("scheduledTime", Order=150)]
+        [FhirElement("scheduledTime", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ScheduledTimeElement
         {
@@ -393,20 +344,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("indication", Order=160)]
+        [FhirElement("reason", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Indication
+        public List<Hl7.Fhir.Model.CodeableConcept> Reason
         {
-            get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
-            set { _Indication = value; OnPropertyChanged("Indication"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
-        private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
         /// When ordered or proposed
         /// </summary>
-        [FhirElement("orderedOn", Order=170)]
+        [FhirElement("orderedOn", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -437,9 +388,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", Order=180)]
+        [FhirElement("subject", Order=170)]
         [References("Patient")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -451,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message urgency
         /// </summary>
-        [FhirElement("priority", Order=190)]
+        [FhirElement("priority", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -471,14 +421,13 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-                if(MessagePart != null) dest.MessagePart = new List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMessagePartComponent>(MessagePart.DeepCopy());
+                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent>(Payload.DeepCopy());
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus>)StatusElement.DeepCopy();
-                if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestMode>)ModeElement.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ScheduledTimeElement != null) dest.ScheduledTimeElement = (Hl7.Fhir.Model.FhirDateTime)ScheduledTimeElement.DeepCopy();
-                if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(OrderedOnElement != null) dest.OrderedOnElement = (Hl7.Fhir.Model.FhirDateTime)OrderedOnElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
@@ -503,14 +452,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
             if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.Matches(MessagePart, otherT.MessagePart)) return false;
+            if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
             if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(ScheduledTimeElement, otherT.ScheduledTimeElement)) return false;
-            if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(OrderedOnElement, otherT.OrderedOnElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
@@ -528,14 +476,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
             if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.IsExactly(MessagePart, otherT.MessagePart)) return false;
+            if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
             if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(ScheduledTimeElement, otherT.ScheduledTimeElement)) return false;
-            if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(OrderedOnElement, otherT.OrderedOnElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;

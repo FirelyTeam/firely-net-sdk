@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,12 +85,12 @@ namespace Hl7.Fhir.Model
             Failed,
         }
         
-        [FhirType("CommunicationMessagePartComponent")]
+        [FhirType("CommunicationPayloadComponent")]
         [DataContract]
-        public partial class CommunicationMessagePartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationPayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CommunicationMessagePartComponent"; } }
+            public override string TypeName { get { return "CommunicationPayloadComponent"; } }
             
             /// <summary>
             /// Message part content
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CommunicationMessagePartComponent;
+                var dest = other as CommunicationPayloadComponent;
                 
                 if (dest != null)
                 {
@@ -122,12 +122,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CommunicationMessagePartComponent());
+                return CopyTo(new CommunicationPayloadComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CommunicationMessagePartComponent;
+                var otherT = other as CommunicationPayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CommunicationMessagePartComponent;
+                var otherT = other as CommunicationPayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -205,15 +205,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("messagePart", Order=90)]
+        [FhirElement("payload", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Communication.CommunicationMessagePartComponent> MessagePart
+        public List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> Payload
         {
-            get { if(_MessagePart==null) _MessagePart = new List<Hl7.Fhir.Model.Communication.CommunicationMessagePartComponent>(); return _MessagePart; }
-            set { _MessagePart = value; OnPropertyChanged("MessagePart"); }
+            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent>(); return _Payload; }
+            set { _Payload = value; OnPropertyChanged("Payload"); }
         }
-        private List<Hl7.Fhir.Model.Communication.CommunicationMessagePartComponent> _MessagePart;
+        private List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> _Payload;
         
         /// <summary>
         /// Communication medium
@@ -337,22 +337,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("indication", Order=150)]
+        [FhirElement("reason", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Indication
+        public List<Hl7.Fhir.Model.CodeableConcept> Reason
         {
-            get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
-            set { _Indication = value; OnPropertyChanged("Indication"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
-        private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
         /// Focus of message
         /// </summary>
         [FhirElement("subject", Order=160)]
         [References("Patient")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -372,13 +371,13 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-                if(MessagePart != null) dest.MessagePart = new List<Hl7.Fhir.Model.Communication.CommunicationMessagePartComponent>(MessagePart.DeepCopy());
+                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent>(Payload.DeepCopy());
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Communication.CommunicationStatus>)StatusElement.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(SentElement != null) dest.SentElement = (Hl7.Fhir.Model.FhirDateTime)SentElement.DeepCopy();
                 if(ReceivedElement != null) dest.ReceivedElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedElement.DeepCopy();
-                if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 return dest;
             }
@@ -401,13 +400,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
             if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.Matches(MessagePart, otherT.MessagePart)) return false;
+            if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
             if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(SentElement, otherT.SentElement)) return false;
             if( !DeepComparable.Matches(ReceivedElement, otherT.ReceivedElement)) return false;
-            if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             
             return true;
@@ -423,13 +422,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
             if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.IsExactly(MessagePart, otherT.MessagePart)) return false;
+            if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
             if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(SentElement, otherT.SentElement)) return false;
             if( !DeepComparable.IsExactly(ReceivedElement, otherT.ReceivedElement)) return false;
-            if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             
             return true;

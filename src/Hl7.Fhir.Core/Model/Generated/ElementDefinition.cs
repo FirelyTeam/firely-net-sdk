@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -163,12 +163,12 @@ namespace Hl7.Fhir.Model
             [FhirElement("discriminator", InSummary=true, Order=20)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Id> DiscriminatorElement
+            public List<Hl7.Fhir.Model.FhirString> DiscriminatorElement
             {
-                get { if(_DiscriminatorElement==null) _DiscriminatorElement = new List<Hl7.Fhir.Model.Id>(); return _DiscriminatorElement; }
+                get { if(_DiscriminatorElement==null) _DiscriminatorElement = new List<Hl7.Fhir.Model.FhirString>(); return _DiscriminatorElement; }
                 set { _DiscriminatorElement = value; OnPropertyChanged("DiscriminatorElement"); }
             }
-            private List<Hl7.Fhir.Model.Id> _DiscriminatorElement;
+            private List<Hl7.Fhir.Model.FhirString> _DiscriminatorElement;
             
             /// <summary>
             /// Element values that used to distinguish the slices
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       DiscriminatorElement = null; 
                     else
-                      DiscriminatorElement = new List<Hl7.Fhir.Model.Id>(value.Select(elem=>new Hl7.Fhir.Model.Id(elem)));
+                      DiscriminatorElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Discriminator");
                 }
             }
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DiscriminatorElement != null) dest.DiscriminatorElement = new List<Hl7.Fhir.Model.Id>(DiscriminatorElement.DeepCopy());
+                    if(DiscriminatorElement != null) dest.DiscriminatorElement = new List<Hl7.Fhir.Model.FhirString>(DiscriminatorElement.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(OrderedElement != null) dest.OrderedElement = (Hl7.Fhir.Model.FhirBoolean)OrderedElement.DeepCopy();
                     if(RulesElement != null) dest.RulesElement = (Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>)RulesElement.DeepCopy();

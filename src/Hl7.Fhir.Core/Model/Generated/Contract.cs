@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
-            /// Human readable term text
+            /// Human readable Term text
             /// </summary>
             [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Human readable term text
+            /// Human readable Term text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// When this was issued
+            /// When issued
             /// </summary>
             [FhirElement("issued", InSummary=true, Order=70)]
             [DataMember]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
             
             /// <summary>
-            /// When this was issued
+            /// When issued
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Effective time
+            /// When effective
             /// </summary>
             [FhirElement("applies", InSummary=true, Order=80)]
             [DataMember]
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Contract.ContractSignerComponent> _Signer;
         
         /// <summary>
-        /// Contract provisions
+        /// The terms of the Contract
         /// </summary>
         [FhirElement("term", Order=250)]
         [Cardinality(Min=0,Max=-1)]

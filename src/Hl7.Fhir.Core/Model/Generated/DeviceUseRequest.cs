@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,34 +53,21 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceUseRequest"; } }
         
         /// <summary>
-        /// Codes representing whether the request is planned, proposed, or ordered
-        /// </summary>
-        [FhirEnumeration("DeviceUseRequestMode")]
-        public enum DeviceUseRequestMode
-        {
-            /// <summary>
-            /// planned.
-            /// </summary>
-            [EnumLiteral("planned")]
-            Planned,
-            /// <summary>
-            /// proposed.
-            /// </summary>
-            [EnumLiteral("proposed")]
-            Proposed,
-            /// <summary>
-            /// ordered.
-            /// </summary>
-            [EnumLiteral("ordered")]
-            Ordered,
-        }
-        
-        /// <summary>
         /// Codes representing the status of the request
         /// </summary>
         [FhirEnumeration("DeviceUseRequestStatus")]
         public enum DeviceUseRequestStatus
         {
+            /// <summary>
+            /// The request has been proposed.
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
+            /// <summary>
+            /// The request has been planned.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
             /// <summary>
             /// The request has been placed.
             /// </summary>
@@ -102,11 +89,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in progress")]
             InProgress,
             /// <summary>
-            /// The work is complete, and the outcomes are being reviewed for approval.
-            /// </summary>
-            [EnumLiteral("review")]
-            Review,
-            /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
             /// </summary>
             [EnumLiteral("completed")]
@@ -124,8 +106,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The request was attempted, but due to some procedural error, it could not be completed.
             /// </summary>
-            [EnumLiteral("failed")]
-            Failed,
+            [EnumLiteral("aborted")]
+            Aborted,
         }
         
         /// <summary>
@@ -170,7 +152,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
         [FhirElement("status", Order=60)]
         [DataMember]
@@ -182,7 +164,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus> _StatusElement;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -201,40 +183,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        [FhirElement("mode", Order=70)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestMode> ModeElement
-        {
-            get { return _ModeElement; }
-            set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
-        }
-        private Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestMode> _ModeElement;
-        
-        /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestMode? Mode
-        {
-            get { return ModeElement != null ? ModeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ModeElement = null; 
-                else
-                  ModeElement = new Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestMode>(value);
-                OnPropertyChanged("Mode");
-            }
-        }
-        
-        /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("device", Order=80)]
+        [FhirElement("device", Order=70)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -248,7 +199,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter motivating request
         /// </summary>
-        [FhirElement("encounter", Order=90)]
+        [FhirElement("encounter", Order=80)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -261,7 +212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request identifier
         /// </summary>
-        [FhirElement("identifier", Order=100)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -274,7 +225,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for request
         /// </summary>
-        [FhirElement("indication", Order=110)]
+        [FhirElement("indication", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -287,7 +238,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes or comments
         /// </summary>
-        [FhirElement("notes", Order=120)]
+        [FhirElement("notes", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -319,7 +270,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("prnReason", Order=130)]
+        [FhirElement("prnReason", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PrnReason
@@ -332,7 +283,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered
         /// </summary>
-        [FhirElement("orderedOn", Order=140)]
+        [FhirElement("orderedOn", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -363,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedOn", Order=150)]
+        [FhirElement("recordedOn", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
         {
@@ -394,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of request
         /// </summary>
-        [FhirElement("subject", Order=160)]
+        [FhirElement("subject", Order=150)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -408,7 +359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Schedule for use
         /// </summary>
-        [FhirElement("timing", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=160, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
@@ -421,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=180)]
+        [FhirElement("priority", Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestPriority> PriorityElement
         {
@@ -458,7 +409,6 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus>)StatusElement.DeepCopy();
-                if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestMode>)ModeElement.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
@@ -489,7 +439,6 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -513,7 +462,6 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

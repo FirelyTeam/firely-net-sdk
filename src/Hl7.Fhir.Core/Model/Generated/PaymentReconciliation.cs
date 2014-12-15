@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -441,14 +441,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("date", Order=110)]
+        [FhirElement("created", Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.Date DateElement
+        public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+            get { return _CreatedElement; }
+            set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
-        private Hl7.Fhir.Model.Date _DateElement;
+        private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
         /// Creation date
@@ -456,23 +456,35 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Date
+        public string Created
         {
-            get { return DateElement != null ? DateElement.Value : null; }
+            get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
                 if(value == null)
-                  DateElement = null; 
+                  CreatedElement = null; 
                 else
-                  DateElement = new Hl7.Fhir.Model.Date(value);
-                OnPropertyChanged("Date");
+                  CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Created");
             }
         }
         
         /// <summary>
+        /// Period covered
+        /// </summary>
+        [FhirElement("period", Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("organization", Order=120)]
+        [FhirElement("organization", Order=130)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -485,7 +497,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("requestProvider", Order=130)]
+        [FhirElement("requestProvider", Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
@@ -498,7 +510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", Order=140)]
+        [FhirElement("requestOrganization", Order=150)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
@@ -511,7 +523,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details
         /// </summary>
-        [FhirElement("detail", Order=150)]
+        [FhirElement("detail", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent> Detail
@@ -524,7 +536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=160)]
+        [FhirElement("form", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Form
         {
@@ -536,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Total amount of Payment
         /// </summary>
-        [FhirElement("total", Order=170)]
+        [FhirElement("total", Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Money Total
@@ -545,19 +557,6 @@ namespace Hl7.Fhir.Model
             set { _Total = value; OnPropertyChanged("Total"); }
         }
         private Hl7.Fhir.Model.Money _Total;
-        
-        /// <summary>
-        /// Error code
-        /// </summary>
-        [FhirElement("error", Order=180)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Error
-        {
-            get { if(_Error==null) _Error = new List<Hl7.Fhir.Model.Coding>(); return _Error; }
-            set { _Error = value; OnPropertyChanged("Error"); }
-        }
-        private List<Hl7.Fhir.Model.Coding> _Error;
         
         /// <summary>
         /// Note text
@@ -585,14 +584,14 @@ namespace Hl7.Fhir.Model
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
+                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent>(Detail.DeepCopy());
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.Coding)Form.DeepCopy();
                 if(Total != null) dest.Total = (Hl7.Fhir.Model.Money)Total.DeepCopy();
-                if(Error != null) dest.Error = new List<Hl7.Fhir.Model.Coding>(Error.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(Note.DeepCopy());
                 return dest;
             }
@@ -617,14 +616,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
             if( !DeepComparable.Matches(Total, otherT.Total)) return false;
-            if( !DeepComparable.Matches(Error, otherT.Error)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
@@ -642,14 +641,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
             if( !DeepComparable.IsExactly(Total, otherT.Total)) return false;
-            if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;

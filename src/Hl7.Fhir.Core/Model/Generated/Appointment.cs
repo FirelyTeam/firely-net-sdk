@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,25 +59,35 @@ namespace Hl7.Fhir.Model
         public enum AppointmentStatus
         {
             /// <summary>
-            /// The participant(s) will be unavailable during this appointment.
+            /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
             /// </summary>
-            [EnumLiteral("busy")]
-            Busy,
+            [EnumLiteral("pending")]
+            Pending,
             /// <summary>
-            /// The participant(s) will still be available during this appointment.
+            /// All participant(s) have been considered and the appointment is condirmed to go ahead at the date/times specified.
             /// </summary>
-            [EnumLiteral("free")]
-            Free,
+            [EnumLiteral("booked")]
+            Booked,
             /// <summary>
-            /// This appointment has not been confirmed, and may become available.
+            /// Some of the patients have arrived.
             /// </summary>
-            [EnumLiteral("tentative")]
-            Tentative,
+            [EnumLiteral("arrived")]
+            Arrived,
             /// <summary>
-            /// The participant(s) will not be at the usual location.
+            /// This appointment has completed and may have resulted in an encounter.
             /// </summary>
-            [EnumLiteral("outofoffice")]
-            Outofoffice,
+            [EnumLiteral("fulfilled")]
+            Fulfilled,
+            /// <summary>
+            /// The appointment has been cancelled.
+            /// </summary>
+            [EnumLiteral("cancelled")]
+            Cancelled,
+            /// <summary>
+            /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
+            /// </summary>
+            [EnumLiteral("noshow")]
+            Noshow,
         }
         
         /// <summary>
@@ -335,24 +345,25 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The overall status of the Appointment
+        /// pending | booked | arrived | fulfilled | cancelled | noshow
         /// </summary>
         [FhirElement("status", Order=70)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code StatusElement
+        public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
-        private Hl7.Fhir.Model.Code _StatusElement;
+        private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> _StatusElement;
         
         /// <summary>
-        /// The overall status of the Appointment
+        /// pending | booked | arrived | fulfilled | cancelled | noshow
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Status
+        public Hl7.Fhir.Model.Appointment.AppointmentStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -360,7 +371,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Hl7.Fhir.Model.Code(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -621,7 +632,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.Integer)PriorityElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();

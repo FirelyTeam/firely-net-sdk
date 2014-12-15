@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,6 +59,16 @@ namespace Hl7.Fhir.Model
         public enum GoalStatus
         {
             /// <summary>
+            /// A goal is proposed for this patient.
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
+            /// <summary>
+            /// A goal is planned for this patient.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
+            /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
             /// </summary>
             [EnumLiteral("in progress")]
@@ -78,6 +88,16 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
+            /// <summary>
+            /// A proposed goal was accepted.
+            /// </summary>
+            [EnumLiteral("accepted")]
+            Accepted,
+            /// <summary>
+            /// A proposed goal was rejected.
+            /// </summary>
+            [EnumLiteral("rejected")]
+            Rejected,
         }
         
         /// <summary>
@@ -139,7 +159,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// in progress | achieved | sustaining | cancelled
+        /// proposed | planned | in progress | achieved | sustaining | cancelled | accepted | rejected
         /// </summary>
         [FhirElement("status", Order=80)]
         [DataMember]
@@ -151,7 +171,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Goal.GoalStatus> _StatusElement;
         
         /// <summary>
-        /// in progress | achieved | sustaining | cancelled
+        /// proposed | planned | in progress | achieved | sustaining | cancelled | accepted | rejected
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

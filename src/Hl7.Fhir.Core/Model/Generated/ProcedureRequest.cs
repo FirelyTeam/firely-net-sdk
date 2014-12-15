@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,6 +87,16 @@ namespace Hl7.Fhir.Model
         public enum ProcedureRequestStatus
         {
             /// <summary>
+            /// The request has been proposed.
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
+            /// <summary>
+            /// The request has been planned.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
+            /// <summary>
             /// The request has been placed.
             /// </summary>
             [EnumLiteral("requested")]
@@ -107,11 +117,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in progress")]
             InProgress,
             /// <summary>
-            /// The work is complete, and the outcomes are being reviewed for approval.
-            /// </summary>
-            [EnumLiteral("review")]
-            Review,
-            /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
             /// </summary>
             [EnumLiteral("completed")]
@@ -129,31 +134,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The request was attempted, but due to some procedural error, it could not be completed.
             /// </summary>
-            [EnumLiteral("failed")]
-            Failed,
-        }
-        
-        /// <summary>
-        /// The mode (type) of request
-        /// </summary>
-        [FhirEnumeration("ProcedureRequestMode")]
-        public enum ProcedureRequestMode
-        {
-            /// <summary>
-            /// planned.
-            /// </summary>
-            [EnumLiteral("planned")]
-            Planned,
-            /// <summary>
-            /// proposed.
-            /// </summary>
-            [EnumLiteral("proposed")]
-            Proposed,
-            /// <summary>
-            /// ordered.
-            /// </summary>
-            [EnumLiteral("ordered")]
-            Ordered,
+            [EnumLiteral("aborted")]
+            Aborted,
         }
         
         /// <summary>
@@ -262,7 +244,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
         [FhirElement("status", Order=130)]
         [DataMember]
@@ -274,7 +256,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> _StatusElement;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -293,40 +275,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        [FhirElement("mode", Order=140)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestMode> ModeElement
-        {
-            get { return _ModeElement; }
-            set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
-        }
-        private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestMode> _ModeElement;
-        
-        /// <summary>
-        /// planned | proposed | ordered
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestMode? Mode
-        {
-            get { return ModeElement != null ? ModeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ModeElement = null; 
-                else
-                  ModeElement = new Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestMode>(value);
-                OnPropertyChanged("Mode");
-            }
-        }
-        
-        /// <summary>
         /// Notes
         /// </summary>
-        [FhirElement("notes", Order=150)]
+        [FhirElement("notes", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -358,7 +309,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("asNeeded", Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
@@ -371,7 +322,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When Requested
         /// </summary>
-        [FhirElement("orderedOn", Order=170)]
+        [FhirElement("orderedOn", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -402,7 +353,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Ordering Party
         /// </summary>
-        [FhirElement("orderer", Order=180)]
+        [FhirElement("orderer", Order=170)]
         [References("Practitioner","Patient","RelatedPerson","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -415,7 +366,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=190)]
+        [FhirElement("priority", Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> PriorityElement
         {
@@ -459,7 +410,6 @@ namespace Hl7.Fhir.Model
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus>)StatusElement.DeepCopy();
-                if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestMode>)ModeElement.DeepCopy();
                 if(NotesElement != null) dest.NotesElement = new List<Hl7.Fhir.Model.FhirString>(NotesElement.DeepCopy());
                 if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                 if(OrderedOnElement != null) dest.OrderedOnElement = (Hl7.Fhir.Model.FhirDateTime)OrderedOnElement.DeepCopy();
@@ -491,7 +441,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.Matches(OrderedOnElement, otherT.OrderedOnElement)) return false;
@@ -516,7 +465,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.IsExactly(OrderedOnElement, otherT.OrderedOnElement)) return false;

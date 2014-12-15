@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
-            /// The period during which this person or organisation is valid to be contacted relating to this patient
+            /// The period during which this person or organization is valid to be contacted relating to this patient
             /// </summary>
             [FhirElement("period", InSummary=true, Order=80)]
             [DataMember]
@@ -519,12 +519,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("birthDate", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime BirthDateElement
+        public Hl7.Fhir.Model.Date BirthDateElement
         {
             get { return _BirthDateElement; }
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
-        private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
+        private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
         /// The date and time of birth for the individual
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   BirthDateElement = null; 
                 else
-                  BirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                  BirthDateElement = new Hl7.Fhir.Model.Date(value);
                 OnPropertyChanged("BirthDate");
             }
         }
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.FhirDateTime)BirthDateElement.DeepCopy();
+                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopy();

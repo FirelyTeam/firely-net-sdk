@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 9, 2014 15:49+0100 for FHIR v0.3.0
+// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -172,6 +172,18 @@ namespace Hl7.Fhir.Model
         }
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
+        /// <summary>
+        /// Period of time that this relationship is considered valid
+        /// </summary>
+        [FhirElement("period", Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        private Hl7.Fhir.Model.Period _Period;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RelatedPerson;
@@ -187,6 +199,7 @@ namespace Hl7.Fhir.Model
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 return dest;
             }
             else
@@ -212,6 +225,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             
             return true;
         }
@@ -230,6 +244,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             
             return true;
         }
