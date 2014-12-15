@@ -88,31 +88,31 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        [TestMethod]
-        public void ExtensionManagement()
-        {
-            Patient p = new Patient();
-            var u1 = "http://fhir.org/ext/ext-test";
-            Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
+        //[TestMethod]
+        //public void ExtensionManagement()
+        //{
+        //    Patient p = new Patient();
+        //    var u1 = "http://fhir.org/ext/ext-test";
+        //    Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
-            Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
-            Assert.AreSame(newEx, p.GetExtension(u1));
+        //    Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
+        //    Assert.AreSame(newEx, p.GetExtension(u1));
 
-            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
-            Assert.AreSame(newEx, p.GetExtension(u1));
+        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
+        //    Assert.AreSame(newEx, p.GetExtension(u1));
 
-            p.RemoveExtension(u1);
-            Assert.IsNull(p.GetExtension(u1));
+        //    p.RemoveExtension(u1);
+        //    Assert.IsNull(p.GetExtension(u1));
 
-            p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
-            var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-            Assert.AreEqual(1, ew.Count());
+        //    p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
+        //    var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+        //    Assert.AreEqual(1, ew.Count());
 
-            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
+        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
-            ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-            Assert.AreEqual(2, ew.Count());
-        }
+        //    ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+        //    Assert.AreEqual(2, ew.Count());
+        //}
 
 
         [TestMethod]
@@ -130,23 +130,23 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        [TestMethod]
-        public void FindContainedResource()
-        {
-            var cPat1 = new Patient() { Id = "pat1" };
-            var cPat2 = new Patient() { Id = "pat2" };
-            var pat = new Patient();
+        //[TestMethod]
+        //public void FindContainedResource()
+        //{
+        //    var cPat1 = new Patient() { Id = "pat1" };
+        //    var cPat2 = new Patient() { Id = "pat2" };
+        //    var pat = new Patient();
 
-            pat.Contained = new List<Resource> { cPat1, cPat2 };
+        //    pat.Contained = new List<Resource> { cPat1, cPat2 };
 
-            var rref = new ResourceReference() { Reference = "#pat2" };
+        //    var rref = new ResourceReference() { Reference = "#pat2" };
 
-            Assert.IsNotNull(pat.FindContainedResource(rref));
-            Assert.IsNotNull(pat.FindContainedResource(rref.Url));
+        //    Assert.IsNotNull(pat.FindContainedResource(rref));
+        //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
             
-            rref.Reference = "#pat3";
-            Assert.IsNull(pat.FindContainedResource(rref));
-        }
+        //    rref.Reference = "#pat3";
+        //    Assert.IsNull(pat.FindContainedResource(rref));
+        //}
 
         [TestMethod]
         public void TestListDeepCopy()
@@ -161,28 +161,36 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreNotEqual(x[1], y[1]);
         }
 
+
         [TestMethod]
-        public void TypedResourceEntry()
+        public void TestLazyCreatedLists()
         {
-            var pe = new ResourceEntry<Patient>();
+            var p = new Patient();
+            p.Name.Add(new HumanName());
+        }
 
-            pe.Resource = new Patient();
+        //[TestMethod]
+        //public void TypedResourceEntry()
+        //{
+        //    var pe = new ResourceEntry<Patient>();
 
-            ResourceEntry e = pe;
+        //    pe.Resource = new Patient();
 
-            Assert.AreEqual(pe.Resource, e.Resource);
+        //    ResourceEntry e = pe;
 
-            e.Resource = new CarePlan();
+        //    Assert.AreEqual(pe.Resource, e.Resource);
 
-            try
-            {
-                var c = pe.Resource;
-                Assert.Fail("Should have bombed");
-            }
-            catch (InvalidCastException)
-            {
-                // pass
-            }
-        }    
+        //    e.Resource = new CarePlan();
+
+        //    try
+        //    {
+        //        var c = pe.Resource;
+        //        Assert.Fail("Should have bombed");
+        //    }
+        //    catch (InvalidCastException)
+        //    {
+        //        // pass
+        //    }
+        //}    
     }
 }

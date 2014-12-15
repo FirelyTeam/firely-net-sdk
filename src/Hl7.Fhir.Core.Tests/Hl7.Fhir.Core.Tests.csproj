@@ -74,6 +74,7 @@
     <Compile Include="Model\DeepCompareTest.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\DeepMatchTest.cs" />
+    <Compile Include="Model\ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonAssert.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />

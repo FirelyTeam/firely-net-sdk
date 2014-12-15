@@ -24,7 +24,7 @@
             "use": "usual"
         }
     ],
-    "http://hl7.org/fhir/example-do-not-use#Patient.avatar": [{"valueResource": {
+    "http://hl7.org/fhir/example-do-not-use#Patient.avatar": [{"valueReference": {
         "reference": "#pic1",
         "display": "Duck image"
     }}],
