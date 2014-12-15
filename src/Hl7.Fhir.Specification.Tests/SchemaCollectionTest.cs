@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSchemaCollectionValidation()
         {
             var s = File.ReadAllText(@"TestData\example-lipid-profile-testmessage.xml");
-            var doc = XDocument.Parse(s);
+            var doc = FhirParser.XDocumentFromXml(s);
 
             bool hasError = false;
 

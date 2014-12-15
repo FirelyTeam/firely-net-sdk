@@ -36,6 +36,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using Hl7.Fhir.Serialization;
 
 
 namespace Hl7.Fhir.Model
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Model
                 // for the XDocument validation, would need to scan for
                 // another implementation to cover this
 #if !PORTABLE45
-                var doc = XDocument.Parse(value as string);
+                var doc = FhirParser.XDocumentFromXml(value as string);
                 doc.Validate(_xhtmlSchemaSet.Value, validationEventHandler: null);
 #endif
 

@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
 {
     internal class ComplexTypeWriter
     {
-        private IFhirWriter _current;
+        private IFhirWriter _writer;
         private ModelInspector _inspector;
  
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
 
         public ComplexTypeWriter(IFhirWriter writer)
         {
-            _current = writer;
+            _writer = writer;
             _inspector = SerializationConfig.Inspector;
         }
 
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
-            _current.WriteStartComplexContent();
+            _writer.WriteStartComplexContent();
 
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
                 if (!summary || prop.InSummary) write(mapping, instance, summary, prop, mode);
 
-            _current.WriteEndComplexContent();
+            _writer.WriteEndComplexContent();
         }
 
         private void write(ClassMapping mapping, object instance, bool summary, PropertyMapping prop, SerializationMode mode)
@@ -79,24 +79,24 @@ namespace Hl7.Fhir.Serialization
                 if (prop.Choice == ChoiceType.DatatypeChoice)
                     memberName = determineElementMemberName(prop.Name, value.GetType());
 
-                _current.WriteStartProperty(memberName);
+                _writer.WriteStartProperty(memberName);
                
-                var writer = new DispatchingWriter(_current);
+                var writer = new DispatchingWriter(_writer);
 
                 // Now, if our writer does not use dual properties for primitive values + rest (xml),
                 // or this is a complex property without value element, serialize data normally
-                if(!_current.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
+                if(!_writer.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
                     writer.Serialize(prop, value, summary, SerializationMode.AllMembers);
                 else
                 {
                     // else split up between two properties, name and _name
                     writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
-                    _current.WriteEndProperty();
-                    _current.WriteStartProperty("_" + memberName);
+                    _writer.WriteEndProperty();
+                    _writer.WriteStartProperty("_" + memberName);
                     writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
                 }
 
-                _current.WriteEndProperty();
+                _writer.WriteEndProperty();
             }
         }
 
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization
             var mapping = _inspector.ImportType(type);
 
             var suffix = mapping.Name;
-            if (suffix == "ResourceReference") suffix = "Resource";
+//            if (suffix == "Reference") suffix = "Resource";
 
             return memberName + upperCamel(suffix);
         }

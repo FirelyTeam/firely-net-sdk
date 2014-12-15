@@ -91,13 +91,15 @@ namespace Hl7.Fhir.Serialization
                 xw.WriteString(valueAsString);
             else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
             {
-                XElement xe = XElement.Parse(valueAsString);
+                var sanitized = FhirParser.SanitizeXml(valueAsString);
+                XElement xe = XElement.Parse(sanitized);
                 xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
                     
                 // Write xhtml directly into the output stream,
                 // the xhtml <div> becomes part of the elements
                 // of the type, just like the other FHIR elements
-                xw.WriteRaw(xe.ToString());
+                var ready = xe.ToString();
+                xw.WriteRaw(ready);
             }
             else
                 throw new ArgumentException("Unsupported xmlFormatHint " + xmlFormatHint);

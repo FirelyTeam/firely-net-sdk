@@ -22,6 +22,7 @@ namespace Hl7.Fhir.Serialization
     {
         private JsonWriter jw;
         private JToken _current = null;
+        private JToken _root = null;
  
         public JsonDomFhirWriter(JsonWriter jwriter)
         {
@@ -32,17 +33,109 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        private string _rootType;
-        
+
+        private JObject _createdRootObject;
+
         public void WriteStartRootObject(string name, bool contained)
         {
-            _rootType = name;
+            _createdRootObject = new JObject(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, name));
+
+            if (!contained)
+                _root = _createdRootObject;                    
         }
 
 
         public void WriteEndRootObject(bool contained)
         {
+            if (!contained)
+            {
+                rewriteExtensionProperties(_root);
+
+                if (jw != null) _root.WriteTo(jw);
+            }
         }
+
+
+        private void rewriteExtensionProperties(JToken current)
+        {
+            if (current is JObject)
+                rewriteExtensionProperties((JObject)current);
+            else if (current is JArray)
+                rewriteExtensionProperties((JArray)current);
+        }
+
+
+        private bool isExtensionProperty(string name)
+        {
+            return name == "extension" || name == "modifierExtension";
+        }
+
+        private void rewriteExtensionProperties(JObject current)
+        {
+            foreach (var property in current.Properties().ToList())  // Properties() is modified, so do a ToList()
+            {
+                if (property.Name == "extension")
+                {
+                    var dstu1Extensions = (JArray)property.Value;
+                    var convertedExtensions = convertExtensionArray(dstu1Extensions);
+
+                    foreach (var extension in convertedExtensions) current.Add(extension);
+                    property.Remove();
+                }
+                else if (property.Name == "modifierExtension")
+                {
+                    var dstu1Extensions = (JArray)property.Value;
+                    var convertedExtensions = convertExtensionArray(dstu1Extensions);
+
+                    var modifierObject = new JObject();
+                    var modifierProp = new JProperty("modifier", modifierObject);
+                    foreach (var extension in convertedExtensions) modifierObject.Add(extension);
+                    property.Remove();
+
+                    current.Add(modifierProp);
+                }
+                else
+                {
+                    // not an extension property, so this is an actual element.
+                    rewriteExtensionProperties(property.Value);
+                }
+            }
+        }
+
+        private List<JProperty> convertExtensionArray(JArray dstu1Extensions)
+        {
+            var result = new List<JProperty>();
+
+            // DSTU2 extensions are grouped by url, so sort them together
+            var urlGroups = dstu1Extensions.GroupBy(token => ((JObject)token)["url"].Value<string>());
+
+            foreach (var urlGroup in urlGroups.ToList())
+            {
+                var dstu2extensions = new JArray();
+                var dstu2extensionProperty = new JProperty(urlGroup.Key, dstu2extensions);
+
+                foreach (var dstu1extension in urlGroup)
+                {
+                    dstu1Extensions.Remove(dstu1extension);
+                    dstu2extensions.Add(dstu1extension);
+                    ((JObject)dstu1extension).Remove("url");
+                }
+
+                result.Add(dstu2extensionProperty);
+                rewriteExtensionProperties(dstu2extensionProperty.Value);
+            }
+
+            return result;
+        }
+
+
+        private void rewriteExtensionProperties(JArray current)
+        {
+            foreach (var element in current.Children())
+                rewriteExtensionProperties(element);
+        }
+
+
 
         public void WriteStartProperty(string name)
         {
@@ -63,32 +156,19 @@ namespace Hl7.Fhir.Serialization
             _current = parent;
         }
 
-
-        internal JObject Result;
-
         public void WriteStartComplexContent()
         {
-            if (_current == null)
-                _current = new JObject();
-            else
-            {
-                JObject obj = new JObject();
+            // If this call was preceded by a call to WriteStartRootObject (when creating a resource or contained/nested resource)
+            // use the special root JObject that was just created by that call instead of creating a new one.
+            JObject newScope = _createdRootObject ?? new JObject();
+            _createdRootObject = null;
 
-                if (_current is JProperty)
-                    ((JProperty)_current).Value = obj;
-                else if (_current is JArray)
-                    ((JArray)_current).Add(obj);
-
-                _current = obj;
-            }
-
-            // When this is the first complex scope when writing a resource,
-            // emit a type member
-            if(_rootType != null)
-            {
-                ((JObject)_current).Add(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, _rootType));
-                _rootType = null;
-            }
+            if (_current is JProperty)
+                ((JProperty)_current).Value = newScope;
+            else if (_current is JArray)
+                ((JArray)_current).Add(newScope);
+            
+            _current = newScope;
         }
 
         public void WriteEndComplexContent()
@@ -107,11 +187,6 @@ namespace Hl7.Fhir.Serialization
                     obj.Replace(null);
                 else if (parent is JProperty)
                     ((JProperty)parent).Value = null;
-            }
-            if (parent == null)
-            {
-                Result = (JObject)_current;
-                if(jw != null) _current.WriteTo(jw);
             }
 
             _current = parent;

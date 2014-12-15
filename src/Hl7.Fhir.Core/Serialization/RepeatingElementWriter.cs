@@ -22,12 +22,12 @@ namespace Hl7.Fhir.Serialization
 {
     internal class RepeatingElementWriter
     {
-        private IFhirWriter _current;
+        private IFhirWriter _writer;
         private ModelInspector _inspector;
 
         public RepeatingElementWriter(IFhirWriter writer)
         {
-            _current = writer;
+            _writer = writer;
             _inspector = SerializationConfig.Inspector;
         }
 
@@ -38,15 +38,15 @@ namespace Hl7.Fhir.Serialization
             var elements = instance as IList;                       
             if(elements == null) throw Error.Argument("existing", "Can only write repeating elements from a type implementing IList");
 
-            _current.WriteStartArray();
+            _writer.WriteStartArray();
 
             foreach(var element in elements)
             {
-                var writer = new DispatchingWriter(_current);
+                var writer = new DispatchingWriter(_writer);
                 writer.Serialize(prop, element, summary, mode);
             }
 
-            _current.WriteEndArray();
+            _writer.WriteEndArray();
         }
     }
 }

@@ -20,12 +20,12 @@ namespace Hl7.Fhir.Serialization
 {
     internal class DispatchingWriter
     {
-        private readonly IFhirWriter _current;
+        private readonly IFhirWriter _writer;
         private readonly ModelInspector _inspector;
 
         public DispatchingWriter(IFhirWriter data)
         {
-            _current = data;
+            _writer = data;
             _inspector = SerializationConfig.Inspector;
         }
 
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization
                 var elements = instance as IList;
                 if (elements == null) throw Error.Argument("existing", "Can only write repeating elements from a type implementing IList");
 
-                _current.WriteStartArray();
+                _writer.WriteStartArray();
 
                 foreach (var element in elements)
                 {
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Serialization
                     write(prop, element, summary, mode);
                 }
 
-                _current.WriteEndArray();
+                _writer.WriteEndArray();
             }
             else
                 write(prop, instance, summary, mode);
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
             // just serialize the primitive to the writer
             if (prop.IsPrimitive)
             {
-                var writer = new PrimitiveValueWriter(_current);
+                var writer = new PrimitiveValueWriter(_writer);
                 writer.Serialize(instance, prop.SerializationHint);
                 return;
             }
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if (prop.Choice == ChoiceType.ResourceChoice)
             {
-                var writer = new ResourceWriter(_current);
+                var writer = new ResourceWriter(_writer);
                 writer.Serialize(instance, summary, contained: true);
                 return;
             }
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization
 
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
-                var cplxWriter = new ComplexTypeWriter(_current);
+                var cplxWriter = new ComplexTypeWriter(_writer);
                 cplxWriter.Serialize(mapping, instance, summary, mode);
             }
             else

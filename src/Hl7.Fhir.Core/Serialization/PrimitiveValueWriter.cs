@@ -23,12 +23,12 @@ namespace Hl7.Fhir.Serialization
 {
     internal class PrimitiveValueWriter
     {
-        private IFhirWriter _current;
+        private IFhirWriter _writer;
         private ModelInspector _inspector;
 
         public PrimitiveValueWriter(IFhirWriter data)
         {
-            _current = data;
+            _writer = data;
             _inspector = SerializationConfig.Inspector;
         }
 
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 }
             }
 
-            _current.WritePrimitiveContents(value, hint);
+            _writer.WritePrimitiveContents(value, hint);
         }
     }
 

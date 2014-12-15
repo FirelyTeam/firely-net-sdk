@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -24,8 +25,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         public static void AreSame(string expected, string actual)
         {
-            XDocument exp = XDocument.Parse(expected);
-            XDocument act = XDocument.Parse(actual);
+            XDocument exp = FhirParser.XDocumentFromXml(expected);
+            XDocument act = FhirParser.XDocumentFromXml(actual);
 
             AreSame(exp, act);
         }
