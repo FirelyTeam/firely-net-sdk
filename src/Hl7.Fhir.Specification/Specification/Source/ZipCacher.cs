@@ -52,6 +52,12 @@ namespace Hl7.Fhir.Specification.Source
             return dir.GetFiles().Select(fi => fi.FullName);
         }
 
+        public string GetContentDirectory()
+        {
+            if (!IsActual()) Refresh();
+
+            return getCachedZipDirectory().FullName;
+        }
 
         /// <summary>
         /// Returns true if the ZipCacher has an up-to-date cache for the zip file it manages

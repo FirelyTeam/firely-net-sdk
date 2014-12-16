@@ -17,17 +17,22 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
-        public void Prepare()
-        {
-            return;     // Nothing to prepare
-        }
-
         public System.IO.Stream ReadContentArtifact(string name)
         {
             throw new NotImplementedException();        // support only url-based artifacts
         }
 
-        public Hl7.Fhir.Model.Resource ReadConformanceResource(Uri artifactId)
+        public IEnumerable<string> ListArtifactNames()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier)
         {
             throw new NotImplementedException();
 

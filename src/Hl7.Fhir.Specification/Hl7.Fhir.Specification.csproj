@@ -73,7 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
-    <Compile Include="Specification\Source\XmlFeedScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

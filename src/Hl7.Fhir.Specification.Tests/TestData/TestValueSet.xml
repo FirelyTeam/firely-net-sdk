@@ -1,0 +1,93 @@
+﻿  <ValueSet xmlns="http://hl7.org/fhir">
+    <id value="101"/>
+    <meta>
+      <lastUpdated value="2014-12-15T13:18:51.104+01:00"/>
+    </meta>
+    <text>
+      <status value="generated"/>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+
+        <p>
+          Value set &quot;LOINC Codes for Cholesterol&quot;: This is an example value set that includes
+          all the LOINC codes for serum cholesterol from v2.36.
+          Developed by: FHIR project team (example)
+        </p>
+
+        <p>Published for testing on 13-June 2012</p>
+
+        <p>
+          This is a restriction on
+
+          <a href="http://test.fhir.org/open/ValueSet/03acace4-5206-4c8f-a8b4-df27a4c18b09?format=text/html">
+            the value set &quot;all serum test codes&quot;
+          </a>, and contains the following LOINC codes:
+        </p>
+
+        <ul>
+
+          <li>14647-2</li>
+
+          <li>2093-3</li>
+
+          <li>35200-5</li>
+
+          <li>9342-7</li>
+
+        </ul>
+
+      </div>
+    </text>
+    <!--   this example, we elected to use a UUID. We could have used 
+     an OID, or a URI - depends on how it will be used.   -->
+    <identifier value="urn:uuid:256a5231-a2bb-49bd-9fea-f349d428b70d"/>
+    <!--   for version, we are going to simply use the day of publication. This is also 
+    arbitrary - whatever is here is what people use to refer to the version. 
+    Could also be a UUID too   -->
+    <version value="20120613"/>
+    <!--   set of loinc codes for cholesterol for LONC 2.36   -->
+    <name value="LOINC Codes for Cholesterol"/>
+    <publisher value="FHIR project team (example)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="http://hl7.org/fhir"/>
+    </telecom>
+    <description value="This is an example value set that includes        all the LOINC codes for serum cholesterol from v2.36"/>
+    <copyright value="This content from LOINC® is copyright © 1995 Regenstrief Institute, Inc. and the LOINC Committee, and available at no cost under the license at http://loinc.org/terms-of-use"/>
+    <status value="draft"/>
+    <experimental value="true"/>
+    <date value="2012-06-13"/>
+    <compose>
+      <!--   we claim that this value set is a constraint on this other value set 
+    this actual URL is a reference to a fictitious value set definition on a 
+    fictitious FHIR value set registry. We claim here, simply for illustrative 
+    purposes, that the value set referred to here is all LOINC codes for serum
+    tests, and that this value set is therefor a constraint on that one 
+
+     Currently this is not included in the resource pending further investigation
+    <restricts value="http://test.fhir.org/open/ValueSet/03acace4-5206-4c8f-a8b4-df27a4c18b09"/>   -->
+      <!--   given that this value set is small, it doesn't make 
+   sense to import another one - what would it say? But if that made sense, 
+   we'd do it like this: 
+  <import>http://test.fhir.org/open/ValueSet/f0f65621-ae8c-4c57-9f96-5326c2acefe3</import>   -->
+      <!--   you could have multiple includes, if you wanted to include codes from more than
+     one code system, or include codes with different modes. we don't, in this case   -->
+      <include>
+        <system value="http://loinc.org"/>
+        <version value="2.36"/>
+        <!--   for LOINC, we simply include the listed codes - no subsumption in LOINC   -->
+        <!--   these were selected by hand   -->
+        <concept>
+          <code value="14647-2"/>
+        </concept>
+        <concept>
+          <code value="2093-3"/>
+        </concept>
+        <concept>
+          <code value="35200-5"/>
+        </concept>
+        <concept>
+          <code value="9342-7"/>
+        </concept>
+      </include>
+    </compose>
+  </ValueSet>

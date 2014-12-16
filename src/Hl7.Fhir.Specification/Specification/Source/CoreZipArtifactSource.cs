@@ -20,111 +20,81 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
+#if !PORTABLE45
+
     /// <summary>
-    /// Reads FHIR artifacts (Profiles, ValueSets, ...) from (zipped) Bundles and individual files
+    /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip
     /// </summary>
     public class CoreZipArtifactSource : IArtifactSource
     {
-        public const string CORE_SPEC_EXTENSIONDEFN_URI_PREFIX = "http://hl7.org/fhir/ExtensionDefinition/";
-        public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/Profile/";
-        public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/Conformance/";
-        public const string CORE_SPEC_OPERATIONDEFN_URI_PREFIX = "http://hl7.org/fhir/OperationDefinition/";
-        public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
-        public const string CORE_SPEC_V2_VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
-        public const string CORE_SPEC_V3_VS_URI_PREFIX = "http://hl7.org/fhir/v3/vs/";
-        public const string CORE_SPEC_NAMESPACE_URI_PREFIX = "http://hl7.org/fhir/ns/";      //TODO: check prefix
-        public const string CORE_SPEC_CONCEPTMAP_URI_PREFIX = "http://hl7.org/fhir/conceptmap/";     //TODO: check prefix
-
         private const string CACHE_KEY = "FhirArtifactCache";
 
         private readonly string _contentDirectory;
-        private bool _isPrepared = false;
+        
+        private bool _prepared = false;
 
-        public CoreZipArtifactSource(string contentDirectory)
+        public CoreZipArtifactSource(string contentDirectory = null)
         {
             _contentDirectory = contentDirectory;
+
+            if(_contentDirectory == null)
+            {
+                var modelDir = FileArtifactSource.SpecificationDirectory;
+
+                // Add the current directory to the list of directories with artifact content, unless there's
+                // a special subdirectory available
+                if (Directory.Exists(modelDir))
+                    _contentDirectory = modelDir;
+                else
+                    _contentDirectory = Directory.GetCurrentDirectory();
+            }
         }
 
-        public CoreZipArtifactSource()
-        {
-#if !PORTABLE45
-            var modelDir = FileArtifactSource.SpecificationDirectory;
 
-            // Add the current directory to the list of directories with artifact content, unless there's
-            // a special subdirectory available
-            if (Directory.Exists(modelDir))
-                _contentDirectory = modelDir;
-            else
-                _contentDirectory = Directory.GetCurrentDirectory();
-#else
-            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
-#endif
-        }
+        private FileArtifactSource _resourceSource;
+        private FileArtifactSource _filesSource;
 
         /// <summary>
         /// Unpacks zip-files containing the artifact files, and enumerates all (zipped/nonzipped) files.
         /// </summary>
         /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
         /// file system and is not thread-safe.</remarks>
-        public void Prepare()
+        private void prepare()
         {
-#if !PORTABLE45
-            _artifactFiles = new List<string>();
-
-            //var zips = Directory.GetFiles(_contentDirectory, "*.zip");
-
-            //// Get the files in each *.zip files present in the content directory
-            //// The ZipCacher will avoid re-extracting these files.
-            //foreach (string zipPath in zips)
-            //{
-            //    ZipCacher zc = new ZipCacher(zipPath, CACHE_KEY);
-            //    _artifactFiles.AddRange(zc.GetContents());
-            //}
+            if (_prepared) return;
 
             var zipPath = Path.Combine(_contentDirectory, "validation.zip");
-
             if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation.zip");
            
             var zc = new ZipCacher(zipPath, CACHE_KEY);
-            _artifactFiles.AddRange(zc.GetContents());
-            
-            _isPrepared = true;
 
-#else
-            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
-#endif
+            _resourceSource = new FileArtifactSource(zc.GetContentDirectory(), includeSubdirectories: false);
+            _resourceSource.Mask = "*.xml";
 
+            _filesSource = new FileArtifactSource(zc.GetContentDirectory(), includeSubdirectories: false);
+
+            _prepared = true;
         }
 
-
-        private List<string> _artifactFiles;
-
-        public IEnumerable<string> ArtifactFiles 
+        public IEnumerable<string> ListArtifactNames()
         {
-            get
-            {
-                ensurePrepared();
-                return _artifactFiles.Select(path => Path.GetFileName(path));
-            }
+            prepare();
+            return _filesSource.ListArtifactNames();
         }
 
         public Stream ReadContentArtifact(string name)
         {
-#if !PORTABLE45
             if (name == null) throw Error.ArgumentNull("name");
+            prepare();
 
-            ensurePrepared();
+            return _filesSource.ReadContentArtifact(name);
+        }
 
-            var searchString = (Path.DirectorySeparatorChar + name).ToLower();
 
-            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
-            var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
-
-            return fullFileName == null ? null : File.OpenRead(fullFileName);
-#else
-            throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
-#endif
-
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        {
+            prepare();
+            return _resourceSource.ListConformanceResourceIdentifiers();
         }
 
 
@@ -134,89 +104,14 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="artifactId"></param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located</returns>
-        public Resource ReadConformanceResource(Uri artifactId)
+        public Resource ReadConformanceResource(string identifier)
         {
-            if (artifactId == null) throw Error.ArgumentNull("artifactId");
+            if (identifier == null) throw Error.ArgumentNull("identifier");
+            prepare();
 
-            ensurePrepared();
-
-            string artifactXml;
-
-            // Core artifacts come from specific bundles files in the validation.zip
-            // We're assuming the validation.zip contains xml files
-            artifactXml = loadCoreArtifactXml(artifactId.ToString());
-
-            if (artifactXml != null)
-                return (new FhirParser()).ParseResourceFromXml(artifactXml);
-            else
-                return null;
-        }
-        
-
-        ///// <summary>
-        ///// Given the Url for an artifact (e.g. http://hl7.org/fhir/Profile/AdverseReaction), determines whether this is
-        ///// a core artifact that is pre-packaged in core files from the validation.zip
-        ///// </summary>
-        ///// <param name="artifactId">The location on the hl7.org repository of the core artifact</param>
-        ///// <returns></returns>
-        //public static bool IsCoreArtifact(Uri artifactId)
-        //{
-        //    if(artifactId == null) throw Error.ArgumentNull("artifactId");
-
-        //    //var normalized = artifactId.ToString().ToLower();
-
-        //    //return normalized.StartsWith(CORE_SPEC_URI_PREFIX);
-        //    return artifactId.ToString().StartsWith(CORE_SPEC_URI_PREFIX);
-        //}
-
-
-        private string loadCoreArtifactXml(string artifactId)
-        {
-           // var normalized = artifactId.ToString().ToLower();
-            var normalized = artifactId.ToString();     // do case-sensitive search
-
-            // Depending on the actual artifact uri, determine in which supplied bundled
-            // file these artifacts should be found
-            if (normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
-            else if(normalized.StartsWith(CORE_SPEC_EXTENSIONDEFN_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "extension-definition.xml");
-            else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX) ||
-                            normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "profiles-resources.xml");
-            else if (normalized.StartsWith(CORE_SPEC_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "valuesets.xml");
-            else if (normalized.StartsWith(CORE_SPEC_V2_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "v2-tables.xml");
-            else if (normalized.StartsWith(CORE_SPEC_V3_VS_URI_PREFIX))
-                return readXmlEntryFromCoreBundle(artifactId, "v3-codesystems.xml");
-            else
-                return readXmlEntryFromCoreBundle(artifactId, "valuesets.xml"); 
-        }
-
-        private string readXmlEntryFromCoreBundle(string artifactId, params string[] fileNames)
-        {
-            foreach (var filename in fileNames)
-            {
-                // Note: no exception handling. If the expected bundled file cannot be
-                // read, throw the original exception.
-                using (var content = ReadContentArtifact(filename))
-                {
-                    if (content == null) throw new FileNotFoundException("Cannot find bundled core file " + filename);
-
-                    var scanner = new XmlFeedScanner(content);
-                    var entry = scanner.FindConformanceResourceById(artifactId);
-
-                    return entry != null ? entry.ToString() : null;
-                }
-            }
-
-            return null;
-        }
-            
-        private void ensurePrepared()
-        {
-            if (!_isPrepared) Prepare();
-        }     
+            return _resourceSource.ReadConformanceResource(identifier);
+        }                
     }
+
+#endif
 }

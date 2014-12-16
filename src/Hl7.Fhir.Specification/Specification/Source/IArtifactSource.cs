@@ -14,12 +14,10 @@ namespace Hl7.Fhir.Specification.Source
 {
     public interface IArtifactSource
     {
-        void Prepare();
-
         Stream ReadContentArtifact(string name);
-        //IEnumerable<string> ListArtifactNames();
+        IEnumerable<string> ListArtifactNames();
 
-        Hl7.Fhir.Model.Resource ReadConformanceResource(Uri artifactId);
-        //IEnumerable<Uri> ListConformanceResources();
+        Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier);
+        IEnumerable<string> ListConformanceResourceIdentifiers();
     }
 }
