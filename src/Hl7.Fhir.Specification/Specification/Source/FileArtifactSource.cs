@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Rest;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 
 namespace Hl7.Fhir.Specification.Source
 {
+#if !PORTABLE45
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from individual files
     /// </summary>
@@ -54,20 +54,13 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
-#if !PORTABLE45
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-                //if (!codebase.StartsWith("file:///")) return Directory.GetCurrentDirectory();
-                //codebase = codebase.Substring("file:///".Length);
                 return codebase;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
             }
         }
 
         public FileArtifactSource(bool includeSubdirectories = false)
         {
-#if !PORTABLE45
             // Add the current directory to the list of directories with artifact content, unless there's
             // a special specification subdirectory available (next to the current DLL)
             if (Directory.Exists(SpecificationDirectory))
@@ -76,9 +69,6 @@ namespace Hl7.Fhir.Specification.Source
                 _contentDirectory = Directory.GetCurrentDirectory();
 
             _includeSubs = includeSubdirectories;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
         }
 
         /// <summary>
@@ -86,7 +76,6 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public void Prepare()
         {
-#if !PORTABLE45
             _artifactFiles = new List<string>();
 
             IEnumerable<string> masks;
@@ -107,24 +96,16 @@ namespace Hl7.Fhir.Specification.Source
             
             _artifactFiles.AddRange(files);
             _isPrepared = true;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
-
         }
 
-        public IEnumerable<string> ArtifactFiles 
+        public IEnumerable<string> ListArtifactNames()
         {
-            get
-            {
-                ensurePrepared();
-                return _artifactFiles.Select(path => Path.GetFileName(path));
-            }
+            ensurePrepared();
+            return _artifactFiles.Select(path => Path.GetFileName(path));
         }
 
         public Stream ReadContentArtifact(string name)
         {
-#if !PORTABLE45
             if (name == null) throw Error.ArgumentNull("name");
 
             ensurePrepared();
@@ -133,9 +114,6 @@ namespace Hl7.Fhir.Specification.Source
             var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
         }
 
         /// <summary>
@@ -145,7 +123,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="artifactId"></param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located. If both an
         /// xml and a json version is available, the xml version is returned</returns>
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(Uri artifactId)
         {
             if (artifactId == null) throw Error.ArgumentNull("artifactId");
 
@@ -162,18 +140,17 @@ namespace Hl7.Fhir.Specification.Source
             using (var contentXml = ReadContentArtifact(xmlFilename))
             {
                 if (contentXml != null)
-                    return FhirParser.ParseResource(XmlReader.Create(contentXml));
+                    return (new FhirParser()).ParseResource(XmlReader.Create(contentXml));
             }
             
             var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
             using (var contentJson = ReadContentArtifact(jsonFilename))
             {
                 if (contentJson != null)
-                    return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
+                    return (new FhirParser()).ParseResource(new JsonTextReader(new StreamReader(contentJson)));
             }
 
-            return null;
-            
+            return null;            
         }
         
         private void ensurePrepared()
@@ -181,4 +158,6 @@ namespace Hl7.Fhir.Specification.Source
             if (!_isPrepared) Prepare();
         }     
     }
+
+#endif
 }

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -24,8 +25,6 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     internal class XmlFeedScanner
     {
-        public static readonly XName ENTRY_ID = XmlNs.XATOM + "id";        
-
         private Stream _input;
 
         public XmlFeedScanner(Stream stream)
@@ -38,47 +37,36 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="entryUri"></param>
         /// <returns></returns>
-        public XElement FindEntryById(Uri entryUri)
+        public XElement FindConformanceResourceById(string identifier)
         {
-            if(entryUri == null) throw Error.ArgumentNull("entryUri");
+            if(identifier == null) throw Error.ArgumentNull("identifier");
 
-            var reader = xmlReaderFromStream(_input);
+            var reader = FhirParser.XmlReaderFromStream(_input);
             var entries = streamFeedEntries(reader);
 
             // We're a bit lenient here, but find 0..1 entry which has ANY entry.id that
             // matches the artifactId we're looking for
-            var entryId = entryUri.ToString();
-            var matchingEntry = entries
-                    .SingleOrDefault(entry => entry.Elements(ENTRY_ID).Any(idElem => idElem.Value == entryId));
+            var artifactResources = entries.Select(entry=>entry.Elements().First().Elements().First());
 
-            return matchingEntry;
+            return artifactResources.Where(res =>
+                res.Element(XmlNs.XFHIR + ConformanceArtifactScanner.GetIdentifyingElementNameForConformanceResource(res.Name.LocalName))
+                            .Attribute("value").Value == identifier)
+                            .SingleOrDefault();
         }
 
 
         public IEnumerable<string> ListEntryIds()
         {
-            var reader = xmlReaderFromStream(_input);
+            var reader = FhirParser.XmlReaderFromStream(_input);
             var entries = streamFeedEntries(reader);
 
-            return entries.Elements(ENTRY_ID).Select(idElem => idElem.Value);
+            var artifactResources = entries.Select(entry => entry.Elements().First().Elements().First());
+            return artifactResources.Select(res =>
+                res.Element(XmlNs.XFHIR + ConformanceArtifactScanner.GetIdentifyingElementNameForConformanceResource(res.Name.LocalName))
+                        .Attribute("value").Value);
+
         }
-
-
-        private static XmlReader xmlReaderFromStream(Stream input)
-        {
-            if (input.Position != 0)
-            {
-                if (input.CanSeek)
-                    input.Seek(0, SeekOrigin.Begin);
-                else
-                    throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
-            }
-
-            var reader = XmlReader.Create(input);
-            return reader;
-        }
-
-
+    
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
         private static IEnumerable<XElement> streamFeedEntries(XmlReader reader)
@@ -89,7 +77,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 if (reader.NodeType == XmlNodeType.Element
                         && reader.LocalName == "entry"
-                        && reader.NamespaceURI == XmlNs.ATOM)
+                        && reader.NamespaceURI == XmlNs.FHIR)
                 {
                     var entryNode = (XElement)XElement.ReadFrom(reader);
                     yield return entryNode;

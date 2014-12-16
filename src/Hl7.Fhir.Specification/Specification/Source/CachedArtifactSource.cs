@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private List<CacheEntry> _cache = new List<CacheEntry>();
 
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(Uri artifactId)
         {
             if (!_prepared) Prepare();
 
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Source
 
                 try
                 {
-                    newData = Source.ReadResourceArtifact(artifactId);
+                    newData = Source.ReadConformanceResource(artifactId);
                 }
                 catch(Exception e)
                 {

@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Rest;
+//using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Source
@@ -27,26 +27,28 @@ namespace Hl7.Fhir.Specification.Source
             throw new NotImplementedException();        // support only url-based artifacts
         }
 
-        public Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId)
+        public Hl7.Fhir.Model.Resource ReadConformanceResource(Uri artifactId)
         {
-            if (artifactId == null) throw Error.ArgumentNull("artifactId");
-            if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");
+            throw new NotImplementedException();
 
-            var id = new ResourceIdentity(artifactId);
+            //if (artifactId == null) throw Error.ArgumentNull("artifactId");
+            //if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");
 
-            var client = new FhirClient(id.Endpoint);
-            client.Timeout = 5000;  //ms
+            //var id = new ResourceIdentity(artifactId);
 
-            try
-            {
-                var artifactEntry = client.Read(id);
+            //var client = new FhirClient(id.Endpoint);
+            //client.Timeout = 5000;  //ms
 
-                return artifactEntry != null ? artifactEntry.Resource : null;
-            }
-            catch
-            {
-                return null;
-            }
+            //try
+            //{
+            //    var artifactEntry = client.Read(id);
+
+            //    return artifactEntry != null ? artifactEntry.Resource : null;
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
             
         }
     }

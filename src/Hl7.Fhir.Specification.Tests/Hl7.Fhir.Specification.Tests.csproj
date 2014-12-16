@@ -53,25 +53,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
+      <Link>XmlAssert.cs</Link>
+    </Compile>
     <Compile Include="ArtifactStorageTest.cs" />
-    <Compile Include="JsonNavigatorTests.cs" />
-    <Compile Include="JTokenExtensionsTests.cs" />
-    <Compile Include="ProfileExpansionTest.cs" />
-    <Compile Include="ProfileNavigationTest.cs" />
-    <Compile Include="PublishProfile.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
-    <Compile Include="TestAdvancedValidation.cs" />
-    <Compile Include="TestExtensions.cs" />
-    <Compile Include="TestUnresolvedValidation.cs" />
-    <Compile Include="TestValidation.cs" />
-    <Compile Include="TestProvider.cs" />
-    <Compile Include="TestMetaValidation.cs" />
-    <Compile Include="TypeRefUniform.cs" />
-    <Compile Include="TestSlicing.cs" />
-    <Compile Include="TestValuesets.cs" />
-    <Compile Include="ValidationAnalysis.cs" />
-    <Compile Include="XmlAssert.cs" />
-    <Compile Include="XsltContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +169,6 @@
     <Content Include="TestData\Patient.ErrorUse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="TestData\valuesets.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">

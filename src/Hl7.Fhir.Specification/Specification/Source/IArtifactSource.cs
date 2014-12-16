@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Hl7.Fhir.Specification.Source
@@ -16,6 +17,9 @@ namespace Hl7.Fhir.Specification.Source
         void Prepare();
 
         Stream ReadContentArtifact(string name);
-        Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId);
+        //IEnumerable<string> ListArtifactNames();
+
+        Hl7.Fhir.Model.Resource ReadConformanceResource(Uri artifactId);
+        //IEnumerable<Uri> ListConformanceResources();
     }
 }

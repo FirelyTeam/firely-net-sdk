@@ -75,7 +75,6 @@
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
-    <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\Extension.cs" />

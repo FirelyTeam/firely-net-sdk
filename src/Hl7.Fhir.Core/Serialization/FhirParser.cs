@@ -70,6 +70,19 @@ namespace Hl7.Fhir.Serialization
             return XmlReader.Create(new StringReader(SanitizeXml(xml)));
         }
 
+        public static XmlReader XmlReaderFromStream(Stream input)
+        {
+            if (input.Position != 0)
+            {
+                if (input.CanSeek)
+                    input.Seek(0, SeekOrigin.Begin);
+                else
+                    throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
+            }
+
+            return XmlReader.Create(input);
+        }
+
         public static IFhirReader FhirReaderFromXml(string xml)
         {
             return new XmlDomFhirReader(XmlReaderFromXml(xml));
@@ -92,11 +105,11 @@ namespace Hl7.Fhir.Serialization
             return new ResourceReader(reader).Deserialize();
         }
 
-        //public Resource ParseResource(XmlReader reader)
-        //{
-        //    var xmlReader = new XmlDomFhirReader(reader);
-        //    return new ResourceReader(xmlReader).Deserialize();
-        //}
+        public Resource ParseResource(XmlReader reader)
+        {
+            var xmlReader = new XmlDomFhirReader(reader);
+            return new ResourceReader(xmlReader).Deserialize();
+        }
 
         public Resource ParseResource(JsonReader reader)
         {

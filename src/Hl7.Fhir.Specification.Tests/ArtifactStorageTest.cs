@@ -139,31 +139,31 @@ namespace Hl7.Fhir.Specification.Tests
             Directory.CreateDirectory(resPath);
 
             Patient p = new Patient();
-            File.WriteAllText(Path.Combine(resPath,"patientNL.xml"), FhirSerializer.SerializeResourceToXml(p));
+            File.WriteAllText(Path.Combine(resPath,"patientNL.xml"), (new FhirSerializer()).SerializeResourceToXml(p));
 
             var fa = new FileArtifactSource(testPath, includeSubdirectories:true);
             fa.Mask = "*.txt | *.xml";
             fa.Prepare();
 
             // Check whether the .jrg file was indeed exluded
-            Assert.AreEqual(2, fa.ArtifactFiles.Count());
+            Assert.AreEqual(2, fa.ListArtifactNames().Count());
             
             using (var a = fa.ReadContentArtifact("userfile.txt"))
             {
                 Assert.IsNotNull(a);
             }
 
-            var pat = fa.ReadResourceArtifact(new Uri("http://nu.nl/fhir/patientNL"));
+            var pat = fa.ReadConformanceResource(new Uri("http://nu.nl/fhir/patientNL"));
             Assert.IsNotNull(pat);
 
             // Check that, without a Mask, all files are found
             var fa2 = new FileArtifactSource(testPath, includeSubdirectories: true);
-            Assert.AreEqual(3, fa2.ArtifactFiles.Count());
+            Assert.AreEqual(3, fa2.ListArtifactNames().Count());
 
             // Check that, when exluding subdirectories, we will only find 2 files again
             var fa3 = new FileArtifactSource(testPath, includeSubdirectories: false);
-            Assert.AreEqual(2, fa3.ArtifactFiles.Count());
-            Assert.IsTrue(fa3.ArtifactFiles.All(f => f.Contains("userfile.")));
+            Assert.AreEqual(2, fa3.ListArtifactNames().Count());
+            Assert.IsTrue(fa3.ListArtifactNames().All(f => f.Contains("userfile.")));
         }
 
         [TestMethod]
@@ -171,23 +171,23 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var fa = new CoreZipArtifactSource();
 
-            var vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            var vs = fa.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/vs/location-status"));
+            vs = fa.ReadConformanceResource(new Uri("http://hl7.org/fhir/vs/location-status"));
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Condition"));
+            var rs = fa.ReadConformanceResource(new Uri("http://hl7.org/fhir/Profile/Condition"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
-            rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/ValueSet"));
+            rs = fa.ReadConformanceResource(new Uri("http://hl7.org/fhir/Profile/ValueSet"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
-            var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Money"));
+            var dt = fa.ReadConformanceResource(new Uri("http://hl7.org/fhir/Profile/Money"));
             Assert.IsNotNull(rs);
             Assert.IsTrue(dt is Profile);
         }
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebArtifactSource();
 
-            var artifact = wa.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
+            var artifact = wa.ReadConformanceResource(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is Profile);
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             resolver.Prepare();
 
-            var vs = resolver.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            var vs = resolver.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
@@ -242,13 +242,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Ensure looking up a failed endpoint repeatedly does not cost much time
             sw1.Start();
-            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
+            src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
             sw1.Stop();
 
             var sw2 = new Stopwatch();
 
             sw2.Start();
-            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
+            src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
             sw2.Stop();
 
             Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
@@ -256,11 +256,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now try an existing artifact
             sw1.Restart();
-            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             sw1.Stop();
 
             sw2.Restart();
-            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);

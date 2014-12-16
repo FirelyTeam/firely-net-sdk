@@ -27,10 +27,9 @@ namespace Hl7.Fhir.Model
         /// <param name="id">The (deleted) resource's id to find</param>
         /// <param name="includeDeleted">Indicates whether the search should include deleted entries in the list</param>
         /// <returns>A list of BundleEntries with the given id, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntryById(this Bundle bundle, string type, string id, bool includeDeleted = false)
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceReference reference)
         {
-            if (id == null) throw Error.ArgumentNull("id");
-            if (type == null) throw Error.ArgumentNull("resource");
+            if (reference == null) throw Error.ArgumentNull("reference");
 
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 

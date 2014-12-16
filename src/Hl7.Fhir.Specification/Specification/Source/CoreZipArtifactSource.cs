@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Rest;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
@@ -26,8 +25,10 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class CoreZipArtifactSource : IArtifactSource
     {
+        public const string CORE_SPEC_EXTENSIONDEFN_URI_PREFIX = "http://hl7.org/fhir/ExtensionDefinition/";
         public const string CORE_SPEC_PROFILE_URI_PREFIX = "http://hl7.org/fhir/Profile/";
-        public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/conformance/";
+        public const string CORE_SPEC_CONFORMANCE_URI_PREFIX = "http://hl7.org/fhir/Conformance/";
+        public const string CORE_SPEC_OPERATIONDEFN_URI_PREFIX = "http://hl7.org/fhir/OperationDefinition/";
         public const string CORE_SPEC_VS_URI_PREFIX = "http://hl7.org/fhir/vs/";
         public const string CORE_SPEC_V2_VS_URI_PREFIX = "http://hl7.org/fhir/v2/vs/";
         public const string CORE_SPEC_V3_VS_URI_PREFIX = "http://hl7.org/fhir/v3/vs/";
@@ -81,12 +82,13 @@ namespace Hl7.Fhir.Specification.Source
             //}
 
             var zipPath = Path.Combine(_contentDirectory, "validation.zip");
-            if (File.Exists(zipPath))
-            {
-                var zc = new ZipCacher(zipPath, CACHE_KEY);
-                _artifactFiles.AddRange(zc.GetContents());
-                _isPrepared = true;
-            }
+
+            if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation.zip");
+           
+            var zc = new ZipCacher(zipPath, CACHE_KEY);
+            _artifactFiles.AddRange(zc.GetContents());
+            
+            _isPrepared = true;
 
 #else
             throw Error.NotImplemented("File based Core artifact source is not supported on the portable runtime");
@@ -132,7 +134,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="artifactId"></param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located</returns>
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(Uri artifactId)
         {
             if (artifactId == null) throw Error.ArgumentNull("artifactId");
 
@@ -142,10 +144,10 @@ namespace Hl7.Fhir.Specification.Source
 
             // Core artifacts come from specific bundles files in the validation.zip
             // We're assuming the validation.zip contains xml files
-            artifactXml = loadCoreArtifactXml(artifactId);
+            artifactXml = loadCoreArtifactXml(artifactId.ToString());
 
             if (artifactXml != null)
-                return FhirParser.ParseResourceFromXml(artifactXml);
+                return (new FhirParser()).ParseResourceFromXml(artifactXml);
             else
                 return null;
         }
@@ -168,7 +170,7 @@ namespace Hl7.Fhir.Specification.Source
         //}
 
 
-        private string loadCoreArtifactXml(Uri artifactId)
+        private string loadCoreArtifactXml(string artifactId)
         {
            // var normalized = artifactId.ToString().ToLower();
             var normalized = artifactId.ToString();     // do case-sensitive search
@@ -177,6 +179,8 @@ namespace Hl7.Fhir.Specification.Source
             // file these artifacts should be found
             if (normalized.StartsWith(CORE_SPEC_PROFILE_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "profiles-types.xml", "profiles-resources.xml");
+            else if(normalized.StartsWith(CORE_SPEC_EXTENSIONDEFN_URI_PREFIX))
+                return readXmlEntryFromCoreBundle(artifactId, "extension-definition.xml");
             else if (normalized.StartsWith(CORE_SPEC_CONFORMANCE_URI_PREFIX) || normalized.StartsWith(CORE_SPEC_CONCEPTMAP_URI_PREFIX) ||
                             normalized.StartsWith(CORE_SPEC_NAMESPACE_URI_PREFIX))
                 return readXmlEntryFromCoreBundle(artifactId, "profiles-resources.xml");
@@ -190,9 +194,7 @@ namespace Hl7.Fhir.Specification.Source
                 return readXmlEntryFromCoreBundle(artifactId, "valuesets.xml"); 
         }
 
-        public static readonly XName ENTRY_CONTENT = XmlNs.XATOM + "content";
-
-        private string readXmlEntryFromCoreBundle(Uri artifactId, params string[] fileNames)
+        private string readXmlEntryFromCoreBundle(string artifactId, params string[] fileNames)
         {
             foreach (var filename in fileNames)
             {
@@ -203,22 +205,9 @@ namespace Hl7.Fhir.Specification.Source
                     if (content == null) throw new FileNotFoundException("Cannot find bundled core file " + filename);
 
                     var scanner = new XmlFeedScanner(content);
-                    var entry = scanner.FindEntryById(artifactId);
+                    var entry = scanner.FindConformanceResourceById(artifactId);
 
-                    if (entry != null)
-                    {
-                        // Matching entry found
-                        try
-                        {
-                            var contentElement = entry.Element(ENTRY_CONTENT);
-                            var entryContentXml = contentElement.Elements().FirstOrDefault();
-                            return entryContentXml == null ? null : entryContentXml.ToString();
-                        }
-                        catch
-                        {
-                            throw Error.Format("Entry {0} was found in core bundle {1}, but cannot parse its contents", null, artifactId, filename);
-                        }
-                    }
+                    return entry != null ? entry.ToString() : null;
                 }
             }
 

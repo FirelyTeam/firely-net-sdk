@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static IArtifactSource CreateDefault()
         {
-            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());
+            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());            
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(Uri artifactId)
         {
             if (!_prepared) Prepare();
 
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 try
                 {
-                    var result = source.ReadResourceArtifact(artifactId);
+                    var result = source.ReadConformanceResource(artifactId);
 
                     if (result != null) return result;
                 }
