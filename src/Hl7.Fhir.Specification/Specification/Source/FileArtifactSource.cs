@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Source
 
 
         bool _resourcesPrepared = false;
-        private List<Tuple<string, string>> _resourceIds;
+        private List<ConformanceInformation> _resourceInformation;
 
 
         /// <summary>
@@ -114,13 +114,13 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareFiles();
 
-            _resourceIds = new List<Tuple<string, string>>();
+            _resourceInformation = new List<ConformanceInformation>();
 
             foreach (var file in _artifactFiles)
             {
                 try
                 {
-                    _resourceIds.AddRange(readIdsFromFile(file));
+                    _resourceInformation.AddRange(readInformationFromFile(file));
                 }
                 catch(XmlException)
                 {
@@ -131,17 +131,17 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        private IEnumerable<Tuple<string, string>> readIdsFromFile(string path)
+        private IEnumerable<ConformanceInformation> readInformationFromFile(string path)
         {
             using (var bundleStream = File.OpenRead(path))
             {
                 if (bundleStream != null)
                 {
-                    var scanner = new ConformanceArtifactScanner(bundleStream);
-                    return scanner.ListConformanceResourceIdentifiers().Select(id => Tuple.Create(id, path)).ToList();
+                    var scanner = new ConformanceArtifactScanner(bundleStream, path);
+                    return scanner.ListConformanceResourceInformation().ToList();
                 }
                 else
-                    return Enumerable.Empty<Tuple<string, string>>();
+                    return Enumerable.Empty<ConformanceInformation>();
             }
         }
 
@@ -179,17 +179,20 @@ namespace Hl7.Fhir.Specification.Source
             if (identifier == null) throw Error.ArgumentNull("identifier");
             prepareResources();
 
-            var filename = _resourceIds.Where(id => id.Item1 == identifier).Select(tup => tup.Item2).SingleOrDefault();
+            var info = _resourceInformation.SingleOrDefault(ci => ci.Identifier == identifier);
+            
+            if(info == null) return null;
 
+            var path = info.Origin;
             string artifactXml;
 
             // Note: no exception handling. If the expected bundled file cannot be
             // read, throw the original exception.
-            using (var content = File.OpenRead(filename))
+            using (var content = File.OpenRead(path))
             {
-                if (content == null) throw new FileNotFoundException("Cannot find file " + filename);
+                if (content == null) throw new FileNotFoundException("Cannot find file " + path);
 
-                var scanner = new ConformanceArtifactScanner(content);
+                var scanner = new ConformanceArtifactScanner(content, path);
                 var entry = scanner.FindConformanceResourceById(identifier);
 
                 artifactXml = entry != null ? entry.ToString() : null;
@@ -203,10 +206,10 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
             prepareResources();
-            return _resourceIds.Select(id => id.Item1);
+            return _resourceInformation;
         }
 
     }

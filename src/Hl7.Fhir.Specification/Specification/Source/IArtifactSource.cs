@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -18,6 +19,24 @@ namespace Hl7.Fhir.Specification.Source
         IEnumerable<string> ListArtifactNames();
 
         Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier);
-        IEnumerable<string> ListConformanceResourceIdentifiers();
+        IEnumerable<ConformanceInformation> ListConformanceResources();
+    }
+
+
+    public class ConformanceInformation
+    {
+        public string Identifier { get; set; }
+
+        //public ResourceType Type { get; set; }
+        public string Type { get; set; }
+        
+        public string Name { get; set; }
+
+        public string Origin { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("{0} resource with id {1} ({2}), read from {3}", Type.ToString(), Identifier, Name, Origin);
+        }
     }
 }

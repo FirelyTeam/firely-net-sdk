@@ -156,15 +156,15 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
-            var result = new List<string>();
+            var result = new List<ConformanceInformation>();
 
             foreach (var source in Sources)
             {
                 try
                 {
-                    result.AddRange(source.ListConformanceResourceIdentifiers());
+                    result.AddRange(source.ListConformanceResources());
                 }
                 catch (NotImplementedException)
                 {

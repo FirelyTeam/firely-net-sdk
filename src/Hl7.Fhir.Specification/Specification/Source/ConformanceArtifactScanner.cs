@@ -23,23 +23,14 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     internal class ConformanceArtifactScanner
     {
-        // Profile: url (uri)
-        // ExtensionDefinition: url (uri)
-        // SearchParameter: url (uri)
-        // OperationDefinition: identifier (uri)
-        // ValueSet: identifier (uri)
-        // ConceptMap: identifier (string)
-        // Conformance: identifier (string)
-        // NamingSystem: ??
-
         public static bool IsConformanceResource(string name)
         {
             return name == "Profile" || name == "ExtensionDefinition" || name == "SearchParameter" ||
                     name == "OperationDefinition" || name == "ValueSet" || name == "ConceptMap" ||
-                    name == "Conformance" || name == "NamingSystem";
+                    name == "Conformance" || name == "NamingSystem" || name == "DataElement";
         }
 
-        public static string GetIdentifyingElementNameForConformanceResource(string name)
+        public static string GetIdentifyingElementName(string name)
         {
             switch(name)
             {
@@ -50,16 +41,28 @@ namespace Hl7.Fhir.Specification.Source
                 case "ValueSet": return "identifier";
                 case "ConceptMap": return "identifier";
                 case "Conformance": return "identifier";
+                case "DataElement" : throw Error.NotImplemented("DataElement used Identifier datatype to represent identity. This is unsupported");
                 case "NamingSystem": throw Error.NotImplemented("NamingSystem does not have an identifying element");
                 default: return null;
             }
         }
 
-        private Stream _input;
+        public static string GetNameElementName(string name)
+        {
+            if(!IsConformanceResource(name)) return null;
 
-        public ConformanceArtifactScanner(Stream input)
+            if (name == "OperationDefinition") return "title";
+
+            return "name";
+        }
+
+        private Stream _input;
+        private string _origin;
+
+        public ConformanceArtifactScanner(Stream input, string origin)
         {
             _input = input;
+            _origin = origin;
         }
 
         /// <summary>
@@ -74,20 +77,35 @@ namespace Hl7.Fhir.Specification.Source
             var resources = StreamResources();
 
             return resources.Where(res => IsConformanceResource(res.Name.LocalName) &&
-                res.Element(XmlNs.XFHIR + GetIdentifyingElementNameForConformanceResource(res.Name.LocalName))
+                res.Element(XmlNs.XFHIR + GetIdentifyingElementName(res.Name.LocalName))
                             .Attribute("value").Value == identifier)
                             .SingleOrDefault();
         }
 
+        private string getPrimitiveValueElement(XElement element, string name)
+        {
+            var valueElem = element.Element(XmlNs.XFHIR + name);
+            if(valueElem == null) return null;
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+            var valueAttr = valueElem.Attribute("value");
+
+            return valueAttr != null ? valueAttr.Value : null;
+        }
+
+
+        public IEnumerable<ConformanceInformation> ListConformanceResourceInformation()
         {
             var resources = StreamResources();
 
             return resources.Where(res => IsConformanceResource(res.Name.LocalName))
-                .Select(res=>res.Element(XmlNs.XFHIR + GetIdentifyingElementNameForConformanceResource(res.Name.LocalName))
-                        .Attribute("value").Value);
-
+                .Select(res =>
+                        new ConformanceInformation()
+                        {
+                                Identifier = getPrimitiveValueElement(res, GetIdentifyingElementName(res.Name.LocalName)),
+                                Name = getPrimitiveValueElement(res, GetNameElementName(res.Name.LocalName)),
+                                Origin = _origin,
+                                Type = res.Name.LocalName
+                        });                       
         }
 
         private static string getRootName(XmlReader reader)

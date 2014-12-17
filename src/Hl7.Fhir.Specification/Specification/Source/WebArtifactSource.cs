@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Specification.Source
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
             throw new NotImplementedException();
         }

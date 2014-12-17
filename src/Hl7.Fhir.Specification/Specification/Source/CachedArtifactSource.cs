@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Source
 
             _artifactNames = new Cache<IEnumerable<string>>(id=>Source.ListArtifactNames(), CacheDuration);
             _conformanceResources = new Cache<Resource>(id => Source.ReadConformanceResource(id), CacheDuration);
-            _resourceIdentifiers = new Cache<IEnumerable<string>>(id=>Source.ListConformanceResourceIdentifiers(), CacheDuration);
+            _resourceInformation = new Cache<IEnumerable<ConformanceInformation>>(id=>Source.ListConformanceResources(), CacheDuration);
         }
 
         public CachedArtifactSource(IArtifactSource source) : this(source,DEFAULT_CACHE_DURATION)
@@ -67,11 +67,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        private Cache<IEnumerable<string>> _resourceIdentifiers;
+        private Cache<IEnumerable<ConformanceInformation>> _resourceInformation;
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
-            return _resourceIdentifiers.Get("__RESOURCEIDENTIFIERS__");
+            return _resourceInformation.Get("__RESOURCEINFORMATION__");
         }
 
 

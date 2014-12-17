@@ -91,10 +91,10 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
             prepare();
-            return _resourceSource.ListConformanceResourceIdentifiers();
+            return _resourceSource.ListConformanceResources();
         }
 
 

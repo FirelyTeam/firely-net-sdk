@@ -101,6 +101,9 @@ namespace Hl7.Fhir.Specification.Tests
             copy(@"TestData", "TestPatient.xml", testPath);
             copy(@"TestData", "TestValueSet.xml", testPath);
 
+            Directory.CreateDirectory(Path.Combine(testPath, "sub"));
+            copy(@"TestData", "TestPatient.json", testPath);
+
             return testPath;
         }
 
@@ -129,8 +132,20 @@ namespace Hl7.Fhir.Specification.Tests
 
             var ed = fa.ReadConformanceResource("http://hl7.org/fhir/ExtensionDefinition/openEHR-location") as ExtensionDefinition;
             Assert.IsNotNull(ed);
+
+            var cis = fa.ListConformanceResources();
+            foreach (var ci in cis) Debug.WriteLine(ci.ToString());
         }
 
+        [TestMethod]
+        public void ReadsSubdirectories()
+        {
+            var testPath = prepareExampleDirectory();
+            var fa = new FileArtifactSource(testPath, includeSubdirectories:true);
+            var names = fa.ListArtifactNames();
+
+            Assert.AreEqual(6,names.Count());
+        }
 
         [TestMethod]
         public void GetSomeBundledArtifacts()
@@ -181,32 +196,25 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-       // [TestMethod]
-       // public void RecreatingCoreZipArtifact()
-       // {
-       //     var fa = new CoreZipArtifactSource();
+        [TestMethod]
+        public void TestSetupIsOnce()
+        {
+            var fa = new CoreZipArtifactSource();
 
-       //     fa.Prepare(); // First time might be expensive...
+            var sw = new Stopwatch();
+            sw.Start();
+            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            sw.Stop();
 
-       //     Stopwatch sw = new Stopwatch();
+            var sw2 = new Stopwatch();
+            sw2.Start();
+            var vs2 = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            sw2.Stop();
 
-       //     for (var loop = 0; loop < 50; loop++)
-       //     {
-       //         fa = new CoreZipArtifactSource();
-       //         fa.Prepare();
-       //     }
+            Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);
+            Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
+        }
 
-       //     sw.Stop();
-
-       //     Assert.IsTrue(sw.ElapsedMilliseconds < 20 * 50);
-       // }
-
-     
-
-
-
-
-    
 
        // //Re-enable when servers support DSTU2
        // [TestMethod,Ignore]
@@ -247,40 +255,38 @@ namespace Hl7.Fhir.Specification.Tests
        //     //Assert.AreEqual("alert", ((Profile)artifact).Name);
        // }
 
-       // [TestMethod]
-       // public void TestSourceCaching()
-       // {
-       //     var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
+        [TestMethod]
+        public void TestSourceCaching()
+        {
+            var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
 
-       //     src.Prepare();
+            Stopwatch sw1 = new Stopwatch();
 
-       //     Stopwatch sw1 = new Stopwatch();
+            // Ensure looking up a failed endpoint repeatedly does not cost much time
+            sw1.Start();
+            src.ReadConformanceResource("http://some.none.existant.address.nl");
+            sw1.Stop();
 
-       //     // Ensure looking up a failed endpoint repeatedly does not cost much time
-       //     sw1.Start();
-       //     src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
-       //     sw1.Stop();
+            var sw2 = new Stopwatch();
 
-       //     var sw2 = new Stopwatch();
+            sw2.Start();
+            src.ReadConformanceResource("http://some.none.existant.address.nl");
+            sw2.Stop();
 
-       //     sw2.Start();
-       //     src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
-       //     sw2.Stop();
+            Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
+            Assert.IsTrue(sw2.ElapsedMilliseconds <= sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
 
-       //     Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
-       //     Assert.IsTrue(sw2.ElapsedMilliseconds <= sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+            // Now try an existing artifact
+            sw1.Restart();
+            src.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            sw1.Stop();
 
-       //     // Now try an existing artifact
-       //     sw1.Restart();
-       //     src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-       //     sw1.Stop();
+            sw2.Restart();
+            src.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            sw2.Stop();
 
-       //     sw2.Restart();
-       //     src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-       //     sw2.Stop();
+            Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
 
-       //     Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
-
-       //}
+        }
     }
 }
