@@ -64,7 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DSTU1compatability.cs" />
+    <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
@@ -263,7 +263,6 @@
     <Compile Include="Rest\FhirResponse.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
-    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Rest\RestUrl.cs" />
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />

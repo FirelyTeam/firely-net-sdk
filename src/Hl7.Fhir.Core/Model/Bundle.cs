@@ -169,8 +169,5 @@ namespace Hl7.Fhir.Model
         {
             return u != null && !String.IsNullOrEmpty(u.ToString());
         }
-
-
-
     }  
 }

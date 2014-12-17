@@ -28,6 +28,19 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        public void TestWithBase()
+        {
+            var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+
+            var id1 = id.WithBase("http://nu.nl/fhir");
+            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id1.ToString());
+
+            var id2 = new ResourceIdentity("Patient/3").WithBase("http://nu.nl/fhir");
+            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id2.ToString());
+        }
+
+
+        [TestMethod]
         public void TestCollection()
         {
             ResourceIdentity identity;

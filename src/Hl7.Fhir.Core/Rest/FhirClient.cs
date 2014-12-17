@@ -178,7 +178,8 @@ namespace Hl7.Fhir.Rest
 
             TResource entry = new TResource();
             entry.Meta = new Resource.ResourceMetaComponent();
-            entry.ResourceBase = this._endpoint.OriginalString;
+            //entry.ResourceBase = this._endpoint.OriginalString;
+            entry.ResourceBase = this._endpoint;
             var actualIdentity = new ResourceIdentity(response.Location);
             entry.Id = actualIdentity.Id;
 
@@ -405,7 +406,8 @@ namespace Hl7.Fhir.Rest
             entry.Meta = new Resource.ResourceMetaComponent();
             entry.Meta.LastUpdated = DateTimeOffset.Now;
             ResourceIdentity ri = new ResourceIdentity(makeAbsolute(location));
-            data.ResourceBase = ri.Endpoint.OriginalString;
+            //data.ResourceBase = ri.Endpoint.OriginalString;
+            data.ResourceBase = ri.Endpoint;
 
             return Update(data, refresh);
         }

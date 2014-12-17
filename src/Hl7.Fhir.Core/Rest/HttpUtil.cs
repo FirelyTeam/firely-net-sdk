@@ -173,5 +173,25 @@ namespace Hl7.Fhir.Rest
 
             return result.ToString().TrimEnd('&');
         }
+
+
+        public static bool IsWithin(this Uri me, Uri other)
+        {
+            // The address comparison is done case-insensitive as we can't be sure that the 
+            // sensitivity of the servernames/virtual directory address is correct and case sensitive
+            var baseUri = new Uri(other.OriginalString.ToLower(), UriKind.Absolute);
+            var meUri = new Uri(me.OriginalString.ToLower(), UriKind.RelativeOrAbsolute);
+
+            if (baseUri.Authority != me.Authority) return false;
+            if (baseUri.Segments.Length > me.Segments.Length) return false;
+
+            for (int index = 0; index < baseUri.Segments.Length; index++)
+            {
+                if (baseUri.Segments[index].TrimEnd('/') != me.Segments[index].TrimEnd('/')) return false;
+            }
+
+            return true;
+        }
+
     }
 }

@@ -195,12 +195,6 @@ namespace Hl7.Fhir.Rest
 				}
 
                 return collectionName;
-                //if (!string.IsNullOrEmpty(collectionName))
-                //{
-                //    if (Model.ModelInfo.IsKnownResource(collectionName))
-                //        return collectionName;
-                //}
-                //return null;
 			}
         }
 
@@ -295,13 +289,22 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
+        /// Relocate an absolute identity to a new base, or make a relative identity absolute to a base
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        public ResourceIdentity WithBase(string endpoint)
+        {
+            return ResourceIdentity.Build(new Uri(endpoint, UriKind.RelativeOrAbsolute), this.Collection, this.Id, this.VersionId);
+        }
+
+        /// <summary>
         /// Returns a Uri that is a relative version of the ResourceIdentity
         /// </summary>
         public Uri OperationPath
         {
             get
             {
-                // dit maakt de uri altijd relatief
                 return ResourceIdentity.Build(this.Collection, this.Id, this.VersionId);
             }
         }

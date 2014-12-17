@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
         /// This is the base URL of the FHIR server that this resource is hosted on
         /// </summary>
         [Hl7.Fhir.Introspection.NotMapped]
-        public string ResourceBase;
+        public Uri ResourceBase;
 
         /// <summary>
         /// Returns the entire URI of the location that this resource was retrieved from
@@ -57,8 +57,10 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public Hl7.Fhir.Rest.ResourceIdentity ResourceIdentity()
         {
-            Hl7.Fhir.Rest.ResourceIdentity id = Rest.ResourceIdentity.Build(new Uri(this.ResourceBase), this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
-            return id;
+            if(this.ResourceBase != null)
+                return Rest.ResourceIdentity.Build(this.ResourceBase, this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
+            else
+                return Rest.ResourceIdentity.Build(this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
         }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

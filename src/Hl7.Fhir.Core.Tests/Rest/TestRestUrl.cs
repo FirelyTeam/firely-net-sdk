@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Test
 
 
         [TestMethod]
-        public void TestBase()
+        public void TestIsEndpointFor()
         {
             var u = new RestUrl("http://www.hl7.org/svc");
 

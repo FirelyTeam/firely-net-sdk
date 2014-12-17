@@ -127,7 +127,8 @@ namespace Hl7.Fhir.Rest
                 if (!String.IsNullOrEmpty(location))
                 {
                     ResourceIdentity ri = new ResourceIdentity(location);
-                    entry.ResourceBase = ri.Endpoint.OriginalString;
+                    //entry.ResourceBase = ri.Endpoint.OriginalString;
+                    entry.ResourceBase = ri.Endpoint;
                 }
                 return entry;
             }

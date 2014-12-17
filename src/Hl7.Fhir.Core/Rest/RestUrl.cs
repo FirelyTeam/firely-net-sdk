@@ -146,20 +146,7 @@ namespace Hl7.Fhir.Rest
             baseAddress = baseAddress.Replace("localhost.fiddler", "localhost");
             other = other.Replace("localhost.fiddler", "localhost");
 
-            // The address comparison is done case-insensitive as we can't be sure that the 
-            // sensitivity of the servernames/virtual directory address is correct and case sensitive
-            var baseUri = new Uri(baseAddress.ToLower(),UriKind.Absolute);
-            var otherUri = new Uri(other.ToLower(), UriKind.Absolute);
-            
-            if(baseUri.Authority != otherUri.Authority) return false;
-            if(baseUri.Segments.Length > otherUri.Segments.Length) return false;
-            
-            for(int index = 0; index < baseUri.Segments.Length; index++)
-            {
-                if (baseUri.Segments[index].TrimEnd('/') != otherUri.Segments[index].TrimEnd('/')) return false;
-            }
-
-            return true;
+            return new Uri(other, UriKind.RelativeOrAbsolute).IsWithin(new Uri(baseAddress, UriKind.Absolute));
         }
 
         /// <summary>
