@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
             return new ResourceReader(reader).Deserialize();
         }
 
-        public Resource ParseResource(XmlReader reader)
+        public static Resource ParseResource(XmlReader reader)
         {
             var xmlReader = new XmlDomFhirReader(reader);
             return new ResourceReader(xmlReader).Deserialize();
@@ -117,14 +117,14 @@ namespace Hl7.Fhir.Serialization
             return new ResourceReader(jsonReader).Deserialize();
         }
 
-        public Resource.ResourceMetaComponent ParseMetaFromXml(string xml)
+        public static Resource.ResourceMetaComponent ParseMetaFromXml(string xml)
         {
             throw Error.NotImplemented("Parsing <meta> is not yet implemented");
 
             //return ParseFromXml<TagList>(xml);
         }
 
-        public Resource.ResourceMetaComponent ParseMetaFromJson(string json)
+        public static Resource.ResourceMetaComponent ParseMetaFromJson(string json)
         {
             throw Error.NotImplemented("Parsing resourceType:meta is not yet implemented");
             //return ParseFromJson<TagList>(json);
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Serialization
         //    //return ParseFromXml<TagList>(xml);
         //}
 
-        public Resource.ResourceMetaComponent ParseMeta(JsonReader reader)
+        public static Resource.ResourceMetaComponent ParseMeta(JsonReader reader)
         {
             throw Error.NotImplemented("Parsing <meta> is not yet implemented");
 

@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             using (var stream = fa.ReadContentArtifact("TestPatient.xml"))
             {
-                var pat = (new FhirParser()).ParseResource(FhirParser.XmlReaderFromStream(stream));
+                var pat = FhirParser.ParseResource(FhirParser.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
             }
 
