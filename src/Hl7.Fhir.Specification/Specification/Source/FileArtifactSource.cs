@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Rest;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 
 namespace Hl7.Fhir.Specification.Source
 {
+#if !PORTABLE45
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from individual files
     /// </summary>
@@ -30,16 +30,12 @@ namespace Hl7.Fhir.Specification.Source
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
-        private List<string> _artifactFiles;
-
-        private bool _isPrepared = false;
-
         private string _mask;
 
         public string Mask
         { 
             get { return _mask; }
-            set { _mask = value; _isPrepared = false; }
+            set { _mask = value; _filesPrepared = false; _resourcesPrepared = false; }
         }
 
         public FileArtifactSource(string contentDirectory, bool includeSubdirectories = false)
@@ -54,20 +50,13 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
-#if !PORTABLE45
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-                //if (!codebase.StartsWith("file:///")) return Directory.GetCurrentDirectory();
-                //codebase = codebase.Substring("file:///".Length);
                 return codebase;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
             }
         }
 
         public FileArtifactSource(bool includeSubdirectories = false)
         {
-#if !PORTABLE45
             // Add the current directory to the list of directories with artifact content, unless there's
             // a special specification subdirectory available (next to the current DLL)
             if (Directory.Exists(SpecificationDirectory))
@@ -76,17 +65,19 @@ namespace Hl7.Fhir.Specification.Source
                 _contentDirectory = Directory.GetCurrentDirectory();
 
             _includeSubs = includeSubdirectories;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
         }
+
+
+        private bool _filesPrepared = false;
+        private List<string> _artifactFiles;
 
         /// <summary>
         /// Prepares the source by reading all files present in the directory (matching the mask, if given)
         /// </summary>
-        public void Prepare()
+        private void prepareFiles()
         {
-#if !PORTABLE45
+            if (_filesPrepared) return;
+
             _artifactFiles = new List<string>();
 
             IEnumerable<string> masks;
@@ -106,36 +97,74 @@ namespace Hl7.Fhir.Specification.Source
             var files = allFiles.Where(name => Path.GetExtension(name) != "exe" && Path.GetExtension(name) != "dll");
             
             _artifactFiles.AddRange(files);
-            _isPrepared = true;
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
-
+            _filesPrepared = true;
         }
 
-        public IEnumerable<string> ArtifactFiles 
+
+        bool _resourcesPrepared = false;
+        private List<Tuple<string, string>> _resourceIds;
+
+
+        /// <summary>
+        /// Scan all files found by prepareFiles and find conformance resources + their id
+        /// </summary>
+        private void prepareResources()
         {
-            get
+            if (_resourcesPrepared) return;
+
+            prepareFiles();
+
+            _resourceIds = new List<Tuple<string, string>>();
+
+            foreach (var file in _artifactFiles)
             {
-                ensurePrepared();
-                return _artifactFiles.Select(path => Path.GetFileName(path));
+                try
+                {
+                    _resourceIds.AddRange(readIdsFromFile(file));
+                }
+                catch(XmlException)
+                {
+                }
             }
+
+            _resourcesPrepared = true;
+        }
+
+
+        private IEnumerable<Tuple<string, string>> readIdsFromFile(string path)
+        {
+            using (var bundleStream = File.OpenRead(path))
+            {
+                if (bundleStream != null)
+                {
+                    var scanner = new ConformanceArtifactScanner(bundleStream);
+                    return scanner.ListConformanceResourceIdentifiers().Select(id => Tuple.Create(id, path)).ToList();
+                }
+                else
+                    return Enumerable.Empty<Tuple<string, string>>();
+            }
+        }
+
+
+        public IEnumerable<string> ListArtifactNames()
+        {
+            prepareFiles();
+
+            return _artifactFiles.Select(path => Path.GetFileName(path));
         }
 
         public Stream ReadContentArtifact(string name)
         {
-#if !PORTABLE45
+            prepareFiles();
+
             if (name == null) throw Error.ArgumentNull("name");
 
-            ensurePrepared();
-
             var searchString = (Path.DirectorySeparatorChar + name).ToLower();
+
+            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
             var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
-#else
-            throw Error.NotImplemented("File based artifact source is not supported on the portable runtime");
-#endif
         }
 
         /// <summary>
@@ -145,40 +174,42 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="artifactId"></param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located. If both an
         /// xml and a json version is available, the xml version is returned</returns>
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(string identifier)
         {
-            if (artifactId == null) throw Error.ArgumentNull("artifactId");
+            if (identifier == null) throw Error.ArgumentNull("identifier");
+            prepareResources();
 
-            ensurePrepared();
+            var filename = _resourceIds.Where(id => id.Item1 == identifier).Select(tup => tup.Item2).SingleOrDefault();
 
-            // Locate a file that has the same name as the 'logical' id from the uri
-            var logicalId = artifactId.Segments[artifactId.Segments.Length - 1];
-            //var logicalId = new ResourceIdentity(artifactId).Id;
+            string artifactXml;
 
-            if (logicalId == null) throw Error.Argument("The artifactId {0} is not parseable as a normal http based REST endpoint with a logical id", artifactId.ToString());
-
-            // Return the contents of the file, since there's no logical id inside the data of a simple resource file
-            var xmlFilename = logicalId.EndsWith(".xml") ? logicalId : logicalId + ".xml";
-            using (var contentXml = ReadContentArtifact(xmlFilename))
+            // Note: no exception handling. If the expected bundled file cannot be
+            // read, throw the original exception.
+            using (var content = File.OpenRead(filename))
             {
-                if (contentXml != null)
-                    return FhirParser.ParseResource(XmlReader.Create(contentXml));
-            }
-            
-            var jsonFilename = logicalId.EndsWith(".json") ? logicalId : logicalId + ".json";
-            using (var contentJson = ReadContentArtifact(jsonFilename))
-            {
-                if (contentJson != null)
-                    return FhirParser.ParseResource(new JsonTextReader(new StreamReader(contentJson)));
+                if (content == null) throw new FileNotFoundException("Cannot find file " + filename);
+
+                var scanner = new ConformanceArtifactScanner(content);
+                var entry = scanner.FindConformanceResourceById(identifier);
+
+                artifactXml = entry != null ? entry.ToString() : null;
             }
 
-            return null;
-            
+
+            if (artifactXml != null)
+                return (new FhirParser()).ParseResourceFromXml(artifactXml);
+            else
+                return null;
         }
-        
-        private void ensurePrepared()
+
+
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
         {
-            if (!_isPrepared) Prepare();
-        }     
+            prepareResources();
+            return _resourceIds.Select(id => id.Item1);
+        }
+
     }
+
+#endif
 }

@@ -81,31 +81,61 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        [TestMethod]
-        public void RecreatingCoreZipArtifact()
+        private void copy(string dir, string file, string outputDir)
         {
-            var fa = new CoreZipArtifactSource();
+            File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
+        }
 
-            fa.Prepare(); // First time might be expensive...
+        private string prepareExampleDirectory()
+        {
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+            var zip = new ZipCacher(zipFile);
+            var zipPath = zip.GetContentDirectory();
 
-            Stopwatch sw = new Stopwatch();
+            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testPath);
 
-            for (var loop = 0; loop < 50; loop++)
+            copy(zipPath, "extension-definitions.xml", testPath);
+            copy(zipPath, "alert.xsd", testPath);
+            copy(zipPath, "patient.sch", testPath);
+            copy(@"TestData", "TestPatient.xml", testPath);
+            copy(@"TestData", "TestValueSet.xml", testPath);
+
+            return testPath;
+        }
+
+
+        [TestMethod]
+        public void UseFileArtifactSource()
+        {
+            var testPath = prepareExampleDirectory();
+            var fa = new FileArtifactSource(testPath);
+            fa.Mask = "*.xml|*.xsd";
+            var names = fa.ListArtifactNames();
+
+            Assert.AreEqual(4, names.Count());
+            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("alert.xsd"));
+            Assert.IsFalse(names.Contains("patient.sch"));
+
+            using (var stream = fa.ReadContentArtifact("TestPatient.xml"))
             {
-                fa = new CoreZipArtifactSource();
-                fa.Prepare();
+                var pat = (new FhirParser()).ParseResource(FhirParser.XmlReaderFromStream(stream));
+                Assert.IsNotNull(pat);
             }
 
-            sw.Stop();
+            var vs = fa.ReadConformanceResource("urn:uuid:256a5231-a2bb-49bd-9fea-f349d428b70d") as ValueSet;
+            Assert.IsNotNull(vs);
 
-            Assert.IsTrue(sw.ElapsedMilliseconds < 20 * 50);
+            var ed = fa.ReadConformanceResource("http://hl7.org/fhir/ExtensionDefinition/openEHR-location") as ExtensionDefinition;
+            Assert.IsNotNull(ed);
         }
+
 
         [TestMethod]
         public void GetSomeBundledArtifacts()
         {
             var za = new CoreZipArtifactSource();
-            za.Prepare();
 
             using (var a = za.ReadContentArtifact("patient.sch"))
             {
@@ -125,146 +155,132 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public void GetFileArtifacts()
-        {
-            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            Directory.CreateDirectory(testPath);
-
-            // Add a "user" file before preparing;
-            File.WriteAllText(Path.Combine(testPath,"userfile.txt"), @"Hello, world");
-            File.WriteAllText(Path.Combine(testPath, "userfile.jrg"), @"Hello, world");
-
-            // Copy a resource from the zip to a subdirectory
-            var resPath = Path.Combine(testPath, "resources");
-            Directory.CreateDirectory(resPath);
-
-            Patient p = new Patient();
-            File.WriteAllText(Path.Combine(resPath,"patientNL.xml"), FhirSerializer.SerializeResourceToXml(p));
-
-            var fa = new FileArtifactSource(testPath, includeSubdirectories:true);
-            fa.Mask = "*.txt | *.xml";
-            fa.Prepare();
-
-            // Check whether the .jrg file was indeed exluded
-            Assert.AreEqual(2, fa.ArtifactFiles.Count());
-            
-            using (var a = fa.ReadContentArtifact("userfile.txt"))
-            {
-                Assert.IsNotNull(a);
-            }
-
-            var pat = fa.ReadResourceArtifact(new Uri("http://nu.nl/fhir/patientNL"));
-            Assert.IsNotNull(pat);
-
-            // Check that, without a Mask, all files are found
-            var fa2 = new FileArtifactSource(testPath, includeSubdirectories: true);
-            Assert.AreEqual(3, fa2.ArtifactFiles.Count());
-
-            // Check that, when exluding subdirectories, we will only find 2 files again
-            var fa3 = new FileArtifactSource(testPath, includeSubdirectories: false);
-            Assert.AreEqual(2, fa3.ArtifactFiles.Count());
-            Assert.IsTrue(fa3.ArtifactFiles.All(f => f.Contains("userfile.")));
-        }
-
-        [TestMethod]
         public void GetSomeArtifactsById()
         {
             var fa = new CoreZipArtifactSource();
 
-            var vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/vs/location-status"));
+            vs = fa.ReadConformanceResource("http://hl7.org/fhir/vs/location-status");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Condition"));
+            var rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
-            rs = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/ValueSet"));
+            rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/ValueSet");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is Profile);
 
-            var dt = fa.ReadResourceArtifact(new Uri("http://hl7.org/fhir/Profile/Money"));
+            var dt = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Money");
             Assert.IsNotNull(rs);
             Assert.IsTrue(dt is Profile);
         }
 
-        //Re-enable when servers support DSTU2
-        [TestMethod,Ignore]
-        public void RetrieveWebArtifact()
-        {
-            var wa = new WebArtifactSource();
 
-            var artifact = wa.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
+       // [TestMethod]
+       // public void RecreatingCoreZipArtifact()
+       // {
+       //     var fa = new CoreZipArtifactSource();
 
-            Assert.IsNotNull(artifact);
-            Assert.IsTrue(artifact is Profile);
-            Assert.AreEqual("alert", ((Profile) artifact).Name);
-        }
+       //     fa.Prepare(); // First time might be expensive...
 
-        [TestMethod]
-        public void RetrieveArtifactMulti()
-        {
-            var resolver = ArtifactResolver.CreateDefault();
+       //     Stopwatch sw = new Stopwatch();
 
-            resolver.Prepare();
+       //     for (var loop = 0; loop < 50; loop++)
+       //     {
+       //         fa = new CoreZipArtifactSource();
+       //         fa.Prepare();
+       //     }
 
-            var vs = resolver.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
+       //     sw.Stop();
 
-            using (var a = resolver.ReadContentArtifact("patient.sch"))
-            {
+       //     Assert.IsTrue(sw.ElapsedMilliseconds < 20 * 50);
+       // }
 
-                Assert.IsNotNull(a);
-            }
+     
 
-            //TODO: Re-enable when servers support DSTU2
 
-            //var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
 
-            //Assert.IsNotNull(artifact);
-            //Assert.IsTrue(artifact is Profile);
-            //Assert.AreEqual("alert", ((Profile)artifact).Name);
-        }
 
-        [TestMethod]
-        public void TestSourceCaching()
-        {
-            var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
+    
 
-            src.Prepare();
+       // //Re-enable when servers support DSTU2
+       // [TestMethod,Ignore]
+       // public void RetrieveWebArtifact()
+       // {
+       //     var wa = new WebArtifactSource();
 
-            Stopwatch sw1 = new Stopwatch();
+       //     var artifact = wa.ReadConformanceResource(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
 
-            // Ensure looking up a failed endpoint repeatedly does not cost much time
-            sw1.Start();
-            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
-            sw1.Stop();
+       //     Assert.IsNotNull(artifact);
+       //     Assert.IsTrue(artifact is Profile);
+       //     Assert.AreEqual("alert", ((Profile) artifact).Name);
+       // }
 
-            var sw2 = new Stopwatch();
+       // [TestMethod]
+       // public void RetrieveArtifactMulti()
+       // {
+       //     var resolver = ArtifactResolver.CreateDefault();
 
-            sw2.Start();
-            src.ReadResourceArtifact(new Uri("http://some.none.existant.address.nl"));
-            sw2.Stop();
+       //     resolver.Prepare();
 
-            Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
-            Assert.IsTrue(sw2.ElapsedMilliseconds <= sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+       //     var vs = resolver.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+       //     Assert.IsNotNull(vs);
+       //     Assert.IsTrue(vs is ValueSet);
 
-            // Now try an existing artifact
-            sw1.Restart();
-            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-            sw1.Stop();
+       //     using (var a = resolver.ReadContentArtifact("patient.sch"))
+       //     {
 
-            sw2.Restart();
-            src.ReadResourceArtifact(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-            sw2.Stop();
+       //         Assert.IsNotNull(a);
+       //     }
 
-            Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+       //     //TODO: Re-enable when servers support DSTU2
 
-       }
+       //     //var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
+
+       //     //Assert.IsNotNull(artifact);
+       //     //Assert.IsTrue(artifact is Profile);
+       //     //Assert.AreEqual("alert", ((Profile)artifact).Name);
+       // }
+
+       // [TestMethod]
+       // public void TestSourceCaching()
+       // {
+       //     var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
+
+       //     src.Prepare();
+
+       //     Stopwatch sw1 = new Stopwatch();
+
+       //     // Ensure looking up a failed endpoint repeatedly does not cost much time
+       //     sw1.Start();
+       //     src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
+       //     sw1.Stop();
+
+       //     var sw2 = new Stopwatch();
+
+       //     sw2.Start();
+       //     src.ReadConformanceResource(new Uri("http://some.none.existant.address.nl"));
+       //     sw2.Stop();
+
+       //     Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
+       //     Assert.IsTrue(sw2.ElapsedMilliseconds <= sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+
+       //     // Now try an existing artifact
+       //     sw1.Restart();
+       //     src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+       //     sw1.Stop();
+
+       //     sw2.Restart();
+       //     src.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
+       //     sw2.Stop();
+
+       //     Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
+
+       //}
     }
 }

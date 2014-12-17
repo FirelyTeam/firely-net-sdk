@@ -13,9 +13,8 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-#if !PORTABLE45
-using SharpCompress.Archive;
-#endif
+using System.IO.Compression;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -37,14 +36,8 @@ namespace Hl7.Fhir.Specification.Source
         public ZipCacher(string zipPath, string cacheKey=null)
         {
             if(cacheKey == null) cacheKey = Guid.NewGuid().ToString();
-            
             _cachePath = Path.Combine(Path.GetTempPath(), cacheKey);
             _zipPath = zipPath;
-        }
-
-        public ZipCacher()
-        {
-            // TODO: Complete member initialization
         }
 
         /// <summary>
@@ -59,6 +52,12 @@ namespace Hl7.Fhir.Specification.Source
             return dir.GetFiles().Select(fi => fi.FullName);
         }
 
+        public string GetContentDirectory()
+        {
+            if (!IsActual()) Refresh();
+
+            return getCachedZipDirectory().FullName;
+        }
 
         /// <summary>
         /// Returns true if the ZipCacher has an up-to-date cache for the zip file it manages
@@ -66,10 +65,6 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns></returns>
         public bool IsActual()
         {
-            return false;
-            // todo: Previous logic had loopholes, for example when switching from git branch.
-            // This is only for performance, but the hit is small, so for now it is disabled.
-            /*
             var dir = getCachedZipDirectory();
 
             if (!dir.Exists) return false;
@@ -77,7 +72,6 @@ namespace Hl7.Fhir.Specification.Source
             var currentZipFileTime = File.GetLastWriteTimeUtc(_zipPath);
 
             return (dir.CreationTimeUtc >= currentZipFileTime);
-            */
         }
 
 
@@ -89,7 +83,12 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
-            unzip(_zipPath, dir.FullName);
+            ZipFile.ExtractToDirectory(_zipPath, dir.FullName);
+
+            // Set the last write time to be equal to the write time of the zip file,
+            // this way, we can compare this time to the write times of newer zips and
+            // detect we need a refresh
+            Directory.SetCreationTimeUtc(dir.FullName, File.GetLastWriteTimeUtc(_zipPath));
         }
 
 
@@ -98,17 +97,6 @@ namespace Hl7.Fhir.Specification.Source
             var dir = getCachedZipDirectory();
 
             if (dir.Exists) dir.Delete(recursive: true);
-        }
-
-
-        private static void unzip(string zipPath, string outputPath)
-        {
-            ArchiveFactory.WriteToDirectory(zipPath, outputPath);
-
-            //using (var zipfile = ZipFile.Read(zipPath))
-            //{
-            //    zipfile.ExtractAll(outputPath);
-            //}
         }
 
 

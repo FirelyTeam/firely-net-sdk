@@ -31,6 +31,10 @@ namespace Hl7.Fhir.Specification.Source
         {
             Source = source;
             CacheDuration = cacheDuration;
+
+            _artifactNames = new Cache<IEnumerable<string>>(id=>Source.ListArtifactNames(), CacheDuration);
+            _conformanceResources = new Cache<Resource>(id => Source.ReadConformanceResource(id), CacheDuration);
+            _resourceIdentifiers = new Cache<IEnumerable<string>>(id=>Source.ListConformanceResourceIdentifiers(), CacheDuration);
         }
 
         public CachedArtifactSource(IArtifactSource source) : this(source,DEFAULT_CACHE_DURATION)
@@ -42,72 +46,96 @@ namespace Hl7.Fhir.Specification.Source
 
         public int CacheDuration { get; set; }
 
-        private bool _prepared = false;
-
-        public void Prepare()
-        {
-            if (!_prepared)
-            {
-                Source.Prepare();
-                _prepared = true;
-            }
-        }
-
         public Stream ReadContentArtifact(string name)
         {                    
-            if (!_prepared) Prepare();
-
             // We don't cache a stream (yet?)
             return Source.ReadContentArtifact(name);
         }
 
+        private Cache<IEnumerable<string>> _artifactNames;
 
-        private class CacheEntry
+        public IEnumerable<string> ListArtifactNames()
         {
-            public Resource Data;
-            public DateTime Last;
-            public Uri ArtifactId;
-            public Exception LastError;
+            return _artifactNames.Get("__ARTIFACTNAMES__");
         }
 
-        private List<CacheEntry> _cache = new List<CacheEntry>();
+        private Cache<Resource> _conformanceResources;
 
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public Resource ReadConformanceResource(string identifier)
         {
-            if (!_prepared) Prepare();
+            return _conformanceResources.Get(identifier);
+        }
 
-            // Check the cache
-            var entry = _cache.Where(ce => ce.ArtifactId == artifactId).SingleOrDefault();
 
-            // Remove entry if it's too old
-            if(entry != null && entry.Last < DateTime.Now.AddSeconds(-1 * CacheDuration))
+        private Cache<IEnumerable<string>> _resourceIdentifiers;
+
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        {
+            return _resourceIdentifiers.Get("__RESOURCEIDENTIFIERS__");
+        }
+
+
+        private class Cache<T>
+        {
+            private Func<string,T> _onCacheMiss;
+            private int _duration;
+
+            public Cache(Func<string,T> onCacheMiss, int duration)
             {
-                _cache.Remove(entry);
-                entry = null;
+                _onCacheMiss = onCacheMiss;
+                _duration = duration;
             }
 
-            // If we still have a fresh entry, return it
-            if(entry != null)
-                return entry.Data;
-            else
+            private List<CacheEntry<T>> _cache = new List<CacheEntry<T>>();
+
+            public T Get(string identifier)
             {
-                // Otherwise, fetch it and cache it.
-                Resource newData = null;
-                Exception lastError = null;
+                // Check the cache
+                var entry = _cache.Where(ce => ce.Identifier == identifier).SingleOrDefault();
 
-                try
+                // Remove entry if it's too old
+                if(entry != null && entry.Expired)
                 {
-                    newData = Source.ReadResourceArtifact(artifactId);
+                    _cache.Remove(entry);
+                    entry = null;
                 }
-                catch(Exception e)
-                {
-                    lastError = e;
-                }
-                
-                _cache.Add(new CacheEntry { Data = newData, ArtifactId = artifactId, Last = DateTime.Now, LastError = lastError });
 
-                return newData;
+                // If we still have a fresh entry, return it
+                if (entry != null)
+                    return entry.Data;
+                else
+                {
+                    // Otherwise, fetch it and cache it.
+                    T newData = default(T);
+
+                    try
+                    {
+                        newData = _onCacheMiss(identifier);
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                    _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+
+                    return newData;
+                }
             }
         }
+
+        private class CacheEntry<T>
+        {
+            public T Data;
+            public DateTime Expires;
+            public string Identifier;
+
+            public bool Expired
+            {
+                get
+                {
+                    return DateTime.Now > Expires;
+                }
+            }
+        }    
     }
 }

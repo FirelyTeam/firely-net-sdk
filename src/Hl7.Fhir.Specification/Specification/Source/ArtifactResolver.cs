@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static IArtifactSource CreateDefault()
         {
-            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());
+            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());            
         }
 
         /// <summary>
@@ -96,21 +96,9 @@ namespace Hl7.Fhir.Specification.Source
             get { return _sources; } 
         }
 
-        private bool _prepared = false;
-
-        public void Prepare()
-        {
-            if (!_prepared)
-            {
-                foreach (var source in Sources) source.Prepare();
-                _prepared = true;
-            }
-        }
-
+   
         public Stream ReadContentArtifact(string name)
         {
-            if (!_prepared) Prepare();
-
             foreach (var source in Sources)
             {
                 try
@@ -129,15 +117,32 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        public Resource ReadResourceArtifact(Uri artifactId)
+        public IEnumerable<string> ListArtifactNames()
         {
-            if (!_prepared) Prepare();
+            var result = new List<string>();
 
             foreach (var source in Sources)
             {
                 try
                 {
-                    var result = source.ReadResourceArtifact(artifactId);
+                    result.AddRange(source.ListArtifactNames());
+                }
+                catch (NotImplementedException)
+                {
+                    // Don't do anything, just try the next IArtifactSource
+                }
+            }
+
+            return result;
+        }
+
+        public Resource ReadConformanceResource(string identifier)
+        {
+            foreach (var source in Sources)
+            {
+                try
+                {
+                    var result = source.ReadConformanceResource(identifier);
 
                     if (result != null) return result;
                 }
@@ -150,5 +155,25 @@ namespace Hl7.Fhir.Specification.Source
             // None of the IArtifactSources succeeded in returning a result
             return null;
         }
+
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        {
+            var result = new List<string>();
+
+            foreach (var source in Sources)
+            {
+                try
+                {
+                    result.AddRange(source.ListConformanceResourceIdentifiers());
+                }
+                catch (NotImplementedException)
+                {
+                    // Don't do anything, just try the next IArtifactSource
+                }
+            }
+
+            return result;
+        }
+
     }
 }

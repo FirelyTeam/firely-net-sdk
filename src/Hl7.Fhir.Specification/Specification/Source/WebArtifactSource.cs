@@ -10,43 +10,50 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Rest;
+//using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
-        public void Prepare()
-        {
-            return;     // Nothing to prepare
-        }
-
         public System.IO.Stream ReadContentArtifact(string name)
         {
             throw new NotImplementedException();        // support only url-based artifacts
         }
 
-        public Hl7.Fhir.Model.Resource ReadResourceArtifact(Uri artifactId)
+        public IEnumerable<string> ListArtifactNames()
         {
-            if (artifactId == null) throw Error.ArgumentNull("artifactId");
-            if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");
+            throw new NotImplementedException();
+        }
 
-            var id = new ResourceIdentity(artifactId);
+        public IEnumerable<string> ListConformanceResourceIdentifiers()
+        {
+            throw new NotImplementedException();
+        }
 
-            var client = new FhirClient(id.Endpoint);
-            client.Timeout = 5000;  //ms
+        public Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier)
+        {
+            throw new NotImplementedException();
 
-            try
-            {
-                var artifactEntry = client.Read(id);
+            //if (artifactId == null) throw Error.ArgumentNull("artifactId");
+            //if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");
 
-                return artifactEntry != null ? artifactEntry.Resource : null;
-            }
-            catch
-            {
-                return null;
-            }
+            //var id = new ResourceIdentity(artifactId);
+
+            //var client = new FhirClient(id.Endpoint);
+            //client.Timeout = 5000;  //ms
+
+            //try
+            //{
+            //    var artifactEntry = client.Read(id);
+
+            //    return artifactEntry != null ? artifactEntry.Resource : null;
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
             
         }
     }
