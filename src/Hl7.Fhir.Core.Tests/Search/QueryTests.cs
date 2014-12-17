@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Tests.Search
+namespace Hl7.Fhir.Test.Search
 {
     [TestClass]
     public class QueryTests
@@ -23,27 +23,28 @@ namespace Hl7.Fhir.Tests.Search
         [TestMethod]
         public void RetrieveCriteria()
         {
-            var q = new Query()
+            var q = new Parameters()
                 .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
                 .SummaryOnly().Include("Patient.managingOrganization")
                 .LimitTo(20);
             Assert.AreEqual(1, q.Criteria.Count());
-            Assert.AreEqual("ewout", Query.ExtractParamValue(q.Criteria.First()));
+            Assert.AreEqual("ewout", Parameters.ExtractParamValue(q.Criteria.First()));
         }
 
         [TestMethod]
         public void CountSetToNullAndGet()
         {
-            var q = new Query();
+            var q = new Parameters();
             q.Count = null;
             Assert.IsFalse(q.Count.HasValue);
         }
 
-          [TestMethod]
+
+        [TestMethod]
         public void ManipulateParameters()
         {
-            var q = new Query();
-     
+            var q = new Parameters();
+
             q.AddParameter("testX", "someVal");
             q.AddParameter("testX", "someVal2");
             q.AddParameter("testXY", "someVal3");
@@ -59,22 +60,21 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual(2, q.GetValues("testX").Count());
         }
 
-
         [TestMethod]
         public void TestProperties()
         {
-            var q = new Query();
+            var q = new Parameters();
 
             q.QueryName = "special";
-            q.ResourceType = "Patient";
+            q.ResourceSearchType = "Patient";
             q.Count = 31;
             q.Summary = true;
-            q.Sort = new List<Tuple<string,SortOrder>>() { Tuple.Create("sorted", SortOrder.Descending) };
+            q.Sort = new List<Tuple<string, SortOrder>>() { Tuple.Create("sorted", SortOrder.Descending) };
             q.Includes.Add("Patient.name");
             q.Includes.Add("Observation.subject");
 
             Assert.AreEqual("special", q.QueryName);
-            Assert.AreEqual("Patient", q.ResourceType);
+            Assert.AreEqual("Patient", q.ResourceSearchType);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(true, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
@@ -83,16 +83,16 @@ namespace Hl7.Fhir.Tests.Search
             Assert.AreEqual("Observation.subject", q.Includes.Skip(1).First());
 
             q.QueryName = "special2";
-            q.ResourceType = "Observation";
+            q.ResourceSearchType = "Observation";
             q.Count = 32;
             q.Summary = false;
-            q.Sort = new List<Tuple<string,SortOrder>>() { Tuple.Create("sorted2", SortOrder.Ascending) };
+            q.Sort = new List<Tuple<string, SortOrder>>() { Tuple.Create("sorted2", SortOrder.Ascending) };
             q.Includes.Add("Patient.name2");
             q.Includes.Remove("Patient.name");
             q.Includes.Add("Observation.subject2");
 
             Assert.AreEqual("special2", q.QueryName);
-            Assert.AreEqual("Observation", q.ResourceType);
+            Assert.AreEqual("Observation", q.ResourceSearchType);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(false, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Single());

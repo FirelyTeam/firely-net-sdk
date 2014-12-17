@@ -10,15 +10,14 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Tests.Rest
+namespace Hl7.Fhir.Test
 {
     [TestClass]
 #if PORTABLE45
 	public class PortableTestRestUrl
 #else
-	public class TestRestUrl
+    public class TestRestUrl
 #endif
     {
         [TestMethod]
@@ -42,13 +41,13 @@ namespace Hl7.Fhir.Tests.Rest
         {
             RestUrl endpoint = new RestUrl("http://localhost/fhir");
             RestUrl resturi;
-            
+
             resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
             Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
 
             var rl2 = new RestUrl(resturi.Uri);
 
-            rl2.AddParam("given","Piet");
+            rl2.AddParam("given", "Piet");
             Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
         }
 
@@ -63,20 +62,10 @@ namespace Hl7.Fhir.Tests.Rest
 
             old = new RestUrl("http://hl7.org/fhir/Patient/1");
             rl = old.NavigateTo("2");
-            Assert.AreEqual("http://hl7.org/fhir/Patient/2",rl.ToString());
+            Assert.AreEqual("http://hl7.org/fhir/Patient/2", rl.ToString());
 
             rl = old.NavigateTo("../Observation/3");
-            Assert.AreEqual("http://hl7.org/fhir/Observation/3",rl.ToString());
-        }
-
-        [TestMethod]
-        public void TestEscaping()
-        {
-            var url = new RestUrl("http://www.server.org/fhir");
-            url.AddParam("_since", FhirDateTime.Now().Value);
-
-            var output = url.Uri;
-            Assert.IsFalse(output.ToString().Contains("+"));    // don't use un-escaped +
+            Assert.AreEqual("http://hl7.org/fhir/Observation/3", rl.ToString());
         }
 
 
@@ -85,18 +74,9 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var u = new RestUrl("http://www.hl7.org/svc");
 
-            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc"));
-            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/"));
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization"));
-            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/"));
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/search?name=eve"));
             Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/svx/Organization"));
-
-            var v = new RestUrl("http://fhirtest.uhn.ca/base");
-            Assert.IsTrue(v.IsEndpointFor("http://fhirtest.uhn.ca/base?_getpages=8bba8a5a-233f-4f00-8db4-a00418c806fd&_getpagesoffset=10&_count=10&_format=xml"));
-
-            var x = new RestUrl("http://fhirtest.uhn.ca/base/");
-            Assert.IsTrue(x.IsEndpointFor("http://fhirtest.uhn.ca/base?_getpages=8bba8a5a-233f-4f00-8db4-a00418c806fd&_getpagesoffset=10&_count=10&_format=xml"));
         }
 
         //[TestMethod]

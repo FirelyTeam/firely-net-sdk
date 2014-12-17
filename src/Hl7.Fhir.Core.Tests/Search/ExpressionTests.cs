@@ -20,13 +20,13 @@ using Hl7.Fhir.Search;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Tests.Search
+namespace Hl7.Fhir.Tests
 {
     [TestClass]
 #if PORTABLE45
 	public class PortableSearchParamTests
 #else
-	public class SearchParamTests
+    public class SearchParamTests
 #endif
     {
         [TestMethod]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests.Search
         [TestMethod]
         public void ParseCriteriumFromParameter()
         {
-            Extension parameter = Query.BuildParamExtension("Subject.name", "Teun");
+            Parameters.ParametersParameterComponent parameter = Parameters.BuildParamExtension("Subject.name", "Teun");
             Criterium sut = Criterium.Parse(parameter);
             Assert.AreEqual("Subject", sut.ParamName);
             Assert.IsTrue(sut.Operand is Criterium);
@@ -155,17 +155,44 @@ namespace Hl7.Fhir.Tests.Search
         [TestMethod]
         public void HandleDateParam()
         {
+            // Brian: Not sure tha these tests SHOULD pass...
+            // a time component on the Date?
             var p1 = new DateValue(new DateTimeOffset(1972, 11, 30, 15, 20, 49, TimeSpan.Zero));
-            Assert.AreEqual("1972-11-30T15:20:49+00:00", p1.ToString());
+            Assert.AreEqual("1972-11-30", p1.ToString());
 
-            var p2 = DateValue.Parse("1972-11-30T18:45:36");
-            Assert.AreEqual("1972-11-30T18:45:36", p2.ToString());
+            // we can parse a valid FHIR datetime and strip the time part off
+            // (but it must be a valid FHIR datetime)
+            var p2 = DateValue.Parse("1972-11-30T18:45:36Z");
+            Assert.AreEqual("1972-11-30", p2.ToString());
 
             var crit = Criterium.Parse("paramX=1972-11-30");
             var p3 = ((UntypedValue)crit.Operand).AsDateValue();
             Assert.AreEqual("1972-11-30", p3.Value);
+
+            try
+            {
+                // Test with an invalid FHIR datetime (no timezone specified)
+                var p4 = DateValue.Parse("1972-11-30T18:45:36");
+                Assert.Fail("The datetime [1972-11-30T18:45:36] does not have a timezone, hence should fail parsing as a datevalue (via fhirdatetime)");
+            }
+            catch (ArgumentException)
+            {
+            }
         }
 
+        [TestMethod]
+        public void HandleDateTimeParam()
+        {
+            var p1 = new FhirDateTime(new DateTimeOffset(1972, 11, 30, 15, 20, 49, TimeSpan.Zero));
+            Assert.AreEqual("1972-11-30T15:20:49+00:00", p1.Value.ToString());
+
+            var crit = Criterium.Parse("paramX=1972-11-30T18:45:36Z");
+            var p3 = ((UntypedValue)crit.Operand).AsDateValue();
+            Assert.AreEqual("1972-11-30", p3.Value);
+
+            var p4 = ((UntypedValue)crit.Operand).AsDateTimeValue();
+            Assert.AreEqual("1972-11-30T18:45:36Z", p4.Value);
+        }
 
         [TestMethod]
         public void HandleStringParam()

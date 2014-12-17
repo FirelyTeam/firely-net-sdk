@@ -16,19 +16,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Tests.Search
+namespace Hl7.Fhir.Test.Search
 {
     [TestClass]
 #if PORTABLE45
 	public class PortableQueryExtensionTests
 #else
-	public class QueryExtensionTests
+    public class QueryExtensionTests
 #endif
     {
         [TestMethod]
         public void ManageSearchResult()
         {
-            var q = new Query()
+            var q = new Parameters()
                 .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
                 .SummaryOnly().Include("Patient.managingOrganization")
                 .LimitTo(20);
@@ -36,42 +36,40 @@ namespace Hl7.Fhir.Tests.Search
             var x = FhirSerializer.SerializeResourceToXml(q);
             Console.WriteLine(x);
 
-            Assert.AreEqual("Patient", q.ResourceType);
-            
-            var p = q.Parameter.SingleWithName("name");
-            Assert.AreEqual("name:exact", Query.ExtractParamKey(p));
-            Assert.AreEqual("ewout", Query.ExtractParamValue(p));
+            Assert.AreEqual("Patient", q.ResourceSearchType);
 
-            var o = q.Sort.Single();
-            Assert.AreEqual("birthDate", o.Item1);
-            Assert.AreEqual(SortOrder.Descending, o.Item2);
+            var p = q.Parameter.SingleWithName("name");
+            Assert.AreEqual("name:exact", p.Name);
+            Assert.AreEqual("ewout", Parameters.ExtractParamValue(p));
+
+            var o = q.Sort;
+            Assert.AreEqual("birthDate", o.First().Item1);
+            Assert.AreEqual(SortOrder.Descending, o.First().Item2);
 
             Assert.IsTrue(q.Summary);
             Assert.IsTrue(q.Includes.Contains("Patient.managingOrganization"));
-            Assert.AreEqual(20,q.Count);
+            Assert.AreEqual(20, q.Count);
         }
 
         [TestMethod]
-        public void ReapplyParam()
+        public void ReapplySingleParam()
         {
-            var q = new Query()
+            var q = new Parameters()
                 .Custom("mySearch").OrderBy("adsfadf").OrderBy("q", SortOrder.Descending)
                     .LimitTo(10).LimitTo(20).Custom("miSearch").SummaryOnly().SummaryOnly(false);
 
             Assert.AreEqual("miSearch", q.QueryName);
             Assert.IsFalse(q.Summary);
 
-            var o = q.Sort.First();
-            Assert.AreEqual("adsfadf", o.Item1);
-            Assert.AreEqual(SortOrder.Ascending, o.Item2);
-
-            o = q.Sort.Skip(1).First();
-            Assert.AreEqual("q", o.Item1);
-            Assert.AreEqual(SortOrder.Descending, o.Item2);
+            var o = q.Sort;
+            Assert.AreEqual("adsfadf", o.First().Item1);
+            Assert.AreEqual(SortOrder.Ascending, o.First().Item2);
+            Assert.AreEqual("q", o.Skip(1).First().Item1);
+            Assert.AreEqual(SortOrder.Descending, o.Skip(1).First().Item2);
 
             Assert.AreEqual(20, q.Count);
 
             Assert.IsFalse(q.Summary);
-        }   
+        }
     }
 }

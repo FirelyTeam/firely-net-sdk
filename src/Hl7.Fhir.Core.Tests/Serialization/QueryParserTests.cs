@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Search;
 
-namespace Hl7.Fhir.Tests.Serialization
+namespace Hl7.Fhir.Test.Serialization
 {
     [TestClass]
     public class FhirParserTests
@@ -27,9 +27,9 @@ namespace Hl7.Fhir.Tests.Serialization
             string resource = "Patient";
             var uriParams = parseParams("_id=1");
 
-            Query test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
+            Parameters test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
 
-            Assert.AreEqual("Patient", test.ResourceType);
+            Assert.AreEqual("Patient", test.ResourceSearchType);
             Assert.AreEqual("1", test.GetSingleValue("_id"));
         }
 
@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Tests.Serialization
             string resource = "Observation";
             var uriParams = parseParams("_include=Subject");
 
-            Query test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
+            Parameters test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
 
-            Assert.AreEqual("Observation", test.ResourceType);
+            Assert.AreEqual("Observation", test.ResourceSearchType);
             Assert.IsTrue(test.Includes.Contains("Subject"));
         }
 
@@ -51,11 +51,11 @@ namespace Hl7.Fhir.Tests.Serialization
             string resource = "Observation";
             var uriParams = parseParams("Observation.Subject.name=Teun");
 
-            Query test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
+            Parameters test = FhirParser.ParseQueryFromUriParameters(resource, uriParams);
 
-            Assert.AreEqual("Observation", test.ResourceType);
-            Extension paramTeun = test.Parameter.SingleWithName("Observation.Subject.name");
-            Assert.AreEqual("Teun", Query.ExtractParamValue(paramTeun));
+            Assert.AreEqual("Observation", test.ResourceSearchType);
+            Parameters.ParametersParameterComponent paramTeun = test.Parameter.SingleWithName("Observation.Subject.name");
+            Assert.AreEqual("Teun", Parameters.ExtractParamValue(paramTeun));
         }
 
         private IEnumerable<Tuple<String, String>> parseParams(string uriParams)
