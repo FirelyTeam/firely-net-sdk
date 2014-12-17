@@ -27,9 +27,8 @@ namespace Hl7.Fhir.Specification.Source
     {
         public string Identifier { get; set; }
 
-        //public ResourceType Type { get; set; }
-        public string Type { get; set; }
-        
+        public ResourceType Type { get; set; }
+                
         public string Name { get; set; }
 
         public string Origin { get; set; }

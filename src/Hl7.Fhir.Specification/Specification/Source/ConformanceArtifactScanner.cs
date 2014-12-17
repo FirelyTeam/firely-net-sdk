@@ -15,6 +15,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -92,6 +93,12 @@ namespace Hl7.Fhir.Specification.Source
             return valueAttr != null ? valueAttr.Value : null;
         }
 
+        private Lazy<EnumMapping> _resourceTypeMapping = new Lazy<EnumMapping>(() => EnumMapping.Create(typeof(ResourceType)));
+
+        private ResourceType stringNameToEnum(string name)
+        {
+            return (ResourceType)_resourceTypeMapping.Value.ParseLiteral(name);
+        }
 
         public IEnumerable<ConformanceInformation> ListConformanceResourceInformation()
         {
@@ -104,7 +111,7 @@ namespace Hl7.Fhir.Specification.Source
                                 Identifier = getPrimitiveValueElement(res, GetIdentifyingElementName(res.Name.LocalName)),
                                 Name = getPrimitiveValueElement(res, GetNameElementName(res.Name.LocalName)),
                                 Origin = _origin,
-                                Type = res.Name.LocalName
+                                Type = stringNameToEnum(res.Name.LocalName)
                         });                       
         }
 
