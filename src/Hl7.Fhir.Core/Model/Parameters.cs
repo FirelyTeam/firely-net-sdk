@@ -43,20 +43,59 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Query
+    /// <summary>
+    /// This is the Parameters partial class that adds all the specific functionality of a Query to the model
+    /// </summary>
+    public partial class Parameters
     {
+        /// <summary>
+        /// "_id"
+        /// </summary>
         public const string SEARCH_PARAM_ID = "_id";
+        /// <summary>
+        /// "_text"
+        /// </summary>
         public const string SEARCH_PARAM_NARRATIVE = "_text";
+        /// <summary>
+        /// "_content"
+        /// </summary>
         public const string SEARCH_PARAM_CONTENT = "_content";
+        /// <summary>
+        /// "_tag"
+        /// </summary>
         public const string SEARCH_PARAM_TAG = "_tag";
+        /// <summary>
+        /// "_profile"
+        /// </summary>
         public const string SEARCH_PARAM_PROFILE = "_profile";
+        /// <summary>
+        /// "_security"
+        /// </summary>
         public const string SEARCH_PARAM_SECURITY = "_security";
+        /// <summary>
+        /// "_query"
+        /// </summary>
         public const string SEARCH_PARAM_QUERY = "_query";
+        /// <summary>
+        /// "_type"
+        /// </summary>
         public const string SEARCH_PARAM_TYPE = "_type";
 
+        /// <summary>
+        /// "_count"
+        /// </summary>
         public const string SEARCH_PARAM_COUNT = "_count";
+        /// <summary>
+        /// "_include"
+        /// </summary>
         public const string SEARCH_PARAM_INCLUDE = "_include";
+        /// <summary>
+        /// "_sort"
+        /// </summary>
         public const string SEARCH_PARAM_SORT = "_sort";
+        /// <summary>
+        /// "_summary"
+        /// </summary>
         public const string SEARCH_PARAM_SUMMARY = "_summary";
 
         /// <summary>
@@ -96,10 +135,12 @@ namespace Hl7.Fhir.Model
         
 
 
-        public Query()
+        public Parameters()
         {
-            Identifier = "urn:uuid:" + Guid.NewGuid();
-            Parameter = new List<Extension>();
+            // As this is an actual resource, we can't just allocate an
+            // arbitrary identifier to it
+            // base.Id = "urn:uuid:" + Guid.NewGuid();
+            Parameter = new List<ParametersParameterComponent>();
         }
 
         /// <summary>
@@ -112,12 +153,12 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                return GetSingleValue(Query.SEARCH_PARAM_QUERY);
+                return GetSingleValue(Parameters.SEARCH_PARAM_QUERY);
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_QUERY);
-                AddParameter(Query.SEARCH_PARAM_QUERY, value);
+                RemoveParameter(Parameters.SEARCH_PARAM_QUERY);
+                AddParameter(Parameters.SEARCH_PARAM_QUERY, value);
             }
         }
 
@@ -134,12 +175,12 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                return GetSingleValue(Query.SEARCH_PARAM_TYPE);
+                return GetSingleValue(Parameters.SEARCH_PARAM_TYPE);
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_TYPE);
-                AddParameter(Query.SEARCH_PARAM_TYPE, value);
+                RemoveParameter(Parameters.SEARCH_PARAM_TYPE);
+                AddParameter(Parameters.SEARCH_PARAM_TYPE, value);
             }
         }
 
@@ -157,14 +198,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var count = GetSingleValue(Query.SEARCH_PARAM_COUNT);
+                var count = GetSingleValue(Parameters.SEARCH_PARAM_COUNT);
                 return count != null ? Int32.Parse(count) : (int?)null;
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_COUNT);
+                RemoveParameter(Parameters.SEARCH_PARAM_COUNT);
                 if (value.HasValue)
-                    AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
+                    AddParameter(Parameters.SEARCH_PARAM_COUNT, value.ToString());
             }
         }
 
@@ -180,13 +221,13 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var val = GetSingleValue(Query.SEARCH_PARAM_SUMMARY);
+                var val = GetSingleValue(Parameters.SEARCH_PARAM_SUMMARY);
                 return val == "true";
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_SUMMARY);
-                AddParameter(Query.SEARCH_PARAM_SUMMARY, value ? "true" : "false");
+                RemoveParameter(Parameters.SEARCH_PARAM_SUMMARY);
+                AddParameter(Parameters.SEARCH_PARAM_SUMMARY, value ? "true" : "false");
             }
         }
 
@@ -200,16 +241,15 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var ext = Parameter.WithName(Query.SEARCH_PARAM_SORT);
-                if (ext == null) return null;
+                var sortParams = Parameter.WithName(Parameters.SEARCH_PARAM_SORT);
+                if (sortParams == null) return null;
 
                 var result = new List<Tuple<string,SortOrder>>();
 
-                foreach (var extension in ext)
+                foreach (var sp in sortParams)
                 {
-                    var key = ExtractParamKey(extension);
-                    var sort = key.EndsWith(Query.SEARCH_MODIF_DESCENDING) ? SortOrder.Descending : SortOrder.Ascending;
-                    var name = ExtractParamValue(extension);
+                    var sort = sp.Name.EndsWith(Parameters.SEARCH_MODIFIERSEPARATOR + Parameters.SEARCH_MODIF_DESCENDING) ? SortOrder.Descending : SortOrder.Ascending;
+                    var name = ExtractParamValue(sp);
 
                     result.Add(Tuple.Create(name, sort));
                 }
@@ -218,15 +258,15 @@ namespace Hl7.Fhir.Model
             }
             set
             {
-                RemoveParameter(Query.SEARCH_PARAM_SORT);
+                RemoveParameter(Parameters.SEARCH_PARAM_SORT);
 
                 foreach (var sort in value)
                 {
                     var modif = sort.Item2 == SortOrder.Ascending ?
-                        Query.SEARCH_MODIF_ASCENDING : Query.SEARCH_MODIF_DESCENDING;
+                        Parameters.SEARCH_MODIF_ASCENDING : Parameters.SEARCH_MODIF_DESCENDING;
                     var name = sort.Item1;
 
-                    AddParameter(Query.SEARCH_PARAM_SORT + Query.SEARCH_MODIFIERSEPARATOR + modif, name);
+                    AddParameter(Parameters.SEARCH_PARAM_SORT + Parameters.SEARCH_MODIFIERSEPARATOR + modif, name);
                 }                
             }
         }
@@ -253,11 +293,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public ICollection<Extension> Criteria
+        public ICollection<ParametersParameterComponent> Criteria
         {
             get
             {
-                return new List<Extension>(this.Parameter.Where(p => !p.IsReserved()));
+                return new List<ParametersParameterComponent>(this.Parameter.Where(p => !p.IsReserved()));
             }
         }
 
@@ -267,12 +307,12 @@ namespace Hl7.Fhir.Model
         /// <param name="key">The name of the parameter, possibly including the modifier</param>
         /// <param name="value">The string representation of the parameter value</param>
         /// <returns>this (Query), so you can chain AddParameter calls</returns>
-        public Query AddParameter(string key, string value)
+        public Parameters AddParameter(string key, string value)
         {
             if (key == null) throw new ArgumentNullException("key");
             if (value == null) throw new ArgumentNullException("value");
 
-            if (Parameter == null) Parameter = new List<Extension>();
+            if (Parameter == null) Parameter = new List<ParametersParameterComponent>();
 
             Parameter.Add(BuildParamExtension(key, value));
 
@@ -339,54 +379,22 @@ namespace Hl7.Fhir.Model
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Extension BuildParamExtension(string key, string value)
+        public static Parameters.ParametersParameterComponent BuildParamExtension(string key, string value)
         {
             if (key == null) throw new ArgumentNullException("key");
             if (value == null) throw new ArgumentNullException("value");
 
-            return new Extension(BuildParamUri(key), new FhirString(value));
+            return new Parameters.ParametersParameterComponent() { Name = key, Value = new FhirString(value)};
         }
 
 
-        public static string ExtractParamValue(Extension extension)
+        public static string ExtractParamValue(Parameters.ParametersParameterComponent paramComponent)
         {
-            var element = extension != null ? extension.Value as FhirString : null;
+            var element = paramComponent != null ? paramComponent.Value as FhirString : null;
             var value = element != null ? element.Value : null;
             return value;
         }
 
-        /// <summary>
-        /// Constructs an Url indicating a FHIR search parameter
-        /// </summary>
-        /// <param name="paramKey"></param>
-        /// <returns></returns>
-        public static string BuildParamUri(string paramKey)
-        {
-            if (paramKey == null) throw new ArgumentNullException("paramName");
-
-            return XmlNs.FHIR_URL_SEARCHPARAM + "#" + paramKey;
-        }
-
-        private const string PARAMETERURLANDFRAGMENT = XmlNs.FHIR_URL_SEARCHPARAM + "#";
-
-        /// <summary>
-        /// Given a Extension containing a FHIR search parameter, returns the
-        /// name (and possibly modifier) of the parameter
-        /// </summary>
-        /// <param name="paramExt">An Extension containing a FHIR search parameter</param>
-        /// <returns>The name of the parameter, possibly including a modifier</returns>
-        public static string ExtractParamKey(Extension paramExt)
-        {
-            if (paramExt == null) throw new ArgumentNullException("paramExt");
-            if (paramExt.Url == null) throw new ArgumentException("Extension.url cannot be null", "paramExt");
-
-            var uriString = paramExt.Url.ToString();
-
-            if (uriString.StartsWith(PARAMETERURLANDFRAGMENT))
-                return uriString.Remove(0, PARAMETERURLANDFRAGMENT.Length);
-            else
-                return null;
-        }
     }
 
     public enum SortOrder
@@ -398,19 +406,19 @@ namespace Hl7.Fhir.Model
 
     internal class IncludeCollection : ICollection<string>
     {
-        public IncludeCollection(List<Extension> wrapped)
+        public IncludeCollection(List<Parameters.ParametersParameterComponent> wrapped)
         {
             Wrapped = wrapped;
-            _matcher = ParamsExtensions.MatchParam(Query.SEARCH_PARAM_INCLUDE);
+            _matcher = ParamsExtensions.MatchParam(Parameters.SEARCH_PARAM_INCLUDE);
         }
 
-        public List<Extension> Wrapped { get; private set; }
-        private Predicate<Extension> _matcher;
+        public List<Parameters.ParametersParameterComponent> Wrapped { get; private set; }
+        private Predicate<Parameters.ParametersParameterComponent> _matcher;
 
 
         public void Add(string item)
         {
-            Wrapped.Add(Query.BuildParamExtension(Query.SEARCH_PARAM_INCLUDE, item));
+            Wrapped.Add(Parameters.BuildParamExtension(Parameters.SEARCH_PARAM_INCLUDE, item));
         }
 
         public void Clear()
@@ -420,12 +428,12 @@ namespace Hl7.Fhir.Model
 
         public bool Contains(string item)
         {
-            return Wrapped.Any(ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
+            return Wrapped.Any(ext => _matcher(ext) && Parameters.ExtractParamValue(ext) == item);
         }
 
         public void CopyTo(string[] array, int arrayIndex)
         {
-            Wrapped.FindAll(_matcher).Select(ext => Query.ExtractParamValue(ext))
+            Wrapped.FindAll(_matcher).Select(ext => Parameters.ExtractParamValue(ext))
                 .ToArray<string>().CopyTo(array, arrayIndex);
         }
 
@@ -441,7 +449,7 @@ namespace Hl7.Fhir.Model
 
         public bool Remove(string item)
         {
-            var found = Wrapped.FirstOrDefault(ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
+            var found = Wrapped.FirstOrDefault(ext => _matcher(ext) && Parameters.ExtractParamValue(ext) == item);
             if (found == null) return false;
 
             return Wrapped.Remove(found);
@@ -449,7 +457,7 @@ namespace Hl7.Fhir.Model
 
         public IEnumerator<string> GetEnumerator()
         {
-            return Wrapped.FindAll(_matcher).Select(ext => Query.ExtractParamValue(ext)).GetEnumerator();
+            return Wrapped.FindAll(_matcher).Select(ext => Parameters.ExtractParamValue(ext)).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -462,42 +470,40 @@ namespace Hl7.Fhir.Model
 
     public static class ParamsExtensions
     {
-        public static IEnumerable<Extension> WithName(this IEnumerable<Extension> pars, string key)
+        public static IEnumerable<Parameters.ParametersParameterComponent> WithName(this IEnumerable<Parameters.ParametersParameterComponent> pars, string key)
         {
             var match = MatchParam(key);
             return pars.Where(par => match(par));
         }
 
-        public static Extension SingleWithName(this IEnumerable<Extension> pars, string key)
+        public static Parameters.ParametersParameterComponent SingleWithName(this IEnumerable<Parameters.ParametersParameterComponent> pars, string key)
         {
             var match = MatchParam(key);
             return pars.SingleOrDefault(par => match(par));
         }
 
-        internal static Predicate<Extension> MatchParam(string key)
+        internal static Predicate<Parameters.ParametersParameterComponent> MatchParam(string key)
         {
-            var param = Query.BuildParamUri(key).ToString();
-
 			// PCL does not have an overload on this routine that takes a char, only string
-			if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR.ToString()))
+			if (key.Contains(Parameters.SEARCH_MODIFIERSEPARATOR.ToString()))
 			{
-                return (Extension ext) => ext.Url.ToString() == param;
+                return (Parameters.ParametersParameterComponent ext) => ext.Name == key;
             }
             else
             {
                 // Add a modifier separator to the end if there's no modifier,
                 // this way we can assure we don't match just a prefix 
                 // (e.g. a param _querySpecial when looking for_query)
-                var paramWithSep = Query.BuildParamUri(key + Query.SEARCH_MODIFIERSEPARATOR).ToString();
-                return (Extension ext) => ext.Url.ToString().StartsWith(paramWithSep) ||
-                                (ext.Url.ToString() == param);
+                var paramWithSep = key + Parameters.SEARCH_MODIFIERSEPARATOR;
+                return (Parameters.ParametersParameterComponent ext) => ext.Name.StartsWith(paramWithSep) ||
+                                ext.Name == key;
             }
         }
 
-        internal static bool IsReserved(this Extension parameter)
+        internal static bool IsReserved(this Parameters.ParametersParameterComponent parameter)
         {
-            string key = Query.ExtractParamKey(parameter).Split(new char[] { Query.SEARCH_MODIFIERSEPARATOR }).First();
-            return Query.RESERVED_PARAMETERS.Contains(key);
+            string key = parameter.Name.Split(new char[] { Parameters.SEARCH_MODIFIERSEPARATOR }).First();
+            return Parameters.RESERVED_PARAMETERS.Contains(key);
         }
     }
 }

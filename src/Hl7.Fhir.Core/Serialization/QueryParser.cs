@@ -18,14 +18,13 @@ namespace Hl7.Fhir.Serialization
     {
         internal static Parameters Load (String resource, IEnumerable<Tuple<String, String>> parameters)
         {
-            throw new NotImplementedException();
-            //Query result = new Query();
-            //result.ResourceSearchType = resource;
-            //foreach (var p in parameters)
-            //{
-            //    result.AddParameter(p.Item1, p.Item2);
-            //};
-            //return result;
+            Parameters result = new Parameters();
+            result.ResourceSearchType = resource;
+            foreach (var p in parameters)
+            {
+                result.AddParameter(p.Item1, p.Item2);
+            };
+            return result;
         }
     }
 }

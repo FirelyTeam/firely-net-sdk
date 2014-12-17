@@ -75,22 +75,22 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw Error.ArgumentNull("bundle");
 
             Body = format == ResourceFormat.Xml ?
-                FhirSerializer.SerializeBundleToXmlBytes(bundle, summary: false) :
-                FhirSerializer.SerializeBundleToJsonBytes(bundle, summary: false);
+                FhirSerializer.SerializeToXmlBytes(bundle, summary: false) :
+                FhirSerializer.SerializeToJsonBytes(bundle, summary: false);
 
             ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: true);
         }
 
-        public void SetBody(TagList tagList, ResourceFormat format)
-        {
-            if (tagList == null) throw Error.ArgumentNull("tagList");
+        //public void SetBody(IEnumerable<Coding> tagList, ResourceFormat format)
+        //{
+        //    if (tagList == null) throw Error.ArgumentNull("tagList");
 
-            Body = format == ResourceFormat.Xml ?
-                FhirSerializer.SerializeTagListToXmlBytes(tagList) :
-                FhirSerializer.SerializeTagListToJsonBytes(tagList);
+        //    Body = format == ResourceFormat.Xml ?
+        //        FhirSerializer.SerializeTagListToXmlBytes(tagList) :
+        //        FhirSerializer.SerializeTagListToJsonBytes(tagList);
 
-            ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
-        }
+        //    ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+        //}
 
 
         public string BodyAsString()
@@ -98,13 +98,6 @@ namespace Hl7.Fhir.Rest
             if (Body == null) return null;
 
             return (new StreamReader(new MemoryStream(Body), System.Text.Encoding.UTF8, true)).ReadToEnd();
-        }
-
-        public void SetTagsInHeader(IEnumerable<Tag> tags)
-        {
-            if (tags == null) throw Error.ArgumentNull("tags");
-
-            CategoryHeader = HttpUtil.BuildCategoryHeader(tags);            
         }
 
         public FhirResponse GetResponse(ResourceFormat? acceptFormat)
@@ -127,10 +120,11 @@ namespace Hl7.Fhir.Rest
             {
                 request.WriteBody(Body);
                 request.ContentType = ContentType;
-                if(ContentLocation != null) request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
+                if (ContentLocation != null)
+                    request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
             }
 
-            if(CategoryHeader != null) request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
+            // if(location.ver != null) request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
 
             FhirResponse fhirResponse = null;
 
@@ -138,12 +132,13 @@ namespace Hl7.Fhir.Rest
             request.Timeout = Timeout;
 #endif
 
-            if (_beforeRequest != null) _beforeRequest(this,request);
+            if (_beforeRequest != null) 
+                _beforeRequest(this,request);
 
             // Make sure the HttpResponse gets disposed!
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
-                fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
+                fhirResponse = FhirResponse.FromHttpWebResponse(webResponse).Result;
                 if (_afterRequest != null) _afterRequest(fhirResponse,webResponse);
             }
 

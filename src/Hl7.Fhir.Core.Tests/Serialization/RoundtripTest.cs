@@ -155,22 +155,20 @@ namespace Hl7.Fhir.Tests.Serialization
         private void convertResource(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
-            var parsr = new FhirParser();
-            var sersr = new FhirSerializer();
 
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = parsr.ParseResourceFromXml(xml);
+                var resource = FhirParser.ParseResourceFromXml(xml);
 
-                var json = sersr.SerializeResourceToJson(resource);
+                var json = FhirSerializer.SerializeResourceToJson(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = parsr.ParseResourceFromJson(json);
-                var xml = sersr.SerializeResourceToXml(resource);
+                var resource = FhirParser.ParseResourceFromJson(json);
+                var xml = FhirSerializer.SerializeResourceToXml(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }
@@ -178,22 +176,20 @@ namespace Hl7.Fhir.Tests.Serialization
         private void convertFeed(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
-            var parsr = new FhirParser();
-            var sersr = new FhirSerializer();
 
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = parsr.ParseResourceFromXml(xml);
+                var resource = FhirParser.ParseResourceFromXml(xml);
 
-                var json = sersr.SerializeResourceToJson(resource);
+                var json = FhirSerializer.SerializeResourceToJson(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = parsr.ParseResourceFromJson(json);
-                var xml = sersr.SerializeResourceToXml(resource);
+                var resource = FhirParser.ParseResourceFromJson(json);
+                var xml = FhirSerializer.SerializeResourceToXml(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }

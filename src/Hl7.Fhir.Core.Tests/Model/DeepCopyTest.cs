@@ -31,9 +31,9 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)(new FhirParser()).ParseResourceFromXml(xml);
+            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
             var p2 = (Patient)p.DeepCopy();
-            var xml2 = (new FhirSerializer()).SerializeResourceToXml(p2);
+            var xml2 = FhirSerializer.SerializeResourceToXml(p2);
             XmlAssert.AreSame(xml, xml2);
         }
     }

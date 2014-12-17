@@ -21,9 +21,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Rest;
 using System.Threading;
 using Hl7.Fhir.Introspection;
-#if PORTABLE45 || NET45
 using System.Threading.Tasks;
-#endif
 
 
 namespace Hl7.Fhir.Rest
@@ -100,7 +98,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="useOptionsVerb">If true, uses the Http OPTIONS verb to get the conformance, otherwise uses the /metadata endpoint</param>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public ResourceEntry<Conformance> Conformance(bool useOptionsVerb = false)
+        public Conformance Conformance(bool useOptionsVerb = false)
         {
             RestUrl url = useOptionsVerb ? new RestUrl(Endpoint) : new RestUrl(Endpoint).WithMetadata();
 
@@ -119,7 +117,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>The Create operation normally does not return the posted resource, but just its metadata. Specifying
         /// refresh=true ensures the return value contains the Resource as stored by the server.
         /// </remarks>
-        public ResourceEntry<TResource> Create<TResource>(TResource resource, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
+		public TResource Create<TResource>(TResource resource, IEnumerable<Coding> tags = null, bool refresh = false) where TResource : Resource, new()
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
@@ -138,7 +136,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>The Create operation normally does not return the posted resource, but just its metadata. Specifying
         /// refresh=true ensures the return value contains the Resource as stored by the server.
         /// </remarks>
-        public ResourceEntry<TResource> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
+		public TResource Create<TResource>(TResource resource, string id, IEnumerable<Coding> tags = null, bool refresh = false) where TResource : Resource, new()
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id", "Must supply a client-assigned id");
@@ -155,7 +153,7 @@ namespace Hl7.Fhir.Rest
             return req;
         }
 
-        private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
+        private TResource internalCreate<TResource>(TResource resource, IEnumerable<Coding> tags, string id, bool refresh) where TResource : Resource, new()
         {
             var collection = typeof(TResource).GetCollectionName();
             FhirRequest req = null;
@@ -173,22 +171,38 @@ namespace Hl7.Fhir.Rest
                 req = createFhirRequest(ri, "PUT");
             }
 
+            if(tags != null) 
+                resource.Meta.Tag = tags.ToList();
             req.SetBody(resource, PreferredFormat);
-            if(tags != null) req.SetTagsInHeader(tags);
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
-            ResourceEntry<TResource> entry = (ResourceEntry<TResource>) ResourceEntry.Create(resource);
-            entry.Links.SelfLink = new ResourceIdentity(response.Location);
-            entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
+            TResource entry = new TResource();
+            entry.Meta = new Resource.ResourceMetaComponent();
+            entry.ResourceBase = this._endpoint.OriginalString;
+            var actualIdentity = new ResourceIdentity(response.Location);
+            entry.Id = actualIdentity.Id;
 
-			if (!String.IsNullOrEmpty(response.LastModified))
-				entry.LastUpdated = DateTimeOffset.Parse(response.LastModified);
+            if (!String.IsNullOrEmpty(response.LastModified))
+                entry.Meta.LastUpdated = DateTimeOffset.Parse(response.LastModified);
 
-			if (!String.IsNullOrEmpty(response.Category))
-				entry.Tags = HttpUtil.ParseCategoryHeader(response.Category);
+            if (!String.IsNullOrEmpty(response.ETag))
+            {
+                entry.Meta.VersionId = response.ETag.Replace("\"", "");
+
+                // test that the etag did have the quotes on it as per the IETF spec
+                // http://tools.ietf.org/html/rfc7232#section-2.3
+                if (response.ETag != "\"" + actualIdentity.VersionId + "\"")
+                    throw new ApplicationException(String.Format("Version IDs from the server don't match: [{0}], [{1}]", entry.Meta.VersionId, actualIdentity.VersionId));
+            }
+            else
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format("{0}: {1} - Result did not have an ETag on the HTTP Header, using the ContentLocation instead", req.Method, response.Location));
+                entry.Meta.VersionId = actualIdentity.VersionId;
+            }
 
             // If asked for it, immediately get the contents *we just posted*, so use the actually created version
-            if (refresh) entry = Refresh(entry, versionSpecific: true);
+            if (refresh) 
+                entry = Refresh(entry, versionSpecific: true);
             return entry;
         }
 
@@ -199,19 +213,19 @@ namespace Hl7.Fhir.Rest
         /// <param name="entry">The entry to refresh. It's id property will be used to fetch the latest version of the Resource.</param>
         /// <typeparam name="TResource">The type of resource to refresh</typeparam>
         /// <returns>A resource entry containing up-to-date data and metadata.</returns>
-        public ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
+        public TResource Refresh<TResource>(TResource entry) where TResource : Resource, new()
         {
             return Refresh<TResource>(entry, false);
         }
 
-        internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
+        internal TResource Refresh<TResource>(TResource entry, bool versionSpecific = false) where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
 
             if (!versionSpecific)
                 return Read<TResource>(entry.Id);
             else
-                return Read<TResource>(entry.SelfLink);
+                return Read<TResource>(entry.ResourceIdentity());
         }
 
         /// <summary>
@@ -223,7 +237,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public ResourceEntry<TResource> Read<TResource>(Uri location) where TResource : Resource, new()
+        public TResource Read<TResource>(Uri location) where TResource : Resource, new()
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -241,7 +255,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public ResourceEntry<TResource> Read<TResource>(string location) where TResource : Resource, new()
+        public TResource Read<TResource>(string location) where TResource : Resource, new()
         {
             if (location == null) throw Error.ArgumentNull("location");
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
@@ -256,9 +270,10 @@ namespace Hl7.Fhir.Rest
         /// object, must be cast to the correct Resource type to access its properties.
         /// The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public ResourceEntry Read(Uri location)
+        public Resource Read(Uri location)
         {
-            if (location == null) throw Error.ArgumentNull("location");
+            if (location == null)
+                throw Error.ArgumentNull("location");
 
             var collection = getCollectionFromLocation(location);
 
@@ -275,7 +290,7 @@ namespace Hl7.Fhir.Rest
         /// object, must be cast to the correct Resource type to access its properties.
         /// The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public ResourceEntry Read(string location)
+        public Resource Read(string location)
         {
             if (location == null) throw Error.ArgumentNull("location");
             return Read(new Uri(location, UriKind.RelativeOrAbsolute));
@@ -310,49 +325,54 @@ namespace Hl7.Fhir.Rest
         /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
-        public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool refresh=false)
+        public TResource Update<TResource>(TResource entry, bool refresh = false)
                         where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
-            if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
-            if (entry.Id == null) throw Error.Argument("entry","Entry needs a non-null entry.id to send the update to");
+            // if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
+            if (entry.Id == null) throw Error.Argument("entry", "Entry needs a non-null entry.id to send the update to");
 
-            var req = createFhirRequest(entry.Id, "PUT");
-            req.SetBody(entry.Resource,PreferredFormat);
-            if(entry.Tags != null) req.SetTagsInHeader(entry.Tags);
+            var req = createFhirRequest(entry.ResourceIdentity().WithoutVersion(), "PUT");
+            req.SetBody(entry, PreferredFormat);
+            // if(entry.Tags != null) req.SetTagsInHeader(entry.Tags);
 
             // Always supply the version we are updating if we have one. Servers may require this.
-            if (entry.SelfLink != null) req.ContentLocation = entry.SelfLink;
+            // if (entry.Meta.SelfLink != null) 
+            req.ContentLocation = entry.ResourceIdentity();
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
-            var updated = new ResourceEntry<TResource>();
-			var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
+            var updated = new TResource();
+            updated.Meta = new Resource.ResourceMetaComponent();
+            updated.ResourceBase = entry.ResourceBase;
+            var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
 
-			if (!String.IsNullOrEmpty(location))
-			{
-				ResourceIdentity reqId = new ResourceIdentity(location);
+            if (!String.IsNullOrEmpty(location))
+            {
+                ResourceIdentity reqId = new ResourceIdentity(location);
 
-				// Set the id to the location, without the version specific part
-				updated.Id = reqId.WithoutVersion();
+                // Set the id to the location, without the version specific part
+                updated.Id = reqId.Id;
 
-				// If the content location has version information, set to SelfLink to it
-				if (reqId.VersionId != null) updated.SelfLink = reqId;
-			}
+                // If the content location has version information, set to SelfLink to it
+                if (reqId.VersionId != null)
+                    updated.Meta.VersionId = reqId.VersionId;
+                //					updated.SelfLink = reqId;
+            }
 
-			if (!String.IsNullOrEmpty(response.LastModified))
-				updated.LastUpdated = DateTimeOffset.Parse(response.LastModified);
+            if (!String.IsNullOrEmpty(response.LastModified))
+                updated.Meta.LastUpdated = DateTimeOffset.Parse(response.LastModified);
 
-			if (!String.IsNullOrEmpty(response.Category))
-				updated.Tags = HttpUtil.ParseCategoryHeader(response.Category);
+            //if (!String.IsNullOrEmpty(response.Category))
+            //	updated.Meta.Tags = HttpUtil.ParseCategoryHeader(response.Category);
 
-			updated.Title = entry.Title;
+            // updated.Title = entry.Title;
 
             // If asked for it, immediately get the contents *we just posted* if we have the version-specific url, or
             // otherwise the most recent data on the server.
             if (refresh)
             {
-                if (updated.SelfLink != null)
+                if (updated.Meta != null && !string.IsNullOrEmpty(updated.Meta.VersionId))
                     updated = Refresh(updated, versionSpecific: true);
                 else
                     updated = Refresh(updated, versionSpecific: false);
@@ -375,15 +395,19 @@ namespace Hl7.Fhir.Rest
         /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
-        public ResourceEntry<TResource> Update<TResource>(Uri location, TResource data, bool refresh = false)
+        public TResource Update<TResource>(Uri location, TResource data, bool refresh = false)
             where TResource : Resource, new()
         {
             if(location == null) Error.ArgumentNull("location");
             if(data == null) Error.ArgumentNull("data");
 
-            ResourceEntry<TResource> entry = new ResourceEntry<TResource>(makeAbsolute(location), DateTimeOffset.Now, data);
+            TResource entry = new TResource();
+            entry.Meta = new Resource.ResourceMetaComponent();
+            entry.Meta.LastUpdated = DateTimeOffset.Now;
+            ResourceIdentity ri = new ResourceIdentity(makeAbsolute(location));
+            data.ResourceBase = ri.Endpoint.OriginalString;
 
-            return Update(entry, refresh);
+            return Update(data, refresh);
         }
 
         /// <summary>
@@ -400,15 +424,15 @@ namespace Hl7.Fhir.Rest
         /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
-        public ResourceEntry<TResource> Update<TResource>(string location, TResource data, bool refresh = false)
-            where TResource : Resource, new()
-        {
-            if (location == null) Error.ArgumentNull("location");
-            if (data == null) Error.ArgumentNull("data");
+        //public TResource Update<TResource>(string location, TResource data, bool refresh = false)
+        //    where TResource : Resource, new()
+        //{
+        //    if (location == null) Error.ArgumentNull("location");
+        //    if (data == null) Error.ArgumentNull("data");
 
-            return Update<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), data, refresh);
+        //    return Update<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), data, refresh);
 
-        }
+        //}
 
         // TODO: Have Update() without generic params.
 
@@ -440,12 +464,12 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public void Delete(ResourceEntry entry)
+        public void Delete(Resource entry)
         {
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            Delete(entry.Id);
+            Delete(entry.ResourceIdentity().WithoutVersion());
         }
 
         /// <summary>
@@ -497,11 +521,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(BundleEntry entry, DateTimeOffset? since = null, int? pageSize = null)
+        public Bundle History(Bundle.BundleEntryComponent entry, DateTimeOffset? since = null, int? pageSize = null)
         {
             if (entry == null) throw Error.ArgumentNull("entry");
 
-            return History(entry.Id, since, pageSize);
+            return History(entry.BuildUrlForEntry(), since, pageSize);
         }
 
         /// <summary>
@@ -554,15 +578,15 @@ namespace Hl7.Fhir.Rest
         /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
         /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
         /// failures occur.</returns>
-        public bool TryValidateUpdate<TResource>(ResourceEntry<TResource> entry, out OperationOutcome result) where TResource : Resource, new()
+        public bool TryValidateUpdate<TResource>(TResource entry, out OperationOutcome result) where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
-            if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to validate");
+            if (entry.Meta == null) throw Error.Argument("entry","Entry needs a non-null entry.Meta to use for validate");
             if (entry.Id == null) throw Error.Argument("enry", "Entry needs a non-null entry.id to use for validation");
 
             var id = new ResourceIdentity(entry.Id);
             var url = new RestUrl(Endpoint).Validate(id.Collection, id.Id);
-            result = doValidate(url.Uri, entry.Resource, entry.Tags);
+            result = doValidate(url.Uri, entry, entry.Meta.Tag);
 
             return result == null || !result.Success();
         }
@@ -576,7 +600,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="tags">Optional list of tags to attach to the resource</param>
         /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
         /// failures occur.</returns>
-        public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags = null) where TResource : Resource, new()
+		public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Coding> tags = null) where TResource : Resource, new()
         {
             if (resource == null) throw new ArgumentNullException("resource");
 
@@ -587,12 +611,12 @@ namespace Hl7.Fhir.Rest
             return result == null || !result.Success();
         }
 
-        private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Tag> tags)
+        private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Coding> tags)
         {
             var req = createFhirRequest(url, "POST");
 
+            // if(tags != null) req.SetTagsInHeader(tags);
             req.SetBody(data, PreferredFormat);
-            if(tags != null) req.SetTagsInHeader(tags);
 
             try
             {
@@ -613,7 +637,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="q">The Query resource containing the search parameters</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-        public Bundle Search(Query q)
+        public Bundle Search(Parameters q)
         {
             RestUrl url = new RestUrl(Endpoint);
             url = url.Search(q);
@@ -706,15 +730,15 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
-            string criterium = Query.SEARCH_PARAM_ID + "=" + id;
+            string criterium = Parameters.SEARCH_PARAM_ID + "=" + id;
             return Search(toQuery(resource, new string[] { criterium }, includes, pageSize));
         }
 
-        private Query toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
+        private Parameters toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
-            Query q = new Query
+            Parameters q = new Parameters
             {
-                ResourceType = collection,
+                ResourceSearchType = collection,
                 Count = pageSize
             };
 
@@ -742,20 +766,20 @@ namespace Hl7.Fhir.Rest
         public Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next)
         {
             if (current == null) throw Error.ArgumentNull("current");
-            if (current.Links == null) return null;
+            if (current.Link == null) return null;
 
             Uri continueAt = null;
 
             switch (direction)
             {
                 case PageDirection.First:
-                    continueAt = current.Links.FirstLink; break;
+                    continueAt = current.FirstLink; break;
                 case PageDirection.Previous:
-                    continueAt = current.Links.PreviousLink; break;
+                    continueAt = current.PreviousLink; break;
                 case PageDirection.Next:
-                    continueAt = current.Links.NextLink; break;
+                    continueAt = current.NextLink; break;
                 case PageDirection.Last:
-                    continueAt = current.Links.LastLink; break;
+                    continueAt = current.LastLink; break;
             }
 
             if (continueAt != null)
@@ -779,24 +803,34 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
         }
 
+		[Obsolete("Do not use this operation, instead use the Bundle operation", true)]
+		public void Document(Bundle bundle)
+		{
+		}
+
         /// <summary>
         /// Send a document bundle
         /// </summary>
         /// <param name="bundle">A bundle containing a Document</param>
-        /// <remarks>The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.</remarks>
-        public void Document(Bundle bundle)
-        {
-            if (bundle == null) throw Error.ArgumentNull("bundle");
-            if(bundle.GetBundleType() != BundleType.Document)
-                throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
+        /// <remarks>
+		/// The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.
+		/// This was formerly known as the Document endpoint
+		/// </remarks>
+		/// Brian: Not sure that this is actually valid anymore.
+		/// http://hl7-fhir.github.io/documents.html#bundle has nothing about POST to the Document endpont.
+		public void Bundle(Bundle bundle)
+		{
+			if (bundle == null) throw Error.ArgumentNull("bundle");
+			if (bundle.ResourceType != ResourceType.Bundle)
+				throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a Bundle (ensure bundle.ResourceType = ResourceType.Bundle;)");
 
-            var url = new RestUrl(Endpoint).ToDocument();
+			var url = new RestUrl(Endpoint).ToDocument();
 
-            // Documents are merely "accepted"
-            var req = createFhirRequest(url.Uri, "POST");
-            req.SetBody(bundle, PreferredFormat);
-            doRequest(req, HttpStatusCode.NoContent, resp => true );
-        }
+			// Documents are merely "accepted"
+			var req = createFhirRequest(url.Uri, "POST");
+			req.SetBody(bundle, PreferredFormat);
+			doRequest(req, HttpStatusCode.NoContent, resp => true);
+		}
 
         /// <summary>
         /// Send a Document or Message bundle to a server's Mailbox
@@ -807,7 +841,7 @@ namespace Hl7.Fhir.Rest
         public Bundle DeliverToMailbox(Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull("bundle");
-            if( bundle.GetBundleType() != BundleType.Document && bundle.GetBundleType() != BundleType.Message)
+            if( bundle.Type != Model.Bundle.BundleType.Message && bundle.Type != Model.Bundle.BundleType.Message)
                 throw Error.Argument("bundle", "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
 
             var url = new RestUrl(_endpoint).ToMailbox();
@@ -822,30 +856,30 @@ namespace Hl7.Fhir.Rest
         /// Get all tags known by the FHIR server
         /// </summary>
         /// <returns>A list of Tags</returns>
-        public IEnumerable<Tag> WholeSystemTags()
-        {
-            return internalGetTags(null, null, null);
-        }
+        //public IEnumerable<Coding> WholeSystemTags()
+        //{
+        //    return internalGetTags(null, null, null);
+        //}
 
         /// <summary>
         /// Get all tags known by the FHIR server for a given resource type
         /// </summary>
         /// <returns>A list of all Tags present on the server</returns>
-        public IEnumerable<Tag> TypeTags<TResource>() where TResource : Resource, new()
-        {
-            return internalGetTags(typeof(TResource).GetCollectionName(), null, null);
-        }
+        //public IEnumerable<Coding> TypeTags<TResource>() where TResource : Resource, new()
+        //{
+        //    return internalGetTags(typeof(TResource).GetCollectionName(), null, null);
+        //}
 
         /// <summary>
         /// Get all tags known by the FHIR server for a given resource type
         /// </summary>
         /// <returns>A list of Tags occuring for the given resource type</returns>
-        public IEnumerable<Tag> TypeTags(string type)
-        {
-            if (type == null) throw Error.ArgumentNull("type");
+        //public IEnumerable<Coding> TypeTags(string type)
+        //{
+        //    if (type == null) throw Error.ArgumentNull("type");
 
-            return internalGetTags(type, null, null);
-        }
+        //    return internalGetTags(type, null, null);
+        //}
 
         /// <summary>
         /// Get the tags for a resource (or resource version) at a given location
@@ -853,16 +887,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The url of the Resource to get the tags for. This can be a Resource id url or a version-specific
         /// Resource url, and may be relative.</param>
         /// <returns>A list of Tags for the resource instance</returns>
-        public IEnumerable<Tag> Tags(Uri location)
-        {
-            if (location == null) throw Error.ArgumentNull("location");
+        //public IEnumerable<Coding> Tags(Uri location)
+        //{
+        //    if (location == null) throw Error.ArgumentNull("location");
 
-            var collection = getCollectionFromLocation(location);
-            var id = getIdFromLocation(location);
-            var version = new ResourceIdentity(location).VersionId;
+        //    var collection = getCollectionFromLocation(location);
+        //    var id = getIdFromLocation(location);
+        //    var version = new ResourceIdentity(location).VersionId;
 
-            return internalGetTags(collection, id, version);
-        }
+        //    return internalGetTags(collection, id, version);
+        //}
 
         /// <summary>
         /// Get the tags for a resource (or resource version) at a given location
@@ -870,11 +904,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The location the Resource to get the tags for. 
         /// This can be a Resource id url or a version-specific Resource url, and may be relative</param>
         /// <returns>A list of Tags for the resource instance</returns>
-        public IEnumerable<Tag> Tags(string location)
-        {
-            var identity = new ResourceIdentity(location);
-            return internalGetTags(identity.Collection, identity.Id, identity.VersionId);
-        }
+        //public IEnumerable<Coding> Tags(string location)
+        //{
+        //    var identity = new ResourceIdentity(location);
+        //    return internalGetTags(identity.Collection, identity.Id, identity.VersionId);
+        //}
 
         /// <summary>
         /// Get the tags for a resource (or resource version) at a given location
@@ -882,30 +916,30 @@ namespace Hl7.Fhir.Rest
         /// <param name="id">The logical id for the resource</param>
         /// <param name="vid">The version identifier for the resrouce</param>
         /// <returns>A list of Tags for the resource instance</returns>
-        public IEnumerable<Tag> Tags<TResource>(string id, string vid = null)
-        {
-            string collection = ModelInfo.GetResourceNameForType(typeof(TResource));
-            return internalGetTags(collection, id, vid);
-        }
+        //public IEnumerable<Coding> Tags<TResource>(string id, string vid = null)
+        //{
+        //    string collection = ModelInfo.GetResourceNameForType(typeof(TResource));
+        //    return internalGetTags(collection, id, vid);
+        //}
 
-        private IEnumerable<Tag> internalGetTags(string collection, string id, string version)
-        {
-            RestUrl location = new RestUrl(this.Endpoint);
+        //private IEnumerable<Coding> internalGetTags(string collection, string id, string version)
+        //{
+        //    RestUrl location = new RestUrl(this.Endpoint);
 
-            if(collection == null)
-                location = location.ServerTags();
-            else
-            {
-                if(id == null)
-                    location = location.CollectionTags(collection);
-                else
-                    location = location.ResourceTags(collection, id, version);
-            }
+        //    if(collection == null)
+        //        location = location.ServerTags();
+        //    else
+        //    {
+        //        if(id == null)
+        //            location = location.CollectionTags(collection);
+        //        else
+        //            location = location.ResourceTags(collection, id, version);
+        //    }
 
-            var req = createFhirRequest(location.Uri, "GET");
-            var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
-            return result.Category;
-        }
+        //    var req = createFhirRequest(location.Uri, "GET");
+        //    var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
+        //    return result.Category;
+        //}
 
         /// <summary>
         /// Add one or more tags to a resource at a given location
@@ -914,7 +948,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="tags">List of tags to add to the resource</param>
         /// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does 
         /// not create a new version.</remarks>
-        public void AffixTags(Uri location, IEnumerable<Tag> tags)
+		[Obsolete("This should now be done using the _meta endpoint", true)]
+        public void AffixTags(Uri location, IEnumerable<Coding> tags)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (tags == null) throw Error.ArgumentNull("tags");
@@ -926,7 +961,7 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
 
             var req = createFhirRequest(rl.Uri,"POST");
-            req.SetBody(new TagList(tags), PreferredFormat);
+//            req.SetBody(new TagList(tags), PreferredFormat);
             
             doRequest(req, HttpStatusCode.OK, resp => true);
         }
@@ -938,22 +973,22 @@ namespace Hl7.Fhir.Rest
         /// <param name="tags">List of tags to delete</param>
         /// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, 
         /// so does not create a new version.</remarks>
-        public void DeleteTags(Uri location, IEnumerable<Tag> tags)
-        {
-            if (location == null) throw Error.ArgumentNull("location");
-            if (tags == null) throw Error.ArgumentNull("tags");
+		//public void DeleteTags(Uri location, IEnumerable<Coding> tags)
+		//{
+		//	if (location == null) throw Error.ArgumentNull("location");
+		//	if (tags == null) throw Error.ArgumentNull("tags");
 
-            var collection = getCollectionFromLocation(location);
-            var id = getIdFromLocation(location);
-            var version = new ResourceIdentity(location).VersionId;
+		//	var collection = getCollectionFromLocation(location);
+		//	var id = getIdFromLocation(location);
+		//	var version = new ResourceIdentity(location).VersionId;
 
-            var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
+		//	var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
 
-            var req = createFhirRequest(rl.Uri, "POST");
-            req.SetBody(new TagList(tags), PreferredFormat);
+		//	var req = createFhirRequest(rl.Uri, "POST");
+		//	req.SetBody(new TagList(tags), PreferredFormat);
 
-            doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
-        }
+		//	doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
+		//}
 
 
         public event BeforeRequestEventHandler OnBeforeRequest;
@@ -1007,7 +1042,7 @@ namespace Hl7.Fhir.Rest
 
                 try
                 {
-                    outcome = response.BodyAsEntry<OperationOutcome>().Resource;
+                    outcome = response.BodyAsEntry<OperationOutcome>();
                 }
                 catch
                 {
@@ -1063,7 +1098,7 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The Create operation normally does not return the posted resource, but just its metadata. Specifying
 		/// refresh=true ensures the return value contains the Resource as stored by the server.
 		/// </remarks>
-		public Task<ResourceEntry<TResource>> CreateAsync<TResource>(TResource resource, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
+		public Task<TResource> CreateAsync<TResource>(TResource resource, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
 		{
 			if (resource == null) throw Error.ArgumentNull("resource");
 
@@ -1082,7 +1117,7 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The Create operation normally does not return the posted resource, but just its metadata. Specifying
 		/// refresh=true ensures the return value contains the Resource as stored by the server.
 		/// </remarks>
-		public Task<ResourceEntry<TResource>> CreateAsync<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
+		public Task<TResource> CreateAsync<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
 		{
 			if (resource == null) throw Error.ArgumentNull("resource");
 			if (id == null) throw Error.ArgumentNull("id", "Must supply a client-assigned id");
@@ -1090,7 +1125,7 @@ namespace Hl7.Fhir.Rest
 			return internalCreateAsync<TResource>(resource, tags, id, refresh);
 		}
 
-		private async Task<ResourceEntry<TResource>> internalCreateAsync<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
+		private async Task<TResource> internalCreateAsync<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
 		{
 			var collection = typeof(TResource).GetCollectionName();
 			FhirRequest req = null;
@@ -1112,7 +1147,7 @@ namespace Hl7.Fhir.Rest
 			if (tags != null) req.SetTagsInHeader(tags);
 			FhirResponse response = await doRequestAsync(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
-			ResourceEntry<TResource> entry = (ResourceEntry<TResource>)ResourceEntry.Create(resource);
+			TResource entry = (TResource)ResourceEntry.Create(resource);
 			entry.Links.SelfLink = new ResourceIdentity(response.Location);
 			entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
 
@@ -1136,12 +1171,12 @@ namespace Hl7.Fhir.Rest
 		/// <param name="entry">The entry to refresh. It's id property will be used to fetch the latest version of the Resource.</param>
 		/// <typeparam name="TResource">The type of resource to refresh</typeparam>
 		/// <returns>A resource entry containing up-to-date data and metadata.</returns>
-		public Task<ResourceEntry<TResource>> RefreshAsync<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
+		public Task<TResource> RefreshAsync<TResource>(TResource entry) where TResource : Resource, new()
 		{
 			return RefreshAsync<TResource>(entry, false);
 		}
 
-		internal Task<ResourceEntry<TResource>> RefreshAsync<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
+		internal Task<TResource> RefreshAsync<TResource>(TResource entry, bool versionSpecific = false) where TResource : Resource, new()
 		{
 			if (entry == null) throw Error.ArgumentNull("entry");
 
@@ -1160,7 +1195,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
 		/// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
 		/// url, it must reference an address within the endpoint.</returns>
-		public Task<ResourceEntry<TResource>> ReadAsync<TResource>(Uri location) where TResource : Resource, new()
+		public Task<TResource> ReadAsync<TResource>(Uri location) where TResource : Resource, new()
 		{
 			if (location == null) throw Error.ArgumentNull("location");
 
@@ -1178,7 +1213,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
 		/// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
 		/// url, it must reference an address within the endpoint.</returns>
-		public Task<ResourceEntry<TResource>> ReadAsync<TResource>(string location) where TResource : Resource, new()
+		public Task<TResource> ReadAsync<TResource>(string location) where TResource : Resource, new()
 		{
 			if (location == null) throw Error.ArgumentNull("location");
 			return ReadAsync<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
@@ -1231,7 +1266,7 @@ namespace Hl7.Fhir.Rest
 		/// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
 		/// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
 		/// requires version-aware updates.</returns>
-		public async Task<ResourceEntry<TResource>> UpdateAsync<TResource>(ResourceEntry<TResource> entry, bool refresh = false)
+		public async Task<TResource> UpdateAsync<TResource>(TResource entry, bool refresh = false)
 						where TResource : Resource, new()
 		{
 			if (entry == null) throw Error.ArgumentNull("entry");
@@ -1247,7 +1282,7 @@ namespace Hl7.Fhir.Rest
 
 			// This might be an update of a resource that doesn't yet exist, so accept a status Created too
 			FhirResponse response = await doRequestAsync(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
-			var updated = new ResourceEntry<TResource>();
+			var updated = new TResource();
 			var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
 
 			if (!String.IsNullOrEmpty(location))
@@ -1296,13 +1331,13 @@ namespace Hl7.Fhir.Rest
 		/// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
 		/// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
 		/// requires version-aware updates.</returns>
-		public Task<ResourceEntry<TResource>> UpdateAsync<TResource>(Uri location, TResource data, bool refresh = false)
+		public Task<TResource> UpdateAsync<TResource>(Uri location, TResource data, bool refresh = false)
 			where TResource : Resource, new()
 		{
 			if (location == null) Error.ArgumentNull("location");
 			if (data == null) Error.ArgumentNull("data");
 
-			ResourceEntry<TResource> entry = new ResourceEntry<TResource>(makeAbsolute(location), DateTimeOffset.Now, data);
+			TResource entry = new TResource(makeAbsolute(location), DateTimeOffset.Now, data);
 
 			return UpdateAsync(entry, refresh);
 		}
@@ -1322,7 +1357,7 @@ namespace Hl7.Fhir.Rest
 		/// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
 		/// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
 		/// requires version-aware updates.</returns>
-		public Task<ResourceEntry<TResource>> UpdateAsync<TResource>(string location, TResource data, bool refresh = false)
+		public Task<TResource> UpdateAsync<TResource>(string location, TResource data, bool refresh = false)
 			where TResource : Resource, new()
 		{
 			if (location == null) Error.ArgumentNull("location");
@@ -1486,7 +1521,7 @@ namespace Hl7.Fhir.Rest
 		/// <param name="entry">The entry containing the updated Resource to validate</param>
 		/// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
 		/// failures occur.</returns>
-		public async Task<ValidateAsyncResult> TryValidateUpdateAsync<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
+		public async Task<ValidateAsyncResult> TryValidateUpdateAsync<TResource>(TResource entry) where TResource : Resource, new()
 		{
 			if (entry == null) throw Error.ArgumentNull("entry");
 			if (entry.Resource == null) throw Error.Argument("entry", "Entry does not contain a Resource to validate");

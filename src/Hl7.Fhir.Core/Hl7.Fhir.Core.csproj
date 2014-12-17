@@ -23,7 +23,7 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DSTU1compatability.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceReference.cs" />
     <Compile Include="Model\Uuid.cs" />
@@ -253,9 +255,26 @@
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Rest\BundleExtensions.cs" />
+    <Compile Include="Rest\ContentType.cs" />
+    <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirOperationException.cs" />
+    <Compile Include="Rest\FhirRequest.cs" />
+    <Compile Include="Rest\FhirResponse.cs" />
+    <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
+    <Compile Include="Rest\RestOperation.cs" />
+    <Compile Include="Rest\RestUrl.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Rest\SystemNetMimeContentType.cs" />
+    <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Search\CompositeValue.cs" />
     <Compile Include="Search\ChoiceValue.cs" />
+    <Compile Include="Search\Criterium.cs" />
+    <Compile Include="Search\CriteriumBuilder.cs" />
     <Compile Include="Search\Expression.cs" />
+    <Compile Include="Search\ParametersExtensions.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
     <Compile Include="Search\QuantityValue.cs" />
     <Compile Include="Search\UntypedValue.cs" />
@@ -332,9 +351,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rest\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

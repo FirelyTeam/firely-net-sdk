@@ -19,27 +19,56 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Rest
 {
+	/*
+	 * Brian 16 Dec 2014:
+	 *		Removed the Category in the HTML Header as we don't do this anymore for DSTU2
+	 *		Implement everything using the native .net async patterns
+	 */
     public static class HttpUtil
     {
+        #region << HTTP Headers >>
+        /// <summary>
+        /// "Content-Location" found in the HTTP Headers
+        /// </summary>
         public const string CONTENTLOCATION = "Content-Location";
+        /// <summary>
+        /// "Location" found in the HTTP Headers
+        /// </summary>
         public const string LOCATION = "Location";
+        /// <summary>
+        /// "Last-Modified" found in the HTTP Headers
+        /// </summary>
         public const string LASTMODIFIED = "Last-Modified";
-        public const string CATEGORY = "Category";
+        /// <summary>
+        /// "ETag" found in the HTTP Headers
+        /// </summary>
+        public const string ETAG = "ETag";
+        #endregion
 
+        /// <summary>
+        /// "_format" found as a parameter on the REST URL
+        /// </summary>
         public const string RESTPARAM_FORMAT = "_format";
 
-      
+        /// <summary>
+        /// "_since" found as a parameter on the REST History operation URL
+        /// </summary>
         public const string HISTORY_PARAM_SINCE = "_since";
-        public const string HISTORY_PARAM_COUNT = Query.SEARCH_PARAM_COUNT;
+        /// <summary>
+        /// "_count" found as a parameter on the REST History operation URL
+        /// </summary>
+        public const string HISTORY_PARAM_COUNT = Parameters.SEARCH_PARAM_COUNT;
 
-        public static byte[] ReadAllFromStream(Stream s, int contentLength)
+        public static async Task<byte[]> ReadAllFromStream(Stream s, int contentLength)
         {
-            if (contentLength == 0) return null;
+            if (contentLength == 0)
+                return null;
 
             //int bufferSize = contentLength < 4096 ? contentLength : 4096;
             int bufferSize = 4096;
@@ -47,76 +76,15 @@ namespace Hl7.Fhir.Rest
             byte[] byteBuffer = new byte[bufferSize];
             MemoryStream buffer = new MemoryStream();
 
-            int readLen = s.Read(byteBuffer, 0, byteBuffer.Length);
+            int readLen = await s.ReadAsync(byteBuffer, 0, byteBuffer.Length);
 
             while (readLen > 0)
             {
-                buffer.Write(byteBuffer, 0, readLen);
-                readLen = s.Read(byteBuffer, 0, byteBuffer.Length);
+                await buffer.WriteAsync(byteBuffer, 0, readLen);
+                readLen = await s.ReadAsync (byteBuffer, 0, byteBuffer.Length);
             }
 
             return buffer.ToArray();
-        }
-          
-
-        public static ICollection<Tag> ParseCategoryHeader(string value)
-        {
-            if (String.IsNullOrEmpty(value)) return new List<Tag>();
-
-            var result = new List<Tag>();
-
-            var categories = value.SplitNotInQuotes(',').Where(s => !String.IsNullOrEmpty(s));
-
-            foreach (var category in categories)
-            {
-                var values = category.SplitNotInQuotes(';').Where(s => !String.IsNullOrEmpty(s));
-
-                if (values.Count() >= 1)
-                {
-                    var term = values.First();
-
-                    var pars = values.Skip(1).Select( v =>
-                        { 
-                            var vsplit = v.Split('=');
-                            var item1 = vsplit[0].Trim();
-                            var item2 = vsplit.Length > 1 ? vsplit[1].Trim() : null;
-                            return new Tuple<string,string>(item1,item2);
-                        });
-
-                    var scheme = new Uri(pars.Where(t => t.Item1 == "scheme").Select(t => t.Item2.Trim('\"')).FirstOrDefault(), UriKind.RelativeOrAbsolute);
-                    var label = pars.Where(t => t.Item1 == "label").Select(t => t.Item2.Trim('\"')).FirstOrDefault();
-                       
-                    result.Add(new Tag(term,scheme,label));
-                }
-            }
-
-            return result;
-        }
-
-        
-       
-        public static string BuildCategoryHeader(IEnumerable<Tag> tags)
-        {
-            var result = new List<string>();
-            foreach(var tag in tags)
-            {                
-                StringBuilder sb = new StringBuilder();
-
-                if (!String.IsNullOrEmpty(tag.Term))
-                {
-                    if (tag.Term.Contains(",") || tag.Term.Contains(";"))
-                        throw new ArgumentException("Found tag containing ',' or ';' - this will produce an inparsable Category header");
-                    sb.Append(tag.Term);
-                }
-
-                if (!String.IsNullOrEmpty(tag.Label))
-                    sb.AppendFormat("; label=\"{0}\"", tag.Label);
-
-                sb.AppendFormat("; scheme=\"{0}\"", tag.Scheme.ToString());
-                result.Add(sb.ToString());
-            }
-
-            return String.Join(", ", result);
         }
 
         /// <summary>

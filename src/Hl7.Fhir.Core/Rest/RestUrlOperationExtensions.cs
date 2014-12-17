@@ -63,20 +63,19 @@ namespace Hl7.Fhir.Rest
                 return new RestUrl(url).AddPath(RestOperation.SEARCH);
         }
 
-        public static RestUrl Search(this RestUrl url, Query q)
+        public static RestUrl Search(this RestUrl url, Parameters q)
         {
             // The ResourceType is the only parameter that needs special handling,
             // since the others are all "normal" parameters. Just make sure we don't
             // include the special _type parameter on the REST url
-            var result = url.Search(q.ResourceType);
+            RestUrl result = url.Search(q.ResourceSearchType);
 
             foreach (var par in q.Parameter)
             {
-                var paramKey = Query.ExtractParamKey(par);
-                if (paramKey != Query.SEARCH_PARAM_TYPE)
+                if (par.Name != Parameters.SEARCH_PARAM_TYPE)
                 {
-                    result.AddParam(Query.ExtractParamKey(par),
-                                Query.ExtractParamValue(par));
+                    result.AddParam(par.Name,
+                                Parameters.ExtractParamValue(par));
                 }
             }
 
@@ -90,7 +89,7 @@ namespace Hl7.Fhir.Rest
 
         public static RestUrl ToDocument(this RestUrl url)
         {
-            return new RestUrl(url).AddPath(RestOperation.DOCUMENT);
+            return new RestUrl(url).AddPath(RestOperation.BUNDLE);
         }
 
 

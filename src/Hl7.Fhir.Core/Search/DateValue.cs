@@ -25,13 +25,22 @@ namespace Hl7.Fhir.Search
 
         public DateValue(DateTimeOffset value)
         {
-            Value = value.ConvertTo<string>();
+            // The DateValue datatype is not interested in any time related
+            // components, so we must strip those off before converting to the string
+            // value
+            Value = value.Date.ToString("yyyy-MM-dd");
         }
 
         public DateValue(string date)
         {
-            if (!FhirDateTime.IsValidValue(date)) throw Error.Argument("date", "Is not a valid FHIR date/time string");
-
+            if (!Date.IsValidValue(date))
+            {
+                if (!FhirDateTime.IsValidValue(date))
+                    throw Error.Argument("date", "The string [" + date + "] is not a valid FHIR date string and isn't a FHIR datetime either");
+                
+                // This was a time, so we can just use the date portion of this
+                date = (new FhirDateTime(date)).ToDateTimeOffset().Date.ToString("yyyy-MM-dd");
+            }
             Value = date;
         }
 

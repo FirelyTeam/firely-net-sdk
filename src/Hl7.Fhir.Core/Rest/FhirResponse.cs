@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Rest
         public string ContentLocation { get; set; }
         public string Location { get; set; }
         public string LastModified { get; set; }
-        public string Category { get; set; }
+        public string ETag { get; set; }
 
         public Uri ResponseUri { get; set; }
 
@@ -36,7 +37,7 @@ namespace Hl7.Fhir.Rest
 		// Can't hold onto this as it gets disposed pretty quick.
         //public HttpWebResponse Response { get; set; }
 
-        public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
+        public static async Task<FhirResponse> FromHttpWebResponse(HttpWebResponse response)
         {
             
             return new FhirResponse
@@ -48,16 +49,17 @@ namespace Hl7.Fhir.Rest
                     ContentLocation = response.Headers[HttpUtil.CONTENTLOCATION],
                     Location = response.Headers[HttpUtil.LOCATION],                   
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
-                    Category = response.Headers[HttpUtil.CATEGORY],
-                    Body = readBody(response),
+                    ETag = response.Headers[HttpUtil.ETAG],
+                    Body = await readBody(response),
                     // Response = response
                 };
         }
 
-        private static byte[] readBody(HttpWebResponse response)
+        private static Task<byte[]> readBody(HttpWebResponse response)
         {
+            long contentlength = response.ContentLength;
             return HttpUtil.ReadAllFromStream(response.GetResponseStream(),
-                (int)response.ContentLength);
+                (int)contentlength);
         }
 
         private static string getContentType(HttpWebResponse response)
@@ -106,36 +108,52 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TagList BodyAsTagList()
-        {
-            return parseBody(BodyAsString(), ContentType,
-                        (b) => FhirParser.ParseTagListFromXml(b),
-                        (b) => FhirParser.ParseTagListFromJson(b));
-        }
+		//public TagList BodyAsTagList()
+		//{
+		//	return parseBody(BodyAsString(), ContentType,
+		//				(b) => FhirParser.ParseTagListFromXml(b),
+		//				(b) => FhirParser.ParseTagListFromJson(b));
+		//}
 
-        public ResourceEntry<T> BodyAsEntry<T>() where T : Resource, new()
+        public T BodyAsEntry<T>() where T : Resource, new()
         {
             var result = BodyAsEntry(typeof(T).GetCollectionName());
 
-            if (result.Resource is T)
-                return (ResourceEntry<T>)result;
+            if (result is T)
+            {
+                T entry = (T)result;
+                var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
+
+                if (!String.IsNullOrEmpty(location))
+                {
+                    ResourceIdentity ri = new ResourceIdentity(location);
+                    entry.ResourceBase = ri.Endpoint.OriginalString;
+                }
+                return entry;
+            }
             else
+            {
                 throw new FhirOperationException(
-                    String.Format("Received a resource of type {0}, expected a {1} resource",
-                                    result.Resource.GetType().Name, typeof(T).Name));
+                    String.Format("Received a resource of type {0} (FHIR: {1}), expected a {2} resource",
+                                    result.GetType().Name, result.TypeName, typeof(T).Name));
+            }
         }
 
 
-        public ResourceEntry BodyAsEntry(string collection)
+        public Resource BodyAsEntry(string collection)
         {
             return createResourceEntry(collection);
         }
 
         public Bundle BodyAsBundle()
         {
-            return parseBody<Bundle>(BodyAsString(), ContentType,
-                (b) => FhirParser.ParseBundleFromXml(b),
-                (b) => FhirParser.ParseBundleFromJson(b));
+            Bundle result = BodyAsEntry<Bundle>();
+            // When we get a bundle we need to set the base location of each item
+            foreach (var entry in result.Entry.Where(e => e.Resource != null))
+            {
+                entry.Resource.ResourceBase = result.ResourceBase;
+            }
+            return result;
         }
 
 
@@ -150,20 +168,22 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private ResourceEntry createResourceEntry(string resourceType)
+        private Resource createResourceEntry(string resourceType)
         {
             Resource resource = null;
 
-            if( resourceType == "Binary")
+            if (resourceType == "Binary")
                 resource = makeBinary(Body, ContentType);
             else
             {
                 resource = parseBody<Resource>(BodyAsString(), ContentType,
                     b => FhirParser.ParseResourceFromXml(b),
                     b => FhirParser.ParseResourceFromJson(b));
-            }           
+            }
 
-            ResourceEntry result = ResourceEntry.Create(resource);
+            if (resource.Meta != null)
+                resource.Meta = new Resource.ResourceMetaComponent();
+            //   ResourceEntry result = ResourceEntry.Create(resource);
 
             var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
 
@@ -172,22 +192,24 @@ namespace Hl7.Fhir.Rest
                 ResourceIdentity reqId = new ResourceIdentity(location);
 
                 // Set the id to the location, without the version specific part
-                result.Id = reqId.WithoutVersion();
+                resource.Id = reqId.Id; // WithoutVersion();
 
                 // If the content location has version information, set to SelfLink to it
                 if (reqId.VersionId != null)
-                    result.SelfLink = reqId;
+                {
+                    resource.Meta.VersionId = reqId.VersionId;
+                }
             }
 
             if (!String.IsNullOrEmpty(LastModified))
-                result.LastUpdated = DateTimeOffset.Parse(LastModified);
+                resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
 
-            if (!String.IsNullOrEmpty(Category))
-                result.Tags = HttpUtil.ParseCategoryHeader(Category);
+            //if (!String.IsNullOrEmpty(Category))
+            //    result.Tags = HttpUtil.ParseCategoryHeader(Category);
 
-            result.Title = "A " + resource.GetType().Name + " resource";
+            // result.Title = "A " + resource.GetType().Name + " resource";
 
-            return result;
+            return resource;
         }
 
         private static T parseBody<T>(string body, string contentType,

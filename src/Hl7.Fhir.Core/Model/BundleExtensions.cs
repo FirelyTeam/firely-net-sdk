@@ -40,6 +40,19 @@ namespace Hl7.Fhir.Model
 
 
         /// <summary>
+        /// Filter ResourceEntries containing a specific Resource type. No DeletedEntries are returned.
+        /// </summary>
+        /// <typeparam name="T">Type of Resource to filter</typeparam>
+        /// <returns>All ResourceEntries containing the given type of resource, or an empty list if none were found.</returns>
+        // Note: works for IEnumerable<ResourceEntry> too
+        public static IEnumerable<T> ByResourceType<T>(this IEnumerable<Bundle.BundleEntryComponent> bes) where T : Resource, new()
+        {
+            var t = from be in bes.Where(be => be.Resource is T && be.Resource != null)
+                    select be.Resource as T;
+            return t.ToList<T>();
+        }
+
+        /// <summary>
         /// Find all Resources in a Bundle with the given id.
         /// </summary>
         /// <param name="bundle">Bundle to search in</param>

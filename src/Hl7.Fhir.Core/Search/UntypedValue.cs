@@ -41,6 +41,11 @@ namespace Hl7.Fhir.Search
             return DateValue.Parse(Value);
         }
 
+        public FhirDateTime AsDateTimeValue()
+        {
+            return new FhirDateTime(Value);
+        }
+
         public StringValue AsStringValue()
         {
             return StringValue.Parse(Value);

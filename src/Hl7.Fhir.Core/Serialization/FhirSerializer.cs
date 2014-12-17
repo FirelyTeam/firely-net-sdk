@@ -19,103 +19,103 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirSerializer
+    public static class FhirSerializer
     {
-        public string SerializeResourceToXml(Resource resource, bool summary = false)
+        public static string SerializeResourceToXml(Resource resource, bool summary = false)
         {
             return SerializeToXml(resource, summary);
         }
 
-        public byte[] SerializeResourceToXmlBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeResourceToXmlBytes(Resource resource, bool summary = false)
         {
             return SerializeToXmlBytes(resource, summary);
         }
 
-        public string SerializeResourceToJson(Resource resource, bool summary = false)
+        public static string SerializeResourceToJson(Resource resource, bool summary = false)
         {
             return SerializeToJson(resource, summary);
         }
 
-        public byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
         {
             return SerializeToJsonBytes(resource, summary);
         }
 
-        public void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
         {
             Serialize(resource, new XmlFhirWriter(writer), summary);
         }
 
-        public void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
         {
             Serialize(resource, new JsonDomFhirWriter(writer), summary);
         }
 
 
-        public string SerializeMetaToXml(Resource.ResourceMetaComponent meta)
+        public static string SerializeMetaToXml(Resource.ResourceMetaComponent meta)
         {
             throw Error.NotImplemented("Serializing <meta> is not yet implemented");
             //return SerializeToXml(list,false);
         }
 
-        public byte[] SerializeMetaToXmlBytes(Resource.ResourceMetaComponent meta)
+        public static byte[] SerializeMetaToXmlBytes(Resource.ResourceMetaComponent meta)
         {
             throw Error.NotImplemented("Serializing <meta> is not yet implemented");
             //return SerializeToXmlBytes(list, false);
         }
 
-        public string SerializeMetaToJson(Resource.ResourceMetaComponent meta)
+        public static string SerializeMetaToJson(Resource.ResourceMetaComponent meta)
         {
             throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
             //return SerializeToJson(list,false);
         }
 
 
-        public byte[] SerializeMetaToJsonBytes(Resource.ResourceMetaComponent meta)
+        public static byte[] SerializeMetaToJsonBytes(Resource.ResourceMetaComponent meta)
         {
             throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
             //return SerializeToJsonBytes(list, false);
         }
 
-        public void SerializeMeta(Resource.ResourceMetaComponent meta, XmlWriter xw)
+        public static void SerializeMeta(Resource.ResourceMetaComponent meta, XmlWriter xw)
         {
             throw Error.NotImplemented("Serializing <meta> is not yet implemented");
             //FhirSerializer.Serialize(list, new XmlFhirWriter(xw), false);
         }
 
-        public void SerializeMeta(Resource.ResourceMetaComponent meta, JsonWriter jw)
+        public static void SerializeMeta(Resource.ResourceMetaComponent meta, JsonWriter jw)
         {
             throw Error.NotImplemented("Serializing resourceType:meta is not yet implemented");
             //FhirSerializer.Serialize(list, new JsonDomFhirWriter(jw), false);
         }
 
 
-        internal void Serialize(Resource instance, IFhirWriter writer, bool summary = false)
+        internal static void Serialize(Resource instance, IFhirWriter writer, bool summary = false)
         {
             new ResourceWriter(writer).Serialize(instance, summary);
         }
 
-        internal string SerializeToXml(Resource instance, bool summary = false)
+        internal static string SerializeToXml(Resource instance, bool summary = false)
         {
             return xmlWriterToString(xw => Serialize(instance, new XmlFhirWriter(xw), summary));
         }
 
-        internal string SerializeToJson(Resource instance, bool summary = false)
+        internal static string SerializeToJson(Resource instance, bool summary = false)
         {
             return jsonWriterToString(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary));
         }
 
-        internal byte[] SerializeToXmlBytes(Resource instance, bool summary = false)
+        internal static byte[] SerializeToXmlBytes(Resource instance, bool summary = false)
         {
             return xmlWriterToBytes(xw => Serialize(instance, new XmlFhirWriter(xw), summary));
         }
 
-        internal byte[] SerializeToJsonBytes(Resource instance, bool summary = false)
+        internal static byte[] SerializeToJsonBytes(Resource instance, bool summary = false)
         {
             return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary));
         }
 
-        private byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
+        private static byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();
             XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true };
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Serialization
             return stream.ToArray();
         }
 
-        private byte[] jsonWriterToBytes(Action<JsonWriter> serializer)
+        private static byte[] jsonWriterToBytes(Action<JsonWriter> serializer)
         {
             MemoryStream stream = new MemoryStream();
 

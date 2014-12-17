@@ -121,11 +121,23 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Tests to see if this RestURL is contained at the base address provided in <paramref name="other"/>
+        /// (This is a case insensitive test)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>true when the other is the starting portion of the given <paramref name="other"/> URL</returns>
         public bool IsEndpointFor(Uri other)
         {
             return IsEndpointFor(other.ToString());
         }
 
+        /// <summary>
+        /// Tests to see if this RestURL is contained at the base address provided in <paramref name="other"/>
+        /// (This is a case insensitive test)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>true when the other is the starting portion of the given <paramref name="other"/> URL</returns>
         public bool IsEndpointFor(string other)
         {
             var baseAddress = this.Uri.ToString();
@@ -134,8 +146,10 @@ namespace Hl7.Fhir.Rest
             baseAddress = baseAddress.Replace("localhost.fiddler", "localhost");
             other = other.Replace("localhost.fiddler", "localhost");
 
-            var baseUri = new Uri(baseAddress,UriKind.Absolute);
-            var otherUri = new Uri(other,UriKind.Absolute);
+            // The address comparison is done case-insensitive as we can't be sure that the 
+            // sensitivity of the servernames/virtual directory address is correct and case sensitive
+            var baseUri = new Uri(baseAddress.ToLower(),UriKind.Absolute);
+            var otherUri = new Uri(other.ToLower(), UriKind.Absolute);
             
             if(baseUri.Authority != otherUri.Authority) return false;
             if(baseUri.Segments.Length > otherUri.Segments.Length) return false;

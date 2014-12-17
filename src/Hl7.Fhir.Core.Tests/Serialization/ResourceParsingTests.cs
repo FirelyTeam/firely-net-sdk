@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                (new FhirParser()).ParseResourceFromXml(xml);
+                FhirParser.ParseResourceFromXml(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
             catch (FormatException)
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             SerializationConfig.AcceptUnknownMembers = true;
-            (new FhirParser()).ParseResourceFromXml(xml);
+            FhirParser.ParseResourceFromXml(xml);
         }
 
 
@@ -46,13 +46,13 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
 
-            (new FhirParser()).ParseResourceFromXml(xml);
+            FhirParser.ParseResourceFromXml(xml);
 
             SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
 
             try
             {
-                (new FhirParser()).ParseResourceFromXml(xml);
+                FhirParser.ParseResourceFromXml(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
             catch (FormatException)
@@ -66,15 +66,15 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string json = File.ReadAllText(@"TestData\edgecases.json");
 
-            var poco = (new FhirParser()).ParseResourceFromJson(json);
+            var poco = FhirParser.ParseResourceFromJson(json);
             Assert.IsNotNull(poco);
-            var xml = (new FhirSerializer()).SerializeResourceToXml(poco);
+            var xml = FhirSerializer.SerializeResourceToXml(poco);
             Assert.IsNotNull(xml);
             File.WriteAllText(@"c:\temp\edgecase.xml", xml);
 
-            poco = (new FhirParser()).ParseResourceFromXml(xml);
+            poco = FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
-            var json2 = (new FhirSerializer()).SerializeResourceToJson(poco);
+            var json2 = FhirSerializer.SerializeResourceToJson(poco);
             Assert.IsNotNull(json2);
             File.WriteAllText(@"c:\temp\edgecase.json", json2);
            
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                var prof = (new FhirParser()).ParseResourceFromJson(json);
+                var prof = FhirParser.ParseResourceFromJson(json);
                 Assert.Fail("Should have failed parsing");
             }
             catch (FormatException)

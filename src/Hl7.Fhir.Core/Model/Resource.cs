@@ -42,6 +42,25 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public abstract partial class Resource 
     {
+        /// <summary>
+        /// This is the base URL of the FHIR server that this resource is hosted on
+        /// </summary>
+        [Hl7.Fhir.Introspection.NotMapped]
+        public string ResourceBase;
+
+        /// <summary>
+        /// Returns the entire URI of the location that this resource was retrieved from
+        /// </summary>
+        /// <remarks>
+        /// It is not stored, but reconstructed from the components of the resource
+        /// </remarks>
+        /// <returns></returns>
+        public Hl7.Fhir.Rest.ResourceIdentity ResourceIdentity()
+        {
+            Hl7.Fhir.Rest.ResourceIdentity id = Rest.ResourceIdentity.Build(new Uri(this.ResourceBase), this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
+            return id;
+        }
+
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>();

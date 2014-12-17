@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirReader(JsonReaderFromJson(json));
         }
 
-        public Resource ParseResourceFromXml(string xml)
+        public static Resource ParseResourceFromXml(string xml)
         {
             var reader = FhirReaderFromXml(xml);
             return new ResourceReader(reader).Deserialize();
         }
 
-        public Resource ParseResourceFromJson(string json)
+        public static Resource ParseResourceFromJson(string json)
         {
             var reader = FhirReaderFromJson(json);
             return new ResourceReader(reader).Deserialize();
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Serialization
         //    return new ResourceReader(xmlReader).Deserialize();
         //}
 
-        public Resource ParseResource(JsonReader reader)
+        public static Resource ParseResource(JsonReader reader)
         {
             var jsonReader = new JsonDomFhirReader(reader);
             return new ResourceReader(jsonReader).Deserialize();
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization
             //return ParseFromXml<TagList>(xml);
         }
 
-        public Parameters ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
+        public static Parameters ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
         {
             return ParametersParser.Load(resource, parameters);
         }

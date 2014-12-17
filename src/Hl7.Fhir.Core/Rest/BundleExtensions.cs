@@ -23,14 +23,14 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw Error.ArgumentNull("bundle");
 
             // Clone old bundle, without the entries (so, just the header)
-            var oldEntries = bundle.Entries;
+            var oldEntries = bundle.Entry;
             Bundle result;
 
             try
             {
-                bundle.Entries = new List<BundleEntry>();
-                var xml = FhirSerializer.SerializeBundleToXml(bundle, summary:false);
-                result = FhirParser.ParseBundleFromXml(xml);
+                bundle.Entry = new List<Bundle.BundleEntryComponent>();
+                var xml = FhirSerializer.SerializeResourceToXml(bundle, summary:false);
+                result = (Bundle)FhirParser.ParseResourceFromXml(xml);
             }
             catch
             {
@@ -38,22 +38,22 @@ namespace Hl7.Fhir.Rest
             }
             finally
             {
-                bundle.Entries = oldEntries;
+                bundle.Entry = oldEntries;
             }
 
-            result.Id = new Uri("urn:uuid:" + Guid.NewGuid().ToString());
-            result.LastUpdated = DateTimeOffset.Now;
-            result.Entries = new List<BundleEntry>();
-            foreach (var entry in bundle.Entries)
+            result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
+            result.Meta = new Resource.ResourceMetaComponent();
+            result.Meta.LastUpdated = DateTimeOffset.Now;
+            result.Entry = new List<Bundle.BundleEntryComponent>();
+            foreach (var entry in bundle.Entry)
             {
-                if (entry is ResourceEntry)
+                if (entry.Resource != null)
                 {
-                    var newEntry = client.Read(entry.Id);
-                    if (entry.Links.Alternate != null) newEntry.Links.Alternate = entry.Links.Alternate;
-                    result.Entries.Add(newEntry);
+                    Resource newEntry = client.Read(entry.BuildUrlForEntry());
+                    result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });
                 }
-                else if (entry is DeletedEntry)
-                    result.Entries.Add(entry);
+                else if (entry.Deleted != null)
+                    result.Entry.Add(entry);
                 else
                     throw Error.NotSupported("Cannot refresh an entry of type {0}", messageArgs: entry.GetType().Name);
             }

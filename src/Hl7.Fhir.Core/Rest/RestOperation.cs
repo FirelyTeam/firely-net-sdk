@@ -22,8 +22,8 @@ namespace Hl7.Fhir.Rest
         public const string TAGS = "_tags";
         public const string DELETE = "_delete";
 
-        public const string MAILBOX = "Mailbox";
-        public const string DOCUMENT = "Document";
+        public const string MAILBOX = "$mailbox";
+        public const string BUNDLE = "Bundle";
 
     }
 }
