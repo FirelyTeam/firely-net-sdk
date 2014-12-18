@@ -27,8 +27,6 @@
   
 */
 
-
-
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
@@ -39,6 +37,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
     public abstract partial class Resource 
     {

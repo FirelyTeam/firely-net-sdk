@@ -1,5 +1,5 @@
 ﻿/*
-  Copyright (c) 2011-2012, HL7, Inc
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -27,23 +27,44 @@
   
 
 */
-
-
-
 using System;
 using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{Value={_Value}}")]
-    public partial class Id
+    /// <summary>
+    /// Details of a Technology mediated contact point (phone, fax, email, etc)
+    /// </summary>
+    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class ContactPoint
     {
-        public static bool IsValidValue(string value)
+        private string DebuggerDisplay
         {
-            return Regex.IsMatch(value as string, "^" + Hl7.Fhir.Model.Id.PATTERN + "$", RegexOptions.Singleline);
+            get
+            {
+                string result = null;
+
+                if (this._SystemElement != null && this._SystemElement.Value != null && this._SystemElement.Value.HasValue)
+                    result = this._SystemElement.Value.ToString();
+                else
+                    result = "(null)";
+
+                if (this._UseElement != null && this._UseElement.Value != null && this._UseElement.Value.HasValue)
+                    result += String.Format(" ({0})", this._UseElement.Value.ToString());
+                result += ": ";
+
+                if (this._ValueElement != null && this._ValueElement.Value != null)
+                    result += String.Format("\"{0}\"", this._ValueElement.Value);
+                else
+                    result += "(null)";
+
+                return result;
+            }
         }
     }
+    
 }

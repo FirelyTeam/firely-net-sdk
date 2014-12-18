@@ -37,6 +37,7 @@ using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{Value={_Value} Url={_Url}}")]
     public partial class Extension
     {
         public Extension()

@@ -38,6 +38,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"{_Value}")]
     public partial class FhirString
     {
         public static bool IsValidValue(string value)

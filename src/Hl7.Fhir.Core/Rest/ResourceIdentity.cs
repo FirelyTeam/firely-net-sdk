@@ -25,7 +25,8 @@ namespace Hl7.Fhir.Rest
 #if !PORTABLE45 || NET45
 	[SerializableAttribute]
 #endif
-	public class ResourceIdentity : Uri
+    [System.Diagnostics.DebuggerDisplay(@"\{Collection={Collection} Id={Id} VersionId={VersionId} Endpoint={Endpoint}}")]
+    public class ResourceIdentity : Uri
     {
         /// <summary>
         /// Creates an Resource Identity instance for a Resource given a resource's location.
