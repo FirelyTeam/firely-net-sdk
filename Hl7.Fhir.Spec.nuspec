@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Hl7.Fhir.Specification</id>
-    <version>0.11.2</version>
+    <version>0.11.3</version>
 	<title>HL7 FHIR Additional functionality support API</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
