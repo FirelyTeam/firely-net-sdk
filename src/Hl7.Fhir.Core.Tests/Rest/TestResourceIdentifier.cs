@@ -20,181 +20,187 @@ namespace Hl7.Fhir.Test
 #endif
     {
         [TestMethod]
-        public void TestResourceIdentity()
-        {
-            ResourceIdentity id = new ResourceIdentity("http://localhost/services/fhir/v012/patient/3");
-            Assert.AreEqual("http://localhost/services/fhir/v012/patient/3", id.ToString());
-            Assert.AreEqual("patient", id.Collection);
-        }
-
-        [TestMethod]
-        public void TestWithBase()
+        public void TestBuild()
         {
             var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+            var idb = ResourceIdentity.Build(new Uri("http://localhost/services/fhir/v012"), "Patient", "3");
+            Assert.AreEqual("http://localhost/services/fhir/v012/Patient/3", id.ToString());
+            Assert.AreEqual(id, idb);
 
-            var id1 = id.WithBase("http://nu.nl/fhir");
-            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id1.ToString());
+            id = new ResourceIdentity("Patient/3");
+            idb = ResourceIdentity.Build("Patient", "3");
+            Assert.AreEqual("Patient/3", id.ToString());
+            Assert.AreEqual(id, idb);
 
-            var id2 = new ResourceIdentity("Patient/3").WithBase("http://nu.nl/fhir");
-            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id2.ToString());
+            id = ResourceIdentity.Build("Patient", "A100", "H2");
+            Assert.AreEqual("Patient/A100/_history/H2", id.ToString());
+
+            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            idb = ResourceIdentity.Build(new Uri("urn:oid:1.2.3.4.5.6"), "myid");
+            Assert.AreEqual("urn:oid:1.2.3.4.5.6:myid", id.ToString());
+            Assert.AreEqual(id, idb);
+
+            id = new ResourceIdentity("#myid");
+            idb = ResourceIdentity.Build("myid");
+            Assert.AreEqual("#myid", id.ToString());
+            Assert.AreEqual(id, idb);
         }
 
 
         [TestMethod]
-        public void TestCollection()
+        public void TestBase()
         {
-            ResourceIdentity identity;
+            var identity = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+            Assert.AreEqual(new Uri("http://localhost/services/fhir/v012/"), identity.BaseUri);
 
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
+            Assert.AreEqual("http://localhost/fhir/", identity.BaseUri.OriginalString);
 
-            identity = new ResourceIdentity("http://localhost/fhir/organization/3/_history/98");
-            Assert.AreEqual("organization", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
+            Assert.AreEqual("http://localhost/fhir/", identity.BaseUri.OriginalString);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/3/");
-            Assert.AreEqual("patient", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
+            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.BaseUri.OriginalString);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/98");
-            Assert.AreEqual("organization", identity.Collection);
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
+            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.BaseUri.OriginalString);
 
-            identity = new ResourceIdentity("http://localhost/fhir");
-            Assert.AreEqual(null, identity.Collection);
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98/pipo/clown");
+            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.BaseUri.OriginalString);
+
+            identity = new ResourceIdentity("Patient/3");
+            Assert.IsNull(identity.BaseUri);
+            Assert.IsFalse(identity.HasBaseUri);
+
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            Assert.AreEqual(new Uri("urn:oid:1.2.3.4.5.6"), identity.BaseUri);
+
+            identity = new ResourceIdentity("#myid");
+            Assert.IsFalse(identity.HasBaseUri);
+        }
+
+        [TestMethod]
+        public void TestResourceType()
+        {
+            var identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
+            Assert.AreEqual("Patient", identity.ResourceType);
+
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/3/_history/98");
+            Assert.AreEqual("Organization", identity.ResourceType);
+
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/3/");
+            Assert.AreEqual("Patient", identity.ResourceType);
+
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/98");
+            Assert.AreEqual("Organization", identity.ResourceType);
+
+            identity = new ResourceIdentity("Patient/3");
+            Assert.AreEqual("Patient", identity.ResourceType);
+
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            Assert.IsNull(identity.ResourceType);
+
+            identity = new ResourceIdentity("#myid");
+            Assert.IsNull(identity.ResourceType);
         }
 
         [TestMethod]
         public void TestId()
         {
-            ResourceIdentity identity;
-
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
+            var identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
             Assert.AreEqual("3", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/fhir/organization/508x/_history/98");
+            identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
             Assert.AreEqual("508x", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
             Assert.AreEqual("B256", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/98");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/98");
             Assert.AreEqual("3", identity.Id);
 
-            identity = new ResourceIdentity("http://localhost/fhir");
-            Assert.AreEqual(null, identity.Id);
+            identity = new ResourceIdentity("Patient/3");
+            Assert.AreEqual("3", identity.Id);
 
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            Assert.AreEqual("myid", identity.Id);
+
+            identity = new ResourceIdentity("#myid");
+            Assert.AreEqual("myid", identity.Id);
         }
 
         [TestMethod]
         public void TestVersionId()
         {
-            ResourceIdentity identity;
-
-            identity = new ResourceIdentity("http://localhost/fhir/patient/3");
+            var identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
             Assert.AreEqual(null, identity.VersionId);
-
-            identity = new ResourceIdentity("http://localhost/fhir/organization/508x/_history/98");
-            Assert.AreEqual("98", identity.VersionId);
-
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
-            Assert.AreEqual(null, identity.VersionId);
-
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98");
-            Assert.AreEqual("X98", identity.VersionId);
-
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98/pipo/clown");
-            Assert.AreEqual("X98", identity.VersionId);
-
-            identity = new ResourceIdentity("http://localhost/fhir");
-            Assert.AreEqual(null, identity.VersionId);
-        }
-
-        [TestMethod]
-        public void Build()
-        {
-            ResourceIdentity identity;
-
-            identity = ResourceIdentity.Build("patient", "A100");
-            Assert.AreEqual("patient/A100", identity.ToString());
-
-            identity = ResourceIdentity.Build("patient", "A100", "H2");
-            Assert.AreEqual("patient/A100/_history/H2", identity.ToString());
-        }
-
-        [TestMethod]
-        public void TestEndpoint()
-        {
-            ResourceIdentity identity;
-
-            identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
-            Assert.AreEqual("http://localhost/fhir/", identity.Endpoint.OriginalString);
 
             identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
-            Assert.AreEqual("http://localhost/fhir/", identity.Endpoint.OriginalString);
+            Assert.AreEqual("98", identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
-            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+            Assert.AreEqual(null, identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
-            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+            Assert.AreEqual("X98", identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98/pipo/clown");
-            Assert.AreEqual("http://localhost/some/sub/path/fhir/", identity.Endpoint.OriginalString);
+            Assert.AreEqual("X98", identity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/fhir");
-            Assert.IsNull(identity.Endpoint);
+            identity = new ResourceIdentity("Patient/3");
+            Assert.IsNull(identity.VersionId);
+
+            identity = new ResourceIdentity("Patient/3/_history/123");
+            Assert.AreEqual("123", identity.VersionId);
+
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            Assert.IsNull(identity.VersionId);
+
+            identity = new ResourceIdentity("#myid");
+            Assert.IsNull(identity.VersionId);
         }
 
         [TestMethod]
-        public void AddVersionNumberToExistingIdentifier()
+        public void WithVersion()
         {
-            var identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/patient/B256/");
+            var identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
             var newIdentity = identity.WithVersion("3141");
 
             Assert.AreEqual("B256", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
 
-            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/organization/3/_history/X98");
+            identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
             newIdentity = identity.WithVersion("3141");
 
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
 
-            // mh: relativ uri's:
-
-            identity = new ResourceIdentity("organization/3");
+            identity = new ResourceIdentity("Organization/3");
             newIdentity = identity.WithVersion("3141");
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
 
-            identity = new ResourceIdentity("organization/3/_history/X98");
+            identity = new ResourceIdentity("Organization/3/_history/X98");
             newIdentity = identity.WithVersion("3141");
             Assert.AreEqual("3", newIdentity.Id);
             Assert.AreEqual("3141", newIdentity.VersionId);
+
+            var identity2 = identity.WithoutVersion();
+            Assert.AreEqual("Organization/3", identity2.ToString());
         }
-
 
         [TestMethod]
-        public void TestRelativeUri()
+        public void WithBase()
         {
-            ResourceIdentity identity;
+            var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+            var id1 = id.WithBase("http://nu.nl/fhir");
+            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id1.ToString());
 
-            identity = new ResourceIdentity("patient/8");
-            Assert.AreEqual("patient", identity.Collection);
-            Assert.AreEqual("8", identity.Id);
+            var id2 = new ResourceIdentity("Patient/3").WithBase("http://nu.nl/fhir");
+            Assert.AreEqual("http://nu.nl/fhir/Patient/3", id2.ToString());
 
-            identity = new ResourceIdentity("patient/8/_history/H30");
-            Assert.AreEqual("patient", identity.Collection);
-            Assert.AreEqual("8", identity.Id);
-            Assert.AreEqual("H30", identity.VersionId);
-
-            identity = new ResourceIdentity(new Uri("patient/8", UriKind.Relative));
-            Assert.AreEqual("patient", identity.Collection);
-            Assert.AreEqual("8", identity.Id);
-
-            identity = new ResourceIdentity(new Uri("patient/8/_history/H30", UriKind.Relative));
-            Assert.AreEqual("patient", identity.Collection);
-            Assert.AreEqual("8", identity.Id);
-            Assert.AreEqual("H30", identity.VersionId);
+            var id3 = id2.MakeRelative();
+            Assert.AreEqual("Patient/3", id3.ToString());
         }
-
     }
 }

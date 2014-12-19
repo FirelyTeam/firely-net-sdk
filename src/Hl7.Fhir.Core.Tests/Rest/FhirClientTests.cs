@@ -166,9 +166,9 @@ namespace Hl7.Fhir.Tests
 
             Assert.AreEqual(2, result.Entry.Count);  // should have subject too
 
-            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().Collection ==
+            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
                         typeof(DiagnosticReport).GetCollectionName()));
-            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().Collection ==
+            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
                         typeof(Patient).GetCollectionName()));
 
             result = client.Search<Patient>(new string[] { "name=Everywoman", "name=Eve" });
