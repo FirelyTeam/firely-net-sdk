@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Rest
 
         private static string getCollectionFromLocation(Uri location)
         {
-            var collection = new ResourceIdentity(location).Collection;
+            var collection = new ResourceIdentity(location).ResourceType;
             if (collection == null) throw Error.Argument("location", "Must be a FHIR REST url containing the resource type in its path");
 
             return collection;
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Rest
             entry.Meta.LastUpdated = DateTimeOffset.Now;
             ResourceIdentity ri = new ResourceIdentity(makeAbsolute(location));
             //data.ResourceBase = ri.Endpoint.OriginalString;
-            data.ResourceBase = ri.Endpoint;
+            data.ResourceBase = ri.BaseUri;
 
             return Update(data, refresh);
         }
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Rest
             if (entry.Id == null) throw Error.Argument("enry", "Entry needs a non-null entry.id to use for validation");
 
             var id = new ResourceIdentity(entry.Id);
-            var url = new RestUrl(Endpoint).Validate(id.Collection, id.Id);
+            var url = new RestUrl(Endpoint).Validate(id.ResourceType, id.Id);
             result = doValidate(url.Uri, entry, entry.Meta.Tag);
 
             return result == null || !result.Success();

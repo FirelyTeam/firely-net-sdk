@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Model
             var arg = ResourceIdentity.Build(type,id);
 
             return bundle.Entry.Where(be => (!includeDeleted || (includeDeleted && be.Deleted != null)) &&
-                arg.refersTo(be.BuildUrlForEntry(bundle.Base)));
+                be.BuildUrlForEntry(bundle.Base).IsTargetOf(arg));
         }
 
 
@@ -78,15 +78,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        private static bool refersTo(this Uri me, Uri path)
-        {
-            if (me.IsAbsoluteUri && !path.IsAbsoluteUri) return false;  // Absolute path can never match a relative one
-            if (!me.IsAbsoluteUri && path.IsAbsoluteUri) return me.IsWithin(path);  // IsBaseOf() is unusable
-
-            // Either both absolute or both relative
-            return me.ToString() == path.ToString();
-        }
-
         /// <summary>
         /// Find all Resources in a Bundle with the given url.
         /// </summary>
@@ -99,7 +90,7 @@ namespace Hl7.Fhir.Model
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 
             var url = reference.ToString();
-            return bundle.Entry.Where(be => refersTo(reference, be.BuildUrlForEntry(bundle.Base)));
+            return bundle.Entry.Where(be => be.BuildUrlForEntry(bundle.Base).IsTargetOf(reference));
         }
 
 

@@ -177,17 +177,23 @@ namespace Hl7.Fhir.Rest
 
         public static bool IsWithin(this Uri me, Uri other)
         {
-            // The address comparison is done case-insensitive as we can't be sure that the 
-            // sensitivity of the servernames/virtual directory address is correct and case sensitive
-            var baseUri = new Uri(other.OriginalString.ToLower(), UriKind.Absolute);
-            var meUri = new Uri(me.OriginalString.ToLower(), UriKind.RelativeOrAbsolute);
+            if (!other.IsAbsoluteUri) return false;     // can never be within a relative path
 
-            if (baseUri.Authority != me.Authority) return false;
-            if (baseUri.Segments.Length > me.Segments.Length) return false;
-
-            for (int index = 0; index < baseUri.Segments.Length; index++)
+            if (me.IsAbsoluteUri)
             {
-                if (baseUri.Segments[index].TrimEnd('/') != me.Segments[index].TrimEnd('/')) return false;
+                if (other.Authority.ToLower() != me.Authority.ToLower()) return false;
+            }
+
+            var meSegments = me.OriginalString.ToLower().Split('/');
+            var otherSegments = other.OriginalString.ToLower().Split('/');
+
+            var otherLength = otherSegments.Length;
+            var meLength = meSegments.Length;
+
+            if (meSegments.Length > otherSegments.Length) return false;
+            for (int index = 0; index < meLength; index++)
+            {
+                if (otherSegments[otherLength-index-1].TrimEnd('/') != meSegments[meLength-index-1].TrimEnd('/')) return false;
             }
 
             return true;

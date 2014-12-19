@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 #if !PORTABLE45 || NET45
 using System.Runtime.Serialization;
+using Hl7.Fhir.Model;
 #endif
 
 namespace Hl7.Fhir.Rest
@@ -455,5 +456,36 @@ namespace Hl7.Fhir.Rest
                 throw Error.InvalidOperation("Cannot give a base to a local id");
         }
 
+        public bool IsTargetOf(string reference)
+        {
+            if (IsFhirUrn(reference))
+                return reference == this.OriginalString;
+
+            if (reference.StartsWith("#"))
+                return reference == this.OriginalString;
+
+            var refUri = new Uri(reference, UriKind.RelativeOrAbsolute);
+
+            if (this.IsAbsoluteUri && !refUri.IsAbsoluteUri) return false;  // Absolute path can never match a relative one
+            if (!this.IsAbsoluteUri && refUri.IsAbsoluteUri) return this.IsWithin(refUri);  // IsBaseOf() is unusable
+
+            // Either both absolute or both relative
+            return this.OriginalString == reference;
+        }
+
+        public bool IsTargetOf(FhirUri reference)
+        {
+            return IsTargetOf(reference.Value);
+        }
+
+        public bool IsTargetOf(Uri reference)
+        {
+            return IsTargetOf(reference.OriginalString);
+        }
+
+        public bool IsTargetOf(ResourceReference reference)
+        {
+            return IsTargetOf(reference.Reference);
+        }
     }
 }

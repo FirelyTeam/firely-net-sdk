@@ -202,5 +202,25 @@ namespace Hl7.Fhir.Test
             var id3 = id2.MakeRelative();
             Assert.AreEqual("Patient/3", id3.ToString());
         }
+
+        [TestMethod]
+        public void TestForTarget()
+        {
+            var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
+            Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
+            Assert.IsFalse(id.IsTargetOf("Patient/3"));
+
+            id = new ResourceIdentity("Patient/3");
+            Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
+            Assert.IsTrue(id.IsTargetOf("Patient/3"));
+
+            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            Assert.IsTrue(id.IsTargetOf("urn:oid:1.2.3.4.5.6:myid"));
+            Assert.IsFalse(id.IsTargetOf("#myid"));
+            Assert.IsFalse(id.IsTargetOf("urn:oid:1.2.3.4.5.6"));
+
+            id = new ResourceIdentity("#myid");
+            Assert.IsTrue(id.IsTargetOf("#myid"));
+        }
     }
 }
