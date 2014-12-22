@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>The Create operation normally does not return the posted resource, but just its metadata. Specifying
         /// refresh=true ensures the return value contains the Resource as stored by the server.
         /// </remarks>
-		public TResource Create<TResource>(TResource resource, IEnumerable<Coding> tags = null, bool refresh = false) where TResource : Resource, new()
+		public TResource Create<TResource>(TResource resource, IEnumerable<Coding> tags = null, bool refresh = false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Rest
             return req;
         }
 
-        private TResource internalCreate<TResource>(TResource resource, IEnumerable<Coding> tags, string id, bool refresh) where TResource : Resource, new()
+        private TResource internalCreate<TResource>(TResource resource, IEnumerable<Coding> tags, string id, bool refresh) where TResource : Resource
         {
             var collection = typeof(TResource).GetCollectionName();
             FhirRequest req = null;
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Rest
             req.SetBody(resource, PreferredFormat);
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
-            TResource entry = new TResource();
+            TResource entry = (TResource)Activator.CreateInstance(resource.GetType());
             entry.Meta = new Resource.ResourceMetaComponent();
             //entry.ResourceBase = this._endpoint.OriginalString;
             entry.ResourceBase = this._endpoint;

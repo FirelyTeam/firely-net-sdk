@@ -470,5 +470,24 @@ namespace Hl7.Fhir.Tests
         //    client.DeleteTags(affixedEntry.SelfLink, tags);
         //    //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
         //}
+
+        [TestMethod]
+        public void CreateDynamic()
+        {
+            Resource furore = new Organization
+            {
+                Name = "Furore",
+                Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
+                Telecom = new List<ContactPoint> { 
+                    new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Value = "+31-20-3467171", Use = ContactPoint.ContactPointUse.Work },
+                    new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Value = "+31-20-3467172" } 
+                }
+            };
+
+            FhirClient client = new FhirClient(testEndpoint);
+
+            var fe = client.Create(furore, tags: null, refresh: true);
+            Assert.IsNotNull(fe);
+        }
     }
 }
