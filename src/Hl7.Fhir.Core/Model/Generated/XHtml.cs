@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("xhtml")]
     [DataContract]
-    public partial class XHtml : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class XHtml : Hl7.Fhir.Model.Primitive, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "xhtml"; } }

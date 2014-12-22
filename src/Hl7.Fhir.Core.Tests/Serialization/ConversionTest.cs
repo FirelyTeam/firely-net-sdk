@@ -41,6 +41,14 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestGetValueAsString()
+        {
+            var x = new FhirBoolean(true);
+
+            Assert.AreEqual("true", x.GetValueAsString());
+        }
+
+        [TestMethod]
         public void TestStringToInteger()
         {
             var result = PrimitiveTypeConverter.ConvertTo<int>("-314159");
