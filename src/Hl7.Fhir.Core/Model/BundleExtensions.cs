@@ -16,94 +16,72 @@ using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Model
 {
-    //TODO: Add functionality to resolve references between resources in the Bundle (see references.html)
-    //TODO: Add functionality to make relative references absolute and vice versa using fhir-base url
     public static class BundleExtensions
     {
         /// <summary>
-        /// Find all BundleEntries with the given id.
-        /// </summary>
-        /// <param name="bundle">Bundle to search in</param>B
-        /// <param name="type">Type of resource to search for</param>
-        /// <param name="id">The (deleted) resource's id to find</param>
-        /// <param name="includeDeleted">Indicates whether the search should include deleted entries in the list</param>
-        /// <returns>A list of BundleEntries with the given id, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, string type, string id, bool includeDeleted = false)
-        {
-            if (id == null) throw Error.ArgumentNull("id");
-            if (type == null) throw Error.ArgumentNull("resource");
-
-            if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
-
-            var arg = ResourceIdentity.Build(type,id);
-
-            return bundle.Entry.Where(be => (!includeDeleted || (includeDeleted && be.Deleted != null)) &&
-                be.BuildUrlForEntry(bundle.Base).IsTargetOf(arg));
-        }
-
-
-        /// <summary>
-        /// Filter ResourceEntries containing a specific Resource type. No DeletedEntries are returned.
-        /// </summary>
-        /// <typeparam name="T">Type of Resource to filter</typeparam>
-        /// <returns>All ResourceEntries containing the given type of resource, or an empty list if none were found.</returns>
-        // Note: works for IEnumerable<ResourceEntry> too
-        public static IEnumerable<T> ByResourceType<T>(this IEnumerable<Bundle.BundleEntryComponent> bes) where T : Resource, new()
-        {
-            var t = from be in bes.Where(be => be.Resource is T && be.Resource != null)
-                    select be.Resource as T;
-            return t.Cast<T>();
-        }
-
-
-        internal static ResourceIdentity BuildUrlForEntry(this Bundle.BundleEntryComponent entry, string baseUrl = null)
-        {
-            var url = entry.Base ?? baseUrl;
-            ResourceIdentity result;
-
-            if (entry.Deleted != null)
-                result = ResourceIdentity.Build(entry.Deleted.Type, entry.Deleted.ResourceId, entry.Deleted.VersionId);
-            else
-            {
-                var versionId = entry.Resource.Meta != null && entry.Resource.Meta.VersionId != null ?
-                    entry.Resource.Meta.VersionId : null;
-
-                result = ResourceIdentity.Build(entry.Resource.TypeName, entry.Resource.Id, versionId);
-            }
-
-            if (url != null)
-                return result.WithBase(url);
-            else
-                return result;
-        }
-
-
-        /// <summary>
-        /// Find all Resources in a Bundle with the given url.
+        /// Find all entries in a Bundle with the given ResourceIdentity.
         /// </summary>
         /// <param name="bundle">Bundle to search in</param>
-        /// <param name="id">The resource's id to find</param>
-        /// <returns>A list of Resources with the given id, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntryByUrl(this Bundle bundle, Uri reference, bool includeDeleted = false)
+        /// <param name="identity">The identity to find</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceIdentity identity, bool includeDeleted = false)
         {
-            if (reference == null) throw Error.ArgumentNull("reference");
+            if (identity == null) throw Error.ArgumentNull("reference");
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 
-            var url = reference.ToString();
-            return bundle.Entry.Where(be => be.BuildUrlForEntry(bundle.Base).IsTargetOf(reference));
+            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || (be.Deleted == null)));
         }
 
 
         /// <summary>
-        /// Find the BundleEntry with a given self-link id.
+        /// Find all entries in a Bundle with the given type/id/version
         /// </summary>
-        /// <param name="entries">List of bundle entries to filter on</param>
-        /// <param name="self">Sel-link id of the Resource, as given in the BundleEntry's link with rel='self'.</param>
-        /// <returns>A list of BundleEntries with the given self-link id, or an empty list if none were found.</returns>
-        public static Resource FindEntryByVersionUrl(this Bundle bundle, Uri version)
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="type">Type of entry to find</param>
+        /// <param name="id">Id of the entry to find</param>
+        /// <param name="version">Version of the entry to find. Optional.</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, string type, string id, string version = null, bool includeDeleted = false)
         {
-            throw new NotImplementedException();
-            // Cannot do this, unless we add a versionId to the Entry.Deleted element.
+            if (type == null) throw Error.ArgumentNull("resource");
+            if (id == null) throw Error.ArgumentNull("id");
+            var identity = ResourceIdentity.Build(type,id,version);
+
+            return FindEntry(bundle, identity, includeDeleted);
+        }
+
+
+        /// <summary>
+        /// Find all entries in a Bundle with the given uri
+        /// </summary>
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="reference">The uri to find</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given uri, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, Uri reference, bool includeDeleted = false)
+        {
+            if (reference == null) throw Error.ArgumentNull("reference");
+            var identity = new ResourceIdentity(reference);
+
+            return FindEntry(bundle, identity, includeDeleted);
+        }
+
+
+        /// <summary>
+        /// Find all Resources in a Bundle referred to by the given ResourceReference.
+        /// </summary>
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="reference">Reference to the entries you want to find</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given reference, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceReference reference, bool includeDeleted = false)
+        {
+            if (reference == null) throw Error.ArgumentNull("reference");
+            var identity = new ResourceIdentity(reference.Reference);
+
+            return FindEntry(bundle, identity, includeDeleted);
         }
 
 
@@ -129,6 +107,56 @@ namespace Hl7.Fhir.Model
         public static IEnumerable<T> ByTag<T>(this IEnumerable<Resource> entries, Coding tag) where T : Resource, new()
         {
             return entries.Where(be => be.Meta != null && be.Meta.Tag != null && be.Meta.Tag.Contains(tag) && be is T).Cast<T>();
+        }
+
+        /// <summary>
+        /// Filter ResourceEntries containing a specific Resource type. No DeletedEntries are returned.
+        /// </summary>
+        /// <typeparam name="T">Type of Resource to filter</typeparam>
+        /// <returns>All ResourceEntries containing the given type of resource, or an empty list if none were found.</returns>
+        // Note: works for IEnumerable<ResourceEntry> too
+        public static IEnumerable<T> ByResourceType<T>(this IEnumerable<Bundle.BundleEntryComponent> bes) where T : Resource, new()
+        {
+            var t = from be in bes.Where(be => be.Resource is T && be.Resource != null)
+                    select be.Resource as T;
+            return t.Cast<T>();
+        }
+
+
+        public static ResourceIdentity GetResourceLocation(this Bundle.BundleEntryComponent entry, string baseUrl = null)
+        {
+            var url = entry.Base ?? baseUrl;
+            ResourceIdentity result;
+
+            if (entry.Deleted != null)
+                result = ResourceIdentity.Build(entry.Deleted.Type, entry.Deleted.ResourceId, entry.Deleted.VersionId);
+            else
+            {
+                var versionId = entry.Resource.Meta != null && entry.Resource.Meta.VersionId != null ?
+                    entry.Resource.Meta.VersionId : null;
+
+                result = ResourceIdentity.Build(entry.Resource.TypeName, entry.Resource.Id, versionId);
+            }
+
+            if (url != null)
+                return result.WithBase(url);
+            else
+                return result;
+        }
+
+
+        public static ResourceIdentity GetResourceLocation(this Resource resource, string baseUrl = null)
+        {
+           ResourceIdentity result;
+
+           var versionId = resource.Meta != null && resource.Meta.VersionId != null ? resource.Meta.VersionId : null;
+
+           result = ResourceIdentity.Build(resource.TypeName, resource.Id, versionId);
+
+           if (baseUrl != null)
+               return result.WithBase(baseUrl);
+            else
+                return result;
         }
     }
 

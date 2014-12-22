@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Rest
             {
                 if (entry.Resource != null)
                 {
-                    Resource newEntry = client.Read(entry.BuildUrlForEntry());
+                    Resource newEntry = client.Read(entry.GetResourceLocation());
                     result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });
                 }
                 else if (entry.Deleted != null)

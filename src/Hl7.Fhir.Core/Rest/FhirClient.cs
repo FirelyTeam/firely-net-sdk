@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Rest
         {
             if (entry == null) throw Error.ArgumentNull("entry");
 
-            return History(entry.BuildUrlForEntry(), since, pageSize);
+            return History(entry.GetResourceLocation(), since, pageSize);
         }
 
         /// <summary>

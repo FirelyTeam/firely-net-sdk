@@ -35,9 +35,9 @@ namespace Hl7.Fhir.Test
             id = ResourceIdentity.Build("Patient", "A100", "H2");
             Assert.AreEqual("Patient/A100/_history/H2", id.ToString());
 
-            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
-            idb = ResourceIdentity.Build(new Uri("urn:oid:1.2.3.4.5.6"), "myid");
-            Assert.AreEqual("urn:oid:1.2.3.4.5.6:myid", id.ToString());
+            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
+            idb = ResourceIdentity.Build(UrnType.OID, "1.2.3.4.5.6");
+            Assert.AreEqual("urn:oid:1.2.3.4.5.6", id.ToString());
             Assert.AreEqual(id, idb);
 
             id = new ResourceIdentity("#myid");
@@ -72,8 +72,8 @@ namespace Hl7.Fhir.Test
             Assert.IsNull(identity.BaseUri);
             Assert.IsFalse(identity.HasBaseUri);
 
-            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
-            Assert.AreEqual(new Uri("urn:oid:1.2.3.4.5.6"), identity.BaseUri);
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
+            Assert.AreEqual(new Uri("urn:oid:"), identity.BaseUri);
 
             identity = new ResourceIdentity("#myid");
             Assert.IsFalse(identity.HasBaseUri);
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Test
             identity = new ResourceIdentity("Patient/3");
             Assert.AreEqual("Patient", identity.ResourceType);
 
-            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
             Assert.IsNull(identity.ResourceType);
 
             identity = new ResourceIdentity("#myid");
@@ -122,8 +122,8 @@ namespace Hl7.Fhir.Test
             identity = new ResourceIdentity("Patient/3");
             Assert.AreEqual("3", identity.Id);
 
-            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
-            Assert.AreEqual("myid", identity.Id);
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
+            Assert.AreEqual("1.2.3.4.5.6", identity.Id);
 
             identity = new ResourceIdentity("#myid");
             Assert.AreEqual("myid", identity.Id);
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Test
             identity = new ResourceIdentity("Patient/3/_history/123");
             Assert.AreEqual("123", identity.VersionId);
 
-            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
+            identity = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
             Assert.IsNull(identity.VersionId);
 
             identity = new ResourceIdentity("#myid");
@@ -208,16 +208,19 @@ namespace Hl7.Fhir.Test
         {
             var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");
             Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
-            Assert.IsFalse(id.IsTargetOf("Patient/3"));
-
-            id = new ResourceIdentity("Patient/3");
-            Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
             Assert.IsTrue(id.IsTargetOf("Patient/3"));
 
-            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6:myid");
-            Assert.IsTrue(id.IsTargetOf("urn:oid:1.2.3.4.5.6:myid"));
-            Assert.IsFalse(id.IsTargetOf("#myid"));
-            Assert.IsFalse(id.IsTargetOf("urn:oid:1.2.3.4.5.6"));
+            id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3/_history/50");
+            Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
+            Assert.IsTrue(id.IsTargetOf("Patient/3/_history/50"));
+            
+            id = new ResourceIdentity("Patient/3");
+            Assert.IsFalse(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
+            Assert.IsTrue(id.IsTargetOf("Patient/3"));
+
+            id = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
+            Assert.IsTrue(id.IsTargetOf("urn:oid:1.2.3.4.5.6"));
+            Assert.IsFalse(id.IsTargetOf("1.2.3.4.5.6"));
 
             id = new ResourceIdentity("#myid");
             Assert.IsTrue(id.IsTargetOf("#myid"));

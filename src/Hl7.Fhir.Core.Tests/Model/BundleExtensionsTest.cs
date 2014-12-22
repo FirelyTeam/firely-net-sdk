@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -26,40 +27,34 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ResourceListFiltering()
         {
-            var rl = new List<BundleEntry>();
+            var testBundle = new Bundle();
 
-            rl.Add(new ResourceEntry<Patient> { Id = new Uri("http://x.com/Patient/1"), SelfLink = new Uri("http://x.com/Patient/1/_history/1") });
-            rl.Add(new ResourceEntry<Patient> { Id = new Uri("http://x.com/Patient/1"), SelfLink = new Uri("http://x.com/Patient/1/_history/2") });
-            rl.Add(new ResourceEntry<CarePlan> { Id = new Uri("http://x.com/Patient/2"), SelfLink = new Uri("http://x.com/Patient/2/_history/1") });
-            rl.Add(new DeletedEntry() { Id = new Uri("http://x.com/Patient/2"), SelfLink = new Uri("http://x.com/Patient/2/_history/2") });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Resource.ResourceMetaComponent { VersionId = "v2" } } });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Resource.ResourceMetaComponent { VersionId = "v3" } } });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Deleted = new Bundle.BundleEntryDeletedComponent { ResourceId = "1234", Type = "Patient", VersionId = "v4" } });
 
-            var tr = rl.ByResourceType<Patient>();
-            Assert.AreEqual(2, tr.Count());
-            var tr2 = rl.ByResourceType<CarePlan>();
-            Assert.AreEqual(1, tr2.Count());
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "5678" }, Base = "http://server1.com/fhir" });
 
-            var ur = rl.ById(new Uri("http://x.com/Patient/1"));
-            Assert.AreEqual(2, ur.Count());
-            Assert.AreEqual(2, ur.ByResourceType<Patient>().Count());
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1.2.3.4.5" }, Base = "urn:oid:" });
 
-            Assert.IsNotNull(ur.BySelfLink(new Uri("http://x.com/Patient/1/_history/1")));
-            Assert.IsNotNull(rl.BySelfLink(new Uri("http://x.com/Patient/2/_history/2")));
-        }
+            var result = testBundle.FindEntry("Patient", "1234");
+            Assert.AreEqual(2, result.Count());
+            result = testBundle.FindEntry("Patient", "1234", includeDeleted: true);
+            Assert.AreEqual(3, result.Count());
+            result = testBundle.FindEntry("Patient", "1234", "v3", includeDeleted: true);
+            Assert.AreEqual(1, result.Count());
+            result = testBundle.FindEntry(new Uri("http://server3.org/fhir/Patient/1234"));
+            Assert.AreEqual(0, result.Count());
 
-        [TestMethod]
-        public void BundleEntryByReference()
-        {
-            Bundle b = new Bundle();
+            result = testBundle.FindEntry("Patient", "5678");
+            Assert.AreEqual(1, result.Count());
+            result = testBundle.FindEntry(new Uri("http://server1.com/fhir/Patient/5678"));
+            Assert.AreEqual(1, result.Count());
+            result = testBundle.FindEntry(new Uri("http://server2.com/fhir/Patient/5678"));
+            Assert.AreEqual(0, result.Count());
 
-            b.Entries.Add(new ResourceEntry<Patient> { Id = new Uri("http://x.com/Patient/1"), SelfLink = new Uri("http://x.com/Patient/1/_history/1") });
-            b.Entries.Add(new ResourceEntry<Patient> { Id = new Uri("http://x.com/Patient/1"), SelfLink = new Uri("http://x.com/Patient/1/_history/2") });
-            b.Entries.Add(new ResourceEntry<Patient> { Id = new Uri("http://y.com/Patient/1"), SelfLink = new Uri("http://y.com/Patient/1") });
-
-            b.Links.Base = new Uri("http://x.com");
-
-            Assert.AreEqual(2, b.FindEntryByReference(new Uri("Patient/1", UriKind.Relative)).Count());
-            Assert.AreEqual(1, b.FindEntryByReference(new Uri("Patient/1/_history/1", UriKind.Relative)).Count());
-            Assert.AreEqual(2, b.FindEntryByReference(new Uri("http://y.com/Patient/1")).Count());
+            result = testBundle.FindEntry(new Uri("urn:oid:1.2.3.4.5"));
+            Assert.AreEqual(1, result.Count());
         }
     }
 }
