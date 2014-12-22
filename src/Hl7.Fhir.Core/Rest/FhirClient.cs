@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Rest
             return Refresh<TResource>(entry, false);
         }
 
-        internal TResource Refresh<TResource>(TResource entry, bool versionSpecific = false) where TResource : Resource, new()
+        internal TResource Refresh<TResource>(TResource entry, bool versionSpecific = false) where TResource : Resource
         {
             if (entry == null) throw Error.ArgumentNull("entry");
 
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public TResource Read<TResource>(Uri location) where TResource : Resource, new()
+        public TResource Read<TResource>(Uri location) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
         /// url, it must reference an address within the endpoint.</returns>
-        public TResource Read<TResource>(string location) where TResource : Resource, new()
+        public TResource Read<TResource>(string location) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull("location");
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Rest
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
         public TResource Update<TResource>(TResource entry, bool refresh = false)
-                        where TResource : Resource, new()
+                        where TResource : Resource
         {
             if (entry == null) throw Error.ArgumentNull("entry");
             // if (entry.Resource == null) throw Error.Argument("entry","Entry does not contain a Resource to update");
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Rest
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
-            var updated = new TResource();
+            var updated = (Resource)Activator.CreateInstance(entry.GetType());
             updated.Meta = new Resource.ResourceMetaComponent();
             updated.ResourceBase = entry.ResourceBase;
             var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
@@ -374,12 +374,12 @@ namespace Hl7.Fhir.Rest
             if (refresh)
             {
                 if (updated.Meta != null && !string.IsNullOrEmpty(updated.Meta.VersionId))
-                    updated = Refresh(updated, versionSpecific: true);
+                    updated = Refresh((TResource)updated, versionSpecific: true);
                 else
-                    updated = Refresh(updated, versionSpecific: false);
+                    updated = Refresh((TResource)updated, versionSpecific: false);
             }
 
-            return updated;
+            return updated as TResource;
         }
 
         /// <summary>
@@ -397,12 +397,12 @@ namespace Hl7.Fhir.Rest
         /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
         /// requires version-aware updates.</returns>
         public TResource Update<TResource>(Uri location, TResource data, bool refresh = false)
-            where TResource : Resource, new()
+            where TResource : Resource
         {
             if(location == null) Error.ArgumentNull("location");
             if(data == null) Error.ArgumentNull("data");
 
-            TResource entry = new TResource();
+            Resource entry = (Resource)Activator.CreateInstance(data.GetType());
             entry.Meta = new Resource.ResourceMetaComponent();
             entry.Meta.LastUpdated = DateTimeOffset.Now;
             ResourceIdentity ri = new ResourceIdentity(makeAbsolute(location));

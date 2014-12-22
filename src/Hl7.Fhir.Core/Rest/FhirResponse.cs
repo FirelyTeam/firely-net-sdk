@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Rest
 		//				(b) => FhirParser.ParseTagListFromJson(b));
 		//}
 
-        public T BodyAsEntry<T>() where T : Resource, new()
+        public T BodyAsEntry<T>() where T : Resource
         {
             var result = BodyAsEntry(typeof(T).GetCollectionName());
 
