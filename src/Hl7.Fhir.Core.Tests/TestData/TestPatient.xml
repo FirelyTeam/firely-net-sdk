@@ -2,6 +2,48 @@
 
 <Patient xmlns="http://hl7.org/fhir">
   <id value="pat1"/>
+  <contained>
+    <Patient>
+      <id value="1"/>
+      <meta>
+        <lastUpdated value="2012-05-29T23:45:32Z"/>
+      </meta>
+      <text>
+        <status value="generated"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          Everywoman, Eve. SSN:
+          444222222
+        </div>
+      </text>
+      <identifier>
+        <label value="SSN"/>
+        <system value="http://hl7.org/fhir/sid/us-ssn"/>
+        <value value="444222222"/>
+      </identifier>
+
+      <name>
+        <use value="official"/>
+        <family value="Everywoman"/>
+        <given value="Eve"/>
+      </name>
+      <telecom>
+        <system value="phone"/>
+        <value value="555-555-2003"/>
+        <use value="work"/>
+      </telecom>
+      <gender value="female"/>
+      <birthDate value="1973-05-31"/>
+      <address>
+        <use value="home"/>
+        <line value="2222 Home Street"/>
+      </address>
+
+      <managingOrganization>
+        <reference value="Organization/hl7"/>
+      </managingOrganization>
+      <active value="true"/>
+    </Patient>
+  </contained>
   <text>
     <status value="generated"/>
     <div xmlns="http://www.w3.org/1999/xhtml">

@@ -243,6 +243,7 @@
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\Parameters.cs" />
+    <Compile Include="Model\DomainResource.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceReference.cs" />
     <Compile Include="Model\Uuid.cs" />

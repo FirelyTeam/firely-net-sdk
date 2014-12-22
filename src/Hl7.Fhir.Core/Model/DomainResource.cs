@@ -39,32 +39,22 @@ namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
-    public abstract partial class Resource 
+    public abstract partial class DomainResource
     {
-        /// <summary>
-        /// This is the base URL of the FHIR server that this resource is hosted on
-        /// </summary>
-        [Hl7.Fhir.Introspection.NotMapped]
-        public Uri ResourceBase;
-
-        /// <summary>
-        /// Returns the entire URI of the location that this resource was retrieved from
-        /// </summary>
-        /// <remarks>
-        /// It is not stored, but reconstructed from the components of the resource
-        /// </remarks>
-        /// <returns></returns>
-        public Hl7.Fhir.Rest.ResourceIdentity ResourceIdentity()
-        {
-            if(this.ResourceBase != null)
-                return Rest.ResourceIdentity.Build(this.ResourceBase, this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
-            else
-                return Rest.ResourceIdentity.Build(this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
-        }
-
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return base.Validate(validationContext);
+            var result = new List<ValidationResult>(base.Validate(validationContext));
+
+            if (this.Contained != null)
+            {
+                if (!Contained.OfType<DomainResource>().All(dr => dr.Text == null))
+                    result.Add(new ValidationResult("Resource has contained resources with narrative"));
+
+                if(!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
+                    result.Add(new ValidationResult("Resource has contained resources with nested contained resources"));
+            }
+
+            return result;
         }
     }
 }
