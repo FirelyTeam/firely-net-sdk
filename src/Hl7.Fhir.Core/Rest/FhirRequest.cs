@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Rest
 
             Location = location;
             Method = method;
-            Timeout = 100000;       // Default timeout is 100 seconds
+            Timeout = 100*1000;       // Default timeout is 100 seconds
             
             _beforeRequest = beforeRequest;
             _afterRequest = afterRequest;
@@ -50,6 +50,7 @@ namespace Hl7.Fhir.Rest
         public string CategoryHeader { get; private set; }
         public Uri ContentLocation { get; set; }
         public string ETag { get; set; }
+        public string IfMatch { get; set; }
 
         public void SetBody(Resource resource, ResourceFormat format)
         {
@@ -109,6 +110,9 @@ namespace Hl7.Fhir.Rest
             if (ETag != null)
                 request.Headers.Add("ETag", "\"" + ETag + "\"");
 
+            if (IfMatch != null)
+                request.Headers.Add("If-Match", "\"" + IfMatch + "\"");
+
             if (Body != null)
             {
                 request.WriteBody(Body);
@@ -116,8 +120,6 @@ namespace Hl7.Fhir.Rest
                 if (ContentLocation != null)
                     request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
             }
-
-            // if(location.ver != null) request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
 
             FhirResponse fhirResponse = null;
 
@@ -205,5 +207,7 @@ namespace Hl7.Fhir.Rest
 
             return request;
         }
+
+        
     }
 }

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(RestOperation.METADATA);
         }
 
-        public static RestUrl ForCollection(this RestUrl url, string collection)
+        public static RestUrl ForResourceType(this RestUrl url, string collection)
         {
             return new RestUrl(url).AddPath(collection);
         }

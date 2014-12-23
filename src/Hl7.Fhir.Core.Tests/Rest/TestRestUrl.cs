@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Test
             RestUrl endpoint = new RestUrl("http://localhost/fhir");
             RestUrl resturi;
 
-            resturi = endpoint.ForCollection("patient");
+            resturi = endpoint.ForResourceType("patient");
             Assert.AreEqual("http://localhost/fhir/patient", resturi.AsString);
 
             resturi = endpoint.Resource("patient", "1");

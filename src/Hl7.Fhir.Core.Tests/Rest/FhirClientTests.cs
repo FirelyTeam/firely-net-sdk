@@ -82,9 +82,13 @@ namespace Hl7.Fhir.Tests
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
-            string version = new ResourceIdentity(loc.ResourceIdentity()).VersionId;
-            Assert.IsNotNull(version);
             Assert.AreEqual("1", loc.Id);
+            Assert.IsNotNull(loc.Meta.VersionId);
+
+            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
+            Assert.IsNotNull(loc2);
+            Assert.AreEqual(loc2.Id, loc.Id);
+            Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
 
             try
             {
@@ -96,15 +100,15 @@ namespace Hl7.Fhir.Tests
                 Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.NotFound);
             }
 
-            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", version));
-            Assert.IsNotNull(loc2);
-            Assert.AreEqual(FhirSerializer.SerializeResourceToJson(loc),
-                            FhirSerializer.SerializeResourceToJson(loc2));
-
-            var loc3 = client.Read<Location>(loc.ResourceIdentity());
+            var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
             Assert.IsNotNull(loc3);
             Assert.AreEqual(FhirSerializer.SerializeResourceToJson(loc),
                             FhirSerializer.SerializeResourceToJson(loc3));
+
+            var loc4 = client.Read<Location>(loc.ResourceIdentity());
+            Assert.IsNotNull(loc4);
+            Assert.AreEqual(FhirSerializer.SerializeResourceToJson(loc),
+                            FhirSerializer.SerializeResourceToJson(loc4));
         }
 
 
@@ -301,18 +305,11 @@ namespace Hl7.Fhir.Tests
             };
 
             FhirClient client = new FhirClient(testEndpoint);
-            //   var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
 
-            var fe = client.Create<Organization>(furore, tags: null, refresh: true);
-
-            Assert.IsNotNull(furore);
+            var fe = client.Create<Organization>(furore);
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
-            Assert.IsNotNull(fe.ResourceIdentity());
-            Assert.AreNotEqual(fe.Id, fe.ResourceIdentity());
-            //		Assert.IsNotNull(fe.Tags);
-            //		Assert.AreEqual(1, fe.Tags.Count(), "Tag count on new organization record don't match");
-            //		Assert.AreEqual(fe.Tags.First(), tags[0]);
+            Assert.IsNotNull(fe.Meta.VersionId);
             createdTestOrganizationUrl = fe.ResourceIdentity();
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
@@ -322,10 +319,6 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
             Assert.AreEqual(2, fe2.Identifier.Count);
-
-            //   Assert.IsNotNull(fe2.Tags);
-            //	Assert.AreEqual(1, fe2.Tags.Count(), "Tag count on updated organization record don't match");
-            // Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = client.Update(fe);
@@ -485,7 +478,7 @@ namespace Hl7.Fhir.Tests
 
             FhirClient client = new FhirClient(testEndpoint);
 
-            var fe = client.Create(furore, tags: null, refresh: true);
+            var fe = client.Create(furore);
             Assert.IsNotNull(fe);
         }
     }

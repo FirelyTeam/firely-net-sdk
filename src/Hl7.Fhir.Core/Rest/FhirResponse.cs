@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Rest
 {
@@ -160,7 +161,22 @@ namespace Hl7.Fhir.Rest
             }
 
             if (!String.IsNullOrEmpty(ETag))
+            {
                 resource.Meta.VersionId = ETag;
+                var id = new ResourceIdentity(location);
+
+                if (id.HasVersion &&  ETag != id.VersionId)
+                    throw new ApplicationException(String.Format("Version IDs from the server don't match: [{0}], [{1}]", ETag, id.VersionId));
+            }
+            else
+            {
+                var id = new ResourceIdentity(location);
+                if(id.HasVersion)
+                {
+                    Trace.WriteLine(String.Format("Result did not have an ETag on the HTTP Header, using the (Content)Location instead"));
+                    resource.Meta.VersionId = id.VersionId;
+                }
+            }
 
             if (!String.IsNullOrEmpty(LastModified))
                 resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
