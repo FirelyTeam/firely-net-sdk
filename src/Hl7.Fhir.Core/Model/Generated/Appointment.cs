@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Role of participant in the appointment
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A Person of device that is participating in the appointment, usually Practitioner, Patient, RelatedPerson or Device
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=30)]
+            [FhirElement("actor", InSummary=true, Order=50)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// required | optional | information-only
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=40)]
+            [FhirElement("required", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
             {
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// accepted | declined | tentative | in-process | completed | needs-action
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=50)]
+            [FhirElement("status", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The priority of the appointment. Can be used to make informed decisions if needing to re-prioritize appointments. (The iCal Standard specifies 0 as undefined, 1 as highest, 9 as lowest priority) (Need to change back to CodeableConcept)
         /// </summary>
-        [FhirElement("priority", Order=60)]
+        [FhirElement("priority", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Integer PriorityElement
         {
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// pending | booked | arrived | fulfilled | cancelled | noshow
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The type of appointments that is being booked (ideally this would be an identifiable service - which is at a location, rather than the location itself)
         /// </summary>
-        [FhirElement("type", Order=80)]
+        [FhirElement("type", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The reason that this appointment is being scheduled, this is more clinical than administrative
         /// </summary>
-        [FhirElement("reason", Order=90)]
+        [FhirElement("reason", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The brief description of the appointment as would be shown on a subject line in a meeting request, or appointment list. Detailed or expanded information should be put in the comment field
         /// </summary>
-        [FhirElement("description", Order=100)]
+        [FhirElement("description", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to take place
         /// </summary>
-        [FhirElement("start", Order=110)]
+        [FhirElement("start", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to conclude
         /// </summary>
-        [FhirElement("end", Order=120)]
+        [FhirElement("end", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The slot that this appointment is filling. If provided then the schedule will not be provided as slots are not recursive, and the start/end values MUST be the same as from the slot
         /// </summary>
-        [FhirElement("slot", Order=130)]
+        [FhirElement("slot", Order=170)]
         [References("Slot")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The primary location that this appointment is to take place
         /// </summary>
-        [FhirElement("location", Order=140)]
+        [FhirElement("location", Order=180)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments about the appointment
         /// </summary>
-        [FhirElement("comment", Order=150)]
+        [FhirElement("comment", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An Order that lead to the creation of this appointment
         /// </summary>
-        [FhirElement("order", Order=160)]
+        [FhirElement("order", Order=200)]
         [References("Order")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Order
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of participants involved in the appointment
         /// </summary>
-        [FhirElement("participant", Order=170)]
+        [FhirElement("participant", Order=210)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> Participant
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the appointment
         /// </summary>
-        [FhirElement("lastModifiedBy", Order=180)]
+        [FhirElement("lastModifiedBy", Order=220)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference LastModifiedBy
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date when the appointment was recorded
         /// </summary>
-        [FhirElement("lastModified", Order=190)]
+        [FhirElement("lastModified", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When dose(s) were given
             /// </summary>
-            [FhirElement("timing", InSummary=true, Order=20, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Take "as needed" f(or x)
             /// </summary>
-            [FhirElement("asNeeded", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("asNeeded", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element AsNeeded
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Body site administered to
             /// </summary>
-            [FhirElement("site", InSummary=true, Order=40)]
+            [FhirElement("site", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Site
             {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Path of substance into body
             /// </summary>
-            [FhirElement("route", InSummary=true, Order=50)]
+            [FhirElement("route", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Route
             {
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How drug was administered
             /// </summary>
-            [FhirElement("method", InSummary=true, Order=60)]
+            [FhirElement("method", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount administered in one dose
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
+            [FhirElement("quantity", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dose quantity per unit of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=80)]
+            [FhirElement("rate", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Rate
             {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Total dose that was consumed per unit of time
             /// </summary>
-            [FhirElement("maxDosePerPeriod", InSummary=true, Order=90)]
+            [FhirElement("maxDosePerPeriod", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
             {
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in progress | on hold | completed | entered in error | stopped
         /// </summary>
-        [FhirElement("status", Order=60)]
+        [FhirElement("status", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus> StatusElement
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who received medication?
         /// </summary>
-        [FhirElement("patient", Order=70)]
+        [FhirElement("patient", Order=110)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who administered substance?
         /// </summary>
-        [FhirElement("practitioner", Order=80)]
+        [FhirElement("practitioner", Order=120)]
         [References("Practitioner")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter administered as part of
         /// </summary>
-        [FhirElement("encounter", Order=90)]
+        [FhirElement("encounter", Order=130)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Order administration performed against
         /// </summary>
-        [FhirElement("prescription", Order=100)]
+        [FhirElement("prescription", Order=140)]
         [References("MedicationPrescription")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if medication not administered
         /// </summary>
-        [FhirElement("wasNotGiven", Order=110)]
+        [FhirElement("wasNotGiven", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean WasNotGivenElement
         {
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason administration not performed
         /// </summary>
-        [FhirElement("reasonNotGiven", Order=120)]
+        [FhirElement("reasonNotGiven", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Start and end time of administration
         /// </summary>
-        [FhirElement("effectiveTime", Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effectiveTime", Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was administered?
         /// </summary>
-        [FhirElement("medication", Order=140)]
+        [FhirElement("medication", Order=180)]
         [References("Medication")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Medication
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device used to administer
         /// </summary>
-        [FhirElement("device", Order=150)]
+        [FhirElement("device", Order=190)]
         [References("Device")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medicine administration instructions to the patient/carer
         /// </summary>
-        [FhirElement("dosage", Order=160)]
+        [FhirElement("dosage", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationDosageComponent> Dosage

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this goal
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The patient for whom this goal is intended for
         /// </summary>
-        [FhirElement("patient", Order=60)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What's the desired outcome?
         /// </summary>
-        [FhirElement("description", Order=70)]
+        [FhirElement("description", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | planned | in progress | achieved | sustaining | cancelled | accepted | rejected
         /// </summary>
-        [FhirElement("status", Order=80)]
+        [FhirElement("status", Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Goal.GoalStatus> StatusElement
         {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the goal
         /// </summary>
-        [FhirElement("notes", Order=90)]
+        [FhirElement("notes", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Health issues this goal addresses
         /// </summary>
-        [FhirElement("concern", Order=100)]
+        [FhirElement("concern", Order=140)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

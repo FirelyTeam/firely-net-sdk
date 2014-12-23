@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The kind of relationship
             /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=20)]
+            [FhirElement("relationship", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the person
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=30)]
+            [FhirElement("name", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A contact detail for the person
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=40)]
+            [FhirElement("telecom", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Address for the contact person
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=50)]
+            [FhirElement("address", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// male | female | other | unknown
             /// </summary>
-            [FhirElement("gender", InSummary=true, Order=60)]
+            [FhirElement("gender", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
             {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Organization that is associated with the contact
             /// </summary>
-            [FhirElement("organization", InSummary=true, Order=70)]
+            [FhirElement("organization", InSummary=true, Order=90)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Organization
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The period during which this person or organization is valid to be contacted relating to this patient
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=80)]
+            [FhirElement("period", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. Dog, Cow
             /// </summary>
-            [FhirElement("species", InSummary=true, Order=20)]
+            [FhirElement("species", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Species
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. Poodle, Angus
             /// </summary>
-            [FhirElement("breed", InSummary=true, Order=30)]
+            [FhirElement("breed", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Breed
             {
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. Neutered, Intact
             /// </summary>
-            [FhirElement("genderStatus", InSummary=true, Order=40)]
+            [FhirElement("genderStatus", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept GenderStatus
             {
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The other patient resource that the link refers to
             /// </summary>
-            [FhirElement("other", InSummary=true, Order=20)]
+            [FhirElement("other", InSummary=true, Order=40)]
             [References("Patient")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// replace | refer | seealso - type of link
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the person as this patient
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A name associated with the patient
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HumanName> Name
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the individual
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=70)]
+        [FhirElement("telecom", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=80)]
+        [FhirElement("gender", InSummary=true, Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date and time of birth for the individual
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=90)]
+        [FhirElement("birthDate", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates if the individual is deceased or not
         /// </summary>
-        [FhirElement("deceased", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Addresses for the individual
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=110)]
+        [FhirElement("address", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marital (civil) status of a person
         /// </summary>
-        [FhirElement("maritalStatus", InSummary=true, Order=120)]
+        [FhirElement("maritalStatus", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept MaritalStatus
         {
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether patient is part of a multiple birth
         /// </summary>
-        [FhirElement("multipleBirth", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("multipleBirth", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
         [DataMember]
         public Hl7.Fhir.Model.Element MultipleBirth
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=140)]
+        [FhirElement("photo", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact party (e.g. guardian, partner, friend) for the patient
         /// </summary>
-        [FhirElement("contact", Order=150)]
+        [FhirElement("contact", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this patient is an animal (non-human)
         /// </summary>
-        [FhirElement("animal", InSummary=true, Order=160)]
+        [FhirElement("animal", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Patient.AnimalComponent Animal
         {
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Languages which may be used to communicate with the patient about his or her health
         /// </summary>
-        [FhirElement("communication", Order=170)]
+        [FhirElement("communication", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated care provider
         /// </summary>
-        [FhirElement("careProvider", Order=180)]
+        [FhirElement("careProvider", Order=220)]
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization that is the custodian of the patient record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=190)]
+        [FhirElement("managingOrganization", InSummary=true, Order=230)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=200)]
+        [FhirElement("link", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.PatientLinkComponent> Link
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether this patient's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=210)]
+        [FhirElement("active", InSummary=true, Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", Order=50)]
+        [FhirElement("bodySite", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
-        [FhirElement("status", Order=60)]
+        [FhirElement("status", Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus> StatusElement
         {
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("device", Order=70)]
+        [FhirElement("device", Order=110)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter motivating request
         /// </summary>
-        [FhirElement("encounter", Order=80)]
+        [FhirElement("encounter", Order=120)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for request
         /// </summary>
-        [FhirElement("indication", Order=100)]
+        [FhirElement("indication", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes or comments
         /// </summary>
-        [FhirElement("notes", Order=110)]
+        [FhirElement("notes", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("prnReason", Order=120)]
+        [FhirElement("prnReason", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PrnReason
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered
         /// </summary>
-        [FhirElement("orderedOn", Order=130)]
+        [FhirElement("orderedOn", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedOn", Order=140)]
+        [FhirElement("recordedOn", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
         {
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of request
         /// </summary>
-        [FhirElement("subject", Order=150)]
+        [FhirElement("subject", Order=190)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Schedule for use
         /// </summary>
-        [FhirElement("timing", Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=170)]
+        [FhirElement("priority", Order=210)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestPriority> PriorityElement
         {

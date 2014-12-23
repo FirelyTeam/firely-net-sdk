@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code to indicate the item (test or panel) being ordered
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If this item relates to specific specimens
             /// </summary>
-            [FhirElement("specimen", InSummary=true, Order=30)]
+            [FhirElement("specimen", InSummary=true, Order=50)]
             [References("Specimen")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location of requested test (if applicable)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=40)]
+            [FhirElement("bodySite", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=50)]
+            [FhirElement("status", InSummary=true, Order=70)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
             {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Events specific to this item
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=60)]
+            [FhirElement("event", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=20)]
+            [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// More information about the event and its context
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=30)]
+            [FhirElement("description", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Description
             {
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The date at which the event happened
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=40)]
+            [FhirElement("dateTime", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who recorded or did this
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=50)]
+            [FhirElement("actor", InSummary=true, Order=70)]
             [References("Practitioner","Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what test is about
         /// </summary>
-        [FhirElement("subject", Order=50)]
+        [FhirElement("subject", Order=90)]
         [References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the test
         /// </summary>
-        [FhirElement("orderer", Order=60)]
+        [FhirElement("orderer", Order=100)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter that this diagnostic order is associated with
         /// </summary>
-        [FhirElement("encounter", Order=80)]
+        [FhirElement("encounter", Order=120)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation/Justification for test
         /// </summary>
-        [FhirElement("clinicalNotes", Order=90)]
+        [FhirElement("clinicalNotes", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ClinicalNotesElement
         {
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting observations or conditions for this request
         /// </summary>
-        [FhirElement("supportingInformation", Order=100)]
+        [FhirElement("supportingInformation", Order=140)]
         [References("Observation","Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If the whole order relates to specific specimens
         /// </summary>
-        [FhirElement("specimen", Order=110)]
+        [FhirElement("specimen", Order=150)]
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
         {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=130)]
+        [FhirElement("priority", Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement
         {
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A list of events of interest in the lifecycle
         /// </summary>
-        [FhirElement("event", Order=140)]
+        [FhirElement("event", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The items the orderer requested
         /// </summary>
-        [FhirElement("item", Order=150)]
+        [FhirElement("item", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> Item

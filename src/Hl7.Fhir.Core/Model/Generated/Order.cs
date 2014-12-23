@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code specifies when request should be done. The code may simply be a priority code
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A formal schedule
             /// </summary>
-            [FhirElement("schedule", InSummary=true, Order=30)]
+            [FhirElement("schedule", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Timing Schedule
             {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the order was made
         /// </summary>
-        [FhirElement("date", Order=60)]
+        [FhirElement("date", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient this order is about
         /// </summary>
-        [FhirElement("subject", Order=70)]
+        [FhirElement("subject", Order=110)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who initiated the order
         /// </summary>
-        [FhirElement("source", Order=80)]
+        [FhirElement("source", Order=120)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is intended to fulfill the order
         /// </summary>
-        [FhirElement("target", Order=90)]
+        [FhirElement("target", Order=130)]
         [References("Organization","Device","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text - why the order was made
         /// </summary>
-        [FhirElement("reason", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If required by policy
         /// </summary>
-        [FhirElement("authority", Order=110)]
+        [FhirElement("authority", Order=150)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Authority
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When order should be fulfilled
         /// </summary>
-        [FhirElement("when", Order=120)]
+        [FhirElement("when", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Order.OrderWhenComponent When
         {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What action is being ordered
         /// </summary>
-        [FhirElement("detail", Order=130)]
+        [FhirElement("detail", Order=170)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

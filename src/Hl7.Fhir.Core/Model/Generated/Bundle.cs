@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of resource that was deleted
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code TypeElement
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Id of resource that was deleted
             /// </summary>
-            [FhirElement("resourceId", InSummary=true, Order=30)]
+            [FhirElement("resourceId", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id ResourceIdElement
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Version id for releted resource
             /// </summary>
-            [FhirElement("versionId", InSummary=true, Order=40)]
+            [FhirElement("versionId", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id VersionIdElement
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the resource was deleted
             /// </summary>
-            [FhirElement("instant", InSummary=true, Order=50)]
+            [FhirElement("instant", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Instant InstantElement
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Base URL, if different to bundle base
             /// </summary>
-            [FhirElement("base", InSummary=true, Order=20)]
+            [FhirElement("base", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri BaseElement
             {
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// create | update | match | include - for search &amp; transaction
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=30)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus> StatusElement
             {
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Search URL (see transaction)
             /// </summary>
-            [FhirElement("search", InSummary=true, Order=40)]
+            [FhirElement("search", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SearchElement
             {
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Search ranking (between 0 and 1)
             /// </summary>
-            [FhirElement("score", InSummary=true, Order=50)]
+            [FhirElement("score", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal ScoreElement
             {
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If this is a deleted resource (transaction/history)
             /// </summary>
-            [FhirElement("deleted", InSummary=true, Order=60)]
+            [FhirElement("deleted", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Bundle.BundleEntryDeletedComponent Deleted
             {
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resources in this bundle
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=70, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=90, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
             /// </summary>
-            [FhirElement("relation", InSummary=true, Order=20)]
+            [FhirElement("relation", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RelationElement
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference details for the link
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=30)]
+            [FhirElement("url", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement

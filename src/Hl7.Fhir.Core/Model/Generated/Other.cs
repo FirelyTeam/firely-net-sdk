@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Resource
         /// </summary>
-        [FhirElement("code", Order=60)]
+        [FhirElement("code", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies the
         /// </summary>
-        [FhirElement("subject", Order=70)]
+        [FhirElement("subject", Order=110)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who created
         /// </summary>
-        [FhirElement("author", Order=80)]
+        [FhirElement("author", Order=120)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", Order=90)]
+        [FhirElement("created", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {

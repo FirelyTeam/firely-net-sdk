@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Optional amount (concentration)
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=20)]
+            [FhirElement("quantity", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Quantity
             {
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A component of the substance
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=30)]
+            [FhirElement("substance", InSummary=true, Order=50)]
             [References("Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier of the package/container
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When no longer valid to use
             /// </summary>
-            [FhirElement("expiry", InSummary=true, Order=30)]
+            [FhirElement("expiry", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ExpiryElement
             {
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of substance in the package
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=40)]
+            [FhirElement("quantity", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of substance this is
         /// </summary>
-        [FhirElement("type", Order=50)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
-        [FhirElement("description", Order=60)]
+        [FhirElement("description", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific package/container of the substance
         /// </summary>
-        [FhirElement("instance", Order=70)]
+        [FhirElement("instance", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
         {
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition information about the substance
         /// </summary>
-        [FhirElement("ingredient", Order=80)]
+        [FhirElement("ingredient", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient

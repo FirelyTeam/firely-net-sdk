@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a data type
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a whole resource
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=40, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Named part of a parameter (e.g. Tuple)
             /// </summary>
-            [FhirElement("part", InSummary=true, Order=50)]
+            [FhirElement("part", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> Part
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value of the part
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]

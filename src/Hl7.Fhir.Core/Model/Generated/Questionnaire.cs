@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To link questionnaire with questionnaire answers
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=20)]
+            [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Concept that represents this question on a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=30)]
+            [FhirElement("concept", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text of the question as it is shown to the user
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=40)]
+            [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// boolean | decimal | integer | date | dateTime +
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=70)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> TypeElement
             {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Must group be included in data results?
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=60)]
+            [FhirElement("required", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group may repeat
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=70)]
+            [FhirElement("repeats", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Valueset containing the possible options
             /// </summary>
-            [FhirElement("options", InSummary=true, Order=80)]
+            [FhirElement("options", InSummary=true, Order=100)]
             [References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=90)]
+            [FhirElement("group", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To link questionnaire with questionnaire answers
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=20)]
+            [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name to be displayed for group
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=30)]
+            [FhirElement("title", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Concept that represents this section on a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=40)]
+            [FhirElement("concept", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional text for the group
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=50)]
+            [FhirElement("text", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Must group be included in data results?
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=60)]
+            [FhirElement("required", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group may repeat
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=70)]
+            [FhirElement("repeats", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=80)]
+            [FhirElement("group", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", InSummary=true, Order=90)]
+            [FhirElement("question", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this questionnaire
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id for this version of Questionnaire
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=60)]
+        [FhirElement("version", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | published | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=70)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> StatusElement
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=80)]
+        [FhirElement("date", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization who designed the questionnaire
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=90)]
+        [FhirElement("publisher", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=100)]
+        [FhirElement("group", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Questionnaire.GroupComponent Group

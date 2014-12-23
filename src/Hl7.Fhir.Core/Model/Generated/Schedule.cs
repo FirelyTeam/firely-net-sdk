@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The schedule type can be used for the categorization of healthcare services or other appointment types
         /// </summary>
-        [FhirElement("type", Order=60)]
+        [FhirElement("type", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
-        [FhirElement("actor", Order=70)]
+        [FhirElement("actor", Order=110)]
         [References()]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
         /// </summary>
-        [FhirElement("planningHorizon", Order=80)]
+        [FhirElement("planningHorizon", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
         {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
         /// </summary>
-        [FhirElement("comment", Order=90)]
+        [FhirElement("comment", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this Schedule was created, or last revised
         /// </summary>
-        [FhirElement("lastModified", Order=100)]
+        [FhirElement("lastModified", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {

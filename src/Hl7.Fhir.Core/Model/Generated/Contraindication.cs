@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What mitigation?
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=20)]
+            [FhirElement("action", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Action
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date committed
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=30)]
+            [FhirElement("date", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is committing?
             /// </summary>
-            [FhirElement("author", InSummary=true, Order=40)]
+            [FhirElement("author", InSummary=true, Order=60)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated patient
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=50)]
+        [FhirElement("patient", InSummary=true, Order=90)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. Drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=60)]
+        [FhirElement("category", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// high | medium | low
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=70)]
+        [FhirElement("severity", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Code SeverityElement
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Problem resource
         /// </summary>
-        [FhirElement("implicated", InSummary=true, Order=80)]
+        [FhirElement("implicated", InSummary=true, Order=120)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description and context
         /// </summary>
-        [FhirElement("detail", Order=90)]
+        [FhirElement("detail", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DetailElement
         {
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=100)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who found issue?
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=110)]
+        [FhirElement("author", InSummary=true, Order=150)]
         [References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique id for the contraindication
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=120)]
+        [FhirElement("identifier", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authority for issue
         /// </summary>
-        [FhirElement("reference", Order=130)]
+        [FhirElement("reference", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ReferenceElement
         {
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Step taken to address
         /// </summary>
-        [FhirElement("mitigation", Order=140)]
+        [FhirElement("mitigation", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> Mitigation

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Single-valued answer to the question
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=20, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Corresponding question within Questionnaire
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=20)]
+            [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text of the question as it is shown to the user
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=30)]
+            [FhirElement("text", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The response(s) to the question
             /// </summary>
-            [FhirElement("answer", InSummary=true, Order=40)]
+            [FhirElement("answer", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionAnswerComponent> Answer
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=50)]
+            [FhirElement("group", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent> Group
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Corresponding group within Questionnaire
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=20)]
+            [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name for this group
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=30)]
+            [FhirElement("title", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional text for the group
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=40)]
+            [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The subject this group's answers are about
             /// </summary>
-            [FhirElement("subject", InSummary=true, Order=50)]
+            [FhirElement("subject", InSummary=true, Order=70)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire answers group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=60)]
+            [FhirElement("group", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent> Group
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", InSummary=true, Order=70)]
+            [FhirElement("question", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionComponent> Question
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique id for this set of answers
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Form being answered
         /// </summary>
-        [FhirElement("questionnaire", InSummary=true, Order=60)]
+        [FhirElement("questionnaire", InSummary=true, Order=100)]
         [References("Questionnaire")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Questionnaire
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in progress | completed | amended
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=70)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionnaireAnswersStatus> StatusElement
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the questions
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=80)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person who received and recorded the answers
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=90)]
+        [FhirElement("author", InSummary=true, Order=130)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("authored", InSummary=true, Order=100)]
+        [FhirElement("authored", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredElement
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who answered the questions
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=110)]
+        [FhirElement("source", InSummary=true, Order=150)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primary encounter during which the answers were collected
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=120)]
+        [FhirElement("encounter", InSummary=true, Order=160)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=130)]
+        [FhirElement("group", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent Group
         {

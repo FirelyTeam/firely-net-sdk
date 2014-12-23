@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Event occurs frequency times per duration
             /// </summary>
-            [FhirElement("frequency", InSummary=true, Order=20)]
+            [FhirElement("frequency", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Integer FrequencyElement
             {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// HS | WAKE | AC | ACM | ACD | ACV | PC | PCM | PCD | PCV - common life events
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=30)]
+            [FhirElement("when", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Timing.EventTiming> WhenElement
             {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Repeating or event-related duration
             /// </summary>
-            [FhirElement("duration", InSummary=true, Order=40)]
+            [FhirElement("duration", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationElement
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("units", InSummary=true, Order=50)]
+            [FhirElement("units", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> UnitsElement
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Number of times to repeat
             /// </summary>
-            [FhirElement("count", InSummary=true, Order=60)]
+            [FhirElement("count", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When to stop repeats
             /// </summary>
-            [FhirElement("end", InSummary=true, Order=70)]
+            [FhirElement("end", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime EndElement
             {

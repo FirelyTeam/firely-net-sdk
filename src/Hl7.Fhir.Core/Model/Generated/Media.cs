@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// photo | video | audio
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=50)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Media.MediaType> TypeElement
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The type of acquisition equipment/process
         /// </summary>
-        [FhirElement("subtype", InSummary=true, Order=60)]
+        [FhirElement("subtype", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Subtype
         {
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier(s) for the image
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=70)]
+        [FhirElement("identifier", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the media was taken/recorded (start)
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=80)]
+        [FhirElement("created", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=90)]
+        [FhirElement("subject", InSummary=true, Order=130)]
         [References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=true, Order=100)]
+        [FhirElement("operator", InSummary=true, Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Operator
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Imaging view e.g Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=true, Order=110)]
+        [FhirElement("view", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
         {
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the device/manufacturer
         /// </summary>
-        [FhirElement("deviceName", InSummary=true, Order=120)]
+        [FhirElement("deviceName", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DeviceNameElement
         {
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Height of the image in pixels(photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=true, Order=130)]
+        [FhirElement("height", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Integer HeightElement
         {
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=true, Order=140)]
+        [FhirElement("width", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Integer WidthElement
         {
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=true, Order=150)]
+        [FhirElement("frames", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Integer FramesElement
         {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=true, Order=160)]
+        [FhirElement("duration", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Integer DurationElement
         {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actual Media - reference or data
         /// </summary>
-        [FhirElement("content", Order=170)]
+        [FhirElement("content", Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Content

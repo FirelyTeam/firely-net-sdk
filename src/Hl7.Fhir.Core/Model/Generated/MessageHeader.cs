@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual destination address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=40)]
+            [FhirElement("endpoint", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of software running the system
             /// </summary>
-            [FhirElement("software", InSummary=true, Order=30)]
+            [FhirElement("software", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SoftwareElement
             {
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Version of software running
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=40)]
+            [FhirElement("version", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human contact for problems
             /// </summary>
-            [FhirElement("contact", InSummary=true, Order=50)]
+            [FhirElement("contact", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.ContactPoint Contact
             {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual message source address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [FhirElement("endpoint", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Id of original message
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentifierElement
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// ok | transient-error | fatal-error
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=30)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific list of hints/warnings/errors
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=40)]
+            [FhirElement("details", InSummary=true, Order=60)]
             [References("OperationOutcome")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Details
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Id of this message
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id IdentifierElement
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time that the message was sent
         /// </summary>
-        [FhirElement("timestamp", Order=60)]
+        [FhirElement("timestamp", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant TimestampElement
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Code for the event this message represents
         /// </summary>
-        [FhirElement("event", Order=70)]
+        [FhirElement("event", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Event
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", Order=80)]
+        [FhirElement("response", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response
         {
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Source Application
         /// </summary>
-        [FhirElement("source", Order=90)]
+        [FhirElement("source", Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Destination Application(s)
         /// </summary>
-        [FhirElement("destination", Order=100)]
+        [FhirElement("destination", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", Order=110)]
+        [FhirElement("enterer", Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", Order=120)]
+        [FhirElement("author", Order=160)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended "real-world" recipient for the data
         /// </summary>
-        [FhirElement("receiver", Order=130)]
+        [FhirElement("receiver", Order=170)]
         [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Receiver
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", Order=140)]
+        [FhirElement("responsible", Order=180)]
         [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Responsible
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", Order=150)]
+        [FhirElement("reason", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("data", Order=160)]
+        [FhirElement("data", Order=200)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

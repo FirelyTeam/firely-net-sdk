@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of involvement
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=20)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
             {
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is involved
             /// </summary>
-            [FhirElement("member", InSummary=true, Order=30)]
+            [FhirElement("member", InSummary=true, Order=50)]
             [References("Practitioner","RelatedPerson","Patient","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this plan
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who care plan is for
         /// </summary>
-        [FhirElement("patient", Order=60)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// planned | active | completed
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CarePlan2.CarePlan2Status> StatusElement
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period plan covers
         /// </summary>
-        [FhirElement("period", Order=80)]
+        [FhirElement("period", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When last updated
         /// </summary>
-        [FhirElement("modified", Order=90)]
+        [FhirElement("modified", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ModifiedElement
         {
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Health issues this plan addresses
         /// </summary>
-        [FhirElement("concern", Order=100)]
+        [FhirElement("concern", Order=140)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who's involved in plan?
         /// </summary>
-        [FhirElement("participant", Order=110)]
+        [FhirElement("participant", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CarePlan2.CarePlan2ParticipantComponent> Participant
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the plan
         /// </summary>
-        [FhirElement("notes", Order=120)]
+        [FhirElement("notes", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// CarePlan Goal
         /// </summary>
-        [FhirElement("goal", Order=130)]
+        [FhirElement("goal", Order=170)]
         [References("Goal")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// CarePlan Activity
         /// </summary>
-        [FhirElement("activity", Order=140)]
+        [FhirElement("activity", Order=180)]
         [References("ProcedureRequest","MedicationPrescription","DiagnosticOrder","ReferralRequest","CommunicationRequest","NutritionOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

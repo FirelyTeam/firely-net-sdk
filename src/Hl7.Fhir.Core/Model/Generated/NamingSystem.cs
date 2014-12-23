@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of person
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Phone, email, etc.
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=30)]
+            [FhirElement("telecom", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this the id that should be used for this type
             /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=40)]
+            [FhirElement("preferred", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean PreferredElement
             {
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// codesystem | identifier | root
         /// </summary>
-        [FhirElement("type", Order=50)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> TypeElement
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", Order=60)]
+        [FhirElement("name", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | active | retired
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> StatusElement
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ISO 3-char country code
         /// </summary>
-        [FhirElement("country", Order=80)]
+        [FhirElement("country", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Code CountryElement
         {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// driver | provider | patient | bank
         /// </summary>
-        [FhirElement("category", Order=90)]
+        [FhirElement("category", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who maintains system namespace?
         /// </summary>
-        [FhirElement("responsible", Order=100)]
+        [FhirElement("responsible", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ResponsibleElement
         {
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What does namingsystem identify?
         /// </summary>
-        [FhirElement("description", Order=110)]
+        [FhirElement("description", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How/where is it used
         /// </summary>
-        [FhirElement("usage", Order=120)]
+        [FhirElement("usage", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UsageElement
         {
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", Order=130)]
+        [FhirElement("uniqueId", Order=170)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who should be contacted for questions about namingsystem
         /// </summary>
-        [FhirElement("contact", Order=140)]
+        [FhirElement("contact", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent Contact
         {
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use this instead
         /// </summary>
-        [FhirElement("replacedBy", Order=150)]
+        [FhirElement("replacedBy", Order=190)]
         [References("NamingSystem")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReplacedBy

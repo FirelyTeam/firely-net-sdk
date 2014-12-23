@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Manifestation/symptom
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supporting information found elsewhere
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=30)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target by means of a predefined code
             /// </summary>
-            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [FhirElement("codeableConcept", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CodeableConcept
             {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target resource
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target by means of a predefined code
             /// </summary>
-            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [FhirElement("codeableConcept", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CodeableConcept
             {
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target resource
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Simple summary (disease specific)
             /// </summary>
-            [FhirElement("summary", InSummary=true, Order=20)]
+            [FhirElement("summary", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Summary
             {
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formal record of assessment
             /// </summary>
-            [FhirElement("assessment", InSummary=true, Order=30)]
+            [FhirElement("assessment", InSummary=true, Order=50)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location - may include laterality
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Precise location details
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=30)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailElement
             {
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this condition
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who has the condition?
         /// </summary>
-        [FhirElement("subject", Order=60)]
+        [FhirElement("subject", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("encounter", Order=70)]
+        [FhirElement("encounter", Order=110)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person who asserts this condition
         /// </summary>
-        [FhirElement("asserter", Order=80)]
+        [FhirElement("asserter", Order=120)]
         [References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When first detected/suspected/entered
         /// </summary>
-        [FhirElement("dateAsserted", Order=90)]
+        [FhirElement("dateAsserted", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date DateAssertedElement
         {
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identification of the condition, problem or diagnosis
         /// </summary>
-        [FhirElement("code", Order=100)]
+        [FhirElement("code", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. complaint | symptom | finding | diagnosis
         /// </summary>
-        [FhirElement("category", Order=110)]
+        [FhirElement("category", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// provisional | working | confirmed | refuted
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionStatus> StatusElement
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Degree of confidence
         /// </summary>
-        [FhirElement("certainty", Order=130)]
+        [FhirElement("certainty", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Certainty
         {
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", Order=140)]
+        [FhirElement("severity", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", Order=170)]
+        [FhirElement("stage", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
         {
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", Order=180)]
+        [FhirElement("evidence", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("location", Order=190)]
+        [FhirElement("location", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> Location
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Causes for this Condition
         /// </summary>
-        [FhirElement("dueTo", Order=200)]
+        [FhirElement("dueTo", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionDueToComponent> DueTo
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Precedent for this Condition
         /// </summary>
-        [FhirElement("occurredFollowing", Order=210)]
+        [FhirElement("occurredFollowing", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent> OccurredFollowing
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about the Condition
         /// </summary>
-        [FhirElement("notes", Order=220)]
+        [FhirElement("notes", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {

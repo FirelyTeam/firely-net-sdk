@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical, administrative, etc.
         /// </summary>
-        [FhirElement("category", Order=60)]
+        [FhirElement("category", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered in error
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is alert about?
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", Order=120)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Alert creator
         /// </summary>
-        [FhirElement("author", Order=90)]
+        [FhirElement("author", Order=130)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text of alert
         /// </summary>
-        [FhirElement("note", Order=100)]
+        [FhirElement("note", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement

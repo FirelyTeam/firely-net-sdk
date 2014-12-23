@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parent appointment that this response is replying to
         /// </summary>
-        [FhirElement("appointment", Order=60)]
+        [FhirElement("appointment", Order=100)]
         [References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Role of participant in the appointment
         /// </summary>
-        [FhirElement("participantType", Order=70)]
+        [FhirElement("participantType", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A Person of device that is participating in the appointment, usually Practitioner, Patient, RelatedPerson or Device
         /// </summary>
-        [FhirElement("individual", Order=80)]
+        [FhirElement("individual", Order=120)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
         /// </summary>
-        [FhirElement("participantStatus", Order=90)]
+        [FhirElement("participantStatus", Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> ParticipantStatus_Element
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments about the appointment
         /// </summary>
-        [FhirElement("comment", Order=100)]
+        [FhirElement("comment", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to take place
         /// </summary>
-        [FhirElement("start", Order=110)]
+        [FhirElement("start", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
         {
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the appointment is to conclude
         /// </summary>
-        [FhirElement("end", Order=120)]
+        [FhirElement("end", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the appointment response
         /// </summary>
-        [FhirElement("lastModifiedBy", Order=130)]
+        [FhirElement("lastModifiedBy", Order=170)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference LastModifiedBy
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date when the response was recorded or last updated
         /// </summary>
-        [FhirElement("lastModified", Order=140)]
+        [FhirElement("lastModified", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {

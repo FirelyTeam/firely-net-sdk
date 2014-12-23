@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The type of contact
             /// </summary>
-            [FhirElement("purpose", InSummary=true, Order=20)]
+            [FhirElement("purpose", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Purpose
             {
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the contact
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=30)]
+            [FhirElement("name", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact details (telephone, email, etc)  for a contact
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=40)]
+            [FhirElement("telecom", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Visiting or postal addresses for the contact
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=50)]
+            [FhirElement("address", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// male | female | other | unknown
             /// </summary>
-            [FhirElement("gender", InSummary=true, Order=60)]
+            [FhirElement("gender", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
             {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies this organization  across multiple systems
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name used for the organization
         /// </summary>
-        [FhirElement("name", Order=60)]
+        [FhirElement("name", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of organization
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=80)]
+        [FhirElement("telecom", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=90)]
+        [FhirElement("address", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", Order=100)]
+        [FhirElement("partOf", Order=140)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=110)]
+        [FhirElement("contact", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> Contact
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location(s) the organization uses to provide services
         /// </summary>
-        [FhirElement("location", Order=120)]
+        [FhirElement("location", Order=160)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the organization's record is still in active use
         /// </summary>
-        [FhirElement("active", Order=130)]
+        [FhirElement("active", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {

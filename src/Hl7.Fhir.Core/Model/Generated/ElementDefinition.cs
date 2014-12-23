@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Element values that used to distinguish the slices
             /// </summary>
-            [FhirElement("discriminator", InSummary=true, Order=20)]
+            [FhirElement("discriminator", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> DiscriminatorElement
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text description of how slicing works (or not)
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=30)]
+            [FhirElement("description", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If elements must be in same order as slices
             /// </summary>
-            [FhirElement("ordered", InSummary=true, Order=40)]
+            [FhirElement("ordered", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean OrderedElement
             {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// closed | open | openAtEnd
             /// </summary>
-            [FhirElement("rules", InSummary=true, Order=50)]
+            [FhirElement("rules", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of Data type or Resource
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code CodeElement
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile.structure to apply
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=30)]
+            [FhirElement("profile", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ProfileElement
             {
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// contained | referenced | bundled - how aggregated
             /// </summary>
-            [FhirElement("aggregation", InSummary=true, Order=40)]
+            [FhirElement("aggregation", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to mapping declaration
             /// </summary>
-            [FhirElement("identity", InSummary=true, Order=20)]
+            [FhirElement("identity", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentityElement
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Details of the mapping
             /// </summary>
-            [FhirElement("map", InSummary=true, Order=30)]
+            [FhirElement("map", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MapElement
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Descriptive Name
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Can additional codes be used?
             /// </summary>
-            [FhirElement("isExtensible", InSummary=true, Order=30)]
+            [FhirElement("isExtensible", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsExtensibleElement
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// required | preferred | example
             /// </summary>
-            [FhirElement("conformance", InSummary=true, Order=40)]
+            [FhirElement("conformance", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ElementDefinition.BindingConformance> ConformanceElement
             {
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human explanation of the value set
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Source of value set
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("reference", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Reference
@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Target of 'condition' reference above
             /// </summary>
-            [FhirElement("key", InSummary=true, Order=20)]
+            [FhirElement("key", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id KeyElement
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Short human label
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=30)]
+            [FhirElement("name", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// error | warning
             /// </summary>
-            [FhirElement("severity", InSummary=true, Order=40)]
+            [FhirElement("severity", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> SeverityElement
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human description of constraint
             /// </summary>
-            [FhirElement("human", InSummary=true, Order=50)]
+            [FhirElement("human", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString HumanElement
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// XPath expression of constraint
             /// </summary>
-            [FhirElement("xpath", InSummary=true, Order=60)]
+            [FhirElement("xpath", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString XpathElement

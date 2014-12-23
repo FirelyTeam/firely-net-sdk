@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// caused-by | because-of
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> TypeElement
             {
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The related item - e.g. a procedure
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("AllergyIntolerance","CarePlan","Condition","DiagnosticReport","FamilyHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationPrescription","MedicationStatement","Observation","Procedure")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The reference to the practitioner
             /// </summary>
-            [FhirElement("person", InSummary=true, Order=20)]
+            [FhirElement("person", InSummary=true, Order=40)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Person
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The role the person was in
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=30)]
+            [FhirElement("role", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
             {
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this procedure
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who procedure was performed on
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=60)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identification of the procedure
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Precise location details
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=80)]
+        [FhirElement("bodySite", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason procedure performed
         /// </summary>
-        [FhirElement("indication", InSummary=true, Order=90)]
+        [FhirElement("indication", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The people who performed the procedure
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=100)]
+        [FhirElement("performer", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> Performer
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date the procedure was performed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period Date
         {
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter when procedure performed
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=120)]
+        [FhirElement("encounter", InSummary=true, Order=160)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was result of procedure?
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=130)]
+        [FhirElement("outcome", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString OutcomeElement
         {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Any report that results from the procedure
         /// </summary>
-        [FhirElement("report", Order=140)]
+        [FhirElement("report", Order=180)]
         [References("DiagnosticReport")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Complication following the procedure
         /// </summary>
-        [FhirElement("complication", Order=150)]
+        [FhirElement("complication", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instructions for follow up
         /// </summary>
-        [FhirElement("followUp", Order=160)]
+        [FhirElement("followUp", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString FollowUpElement
         {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A procedure that is related to this one
         /// </summary>
-        [FhirElement("relatedItem", Order=170)]
+        [FhirElement("relatedItem", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent> RelatedItem
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about procedure
         /// </summary>
-        [FhirElement("notes", Order=180)]
+        [FhirElement("notes", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of supplement product requested
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of the nutritional supplement
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=30)]
+            [FhirElement("quantity", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the nutritional supplement
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code to indicate how to alter the texture of the foods, e.g., pureed
             /// </summary>
-            [FhirElement("modifier", InSummary=true, Order=20)]
+            [FhirElement("modifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Modifier
             {
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Concepts that are used to identify an entity that is ingested for nutritional purposes
             /// </summary>
-            [FhirElement("foodType", InSummary=true, Order=30)]
+            [FhirElement("foodType", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FoodType
             {
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Frequency to offer nutrition item
             /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=20, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("scheduled", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Scheduled
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indicates whether the nutrition item is  currently in effect
             /// </summary>
-            [FhirElement("isInEffect", InSummary=true, Order=30)]
+            [FhirElement("isInEffect", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsInEffectElement
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Oral diet components
             /// </summary>
-            [FhirElement("oralDiet", InSummary=true, Order=40)]
+            [FhirElement("oralDiet", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietComponent OralDiet
             {
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supplement components
             /// </summary>
-            [FhirElement("supplement", InSummary=true, Order=50)]
+            [FhirElement("supplement", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemSupplementComponent Supplement
             {
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Enteral formula components
             /// </summary>
-            [FhirElement("enteralFormula", InSummary=true, Order=60)]
+            [FhirElement("enteralFormula", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemEnteralFormulaComponent EnteralFormula
             {
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formula feeding instructions expressed as text
             /// </summary>
-            [FhirElement("administrationInstructions", InSummary=true, Order=20)]
+            [FhirElement("administrationInstructions", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AdministrationInstructionsElement
             {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaType", InSummary=true, Order=30)]
+            [FhirElement("baseFormulaType", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
             {
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaName", InSummary=true, Order=40)]
+            [FhirElement("baseFormulaName", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BaseFormulaNameElement
             {
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of modular component to add to the feeding
             /// </summary>
-            [FhirElement("additiveType", InSummary=true, Order=50)]
+            [FhirElement("additiveType", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AdditiveType
             {
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the modular additive
             /// </summary>
-            [FhirElement("additiveName", InSummary=true, Order=60)]
+            [FhirElement("additiveName", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AdditiveNameElement
             {
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of energy per specified volume that is required
             /// </summary>
-            [FhirElement("caloricDensity", InSummary=true, Order=70)]
+            [FhirElement("caloricDensity", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity CaloricDensity
             {
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How the formula should enter the patient's gastrointestinal tract
             /// </summary>
-            [FhirElement("routeofAdministration", InSummary=true, Order=80)]
+            [FhirElement("routeofAdministration", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RouteofAdministration
             {
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The volume of formula to provide
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=90)]
+            [FhirElement("quantity", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Speed with which the formula is provided per period of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=100)]
+            [FhirElement("rate", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Rate
             {
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Change in the rate of administration over a given time
             /// </summary>
-            [FhirElement("rateAdjustment", InSummary=true, Order=110)]
+            [FhirElement("rateAdjustment", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity RateAdjustment
             {
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Upper limit on formula volume per unit of time
             /// </summary>
-            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=120)]
+            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
             {
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of oral diet or diet restrictions that describe what can be consumed orally
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Required  nutrient modifications
             /// </summary>
-            [FhirElement("nutrients", InSummary=true, Order=30)]
+            [FhirElement("nutrients", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietNutrientsComponent> Nutrients
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Required  texture modifications
             /// </summary>
-            [FhirElement("texture", InSummary=true, Order=40)]
+            [FhirElement("texture", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietTextureComponent> Texture
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The required consistency of fluids and liquids provided to the patient
             /// </summary>
-            [FhirElement("fluidConsistencyType", InSummary=true, Order=50)]
+            [FhirElement("fluidConsistencyType", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Instructions or additional information about the oral diet
             /// </summary>
-            [FhirElement("instruction", InSummary=true, Order=60)]
+            [FhirElement("instruction", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
             {
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of nutrient that is being modified
             /// </summary>
-            [FhirElement("modifier", InSummary=true, Order=20)]
+            [FhirElement("modifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Modifier
             {
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of the specified nutrient
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Amount
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("subject", Order=50)]
+        [FhirElement("subject", Order=90)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("orderer", Order=60)]
+        [FhirElement("orderer", Order=100)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", Order=70)]
+        [FhirElement("identifier", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter associated with that this nutrition order
         /// </summary>
-        [FhirElement("encounter", Order=80)]
+        [FhirElement("encounter", Order=120)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date and time the nutrition order was requested
         /// </summary>
-        [FhirElement("dateTime", Order=90)]
+        [FhirElement("dateTime", Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of the patient's food and nutrition-related allergies and intolerances
         /// </summary>
-        [FhirElement("allergyIntolerance", Order=100)]
+        [FhirElement("allergyIntolerance", Order=140)]
         [References("AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1016,7 +1016,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Order-specific modifier about the type of food that should be given
         /// </summary>
-        [FhirElement("foodPreferenceModifier", Order=110)]
+        [FhirElement("foodPreferenceModifier", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Order-specific modifier about the type of food that should not be given
         /// </summary>
-        [FhirElement("excludeFoodModifier", Order=120)]
+        [FhirElement("excludeFoodModifier", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Set of nutrition items or components that comprise the nutrition order
         /// </summary>
-        [FhirElement("item", Order=130)]
+        [FhirElement("item", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemComponent> Item
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | active | inactive | held | cancelled
         /// </summary>
-        [FhirElement("status", Order=140)]
+        [FhirElement("status", Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
         {

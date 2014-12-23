@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Payee Type
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
             {
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Provider who is the payee
             /// </summary>
-            [FhirElement("provider", InSummary=true, Order=30)]
+            [FhirElement("provider", InSummary=true, Order=50)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Provider
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Organization who is the payee
             /// </summary>
-            [FhirElement("organization", InSummary=true, Order=40)]
+            [FhirElement("organization", InSummary=true, Order=60)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Organization
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Other person who is the payee
             /// </summary>
-            [FhirElement("person", InSummary=true, Order=50)]
+            [FhirElement("person", InSummary=true, Order=70)]
             [References("Patient")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Person
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service instance
             /// </summary>
-            [FhirElement("sequence", InSummary=true, Order=20)]
+            [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer SequenceElement
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is the focal Coverage
             /// </summary>
-            [FhirElement("focal", InSummary=true, Order=30)]
+            [FhirElement("focal", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean FocalElement
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Insurance information
             /// </summary>
-            [FhirElement("coverage", InSummary=true, Order=40)]
+            [FhirElement("coverage", InSummary=true, Order=60)]
             [References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Business agreement
             /// </summary>
-            [FhirElement("businessArrangement", InSummary=true, Order=50)]
+            [FhirElement("businessArrangement", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BusinessArrangementElement
             {
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Patient relationship to subscriber
             /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=60)]
+            [FhirElement("relationship", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Relationship
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=60)]
+        [FhirElement("ruleset", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=70)]
+        [FhirElement("originalRuleset", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=80)]
+        [FhirElement("created", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("target", Order=90)]
+        [FhirElement("target", Order=130)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=100)]
+        [FhirElement("provider", Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=110)]
+        [FhirElement("organization", Order=150)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=120)]
+        [FhirElement("request", Order=160)]
         [References("OralHealthClaim","PharmacyClaim","VisionClaim","ProfessionalClaim","InstitutionalClaim","SupportingDocumentation")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", Order=130)]
+        [FhirElement("response", Order=170)]
         [References("ClaimResponse","StatusResponse")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Payee
         /// </summary>
-        [FhirElement("payee", Order=140)]
+        [FhirElement("payee", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Reversal.PayeeComponent Payee
         {
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurance or medical plan
         /// </summary>
-        [FhirElement("coverage", Order=150)]
+        [FhirElement("coverage", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Reversal.ReversalCoverageComponent Coverage
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Nullify
         /// </summary>
-        [FhirElement("nullify", Order=160)]
+        [FhirElement("nullify", Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NullifyElement

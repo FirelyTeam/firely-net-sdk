@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this search parameter
         /// </summary>
-        [FhirElement("url", Order=50)]
+        [FhirElement("url", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of search parameter
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=70)]
+        [FhirElement("publisher", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=80)]
+        [FhirElement("telecom", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why this search parameter is defined
         /// </summary>
-        [FhirElement("requirements", Order=90)]
+        [FhirElement("requirements", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The resource type this search parameter applies to
         /// </summary>
-        [FhirElement("base", Order=100)]
+        [FhirElement("base", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code BaseElement
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// number | date | string | token | reference | composite | quantity
         /// </summary>
-        [FhirElement("type", Order=110)]
+        [FhirElement("type", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code TypeElement
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Documentation for  search parameter
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// XPath that extracts the values
         /// </summary>
-        [FhirElement("xpath", Order=130)]
+        [FhirElement("xpath", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString XpathElement
         {
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Types of resource (if a resource reference)
         /// </summary>
-        [FhirElement("target", Order=140)]
+        [FhirElement("target", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> TargetElement

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The order that this is a response to
         /// </summary>
-        [FhirElement("request", Order=60)]
+        [FhirElement("request", Order=100)]
         [References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the response was made
         /// </summary>
-        [FhirElement("date", Order=70)]
+        [FhirElement("date", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who made the response
         /// </summary>
-        [FhirElement("who", Order=80)]
+        [FhirElement("who", Order=120)]
         [References("Practitioner","Organization","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Who
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If required by policy
         /// </summary>
-        [FhirElement("authority", Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("authority", Order=130, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Authority
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
         /// </summary>
-        [FhirElement("code", Order=100)]
+        [FhirElement("code", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> CodeElement
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional description of the response
         /// </summary>
-        [FhirElement("description", Order=110)]
+        [FhirElement("description", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of the outcome of performing the order
         /// </summary>
-        [FhirElement("fulfillment", Order=120)]
+        [FhirElement("fulfillment", Order=160)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

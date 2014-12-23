@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | sent | active | cancelled | refused | completed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=50)]
+        [FhirElement("status", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus> StatusElement
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier of request
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Referral/Transition of care request type
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The clinical specialty (discipline) that the referral is requested for
         /// </summary>
-        [FhirElement("specialty", Order=80)]
+        [FhirElement("specialty", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Specialty
         {
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Urgency of referral / transfer of care request
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=90)]
+        [FhirElement("priority", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient referred to care or transfer
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
+        [FhirElement("patient", InSummary=true, Order=140)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Requester of referral / transfer of care
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=110)]
+        [FhirElement("requester", InSummary=true, Order=150)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Receiver of referral / transfer of care request
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=120)]
+        [FhirElement("recipient", InSummary=true, Order=160)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter
         /// </summary>
-        [FhirElement("encounter", Order=130)]
+        [FhirElement("encounter", Order=170)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date referral/transfer of care request is sent
         /// </summary>
-        [FhirElement("dateSent", InSummary=true, Order=140)]
+        [FhirElement("dateSent", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateSentElement
         {
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for referral / Transfer of care request
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=150)]
+        [FhirElement("reason", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A textual description of the referral
         /// </summary>
-        [FhirElement("description", Order=160)]
+        [FhirElement("description", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Service(s) requested
         /// </summary>
-        [FhirElement("serviceRequested", InSummary=true, Order=170)]
+        [FhirElement("serviceRequested", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additonal information to support referral or transfer of care request
         /// </summary>
-        [FhirElement("supportingInformation", InSummary=true, Order=180)]
+        [FhirElement("supportingInformation", InSummary=true, Order=220)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Requested service(s) fulfillment time
         /// </summary>
-        [FhirElement("fulfillmentTime", InSummary=true, Order=190)]
+        [FhirElement("fulfillmentTime", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Period FulfillmentTime
         {

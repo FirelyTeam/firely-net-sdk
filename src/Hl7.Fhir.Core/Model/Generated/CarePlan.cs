@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What's the desired outcome?
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=20)]
+            [FhirElement("description", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// in progress | achieved | sustaining | cancelled
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=30)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus> StatusElement
             {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Comments about the goal
             /// </summary>
-            [FhirElement("notes", InSummary=true, Order=40)]
+            [FhirElement("notes", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NotesElement
             {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Health issues this goal addresses
             /// </summary>
-            [FhirElement("concern", InSummary=true, Order=50)]
+            [FhirElement("concern", InSummary=true, Order=70)]
             [References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of involvement
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=20)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
             {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is involved
             /// </summary>
-            [FhirElement("member", InSummary=true, Order=30)]
+            [FhirElement("member", InSummary=true, Order=50)]
             [References("Practitioner","RelatedPerson","Patient","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Goals this activity relates to
             /// </summary>
-            [FhirElement("goal", InSummary=true, Order=20)]
+            [FhirElement("goal", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirUri> GoalElement
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// not started | scheduled | in progress | on hold | completed | cancelled
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=30)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
             {
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Do NOT do
             /// </summary>
-            [FhirElement("prohibited", InSummary=true, Order=40)]
+            [FhirElement("prohibited", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ProhibitedElement
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Appointments, orders, etc.
             /// </summary>
-            [FhirElement("actionResulting", InSummary=true, Order=50)]
+            [FhirElement("actionResulting", InSummary=true, Order=70)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Comments about the activity
             /// </summary>
-            [FhirElement("notes", InSummary=true, Order=60)]
+            [FhirElement("notes", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NotesElement
             {
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Activity details defined in specific resource
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=70)]
+            [FhirElement("detail", InSummary=true, Order=90)]
             [References("Procedure","MedicationPrescription","DiagnosticOrder","Encounter","Supply")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Detail
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Activity details summarised here
             /// </summary>
-            [FhirElement("simple", InSummary=true, Order=80)]
+            [FhirElement("simple", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CarePlan.CarePlanActivitySimpleComponent Simple
             {
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// diet | drug | encounter | observation | procedure | supply | other
             /// </summary>
-            [FhirElement("category", InSummary=true, Order=20)]
+            [FhirElement("category", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityCategory> CategoryElement
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Detail type of activity
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=30)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When activity is to occur
             /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("scheduled", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Scheduled
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where it should happen
             /// </summary>
-            [FhirElement("location", InSummary=true, Order=50)]
+            [FhirElement("location", InSummary=true, Order=70)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Location
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who's responsible?
             /// </summary>
-            [FhirElement("performer", InSummary=true, Order=60)]
+            [FhirElement("performer", InSummary=true, Order=80)]
             [References("Practitioner","Organization","RelatedPerson","Patient")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What's administered/supplied
             /// </summary>
-            [FhirElement("product", InSummary=true, Order=70)]
+            [FhirElement("product", InSummary=true, Order=90)]
             [References("Medication","Substance")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Product
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How much consumed/day?
             /// </summary>
-            [FhirElement("dailyAmount", InSummary=true, Order=80)]
+            [FhirElement("dailyAmount", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity DailyAmount
             {
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How much is administered/supplied/consumed
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=90)]
+            [FhirElement("quantity", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Extra info on activity occurrence
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=100)]
+            [FhirElement("details", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailsElement
             {
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this plan
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who care plan is for
         /// </summary>
-        [FhirElement("patient", Order=60)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// planned | active | completed
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> StatusElement
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period plan covers
         /// </summary>
-        [FhirElement("period", Order=80)]
+        [FhirElement("period", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When last updated
         /// </summary>
-        [FhirElement("modified", Order=90)]
+        [FhirElement("modified", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ModifiedElement
         {
@@ -997,7 +997,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Health issues this plan addresses
         /// </summary>
-        [FhirElement("concern", Order=100)]
+        [FhirElement("concern", Order=140)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who's involved in plan?
         /// </summary>
-        [FhirElement("participant", Order=110)]
+        [FhirElement("participant", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent> Participant
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Desired outcome of plan
         /// </summary>
-        [FhirElement("goal", Order=120)]
+        [FhirElement("goal", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CarePlan.CarePlanGoalComponent> Goal
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Action to occur as part of plan
         /// </summary>
-        [FhirElement("activity", Order=130)]
+        [FhirElement("activity", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent> Activity
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the plan
         /// </summary>
-        [FhirElement("notes", Order=140)]
+        [FhirElement("notes", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {

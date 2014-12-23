@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Comment about the image (e.g. explanation)
             /// </summary>
-            [FhirElement("comment", InSummary=true, Order=20)]
+            [FhirElement("comment", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentElement
             {
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to the image source
             /// </summary>
-            [FhirElement("link", InSummary=true, Order=30)]
+            [FhirElement("link", InSummary=true, Order=50)]
             [References("Media")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("name", Order=50)]
+        [FhirElement("name", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Name
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// registered | partial | final | corrected +
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=60)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was released
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=70)]
+        [FhirElement("issued", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=80)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=90)]
+        [FhirElement("performer", InSummary=true, Order=130)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was requested
         /// </summary>
-        [FhirElement("requestDetail", Order=110)]
+        [FhirElement("requestDetail", Order=150)]
         [References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Biochemistry, Hematology etc.
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=120)]
+        [FhirElement("serviceCategory", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physiologically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("diagnostic", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("diagnostic", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specimens this report is based on
         /// </summary>
-        [FhirElement("specimen", Order=140)]
+        [FhirElement("specimen", Order=180)]
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observations - simple, or complex nested groups
         /// </summary>
-        [FhirElement("result", Order=150)]
+        [FhirElement("result", Order=190)]
         [References("Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
-        [FhirElement("imagingStudy", Order=160)]
+        [FhirElement("imagingStudy", Order=200)]
         [References("ImagingStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", InSummary=true, Order=170)]
+        [FhirElement("image", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> Image
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical Interpretation of test results
         /// </summary>
-        [FhirElement("conclusion", Order=180)]
+        [FhirElement("conclusion", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ConclusionElement
         {
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes for the conclusion
         /// </summary>
-        [FhirElement("codedDiagnosis", Order=190)]
+        [FhirElement("codedDiagnosis", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entire Report as issued
         /// </summary>
-        [FhirElement("presentedForm", Order=200)]
+        [FhirElement("presentedForm", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> PresentedForm

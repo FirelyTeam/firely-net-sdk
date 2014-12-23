@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product to be supplied
             /// </summary>
-            [FhirElement("product", InSummary=true, Order=20)]
+            [FhirElement("product", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Product
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// right | left
             /// </summary>
-            [FhirElement("eye", InSummary=true, Order=30)]
+            [FhirElement("eye", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
             {
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens sphere
             /// </summary>
-            [FhirElement("sphere", InSummary=true, Order=40)]
+            [FhirElement("sphere", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal SphereElement
             {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens cylinder
             /// </summary>
-            [FhirElement("cylinder", InSummary=true, Order=50)]
+            [FhirElement("cylinder", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal CylinderElement
             {
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens axis
             /// </summary>
-            [FhirElement("axis", InSummary=true, Order=60)]
+            [FhirElement("axis", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Integer AxisElement
             {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens prism
             /// </summary>
-            [FhirElement("prism", InSummary=true, Order=70)]
+            [FhirElement("prism", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PrismElement
             {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// up | down | in | out
             /// </summary>
-            [FhirElement("base", InSummary=true, Order=80)]
+            [FhirElement("base", InSummary=true, Order=100)]
             [DataMember]
             public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
             {
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("add", InSummary=true, Order=90)]
+            [FhirElement("add", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AddElement
             {
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact Lens power
             /// </summary>
-            [FhirElement("power", InSummary=true, Order=100)]
+            [FhirElement("power", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PowerElement
             {
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact lens back curvature
             /// </summary>
-            [FhirElement("backCurve", InSummary=true, Order=110)]
+            [FhirElement("backCurve", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal BackCurveElement
             {
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact Lens diameter
             /// </summary>
-            [FhirElement("diameter", InSummary=true, Order=120)]
+            [FhirElement("diameter", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DiameterElement
             {
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens wear duration
             /// </summary>
-            [FhirElement("duration", InSummary=true, Order=130)]
+            [FhirElement("duration", InSummary=true, Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Duration
             {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("color", InSummary=true, Order=140)]
+            [FhirElement("color", InSummary=true, Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ColorElement
             {
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("brand", InSummary=true, Order=150)]
+            [FhirElement("brand", InSummary=true, Order=170)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BrandElement
             {
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Notes for coatings
             /// </summary>
-            [FhirElement("notes", InSummary=true, Order=160)]
+            [FhirElement("notes", InSummary=true, Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NotesElement
             {
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When prescription was authorized
         /// </summary>
-        [FhirElement("dateWritten", Order=60)]
+        [FhirElement("dateWritten", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
         {
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who prescription is for
         /// </summary>
-        [FhirElement("patient", Order=70)]
+        [FhirElement("patient", Order=110)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who authorizes the Vision product
         /// </summary>
-        [FhirElement("prescriber", Order=80)]
+        [FhirElement("prescriber", Order=120)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescriber
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Created during encounter / admission / stay
         /// </summary>
-        [FhirElement("encounter", Order=90)]
+        [FhirElement("encounter", Order=130)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason or indication for writing the prescription
         /// </summary>
-        [FhirElement("reason", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vision supply authorization
         /// </summary>
-        [FhirElement("dispense", Order=110)]
+        [FhirElement("dispense", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> Dispense

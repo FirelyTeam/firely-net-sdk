@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// External identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// in progress | dispensed | abandoned
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=30)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> StatusElement
             {
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Category of dispense event
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount dispensed
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=50)]
+            [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication, Substance, or Device supplied
             /// </summary>
-            [FhirElement("suppliedItem", InSummary=true, Order=60)]
+            [FhirElement("suppliedItem", InSummary=true, Order=80)]
             [References("Medication","Substance","Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference SuppliedItem
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dispenser
             /// </summary>
-            [FhirElement("supplier", InSummary=true, Order=70)]
+            [FhirElement("supplier", InSummary=true, Order=90)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Supplier
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dispensing time
             /// </summary>
-            [FhirElement("whenPrepared", InSummary=true, Order=80)]
+            [FhirElement("whenPrepared", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Period WhenPrepared
             {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Handover time
             /// </summary>
-            [FhirElement("whenHandedOver", InSummary=true, Order=90)]
+            [FhirElement("whenHandedOver", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Period WhenHandedOver
             {
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the Supply was sent
             /// </summary>
-            [FhirElement("destination", InSummary=true, Order=100)]
+            [FhirElement("destination", InSummary=true, Order=120)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Destination
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who collected the Supply
             /// </summary>
-            [FhirElement("receiver", InSummary=true, Order=110)]
+            [FhirElement("receiver", InSummary=true, Order=130)]
             [References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The kind of supply (central, non-stock, etc)
         /// </summary>
-        [FhirElement("kind", Order=50)]
+        [FhirElement("kind", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Kind
         {
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | dispensed | received | failed | cancelled
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Supply.SupplyStatus> StatusElement
         {
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", Order=80)]
+        [FhirElement("orderedItem", Order=120)]
         [References("Medication","Substance","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OrderedItem
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", Order=90)]
+        [FhirElement("patient", Order=130)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supply details
         /// </summary>
-        [FhirElement("dispense", Order=100)]
+        [FhirElement("dispense", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> Dispense

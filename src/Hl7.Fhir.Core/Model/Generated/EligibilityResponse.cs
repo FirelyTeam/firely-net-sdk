@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Claim reference
         /// </summary>
-        [FhirElement("request", Order=60)]
+        [FhirElement("request", Order=100)]
         [References("EligibilityRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// complete | error
         /// </summary>
-        [FhirElement("outcome", Order=70)]
+        [FhirElement("outcome", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Code OutcomeElement
         {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", Order=80)]
+        [FhirElement("disposition", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
         {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=90)]
+        [FhirElement("ruleset", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=100)]
+        [FhirElement("originalRuleset", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=110)]
+        [FhirElement("created", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("organization", Order=120)]
+        [FhirElement("organization", Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("requestProvider", Order=130)]
+        [FhirElement("requestProvider", Order=170)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", Order=140)]
+        [FhirElement("requestOrganization", Order=180)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization

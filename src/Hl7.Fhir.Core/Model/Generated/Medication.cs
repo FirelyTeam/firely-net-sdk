@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A product in the package
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=20)]
+            [FhirElement("item", InSummary=true, Order=40)]
             [References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How many are in the package?
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=30)]
+            [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Amount
             {
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. box, vial, blister-pack
             /// </summary>
-            [FhirElement("container", InSummary=true, Order=20)]
+            [FhirElement("container", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Container
             {
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What is  in the package?
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=30)]
+            [FhirElement("content", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The product contained
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=20)]
+            [FhirElement("item", InSummary=true, Order=40)]
             [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How much ingredient in product
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=30)]
+            [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Amount
             {
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// powder | tablets | carton +
             /// </summary>
-            [FhirElement("form", InSummary=true, Order=20)]
+            [FhirElement("form", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Form
             {
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Active or inactive ingredient
             /// </summary>
-            [FhirElement("ingredient", InSummary=true, Order=30)]
+            [FhirElement("ingredient", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Common / Commercial name
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=50)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=60)]
+        [FhirElement("code", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", InSummary=true, Order=70)]
+        [FhirElement("isBrand", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsBrandElement
         {
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=80)]
+        [FhirElement("manufacturer", InSummary=true, Order=120)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// product | package
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=90)]
+        [FhirElement("kind", InSummary=true, Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
         {
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Administrable medication details
         /// </summary>
-        [FhirElement("product", Order=100)]
+        [FhirElement("product", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
         {
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("package", Order=110)]
+        [FhirElement("package", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
         {

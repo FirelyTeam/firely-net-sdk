@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Version specific identifier
             /// </summary>
-            [FhirElement("versionId", InSummary=true, Order=20)]
+            [FhirElement("versionId", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Id VersionIdElement
             {
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the resource version last changed
             /// </summary>
-            [FhirElement("lastUpdated", InSummary=true, Order=30)]
+            [FhirElement("lastUpdated", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Instant LastUpdatedElement
             {
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profiles this resource claims to conform to
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=40)]
+            [FhirElement("profile", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirUri> ProfileElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Security Labels applied to this resource
             /// </summary>
-            [FhirElement("security", InSummary=true, Order=50)]
+            [FhirElement("security", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Security
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Tags applied
             /// </summary>
-            [FhirElement("tag", InSummary=true, Order=60)]
+            [FhirElement("tag", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Tag

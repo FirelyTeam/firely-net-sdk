@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the plan issuer
         /// </summary>
-        [FhirElement("issuer", InSummary=true, Order=50)]
+        [FhirElement("issuer", InSummary=true, Order=90)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Issuer
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=60)]
+        [FhirElement("period", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of coverage
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Type
         {
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The primary coverage ID
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=80)]
+        [FhirElement("identifier", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the group
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=90)]
+        [FhirElement("group", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString GroupElement
         {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the plan
         /// </summary>
-        [FhirElement("plan", InSummary=true, Order=100)]
+        [FhirElement("plan", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PlanElement
         {
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the subsection of the plan
         /// </summary>
-        [FhirElement("subplan", InSummary=true, Order=110)]
+        [FhirElement("subplan", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SubplanElement
         {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=true, Order=120)]
+        [FhirElement("dependent", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Integer DependentElement
         {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The plan instance or sequence counter
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=130)]
+        [FhirElement("sequence", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
         {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plan holder information
         /// </summary>
-        [FhirElement("subscriber", Order=140)]
+        [FhirElement("subscriber", Order=180)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subscriber
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=true, Order=150)]
+        [FhirElement("network", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Network
         {
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract details
         /// </summary>
-        [FhirElement("contract", Order=160)]
+        [FhirElement("contract", Order=200)]
         [References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

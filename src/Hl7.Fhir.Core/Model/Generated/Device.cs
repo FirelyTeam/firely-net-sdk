@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instance id from manufacturer, owner and others
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of device this is
         /// </summary>
-        [FhirElement("type", Order=60)]
+        [FhirElement("type", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of device manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=70)]
+        [FhirElement("manufacturer", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ManufacturerElement
         {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Model id assigned by the manufacturer
         /// </summary>
-        [FhirElement("model", Order=80)]
+        [FhirElement("model", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ModelElement
         {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version number (i.e. software)
         /// </summary>
-        [FhirElement("version", Order=90)]
+        [FhirElement("version", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date of expiry of this device (if applicable)
         /// </summary>
-        [FhirElement("expiry", Order=100)]
+        [FhirElement("expiry", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Date ExpiryElement
         {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FDA Mandated Unique Device Identifier
         /// </summary>
-        [FhirElement("udi", Order=110)]
+        [FhirElement("udi", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UdiElement
         {
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Lot number of manufacture
         /// </summary>
-        [FhirElement("lotNumber", Order=120)]
+        [FhirElement("lotNumber", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LotNumberElement
         {
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization responsible for device
         /// </summary>
-        [FhirElement("owner", Order=130)]
+        [FhirElement("owner", Order=170)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the resource is found
         /// </summary>
-        [FhirElement("location", Order=140)]
+        [FhirElement("location", Order=180)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If the resource is affixed to a person
         /// </summary>
-        [FhirElement("patient", Order=150)]
+        [FhirElement("patient", Order=190)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details for human/organization for support
         /// </summary>
-        [FhirElement("contact", Order=160)]
+        [FhirElement("contact", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Network address to contact device
         /// </summary>
-        [FhirElement("url", Order=170)]
+        [FhirElement("url", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {

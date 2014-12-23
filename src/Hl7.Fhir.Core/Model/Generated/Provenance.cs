@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// e.g. author | overseer | enterer | attester | source | cc: +
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=20)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Role
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// e.g. Resource | Person | Application | Record | Document +
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of agent (urn or url)
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=40)]
+            [FhirElement("reference", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ReferenceElement
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human description of participant
             /// </summary>
-            [FhirElement("display", InSummary=true, Order=50)]
+            [FhirElement("display", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DisplayElement
             {
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// derivation | revision | quotation | source
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=20)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource Type, or something else
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of participant (urn or url)
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=40)]
+            [FhirElement("reference", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ReferenceElement
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human description of participant
             /// </summary>
-            [FhirElement("display", InSummary=true, Order=50)]
+            [FhirElement("display", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DisplayElement
             {
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Entity is attributed to this agent
             /// </summary>
-            [FhirElement("agent", InSummary=true, Order=60)]
+            [FhirElement("agent", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent Agent
             {
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", Order=50)]
+        [FhirElement("target", Order=90)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity occurred
         /// </summary>
-        [FhirElement("period", Order=60)]
+        [FhirElement("period", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", Order=70)]
+        [FhirElement("recorded", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the activity is occurring
         /// </summary>
-        [FhirElement("reason", Order=80)]
+        [FhirElement("reason", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the activity occurred, if relevant
         /// </summary>
-        [FhirElement("location", Order=90)]
+        [FhirElement("location", Order=130)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Policy or plan the activity was defined by
         /// </summary>
-        [FhirElement("policy", Order=100)]
+        [FhirElement("policy", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person, organization, records, etc. involved in creating resource
         /// </summary>
-        [FhirElement("agent", Order=110)]
+        [FhirElement("agent", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> Agent
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An entity used in this activity
         /// </summary>
-        [FhirElement("entity", Order=120)]
+        [FhirElement("entity", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> Entity
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base64 signature (DigSig) - integrity check
         /// </summary>
-        [FhirElement("integritySignature", Order=130)]
+        [FhirElement("integritySignature", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString IntegritySignatureElement
         {

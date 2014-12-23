@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of date
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended date
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ValueElement
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Number of dose within sequence
             /// </summary>
-            [FhirElement("doseSequence", InSummary=true, Order=20)]
+            [FhirElement("doseSequence", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Integer DoseSequenceElement
             {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Protocol details
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=30)]
+            [FhirElement("description", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is responsible for protocol
             /// </summary>
-            [FhirElement("authority", InSummary=true, Order=40)]
+            [FhirElement("authority", InSummary=true, Order=60)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Authority
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of vaccination series
             /// </summary>
-            [FhirElement("series", InSummary=true, Order=50)]
+            [FhirElement("series", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SeriesElement
             {
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date recommendation created
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=20)]
+            [FhirElement("date", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Vaccine recommendation applies to
             /// </summary>
-            [FhirElement("vaccineType", InSummary=true, Order=30)]
+            [FhirElement("vaccineType", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept VaccineType
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended dose number
             /// </summary>
-            [FhirElement("doseNumber", InSummary=true, Order=40)]
+            [FhirElement("doseNumber", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Integer DoseNumberElement
             {
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Vaccine administration status
             /// </summary>
-            [FhirElement("forecastStatus", InSummary=true, Order=50)]
+            [FhirElement("forecastStatus", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ForecastStatus
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dates governing proposed immunization
             /// </summary>
-            [FhirElement("dateCriterion", InSummary=true, Order=60)]
+            [FhirElement("dateCriterion", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent> DateCriterion
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Protocol used by recommendation
             /// </summary>
-            [FhirElement("protocol", InSummary=true, Order=70)]
+            [FhirElement("protocol", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent Protocol
             {
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Past immunizations supporting recommendation
             /// </summary>
-            [FhirElement("supportingImmunization", InSummary=true, Order=80)]
+            [FhirElement("supportingImmunization", InSummary=true, Order=100)]
             [References("Immunization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Patient observations supporting recommendation
             /// </summary>
-            [FhirElement("supportingPatientInformation", InSummary=true, Order=90)]
+            [FhirElement("supportingPatientInformation", InSummary=true, Order=110)]
             [References("Observation","AllergyIntolerance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("subject", Order=60)]
+        [FhirElement("subject", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", Order=70)]
+        [FhirElement("recommendation", Order=110)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> Recommendation

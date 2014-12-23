@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Internal id when this mapping is used
             /// </summary>
-            [FhirElement("identity", InSummary=true, Order=20)]
+            [FhirElement("identity", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentityElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifies what this mapping refers to
             /// </summary>
-            [FhirElement("uri", InSummary=true, Order=30)]
+            [FhirElement("uri", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UriElement
             {
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Names what this mapping refers to
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Versions, Issues, Scope limitations etc
             /// </summary>
-            [FhirElement("comments", InSummary=true, Order=50)]
+            [FhirElement("comments", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentsElement
             {
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this extension
         /// </summary>
-        [FhirElement("url", Order=50)]
+        [FhirElement("url", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other identifiers for the extension
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptional name for this profile
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=70)]
+        [FhirElement("name", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use this name when displaying the value
         /// </summary>
-        [FhirElement("display", Order=80)]
+        [FhirElement("display", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=90)]
+        [FhirElement("publisher", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=100)]
+        [FhirElement("telecom", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the extension
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=110)]
+        [FhirElement("description", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assist with indexing and finding
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=120)]
+        [FhirElement("code", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for this version of the extension
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Scope and Usage this extesion is for
         /// </summary>
-        [FhirElement("requirements", Order=160)]
+        [FhirElement("requirements", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External specification that the content is mapped to
         /// </summary>
-        [FhirElement("mapping", Order=170)]
+        [FhirElement("mapping", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ExtensionDefinition.ExtensionDefinitionMappingComponent> Mapping
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// resource | datatype | mapping | extension
         /// </summary>
-        [FhirElement("contextType", Order=180)]
+        [FhirElement("contextType", Order=220)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ExtensionDefinition.ExtensionContext> ContextTypeElement
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the extension can be used in instances
         /// </summary>
-        [FhirElement("context", Order=190)]
+        [FhirElement("context", Order=230)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ContextElement
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Definition of the elements in the extension
         /// </summary>
-        [FhirElement("element", Order=200)]
+        [FhirElement("element", Order=240)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ElementDefinition> Element

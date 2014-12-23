@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// unspecified | offset | gain | two-point
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> TypeElement
             {
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// not-calibrated | calibration-required | calibrated | unspecified
             /// </summary>
-            [FhirElement("state", InSummary=true, Order=30)]
+            [FhirElement("state", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> StateElement
             {
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Describes the time last calibration has been performed
             /// </summary>
-            [FhirElement("time", InSummary=true, Order=40)]
+            [FhirElement("time", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Instant TimeElement
             {

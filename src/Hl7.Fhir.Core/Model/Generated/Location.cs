@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Longitude as expressed in KML
             /// </summary>
-            [FhirElement("longitude", InSummary=true, Order=20)]
+            [FhirElement("longitude", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LongitudeElement
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Latitude as expressed in KML
             /// </summary>
-            [FhirElement("latitude", InSummary=true, Order=30)]
+            [FhirElement("latitude", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LatitudeElement
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Altitude as expressed in KML
             /// </summary>
-            [FhirElement("altitude", InSummary=true, Order=40)]
+            [FhirElement("altitude", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AltitudeElement
             {
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique code or number identifying the location to its users
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the location as used by humans
         /// </summary>
-        [FhirElement("name", Order=60)]
+        [FhirElement("name", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of the Location, which helps in finding or referencing the place
         /// </summary>
-        [FhirElement("description", Order=70)]
+        [FhirElement("description", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates the type of function performed at the location
         /// </summary>
-        [FhirElement("type", Order=80)]
+        [FhirElement("type", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the location
         /// </summary>
-        [FhirElement("telecom", Order=90)]
+        [FhirElement("telecom", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical location
         /// </summary>
-        [FhirElement("address", Order=100)]
+        [FhirElement("address", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Address Address
         {
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical form of the location
         /// </summary>
-        [FhirElement("physicalType", Order=110)]
+        [FhirElement("physicalType", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysicalType
         {
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The absolute geographic location
         /// </summary>
-        [FhirElement("position", Order=120)]
+        [FhirElement("position", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Location.LocationPositionComponent Position
         {
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization that is responsible for the provisioning and upkeep of the location
         /// </summary>
-        [FhirElement("managingOrganization", Order=130)]
+        [FhirElement("managingOrganization", Order=170)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | suspended | inactive
         /// </summary>
-        [FhirElement("status", Order=140)]
+        [FhirElement("status", Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
         {
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Location which this Location is physically part of
         /// </summary>
-        [FhirElement("partOf", Order=150)]
+        [FhirElement("partOf", Order=190)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// instance | kind
         /// </summary>
-        [FhirElement("mode", Order=160)]
+        [FhirElement("mode", Order=200)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
         {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Kind of characteristic
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value held by characteristic
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Group includes or excludes
             /// </summary>
-            [FhirElement("exclude", InSummary=true, Order=40)]
+            [FhirElement("exclude", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExcludeElement
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique id
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=60)]
+        [FhirElement("type", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptive or actual
         /// </summary>
-        [FhirElement("actual", InSummary=true, Order=70)]
+        [FhirElement("actual", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Group members
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=80)]
+        [FhirElement("code", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Label for Group
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
+        [FhirElement("name", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of members
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=100)]
+        [FhirElement("quantity", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Integer QuantityElement
         {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trait of group members
         /// </summary>
-        [FhirElement("characteristic", Order=110)]
+        [FhirElement("characteristic", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is in group
         /// </summary>
-        [FhirElement("member", Order=120)]
+        [FhirElement("member", Order=160)]
         [References("Patient","Practitioner","Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

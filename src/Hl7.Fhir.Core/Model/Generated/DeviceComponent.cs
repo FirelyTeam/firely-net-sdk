@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specification type
             /// </summary>
-            [FhirElement("specType", InSummary=true, Order=20)]
+            [FhirElement("specType", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept SpecType
             {
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Internal component unique identification
             /// </summary>
-            [FhirElement("componentId", InSummary=true, Order=30)]
+            [FhirElement("componentId", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier ComponentId
             {
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A printable string defining the component
             /// </summary>
-            [FhirElement("productionSpec", InSummary=true, Order=40)]
+            [FhirElement("productionSpec", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ProductionSpecElement
             {
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of component it is
         /// </summary>
-        [FhirElement("type", Order=50)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instance id assigned by the software stack
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Recent system change timestamp
         /// </summary>
-        [FhirElement("lastSystemChange", Order=70)]
+        [FhirElement("lastSystemChange", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastSystemChangeElement
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A source device of this component
         /// </summary>
-        [FhirElement("source", Order=80)]
+        [FhirElement("source", Order=120)]
         [References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parent resource link
         /// </summary>
-        [FhirElement("parent", Order=90)]
+        [FhirElement("parent", Order=130)]
         [References("DeviceComponent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Component operational status
         /// </summary>
-        [FhirElement("operationalStatus", Order=100)]
+        [FhirElement("operationalStatus", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Current supported parameter group
         /// </summary>
-        [FhirElement("parameterGroup", Order=110)]
+        [FhirElement("parameterGroup", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ParameterGroup
         {
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
         /// </summary>
-        [FhirElement("measurementPrinciple", Order=120)]
+        [FhirElement("measurementPrinciple", Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
         {
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Production specification of the component
         /// </summary>
-        [FhirElement("productionSpecification", Order=130)]
+        [FhirElement("productionSpecification", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent> ProductionSpecification
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Language code for the human-readable text strings produced by the device
         /// </summary>
-        [FhirElement("languageCode", Order=140)]
+        [FhirElement("languageCode", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept LanguageCode
         {

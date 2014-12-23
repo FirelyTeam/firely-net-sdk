@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique Identifier for the set of documents
         /// </summary>
-        [FhirElement("masterIdentifier", Order=50)]
+        [FhirElement("masterIdentifier", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other identifiers for the manifest
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the set of documents
         /// </summary>
-        [FhirElement("subject", Order=70)]
+        [FhirElement("subject", Order=110)]
         [References("Patient","Practitioner","Group","Device")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended to get notified about this set of documents
         /// </summary>
-        [FhirElement("recipient", Order=80)]
+        [FhirElement("recipient", Order=120)]
         [References("Patient","Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of document set this is
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", Order=100)]
+        [FhirElement("author", Order=140)]
         [References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this document manifest created
         /// </summary>
-        [FhirElement("created", Order=110)]
+        [FhirElement("created", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source system/application/software
         /// </summary>
-        [FhirElement("source", Order=120)]
+        [FhirElement("source", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SourceElement
         {
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// current | superceded | entered in error
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this document manifest replaces another
         /// </summary>
-        [FhirElement("supercedes", Order=140)]
+        [FhirElement("supercedes", Order=180)]
         [References("DocumentManifest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Supercedes
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", Order=150)]
+        [FhirElement("description", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sensitivity of set of documents
         /// </summary>
-        [FhirElement("confidentiality", Order=160)]
+        [FhirElement("confidentiality", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Confidentiality
         {
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contents of this set of documents
         /// </summary>
-        [FhirElement("content", Order=170)]
+        [FhirElement("content", Order=210)]
         [References("DocumentReference","Binary","Media")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

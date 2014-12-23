@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 22, 2014 15:52+0100 for FHIR v0.4.0
+// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// An identifier for this qualification for the practitioner
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Coded representation of the qualification
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=30)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Period during which the qualification is valid
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=40)]
+            [FhirElement("period", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Organization that regulates and issues the qualification
             /// </summary>
-            [FhirElement("issuer", InSummary=true, Order=50)]
+            [FhirElement("issuer", InSummary=true, Order=70)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Issuer
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A identifier for the person as this agent
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.HumanName Name
         {
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the practitioner
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=70)]
+        [FhirElement("telecom", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where practitioner can be found/visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=80)]
+        [FhirElement("address", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=90)]
+        [FhirElement("gender", InSummary=true, Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date and time of birth for the practitioner
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=100)]
+        [FhirElement("birthDate", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime BirthDateElement
         {
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=110)]
+        [FhirElement("photo", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The represented organization
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=120)]
+        [FhirElement("organization", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Roles which this practitioner may perform
         /// </summary>
-        [FhirElement("role", InSummary=true, Order=130)]
+        [FhirElement("role", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific specialty of the practitioner
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=140)]
+        [FhirElement("specialty", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The period during which the practitioner is authorized to perform in these role(s)
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=150)]
+        [FhirElement("period", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The location(s) at which this practitioner provides care
         /// </summary>
-        [FhirElement("location", Order=160)]
+        [FhirElement("location", Order=200)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Qualifications obtained by training and certification
         /// </summary>
-        [FhirElement("qualification", Order=170)]
+        [FhirElement("qualification", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A language the practitioner is able to use in patient communication
         /// </summary>
-        [FhirElement("communication", Order=180)]
+        [FhirElement("communication", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
