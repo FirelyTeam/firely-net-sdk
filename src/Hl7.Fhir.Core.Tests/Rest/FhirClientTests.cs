@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Tests
             client.UseFormatParam = true;
             client.PreferredFormat = ResourceFormat.Json;
 
-            var loc = client.Read("Patient/1");
+            var loc = client.Read<Patient>("Patient/1");
 
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
         }
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Tests
 
             try
             {
-                var random = client.Read(new Uri("Location/45qq54", UriKind.Relative));
+                var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
             catch (FhirOperationException)
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Tests
             createdTestOrganizationUrl = fe.ResourceIdentity();
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
-            var fe2 = client.Update(fe, refresh: true);
+            var fe2 = client.Update(fe);
 
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Tests
             // Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
-            var fe3 = client.Update(fe2.ResourceIdentity(), fe, refresh: true);
+            var fe3 = client.Update(fe2.ResourceIdentity(), fe);
             Assert.IsNotNull(fe3);
             Assert.AreEqual(3, fe3.Identifier.Count);
 

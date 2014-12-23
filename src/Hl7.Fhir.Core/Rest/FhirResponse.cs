@@ -37,6 +37,12 @@ namespace Hl7.Fhir.Rest
 		// Can't hold onto this as it gets disposed pretty quick.
         //public HttpWebResponse Response { get; set; }
 
+
+        public bool IsBinaryResponse
+        {
+            get { return new ResourceIdentity(ResponseUri).ResourceType == ModelInfo.GetResourceNameForType(typeof(Binary)); }
+        }
+
         public static async Task<FhirResponse> FromHttpWebResponse(HttpWebResponse response)
         {
             
@@ -58,8 +64,7 @@ namespace Hl7.Fhir.Rest
         private static Task<byte[]> readBody(HttpWebResponse response)
         {
             long contentlength = response.ContentLength;
-            return HttpUtil.ReadAllFromStream(response.GetResponseStream(),
-                (int)contentlength);
+            return HttpUtil.ReadAllFromStream(response.GetResponseStream(), (int)contentlength);
         }
 
         private static string getContentType(HttpWebResponse response)
@@ -115,48 +120,62 @@ namespace Hl7.Fhir.Rest
 		//				(b) => FhirParser.ParseTagListFromJson(b));
 		//}
 
-        public T BodyAsEntry<T>() where T : Resource
+        public T BodyAsResource<T>() where T : Resource
         {
-            var result = BodyAsEntry(typeof(T).GetCollectionName());
+            var result = BodyAsResource();
 
-            if (result is T)
-            {
-                T entry = (T)result;
-                var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
-
-                if (!String.IsNullOrEmpty(location))
-                {
-                    ResourceIdentity ri = new ResourceIdentity(location);
-                    //entry.ResourceBase = ri.Endpoint.OriginalString;
-                    entry.ResourceBase = ri.BaseUri;
-                }
-                return entry;
-            }
-            else
+            if (!(result is T))
             {
                 throw new FhirOperationException(
                     String.Format("Received a resource of type {0} (FHIR: {1}), expected a {2} resource",
                                     result.GetType().Name, result.TypeName, typeof(T).Name));
             }
+
+            return (T)result;
         }
 
 
-        public Resource BodyAsEntry(string collection)
+        public Resource BodyAsResource()
         {
-            return createResourceEntry(collection);
-        }
+            Resource resource = null;
 
-        public Bundle BodyAsBundle()
-        {
-            Bundle result = BodyAsEntry<Bundle>();
-            // When we get a bundle we need to set the base location of each item
-            foreach (var entry in result.Entry.Where(e => e.Resource != null))
+            if (IsBinaryResponse)
+                resource = makeBinary(Body, ContentType);
+            else
             {
-                entry.Resource.ResourceBase = result.ResourceBase;
+                resource = parseBody<Resource>(BodyAsString(), ContentType,
+                    b => FhirParser.ParseResourceFromXml(b),
+                    b => FhirParser.ParseResourceFromJson(b));
             }
-            return result;
-        }
 
+            if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
+
+            var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
+
+            if (!String.IsNullOrEmpty(location))
+            {
+                ResourceIdentity reqId = new ResourceIdentity(location);
+                resource.Id = reqId.Id;
+                resource.ResourceBase = reqId.BaseUri;
+            }
+
+            if (!String.IsNullOrEmpty(ETag))
+                resource.Meta.VersionId = ETag;
+
+            if (!String.IsNullOrEmpty(LastModified))
+                resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
+
+            if (resource is Bundle)
+            {
+                var bundle = (Bundle)resource;
+                foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
+                {
+                    entry.Resource.ResourceBase = bundle.ResourceBase;
+                }
+
+            }
+            return resource;
+        }
 
         private static Binary makeBinary(byte[] data, string contentType)
         {
@@ -167,51 +186,7 @@ namespace Hl7.Fhir.Rest
 
             return binary;
         }
-
-
-        private Resource createResourceEntry(string resourceType)
-        {
-            Resource resource = null;
-
-            if (resourceType == "Binary")
-                resource = makeBinary(Body, ContentType);
-            else
-            {
-                resource = parseBody<Resource>(BodyAsString(), ContentType,
-                    b => FhirParser.ParseResourceFromXml(b),
-                    b => FhirParser.ParseResourceFromJson(b));
-            }
-
-            if (resource.Meta != null)
-                resource.Meta = new Resource.ResourceMetaComponent();
-            //   ResourceEntry result = ResourceEntry.Create(resource);
-
-            var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
-
-            if (!String.IsNullOrEmpty(location))
-            {
-                ResourceIdentity reqId = new ResourceIdentity(location);
-
-                // Set the id to the location, without the version specific part
-                resource.Id = reqId.Id; // WithoutVersion();
-
-                // If the content location has version information, set to SelfLink to it
-                if (reqId.VersionId != null)
-                {
-                    resource.Meta.VersionId = reqId.VersionId;
-                }
-            }
-
-            if (!String.IsNullOrEmpty(LastModified))
-                resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
-
-            //if (!String.IsNullOrEmpty(Category))
-            //    result.Tags = HttpUtil.ParseCategoryHeader(Category);
-
-            // result.Title = "A " + resource.GetType().Name + " resource";
-
-            return resource;
-        }
+    
 
         private static T parseBody<T>(string body, string contentType,
           Func<string, T> xmlParser, Func<string, T> jsonParser) where T : class
@@ -234,6 +209,5 @@ namespace Hl7.Fhir.Rest
 
             return result;
         }
-
     }
 }
