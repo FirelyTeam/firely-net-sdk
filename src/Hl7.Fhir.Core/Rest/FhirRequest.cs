@@ -49,6 +49,7 @@ namespace Hl7.Fhir.Rest
         public string ContentType { get; private set; }
         public string CategoryHeader { get; private set; }
         public Uri ContentLocation { get; set; }
+        public string ETag { get; set; }
 
         public void SetBody(Resource resource, ResourceFormat format)
         {
@@ -68,17 +69,6 @@ namespace Hl7.Fhir.Rest
 
                 ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
-        }
-
-        public void SetBody(Bundle bundle, ResourceFormat format)
-        {
-            if (bundle == null) throw Error.ArgumentNull("bundle");
-
-            Body = format == ResourceFormat.Xml ?
-                FhirSerializer.SerializeToXmlBytes(bundle, summary: false) :
-                FhirSerializer.SerializeToJsonBytes(bundle, summary: false);
-
-            ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: true);
         }
 
         //public void SetBody(IEnumerable<Coding> tagList, ResourceFormat format)
@@ -115,6 +105,9 @@ namespace Hl7.Fhir.Rest
 
             if(acceptFormat != null && !UseFormatParameter)
                 request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
+
+            if (ETag != null)
+                request.Headers.Add("ETag", "\"" + ETag + "\"");
 
             if (Body != null)
             {

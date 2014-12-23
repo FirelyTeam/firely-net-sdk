@@ -211,10 +211,10 @@ namespace Hl7.Fhir.Rest
             var otherLength = otherSegments.Length;
             var meLength = meSegments.Length;
 
-            if (meSegments.Length > otherSegments.Length) return false;
-            for (int index = 0; index < meLength; index++)
+            if (meSegments.Length < otherSegments.Length) return false;
+            for (int index = 0; index < otherLength-1; index++)
             {
-                if (otherSegments[otherLength-index-1].TrimEnd('/') != meSegments[meLength-index-1].TrimEnd('/')) return false;
+                if (otherSegments[index].TrimEnd('/') != meSegments[index].TrimEnd('/')) return false;
             }
 
             return true;

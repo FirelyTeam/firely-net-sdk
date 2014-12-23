@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Rest
 #if !PORTABLE45 || NET45
     [SerializableAttribute]
 #endif
-    [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
     public class ResourceIdentity : Uri
     {
         /// <summary>

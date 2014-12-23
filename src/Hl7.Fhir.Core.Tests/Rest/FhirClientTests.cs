@@ -84,8 +84,7 @@ namespace Hl7.Fhir.Tests
 
             string version = new ResourceIdentity(loc.ResourceIdentity()).VersionId;
             Assert.IsNotNull(version);
-            //   string id = new ResourceIdentity(loc.Id).Id;
-            //   Assert.AreEqual("1", id);
+            Assert.AreEqual("1", loc.Id);
 
             try
             {
@@ -329,7 +328,7 @@ namespace Hl7.Fhir.Tests
             // Assert.AreEqual(fe2.Tags.First(), tags[0]);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
-            var fe3 = client.Update(fe2.ResourceIdentity(), fe);
+            var fe3 = client.Update(fe);
             Assert.IsNotNull(fe3);
             Assert.AreEqual(3, fe3.Identifier.Count);
 

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Rest
                     ContentLocation = response.Headers[HttpUtil.CONTENTLOCATION],
                     Location = response.Headers[HttpUtil.LOCATION],                   
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
-                    ETag = response.Headers[HttpUtil.ETAG],
+                    ETag = response.Headers[HttpUtil.ETAG] != null ? response.Headers[HttpUtil.ETAG].Trim('\"') : null,
                     Body = await readBody(response),
                     // Response = response
                 };
