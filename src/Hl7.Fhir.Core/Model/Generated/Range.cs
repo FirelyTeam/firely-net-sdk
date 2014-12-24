@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
             get { return _Low; }
             set { _Low = value; OnPropertyChanged("Low"); }
         }
+        
         private Hl7.Fhir.Model.Quantity _Low;
         
         /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
             get { return _High; }
             set { _High = value; OnPropertyChanged("High"); }
         }
+        
         private Hl7.Fhir.Model.Quantity _High;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

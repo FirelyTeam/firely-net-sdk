@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -83,6 +84,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
                 set { _Specialty = value; OnPropertyChanged("Specialty"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -150,6 +152,7 @@ namespace Hl7.Fhir.Model
                 get { if(_DaysOfWeek==null) _DaysOfWeek = new List<Hl7.Fhir.Model.CodeableConcept>(); return _DaysOfWeek; }
                 set { _DaysOfWeek = value; OnPropertyChanged("DaysOfWeek"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _DaysOfWeek;
             
             /// <summary>
@@ -162,6 +165,7 @@ namespace Hl7.Fhir.Model
                 get { return _AllDayElement; }
                 set { _AllDayElement = value; OnPropertyChanged("AllDayElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _AllDayElement;
             
             /// <summary>
@@ -193,6 +197,7 @@ namespace Hl7.Fhir.Model
                 get { return _AvailableStartTimeElement; }
                 set { _AvailableStartTimeElement = value; OnPropertyChanged("AvailableStartTimeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _AvailableStartTimeElement;
             
             /// <summary>
@@ -224,6 +229,7 @@ namespace Hl7.Fhir.Model
                 get { return _AvailableEndTimeElement; }
                 set { _AvailableEndTimeElement = value; OnPropertyChanged("AvailableEndTimeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _AvailableEndTimeElement;
             
             /// <summary>
@@ -316,6 +322,7 @@ namespace Hl7.Fhir.Model
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -347,6 +354,7 @@ namespace Hl7.Fhir.Model
                 get { return _StartDateElement; }
                 set { _StartDateElement = value; OnPropertyChanged("StartDateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _StartDateElement;
             
             /// <summary>
@@ -378,6 +386,7 @@ namespace Hl7.Fhir.Model
                 get { return _EndDateElement; }
                 set { _EndDateElement = value; OnPropertyChanged("EndDateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _EndDateElement;
             
             /// <summary>
@@ -460,6 +469,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -474,6 +484,7 @@ namespace Hl7.Fhir.Model
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
@@ -486,6 +497,7 @@ namespace Hl7.Fhir.Model
             get { return _ServiceCategory; }
             set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
         
         /// <summary>
@@ -499,6 +511,7 @@ namespace Hl7.Fhir.Model
             get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent>(); return _ServiceType; }
             set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
         }
+        
         private List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent> _ServiceType;
         
         /// <summary>
@@ -511,6 +524,7 @@ namespace Hl7.Fhir.Model
             get { return _ServiceNameElement; }
             set { _ServiceNameElement = value; OnPropertyChanged("ServiceNameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ServiceNameElement;
         
         /// <summary>
@@ -542,6 +556,7 @@ namespace Hl7.Fhir.Model
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -573,6 +588,7 @@ namespace Hl7.Fhir.Model
             get { return _ExtraDetailsElement; }
             set { _ExtraDetailsElement = value; OnPropertyChanged("ExtraDetailsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ExtraDetailsElement;
         
         /// <summary>
@@ -604,6 +620,7 @@ namespace Hl7.Fhir.Model
             get { return _FreeProvisionCode; }
             set { _FreeProvisionCode = value; OnPropertyChanged("FreeProvisionCode"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _FreeProvisionCode;
         
         /// <summary>
@@ -616,6 +633,7 @@ namespace Hl7.Fhir.Model
             get { return _Eligibility; }
             set { _Eligibility = value; OnPropertyChanged("Eligibility"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Eligibility;
         
         /// <summary>
@@ -628,6 +646,7 @@ namespace Hl7.Fhir.Model
             get { return _EligibilityNoteElement; }
             set { _EligibilityNoteElement = value; OnPropertyChanged("EligibilityNoteElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _EligibilityNoteElement;
         
         /// <summary>
@@ -659,6 +678,7 @@ namespace Hl7.Fhir.Model
             get { return _AppointmentRequired; }
             set { _AppointmentRequired = value; OnPropertyChanged("AppointmentRequired"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _AppointmentRequired;
         
         /// <summary>
@@ -671,6 +691,7 @@ namespace Hl7.Fhir.Model
             get { return _ImageURIElement; }
             set { _ImageURIElement = value; OnPropertyChanged("ImageURIElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _ImageURIElement;
         
         /// <summary>
@@ -703,6 +724,7 @@ namespace Hl7.Fhir.Model
             get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(); return _AvailableTime; }
             set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
         }
+        
         private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> _AvailableTime;
         
         /// <summary>
@@ -716,6 +738,7 @@ namespace Hl7.Fhir.Model
             get { if(_NotAvailableTime==null) _NotAvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent>(); return _NotAvailableTime; }
             set { _NotAvailableTime = value; OnPropertyChanged("NotAvailableTime"); }
         }
+        
         private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent> _NotAvailableTime;
         
         /// <summary>
@@ -728,6 +751,7 @@ namespace Hl7.Fhir.Model
             get { return _AvailabilityExceptionsElement; }
             set { _AvailabilityExceptionsElement = value; OnPropertyChanged("AvailabilityExceptionsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _AvailabilityExceptionsElement;
         
         /// <summary>
@@ -759,6 +783,7 @@ namespace Hl7.Fhir.Model
             get { return _PublicKeyElement; }
             set { _PublicKeyElement = value; OnPropertyChanged("PublicKeyElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublicKeyElement;
         
         /// <summary>
@@ -791,6 +816,7 @@ namespace Hl7.Fhir.Model
             get { if(_ProgramNameElement==null) _ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(); return _ProgramNameElement; }
             set { _ProgramNameElement = value; OnPropertyChanged("ProgramNameElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _ProgramNameElement;
         
         /// <summary>
@@ -823,6 +849,7 @@ namespace Hl7.Fhir.Model
             get { if(_ContactPoint==null) _ContactPoint = new List<Hl7.Fhir.Model.ContactPoint>(); return _ContactPoint; }
             set { _ContactPoint = value; OnPropertyChanged("ContactPoint"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _ContactPoint;
         
         /// <summary>
@@ -836,6 +863,7 @@ namespace Hl7.Fhir.Model
             get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Characteristic; }
             set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Characteristic;
         
         /// <summary>
@@ -849,6 +877,7 @@ namespace Hl7.Fhir.Model
             get { if(_ReferralMethod==null) _ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod; }
             set { _ReferralMethod = value; OnPropertyChanged("ReferralMethod"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod;
         
         /// <summary>
@@ -862,6 +891,7 @@ namespace Hl7.Fhir.Model
             get { if(_Setting==null) _Setting = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Setting; }
             set { _Setting = value; OnPropertyChanged("Setting"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Setting;
         
         /// <summary>
@@ -875,6 +905,7 @@ namespace Hl7.Fhir.Model
             get { if(_TargetGroup==null) _TargetGroup = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetGroup; }
             set { _TargetGroup = value; OnPropertyChanged("TargetGroup"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _TargetGroup;
         
         /// <summary>
@@ -888,6 +919,7 @@ namespace Hl7.Fhir.Model
             get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CoverageArea; }
             set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _CoverageArea;
         
         /// <summary>
@@ -901,6 +933,7 @@ namespace Hl7.Fhir.Model
             get { if(_CatchmentArea==null) _CatchmentArea = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CatchmentArea; }
             set { _CatchmentArea = value; OnPropertyChanged("CatchmentArea"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _CatchmentArea;
         
         /// <summary>
@@ -914,6 +947,7 @@ namespace Hl7.Fhir.Model
             get { if(_ServiceCode==null) _ServiceCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCode; }
             set { _ServiceCode = value; OnPropertyChanged("ServiceCode"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCode;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

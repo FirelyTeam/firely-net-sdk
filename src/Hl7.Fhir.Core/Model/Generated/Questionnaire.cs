@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -170,6 +170,7 @@ namespace Hl7.Fhir.Model
                 get { return _LinkIdElement; }
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -202,6 +203,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Concept;
             
             /// <summary>
@@ -214,6 +216,7 @@ namespace Hl7.Fhir.Model
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -245,6 +248,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> _TypeElement;
             
             /// <summary>
@@ -276,6 +280,7 @@ namespace Hl7.Fhir.Model
                 get { return _RequiredElement; }
                 set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
@@ -307,6 +312,7 @@ namespace Hl7.Fhir.Model
                 get { return _RepeatsElement; }
                 set { _RepeatsElement = value; OnPropertyChanged("RepeatsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
             
             /// <summary>
@@ -339,6 +345,7 @@ namespace Hl7.Fhir.Model
                 get { return _Options; }
                 set { _Options = value; OnPropertyChanged("Options"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Options;
             
             /// <summary>
@@ -352,6 +359,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
+            
             private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -436,6 +444,7 @@ namespace Hl7.Fhir.Model
                 get { return _LinkIdElement; }
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -467,6 +476,7 @@ namespace Hl7.Fhir.Model
                 get { return _TitleElement; }
                 set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
@@ -499,6 +509,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Concept;
             
             /// <summary>
@@ -511,6 +522,7 @@ namespace Hl7.Fhir.Model
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -542,6 +554,7 @@ namespace Hl7.Fhir.Model
                 get { return _RequiredElement; }
                 set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
@@ -573,6 +586,7 @@ namespace Hl7.Fhir.Model
                 get { return _RepeatsElement; }
                 set { _RepeatsElement = value; OnPropertyChanged("RepeatsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
             
             /// <summary>
@@ -605,6 +619,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
+            
             private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
             
             /// <summary>
@@ -618,6 +633,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Question==null) _Question = new List<Hl7.Fhir.Model.Questionnaire.QuestionComponent>(); return _Question; }
                 set { _Question = value; OnPropertyChanged("Question"); }
             }
+            
             private List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> _Question;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -696,6 +712,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -708,6 +725,7 @@ namespace Hl7.Fhir.Model
             get { return _VersionElement; }
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -740,6 +758,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus> _StatusElement;
         
         /// <summary>
@@ -771,6 +790,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -802,6 +822,7 @@ namespace Hl7.Fhir.Model
             get { return _PublisherElement; }
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -834,6 +855,7 @@ namespace Hl7.Fhir.Model
             get { return _Group; }
             set { _Group = value; OnPropertyChanged("Group"); }
         }
+        
         private Hl7.Fhir.Model.Questionnaire.GroupComponent _Group;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

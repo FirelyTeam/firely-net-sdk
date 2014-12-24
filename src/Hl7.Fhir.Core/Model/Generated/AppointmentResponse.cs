@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -115,6 +116,7 @@ namespace Hl7.Fhir.Model
             get { return _Appointment; }
             set { _Appointment = value; OnPropertyChanged("Appointment"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
@@ -128,6 +130,7 @@ namespace Hl7.Fhir.Model
             get { if(_ParticipantType==null) _ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ParticipantType; }
             set { _ParticipantType = value; OnPropertyChanged("ParticipantType"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
         
         /// <summary>
@@ -142,6 +145,7 @@ namespace Hl7.Fhir.Model
             get { if(_Individual==null) _Individual = new List<Hl7.Fhir.Model.ResourceReference>(); return _Individual; }
             set { _Individual = value; OnPropertyChanged("Individual"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Individual;
         
         /// <summary>
@@ -155,6 +159,7 @@ namespace Hl7.Fhir.Model
             get { return _ParticipantStatus_Element; }
             set { _ParticipantStatus_Element = value; OnPropertyChanged("ParticipantStatus_Element"); }
         }
+        
         private Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> _ParticipantStatus_Element;
         
         /// <summary>
@@ -186,6 +191,7 @@ namespace Hl7.Fhir.Model
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -217,6 +223,7 @@ namespace Hl7.Fhir.Model
             get { return _StartElement; }
             set { _StartElement = value; OnPropertyChanged("StartElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
@@ -248,6 +255,7 @@ namespace Hl7.Fhir.Model
             get { return _EndElement; }
             set { _EndElement = value; OnPropertyChanged("EndElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
@@ -280,6 +288,7 @@ namespace Hl7.Fhir.Model
             get { return _LastModifiedBy; }
             set { _LastModifiedBy = value; OnPropertyChanged("LastModifiedBy"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _LastModifiedBy;
         
         /// <summary>
@@ -292,6 +301,7 @@ namespace Hl7.Fhir.Model
             get { return _LastModifiedElement; }
             set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
         
         /// <summary>

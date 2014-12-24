@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.Coding>(); return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Type;
             
             /// <summary>
@@ -80,6 +81,7 @@ namespace Hl7.Fhir.Model
                 get { return _SignatureElement; }
                 set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _SignatureElement;
             
             /// <summary>
@@ -165,6 +167,7 @@ namespace Hl7.Fhir.Model
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -177,6 +180,7 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -189,6 +193,7 @@ namespace Hl7.Fhir.Model
                 get { return _Subtype; }
                 set { _Subtype = value; OnPropertyChanged("Subtype"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Subtype;
             
             /// <summary>
@@ -202,6 +207,7 @@ namespace Hl7.Fhir.Model
                 get { return _Subject; }
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
@@ -214,6 +220,7 @@ namespace Hl7.Fhir.Model
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -245,6 +252,7 @@ namespace Hl7.Fhir.Model
                 get { return _IssuedElement; }
                 set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
             
             /// <summary>
@@ -276,6 +284,7 @@ namespace Hl7.Fhir.Model
                 get { return _Applies; }
                 set { _Applies = value; OnPropertyChanged("Applies"); }
             }
+            
             private Hl7.Fhir.Model.Period _Applies;
             
             /// <summary>
@@ -288,6 +297,7 @@ namespace Hl7.Fhir.Model
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
@@ -300,6 +310,7 @@ namespace Hl7.Fhir.Model
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
+            
             private Hl7.Fhir.Model.Money _UnitPrice;
             
             /// <summary>
@@ -312,6 +323,7 @@ namespace Hl7.Fhir.Model
                 get { return _FactorElement; }
                 set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _FactorElement;
             
             /// <summary>
@@ -343,6 +355,7 @@ namespace Hl7.Fhir.Model
                 get { return _PointsElement; }
                 set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _PointsElement;
             
             /// <summary>
@@ -374,6 +387,7 @@ namespace Hl7.Fhir.Model
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
+            
             private Hl7.Fhir.Model.Money _Net;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -464,6 +478,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -478,6 +493,7 @@ namespace Hl7.Fhir.Model
             get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
@@ -492,6 +508,7 @@ namespace Hl7.Fhir.Model
             get { if(_Authority==null) _Authority = new List<Hl7.Fhir.Model.ResourceReference>(); return _Authority; }
             set { _Authority = value; OnPropertyChanged("Authority"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Authority;
         
         /// <summary>
@@ -506,6 +523,7 @@ namespace Hl7.Fhir.Model
             get { if(_Domain==null) _Domain = new List<Hl7.Fhir.Model.ResourceReference>(); return _Domain; }
             set { _Domain = value; OnPropertyChanged("Domain"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Domain;
         
         /// <summary>
@@ -518,6 +536,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -531,6 +550,7 @@ namespace Hl7.Fhir.Model
             get { if(_Subtype==null) _Subtype = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Subtype; }
             set { _Subtype = value; OnPropertyChanged("Subtype"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Subtype;
         
         /// <summary>
@@ -543,6 +563,7 @@ namespace Hl7.Fhir.Model
             get { return _IssuedElement; }
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
         
         /// <summary>
@@ -574,6 +595,7 @@ namespace Hl7.Fhir.Model
             get { return _Applies; }
             set { _Applies = value; OnPropertyChanged("Applies"); }
         }
+        
         private Hl7.Fhir.Model.Period _Applies;
         
         /// <summary>
@@ -586,6 +608,7 @@ namespace Hl7.Fhir.Model
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
+        
         private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
@@ -598,6 +621,7 @@ namespace Hl7.Fhir.Model
             get { return _UnitPrice; }
             set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
         }
+        
         private Hl7.Fhir.Model.Money _UnitPrice;
         
         /// <summary>
@@ -610,6 +634,7 @@ namespace Hl7.Fhir.Model
             get { return _FactorElement; }
             set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _FactorElement;
         
         /// <summary>
@@ -641,6 +666,7 @@ namespace Hl7.Fhir.Model
             get { return _PointsElement; }
             set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _PointsElement;
         
         /// <summary>
@@ -672,6 +698,7 @@ namespace Hl7.Fhir.Model
             get { return _Net; }
             set { _Net = value; OnPropertyChanged("Net"); }
         }
+        
         private Hl7.Fhir.Model.Money _Net;
         
         /// <summary>
@@ -686,6 +713,7 @@ namespace Hl7.Fhir.Model
             get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Author;
         
         /// <summary>
@@ -700,6 +728,7 @@ namespace Hl7.Fhir.Model
             get { if(_Grantor==null) _Grantor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Grantor; }
             set { _Grantor = value; OnPropertyChanged("Grantor"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Grantor;
         
         /// <summary>
@@ -714,6 +743,7 @@ namespace Hl7.Fhir.Model
             get { if(_Grantee==null) _Grantee = new List<Hl7.Fhir.Model.ResourceReference>(); return _Grantee; }
             set { _Grantee = value; OnPropertyChanged("Grantee"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Grantee;
         
         /// <summary>
@@ -728,6 +758,7 @@ namespace Hl7.Fhir.Model
             get { if(_Witness==null) _Witness = new List<Hl7.Fhir.Model.ResourceReference>(); return _Witness; }
             set { _Witness = value; OnPropertyChanged("Witness"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Witness;
         
         /// <summary>
@@ -742,6 +773,7 @@ namespace Hl7.Fhir.Model
             get { if(_Executor==null) _Executor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Executor; }
             set { _Executor = value; OnPropertyChanged("Executor"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Executor;
         
         /// <summary>
@@ -756,6 +788,7 @@ namespace Hl7.Fhir.Model
             get { if(_Notary==null) _Notary = new List<Hl7.Fhir.Model.ResourceReference>(); return _Notary; }
             set { _Notary = value; OnPropertyChanged("Notary"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Notary;
         
         /// <summary>
@@ -769,6 +802,7 @@ namespace Hl7.Fhir.Model
             get { if(_Signer==null) _Signer = new List<Hl7.Fhir.Model.Contract.ContractSignerComponent>(); return _Signer; }
             set { _Signer = value; OnPropertyChanged("Signer"); }
         }
+        
         private List<Hl7.Fhir.Model.Contract.ContractSignerComponent> _Signer;
         
         /// <summary>
@@ -782,6 +816,7 @@ namespace Hl7.Fhir.Model
             get { if(_Term==null) _Term = new List<Hl7.Fhir.Model.Contract.ContractTermComponent>(); return _Term; }
             set { _Term = value; OnPropertyChanged("Term"); }
         }
+        
         private List<Hl7.Fhir.Model.Contract.ContractTermComponent> _Term;
         
         /// <summary>
@@ -794,6 +829,7 @@ namespace Hl7.Fhir.Model
             get { return _Binding; }
             set { _Binding = value; OnPropertyChanged("Binding"); }
         }
+        
         private Hl7.Fhir.Model.Attachment _Binding;
         
         /// <summary>
@@ -806,6 +842,7 @@ namespace Hl7.Fhir.Model
             get { return _BindingDateTimeElement; }
             set { _BindingDateTimeElement = value; OnPropertyChanged("BindingDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _BindingDateTimeElement;
         
         /// <summary>
@@ -838,6 +875,7 @@ namespace Hl7.Fhir.Model
             get { if(_Friendly==null) _Friendly = new List<Hl7.Fhir.Model.Attachment>(); return _Friendly; }
             set { _Friendly = value; OnPropertyChanged("Friendly"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Friendly;
         
         /// <summary>
@@ -850,6 +888,7 @@ namespace Hl7.Fhir.Model
             get { return _FriendlyDateTimeElement; }
             set { _FriendlyDateTimeElement = value; OnPropertyChanged("FriendlyDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _FriendlyDateTimeElement;
         
         /// <summary>
@@ -882,6 +921,7 @@ namespace Hl7.Fhir.Model
             get { if(_Legal==null) _Legal = new List<Hl7.Fhir.Model.Attachment>(); return _Legal; }
             set { _Legal = value; OnPropertyChanged("Legal"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Legal;
         
         /// <summary>
@@ -894,6 +934,7 @@ namespace Hl7.Fhir.Model
             get { return _LegalDateTimeElement; }
             set { _LegalDateTimeElement = value; OnPropertyChanged("LegalDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LegalDateTimeElement;
         
         /// <summary>
@@ -926,6 +967,7 @@ namespace Hl7.Fhir.Model
             get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.Attachment>(); return _Rule; }
             set { _Rule = value; OnPropertyChanged("Rule"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Rule;
         
         /// <summary>
@@ -938,6 +980,7 @@ namespace Hl7.Fhir.Model
             get { return _RuleDateTimeElement; }
             set { _RuleDateTimeElement = value; OnPropertyChanged("RuleDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _RuleDateTimeElement;
         
         /// <summary>

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
                 get { return _LongitudeElement; }
                 set { _LongitudeElement = value; OnPropertyChanged("LongitudeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _LongitudeElement;
             
             /// <summary>
@@ -143,6 +144,7 @@ namespace Hl7.Fhir.Model
                 get { return _LatitudeElement; }
                 set { _LatitudeElement = value; OnPropertyChanged("LatitudeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _LatitudeElement;
             
             /// <summary>
@@ -174,6 +176,7 @@ namespace Hl7.Fhir.Model
                 get { return _AltitudeElement; }
                 set { _AltitudeElement = value; OnPropertyChanged("AltitudeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _AltitudeElement;
             
             /// <summary>
@@ -256,6 +259,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -268,6 +272,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -299,6 +304,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -330,6 +336,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -343,6 +350,7 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -355,6 +363,7 @@ namespace Hl7.Fhir.Model
             get { return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
+        
         private Hl7.Fhir.Model.Address _Address;
         
         /// <summary>
@@ -367,6 +376,7 @@ namespace Hl7.Fhir.Model
             get { return _PhysicalType; }
             set { _PhysicalType = value; OnPropertyChanged("PhysicalType"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _PhysicalType;
         
         /// <summary>
@@ -379,6 +389,7 @@ namespace Hl7.Fhir.Model
             get { return _Position; }
             set { _Position = value; OnPropertyChanged("Position"); }
         }
+        
         private Hl7.Fhir.Model.Location.LocationPositionComponent _Position;
         
         /// <summary>
@@ -392,6 +403,7 @@ namespace Hl7.Fhir.Model
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
@@ -404,6 +416,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Location.LocationStatus> _StatusElement;
         
         /// <summary>
@@ -436,6 +449,7 @@ namespace Hl7.Fhir.Model
             get { return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
         /// <summary>
@@ -448,6 +462,7 @@ namespace Hl7.Fhir.Model
             get { return _ModeElement; }
             set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Location.LocationMode> _ModeElement;
         
         /// <summary>

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -68,6 +68,7 @@ namespace Hl7.Fhir.Model
                 get { return _VersionIdElement; }
                 set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _VersionIdElement;
             
             /// <summary>
@@ -99,6 +100,7 @@ namespace Hl7.Fhir.Model
                 get { return _LastUpdatedElement; }
                 set { _LastUpdatedElement = value; OnPropertyChanged("LastUpdatedElement"); }
             }
+            
             private Hl7.Fhir.Model.Instant _LastUpdatedElement;
             
             /// <summary>
@@ -131,6 +133,7 @@ namespace Hl7.Fhir.Model
                 get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
                 set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
+            
             private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
             
             /// <summary>
@@ -163,6 +166,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Security==null) _Security = new List<Hl7.Fhir.Model.Coding>(); return _Security; }
                 set { _Security = value; OnPropertyChanged("Security"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Security;
             
             /// <summary>
@@ -176,6 +180,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Coding>(); return _Tag; }
                 set { _Tag = value; OnPropertyChanged("Tag"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Tag;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -244,6 +249,7 @@ namespace Hl7.Fhir.Model
             get { return _IdElement; }
             set { _IdElement = value; OnPropertyChanged("IdElement"); }
         }
+        
         private Hl7.Fhir.Model.Id _IdElement;
         
         /// <summary>
@@ -275,6 +281,7 @@ namespace Hl7.Fhir.Model
             get { return _Meta; }
             set { _Meta = value; OnPropertyChanged("Meta"); }
         }
+        
         private Hl7.Fhir.Model.Resource.ResourceMetaComponent _Meta;
         
         /// <summary>
@@ -287,6 +294,7 @@ namespace Hl7.Fhir.Model
             get { return _ImplicitRulesElement; }
             set { _ImplicitRulesElement = value; OnPropertyChanged("ImplicitRulesElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _ImplicitRulesElement;
         
         /// <summary>
@@ -318,6 +326,7 @@ namespace Hl7.Fhir.Model
             get { return _LanguageElement; }
             set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _LanguageElement;
         
         /// <summary>

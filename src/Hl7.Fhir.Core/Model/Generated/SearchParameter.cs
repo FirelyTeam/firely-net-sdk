@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -95,6 +96,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -126,6 +128,7 @@ namespace Hl7.Fhir.Model
             get { return _PublisherElement; }
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -158,6 +161,7 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -170,6 +174,7 @@ namespace Hl7.Fhir.Model
             get { return _RequirementsElement; }
             set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
@@ -202,6 +207,7 @@ namespace Hl7.Fhir.Model
             get { return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _BaseElement;
         
         /// <summary>
@@ -234,6 +240,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
@@ -266,6 +273,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -297,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { return _XpathElement; }
             set { _XpathElement = value; OnPropertyChanged("XpathElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _XpathElement;
         
         /// <summary>
@@ -329,6 +338,7 @@ namespace Hl7.Fhir.Model
             get { if(_TargetElement==null) _TargetElement = new List<Hl7.Fhir.Model.Code>(); return _TargetElement; }
             set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
         }
+        
         private List<Hl7.Fhir.Model.Code> _TargetElement;
         
         /// <summary>

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -91,6 +91,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -103,6 +104,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -117,6 +119,7 @@ namespace Hl7.Fhir.Model
             get { return _Schedule; }
             set { _Schedule = value; OnPropertyChanged("Schedule"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
@@ -130,6 +133,7 @@ namespace Hl7.Fhir.Model
             get { return _FreeBusyTypeElement; }
             set { _FreeBusyTypeElement = value; OnPropertyChanged("FreeBusyTypeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Slot.SlotStatus> _FreeBusyTypeElement;
         
         /// <summary>
@@ -162,6 +166,7 @@ namespace Hl7.Fhir.Model
             get { return _StartElement; }
             set { _StartElement = value; OnPropertyChanged("StartElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
@@ -194,6 +199,7 @@ namespace Hl7.Fhir.Model
             get { return _EndElement; }
             set { _EndElement = value; OnPropertyChanged("EndElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
@@ -225,6 +231,7 @@ namespace Hl7.Fhir.Model
             get { return _OverbookedElement; }
             set { _OverbookedElement = value; OnPropertyChanged("OverbookedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _OverbookedElement;
         
         /// <summary>
@@ -256,6 +263,7 @@ namespace Hl7.Fhir.Model
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -287,6 +295,7 @@ namespace Hl7.Fhir.Model
             get { return _LastModifiedElement; }
             set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
         
         /// <summary>

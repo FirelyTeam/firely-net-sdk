@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,6 +58,7 @@ namespace Hl7.Fhir.Model
             get { return _Text; }
             set { _Text = value; OnPropertyChanged("Text"); }
         }
+        
         private Hl7.Fhir.Model.Narrative _Text;
         
         /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
             get { if(_Contained==null) _Contained = new List<Hl7.Fhir.Model.Resource>(); return _Contained; }
             set { _Contained = value; OnPropertyChanged("Contained"); }
         }
+        
         private List<Hl7.Fhir.Model.Resource> _Contained;
         
         /// <summary>
@@ -85,6 +87,7 @@ namespace Hl7.Fhir.Model
             get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
+        
         private List<Hl7.Fhir.Model.Extension> _Extension;
         
         /// <summary>
@@ -98,6 +101,7 @@ namespace Hl7.Fhir.Model
             get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
             set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
         }
+        
         private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

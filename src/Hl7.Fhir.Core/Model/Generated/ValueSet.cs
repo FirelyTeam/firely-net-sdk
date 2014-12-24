@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
                 get { return _SystemElement; }
                 set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             /// <summary>
@@ -162,6 +163,7 @@ namespace Hl7.Fhir.Model
                 get { return _VersionElement; }
                 set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
             /// <summary>
@@ -193,6 +195,7 @@ namespace Hl7.Fhir.Model
                 get { return _CaseSensitiveElement; }
                 set { _CaseSensitiveElement = value; OnPropertyChanged("CaseSensitiveElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _CaseSensitiveElement;
             
             /// <summary>
@@ -225,6 +228,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> _Concept;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -297,6 +301,7 @@ namespace Hl7.Fhir.Model
                 get { return _SystemElement; }
                 set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             /// <summary>
@@ -328,6 +333,7 @@ namespace Hl7.Fhir.Model
                 get { return _AbstractElement; }
                 set { _AbstractElement = value; OnPropertyChanged("AbstractElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _AbstractElement;
             
             /// <summary>
@@ -359,6 +365,7 @@ namespace Hl7.Fhir.Model
                 get { return _VersionElement; }
                 set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
             /// <summary>
@@ -390,6 +397,7 @@ namespace Hl7.Fhir.Model
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
@@ -421,6 +429,7 @@ namespace Hl7.Fhir.Model
                 get { return _DisplayElement; }
                 set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
@@ -453,6 +462,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(); return _Contains; }
                 set { _Contains = value; OnPropertyChanged("Contains"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -531,6 +541,7 @@ namespace Hl7.Fhir.Model
                 get { return _LanguageElement; }
                 set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _LanguageElement;
             
             /// <summary>
@@ -562,6 +573,7 @@ namespace Hl7.Fhir.Model
                 get { return _Use; }
                 set { _Use = value; OnPropertyChanged("Use"); }
             }
+            
             private Hl7.Fhir.Model.Coding _Use;
             
             /// <summary>
@@ -575,6 +587,7 @@ namespace Hl7.Fhir.Model
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
@@ -664,6 +677,7 @@ namespace Hl7.Fhir.Model
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
@@ -695,6 +709,7 @@ namespace Hl7.Fhir.Model
                 get { return _AbstractElement; }
                 set { _AbstractElement = value; OnPropertyChanged("AbstractElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _AbstractElement;
             
             /// <summary>
@@ -726,6 +741,7 @@ namespace Hl7.Fhir.Model
                 get { return _DisplayElement; }
                 set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
@@ -757,6 +773,7 @@ namespace Hl7.Fhir.Model
                 get { return _DefinitionElement; }
                 set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DefinitionElement;
             
             /// <summary>
@@ -789,6 +806,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionDesignationComponent>(); return _Designation; }
                 set { _Designation = value; OnPropertyChanged("Designation"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionDesignationComponent> _Designation;
             
             /// <summary>
@@ -802,6 +820,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> _Concept;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -881,6 +900,7 @@ namespace Hl7.Fhir.Model
                 get { return _SystemElement; }
                 set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _SystemElement;
             
             /// <summary>
@@ -912,6 +932,7 @@ namespace Hl7.Fhir.Model
                 get { return _VersionElement; }
                 set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _VersionElement;
             
             /// <summary>
@@ -944,6 +965,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent> _Concept;
             
             /// <summary>
@@ -957,6 +979,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Filter==null) _Filter = new List<Hl7.Fhir.Model.ValueSet.ConceptSetFilterComponent>(); return _Filter; }
                 set { _Filter = value; OnPropertyChanged("Filter"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptSetFilterComponent> _Filter;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1030,6 +1053,7 @@ namespace Hl7.Fhir.Model
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
@@ -1061,6 +1085,7 @@ namespace Hl7.Fhir.Model
                 get { return _DisplayElement; }
                 set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
@@ -1093,6 +1118,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionDesignationComponent>(); return _Designation; }
                 set { _Designation = value; OnPropertyChanged("Designation"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionDesignationComponent> _Designation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1163,6 +1189,7 @@ namespace Hl7.Fhir.Model
                 get { return _PropertyElement; }
                 set { _PropertyElement = value; OnPropertyChanged("PropertyElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _PropertyElement;
             
             /// <summary>
@@ -1195,6 +1222,7 @@ namespace Hl7.Fhir.Model
                 get { return _OpElement; }
                 set { _OpElement = value; OnPropertyChanged("OpElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.ValueSet.FilterOperator> _OpElement;
             
             /// <summary>
@@ -1227,6 +1255,7 @@ namespace Hl7.Fhir.Model
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _ValueElement;
             
             /// <summary>
@@ -1316,6 +1345,7 @@ namespace Hl7.Fhir.Model
                 get { if(_ImportElement==null) _ImportElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ImportElement; }
                 set { _ImportElement = value; OnPropertyChanged("ImportElement"); }
             }
+            
             private List<Hl7.Fhir.Model.FhirUri> _ImportElement;
             
             /// <summary>
@@ -1348,6 +1378,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Include==null) _Include = new List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>(); return _Include; }
                 set { _Include = value; OnPropertyChanged("Include"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Include;
             
             /// <summary>
@@ -1361,6 +1392,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Exclude==null) _Exclude = new List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>(); return _Exclude; }
                 set { _Exclude = value; OnPropertyChanged("Exclude"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Exclude;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1430,6 +1462,7 @@ namespace Hl7.Fhir.Model
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -1443,6 +1476,7 @@ namespace Hl7.Fhir.Model
                 get { return _TimestampElement; }
                 set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _TimestampElement;
             
             /// <summary>
@@ -1475,6 +1509,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(); return _Contains; }
                 set { _Contains = value; OnPropertyChanged("Contains"); }
             }
+            
             private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1537,6 +1572,7 @@ namespace Hl7.Fhir.Model
             get { return _IdentifierElement; }
             set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _IdentifierElement;
         
         /// <summary>
@@ -1568,6 +1604,7 @@ namespace Hl7.Fhir.Model
             get { return _VersionElement; }
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -1599,6 +1636,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -1630,6 +1668,7 @@ namespace Hl7.Fhir.Model
             get { return _PurposeElement; }
             set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PurposeElement;
         
         /// <summary>
@@ -1661,6 +1700,7 @@ namespace Hl7.Fhir.Model
             get { return _ImmutableElement; }
             set { _ImmutableElement = value; OnPropertyChanged("ImmutableElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _ImmutableElement;
         
         /// <summary>
@@ -1692,6 +1732,7 @@ namespace Hl7.Fhir.Model
             get { return _PublisherElement; }
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -1724,6 +1765,7 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -1736,6 +1778,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -1767,6 +1810,7 @@ namespace Hl7.Fhir.Model
             get { return _CopyrightElement; }
             set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
@@ -1799,6 +1843,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> _StatusElement;
         
         /// <summary>
@@ -1830,6 +1875,7 @@ namespace Hl7.Fhir.Model
             get { return _ExperimentalElement; }
             set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
@@ -1861,6 +1907,7 @@ namespace Hl7.Fhir.Model
             get { return _ExtensibleElement; }
             set { _ExtensibleElement = value; OnPropertyChanged("ExtensibleElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
         
         /// <summary>
@@ -1892,6 +1939,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -1923,6 +1971,7 @@ namespace Hl7.Fhir.Model
             get { return _StableDateElement; }
             set { _StableDateElement = value; OnPropertyChanged("StableDateElement"); }
         }
+        
         private Hl7.Fhir.Model.Date _StableDateElement;
         
         /// <summary>
@@ -1954,6 +2003,7 @@ namespace Hl7.Fhir.Model
             get { return _Define; }
             set { _Define = value; OnPropertyChanged("Define"); }
         }
+        
         private Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent _Define;
         
         /// <summary>
@@ -1966,6 +2016,7 @@ namespace Hl7.Fhir.Model
             get { return _Compose; }
             set { _Compose = value; OnPropertyChanged("Compose"); }
         }
+        
         private Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent _Compose;
         
         /// <summary>
@@ -1978,6 +2029,7 @@ namespace Hl7.Fhir.Model
             get { return _Expansion; }
             set { _Expansion = value; OnPropertyChanged("Expansion"); }
         }
+        
         private Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent _Expansion;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

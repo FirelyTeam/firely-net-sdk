@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -202,6 +202,7 @@ namespace Hl7.Fhir.Model
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -233,6 +234,7 @@ namespace Hl7.Fhir.Model
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus> _StatusElement;
             
             /// <summary>
@@ -264,6 +266,7 @@ namespace Hl7.Fhir.Model
                 get { return _NotesElement; }
                 set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NotesElement;
             
             /// <summary>
@@ -297,6 +300,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Concern==null) _Concern = new List<Hl7.Fhir.Model.ResourceReference>(); return _Concern; }
                 set { _Concern = value; OnPropertyChanged("Concern"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Concern;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -369,6 +373,7 @@ namespace Hl7.Fhir.Model
                 get { return _Role; }
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Role;
             
             /// <summary>
@@ -383,6 +388,7 @@ namespace Hl7.Fhir.Model
                 get { return _Member; }
                 set { _Member = value; OnPropertyChanged("Member"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Member;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -450,6 +456,7 @@ namespace Hl7.Fhir.Model
                 get { if(_GoalElement==null) _GoalElement = new List<Hl7.Fhir.Model.FhirUri>(); return _GoalElement; }
                 set { _GoalElement = value; OnPropertyChanged("GoalElement"); }
             }
+            
             private List<Hl7.Fhir.Model.FhirUri> _GoalElement;
             
             /// <summary>
@@ -481,6 +488,7 @@ namespace Hl7.Fhir.Model
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> _StatusElement;
             
             /// <summary>
@@ -513,6 +521,7 @@ namespace Hl7.Fhir.Model
                 get { return _ProhibitedElement; }
                 set { _ProhibitedElement = value; OnPropertyChanged("ProhibitedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _ProhibitedElement;
             
             /// <summary>
@@ -546,6 +555,7 @@ namespace Hl7.Fhir.Model
                 get { if(_ActionResulting==null) _ActionResulting = new List<Hl7.Fhir.Model.ResourceReference>(); return _ActionResulting; }
                 set { _ActionResulting = value; OnPropertyChanged("ActionResulting"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _ActionResulting;
             
             /// <summary>
@@ -558,6 +568,7 @@ namespace Hl7.Fhir.Model
                 get { return _NotesElement; }
                 set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NotesElement;
             
             /// <summary>
@@ -590,6 +601,7 @@ namespace Hl7.Fhir.Model
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Detail;
             
             /// <summary>
@@ -602,6 +614,7 @@ namespace Hl7.Fhir.Model
                 get { return _Simple; }
                 set { _Simple = value; OnPropertyChanged("Simple"); }
             }
+            
             private Hl7.Fhir.Model.CarePlan.CarePlanActivitySimpleComponent _Simple;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -684,6 +697,7 @@ namespace Hl7.Fhir.Model
                 get { return _CategoryElement; }
                 set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityCategory> _CategoryElement;
             
             /// <summary>
@@ -715,6 +729,7 @@ namespace Hl7.Fhir.Model
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -728,6 +743,7 @@ namespace Hl7.Fhir.Model
                 get { return _Scheduled; }
                 set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
             }
+            
             private Hl7.Fhir.Model.Element _Scheduled;
             
             /// <summary>
@@ -741,6 +757,7 @@ namespace Hl7.Fhir.Model
                 get { return _Location; }
                 set { _Location = value; OnPropertyChanged("Location"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Location;
             
             /// <summary>
@@ -755,6 +772,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
                 set { _Performer = value; OnPropertyChanged("Performer"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Performer;
             
             /// <summary>
@@ -768,6 +786,7 @@ namespace Hl7.Fhir.Model
                 get { return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Product;
             
             /// <summary>
@@ -780,6 +799,7 @@ namespace Hl7.Fhir.Model
                 get { return _DailyAmount; }
                 set { _DailyAmount = value; OnPropertyChanged("DailyAmount"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _DailyAmount;
             
             /// <summary>
@@ -792,6 +812,7 @@ namespace Hl7.Fhir.Model
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
@@ -804,6 +825,7 @@ namespace Hl7.Fhir.Model
                 get { return _DetailsElement; }
                 set { _DetailsElement = value; OnPropertyChanged("DetailsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
             /// <summary>
@@ -904,6 +926,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -917,6 +940,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -930,6 +954,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> _StatusElement;
         
         /// <summary>
@@ -961,6 +986,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
@@ -973,6 +999,7 @@ namespace Hl7.Fhir.Model
             get { return _ModifiedElement; }
             set { _ModifiedElement = value; OnPropertyChanged("ModifiedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _ModifiedElement;
         
         /// <summary>
@@ -1006,6 +1033,7 @@ namespace Hl7.Fhir.Model
             get { if(_Concern==null) _Concern = new List<Hl7.Fhir.Model.ResourceReference>(); return _Concern; }
             set { _Concern = value; OnPropertyChanged("Concern"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Concern;
         
         /// <summary>
@@ -1019,6 +1047,7 @@ namespace Hl7.Fhir.Model
             get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
+        
         private List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent> _Participant;
         
         /// <summary>
@@ -1032,6 +1061,7 @@ namespace Hl7.Fhir.Model
             get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.CarePlan.CarePlanGoalComponent>(); return _Goal; }
             set { _Goal = value; OnPropertyChanged("Goal"); }
         }
+        
         private List<Hl7.Fhir.Model.CarePlan.CarePlanGoalComponent> _Goal;
         
         /// <summary>
@@ -1045,6 +1075,7 @@ namespace Hl7.Fhir.Model
             get { if(_Activity==null) _Activity = new List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent>(); return _Activity; }
             set { _Activity = value; OnPropertyChanged("Activity"); }
         }
+        
         private List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent> _Activity;
         
         /// <summary>
@@ -1057,6 +1088,7 @@ namespace Hl7.Fhir.Model
             get { return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
         /// <summary>

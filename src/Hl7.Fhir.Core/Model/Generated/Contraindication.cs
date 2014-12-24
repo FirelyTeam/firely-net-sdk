@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _Action; }
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Action;
             
             /// <summary>
@@ -82,6 +83,7 @@ namespace Hl7.Fhir.Model
                 get { return _DateElement; }
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -114,6 +116,7 @@ namespace Hl7.Fhir.Model
                 get { return _Author; }
                 set { _Author = value; OnPropertyChanged("Author"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Author;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -177,6 +180,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -189,6 +193,7 @@ namespace Hl7.Fhir.Model
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -201,6 +206,7 @@ namespace Hl7.Fhir.Model
             get { return _SeverityElement; }
             set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _SeverityElement;
         
         /// <summary>
@@ -234,6 +240,7 @@ namespace Hl7.Fhir.Model
             get { if(_Implicated==null) _Implicated = new List<Hl7.Fhir.Model.ResourceReference>(); return _Implicated; }
             set { _Implicated = value; OnPropertyChanged("Implicated"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
         
         /// <summary>
@@ -246,6 +253,7 @@ namespace Hl7.Fhir.Model
             get { return _DetailElement; }
             set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DetailElement;
         
         /// <summary>
@@ -277,6 +285,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -309,6 +318,7 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
@@ -321,6 +331,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -333,6 +344,7 @@ namespace Hl7.Fhir.Model
             get { return _ReferenceElement; }
             set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _ReferenceElement;
         
         /// <summary>
@@ -365,6 +377,7 @@ namespace Hl7.Fhir.Model
             get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
+        
         private List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> _Mitigation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

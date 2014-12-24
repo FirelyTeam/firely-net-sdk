@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,6 +57,7 @@ namespace Hl7.Fhir.Model
             get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         [FhirElement("whenUsed", Order=100)]
@@ -66,6 +67,7 @@ namespace Hl7.Fhir.Model
             get { return _WhenUsed; }
             set { _WhenUsed = value; OnPropertyChanged("WhenUsed"); }
         }
+        
         private Hl7.Fhir.Model.Period _WhenUsed;
         
         [FhirElement("device", Order=110)]
@@ -77,6 +79,7 @@ namespace Hl7.Fhir.Model
             get { return _Device; }
             set { _Device = value; OnPropertyChanged("Device"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Device;
         
         [FhirElement("identifier", Order=120)]
@@ -87,6 +90,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         [FhirElement("indication", Order=130)]
@@ -97,6 +101,7 @@ namespace Hl7.Fhir.Model
             get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         [FhirElement("notes", Order=140)]
@@ -107,6 +112,7 @@ namespace Hl7.Fhir.Model
             get { if(_NotesElement==null) _NotesElement = new List<Hl7.Fhir.Model.FhirString>(); return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
         [NotMapped]
@@ -131,6 +137,7 @@ namespace Hl7.Fhir.Model
             get { return _RecordedOnElement; }
             set { _RecordedOnElement = value; OnPropertyChanged("RecordedOnElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _RecordedOnElement;
         
         [NotMapped]
@@ -157,6 +164,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         [FhirElement("timing", Order=170, Choice=ChoiceType.DatatypeChoice)]
@@ -167,6 +175,7 @@ namespace Hl7.Fhir.Model
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
+        
         private Hl7.Fhir.Model.Element _Timing;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

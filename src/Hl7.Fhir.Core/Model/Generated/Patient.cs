@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Relationship; }
                 set { _Relationship = value; OnPropertyChanged("Relationship"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Relationship;
             
             /// <summary>
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
                 get { return _Name; }
                 set { _Name = value; OnPropertyChanged("Name"); }
             }
+            
             private Hl7.Fhir.Model.HumanName _Name;
             
             /// <summary>
@@ -118,6 +120,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
+            
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             /// <summary>
@@ -130,6 +133,7 @@ namespace Hl7.Fhir.Model
                 get { return _Address; }
                 set { _Address = value; OnPropertyChanged("Address"); }
             }
+            
             private Hl7.Fhir.Model.Address _Address;
             
             /// <summary>
@@ -142,6 +146,7 @@ namespace Hl7.Fhir.Model
                 get { return _GenderElement; }
                 set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
             
             /// <summary>
@@ -174,6 +179,7 @@ namespace Hl7.Fhir.Model
                 get { return _Organization; }
                 set { _Organization = value; OnPropertyChanged("Organization"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
@@ -186,6 +192,7 @@ namespace Hl7.Fhir.Model
                 get { return _Period; }
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
+            
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -268,6 +275,7 @@ namespace Hl7.Fhir.Model
                 get { return _Species; }
                 set { _Species = value; OnPropertyChanged("Species"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Species;
             
             /// <summary>
@@ -280,6 +288,7 @@ namespace Hl7.Fhir.Model
                 get { return _Breed; }
                 set { _Breed = value; OnPropertyChanged("Breed"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Breed;
             
             /// <summary>
@@ -292,6 +301,7 @@ namespace Hl7.Fhir.Model
                 get { return _GenderStatus; }
                 set { _GenderStatus = value; OnPropertyChanged("GenderStatus"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _GenderStatus;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -363,6 +373,7 @@ namespace Hl7.Fhir.Model
                 get { return _Other; }
                 set { _Other = value; OnPropertyChanged("Other"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
@@ -376,6 +387,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
             
             /// <summary>
@@ -455,6 +467,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -468,6 +481,7 @@ namespace Hl7.Fhir.Model
             get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
+        
         private List<Hl7.Fhir.Model.HumanName> _Name;
         
         /// <summary>
@@ -481,6 +495,7 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -493,6 +508,7 @@ namespace Hl7.Fhir.Model
             get { return _GenderElement; }
             set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
         
         /// <summary>
@@ -524,6 +540,7 @@ namespace Hl7.Fhir.Model
             get { return _BirthDateElement; }
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
+        
         private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
@@ -556,6 +573,7 @@ namespace Hl7.Fhir.Model
             get { return _Deceased; }
             set { _Deceased = value; OnPropertyChanged("Deceased"); }
         }
+        
         private Hl7.Fhir.Model.Element _Deceased;
         
         /// <summary>
@@ -569,6 +587,7 @@ namespace Hl7.Fhir.Model
             get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
+        
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
@@ -581,6 +600,7 @@ namespace Hl7.Fhir.Model
             get { return _MaritalStatus; }
             set { _MaritalStatus = value; OnPropertyChanged("MaritalStatus"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _MaritalStatus;
         
         /// <summary>
@@ -594,6 +614,7 @@ namespace Hl7.Fhir.Model
             get { return _MultipleBirth; }
             set { _MultipleBirth = value; OnPropertyChanged("MultipleBirth"); }
         }
+        
         private Hl7.Fhir.Model.Element _MultipleBirth;
         
         /// <summary>
@@ -607,6 +628,7 @@ namespace Hl7.Fhir.Model
             get { if(_Photo==null) _Photo = new List<Hl7.Fhir.Model.Attachment>(); return _Photo; }
             set { _Photo = value; OnPropertyChanged("Photo"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
         /// <summary>
@@ -620,6 +642,7 @@ namespace Hl7.Fhir.Model
             get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
+        
         private List<Hl7.Fhir.Model.Patient.ContactComponent> _Contact;
         
         /// <summary>
@@ -632,6 +655,7 @@ namespace Hl7.Fhir.Model
             get { return _Animal; }
             set { _Animal = value; OnPropertyChanged("Animal"); }
         }
+        
         private Hl7.Fhir.Model.Patient.AnimalComponent _Animal;
         
         /// <summary>
@@ -645,6 +669,7 @@ namespace Hl7.Fhir.Model
             get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Communication; }
             set { _Communication = value; OnPropertyChanged("Communication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
         
         /// <summary>
@@ -659,6 +684,7 @@ namespace Hl7.Fhir.Model
             get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareProvider; }
             set { _CareProvider = value; OnPropertyChanged("CareProvider"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _CareProvider;
         
         /// <summary>
@@ -672,6 +698,7 @@ namespace Hl7.Fhir.Model
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
@@ -685,6 +712,7 @@ namespace Hl7.Fhir.Model
             get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
+        
         private List<Hl7.Fhir.Model.Patient.PatientLinkComponent> _Link;
         
         /// <summary>
@@ -697,6 +725,7 @@ namespace Hl7.Fhir.Model
             get { return _ActiveElement; }
             set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>

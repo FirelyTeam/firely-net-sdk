@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
                 get { return _SpecType; }
                 set { _SpecType = value; OnPropertyChanged("SpecType"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _SpecType;
             
             /// <summary>
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
                 get { return _ComponentId; }
                 set { _ComponentId = value; OnPropertyChanged("ComponentId"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _ComponentId;
             
             /// <summary>
@@ -156,6 +158,7 @@ namespace Hl7.Fhir.Model
                 get { return _ProductionSpecElement; }
                 set { _ProductionSpecElement = value; OnPropertyChanged("ProductionSpecElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _ProductionSpecElement;
             
             /// <summary>
@@ -238,6 +241,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -251,6 +255,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -264,6 +269,7 @@ namespace Hl7.Fhir.Model
             get { return _LastSystemChangeElement; }
             set { _LastSystemChangeElement = value; OnPropertyChanged("LastSystemChangeElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _LastSystemChangeElement;
         
         /// <summary>
@@ -296,6 +302,7 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -309,6 +316,7 @@ namespace Hl7.Fhir.Model
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
@@ -322,6 +330,7 @@ namespace Hl7.Fhir.Model
             get { if(_OperationalStatus==null) _OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OperationalStatus; }
             set { _OperationalStatus = value; OnPropertyChanged("OperationalStatus"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _OperationalStatus;
         
         /// <summary>
@@ -334,6 +343,7 @@ namespace Hl7.Fhir.Model
             get { return _ParameterGroup; }
             set { _ParameterGroup = value; OnPropertyChanged("ParameterGroup"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _ParameterGroup;
         
         /// <summary>
@@ -346,6 +356,7 @@ namespace Hl7.Fhir.Model
             get { return _MeasurementPrincipleElement; }
             set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> _MeasurementPrincipleElement;
         
         /// <summary>
@@ -378,6 +389,7 @@ namespace Hl7.Fhir.Model
             get { if(_ProductionSpecification==null) _ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent>(); return _ProductionSpecification; }
             set { _ProductionSpecification = value; OnPropertyChanged("ProductionSpecification"); }
         }
+        
         private List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent> _ProductionSpecification;
         
         /// <summary>
@@ -390,6 +402,7 @@ namespace Hl7.Fhir.Model
             get { return _LanguageCode; }
             set { _LanguageCode = value; OnPropertyChanged("LanguageCode"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

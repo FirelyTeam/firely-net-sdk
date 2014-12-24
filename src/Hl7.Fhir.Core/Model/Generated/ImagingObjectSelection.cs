@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -234,6 +235,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -265,6 +267,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -297,6 +300,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent>(); return _Series; }
                 set { _Series = value; OnPropertyChanged("Series"); }
             }
+            
             private List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent> _Series;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -370,6 +374,7 @@ namespace Hl7.Fhir.Model
                 get { return _SopClassElement; }
                 set { _SopClassElement = value; OnPropertyChanged("SopClassElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _SopClassElement;
             
             /// <summary>
@@ -402,6 +407,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -433,6 +439,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -464,6 +471,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -556,6 +564,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -587,6 +596,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -618,6 +628,7 @@ namespace Hl7.Fhir.Model
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -650,6 +661,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent>(); return _Instance; }
                 set { _Instance = value; OnPropertyChanged("Instance"); }
             }
+            
             private List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent> _Instance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -716,6 +728,7 @@ namespace Hl7.Fhir.Model
             get { return _UidElement; }
             set { _UidElement = value; OnPropertyChanged("UidElement"); }
         }
+        
         private Hl7.Fhir.Model.Oid _UidElement;
         
         /// <summary>
@@ -749,6 +762,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -762,6 +776,7 @@ namespace Hl7.Fhir.Model
             get { return _Title; }
             set { _Title = value; OnPropertyChanged("Title"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Title;
         
         /// <summary>
@@ -774,6 +789,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -806,6 +822,7 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
@@ -818,6 +835,7 @@ namespace Hl7.Fhir.Model
             get { return _AuthoringTimeElement; }
             set { _AuthoringTimeElement = value; OnPropertyChanged("AuthoringTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _AuthoringTimeElement;
         
         /// <summary>
@@ -850,6 +868,7 @@ namespace Hl7.Fhir.Model
             get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent>(); return _Study; }
             set { _Study = value; OnPropertyChanged("Study"); }
         }
+        
         private List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent> _Study;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

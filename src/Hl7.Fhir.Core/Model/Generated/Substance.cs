@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -69,6 +69,7 @@ namespace Hl7.Fhir.Model
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Ratio _Quantity;
             
             /// <summary>
@@ -83,6 +84,7 @@ namespace Hl7.Fhir.Model
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -149,6 +151,7 @@ namespace Hl7.Fhir.Model
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -161,6 +164,7 @@ namespace Hl7.Fhir.Model
                 get { return _ExpiryElement; }
                 set { _ExpiryElement = value; OnPropertyChanged("ExpiryElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _ExpiryElement;
             
             /// <summary>
@@ -192,6 +196,7 @@ namespace Hl7.Fhir.Model
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -255,6 +260,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -267,6 +273,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -298,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { return _Instance; }
             set { _Instance = value; OnPropertyChanged("Instance"); }
         }
+        
         private Hl7.Fhir.Model.Substance.SubstanceInstanceComponent _Instance;
         
         /// <summary>
@@ -311,6 +319,7 @@ namespace Hl7.Fhir.Model
             get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent>(); return _Ingredient; }
             set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
         }
+        
         private List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> _Ingredient;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

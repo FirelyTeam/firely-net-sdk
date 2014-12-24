@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
             get { return _MasterIdentifier; }
             set { _MasterIdentifier = value; OnPropertyChanged("MasterIdentifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _MasterIdentifier;
         
         /// <summary>
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -90,6 +92,7 @@ namespace Hl7.Fhir.Model
             get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
@@ -104,6 +107,7 @@ namespace Hl7.Fhir.Model
             get { if(_Recipient==null) _Recipient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recipient; }
             set { _Recipient = value; OnPropertyChanged("Recipient"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
@@ -116,6 +120,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -130,6 +135,7 @@ namespace Hl7.Fhir.Model
             get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Author;
         
         /// <summary>
@@ -142,6 +148,7 @@ namespace Hl7.Fhir.Model
             get { return _CreatedElement; }
             set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
@@ -173,6 +180,7 @@ namespace Hl7.Fhir.Model
             get { return _SourceElement; }
             set { _SourceElement = value; OnPropertyChanged("SourceElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _SourceElement;
         
         /// <summary>
@@ -205,6 +213,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _StatusElement;
         
         /// <summary>
@@ -237,6 +246,7 @@ namespace Hl7.Fhir.Model
             get { return _Supercedes; }
             set { _Supercedes = value; OnPropertyChanged("Supercedes"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Supercedes;
         
         /// <summary>
@@ -249,6 +259,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -280,6 +291,7 @@ namespace Hl7.Fhir.Model
             get { return _Confidentiality; }
             set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Confidentiality;
         
         /// <summary>
@@ -294,6 +306,7 @@ namespace Hl7.Fhir.Model
             get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.ResourceReference>(); return _Content; }
             set { _Content = value; OnPropertyChanged("Content"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Content;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

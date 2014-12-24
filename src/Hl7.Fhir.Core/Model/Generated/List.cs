@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Flag==null) _Flag = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Flag; }
                 set { _Flag = value; OnPropertyChanged("Flag"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Flag;
             
             /// <summary>
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
                 get { return _DeletedElement; }
                 set { _DeletedElement = value; OnPropertyChanged("DeletedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _DeletedElement;
             
             /// <summary>
@@ -136,6 +138,7 @@ namespace Hl7.Fhir.Model
                 get { return _DateElement; }
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -169,6 +172,7 @@ namespace Hl7.Fhir.Model
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -235,6 +239,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -247,6 +252,7 @@ namespace Hl7.Fhir.Model
             get { return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -260,6 +266,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -273,6 +280,7 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -285,6 +293,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -316,6 +325,7 @@ namespace Hl7.Fhir.Model
             get { return _OrderedElement; }
             set { _OrderedElement = value; OnPropertyChanged("OrderedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _OrderedElement;
         
         /// <summary>
@@ -348,6 +358,7 @@ namespace Hl7.Fhir.Model
             get { return _ModeElement; }
             set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.List.ListMode> _ModeElement;
         
         /// <summary>
@@ -380,6 +391,7 @@ namespace Hl7.Fhir.Model
             get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
+        
         private List<Hl7.Fhir.Model.List.ListEntryComponent> _Entry;
         
         /// <summary>
@@ -392,6 +404,7 @@ namespace Hl7.Fhir.Model
             get { return _EmptyReason; }
             set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

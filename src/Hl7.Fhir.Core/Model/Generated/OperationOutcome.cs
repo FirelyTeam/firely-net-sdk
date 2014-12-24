@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -236,6 +236,7 @@ namespace Hl7.Fhir.Model
                 get { return _SeverityElement; }
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
             
             /// <summary>
@@ -267,6 +268,7 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
@@ -279,6 +281,7 @@ namespace Hl7.Fhir.Model
                 get { return _DetailsElement; }
                 set { _DetailsElement = value; OnPropertyChanged("DetailsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
             /// <summary>
@@ -311,6 +314,7 @@ namespace Hl7.Fhir.Model
                 get { if(_LocationElement==null) _LocationElement = new List<Hl7.Fhir.Model.FhirString>(); return _LocationElement; }
                 set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
             }
+            
             private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             /// <summary>
@@ -396,6 +400,7 @@ namespace Hl7.Fhir.Model
             get { if(_Issue==null) _Issue = new List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent>(); return _Issue; }
             set { _Issue = value; OnPropertyChanged("Issue"); }
         }
+        
         private List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> _Issue;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

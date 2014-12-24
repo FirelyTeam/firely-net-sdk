@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -102,6 +103,7 @@ namespace Hl7.Fhir.Model
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
+            
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
@@ -115,6 +117,7 @@ namespace Hl7.Fhir.Model
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
+            
             private Hl7.Fhir.Model.Resource _Resource;
             
             /// <summary>
@@ -128,6 +131,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
+            
             private List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -201,6 +205,7 @@ namespace Hl7.Fhir.Model
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -234,6 +239,7 @@ namespace Hl7.Fhir.Model
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
+            
             private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -294,6 +300,7 @@ namespace Hl7.Fhir.Model
             get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
+        
         private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Parameter;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

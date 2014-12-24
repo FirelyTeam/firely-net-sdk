@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
+            
             private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -156,6 +157,7 @@ namespace Hl7.Fhir.Model
                 get { return _LinkIdElement; }
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -187,6 +189,7 @@ namespace Hl7.Fhir.Model
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -219,6 +222,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Answer==null) _Answer = new List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionAnswerComponent>(); return _Answer; }
                 set { _Answer = value; OnPropertyChanged("Answer"); }
             }
+            
             private List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionAnswerComponent> _Answer;
             
             /// <summary>
@@ -232,6 +236,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
+            
             private List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent> _Group;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -304,6 +309,7 @@ namespace Hl7.Fhir.Model
                 get { return _LinkIdElement; }
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -335,6 +341,7 @@ namespace Hl7.Fhir.Model
                 get { return _TitleElement; }
                 set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
@@ -366,6 +373,7 @@ namespace Hl7.Fhir.Model
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -398,6 +406,7 @@ namespace Hl7.Fhir.Model
                 get { return _Subject; }
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
@@ -411,6 +420,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
+            
             private List<Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent> _Group;
             
             /// <summary>
@@ -424,6 +434,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Question==null) _Question = new List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionComponent>(); return _Question; }
                 set { _Question = value; OnPropertyChanged("Question"); }
             }
+            
             private List<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionComponent> _Question;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -495,6 +506,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -508,6 +520,7 @@ namespace Hl7.Fhir.Model
             get { return _Questionnaire; }
             set { _Questionnaire = value; OnPropertyChanged("Questionnaire"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Questionnaire;
         
         /// <summary>
@@ -521,6 +534,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionnaireAnswersStatus> _StatusElement;
         
         /// <summary>
@@ -553,6 +567,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -566,6 +581,7 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
@@ -579,6 +595,7 @@ namespace Hl7.Fhir.Model
             get { return _AuthoredElement; }
             set { _AuthoredElement = value; OnPropertyChanged("AuthoredElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
         
         /// <summary>
@@ -611,6 +628,7 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -624,6 +642,7 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -636,6 +655,7 @@ namespace Hl7.Fhir.Model
             get { return _Group; }
             set { _Group = value; OnPropertyChanged("Group"); }
         }
+        
         private Hl7.Fhir.Model.QuestionnaireAnswers.GroupComponent _Group;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

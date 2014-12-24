@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
             get { return _ElementId; }
             set { _ElementId = value; OnPropertyChanged("ElementId"); }
         }
+        
         private string _ElementId;
         
         /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
             get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
+        
         private List<Hl7.Fhir.Model.Extension> _Extension;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

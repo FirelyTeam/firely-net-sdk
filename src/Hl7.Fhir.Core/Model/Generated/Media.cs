@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -86,6 +86,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Media.MediaType> _TypeElement;
         
         /// <summary>
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
             get { return _Subtype; }
             set { _Subtype = value; OnPropertyChanged("Subtype"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Subtype;
         
         /// <summary>
@@ -130,6 +132,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -142,6 +145,7 @@ namespace Hl7.Fhir.Model
             get { return _CreatedElement; }
             set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
@@ -174,6 +178,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -187,6 +192,7 @@ namespace Hl7.Fhir.Model
             get { return _Operator; }
             set { _Operator = value; OnPropertyChanged("Operator"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Operator;
         
         /// <summary>
@@ -199,6 +205,7 @@ namespace Hl7.Fhir.Model
             get { return _View; }
             set { _View = value; OnPropertyChanged("View"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _View;
         
         /// <summary>
@@ -211,6 +218,7 @@ namespace Hl7.Fhir.Model
             get { return _DeviceNameElement; }
             set { _DeviceNameElement = value; OnPropertyChanged("DeviceNameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DeviceNameElement;
         
         /// <summary>
@@ -242,6 +250,7 @@ namespace Hl7.Fhir.Model
             get { return _HeightElement; }
             set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _HeightElement;
         
         /// <summary>
@@ -273,6 +282,7 @@ namespace Hl7.Fhir.Model
             get { return _WidthElement; }
             set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _WidthElement;
         
         /// <summary>
@@ -304,6 +314,7 @@ namespace Hl7.Fhir.Model
             get { return _FramesElement; }
             set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _FramesElement;
         
         /// <summary>
@@ -335,6 +346,7 @@ namespace Hl7.Fhir.Model
             get { return _DurationElement; }
             set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _DurationElement;
         
         /// <summary>
@@ -367,6 +379,7 @@ namespace Hl7.Fhir.Model
             get { return _Content; }
             set { _Content = value; OnPropertyChanged("Content"); }
         }
+        
         private Hl7.Fhir.Model.Attachment _Content;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

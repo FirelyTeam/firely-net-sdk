@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -207,6 +207,7 @@ namespace Hl7.Fhir.Model
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Substance;
             
             /// <summary>
@@ -219,6 +220,7 @@ namespace Hl7.Fhir.Model
                 get { return _CertaintyElement; }
                 set { _CertaintyElement = value; OnPropertyChanged("CertaintyElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCertainty> _CertaintyElement;
             
             /// <summary>
@@ -251,6 +253,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Manifestation==null) _Manifestation = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Manifestation; }
                 set { _Manifestation = value; OnPropertyChanged("Manifestation"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Manifestation;
             
             /// <summary>
@@ -263,6 +266,7 @@ namespace Hl7.Fhir.Model
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -294,6 +298,7 @@ namespace Hl7.Fhir.Model
                 get { return _OnsetElement; }
                 set { _OnsetElement = value; OnPropertyChanged("OnsetElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _OnsetElement;
             
             /// <summary>
@@ -325,6 +330,7 @@ namespace Hl7.Fhir.Model
                 get { return _Duration; }
                 set { _Duration = value; OnPropertyChanged("Duration"); }
             }
+            
             private Hl7.Fhir.Model.Duration _Duration;
             
             /// <summary>
@@ -337,6 +343,7 @@ namespace Hl7.Fhir.Model
                 get { return _SeverityElement; }
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> _SeverityElement;
             
             /// <summary>
@@ -368,6 +375,7 @@ namespace Hl7.Fhir.Model
                 get { return _ExposureRoute; }
                 set { _ExposureRoute = value; OnPropertyChanged("ExposureRoute"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _ExposureRoute;
             
             /// <summary>
@@ -380,6 +388,7 @@ namespace Hl7.Fhir.Model
                 get { return _CommentElement; }
                 set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _CommentElement;
             
             /// <summary>
@@ -480,6 +489,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -492,6 +502,7 @@ namespace Hl7.Fhir.Model
             get { return _RecordedDateElement; }
             set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
         
         /// <summary>
@@ -524,6 +535,7 @@ namespace Hl7.Fhir.Model
             get { return _Recorder; }
             set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Recorder;
         
         /// <summary>
@@ -538,6 +550,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -551,6 +564,7 @@ namespace Hl7.Fhir.Model
             get { return _Substance; }
             set { _Substance = value; OnPropertyChanged("Substance"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Substance;
         
         /// <summary>
@@ -563,6 +577,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus> _StatusElement;
         
         /// <summary>
@@ -594,6 +609,7 @@ namespace Hl7.Fhir.Model
             get { return _CriticalityElement; }
             set { _CriticalityElement = value; OnPropertyChanged("CriticalityElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> _CriticalityElement;
         
         /// <summary>
@@ -625,6 +641,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> _TypeElement;
         
         /// <summary>
@@ -656,6 +673,7 @@ namespace Hl7.Fhir.Model
             get { return _CategoryElement; }
             set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory> _CategoryElement;
         
         /// <summary>
@@ -687,6 +705,7 @@ namespace Hl7.Fhir.Model
             get { return _LastOccurenceElement; }
             set { _LastOccurenceElement = value; OnPropertyChanged("LastOccurenceElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LastOccurenceElement;
         
         /// <summary>
@@ -718,6 +737,7 @@ namespace Hl7.Fhir.Model
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -750,6 +770,7 @@ namespace Hl7.Fhir.Model
             get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceEventComponent>(); return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
+        
         private List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceEventComponent> _Event;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

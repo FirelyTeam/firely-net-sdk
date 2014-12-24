@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
             get { return _Issuer; }
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
@@ -75,6 +76,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
@@ -87,6 +89,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.Coding _Type;
         
         /// <summary>
@@ -100,6 +103,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -112,6 +116,7 @@ namespace Hl7.Fhir.Model
             get { return _GroupElement; }
             set { _GroupElement = value; OnPropertyChanged("GroupElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _GroupElement;
         
         /// <summary>
@@ -143,6 +148,7 @@ namespace Hl7.Fhir.Model
             get { return _PlanElement; }
             set { _PlanElement = value; OnPropertyChanged("PlanElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PlanElement;
         
         /// <summary>
@@ -174,6 +180,7 @@ namespace Hl7.Fhir.Model
             get { return _SubplanElement; }
             set { _SubplanElement = value; OnPropertyChanged("SubplanElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _SubplanElement;
         
         /// <summary>
@@ -205,6 +212,7 @@ namespace Hl7.Fhir.Model
             get { return _DependentElement; }
             set { _DependentElement = value; OnPropertyChanged("DependentElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _DependentElement;
         
         /// <summary>
@@ -236,6 +244,7 @@ namespace Hl7.Fhir.Model
             get { return _SequenceElement; }
             set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _SequenceElement;
         
         /// <summary>
@@ -268,6 +277,7 @@ namespace Hl7.Fhir.Model
             get { return _Subscriber; }
             set { _Subscriber = value; OnPropertyChanged("Subscriber"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subscriber;
         
         /// <summary>
@@ -280,6 +290,7 @@ namespace Hl7.Fhir.Model
             get { return _Network; }
             set { _Network = value; OnPropertyChanged("Network"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Network;
         
         /// <summary>
@@ -294,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contract; }
             set { _Contract = value; OnPropertyChanged("Contract"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

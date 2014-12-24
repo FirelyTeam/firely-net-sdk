@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType> _TypeElement;
             
             /// <summary>
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -186,6 +188,7 @@ namespace Hl7.Fhir.Model
                 get { return _Person; }
                 set { _Person = value; OnPropertyChanged("Person"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Person;
             
             /// <summary>
@@ -198,6 +201,7 @@ namespace Hl7.Fhir.Model
                 get { return _Role; }
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Role;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -258,6 +262,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -272,6 +277,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -285,6 +291,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -298,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
@@ -311,6 +319,7 @@ namespace Hl7.Fhir.Model
             get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
@@ -324,6 +333,7 @@ namespace Hl7.Fhir.Model
             get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent>(); return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
+        
         private List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> _Performer;
         
         /// <summary>
@@ -336,6 +346,7 @@ namespace Hl7.Fhir.Model
             get { return _Date; }
             set { _Date = value; OnPropertyChanged("Date"); }
         }
+        
         private Hl7.Fhir.Model.Period _Date;
         
         /// <summary>
@@ -349,6 +360,7 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -361,6 +373,7 @@ namespace Hl7.Fhir.Model
             get { return _OutcomeElement; }
             set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _OutcomeElement;
         
         /// <summary>
@@ -394,6 +407,7 @@ namespace Hl7.Fhir.Model
             get { if(_Report==null) _Report = new List<Hl7.Fhir.Model.ResourceReference>(); return _Report; }
             set { _Report = value; OnPropertyChanged("Report"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Report;
         
         /// <summary>
@@ -407,6 +421,7 @@ namespace Hl7.Fhir.Model
             get { if(_Complication==null) _Complication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Complication; }
             set { _Complication = value; OnPropertyChanged("Complication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Complication;
         
         /// <summary>
@@ -419,6 +434,7 @@ namespace Hl7.Fhir.Model
             get { return _FollowUpElement; }
             set { _FollowUpElement = value; OnPropertyChanged("FollowUpElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _FollowUpElement;
         
         /// <summary>
@@ -451,6 +467,7 @@ namespace Hl7.Fhir.Model
             get { if(_RelatedItem==null) _RelatedItem = new List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent>(); return _RelatedItem; }
             set { _RelatedItem = value; OnPropertyChanged("RelatedItem"); }
         }
+        
         private List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent> _RelatedItem;
         
         /// <summary>
@@ -463,6 +480,7 @@ namespace Hl7.Fhir.Model
             get { return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
         /// <summary>

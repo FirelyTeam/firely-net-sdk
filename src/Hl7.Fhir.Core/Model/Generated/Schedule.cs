@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Model
             get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
@@ -90,6 +92,7 @@ namespace Hl7.Fhir.Model
             get { return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
@@ -102,6 +105,7 @@ namespace Hl7.Fhir.Model
             get { return _PlanningHorizon; }
             set { _PlanningHorizon = value; OnPropertyChanged("PlanningHorizon"); }
         }
+        
         private Hl7.Fhir.Model.Period _PlanningHorizon;
         
         /// <summary>
@@ -114,6 +118,7 @@ namespace Hl7.Fhir.Model
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -145,6 +150,7 @@ namespace Hl7.Fhir.Model
             get { return _LastModifiedElement; }
             set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
         
         /// <summary>

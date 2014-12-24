@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -121,6 +121,7 @@ namespace Hl7.Fhir.Model
             get { return _SystemElement; }
             set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> _SystemElement;
         
         /// <summary>
@@ -152,6 +153,7 @@ namespace Hl7.Fhir.Model
             get { return _ValueElement; }
             set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ValueElement;
         
         /// <summary>
@@ -183,6 +185,7 @@ namespace Hl7.Fhir.Model
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> _UseElement;
         
         /// <summary>
@@ -214,6 +217,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

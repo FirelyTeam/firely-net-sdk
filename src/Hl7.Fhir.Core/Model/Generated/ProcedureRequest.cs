@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -163,6 +164,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -176,6 +178,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -189,6 +192,7 @@ namespace Hl7.Fhir.Model
             get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
@@ -202,6 +206,7 @@ namespace Hl7.Fhir.Model
             get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
@@ -215,6 +220,7 @@ namespace Hl7.Fhir.Model
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
+        
         private Hl7.Fhir.Model.Element _Timing;
         
         /// <summary>
@@ -228,6 +234,7 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -241,6 +248,7 @@ namespace Hl7.Fhir.Model
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
@@ -253,6 +261,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> _StatusElement;
         
         /// <summary>
@@ -285,6 +294,7 @@ namespace Hl7.Fhir.Model
             get { if(_NotesElement==null) _NotesElement = new List<Hl7.Fhir.Model.FhirString>(); return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
         /// <summary>
@@ -317,6 +327,7 @@ namespace Hl7.Fhir.Model
             get { return _AsNeeded; }
             set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
         }
+        
         private Hl7.Fhir.Model.Element _AsNeeded;
         
         /// <summary>
@@ -329,6 +340,7 @@ namespace Hl7.Fhir.Model
             get { return _OrderedOnElement; }
             set { _OrderedOnElement = value; OnPropertyChanged("OrderedOnElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _OrderedOnElement;
         
         /// <summary>
@@ -361,6 +373,7 @@ namespace Hl7.Fhir.Model
             get { return _Orderer; }
             set { _Orderer = value; OnPropertyChanged("Orderer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Orderer;
         
         /// <summary>
@@ -373,6 +386,7 @@ namespace Hl7.Fhir.Model
             get { return _PriorityElement; }
             set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> _PriorityElement;
         
         /// <summary>

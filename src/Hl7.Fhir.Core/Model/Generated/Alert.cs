@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -86,6 +86,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -98,6 +99,7 @@ namespace Hl7.Fhir.Model
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -111,6 +113,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Alert.AlertStatus> _StatusElement;
         
         /// <summary>
@@ -144,6 +147,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -157,6 +161,7 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
@@ -170,6 +175,7 @@ namespace Hl7.Fhir.Model
             get { return _NoteElement; }
             set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>

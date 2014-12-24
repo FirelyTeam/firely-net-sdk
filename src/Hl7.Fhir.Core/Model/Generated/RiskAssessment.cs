@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _Outcome; }
                 set { _Outcome = value; OnPropertyChanged("Outcome"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Outcome;
             
             /// <summary>
@@ -83,6 +84,7 @@ namespace Hl7.Fhir.Model
                 get { return _Probability; }
                 set { _Probability = value; OnPropertyChanged("Probability"); }
             }
+            
             private Hl7.Fhir.Model.Element _Probability;
             
             /// <summary>
@@ -95,6 +97,7 @@ namespace Hl7.Fhir.Model
                 get { return _RelativeRiskElement; }
                 set { _RelativeRiskElement = value; OnPropertyChanged("RelativeRiskElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _RelativeRiskElement;
             
             /// <summary>
@@ -127,6 +130,7 @@ namespace Hl7.Fhir.Model
                 get { return _When; }
                 set { _When = value; OnPropertyChanged("When"); }
             }
+            
             private Hl7.Fhir.Model.Element _When;
             
             /// <summary>
@@ -139,6 +143,7 @@ namespace Hl7.Fhir.Model
                 get { return _RationaleElement; }
                 set { _RationaleElement = value; OnPropertyChanged("RationaleElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _RationaleElement;
             
             /// <summary>
@@ -227,6 +232,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -239,6 +245,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -271,6 +278,7 @@ namespace Hl7.Fhir.Model
             get { return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Condition;
         
         /// <summary>
@@ -284,6 +292,7 @@ namespace Hl7.Fhir.Model
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
@@ -296,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -308,6 +318,7 @@ namespace Hl7.Fhir.Model
             get { return _Method; }
             set { _Method = value; OnPropertyChanged("Method"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
@@ -322,6 +333,7 @@ namespace Hl7.Fhir.Model
             get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.ResourceReference>(); return _Basis; }
             set { _Basis = value; OnPropertyChanged("Basis"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Basis;
         
         /// <summary>
@@ -335,6 +347,7 @@ namespace Hl7.Fhir.Model
             get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(); return _Prediction; }
             set { _Prediction = value; OnPropertyChanged("Prediction"); }
         }
+        
         private List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> _Prediction;
         
         /// <summary>
@@ -347,6 +360,7 @@ namespace Hl7.Fhir.Model
             get { return _MitigationElement; }
             set { _MitigationElement = value; OnPropertyChanged("MitigationElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _MitigationElement;
         
         /// <summary>

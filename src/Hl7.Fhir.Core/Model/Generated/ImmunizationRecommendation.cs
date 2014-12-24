@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -83,6 +84,7 @@ namespace Hl7.Fhir.Model
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _ValueElement;
             
             /// <summary>
@@ -168,6 +170,7 @@ namespace Hl7.Fhir.Model
                 get { return _DoseSequenceElement; }
                 set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _DoseSequenceElement;
             
             /// <summary>
@@ -199,6 +202,7 @@ namespace Hl7.Fhir.Model
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -231,6 +235,7 @@ namespace Hl7.Fhir.Model
                 get { return _Authority; }
                 set { _Authority = value; OnPropertyChanged("Authority"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Authority;
             
             /// <summary>
@@ -243,6 +248,7 @@ namespace Hl7.Fhir.Model
                 get { return _SeriesElement; }
                 set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _SeriesElement;
             
             /// <summary>
@@ -335,6 +341,7 @@ namespace Hl7.Fhir.Model
                 get { return _DateElement; }
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -367,6 +374,7 @@ namespace Hl7.Fhir.Model
                 get { return _VaccineType; }
                 set { _VaccineType = value; OnPropertyChanged("VaccineType"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _VaccineType;
             
             /// <summary>
@@ -379,6 +387,7 @@ namespace Hl7.Fhir.Model
                 get { return _DoseNumberElement; }
                 set { _DoseNumberElement = value; OnPropertyChanged("DoseNumberElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _DoseNumberElement;
             
             /// <summary>
@@ -411,6 +420,7 @@ namespace Hl7.Fhir.Model
                 get { return _ForecastStatus; }
                 set { _ForecastStatus = value; OnPropertyChanged("ForecastStatus"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _ForecastStatus;
             
             /// <summary>
@@ -424,6 +434,7 @@ namespace Hl7.Fhir.Model
                 get { if(_DateCriterion==null) _DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(); return _DateCriterion; }
                 set { _DateCriterion = value; OnPropertyChanged("DateCriterion"); }
             }
+            
             private List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent> _DateCriterion;
             
             /// <summary>
@@ -436,6 +447,7 @@ namespace Hl7.Fhir.Model
                 get { return _Protocol; }
                 set { _Protocol = value; OnPropertyChanged("Protocol"); }
             }
+            
             private Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent _Protocol;
             
             /// <summary>
@@ -450,6 +462,7 @@ namespace Hl7.Fhir.Model
                 get { if(_SupportingImmunization==null) _SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingImmunization; }
                 set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
             
             /// <summary>
@@ -464,6 +477,7 @@ namespace Hl7.Fhir.Model
                 get { if(_SupportingPatientInformation==null) _SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingPatientInformation; }
                 set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -542,6 +556,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -556,6 +571,7 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -569,6 +585,7 @@ namespace Hl7.Fhir.Model
             get { if(_Recommendation==null) _Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent>(); return _Recommendation; }
             set { _Recommendation = value; OnPropertyChanged("Recommendation"); }
         }
+        
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> _Recommendation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

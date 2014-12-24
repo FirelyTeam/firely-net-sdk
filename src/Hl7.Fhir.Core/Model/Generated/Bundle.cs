@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Hl7.Fhir.Model.Code _TypeElement;
             
             /// <summary>
@@ -173,6 +174,7 @@ namespace Hl7.Fhir.Model
                 get { return _ResourceIdElement; }
                 set { _ResourceIdElement = value; OnPropertyChanged("ResourceIdElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _ResourceIdElement;
             
             /// <summary>
@@ -205,6 +207,7 @@ namespace Hl7.Fhir.Model
                 get { return _VersionIdElement; }
                 set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _VersionIdElement;
             
             /// <summary>
@@ -237,6 +240,7 @@ namespace Hl7.Fhir.Model
                 get { return _InstantElement; }
                 set { _InstantElement = value; OnPropertyChanged("InstantElement"); }
             }
+            
             private Hl7.Fhir.Model.Instant _InstantElement;
             
             /// <summary>
@@ -328,6 +332,7 @@ namespace Hl7.Fhir.Model
                 get { return _BaseElement; }
                 set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _BaseElement;
             
             /// <summary>
@@ -359,6 +364,7 @@ namespace Hl7.Fhir.Model
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus> _StatusElement;
             
             /// <summary>
@@ -390,6 +396,7 @@ namespace Hl7.Fhir.Model
                 get { return _SearchElement; }
                 set { _SearchElement = value; OnPropertyChanged("SearchElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _SearchElement;
             
             /// <summary>
@@ -421,6 +428,7 @@ namespace Hl7.Fhir.Model
                 get { return _ScoreElement; }
                 set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _ScoreElement;
             
             /// <summary>
@@ -452,6 +460,7 @@ namespace Hl7.Fhir.Model
                 get { return _Deleted; }
                 set { _Deleted = value; OnPropertyChanged("Deleted"); }
             }
+            
             private Hl7.Fhir.Model.Bundle.BundleEntryDeletedComponent _Deleted;
             
             /// <summary>
@@ -465,6 +474,7 @@ namespace Hl7.Fhir.Model
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
+            
             private Hl7.Fhir.Model.Resource _Resource;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -544,6 +554,7 @@ namespace Hl7.Fhir.Model
                 get { return _RelationElement; }
                 set { _RelationElement = value; OnPropertyChanged("RelationElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _RelationElement;
             
             /// <summary>
@@ -576,6 +587,7 @@ namespace Hl7.Fhir.Model
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
@@ -655,6 +667,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Bundle.BundleType> _TypeElement;
         
         /// <summary>
@@ -686,6 +699,7 @@ namespace Hl7.Fhir.Model
             get { return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _BaseElement;
         
         /// <summary>
@@ -717,6 +731,7 @@ namespace Hl7.Fhir.Model
             get { return _TotalElement; }
             set { _TotalElement = value; OnPropertyChanged("TotalElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _TotalElement;
         
         /// <summary>
@@ -749,6 +764,7 @@ namespace Hl7.Fhir.Model
             get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
+        
         private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
         
         /// <summary>
@@ -762,6 +778,7 @@ namespace Hl7.Fhir.Model
             get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Bundle.BundleEntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
+        
         private List<Hl7.Fhir.Model.Bundle.BundleEntryComponent> _Entry;
         
         /// <summary>
@@ -774,6 +791,7 @@ namespace Hl7.Fhir.Model
             get { return _SignatureElement; }
             set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
         }
+        
         private Hl7.Fhir.Model.Base64Binary _SignatureElement;
         
         /// <summary>

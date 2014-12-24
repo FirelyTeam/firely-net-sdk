@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
                 get { return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
+            
             private Hl7.Fhir.Model.Coding _Product;
             
             /// <summary>
@@ -128,6 +129,7 @@ namespace Hl7.Fhir.Model
                 get { return _EyeElement; }
                 set { _EyeElement = value; OnPropertyChanged("EyeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> _EyeElement;
             
             /// <summary>
@@ -159,6 +161,7 @@ namespace Hl7.Fhir.Model
                 get { return _SphereElement; }
                 set { _SphereElement = value; OnPropertyChanged("SphereElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _SphereElement;
             
             /// <summary>
@@ -190,6 +193,7 @@ namespace Hl7.Fhir.Model
                 get { return _CylinderElement; }
                 set { _CylinderElement = value; OnPropertyChanged("CylinderElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _CylinderElement;
             
             /// <summary>
@@ -221,6 +225,7 @@ namespace Hl7.Fhir.Model
                 get { return _AxisElement; }
                 set { _AxisElement = value; OnPropertyChanged("AxisElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _AxisElement;
             
             /// <summary>
@@ -252,6 +257,7 @@ namespace Hl7.Fhir.Model
                 get { return _PrismElement; }
                 set { _PrismElement = value; OnPropertyChanged("PrismElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _PrismElement;
             
             /// <summary>
@@ -283,6 +289,7 @@ namespace Hl7.Fhir.Model
                 get { return _BaseElement; }
                 set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> _BaseElement;
             
             /// <summary>
@@ -314,6 +321,7 @@ namespace Hl7.Fhir.Model
                 get { return _AddElement; }
                 set { _AddElement = value; OnPropertyChanged("AddElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _AddElement;
             
             /// <summary>
@@ -345,6 +353,7 @@ namespace Hl7.Fhir.Model
                 get { return _PowerElement; }
                 set { _PowerElement = value; OnPropertyChanged("PowerElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _PowerElement;
             
             /// <summary>
@@ -376,6 +385,7 @@ namespace Hl7.Fhir.Model
                 get { return _BackCurveElement; }
                 set { _BackCurveElement = value; OnPropertyChanged("BackCurveElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _BackCurveElement;
             
             /// <summary>
@@ -407,6 +417,7 @@ namespace Hl7.Fhir.Model
                 get { return _DiameterElement; }
                 set { _DiameterElement = value; OnPropertyChanged("DiameterElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _DiameterElement;
             
             /// <summary>
@@ -438,6 +449,7 @@ namespace Hl7.Fhir.Model
                 get { return _Duration; }
                 set { _Duration = value; OnPropertyChanged("Duration"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Duration;
             
             /// <summary>
@@ -450,6 +462,7 @@ namespace Hl7.Fhir.Model
                 get { return _ColorElement; }
                 set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _ColorElement;
             
             /// <summary>
@@ -481,6 +494,7 @@ namespace Hl7.Fhir.Model
                 get { return _BrandElement; }
                 set { _BrandElement = value; OnPropertyChanged("BrandElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _BrandElement;
             
             /// <summary>
@@ -512,6 +526,7 @@ namespace Hl7.Fhir.Model
                 get { return _NotesElement; }
                 set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NotesElement;
             
             /// <summary>
@@ -630,6 +645,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -642,6 +658,7 @@ namespace Hl7.Fhir.Model
             get { return _DateWrittenElement; }
             set { _DateWrittenElement = value; OnPropertyChanged("DateWrittenElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateWrittenElement;
         
         /// <summary>
@@ -674,6 +691,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -687,6 +705,7 @@ namespace Hl7.Fhir.Model
             get { return _Prescriber; }
             set { _Prescriber = value; OnPropertyChanged("Prescriber"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Prescriber;
         
         /// <summary>
@@ -700,6 +719,7 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -713,6 +733,7 @@ namespace Hl7.Fhir.Model
             get { return _Reason; }
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
+        
         private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
@@ -726,6 +747,7 @@ namespace Hl7.Fhir.Model
             get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
+        
         private List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> _Dispense;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

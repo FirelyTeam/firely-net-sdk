@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -137,6 +138,7 @@ namespace Hl7.Fhir.Model
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> _StatusElement;
             
             /// <summary>
@@ -168,6 +170,7 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -180,6 +183,7 @@ namespace Hl7.Fhir.Model
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
@@ -193,6 +197,7 @@ namespace Hl7.Fhir.Model
                 get { return _SuppliedItem; }
                 set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
             
             /// <summary>
@@ -206,6 +211,7 @@ namespace Hl7.Fhir.Model
                 get { return _Supplier; }
                 set { _Supplier = value; OnPropertyChanged("Supplier"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Supplier;
             
             /// <summary>
@@ -218,6 +224,7 @@ namespace Hl7.Fhir.Model
                 get { return _WhenPrepared; }
                 set { _WhenPrepared = value; OnPropertyChanged("WhenPrepared"); }
             }
+            
             private Hl7.Fhir.Model.Period _WhenPrepared;
             
             /// <summary>
@@ -230,6 +237,7 @@ namespace Hl7.Fhir.Model
                 get { return _WhenHandedOver; }
                 set { _WhenHandedOver = value; OnPropertyChanged("WhenHandedOver"); }
             }
+            
             private Hl7.Fhir.Model.Period _WhenHandedOver;
             
             /// <summary>
@@ -243,6 +251,7 @@ namespace Hl7.Fhir.Model
                 get { return _Destination; }
                 set { _Destination = value; OnPropertyChanged("Destination"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Destination;
             
             /// <summary>
@@ -257,6 +266,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Receiver==null) _Receiver = new List<Hl7.Fhir.Model.ResourceReference>(); return _Receiver; }
                 set { _Receiver = value; OnPropertyChanged("Receiver"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -340,6 +350,7 @@ namespace Hl7.Fhir.Model
             get { return _Kind; }
             set { _Kind = value; OnPropertyChanged("Kind"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Kind;
         
         /// <summary>
@@ -352,6 +363,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -364,6 +376,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Supply.SupplyStatus> _StatusElement;
         
         /// <summary>
@@ -396,6 +409,7 @@ namespace Hl7.Fhir.Model
             get { return _OrderedItem; }
             set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _OrderedItem;
         
         /// <summary>
@@ -409,6 +423,7 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -422,6 +437,7 @@ namespace Hl7.Fhir.Model
             get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
+        
         private List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> _Dispense;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> _TypeElement;
             
             /// <summary>
@@ -162,6 +163,7 @@ namespace Hl7.Fhir.Model
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
@@ -194,6 +196,7 @@ namespace Hl7.Fhir.Model
                 get { return _PayloadElement; }
                 set { _PayloadElement = value; OnPropertyChanged("PayloadElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _PayloadElement;
             
             /// <summary>
@@ -225,6 +228,7 @@ namespace Hl7.Fhir.Model
                 get { return _HeaderElement; }
                 set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _HeaderElement;
             
             /// <summary>
@@ -317,6 +321,7 @@ namespace Hl7.Fhir.Model
                 get { return _TermElement; }
                 set { _TermElement = value; OnPropertyChanged("TermElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _TermElement;
             
             /// <summary>
@@ -349,6 +354,7 @@ namespace Hl7.Fhir.Model
                 get { return _SchemeElement; }
                 set { _SchemeElement = value; OnPropertyChanged("SchemeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _SchemeElement;
             
             /// <summary>
@@ -380,6 +386,7 @@ namespace Hl7.Fhir.Model
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -462,6 +469,7 @@ namespace Hl7.Fhir.Model
             get { return _CriteriaElement; }
             set { _CriteriaElement = value; OnPropertyChanged("CriteriaElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CriteriaElement;
         
         /// <summary>
@@ -494,6 +502,7 @@ namespace Hl7.Fhir.Model
             get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
         
         /// <summary>
@@ -507,6 +516,7 @@ namespace Hl7.Fhir.Model
             get { return _ReasonElement; }
             set { _ReasonElement = value; OnPropertyChanged("ReasonElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ReasonElement;
         
         /// <summary>
@@ -539,6 +549,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> _StatusElement;
         
         /// <summary>
@@ -570,6 +581,7 @@ namespace Hl7.Fhir.Model
             get { return _ErrorElement; }
             set { _ErrorElement = value; OnPropertyChanged("ErrorElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ErrorElement;
         
         /// <summary>
@@ -602,6 +614,7 @@ namespace Hl7.Fhir.Model
             get { return _Channel; }
             set { _Channel = value; OnPropertyChanged("Channel"); }
         }
+        
         private Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent _Channel;
         
         /// <summary>
@@ -614,6 +627,7 @@ namespace Hl7.Fhir.Model
             get { return _EndElement; }
             set { _EndElement = value; OnPropertyChanged("EndElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
@@ -646,6 +660,7 @@ namespace Hl7.Fhir.Model
             get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent>(); return _Tag; }
             set { _Tag = value; OnPropertyChanged("Tag"); }
         }
+        
         private List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent> _Tag;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

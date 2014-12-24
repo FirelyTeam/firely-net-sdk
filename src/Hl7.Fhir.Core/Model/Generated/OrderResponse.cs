@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -130,6 +131,7 @@ namespace Hl7.Fhir.Model
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
@@ -142,6 +144,7 @@ namespace Hl7.Fhir.Model
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -174,6 +177,7 @@ namespace Hl7.Fhir.Model
             get { return _Who; }
             set { _Who = value; OnPropertyChanged("Who"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
@@ -187,6 +191,7 @@ namespace Hl7.Fhir.Model
             get { return _Authority; }
             set { _Authority = value; OnPropertyChanged("Authority"); }
         }
+        
         private Hl7.Fhir.Model.Element _Authority;
         
         /// <summary>
@@ -200,6 +205,7 @@ namespace Hl7.Fhir.Model
             get { return _CodeElement; }
             set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> _CodeElement;
         
         /// <summary>
@@ -231,6 +237,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -264,6 +271,7 @@ namespace Hl7.Fhir.Model
             get { if(_Fulfillment==null) _Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Fulfillment; }
             set { _Fulfillment = value; OnPropertyChanged("Fulfillment"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Fulfillment;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

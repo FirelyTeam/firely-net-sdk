@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Dec 23, 2014 10:25+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("base64Binary")]
     [DataContract]
-    public partial class Base64Binary : Hl7.Fhir.Model.Primitive, System.ComponentModel.INotifyPropertyChanged
+    public partial class Base64Binary : Hl7.Fhir.Model.Primitive<byte[]>, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "base64Binary"; } }
@@ -67,7 +67,6 @@ namespace Hl7.Fhir.Model
             get { return _Value; }
             set { _Value = value; OnPropertyChanged("Value"); }
         }
-        private byte[] _Value;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
