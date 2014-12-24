@@ -78,6 +78,11 @@ namespace Hl7.Fhir.Model
                 else 
                     return null;
             }
+            set
+            {
+                if (Meta == null) Meta = new ResourceMetaComponent();
+                Meta.VersionId = value;
+            }
         }
 
         [NotMapped]

@@ -27,14 +27,6 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(collection);
         }
 
-        public static RestUrl Validate(this RestUrl url, string collection, string id = null)
-        {
-            if(id != null)
-                return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE);
-            else
-                return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE, id);
-        }
-
         public static RestUrl Resource(this RestUrl url, string collection, string id)
         {
             return new RestUrl(url).AddPath(collection, id);
@@ -81,17 +73,6 @@ namespace Hl7.Fhir.Rest
 
             return result;
         }
-
-        public static RestUrl ToMailbox(this RestUrl url)
-        {
-            return new RestUrl(url).AddPath(RestOperation.MAILBOX);
-        }
-
-        public static RestUrl ToDocument(this RestUrl url)
-        {
-            return new RestUrl(url).AddPath(RestOperation.BUNDLE);
-        }
-
 
         public static RestUrl ServerTags(this RestUrl url)
         {

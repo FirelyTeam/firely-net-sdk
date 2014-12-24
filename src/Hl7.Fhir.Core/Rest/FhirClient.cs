@@ -393,66 +393,9 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
         }
 
-        /// <summary>
-        /// Validates whether the contents of the resource would be acceptable as an update
-        /// </summary>
-        /// <param name="entry">The entry containing the updated Resource to validate</param>
-        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
-        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
-        /// failures occur.</returns>
-        public bool TryValidateUpdate<TResource>(TResource entry, out OperationOutcome result) where TResource : Resource, new()
-        {
-            if (entry == null) throw Error.ArgumentNull("entry");
-            if (entry.Meta == null) throw Error.Argument("entry","Entry needs a non-null entry.Meta to use for validate");
-            if (entry.Id == null) throw Error.Argument("enry", "Entry needs a non-null entry.id to use for validation");
+     
 
-            var id = new ResourceIdentity(entry.Id);
-            var url = new RestUrl(Endpoint).Validate(id.ResourceType, id.Id);
-            result = doValidate(url.Uri, entry, entry.Meta.Tag);
-
-            return result == null || !result.Success();
-        }
-
-        /// <summary>
-        /// Validates whether the contents of the resource would be acceptable as a create
-        /// </summary>
-        /// <typeparam name="TResource"></typeparam>
-        /// <param name="resource">The entry containing the Resource data to use for the validation</param>
-        /// <param name="result">Contains the OperationOutcome detailing why validation failed, or null if validation succeeded</param>
-        /// <param name="tags">Optional list of tags to attach to the resource</param>
-        /// <returns>True when validation was successful, false otherwise. Note that this function may still throw exceptions if non-validation related
-        /// failures occur.</returns>
-		public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Coding> tags = null) where TResource : Resource, new()
-        {
-            if (resource == null) throw new ArgumentNullException("resource");
-
-            var collection = typeof(TResource).GetCollectionName();
-            var url = new RestUrl(_endpoint).Validate(collection);
-
-            result = doValidate(url.Uri, resource, tags);
-            return result == null || !result.Success();
-        }
-
-        private OperationOutcome doValidate(Uri url, Resource data, IEnumerable<Coding> tags)
-        {
-            var req = createFhirRequest(url, "POST");
-
-            // if(tags != null) req.SetTagsInHeader(tags);
-            req.SetBody(data, PreferredFormat);
-
-            try
-            {
-                doRequest(req, HttpStatusCode.OK, resp => true);
-                return null;
-            }
-            catch (FhirOperationException foe)
-            {
-                if (foe.Outcome != null)
-                    return foe.Outcome;
-                else
-                    throw; // no need to include foe, framework does this and preserves the stack location (CA2200)
-            }
-        }
+     
 
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
@@ -629,35 +572,19 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
         }
 
-		[Obsolete("Do not use this operation, instead use the Bundle operation", true)]
-		public void Document(Bundle bundle)
-		{
-		}
 
         /// <summary>
-        /// Send a document bundle
+        /// Invoke an operation on the server. If the operation fails, then this method will throw an exception
         /// </summary>
-        /// <param name="bundle">A bundle containing a Document</param>
-        /// <remarks>
-		/// The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.
-		/// This was formerly known as the Document endpoint
-		/// </remarks>
-		/// Brian: Not sure that this is actually valid anymore.
-		/// http://hl7-fhir.github.io/documents.html#bundle has nothing about POST to the Document endpont.
-		public void Bundle(Bundle bundle)
-		{
-			if (bundle == null) throw Error.ArgumentNull("bundle");
-			if (bundle.ResourceType != ResourceType.Bundle)
-				throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a Bundle (ensure bundle.ResourceType = ResourceType.Bundle;)");
+        /// <param name="url">The url to append to the server base to invoke the operation. Any parameters to the method are simple, and are in the URL, and this is a GET operation</param>
+        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation</returns>
+        public Resource Operation(string url)
+        {
+            var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(new Uri(Endpoint.ToString() + url), Endpoint), "GET");
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Resource>());
+        }
 
-			var url = new RestUrl(Endpoint).ToDocument();
-
-			// Documents are merely "accepted"
-			var req = createFhirRequest(url.Uri, "POST");
-			req.SetBody(bundle, PreferredFormat);
-			doRequest(req, HttpStatusCode.NoContent, resp => true);
-		}
-
+   
         /// <summary>
         /// Get all tags known by the FHIR server
         /// </summary>

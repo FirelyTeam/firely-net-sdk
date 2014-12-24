@@ -156,18 +156,14 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(location))
             {
                 ResourceIdentity reqId = new ResourceIdentity(location);
-                resource.Id = reqId.Id;
+
+                if(resource.Id == null) resource.Id = reqId.Id;
+
                 resource.ResourceBase = reqId.BaseUri;
             }
 
-            if (!String.IsNullOrEmpty(ETag))
-            {
-                resource.Meta.VersionId = ETag;
-                var id = new ResourceIdentity(location);
-
-                if (id.HasVersion &&  ETag != id.VersionId)
-                    throw new ApplicationException(String.Format("Version IDs from the server don't match: [{0}], [{1}]", ETag, id.VersionId));
-            }
+            if (!String.IsNullOrEmpty(ETag) && !resource.HasVersionId)
+                resource.VersionId = ETag;
             else
             {
                 var id = new ResourceIdentity(location);
@@ -178,7 +174,7 @@ namespace Hl7.Fhir.Rest
                 }
             }
 
-            if (!String.IsNullOrEmpty(LastModified))
+            if (!String.IsNullOrEmpty(LastModified) && (resource.Meta != null && resource.Meta.LastUpdated == null))
                 resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
 
             if (resource is Bundle)
