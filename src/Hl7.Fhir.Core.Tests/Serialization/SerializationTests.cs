@@ -23,6 +23,15 @@ namespace Hl7.Fhir.Tests.Serialization
 #endif
     {
         [TestMethod]
+        public void SerializeMeta()
+        {
+            var meta = new Resource.ResourceMetaComponent { LastUpdated = new DateTimeOffset(2014,12,24,16,30,56,31, new TimeSpan(1,0,0)), VersionId = "3141" };
+
+            var xml = FhirSerializer.SerializeMetaToXml(meta);
+            Assert.AreEqual("<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>", xml);
+        }
+
+        [TestMethod]
         public void AvoidBOMUse()
         {
             Bundle b = new Bundle();

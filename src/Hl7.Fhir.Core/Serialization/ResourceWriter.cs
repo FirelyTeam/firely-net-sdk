@@ -36,7 +36,10 @@ namespace Hl7.Fhir.Serialization
 
             var mapping = _inspector.ImportType(instance.GetType());
 
-            _writer.WriteStartRootObject(mapping.Name,contained);
+            var rootName = mapping.Name;
+            if (instance is Resource.ResourceMetaComponent) rootName = "meta";
+
+            _writer.WriteStartRootObject(rootName,contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
             complexSerializer.Serialize(mapping, instance, summary);
