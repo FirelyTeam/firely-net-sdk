@@ -66,13 +66,15 @@ namespace Hl7.Fhir.Model
         {
             var result = new List<ValidationResult>();
 
-            if (Id != null && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
+            // The ID field does not need to be an abolute URI,
+            // this should be the ResourceIdentity.
+            // if (Id != null && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
+            //    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
 
             if(Meta != null)
             {
-                if (!String.IsNullOrEmpty(this.Meta.VersionId) && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
-                    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
+                // if (!String.IsNullOrEmpty(this.Meta.VersionId) && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
+                //     result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
                 if (Meta.Tag != null && validationContext.ValidateRecursively())
                     DotNetAttributeValidation.TryValidate(Meta.Tag,result,true);
