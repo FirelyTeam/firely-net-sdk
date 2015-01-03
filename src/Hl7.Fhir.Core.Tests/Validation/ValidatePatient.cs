@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Tests.Validation
             // In the example, the contained resource has narrative
 
             results.Clear();
-            foreach (var contained in patient.Contained) contained.Text = null;
+            foreach (DomainResource contained in patient.Contained) contained.Text = null;
 
             // Try again
             Assert.IsTrue(DotNetAttributeValidation.TryValidate(patient, results, true));
