@@ -25,6 +25,7 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirParser
     {
+        #region Helper methods / stream creation methods
         public static bool ProbeIsXml(string data)
         {
             Regex xml = new Regex("^<[^>]+>");
@@ -93,55 +94,58 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirReader(JsonReaderFromJson(json));
         }
 
+#endregion
+
+        internal static Base Parse(IFhirReader reader, Type dataType = null)
+        {
+            if (dataType == null)
+                return new ResourceReader(reader).Deserialize();
+            else
+                return new ComplexTypeReader(reader).Deserialize(dataType);
+        }
+
         public static Resource ParseResourceFromXml(string xml)
         {
+            return (Resource)ParseFromXml(xml);
+        }
+
+        public static Base ParseFromXml(string xml, Type dataType = null)
+        {
             var reader = FhirReaderFromXml(xml);
-            return new ResourceReader(reader).Deserialize();
+            return Parse(reader, dataType);
         }
 
         public static Resource ParseResourceFromJson(string json)
         {
+            return (Resource)ParseFromJson(json);
+        }
+
+        public static Base ParseFromJson(string json, Type dataType = null)
+        {
             var reader = FhirReaderFromJson(json);
-            return new ResourceReader(reader).Deserialize();
+            return Parse(reader, dataType);
         }
 
         public static Resource ParseResource(XmlReader reader)
         {
-            var xmlReader = new XmlDomFhirReader(reader);
-            return new ResourceReader(xmlReader).Deserialize();
+            return (Resource)Parse(reader);
         }
 
         public static Resource ParseResource(JsonReader reader)
         {
+            return (Resource)Parse(reader);
+        }
+
+        public static Base Parse(XmlReader reader, Type dataType = null)
+        {
+            var xmlReader = new XmlDomFhirReader(reader);
+            return Parse(xmlReader);
+        }
+
+        public static Base Parse(JsonReader reader, Type dataType = null)
+        {
             var jsonReader = new JsonDomFhirReader(reader);
-            return new ResourceReader(jsonReader).Deserialize();
-        }
-
-        public static Resource.ResourceMetaComponent ParseMetaFromXml(string xml)
-        {
-            throw Error.NotImplemented("Parsing <meta> is not yet implemented");
-
-            //return ParseFromXml<TagList>(xml);
-        }
-
-        public static Resource.ResourceMetaComponent ParseMetaFromJson(string json)
-        {
-            throw Error.NotImplemented("Parsing resourceType:meta is not yet implemented");
-            //return ParseFromJson<TagList>(json);
-        }
-
-        //public Resource.ResourceMetaComponent ParseMeta(XmlReader reader)
-        //{
-        //    throw Error.NotImplemented("Parsing <meta> is not yet implemented");
-
-        //    //return ParseFromXml<TagList>(xml);
-        //}
-
-        public static Resource.ResourceMetaComponent ParseMeta(JsonReader reader)
-        {
-            throw Error.NotImplemented("Parsing <meta> is not yet implemented");
-
-            //return ParseFromXml<TagList>(xml);
+            return Parse(jsonReader);
         }
 
         public static Parameters ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)

@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.Text;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -22,14 +23,27 @@ namespace Hl7.Fhir.Tests.Serialization
 	public class SerializationTests
 #endif
     {
+        private const string metaXml = "<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>";
+        private readonly Resource.ResourceMetaComponent metaPoco = new Resource.ResourceMetaComponent { LastUpdated = new DateTimeOffset(2014, 12, 24, 16, 30, 56, 31, new TimeSpan(1, 0, 0)), VersionId = "3141" };
+
         [TestMethod]
         public void SerializeMeta()
         {
-            var meta = new Resource.ResourceMetaComponent { LastUpdated = new DateTimeOffset(2014,12,24,16,30,56,31, new TimeSpan(1,0,0)), VersionId = "3141" };
-
-            var xml = FhirSerializer.SerializeMetaToXml(meta);
-            Assert.AreEqual("<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>", xml);
+            var xml = FhirSerializer.SerializeToXml(metaPoco,root:"meta");
+            Assert.AreEqual(metaXml, xml);
         }
+
+
+        [TestMethod]
+        public void ParseMeta()
+        {
+            var poco = (Resource.ResourceMetaComponent)FhirParser.ParseFromXml(metaXml, typeof(Resource.ResourceMetaComponent));
+            var xml = FhirSerializer.SerializeToXml(poco,root:"meta");
+
+            Assert.IsTrue(poco.IsExactly(metaPoco));
+            Assert.AreEqual(metaXml, xml);
+        }
+
 
         [TestMethod]
         public void AvoidBOMUse()

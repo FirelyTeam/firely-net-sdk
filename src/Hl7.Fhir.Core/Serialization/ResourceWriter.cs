@@ -30,14 +30,13 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(object instance, bool summary, bool contained = false)
+        public void Serialize(object instance, bool summary, bool contained = false, string root = null)
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
             var mapping = _inspector.ImportType(instance.GetType());
 
-            var rootName = mapping.Name;
-            if (instance is Resource.ResourceMetaComponent) rootName = "meta";
+            var rootName = root ?? mapping.Name;
 
             _writer.WriteStartRootObject(rootName,contained);
 
