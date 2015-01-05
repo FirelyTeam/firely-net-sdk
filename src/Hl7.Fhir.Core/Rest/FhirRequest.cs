@@ -52,38 +52,27 @@ namespace Hl7.Fhir.Rest
         public string ETag { get; set; }
         public string IfMatch { get; set; }
 
-        public void SetBody(Resource resource, ResourceFormat format)
+        public void SetBody(Base data, ResourceFormat format)
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (data == null) throw Error.ArgumentNull("data");
 
-            if (resource is Binary)
+            if (data is Binary)
             {
-                var bin = (Binary)resource;
+                var bin = (Binary)data;
                 Body = bin.Content;
                 ContentType = bin.ContentType;
             }
             else
             {
                 Body = format == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeResourceToXmlBytes(resource, summary: false) :
-                    FhirSerializer.SerializeResourceToJsonBytes(resource, summary: false);
+                    FhirSerializer.SerializeToXmlBytes(data, summary: false) :
+                    FhirSerializer.SerializeToJsonBytes(data, summary: false);
 
                 ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
         }
 
-        //public void SetBody(IEnumerable<Coding> tagList, ResourceFormat format)
-        //{
-        //    if (tagList == null) throw Error.ArgumentNull("tagList");
-
-        //    Body = format == ResourceFormat.Xml ?
-        //        FhirSerializer.SerializeTagListToXmlBytes(tagList) :
-        //        FhirSerializer.SerializeTagListToJsonBytes(tagList);
-
-        //    ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
-        //}
-
-
+    
         public string BodyAsString()
         {
             if (Body == null) return null;
