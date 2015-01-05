@@ -136,6 +136,14 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        public Resource.ResourceMetaComponent BodyAsMeta()
+        {
+            return parseBody<Resource.ResourceMetaComponent>(ContentType,
+                        b => (Resource.ResourceMetaComponent)FhirParser.ParseFromXml(b, typeof(Resource.ResourceMetaComponent)),
+                        b => (Resource.ResourceMetaComponent)FhirParser.ParseFromJson(b, typeof(Resource.ResourceMetaComponent)));
+        }
+
+
         public Resource BodyAsResource()
         {
             Resource resource = null;
@@ -144,7 +152,7 @@ namespace Hl7.Fhir.Rest
                 resource = makeBinary(Body, ContentType);
             else
             {
-                resource = parseBody<Resource>(BodyAsString(), ContentType,
+                resource = parseBody<Resource>(ContentType,
                     b => FhirParser.ParseResourceFromXml(b),
                     b => FhirParser.ParseResourceFromJson(b));
             }
@@ -200,20 +208,20 @@ namespace Hl7.Fhir.Rest
         }
     
 
-        private static T parseBody<T>(string body, string contentType,
-          Func<string, T> xmlParser, Func<string, T> jsonParser) where T : class
+        private Base parseBody(string contentType,
+          Func<string, Base> xmlParser, Func<string, Base> jsonParser)
         {
-            T result = null;
+            Base result = null;
 
             ResourceFormat format = Hl7.Fhir.Rest.ContentType.GetResourceFormatFromContentType(contentType);
 
             switch (format)
             {
                 case ResourceFormat.Json:
-                    result = jsonParser(body);
+                    result = jsonParser(BodyAsString());
                     break;
                 case ResourceFormat.Xml:
-                    result = xmlParser(body);
+                    result = xmlParser(BodyAsString());
                     break;
                 default:
                     throw Error.Format("Cannot decode body: unrecognized content type " + contentType, null);

@@ -76,28 +76,28 @@ namespace Hl7.Fhir.Rest
 
         public static RestUrl ServerTags(this RestUrl url)
         {
-            return new RestUrl(url).AddPath(RestOperation.TAGS);
+            return new RestUrl(url).AddPath(RestOperation.META);
         }
 
         public static RestUrl CollectionTags(this RestUrl url, string collection)
         {
-            return new RestUrl(url).AddPath(collection, RestOperation.TAGS);
+            return new RestUrl(url).AddPath(collection, RestOperation.META);
         }
 
         public static RestUrl ResourceTags(this RestUrl url, string collection, string id, string vid=null)
         {
             if(vid == null)
-                return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.META);
             else
-                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.META);
         }
 
         public static RestUrl DeleteResourceTags(this RestUrl url, string collection, string id, string vid = null)
         {
             if (vid == null)
-                return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS, RestOperation.DELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.METADELETE);
             else
-                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS, RestOperation.DELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.METADELETE);
         }
 
     }

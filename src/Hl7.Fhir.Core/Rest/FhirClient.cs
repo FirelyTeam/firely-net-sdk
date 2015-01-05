@@ -346,20 +346,6 @@ namespace Hl7.Fhir.Rest
             return History(uri, since, pageSize);
         }
 
-        /// <summary>
-        /// Retrieve the version history for a resource in a ResourceEntry
-        /// </summary>
-        /// <param name="entry">The ResourceEntry representing the Resource to get the history for</param>
-        /// <param name="since">Optional. Returns only changes after the given date</param>
-        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
-        /// <returns>A bundle with the history for the indicated instance, may contain both 
-        /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Bundle.BundleEntryComponent entry, DateTimeOffset? since = null, int? pageSize = null)
-        {
-            if (entry == null) throw Error.ArgumentNull("entry");
-
-            return History(entry.GetResourceLocation(), since, pageSize);
-        }
 
         /// <summary>
         /// Retrieve the full version history of the server
@@ -586,106 +572,95 @@ namespace Hl7.Fhir.Rest
 
    
         /// <summary>
-        /// Get all tags known by the FHIR server
+        /// Get all meta known by the FHIR server
         /// </summary>
-        /// <returns>A list of Tags</returns>
-        //public IEnumerable<Coding> WholeSystemTags()
-        //{
-        //    return internalGetTags(null, null, null);
-        //}
+        /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system</returns>
+        public Resource.ResourceMetaComponent WholeSystemMeta()
+        {
+            return internalGetMeta(null, null, null);
+        }
 
         /// <summary>
-        /// Get all tags known by the FHIR server for a given resource type
+        /// Get all meta known by the FHIR server for a given resource type
         /// </summary>
-        /// <returns>A list of all Tags present on the server</returns>
-        //public IEnumerable<Coding> TypeTags<TResource>() where TResource : Resource, new()
-        //{
-        //    return internalGetTags(typeof(TResource).GetCollectionName(), null, null);
-        //}
+        /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given type</returns>
+        public Resource.ResourceMetaComponent TypeMeta<TResource>() where TResource : Resource
+        {
+            var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            return internalGetMeta(typeName, null, null);
+        }
 
         /// <summary>
-        /// Get all tags known by the FHIR server for a given resource type
+        /// Get all meta known by the FHIR server for a given resource type
         /// </summary>
-        /// <returns>A list of Tags occuring for the given resource type</returns>
-        //public IEnumerable<Coding> TypeTags(string type)
-        //{
-        //    if (type == null) throw Error.ArgumentNull("type");
+        /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given type</returns>
+        public Resource.ResourceMetaComponent TypeMeta(string type)
+        {
+            if (type == null) throw Error.ArgumentNull("type");
 
-        //    return internalGetTags(type, null, null);
-        //}
+            return internalGetMeta(type, null, null);
+        }
 
         /// <summary>
-        /// Get the tags for a resource (or resource version) at a given location
+        /// Get the meta for a resource (or resource version) at a given location
         /// </summary>
-        /// <param name="location">The url of the Resource to get the tags for. This can be a Resource id url or a version-specific
+        /// <param name="location">The url of the Resource to get the meta for. This can be a Resource id url or a version-specific
         /// Resource url, and may be relative.</param>
-        /// <returns>A list of Tags for the resource instance</returns>
-        //public IEnumerable<Coding> Tags(Uri location)
-        //{
-        //    if (location == null) throw Error.ArgumentNull("location");
-
-        //    var collection = getCollectionFromLocation(location);
-        //    var id = getIdFromLocation(location);
-        //    var version = new ResourceIdentity(location).VersionId;
-
-        //    return internalGetTags(collection, id, version);
-        //}
-
-        /// <summary>
-        /// Get the tags for a resource (or resource version) at a given location
-        /// </summary>
-        /// <param name="location">The location the Resource to get the tags for. 
-        /// This can be a Resource id url or a version-specific Resource url, and may be relative</param>
-        /// <returns>A list of Tags for the resource instance</returns>
-        //public IEnumerable<Coding> Tags(string location)
-        //{
-        //    var identity = new ResourceIdentity(location);
-        //    return internalGetTags(identity.Collection, identity.Id, identity.VersionId);
-        //}
-
-        /// <summary>
-        /// Get the tags for a resource (or resource version) at a given location
-        /// </summary>
-        /// <param name="id">The logical id for the resource</param>
-        /// <param name="vid">The version identifier for the resrouce</param>
-        /// <returns>A list of Tags for the resource instance</returns>
-        //public IEnumerable<Coding> Tags<TResource>(string id, string vid = null)
-        //{
-        //    string collection = ModelInfo.GetResourceNameForType(typeof(TResource));
-        //    return internalGetTags(collection, id, vid);
-        //}
-
-        //private IEnumerable<Coding> internalGetTags(string collection, string id, string version)
-        //{
-        //    RestUrl location = new RestUrl(this.Endpoint);
-
-        //    if(collection == null)
-        //        location = location.ServerTags();
-        //    else
-        //    {
-        //        if(id == null)
-        //            location = location.CollectionTags(collection);
-        //        else
-        //            location = location.ResourceTags(collection, id, version);
-        //    }
-
-        //    var req = createFhirRequest(location.Uri, "GET");
-        //    var result = doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsTagList());
-        //    return result.Category;
-        //}
-
-        /// <summary>
-        /// Add one or more tags to a resource at a given location
-        /// </summary>
-        /// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific</param>
-        /// <param name="tags">List of tags to add to the resource</param>
-        /// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does 
-        /// not create a new version.</remarks>
-		[Obsolete("This should now be done using the _meta endpoint", true)]
-        public void AffixTags(Uri location, IEnumerable<Coding> tags)
+        /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given instance</returns>
+        public Resource.ResourceMetaComponent Meta(Uri location)
         {
             if (location == null) throw Error.ArgumentNull("location");
-            if (tags == null) throw Error.ArgumentNull("tags");
+
+            var collection = getResourceTypeFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
+
+            return internalGetMeta(collection, id, version);
+        }
+
+        /// <summary>
+        /// Get the meta for a resource (or resource version) at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to get the meta for. This can be a Resource id url or a version-specific
+        /// Resource url, and may be relative.</param>
+        /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given instance</returns>
+        public Resource.ResourceMetaComponent Meta(string location)
+        {
+            var identity = new ResourceIdentity(location);
+            return Meta(identity);
+        }
+
+
+        private Resource.ResourceMetaComponent internalGetMeta(string collection, string id, string version)
+        {
+            RestUrl location = new RestUrl(this.Endpoint);
+
+            if (collection == null)
+                location = location.ServerTags();
+            else
+            {
+                if (id == null)
+                    location = location.CollectionTags(collection);
+                else
+                    location = location.ResourceTags(collection, id, version);
+            }
+
+            var req = createFhirRequest(location.Uri, "GET");
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsMeta());
+        }
+
+
+        /// <summary>
+        /// Add meta to a resource at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to affix the tags to. This can be a Resource id url or a version-specific id</param>
+        /// <param name="meta">Meta to add to the resource</param>
+        /// <remarks>Affixing mea to a resource (or version of the resource) is not considered an update, so does 
+        /// not create a new version.</remarks>
+        public void AffixTags(Uri location, Resource.ResourceMetaComponent meta)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            if (meta == null) throw Error.ArgumentNull("meta");
 
             var collection = getResourceTypeFromLocation(location);
             var id = getIdFromLocation(location);
@@ -694,34 +669,52 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
 
             var req = createFhirRequest(rl.Uri,"POST");
-//            req.SetBody(new TagList(tags), PreferredFormat);
-            
+            req.SetBody(meta, PreferredFormat);
+//                 
             doRequest(req, HttpStatusCode.OK, resp => true);
         }
 
+
+
         /// <summary>
-        /// Remove one or more tags from a resource at a given location
+        /// Add meta to a resource at a given location
         /// </summary>
-        /// <param name="location">The url of the Resource to remove the tags from. This can be a Resource id url or a version-specific</param>
-        /// <param name="tags">List of tags to delete</param>
-        /// <remarks>Removing tags to a resource (or version of the resource) is not considered an update, 
+        /// <param name="location">The url of the Resource to affix the meta to. This can be a Resource id url or a version-specific id</param>
+        /// <param name="meta">Meta to add to the resource</param>
+        /// <remarks>Affixing meta to a resource (or version of the resource) is not considered an update, so does 
+        /// not create a new version.</remarks>
+        public void AffixMeta(string location, Resource.ResourceMetaComponent meta)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            if (meta == null) throw Error.ArgumentNull("meta");
+
+            AffixTags(new ResourceIdentity(location),meta);
+        }
+
+
+        /// <summary>
+        /// Remove meta from a resource at a given location
+        /// </summary>
+        /// <param name="location">The url of the Resource to remove the meta from. This can be a Resource id url or a version-specific</param>
+        /// <param name="tags">Meta to delete</param>
+        /// <remarks>Removing meta from a resource (or version of the resource) is not considered an update, 
         /// so does not create a new version.</remarks>
-		//public void DeleteTags(Uri location, IEnumerable<Coding> tags)
-		//{
-		//	if (location == null) throw Error.ArgumentNull("location");
-		//	if (tags == null) throw Error.ArgumentNull("tags");
+        public void DeleteMeta(Uri location, Resource.ResourceMetaComponent meta)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            if (meta == null) throw Error.ArgumentNull("meta");
 
-		//	var collection = getCollectionFromLocation(location);
-		//	var id = getIdFromLocation(location);
-		//	var version = new ResourceIdentity(location).VersionId;
+            var collection = getResourceTypeFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
 
-		//	var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
+            var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
 
-		//	var req = createFhirRequest(rl.Uri, "POST");
-		//	req.SetBody(new TagList(tags), PreferredFormat);
+            var req = createFhirRequest(rl.Uri, "POST");
+            req.SetBody(meta, PreferredFormat);
 
-		//	doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
-		//}
+            doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
+        }
 
 
         public event BeforeRequestEventHandler OnBeforeRequest;
