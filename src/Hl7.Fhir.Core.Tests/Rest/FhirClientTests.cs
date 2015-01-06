@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Tests
         }
 
 
-        private Uri createdTestOrganizationUrl = null;
+        private Uri createdTestPatientUrl = null;
 
         /// <summary>
         /// This test is also used as a "setup" test for the History test.
@@ -294,23 +294,17 @@ namespace Hl7.Fhir.Tests
         [TestMethod, TestCategory("FhirClient")]
         public void CreateEditDelete()
         {
-            var furore = new Organization
-            {
-                Name = "Furore",
-                Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
-                Telecom = new List<ContactPoint> { 
-                    new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Value = "+31-20-3467171", Use = ContactPoint.ContactPointUse.Work },
-                    new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Value = "+31-20-3467172" } 
-                }
-            };
+            var pat = (Patient)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
+            var key = new Random().Next();
+            pat.Id = "NetApiCRUDTestPatient" + key;
 
             FhirClient client = new FhirClient(testEndpoint);
 
-            var fe = client.Create<Organization>(furore);
+            var fe = client.Create(pat);
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
             Assert.IsNotNull(fe.Meta.VersionId);
-            createdTestOrganizationUrl = fe.ResourceIdentity();
+            createdTestPatientUrl = fe.ResourceIdentity();
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
             var fe2 = client.Update(fe);
@@ -330,7 +324,7 @@ namespace Hl7.Fhir.Tests
             try
             {
                 // Get most recent version
-                fe = client.Read<Organization>(fe.ResourceIdentity().WithoutVersion());
+                fe = client.Read<Patient>(fe.ResourceIdentity().WithoutVersion());
                 Assert.Fail();
             }
             catch
@@ -409,7 +403,7 @@ namespace Hl7.Fhir.Tests
             CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
 
             FhirClient client = new FhirClient(testEndpoint);
-            Bundle history = client.History(createdTestOrganizationUrl);
+            Bundle history = client.History(createdTestPatientUrl);
             Assert.IsNotNull(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
@@ -418,7 +412,7 @@ namespace Hl7.Fhir.Tests
             // Now, assume no one is quick enough to insert something between now and the next
             // tests....
 
-            history = client.TypeHistory<Organization>(timestampBeforeCreationAndDeletions);
+            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());

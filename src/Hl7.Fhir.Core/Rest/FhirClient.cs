@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Rest
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            Delete(entry.GetResourceLocation(Endpoint));
+            Delete(entry.GetResourceLocation(Endpoint).WithoutVersion());
         }
 
 
