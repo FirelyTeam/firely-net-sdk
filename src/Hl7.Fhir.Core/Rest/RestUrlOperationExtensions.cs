@@ -95,9 +95,9 @@ namespace Hl7.Fhir.Rest
         public static RestUrl DeleteResourceTags(this RestUrl url, string collection, string id, string vid = null)
         {
             if (vid == null)
-                return new RestUrl(url).AddPath(collection, id, RestOperation.METADELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.META, RestOperation.DELETE);
             else
-                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.METADELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.META, RestOperation.DELETE);
         }
 
     }

@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="meta">Meta to add to the resource</param>
         /// <remarks>Affixing mea to a resource (or version of the resource) is not considered an update, so does 
         /// not create a new version.</remarks>
-        public void AffixTags(Uri location, Resource.ResourceMetaComponent meta)
+        public void AffixMeta(Uri location, Resource.ResourceMetaComponent meta)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (meta == null) throw Error.ArgumentNull("meta");
@@ -669,8 +669,7 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(Endpoint).ResourceTags(collection, id, version);
 
             var req = createFhirRequest(rl.Uri,"POST");
-            req.SetBody(meta, PreferredFormat);
-//                 
+            req.SetMeta(meta, PreferredFormat);
             doRequest(req, HttpStatusCode.OK, resp => true);
         }
 
@@ -688,7 +687,7 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull("location");
             if (meta == null) throw Error.ArgumentNull("meta");
 
-            AffixTags(new ResourceIdentity(location),meta);
+            AffixMeta(new ResourceIdentity(location),meta);
         }
 
 
@@ -711,7 +710,7 @@ namespace Hl7.Fhir.Rest
             var rl = new RestUrl(Endpoint).DeleteResourceTags(collection, id, version);
 
             var req = createFhirRequest(rl.Uri, "POST");
-            req.SetBody(meta, PreferredFormat);
+            req.SetMeta(meta, PreferredFormat);
 
             doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
         }

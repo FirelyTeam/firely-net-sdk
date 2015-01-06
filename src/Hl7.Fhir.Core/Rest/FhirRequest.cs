@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Rest
         public string ETag { get; set; }
         public string IfMatch { get; set; }
 
-        public void SetBody(Base data, ResourceFormat format)
+        public void SetBody(Resource data, ResourceFormat format)
         {
             if (data == null) throw Error.ArgumentNull("data");
 
@@ -70,6 +70,17 @@ namespace Hl7.Fhir.Rest
 
                 ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
+        }
+
+        public void SetMeta(Resource.ResourceMetaComponent data, ResourceFormat format)
+        {
+            if (data == null) throw Error.ArgumentNull("data");
+
+            Body = format == ResourceFormat.Xml ?
+                FhirSerializer.SerializeToXmlBytes(data, summary: false, root: "meta") :
+                FhirSerializer.SerializeToJsonBytes(data, summary: false, root: "meta");
+
+            ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
         }
 
     

@@ -433,35 +433,107 @@ namespace Hl7.Fhir.Tests
         }
 
 
+        [TestMethod, TestCategory("FhirClient")]
+        public void ManipulateMeta()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            var pat = FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
+            var key = new Random().Next();
+            pat.Id = "NetApiMetaTestPatient" + key;
+
+            var meta = new Resource.ResourceMetaComponent();
+            meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ1-" + key));
+            meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
+            meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
+
+            pat.Meta = meta;
+
+            // First, create a patient with the first set of meta
+            var pat2 = client.Create(pat);
+          //  var loc = pat2.GetResourceLocation(testEndpoint).WithoutVersion();
+            var loc = pat2.GetResourceLocation(testEndpoint);
+
+            // Meta should be present on created patient
+            verifyMeta(pat2.Meta, false,key);
+
+            // Should be present when doing instance Meta()
+            var meta2 = client.Meta(loc);
+            verifyMeta(meta2, false,key);
+
+            // Should be present when doing type Meta()
+            meta2 = client.TypeMeta<Patient>();
+            verifyMeta(meta2, false,key);
+
+            // Should be present when doing System Meta()
+            meta2 = client.WholeSystemMeta();
+            verifyMeta(meta2, false,key);
+
+            // Now add some additional meta to the patient
+            var newMeta = new Resource.ResourceMetaComponent();
+            newMeta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ2-" + key));
+            newMeta.Security.Add(new Coding("http://mysystem.com/sec", "5678-" + key));
+            newMeta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag2-" + key));
+
+            client.AffixMeta(loc, newMeta);
+            var pat3 = client.Read<Patient>(loc);
+
+            // New and old meta should be present on instance
+            verifyMeta(pat3.Meta, true, key);
+
+            // New and old meta should be present on Meta()
+            var newMeta2 = client.Meta(loc);
+            verifyMeta(newMeta2, true, key);
+
+            // New and old meta should be present when doing type Meta()
+            newMeta2 = client.TypeMeta<Patient>();
+            verifyMeta(newMeta2, true, key);
+
+            // New and old meta should be present when doing system Meta()
+            newMeta2 = client.WholeSystemMeta();
+            verifyMeta(newMeta2, true, key);
+
+            // Now, remove those new meta tags
+            client.DeleteMeta(loc, newMeta);
+
+            // Should no longer be present on instance
+            var pat4 = client.Read<Patient>(loc);
+            verifyMeta(pat4.Meta, false, key);
+
+            // Should no longer be present when doing instance Meta()
+            meta2 = client.Meta(loc);
+            verifyMeta(meta2, false, key);
+
+            // Should no longer be present when doing type Meta()
+            meta2 = client.TypeMeta<Patient>();
+            verifyMeta(meta2, false, key);
+
+            // Should no longer be present when doing System Meta()
+            meta2 = client.WholeSystemMeta();
+            verifyMeta(meta2, false, key);
+        }
 
 
-        //[TestMethod, TestCategory("FhirClient")]
-        //public void ReadTags()
-        //{
-        //    FhirClient client = new FhirClient(testEndpoint);
+        private void verifyMeta(Resource.ResourceMetaComponent meta, bool hasNew, int key)
+        {
+            Assert.IsTrue(meta.Profile.Contains("http://someserver.org/fhir/Profile/XYZ1-" + key));
+            Assert.IsTrue(meta.Security.Select(c => c.Code + "@" + c.System).Contains("1234-" + key + "@http://mysystem.com/sec"));
+            Assert.IsTrue(meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag1-" + key + "@http://mysystem.com/tag"));
 
-        //    var tags = new List<Tag>() { new Tag("http://readtag.nu.nl", Tag.FHIRTAGSCHEME_GENERAL, "readTagTest") };
-        //    var identity = ResourceIdentity.Build("Location", "1");
+            if (hasNew)
+            {
+                Assert.IsTrue(meta.Profile.Contains("http://someserver.org/fhir/Profile/XYZ2-" + key));
+                Assert.IsTrue(meta.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
+                Assert.IsTrue(meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
+            }
 
-        //    client.AffixTags(identity, tags);
+            if (!hasNew)
+            {
+                Assert.IsFalse(meta.Profile.Contains("http://someserver.org/fhir/Profile/XYZ2-" + key));
+                Assert.IsFalse(meta.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
+                Assert.IsFalse(meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
+            }
+        }
 
-        //    var affixedEntry = client.Read(identity);
-        //    IEnumerable<Tag> list;
-        //    //BP/EK: Our server can't yet do this (as noted above in the history test)
-        //    // list = client.WholeSystemTags();
-        //    // Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
-
-        //    list = client.TypeTags<Location>();
-        //    Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
-
-        //    list = client.Tags(affixedEntry.SelfLink);
-        //    Assert.IsTrue(list.Any(t => t.Equals(tags.First())));
-
-        //    // BP: Furore server having issues with this at present (17 April 2014)
-        //    // causes the test to fail
-        //    client.DeleteTags(affixedEntry.SelfLink, tags);
-        //    //TODO: verify tags have really been removed. Should generate random tag so this is repeatable
-        //}
 
         [TestMethod]
         public void CreateDynamic()
