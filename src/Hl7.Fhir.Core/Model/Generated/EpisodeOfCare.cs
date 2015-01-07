@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// planned | active | onhold | finished | withdrawn | other
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=20)]
+            [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
@@ -108,6 +108,7 @@ namespace Hl7.Fhir.Model
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
             
             /// <summary>
@@ -132,7 +133,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The period during this episodeofcare that the specific status applied
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=30)]
+            [FhirElement("period", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -140,6 +141,7 @@ namespace Hl7.Fhir.Model
                 get { return _Period; }
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
+            
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -199,7 +201,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The practitioner within the team
             /// </summary>
-            [FhirElement("member", InSummary=true, Order=20)]
+            [FhirElement("member", InSummary=true, Order=40)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
@@ -207,12 +209,13 @@ namespace Hl7.Fhir.Model
                 get { return _Member; }
                 set { _Member = value; OnPropertyChanged("Member"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Member;
             
             /// <summary>
             /// The role that this team member is taking within this episode of care
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=30)]
+            [FhirElement("role", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -220,18 +223,20 @@ namespace Hl7.Fhir.Model
                 get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             /// <summary>
             /// The period of time that this practitioner is performing some role within the episode of care
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=40)]
+            [FhirElement("period", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
                 get { return _Period; }
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
+            
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -287,7 +292,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier(s) by which this EpisodeOfCare is known
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -295,12 +300,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// planned | active | onhold | finished | withdrawn | other
         /// </summary>
-        [FhirElement("currentStatus", InSummary=true, Order=60)]
+        [FhirElement("currentStatus", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> CurrentStatusElement
@@ -308,6 +314,7 @@ namespace Hl7.Fhir.Model
             get { return _CurrentStatusElement; }
             set { _CurrentStatusElement = value; OnPropertyChanged("CurrentStatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _CurrentStatusElement;
         
         /// <summary>
@@ -332,7 +339,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The status history for the EpisodeOfCare
         /// </summary>
-        [FhirElement("statusHistory", Order=70)]
+        [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> StatusHistory
@@ -340,12 +347,13 @@ namespace Hl7.Fhir.Model
             get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent>(); return _StatusHistory; }
             set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
         }
+        
         private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> _StatusHistory;
         
         /// <summary>
         /// Specific type of EpisodeOfcare
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=80)]
+        [FhirElement("type", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -353,12 +361,13 @@ namespace Hl7.Fhir.Model
             get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// The patient that this episodeofcare applies to
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=90)]
+        [FhirElement("patient", InSummary=true, Order=130)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -367,12 +376,13 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// The organization that has assumed the specific responsibilities for the specified duration
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=100)]
+        [FhirElement("managingOrganization", InSummary=true, Order=140)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
@@ -380,24 +390,26 @@ namespace Hl7.Fhir.Model
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// The interval during which the managing organization assumes the defined responsibility
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
         /// A list of conditions/problems/diagnoses that this episode of care is intended to be providing care for
         /// </summary>
-        [FhirElement("condition", Order=120)]
+        [FhirElement("condition", Order=160)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -406,12 +418,13 @@ namespace Hl7.Fhir.Model
             get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Condition;
         
         /// <summary>
         /// A Referral Request that this EpisodeOfCare manages activities within
         /// </summary>
-        [FhirElement("referralRequest", Order=130)]
+        [FhirElement("referralRequest", Order=170)]
         [References("ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReferralRequest
@@ -419,12 +432,13 @@ namespace Hl7.Fhir.Model
             get { return _ReferralRequest; }
             set { _ReferralRequest = value; OnPropertyChanged("ReferralRequest"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ReferralRequest;
         
         /// <summary>
         /// The practitioner that is the care manager/care co-ordinator for this patient
         /// </summary>
-        [FhirElement("careManager", Order=140)]
+        [FhirElement("careManager", Order=180)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference CareManager
@@ -432,12 +446,13 @@ namespace Hl7.Fhir.Model
             get { return _CareManager; }
             set { _CareManager = value; OnPropertyChanged("CareManager"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _CareManager;
         
         /// <summary>
         /// The list of practitioners that may be facilitating this episode of care for specific purposes
         /// </summary>
-        [FhirElement("careTeam", Order=150)]
+        [FhirElement("careTeam", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent> CareTeam
@@ -445,6 +460,7 @@ namespace Hl7.Fhir.Model
             get { if(_CareTeam==null) _CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent>(); return _CareTeam; }
             set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
         }
+        
         private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent> _CareTeam;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -32,9 +32,10 @@ namespace Hl7.Fhir.Tests.Validation
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 
+            foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />" };
+
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
-            // In the example, the contained resource has narrative
 
             results.Clear();
             foreach (DomainResource contained in patient.Contained) contained.Text = null;

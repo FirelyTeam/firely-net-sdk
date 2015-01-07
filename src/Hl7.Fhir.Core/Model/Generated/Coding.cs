@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
             get { return _SystemElement; }
             set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         /// <summary>
@@ -91,6 +92,7 @@ namespace Hl7.Fhir.Model
             get { return _VersionElement; }
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -122,6 +124,7 @@ namespace Hl7.Fhir.Model
             get { return _CodeElement; }
             set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _CodeElement;
         
         /// <summary>
@@ -153,6 +156,7 @@ namespace Hl7.Fhir.Model
             get { return _DisplayElement; }
             set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DisplayElement;
         
         /// <summary>
@@ -184,6 +188,7 @@ namespace Hl7.Fhir.Model
             get { return _PrimaryElement; }
             set { _PrimaryElement = value; OnPropertyChanged("PrimaryElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _PrimaryElement;
         
         /// <summary>
@@ -216,6 +221,7 @@ namespace Hl7.Fhir.Model
             get { return _ValueSet; }
             set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ValueSet;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

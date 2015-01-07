@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,6 +88,7 @@ namespace Hl7.Fhir.Model
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
         
         /// <summary>
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
             get { return _TextElement; }
             set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _TextElement;
         
         /// <summary>
@@ -151,6 +153,7 @@ namespace Hl7.Fhir.Model
             get { if(_LineElement==null) _LineElement = new List<Hl7.Fhir.Model.FhirString>(); return _LineElement; }
             set { _LineElement = value; OnPropertyChanged("LineElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _LineElement;
         
         /// <summary>
@@ -182,6 +185,7 @@ namespace Hl7.Fhir.Model
             get { return _CityElement; }
             set { _CityElement = value; OnPropertyChanged("CityElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CityElement;
         
         /// <summary>
@@ -213,6 +217,7 @@ namespace Hl7.Fhir.Model
             get { return _StateElement; }
             set { _StateElement = value; OnPropertyChanged("StateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _StateElement;
         
         /// <summary>
@@ -244,6 +249,7 @@ namespace Hl7.Fhir.Model
             get { return _PostalCodeElement; }
             set { _PostalCodeElement = value; OnPropertyChanged("PostalCodeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PostalCodeElement;
         
         /// <summary>
@@ -275,6 +281,7 @@ namespace Hl7.Fhir.Model
             get { return _CountryElement; }
             set { _CountryElement = value; OnPropertyChanged("CountryElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CountryElement;
         
         /// <summary>
@@ -306,6 +313,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

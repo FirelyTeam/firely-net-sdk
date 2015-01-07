@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,6 +88,7 @@ namespace Hl7.Fhir.Model
             get { return _ValueElement; }
             set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _ValueElement;
         
         /// <summary>
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
             get { return _ComparatorElement; }
             set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Quantity.QuantityComparator> _ComparatorElement;
         
         /// <summary>
@@ -150,6 +152,7 @@ namespace Hl7.Fhir.Model
             get { return _UnitsElement; }
             set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _UnitsElement;
         
         /// <summary>
@@ -181,6 +184,7 @@ namespace Hl7.Fhir.Model
             get { return _SystemElement; }
             set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         /// <summary>
@@ -212,6 +216,7 @@ namespace Hl7.Fhir.Model
             get { return _CodeElement; }
             set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _CodeElement;
         
         /// <summary>

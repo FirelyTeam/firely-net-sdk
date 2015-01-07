@@ -22,17 +22,9 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(RestOperation.METADATA);
         }
 
-        public static RestUrl ForCollection(this RestUrl url, string collection)
+        public static RestUrl ForResourceType(this RestUrl url, string collection)
         {
             return new RestUrl(url).AddPath(collection);
-        }
-
-        public static RestUrl Validate(this RestUrl url, string collection, string id = null)
-        {
-            if(id != null)
-                return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE);
-            else
-                return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE, id);
         }
 
         public static RestUrl Resource(this RestUrl url, string collection, string id)
@@ -82,41 +74,30 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        public static RestUrl ToMailbox(this RestUrl url)
-        {
-            return new RestUrl(url).AddPath(RestOperation.MAILBOX);
-        }
-
-        public static RestUrl ToDocument(this RestUrl url)
-        {
-            return new RestUrl(url).AddPath(RestOperation.BUNDLE);
-        }
-
-
         public static RestUrl ServerTags(this RestUrl url)
         {
-            return new RestUrl(url).AddPath(RestOperation.TAGS);
+            return new RestUrl(url).AddPath(RestOperation.META);
         }
 
         public static RestUrl CollectionTags(this RestUrl url, string collection)
         {
-            return new RestUrl(url).AddPath(collection, RestOperation.TAGS);
+            return new RestUrl(url).AddPath(collection, RestOperation.META);
         }
 
         public static RestUrl ResourceTags(this RestUrl url, string collection, string id, string vid=null)
         {
             if(vid == null)
-                return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.META);
             else
-                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.META);
         }
 
         public static RestUrl DeleteResourceTags(this RestUrl url, string collection, string id, string vid = null)
         {
             if (vid == null)
-                return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS, RestOperation.DELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.META, RestOperation.DELETE);
             else
-                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS, RestOperation.DELETE);
+                return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.META, RestOperation.DELETE);
         }
 
     }

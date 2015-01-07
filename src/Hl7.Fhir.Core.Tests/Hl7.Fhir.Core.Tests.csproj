@@ -71,6 +71,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Model\DeepCompareTest.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\DeepMatchTest.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
+    <Compile Include="Validation\ValidatePatient.cs" />
+    <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>

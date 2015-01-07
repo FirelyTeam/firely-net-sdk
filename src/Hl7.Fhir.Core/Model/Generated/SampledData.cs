@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
             get { return _Origin; }
             set { _Origin = value; OnPropertyChanged("Origin"); }
         }
+        
         private Hl7.Fhir.Model.Quantity _Origin;
         
         /// <summary>
@@ -74,6 +75,7 @@ namespace Hl7.Fhir.Model
             get { return _PeriodElement; }
             set { _PeriodElement = value; OnPropertyChanged("PeriodElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _PeriodElement;
         
         /// <summary>
@@ -105,6 +107,7 @@ namespace Hl7.Fhir.Model
             get { return _FactorElement; }
             set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _FactorElement;
         
         /// <summary>
@@ -136,6 +139,7 @@ namespace Hl7.Fhir.Model
             get { return _LowerLimitElement; }
             set { _LowerLimitElement = value; OnPropertyChanged("LowerLimitElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _LowerLimitElement;
         
         /// <summary>
@@ -167,6 +171,7 @@ namespace Hl7.Fhir.Model
             get { return _UpperLimitElement; }
             set { _UpperLimitElement = value; OnPropertyChanged("UpperLimitElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _UpperLimitElement;
         
         /// <summary>
@@ -199,6 +204,7 @@ namespace Hl7.Fhir.Model
             get { return _DimensionsElement; }
             set { _DimensionsElement = value; OnPropertyChanged("DimensionsElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _DimensionsElement;
         
         /// <summary>
@@ -231,6 +237,7 @@ namespace Hl7.Fhir.Model
             get { return _DataElement; }
             set { _DataElement = value; OnPropertyChanged("DataElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DataElement;
         
         /// <summary>

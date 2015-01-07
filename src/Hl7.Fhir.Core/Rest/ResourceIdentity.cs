@@ -35,14 +35,14 @@ namespace Hl7.Fhir.Rest
     /// 
     ///   * Url: the "base", in this case the server's base FHIR service endpoint; the "resource type"; the "logical id" and the "version id",
     ///     all parts are optional, except the logical id.
-    ///   * Urn: the "base", in this case either a uuid/oid urn (e.g. urn:oid: or urn:uuid:) and the "logical id", both are required
+    ///   * Urn: the "base", in this case either urn:oid: or urn:uuid: and the "logical id", both are required
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
 #if !PORTABLE45 || NET45
     [SerializableAttribute]
 #endif
-    [System.Diagnostics.DebuggerDisplay(@"\{Collection={Collection} Id={Id} VersionId={VersionId} Endpoint={Endpoint}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
     public class ResourceIdentity : Uri
     {
         /// <summary>
@@ -50,33 +50,65 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="uri">Relative or absolute location of a Resource</param>
         /// <returns></returns>
-        public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) { }
+        public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) 
+        {
+            parseComponents(uri);
+        }
 
         /// <summary>
         /// Creates an Resource Identity instance for a Resource given a resource's location.
         /// </summary>
         /// <param name="uri">Relative or absolute location of a Resource</param>
         /// <returns></returns>
-        public ResourceIdentity(Uri uri) : base(uri.ToString(), UriKind.RelativeOrAbsolute) { }
-
-
-        internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
-
-        #region << Serialization Implementation >>
-#if !PORTABLE45 || NET45
-        // The default serialization is all that is required as this class does
-        // not contain any of it's own properties that are not contained in the actual Uri
-        protected ResourceIdentity(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        public ResourceIdentity(Uri uri) : base(uri.OriginalString, UriKind.RelativeOrAbsolute) 
         {
+            parseComponents(this.OriginalString);
         }
 
-        protected virtual new void GetObjectData(SerializationInfo info, StreamingContext context)
+        private ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
+
+        private static string constructUri(Uri baseUri, string resourceType, string id, string versionId, ResourceIdentityForm form)
         {
-            base.GetObjectData(info, context);
+            if (form == ResourceIdentityForm.AbsoluteRestUrl || form == ResourceIdentityForm.RelativeRestUrl)
+            {
+                if (baseUri == null)
+                {
+                    return versionId != null ?
+                        string.Format("{0}/{1}/{2}/{3}", resourceType, id, RestOperation.HISTORY, versionId) :
+                        string.Format("{0}/{1}", resourceType, id);
+                }
+                else
+                {
+                    if (versionId != null)
+                        return construct(baseUri, resourceType, id, RestOperation.HISTORY, versionId);
+                    else
+                        return construct(baseUri, resourceType, id);
+                }
+            }
+            else if (form == ResourceIdentityForm.Urn)
+            {
+                return baseUri + id;
+            }
+            else if (form == ResourceIdentityForm.Local)
+            {
+                return "#" + id;
+            }
+            else
+            {
+                throw Error.NotImplemented("Unsupported uri kind " + form.ToString());
+            }
+
         }
-#endif
-        #endregion
+
+        private ResourceIdentity(Uri baseUri, string resourceType, string id, string versionId, ResourceIdentityForm form) : 
+            base(constructUri(baseUri,resourceType,id,versionId, form), UriKind.RelativeOrAbsolute)
+        {
+            BaseUri = baseUri;
+            ResourceType = resourceType;
+            Id = id;
+            VersionId = versionId;
+            Form = form;
+        }
 
         /// <summary>
         /// Creates an absolute url representing a Resource identitity for a given resource type, id and optional version.
@@ -93,10 +125,7 @@ namespace Hl7.Fhir.Rest
             if (resourceType == null) throw Error.ArgumentNull("resourceType");
             if (id == null) throw Error.ArgumentNull("id");
 
-            if (vid != null)
-                return new ResourceIdentity(construct(baseUrl, resourceType, id, RestOperation.HISTORY, vid));
-            else
-                return new ResourceIdentity(construct(baseUrl, resourceType, id));
+            return new ResourceIdentity(baseUrl, resourceType, id, vid, ResourceIdentityForm.AbsoluteRestUrl);
         }
 
 
@@ -113,35 +142,50 @@ namespace Hl7.Fhir.Rest
             if (resourceType == null) throw Error.ArgumentNull("resourceType");
             if (id == null) throw Error.ArgumentNull("id");
 
-            string url = vid != null ?
-                string.Format("{0}/{1}/{2}/{3}", resourceType, id, RestOperation.HISTORY, vid) :
-                string.Format("{0}/{1}", resourceType, id);
-
-            return new ResourceIdentity(url, UriKind.Relative);
+            return new ResourceIdentity(null, resourceType, id, vid, ResourceIdentityForm.RelativeRestUrl);
         }
 
 
         /// <summary>
         /// Creates an absolute urn representing the Resource identitity outside of a REST context
         /// </summary>
-        /// <param name="baseUrn">An urn, either an urn:oid or urn:uuid</param>
+        /// <param name="baseUrn">An urn, either an urn:oid: or urn:uuid:</param>
+        /// <param name="id">The resource's logical id</param>
+        /// <returns></returns>
+        public static ResourceIdentity Build(UrnType urnType, string id)
+        {
+            //if (baseUrn == null) throw Error.ArgumentNull("baseUrn");
+            //if (!baseUrn.IsAbsoluteUri) throw Error.Argument("baseUrn", "Base must be an absolute path");
+            //if (!isUrn(baseUrn.OriginalString)) throw Error.Argument("baseUrn", "Base must be a urn:oid: or urn:uuid:");
+            if (id == null) throw Error.ArgumentNull("id");
+
+            Uri baseUrn;
+
+            if (urnType == UrnType.OID)
+                baseUrn = new Uri("urn:oid:");
+            else
+                baseUrn = new Uri("urn:uuid:");
+
+            return new ResourceIdentity(baseUrn, null, id, null, ResourceIdentityForm.Urn);
+        }
+
+
+        /// <summary>
+        /// Creates an absolute urn representing the Resource identitity outside of a REST context
+        /// </summary>
+        /// <param name="baseUrn">An urn, either an urn:oid: or urn:uuid:</param>
         /// <param name="id">The resource's logical id</param>
         /// <returns></returns>
         public static ResourceIdentity Build(Uri baseUrn, string id)
         {
             if (baseUrn == null) throw Error.ArgumentNull("baseUrn");
             if (!baseUrn.IsAbsoluteUri) throw Error.Argument("baseUrn", "Base must be an absolute path");
-            if (!IsFhirUrn(baseUrn.OriginalString)) throw Error.Argument("baseUrn", "Base must be a urn:oid: or urn:uuid:");
+            if (!isUrn(baseUrn.OriginalString)) throw Error.Argument("baseUrn", "Base must be a urn:oid: or urn:uuid:");
             if (id == null) throw Error.ArgumentNull("id");
 
-            return new ResourceIdentity(baseUrn.OriginalString + ":" + id);
+            return new ResourceIdentity(baseUrn, null, id, null, ResourceIdentityForm.Urn);
         }
 
-
-        internal static bool IsFhirUrn(string uri)
-        {
-            return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
-        }
 
         /// <summary>
         /// Creates an local id that can be the target of an anchored reference to a contained resource elative url representing a Resource identitity for a given resource type, id and optional version.
@@ -154,28 +198,42 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull("id");
 
-            return new ResourceIdentity("#" + id, UriKind.Relative);
+            return new ResourceIdentity(null, null, id, null, ResourceIdentityForm.Local);
         }
 
 
-        public bool IsFullRestUrl
+        private static bool isAbsoluteUrl(string url)
         {
-            get { return this.IsAbsoluteUri && this.Scheme != "urn"; }
+            try
+            {
+                var uri = new Uri(url,UriKind.RelativeOrAbsolute);
+                return uri.IsAbsoluteUri;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public bool IsRelativeRestUrl
+        private static bool isAbsoluteRestUrl(string url)
         {
-            get { return !this.IsAbsoluteUri && !IsLocal && !IsUrn; }
+            return isAbsoluteUrl(url) && new Uri(url).Scheme != "urn";
         }
 
-        public bool IsUrn
+        private static bool isRelativeRestUrl(string url)
         {
-            get { return IsFhirUrn(OriginalString); }
+
+            return !isAbsoluteUrl(url) && !isLocal(url) && !isUrn(url);
         }
 
-        public bool IsLocal
+        private static bool isUrn(string uri)
         {
-            get { return OriginalString.StartsWith("#"); }
+            return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
+        }
+
+        private static bool isLocal(string url)
+        {
+            return url.StartsWith("#");
         }
 
         // Encure path ends in a '/'
@@ -184,40 +242,31 @@ namespace Hl7.Fhir.Rest
             return path.EndsWith(@"/") ? path : path + @"/";
         }
 
-        private static Uri construct(Uri endpoint, IEnumerable<string> components)
+        private static string construct(Uri endpoint, IEnumerable<string> components)
         {
             UriBuilder builder = new UriBuilder(endpoint);
             string _path = delimit(builder.Path);
             string _components = string.Join("/", components).Trim('/');
             builder.Path = _path + _components;
 
-            return builder.Uri;
+            return builder.Uri.ToString();
         }
 
-        private static Uri construct(Uri endpoint, params string[] components)
+        private static string construct(Uri endpoint, params string[] components)
         {
             return construct(endpoint, (IEnumerable<string>)components);
         }
 
-        private List<string> _components = null;
 
-        private IEnumerable<string> splitPath()
-        {
-            string path = (this.IsAbsoluteUri) ? this.LocalPath : this.ToString();
-            return path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-        }
+        public ResourceIdentityForm Form { get; private set; }
 
-        internal List<string> Components
-        {
-            get
-            {
-                if (_components == null)
-                {
-                    _components = splitPath().ToList();
-                }
-                return _components;
-            }
-        }
+        public bool IsAbsoluteRestUrl{ get{ return Form == ResourceIdentityForm.AbsoluteRestUrl; } }
+
+        public bool IsRelativeRestUrl{ get { return Form == ResourceIdentityForm.RelativeRestUrl; } }
+       
+        public bool IsUrn { get  { return Form == ResourceIdentityForm.Urn; } }
+
+        public bool IsLocal { get { return Form == ResourceIdentityForm.Local; } }
 
 
         [Obsolete]
@@ -227,39 +276,67 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        private void parseComponents(string url)
+        {
+            if (isRelativeRestUrl(url) || isAbsoluteRestUrl(url))
+            {
+                var uri = new Uri(url, UriKind.RelativeOrAbsolute);
+                string localPath = uri.IsAbsoluteUri ? uri.LocalPath : url;
+
+                var components = localPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                int count = components.Length;
+
+                if (count < 2) return;  // unparseable               
+
+                var history = -1;
+                for(var index=0; index<count; index++) 
+                    if(components[index] == RestOperation.HISTORY) history = index;
+                if (history > -1 && history == count - 1) return; // illegal use, there's just a _history component, but no version id
+
+                int resourceTypePos = (history > -1) ? history - 2 : count - 2;
+
+                ResourceType = components[resourceTypePos];
+                Id = components[resourceTypePos + 1];
+
+                if (uri.IsAbsoluteUri)
+                {
+                    var baseUri = url.Substring(0, url.IndexOf(ResourceType + "/" + Id));
+                    if (!baseUri.EndsWith("/")) baseUri += "/";
+                    BaseUri = new Uri(baseUri,UriKind.Absolute);
+                }
+
+                if (history != -1 && count >= 4 && history < count - 1)
+                {
+                    VersionId = components[history + 1];
+                }
+
+                Form = uri.IsAbsoluteUri ? ResourceIdentityForm.AbsoluteRestUrl : ResourceIdentityForm.RelativeRestUrl;
+            }
+            else if (isUrn(url))
+            {
+                int lastSep = 8;
+
+                if (url.StartsWith("urn:uuid:")) lastSep = 8;
+                if (url.StartsWith("urn:oid:")) lastSep = 7;
+
+                BaseUri = new Uri(url.Substring(0, lastSep+1), UriKind.Absolute);
+                Id = OriginalString.Substring(lastSep + 1);
+                Form = ResourceIdentityForm.Urn;
+            }
+            else if (isLocal(url))
+            {
+                Id =  OriginalString.Substring(1);        // strip '#'
+                Form = ResourceIdentityForm.Local;
+            }
+        }
+
         /// <summary>
         /// This is the ResourceIdentity's base, either an url which is the FHIR service endpoint where the resource is located or
         /// an urn (urn:oid or urn:uuid).
         /// </summary>
         public Uri BaseUri
         {
-            get
-            {
-                if (IsRelativeRestUrl || IsFullRestUrl)
-                {
-                    int count = Components.Count;
-
-                    if (count < 2)
-                        return null;
-
-                    int index = Components.IndexOf(RestOperation.HISTORY);
-                    int n = (index > 0) ? index - 2 : count - 2;
-                    IEnumerable<string> _components = Components.Skip(n);
-                    string path = string.Join("/", _components).Trim('/');
-                    string s = this.ToString();
-                    string endpoint = s.Remove(s.LastIndexOf(path));
-
-                    return (endpoint.Length > 0) ? new Uri(endpoint, UriKind.Absolute) : null;
-                }
-                else if (IsUrn)
-                {
-                    var lastSep = OriginalString.LastIndexOf(':');
-                    return new Uri(OriginalString.Substring(0,lastSep), UriKind.Absolute);
-                }
-                else
-                    return null;
-                
-            }
+            get; private set;
         }
 
 
@@ -274,33 +351,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public string ResourceType
         {
-            get
-            {
-                if (IsRelativeRestUrl || IsFullRestUrl)
-                {
-                    int index = Components.IndexOf(RestOperation.HISTORY);
-                    if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-                    string collectionName = null;
-                    if (index >= 2)
-                    {
-                        collectionName = Components[index - 2];
-                    }
-                    else if (Components.Count > 2)
-                    {
-                        collectionName = Components[Components.Count - 2];
-                    }
-                    else if (Components.Count == 2 && index == -1)
-                    {
-                        collectionName = Components[0];
-                    }
-
-                    return collectionName;
-                }
-                else
-                    return null;
-
-            }
+            get; private set;
         }
 
 
@@ -309,36 +360,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public string Id
         {
-            get
-            {
-                if (IsFullRestUrl || IsRelativeRestUrl)
-                {
-                    int index = Components.IndexOf(RestOperation.HISTORY);
-                    if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-                    if (index >= 2)
-                    {
-                        return Components[index - 1];
-                    }
-                    else if (index == -1 && Components.Count >= 2)
-                    {
-                        return Components[Components.Count - 1];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                else if (IsUrn)
-                {
-                    var lastSep = OriginalString.LastIndexOf(':');
-                    return OriginalString.Substring(lastSep + 1);
-                }
-                else
-                {
-                    return OriginalString.Substring(1);        // strip '#'
-                }
-            }
+            get; private set;
         }
 
 
@@ -347,20 +369,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public string VersionId
         {
-            get
-            {
-                int index = Components.IndexOf(RestOperation.HISTORY);
-                if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-                if (index >= 2 && Components.Count >= 4 && index < Components.Count - 1)
-                {
-                    return Components[index + 1];
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            get; private set;
         }
 
 
@@ -390,11 +399,9 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public ResourceIdentity WithVersion(string version)
         {
-            if (IsFullRestUrl || IsRelativeRestUrl)
+            if (IsAbsoluteRestUrl || IsRelativeRestUrl)
             {
-                Uri endpoint = this.BaseUri;
-
-                if (endpoint == null)
+                if (BaseUri == null)
                     return ResourceIdentity.Build(this.ResourceType, this.Id, version);
                 else
                     return ResourceIdentity.Build(this.BaseUri, this.ResourceType, this.Id, version);
@@ -409,7 +416,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public ResourceIdentity MakeRelative()
         {
-            if (IsFullRestUrl)
+            if (IsAbsoluteRestUrl)
                 return ResourceIdentity.Build(this.ResourceType, this.Id, this.VersionId);
             else if (IsRelativeRestUrl)
                 return this;
@@ -424,7 +431,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public ResourceIdentity WithoutVersion()
         {
-            if (IsFullRestUrl || IsRelativeRestUrl)
+            if (IsAbsoluteRestUrl || IsRelativeRestUrl)
             {
                 Uri endpoint = this.BaseUri;
 
@@ -445,47 +452,71 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public ResourceIdentity WithBase(string baseUri)
         {
-            if (IsFhirUrn(OriginalString) && !IsFhirUrn(baseUri))
-                throw Error.InvalidOperation("Cannot turn an urn form ResourceIdentity into url form by changing the base");
-
-            if (IsFhirUrn(baseUri))
-                return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.Id);
-            else if (IsFullRestUrl || IsRelativeRestUrl)
+            if (IsAbsoluteRestUrl || (IsRelativeRestUrl && isAbsoluteRestUrl(baseUri)))
+            {
+                if (!baseUri.EndsWith("/")) baseUri += "/";
                 return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.ResourceType, this.Id, this.VersionId);
+            }
+            else if (isUrn(baseUri))
+            {
+                return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.Id);
+            }
             else
-                throw Error.InvalidOperation("Cannot give a base to a local id");
+                throw Error.InvalidOperation("Cannot give a base to anything else than a relative or absolute url");
+        }
+
+
+        public ResourceIdentity WithBase(Uri baseUri)
+        {
+            return WithBase(baseUri.OriginalString);
+        }
+
+
+        public bool IsTargetOf(ResourceIdentity identity)
+        {
+            if (identity.BaseUri != null)
+            {
+                if (BaseUri != identity.BaseUri) return false;
+            }
+
+            if (ResourceType != identity.ResourceType) return false;
+            if (Id != identity.Id) return false;
+
+            if (identity.VersionId != null)
+            {
+                if (VersionId != identity.VersionId) return false;
+            }
+
+            return true;
         }
 
         public bool IsTargetOf(string reference)
         {
-            if (IsFhirUrn(reference))
-                return reference == this.OriginalString;
-
-            if (reference.StartsWith("#"))
-                return reference == this.OriginalString;
-
-            var refUri = new Uri(reference, UriKind.RelativeOrAbsolute);
-
-            if (this.IsAbsoluteUri && !refUri.IsAbsoluteUri) return false;  // Absolute path can never match a relative one
-            if (!this.IsAbsoluteUri && refUri.IsAbsoluteUri) return this.IsWithin(refUri);  // IsBaseOf() is unusable
-
-            // Either both absolute or both relative
-            return this.OriginalString == reference;
+            return IsTargetOf(new ResourceIdentity(reference));
         }
 
         public bool IsTargetOf(FhirUri reference)
         {
-            return IsTargetOf(reference.Value);
+            return IsTargetOf(new ResourceIdentity(reference.Value));
         }
 
         public bool IsTargetOf(Uri reference)
         {
-            return IsTargetOf(reference.OriginalString);
+            return IsTargetOf(new ResourceIdentity(reference.OriginalString));
         }
+    }
 
-        public bool IsTargetOf(ResourceReference reference)
-        {
-            return IsTargetOf(reference.Reference);
-        }
+    public enum ResourceIdentityForm
+    {
+        AbsoluteRestUrl,
+        RelativeRestUrl,
+        Urn,
+        Local
+    }
+
+    public enum UrnType
+    {
+        UUID,
+        OID
     }
 }

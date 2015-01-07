@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Test
             RestUrl endpoint = new RestUrl("http://localhost/fhir");
             RestUrl resturi;
 
-            resturi = endpoint.ForCollection("patient");
+            resturi = endpoint.ForResourceType("patient");
             Assert.AreEqual("http://localhost/fhir/patient", resturi.AsString);
 
             resturi = endpoint.Resource("patient", "1");
@@ -77,6 +77,14 @@ namespace Hl7.Fhir.Test
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization"));
             Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/search?name=eve"));
             Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/svx/Organization"));
+            Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/"));
+
+            u = new RestUrl("http://www.hl7.org/svc/");
+
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization"));
+            Assert.IsTrue(u.IsEndpointFor("http://www.hl7.org/svc/Organization/search?name=eve"));
+            Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/svx/Organization"));
+            Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/"));
         }
 
         //[TestMethod]

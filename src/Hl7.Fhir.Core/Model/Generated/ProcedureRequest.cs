@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -149,12 +149,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Subject
         /// </summary>
-        [FhirElement("subject", Order=60)]
+        [FhirElement("subject", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -163,12 +164,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Procedure Type
         /// </summary>
-        [FhirElement("type", Order=70)]
+        [FhirElement("type", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -176,12 +178,13 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// Target Body Site
         /// </summary>
-        [FhirElement("bodySite", Order=80)]
+        [FhirElement("bodySite", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -189,12 +192,13 @@ namespace Hl7.Fhir.Model
             get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
         /// Indication
         /// </summary>
-        [FhirElement("indication", Order=90)]
+        [FhirElement("indication", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -202,12 +206,13 @@ namespace Hl7.Fhir.Model
             get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
         /// Timing
         /// </summary>
-        [FhirElement("timing", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
@@ -215,12 +220,13 @@ namespace Hl7.Fhir.Model
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
+        
         private Hl7.Fhir.Model.Element _Timing;
         
         /// <summary>
         /// Encounter
         /// </summary>
-        [FhirElement("encounter", Order=110)]
+        [FhirElement("encounter", Order=150)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -228,12 +234,13 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Performer
         /// </summary>
-        [FhirElement("performer", Order=120)]
+        [FhirElement("performer", Order=160)]
         [References("Practitioner","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
@@ -241,18 +248,20 @@ namespace Hl7.Fhir.Model
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> _StatusElement;
         
         /// <summary>
@@ -277,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes
         /// </summary>
-        [FhirElement("notes", Order=140)]
+        [FhirElement("notes", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -285,6 +294,7 @@ namespace Hl7.Fhir.Model
             get { if(_NotesElement==null) _NotesElement = new List<Hl7.Fhir.Model.FhirString>(); return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
         /// <summary>
@@ -309,7 +319,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("asNeeded", Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
@@ -317,18 +327,20 @@ namespace Hl7.Fhir.Model
             get { return _AsNeeded; }
             set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
         }
+        
         private Hl7.Fhir.Model.Element _AsNeeded;
         
         /// <summary>
         /// When Requested
         /// </summary>
-        [FhirElement("orderedOn", Order=160)]
+        [FhirElement("orderedOn", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
             get { return _OrderedOnElement; }
             set { _OrderedOnElement = value; OnPropertyChanged("OrderedOnElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _OrderedOnElement;
         
         /// <summary>
@@ -353,7 +365,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Ordering Party
         /// </summary>
-        [FhirElement("orderer", Order=170)]
+        [FhirElement("orderer", Order=210)]
         [References("Practitioner","Patient","RelatedPerson","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -361,18 +373,20 @@ namespace Hl7.Fhir.Model
             get { return _Orderer; }
             set { _Orderer = value; OnPropertyChanged("Orderer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Orderer;
         
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=180)]
+        [FhirElement("priority", Order=220)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> PriorityElement
         {
             get { return _PriorityElement; }
             set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> _PriorityElement;
         
         /// <summary>

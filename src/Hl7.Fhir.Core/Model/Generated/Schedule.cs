@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -63,12 +63,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The schedule type can be used for the categorization of healthcare services or other appointment types
         /// </summary>
-        [FhirElement("type", Order=60)]
+        [FhirElement("type", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -76,12 +77,13 @@ namespace Hl7.Fhir.Model
             get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
-        [FhirElement("actor", Order=70)]
+        [FhirElement("actor", Order=110)]
         [References()]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -90,30 +92,33 @@ namespace Hl7.Fhir.Model
             get { return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
         /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
         /// </summary>
-        [FhirElement("planningHorizon", Order=80)]
+        [FhirElement("planningHorizon", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
         {
             get { return _PlanningHorizon; }
             set { _PlanningHorizon = value; OnPropertyChanged("PlanningHorizon"); }
         }
+        
         private Hl7.Fhir.Model.Period _PlanningHorizon;
         
         /// <summary>
         /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
         /// </summary>
-        [FhirElement("comment", Order=90)]
+        [FhirElement("comment", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
             get { return _CommentElement; }
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -138,13 +143,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this Schedule was created, or last revised
         /// </summary>
-        [FhirElement("lastModified", Order=100)]
+        [FhirElement("lastModified", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
         {
             get { return _LastModifiedElement; }
             set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
         
         /// <summary>

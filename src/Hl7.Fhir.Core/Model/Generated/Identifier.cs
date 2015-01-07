@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,6 +88,7 @@ namespace Hl7.Fhir.Model
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
         
         /// <summary>
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
             get { return _LabelElement; }
             set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _LabelElement;
         
         /// <summary>
@@ -150,6 +152,7 @@ namespace Hl7.Fhir.Model
             get { return _SystemElement; }
             set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         /// <summary>
@@ -181,6 +184,7 @@ namespace Hl7.Fhir.Model
             get { return _ValueElement; }
             set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ValueElement;
         
         /// <summary>
@@ -212,6 +216,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
@@ -225,6 +230,7 @@ namespace Hl7.Fhir.Model
             get { return _Assigner; }
             set { _Assigner = value; OnPropertyChanged("Assigner"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Assigner;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

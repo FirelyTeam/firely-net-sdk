@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of the property
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TypeElement
@@ -403,6 +403,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
             /// <summary>
@@ -427,7 +428,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Property value
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Base64Binary ValueElement
@@ -435,6 +436,7 @@ namespace Hl7.Fhir.Model
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
+            
             private Hl7.Fhir.Model.Base64Binary _ValueElement;
             
             /// <summary>
@@ -513,19 +515,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific instance of object (e.g. versioned)
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Specific instance of resource (e.g. versioned)
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=30)]
+            [FhirElement("reference", InSummary=true, Order=50)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -533,18 +536,20 @@ namespace Hl7.Fhir.Model
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
             /// Object type being audited
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType> _TypeElement;
             
             /// <summary>
@@ -569,13 +574,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Functional application role of Object
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=50)]
+            [FhirElement("role", InSummary=true, Order=70)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole> RoleElement
             {
                 get { return _RoleElement; }
                 set { _RoleElement = value; OnPropertyChanged("RoleElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole> _RoleElement;
             
             /// <summary>
@@ -600,13 +606,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Life-cycle stage for the object
             /// </summary>
-            [FhirElement("lifecycle", InSummary=true, Order=60)]
+            [FhirElement("lifecycle", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle> LifecycleElement
             {
                 get { return _LifecycleElement; }
                 set { _LifecycleElement = value; OnPropertyChanged("LifecycleElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle> _LifecycleElement;
             
             /// <summary>
@@ -631,25 +638,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Policy-defined sensitivity for the object
             /// </summary>
-            [FhirElement("sensitivity", InSummary=true, Order=70)]
+            [FhirElement("sensitivity", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Sensitivity
             {
                 get { return _Sensitivity; }
                 set { _Sensitivity = value; OnPropertyChanged("Sensitivity"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Sensitivity;
             
             /// <summary>
             /// Instance-specific descriptor for Object
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=80)]
+            [FhirElement("name", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -674,13 +683,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Descriptive text
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=90)]
+            [FhirElement("description", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -705,13 +715,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual query for object
             /// </summary>
-            [FhirElement("query", InSummary=true, Order=100)]
+            [FhirElement("query", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Base64Binary QueryElement
             {
                 get { return _QueryElement; }
                 set { _QueryElement = value; OnPropertyChanged("QueryElement"); }
             }
+            
             private Hl7.Fhir.Model.Base64Binary _QueryElement;
             
             /// <summary>
@@ -736,7 +747,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional Information about the Object
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=110)]
+            [FhirElement("detail", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectDetailComponent> Detail
@@ -744,6 +755,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectDetailComponent>(); return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
+            
             private List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectDetailComponent> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -827,13 +839,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Logical source location within the enterprise
             /// </summary>
-            [FhirElement("site", InSummary=true, Order=20)]
+            [FhirElement("site", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SiteElement
             {
                 get { return _SiteElement; }
                 set { _SiteElement = value; OnPropertyChanged("SiteElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _SiteElement;
             
             /// <summary>
@@ -858,7 +871,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The id of source where event originated
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=30)]
+            [FhirElement("identifier", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IdentifierElement
@@ -866,6 +879,7 @@ namespace Hl7.Fhir.Model
                 get { return _IdentifierElement; }
                 set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _IdentifierElement;
             
             /// <summary>
@@ -890,7 +904,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The type of source where event originated
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Type
@@ -898,6 +912,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.Coding>(); return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Type;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -960,7 +975,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type/identifier of event
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -968,12 +983,13 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// More specific type/id for the event
             /// </summary>
-            [FhirElement("subtype", InSummary=true, Order=30)]
+            [FhirElement("subtype", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Subtype
@@ -981,18 +997,20 @@ namespace Hl7.Fhir.Model
                 get { if(_Subtype==null) _Subtype = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Subtype; }
                 set { _Subtype = value; OnPropertyChanged("Subtype"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Subtype;
             
             /// <summary>
             /// Type of action performed during the event
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
+            [FhirElement("action", InSummary=true, Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventAction> ActionElement
             {
                 get { return _ActionElement; }
                 set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventAction> _ActionElement;
             
             /// <summary>
@@ -1017,7 +1035,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Time when the event occurred on source
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=50)]
+            [FhirElement("dateTime", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Instant DateTimeElement
@@ -1025,6 +1043,7 @@ namespace Hl7.Fhir.Model
                 get { return _DateTimeElement; }
                 set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
             }
+            
             private Hl7.Fhir.Model.Instant _DateTimeElement;
             
             /// <summary>
@@ -1049,13 +1068,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the event succeeded or failed
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=60)]
+            [FhirElement("outcome", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome> OutcomeElement
             {
                 get { return _OutcomeElement; }
                 set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome> _OutcomeElement;
             
             /// <summary>
@@ -1080,13 +1100,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the event outcome
             /// </summary>
-            [FhirElement("outcomeDesc", InSummary=true, Order=70)]
+            [FhirElement("outcomeDesc", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString OutcomeDescElement
             {
                 get { return _OutcomeDescElement; }
                 set { _OutcomeDescElement = value; OnPropertyChanged("OutcomeDescElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _OutcomeDescElement;
             
             /// <summary>
@@ -1177,13 +1198,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier for the network access point of the user device
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IdentifierElement
             {
                 get { return _IdentifierElement; }
                 set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _IdentifierElement;
             
             /// <summary>
@@ -1208,13 +1230,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The type of network access point
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType> _TypeElement;
             
             /// <summary>
@@ -1293,7 +1316,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// User roles (e.g. local RBAC codes)
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=20)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -1301,12 +1324,13 @@ namespace Hl7.Fhir.Model
                 get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             /// <summary>
             /// Direct reference to resource
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=30)]
+            [FhirElement("reference", InSummary=true, Order=50)]
             [References("Practitioner","Patient","Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -1314,18 +1338,20 @@ namespace Hl7.Fhir.Model
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
             /// Unique identifier for the user
             /// </summary>
-            [FhirElement("userId", InSummary=true, Order=40)]
+            [FhirElement("userId", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString UserIdElement
             {
                 get { return _UserIdElement; }
                 set { _UserIdElement = value; OnPropertyChanged("UserIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _UserIdElement;
             
             /// <summary>
@@ -1350,13 +1376,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Alternative User id e.g. authentication
             /// </summary>
-            [FhirElement("altId", InSummary=true, Order=50)]
+            [FhirElement("altId", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AltIdElement
             {
                 get { return _AltIdElement; }
                 set { _AltIdElement = value; OnPropertyChanged("AltIdElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _AltIdElement;
             
             /// <summary>
@@ -1381,13 +1408,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human-meaningful name for the user
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=60)]
+            [FhirElement("name", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -1412,7 +1440,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether user is initiator
             /// </summary>
-            [FhirElement("requestor", InSummary=true, Order=70)]
+            [FhirElement("requestor", InSummary=true, Order=90)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequestorElement
@@ -1420,6 +1448,7 @@ namespace Hl7.Fhir.Model
                 get { return _RequestorElement; }
                 set { _RequestorElement = value; OnPropertyChanged("RequestorElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _RequestorElement;
             
             /// <summary>
@@ -1444,25 +1473,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of media
             /// </summary>
-            [FhirElement("media", InSummary=true, Order=80)]
+            [FhirElement("media", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Media
             {
                 get { return _Media; }
                 set { _Media = value; OnPropertyChanged("Media"); }
             }
+            
             private Hl7.Fhir.Model.Coding _Media;
             
             /// <summary>
             /// Logical network location for application activity
             /// </summary>
-            [FhirElement("network", InSummary=true, Order=90)]
+            [FhirElement("network", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkComponent Network
             {
                 get { return _Network; }
                 set { _Network = value; OnPropertyChanged("Network"); }
             }
+            
             private Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkComponent _Network;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1533,7 +1564,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was done
         /// </summary>
-        [FhirElement("event", Order=50)]
+        [FhirElement("event", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.SecurityEvent.SecurityEventEventComponent Event
@@ -1541,12 +1572,13 @@ namespace Hl7.Fhir.Model
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
+        
         private Hl7.Fhir.Model.SecurityEvent.SecurityEventEventComponent _Event;
         
         /// <summary>
         /// A person, a hardware device or software process
         /// </summary>
-        [FhirElement("participant", Order=60)]
+        [FhirElement("participant", Order=100)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantComponent> Participant
@@ -1554,12 +1586,13 @@ namespace Hl7.Fhir.Model
             get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
+        
         private List<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantComponent> _Participant;
         
         /// <summary>
         /// Application systems and processes
         /// </summary>
-        [FhirElement("source", Order=70)]
+        [FhirElement("source", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.SecurityEvent.SecurityEventSourceComponent Source
@@ -1567,12 +1600,13 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.SecurityEvent.SecurityEventSourceComponent _Source;
         
         /// <summary>
         /// Specific instances of data or objects that have been accessed
         /// </summary>
-        [FhirElement("object", Order=80)]
+        [FhirElement("object", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectComponent> Object
@@ -1580,6 +1614,7 @@ namespace Hl7.Fhir.Model
             get { if(_Object==null) _Object = new List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectComponent>(); return _Object; }
             set { _Object = value; OnPropertyChanged("Object"); }
         }
+        
         private List<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectComponent> _Object;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

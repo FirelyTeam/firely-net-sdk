@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
             get { return _ContentTypeElement; }
             set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _ContentTypeElement;
         
         /// <summary>
@@ -91,6 +92,7 @@ namespace Hl7.Fhir.Model
             get { return _LanguageElement; }
             set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _LanguageElement;
         
         /// <summary>
@@ -122,6 +124,7 @@ namespace Hl7.Fhir.Model
             get { return _DataElement; }
             set { _DataElement = value; OnPropertyChanged("DataElement"); }
         }
+        
         private Hl7.Fhir.Model.Base64Binary _DataElement;
         
         /// <summary>
@@ -153,6 +156,7 @@ namespace Hl7.Fhir.Model
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -184,6 +188,7 @@ namespace Hl7.Fhir.Model
             get { return _SizeElement; }
             set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _SizeElement;
         
         /// <summary>
@@ -215,6 +220,7 @@ namespace Hl7.Fhir.Model
             get { return _HashElement; }
             set { _HashElement = value; OnPropertyChanged("HashElement"); }
         }
+        
         private Hl7.Fhir.Model.Base64Binary _HashElement;
         
         /// <summary>
@@ -246,6 +252,7 @@ namespace Hl7.Fhir.Model
             get { return _TitleElement; }
             set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
         /// <summary>

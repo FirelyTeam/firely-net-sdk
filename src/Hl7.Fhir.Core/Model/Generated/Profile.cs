@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Definition of elements in the resource (if no profile)
             /// </summary>
-            [FhirElement("element", InSummary=true, Order=20)]
+            [FhirElement("element", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ElementDefinition> Element
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Element==null) _Element = new List<Hl7.Fhir.Model.ElementDefinition>(); return _Element; }
                 set { _Element = value; OnPropertyChanged("Element"); }
             }
+            
             private List<Hl7.Fhir.Model.ElementDefinition> _Element;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -149,7 +150,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Internal id when this mapping is used
             /// </summary>
-            [FhirElement("identity", InSummary=true, Order=20)]
+            [FhirElement("identity", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentityElement
@@ -157,6 +158,7 @@ namespace Hl7.Fhir.Model
                 get { return _IdentityElement; }
                 set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _IdentityElement;
             
             /// <summary>
@@ -181,13 +183,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifies what this mapping refers to
             /// </summary>
-            [FhirElement("uri", InSummary=true, Order=30)]
+            [FhirElement("uri", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UriElement
             {
                 get { return _UriElement; }
                 set { _UriElement = value; OnPropertyChanged("UriElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _UriElement;
             
             /// <summary>
@@ -212,13 +215,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Names what this mapping refers to
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -243,13 +247,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Versions, Issues, Scope limitations etc
             /// </summary>
-            [FhirElement("comments", InSummary=true, Order=50)]
+            [FhirElement("comments", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentsElement
             {
                 get { return _CommentsElement; }
                 set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
@@ -327,7 +332,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this profile
         /// </summary>
-        [FhirElement("url", Order=50)]
+        [FhirElement("url", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -335,6 +340,7 @@ namespace Hl7.Fhir.Model
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -359,7 +365,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other identifiers for the profile
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -367,18 +373,20 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Logical id for this version of the profile
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=70)]
+        [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
             get { return _VersionElement; }
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -403,7 +411,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Informal name for this profile
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=80)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -411,6 +419,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -435,13 +444,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=90)]
+        [FhirElement("publisher", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
             get { return _PublisherElement; }
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -466,7 +476,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=100)]
+        [FhirElement("telecom", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -474,18 +484,20 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
         /// Natural language description of the profile
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=110)]
+        [FhirElement("description", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -510,7 +522,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assist with indexing and finding
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=120)]
+        [FhirElement("code", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
@@ -518,12 +530,13 @@ namespace Hl7.Fhir.Model
             get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
+        
         private List<Hl7.Fhir.Model.Coding> _Code;
         
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Profile.ResourceProfileStatus> StatusElement
@@ -531,6 +544,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Profile.ResourceProfileStatus> _StatusElement;
         
         /// <summary>
@@ -555,13 +569,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
             get { return _ExperimentalElement; }
             set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
@@ -586,13 +601,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for this version of the profile
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -617,13 +633,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Scope and Usage this profile is for
         /// </summary>
-        [FhirElement("requirements", Order=160)]
+        [FhirElement("requirements", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
             get { return _RequirementsElement; }
             set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
@@ -648,13 +665,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FHIR Version this profile targets
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=170)]
+        [FhirElement("fhirVersion", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
         {
             get { return _FhirVersionElement; }
             set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
         }
+        
         private Hl7.Fhir.Model.Id _FhirVersionElement;
         
         /// <summary>
@@ -679,7 +697,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External specification that the content is mapped to
         /// </summary>
-        [FhirElement("mapping", Order=180)]
+        [FhirElement("mapping", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Profile.ProfileMappingComponent> Mapping
@@ -687,12 +705,13 @@ namespace Hl7.Fhir.Model
             get { if(_Mapping==null) _Mapping = new List<Hl7.Fhir.Model.Profile.ProfileMappingComponent>(); return _Mapping; }
             set { _Mapping = value; OnPropertyChanged("Mapping"); }
         }
+        
         private List<Hl7.Fhir.Model.Profile.ProfileMappingComponent> _Mapping;
         
         /// <summary>
         /// The Resource or Data Type being described
         /// </summary>
-        [FhirElement("type", Order=190)]
+        [FhirElement("type", Order=230)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code TypeElement
@@ -700,6 +719,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
@@ -724,13 +744,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Structure that this set of constraints applies to
         /// </summary>
-        [FhirElement("base", Order=200)]
+        [FhirElement("base", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri BaseElement
         {
             get { return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _BaseElement;
         
         /// <summary>
@@ -755,25 +776,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Snapshot view of the structure
         /// </summary>
-        [FhirElement("snapshot", Order=210)]
+        [FhirElement("snapshot", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.Profile.ConstraintComponent Snapshot
         {
             get { return _Snapshot; }
             set { _Snapshot = value; OnPropertyChanged("Snapshot"); }
         }
+        
         private Hl7.Fhir.Model.Profile.ConstraintComponent _Snapshot;
         
         /// <summary>
         /// Differential view of the structure
         /// </summary>
-        [FhirElement("differential", Order=220)]
+        [FhirElement("differential", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.Profile.ConstraintComponent Differential
         {
             get { return _Differential; }
             set { _Differential = value; OnPropertyChanged("Differential"); }
         }
+        
         private Hl7.Fhir.Model.Profile.ConstraintComponent _Differential;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

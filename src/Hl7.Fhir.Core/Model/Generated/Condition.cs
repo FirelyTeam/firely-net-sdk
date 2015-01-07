@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,19 +90,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Manifestation/symptom
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Supporting information found elsewhere
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=30)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -111,6 +112,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -170,19 +172,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target by means of a predefined code
             /// </summary>
-            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [FhirElement("codeableConcept", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CodeableConcept
             {
                 get { return _CodeableConcept; }
                 set { _CodeableConcept = value; OnPropertyChanged("CodeableConcept"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _CodeableConcept;
             
             /// <summary>
             /// Relationship target resource
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -190,6 +193,7 @@ namespace Hl7.Fhir.Model
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -249,19 +253,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship target by means of a predefined code
             /// </summary>
-            [FhirElement("codeableConcept", InSummary=true, Order=20)]
+            [FhirElement("codeableConcept", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CodeableConcept
             {
                 get { return _CodeableConcept; }
                 set { _CodeableConcept = value; OnPropertyChanged("CodeableConcept"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _CodeableConcept;
             
             /// <summary>
             /// Relationship target resource
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Condition","Procedure","MedicationAdministration","Immunization","MedicationStatement")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -269,6 +274,7 @@ namespace Hl7.Fhir.Model
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -328,19 +334,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Simple summary (disease specific)
             /// </summary>
-            [FhirElement("summary", InSummary=true, Order=20)]
+            [FhirElement("summary", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Summary
             {
                 get { return _Summary; }
                 set { _Summary = value; OnPropertyChanged("Summary"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Summary;
             
             /// <summary>
             /// Formal record of assessment
             /// </summary>
-            [FhirElement("assessment", InSummary=true, Order=30)]
+            [FhirElement("assessment", InSummary=true, Order=50)]
             [References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -349,6 +356,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Assessment==null) _Assessment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Assessment; }
                 set { _Assessment = value; OnPropertyChanged("Assessment"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -408,25 +416,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location - may include laterality
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=20)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Precise location details
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=30)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailElement
             {
                 get { return _DetailElement; }
                 set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DetailElement;
             
             /// <summary>
@@ -498,7 +508,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this condition
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -506,12 +516,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Who has the condition?
         /// </summary>
-        [FhirElement("subject", Order=60)]
+        [FhirElement("subject", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -520,12 +531,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("encounter", Order=70)]
+        [FhirElement("encounter", Order=110)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -533,12 +545,13 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Person who asserts this condition
         /// </summary>
-        [FhirElement("asserter", Order=80)]
+        [FhirElement("asserter", Order=120)]
         [References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
@@ -546,18 +559,20 @@ namespace Hl7.Fhir.Model
             get { return _Asserter; }
             set { _Asserter = value; OnPropertyChanged("Asserter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Asserter;
         
         /// <summary>
         /// When first detected/suspected/entered
         /// </summary>
-        [FhirElement("dateAsserted", Order=90)]
+        [FhirElement("dateAsserted", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date DateAssertedElement
         {
             get { return _DateAssertedElement; }
             set { _DateAssertedElement = value; OnPropertyChanged("DateAssertedElement"); }
         }
+        
         private Hl7.Fhir.Model.Date _DateAssertedElement;
         
         /// <summary>
@@ -582,7 +597,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identification of the condition, problem or diagnosis
         /// </summary>
-        [FhirElement("code", Order=100)]
+        [FhirElement("code", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -590,24 +605,26 @@ namespace Hl7.Fhir.Model
             get { return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// E.g. complaint | symptom | finding | diagnosis
         /// </summary>
-        [FhirElement("category", Order=110)]
+        [FhirElement("category", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
         /// provisional | working | confirmed | refuted
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionStatus> StatusElement
@@ -615,6 +632,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Condition.ConditionStatus> _StatusElement;
         
         /// <summary>
@@ -639,31 +657,33 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Degree of confidence
         /// </summary>
-        [FhirElement("certainty", Order=130)]
+        [FhirElement("certainty", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Certainty
         {
             get { return _Certainty; }
             set { _Certainty = value; OnPropertyChanged("Certainty"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Certainty;
         
         /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", Order=140)]
+        [FhirElement("severity", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
             get { return _Severity; }
             set { _Severity = value; OnPropertyChanged("Severity"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Severity;
         
         /// <summary>
         /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
@@ -671,12 +691,13 @@ namespace Hl7.Fhir.Model
             get { return _Onset; }
             set { _Onset = value; OnPropertyChanged("Onset"); }
         }
+        
         private Hl7.Fhir.Model.Element _Onset;
         
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
@@ -684,24 +705,26 @@ namespace Hl7.Fhir.Model
             get { return _Abatement; }
             set { _Abatement = value; OnPropertyChanged("Abatement"); }
         }
+        
         private Hl7.Fhir.Model.Element _Abatement;
         
         /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", Order=170)]
+        [FhirElement("stage", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
         {
             get { return _Stage; }
             set { _Stage = value; OnPropertyChanged("Stage"); }
         }
+        
         private Hl7.Fhir.Model.Condition.ConditionStageComponent _Stage;
         
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", Order=180)]
+        [FhirElement("evidence", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
@@ -709,12 +732,13 @@ namespace Hl7.Fhir.Model
             get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent>(); return _Evidence; }
             set { _Evidence = value; OnPropertyChanged("Evidence"); }
         }
+        
         private List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> _Evidence;
         
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("location", Order=190)]
+        [FhirElement("location", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> Location
@@ -722,12 +746,13 @@ namespace Hl7.Fhir.Model
             get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Condition.ConditionLocationComponent>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
+        
         private List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> _Location;
         
         /// <summary>
         /// Causes for this Condition
         /// </summary>
-        [FhirElement("dueTo", Order=200)]
+        [FhirElement("dueTo", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionDueToComponent> DueTo
@@ -735,12 +760,13 @@ namespace Hl7.Fhir.Model
             get { if(_DueTo==null) _DueTo = new List<Hl7.Fhir.Model.Condition.ConditionDueToComponent>(); return _DueTo; }
             set { _DueTo = value; OnPropertyChanged("DueTo"); }
         }
+        
         private List<Hl7.Fhir.Model.Condition.ConditionDueToComponent> _DueTo;
         
         /// <summary>
         /// Precedent for this Condition
         /// </summary>
-        [FhirElement("occurredFollowing", Order=210)]
+        [FhirElement("occurredFollowing", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent> OccurredFollowing
@@ -748,18 +774,20 @@ namespace Hl7.Fhir.Model
             get { if(_OccurredFollowing==null) _OccurredFollowing = new List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent>(); return _OccurredFollowing; }
             set { _OccurredFollowing = value; OnPropertyChanged("OccurredFollowing"); }
         }
+        
         private List<Hl7.Fhir.Model.Condition.ConditionOccurredFollowingComponent> _OccurredFollowing;
         
         /// <summary>
         /// Additional information about the Condition
         /// </summary>
-        [FhirElement("notes", Order=220)]
+        [FhirElement("notes", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {
             get { return _NotesElement; }
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
         /// <summary>

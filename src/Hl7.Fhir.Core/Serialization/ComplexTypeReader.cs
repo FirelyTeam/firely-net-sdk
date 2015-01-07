@@ -31,19 +31,29 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
+        internal Base Deserialize(Type elementType, Base existing = null)
+        {
+            var mapping = _inspector.FindClassMappingByType(elementType);
+
+            if (mapping == null)
+                throw Error.Format("Asked to deserialize unknown type '" + elementType.Name + "'", _current);
+
+            return Deserialize(mapping, existing);
+        }
+        
         internal Base Deserialize(ClassMapping mapping, Base existing=null)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
-            if (existing != null)
-            {
-                if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument("existing", "Existing instance is of type {0}, but type parameter indicates data type is a {1}", existing.GetType().Name, mapping.NativeType.Name);
-            }
-            else
+            if (existing == null)
             {
                 var fac = new DefaultModelFactory();
                 existing = (Base)fac.Create(mapping.NativeType);
+            }
+            else
+            {
+                if (mapping.NativeType != existing.GetType())
+                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, mapping.NativeType.Name);
             }
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;

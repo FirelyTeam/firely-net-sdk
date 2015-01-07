@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -86,24 +86,26 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Clinical, administrative, etc.
         /// </summary>
-        [FhirElement("category", Order=60)]
+        [FhirElement("category", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
         /// active | inactive | entered in error
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement
@@ -111,6 +113,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Alert.AlertStatus> _StatusElement;
         
         /// <summary>
@@ -135,7 +138,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is alert about?
         /// </summary>
-        [FhirElement("subject", Order=80)]
+        [FhirElement("subject", Order=120)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -144,12 +147,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Alert creator
         /// </summary>
-        [FhirElement("author", Order=90)]
+        [FhirElement("author", Order=130)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -157,12 +161,13 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Text of alert
         /// </summary>
-        [FhirElement("note", Order=100)]
+        [FhirElement("note", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
@@ -170,6 +175,7 @@ namespace Hl7.Fhir.Model
             get { return _NoteElement; }
             set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>

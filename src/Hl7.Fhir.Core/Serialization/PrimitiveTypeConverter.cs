@@ -14,6 +14,7 @@ using System.Xml;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -184,6 +185,17 @@ namespace Hl7.Fhir.Serialization
                 return true;
 
             return false;
+        }
+
+     
+        public static string GetValueAsString<T>(this Primitive<T> primitive)
+        {
+            if (primitive == null) throw Error.ArgumentNull("primitive");
+
+            if (primitive._Value != null)
+                return primitive._Value.ConvertTo<string>();
+            else
+                return null;
         }
     }
 }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -284,13 +284,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Numeric identifier of this series (0020,0011)
             /// </summary>
-            [FhirElement("number", InSummary=true, Order=20)]
+            [FhirElement("number", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Integer NumberElement
             {
                 get { return _NumberElement; }
                 set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _NumberElement;
             
             /// <summary>
@@ -315,7 +316,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The modality of the instances in the series (0008,0060)
             /// </summary>
-            [FhirElement("modality", InSummary=true, Order=30)]
+            [FhirElement("modality", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ImagingStudy.Modality> ModalityElement
@@ -323,6 +324,7 @@ namespace Hl7.Fhir.Model
                 get { return _ModalityElement; }
                 set { _ModalityElement = value; OnPropertyChanged("ModalityElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.ImagingStudy.Modality> _ModalityElement;
             
             /// <summary>
@@ -347,7 +349,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formal identifier for this series (0020,000E)
             /// </summary>
-            [FhirElement("uid", InSummary=true, Order=40)]
+            [FhirElement("uid", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -355,6 +357,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -379,13 +382,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A description of the series (0008,103E)
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
                 get { return _DescriptionElement; }
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -410,7 +414,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Number of Series Related Instances (0020,1209)
             /// </summary>
-            [FhirElement("numberOfInstances", InSummary=true, Order=60)]
+            [FhirElement("numberOfInstances", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer NumberOfInstancesElement
@@ -418,6 +422,7 @@ namespace Hl7.Fhir.Model
                 get { return _NumberOfInstancesElement; }
                 set { _NumberOfInstancesElement = value; OnPropertyChanged("NumberOfInstancesElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
             
             /// <summary>
@@ -442,13 +447,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
             /// </summary>
-            [FhirElement("availability", InSummary=true, Order=70)]
+            [FhirElement("availability", InSummary=true, Order=90)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
             {
                 get { return _AvailabilityElement; }
                 set { _AvailabilityElement = value; OnPropertyChanged("AvailabilityElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
             
             /// <summary>
@@ -473,13 +479,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Retrieve URI (0008,1115 &gt; 0008,1190)
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=80)]
+            [FhirElement("url", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
             {
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
@@ -504,25 +511,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Body part examined (Map from 0018,0015)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=90)]
+            [FhirElement("bodySite", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Coding BodySite
             {
                 get { return _BodySite; }
                 set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
+            
             private Hl7.Fhir.Model.Coding _BodySite;
             
             /// <summary>
             /// When the series started
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=100)]
+            [FhirElement("dateTime", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
             {
                 get { return _DateTimeElement; }
                 set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
             
             /// <summary>
@@ -547,7 +556,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A single instance taken from a patient (image or other)
             /// </summary>
-            [FhirElement("instance", InSummary=true, Order=110)]
+            [FhirElement("instance", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent> Instance
@@ -555,6 +564,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent>(); return _Instance; }
                 set { _Instance = value; OnPropertyChanged("Instance"); }
             }
+            
             private List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent> _Instance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -638,13 +648,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The number of this instance in the series (0020,0013)
             /// </summary>
-            [FhirElement("number", InSummary=true, Order=20)]
+            [FhirElement("number", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Integer NumberElement
             {
                 get { return _NumberElement; }
                 set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _NumberElement;
             
             /// <summary>
@@ -669,7 +680,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formal identifier for this instance (0008,0018)
             /// </summary>
-            [FhirElement("uid", InSummary=true, Order=30)]
+            [FhirElement("uid", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -677,6 +688,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -701,7 +713,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// DICOM class type (0008,0016)
             /// </summary>
-            [FhirElement("sopclass", InSummary=true, Order=40)]
+            [FhirElement("sopclass", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid SopclassElement
@@ -709,6 +721,7 @@ namespace Hl7.Fhir.Model
                 get { return _SopclassElement; }
                 set { _SopclassElement = value; OnPropertyChanged("SopclassElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _SopclassElement;
             
             /// <summary>
@@ -733,13 +746,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of instance (image etc) (0004,1430)
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
             /// <summary>
@@ -764,13 +778,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description (0070,0080 | 0040,A043 &gt; 0008,0104 | 0042,0010 | 0008,0008)
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=60)]
+            [FhirElement("title", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
                 get { return _TitleElement; }
                 set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
@@ -795,13 +810,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// WADO-RS service where instance is available  (0008,1199 &gt; 0008,1190)
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=70)]
+            [FhirElement("url", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
             {
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
@@ -826,7 +842,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Content for this instance
             /// </summary>
-            [FhirElement("attachment", InSummary=true, Order=80)]
+            [FhirElement("attachment", InSummary=true, Order=100)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Attachment
@@ -834,6 +850,7 @@ namespace Hl7.Fhir.Model
                 get { return _Attachment; }
                 set { _Attachment = value; OnPropertyChanged("Attachment"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Attachment;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -901,13 +918,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the study was started (0008,0020)+(0008,0030)
         /// </summary>
-        [FhirElement("started", Order=50)]
+        [FhirElement("started", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StartedElement
         {
             get { return _StartedElement; }
             set { _StartedElement = value; OnPropertyChanged("StartedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _StartedElement;
         
         /// <summary>
@@ -932,7 +950,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the images are of
         /// </summary>
-        [FhirElement("patient", Order=60)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -941,12 +959,13 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Formal identifier for the study (0020,000D)
         /// </summary>
-        [FhirElement("uid", Order=70)]
+        [FhirElement("uid", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Oid UidElement
@@ -954,6 +973,7 @@ namespace Hl7.Fhir.Model
             get { return _UidElement; }
             set { _UidElement = value; OnPropertyChanged("UidElement"); }
         }
+        
         private Hl7.Fhir.Model.Oid _UidElement;
         
         /// <summary>
@@ -978,19 +998,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Accession Number (0008,0050)
         /// </summary>
-        [FhirElement("accession", Order=80)]
+        [FhirElement("accession", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Accession
         {
             get { return _Accession; }
             set { _Accession = value; OnPropertyChanged("Accession"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Accession;
         
         /// <summary>
         /// Other identifiers for the study (0020,0010)
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -998,12 +1019,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Order(s) that caused this study to be performed
         /// </summary>
-        [FhirElement("order", Order=100)]
+        [FhirElement("order", Order=140)]
         [References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1012,12 +1034,13 @@ namespace Hl7.Fhir.Model
             get { if(_Order==null) _Order = new List<Hl7.Fhir.Model.ResourceReference>(); return _Order; }
             set { _Order = value; OnPropertyChanged("Order"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Order;
         
         /// <summary>
         /// All series.modality if actual acquisition modalities
         /// </summary>
-        [FhirElement("modalityList", Order=110)]
+        [FhirElement("modalityList", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>> ModalityListElement
@@ -1025,6 +1048,7 @@ namespace Hl7.Fhir.Model
             get { if(_ModalityListElement==null) _ModalityListElement = new List<Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>>(); return _ModalityListElement; }
             set { _ModalityListElement = value; OnPropertyChanged("ModalityListElement"); }
         }
+        
         private List<Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>> _ModalityListElement;
         
         /// <summary>
@@ -1049,7 +1073,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Referring physician (0008,0090)
         /// </summary>
-        [FhirElement("referrer", Order=120)]
+        [FhirElement("referrer", Order=160)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referrer
@@ -1057,18 +1081,20 @@ namespace Hl7.Fhir.Model
             get { return _Referrer; }
             set { _Referrer = value; OnPropertyChanged("Referrer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Referrer;
         
         /// <summary>
         /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
         /// </summary>
-        [FhirElement("availability", Order=130)]
+        [FhirElement("availability", Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
         {
             get { return _AvailabilityElement; }
             set { _AvailabilityElement = value; OnPropertyChanged("AvailabilityElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
         
         /// <summary>
@@ -1093,13 +1119,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Retrieve URI (0008,1190)
         /// </summary>
-        [FhirElement("url", Order=140)]
+        [FhirElement("url", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -1124,7 +1151,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of Study Related Series (0020,1206)
         /// </summary>
-        [FhirElement("numberOfSeries", Order=150)]
+        [FhirElement("numberOfSeries", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Integer NumberOfSeriesElement
@@ -1132,6 +1159,7 @@ namespace Hl7.Fhir.Model
             get { return _NumberOfSeriesElement; }
             set { _NumberOfSeriesElement = value; OnPropertyChanged("NumberOfSeriesElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _NumberOfSeriesElement;
         
         /// <summary>
@@ -1156,7 +1184,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of Study Related Instances (0020,1208)
         /// </summary>
-        [FhirElement("numberOfInstances", Order=160)]
+        [FhirElement("numberOfInstances", Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Integer NumberOfInstancesElement
@@ -1164,6 +1192,7 @@ namespace Hl7.Fhir.Model
             get { return _NumberOfInstancesElement; }
             set { _NumberOfInstancesElement = value; OnPropertyChanged("NumberOfInstancesElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
         
         /// <summary>
@@ -1188,13 +1217,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Diagnoses etc with request (0040,1002)
         /// </summary>
-        [FhirElement("clinicalInformation", Order=170)]
+        [FhirElement("clinicalInformation", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ClinicalInformationElement
         {
             get { return _ClinicalInformationElement; }
             set { _ClinicalInformationElement = value; OnPropertyChanged("ClinicalInformationElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ClinicalInformationElement;
         
         /// <summary>
@@ -1219,7 +1249,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of procedure performed (0008,1032)
         /// </summary>
-        [FhirElement("procedure", Order=180)]
+        [FhirElement("procedure", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Procedure
@@ -1227,12 +1257,13 @@ namespace Hl7.Fhir.Model
             get { if(_Procedure==null) _Procedure = new List<Hl7.Fhir.Model.Coding>(); return _Procedure; }
             set { _Procedure = value; OnPropertyChanged("Procedure"); }
         }
+        
         private List<Hl7.Fhir.Model.Coding> _Procedure;
         
         /// <summary>
         /// Who interpreted images (0008,1060)
         /// </summary>
-        [FhirElement("interpreter", Order=190)]
+        [FhirElement("interpreter", Order=230)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Interpreter
@@ -1240,18 +1271,20 @@ namespace Hl7.Fhir.Model
             get { return _Interpreter; }
             set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Interpreter;
         
         /// <summary>
         /// Institution-generated description (0008,1030)
         /// </summary>
-        [FhirElement("description", Order=200)]
+        [FhirElement("description", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -1276,7 +1309,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Each study has one or more series of instances
         /// </summary>
-        [FhirElement("series", Order=210)]
+        [FhirElement("series", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent> Series
@@ -1284,6 +1317,7 @@ namespace Hl7.Fhir.Model
             get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent>(); return _Series; }
             set { _Series = value; OnPropertyChanged("Series"); }
         }
+        
         private List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent> _Series;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

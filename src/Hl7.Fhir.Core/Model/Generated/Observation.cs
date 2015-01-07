@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -186,61 +186,66 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Low Range, if relevant
             /// </summary>
-            [FhirElement("low", InSummary=true, Order=20)]
+            [FhirElement("low", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Low
             {
                 get { return _Low; }
                 set { _Low = value; OnPropertyChanged("Low"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Low;
             
             /// <summary>
             /// High Range, if relevant
             /// </summary>
-            [FhirElement("high", InSummary=true, Order=30)]
+            [FhirElement("high", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity High
             {
                 get { return _High; }
                 set { _High = value; OnPropertyChanged("High"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _High;
             
             /// <summary>
             /// Indicates the meaning/use of this range of this range
             /// </summary>
-            [FhirElement("meaning", InSummary=true, Order=40)]
+            [FhirElement("meaning", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Meaning
             {
                 get { return _Meaning; }
                 set { _Meaning = value; OnPropertyChanged("Meaning"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Meaning;
             
             /// <summary>
             /// Applicable age range, if relevant
             /// </summary>
-            [FhirElement("age", InSummary=true, Order=50)]
+            [FhirElement("age", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Range Age
             {
                 get { return _Age; }
                 set { _Age = value; OnPropertyChanged("Age"); }
             }
+            
             private Hl7.Fhir.Model.Range _Age;
             
             /// <summary>
             /// Text based reference range in an observation
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
+            [FhirElement("text", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -328,13 +333,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// has-component | has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
             
             /// <summary>
@@ -359,7 +365,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Observation that is related to this one
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=30)]
+            [FhirElement("target", InSummary=true, Order=50)]
             [References("Observation")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -368,6 +374,7 @@ namespace Hl7.Fhir.Model
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -420,7 +427,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("name", Order=50)]
+        [FhirElement("name", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Name
@@ -428,12 +435,13 @@ namespace Hl7.Fhir.Model
             get { return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Name;
         
         /// <summary>
         /// Actual result
         /// </summary>
-        [FhirElement("value", Order=60, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", Order=100, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
@@ -441,18 +449,20 @@ namespace Hl7.Fhir.Model
             get { return _Value; }
             set { _Value = value; OnPropertyChanged("Value"); }
         }
+        
         private Hl7.Fhir.Model.Element _Value;
         
         /// <summary>
         /// unknown | asked | temp | notasked +
         /// </summary>
-        [FhirElement("dataAbsentReason", Order=70)]
+        [FhirElement("dataAbsentReason", Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DataAbsentReason> DataAbsentReasonElement
         {
             get { return _DataAbsentReasonElement; }
             set { _DataAbsentReasonElement = value; OnPropertyChanged("DataAbsentReasonElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.DataAbsentReason> _DataAbsentReasonElement;
         
         /// <summary>
@@ -477,25 +487,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// High, low, normal, etc.
         /// </summary>
-        [FhirElement("interpretation", Order=80)]
+        [FhirElement("interpretation", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Interpretation
         {
             get { return _Interpretation; }
             set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Interpretation;
         
         /// <summary>
         /// Comments about result
         /// </summary>
-        [FhirElement("comments", Order=90)]
+        [FhirElement("comments", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentsElement
         {
             get { return _CommentsElement; }
             set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _CommentsElement;
         
         /// <summary>
@@ -520,7 +532,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physiologically Relevant time/time-period for observation
         /// </summary>
-        [FhirElement("applies", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("applies", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Applies
@@ -528,18 +540,20 @@ namespace Hl7.Fhir.Model
             get { return _Applies; }
             set { _Applies = value; OnPropertyChanged("Applies"); }
         }
+        
         private Hl7.Fhir.Model.Element _Applies;
         
         /// <summary>
         /// Date/Time this was made available
         /// </summary>
-        [FhirElement("issued", Order=110)]
+        [FhirElement("issued", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
         {
             get { return _IssuedElement; }
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
+        
         private Hl7.Fhir.Model.Instant _IssuedElement;
         
         /// <summary>
@@ -564,7 +578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// registered | preliminary | final | amended +
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
@@ -572,6 +586,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
         
         /// <summary>
@@ -596,13 +611,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ok | ongoing | early | questionable | calibrating | error +
         /// </summary>
-        [FhirElement("reliability", Order=130)]
+        [FhirElement("reliability", Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationReliability> ReliabilityElement
         {
             get { return _ReliabilityElement; }
             set { _ReliabilityElement = value; OnPropertyChanged("ReliabilityElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.Observation.ObservationReliability> _ReliabilityElement;
         
         /// <summary>
@@ -627,43 +643,46 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observed body part
         /// </summary>
-        [FhirElement("bodySite", Order=140)]
+        [FhirElement("bodySite", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
         {
             get { return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _BodySite;
         
         /// <summary>
         /// How it was done
         /// </summary>
-        [FhirElement("method", Order=150)]
+        [FhirElement("method", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
             get { return _Method; }
             set { _Method = value; OnPropertyChanged("Method"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
         /// Unique Id for this particular observation
         /// </summary>
-        [FhirElement("identifier", Order=160)]
+        [FhirElement("identifier", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Who and/or what this is about
         /// </summary>
-        [FhirElement("subject", Order=170)]
+        [FhirElement("subject", Order=210)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -671,12 +690,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Specimen used for this observation
         /// </summary>
-        [FhirElement("specimen", Order=180)]
+        [FhirElement("specimen", Order=220)]
         [References("Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Specimen
@@ -684,12 +704,13 @@ namespace Hl7.Fhir.Model
             get { return _Specimen; }
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
         /// Who did the observation
         /// </summary>
-        [FhirElement("performer", Order=190)]
+        [FhirElement("performer", Order=230)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -698,12 +719,13 @@ namespace Hl7.Fhir.Model
             get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
         /// Healthcare event related to the observation
         /// </summary>
-        [FhirElement("encounter", Order=200)]
+        [FhirElement("encounter", Order=240)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -711,12 +733,13 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Provides guide for interpretation
         /// </summary>
-        [FhirElement("referenceRange", Order=210)]
+        [FhirElement("referenceRange", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
@@ -724,12 +747,13 @@ namespace Hl7.Fhir.Model
             get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
             set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
         }
+        
         private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
         /// Observations related to this observation
         /// </summary>
-        [FhirElement("related", Order=220)]
+        [FhirElement("related", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related
@@ -737,6 +761,7 @@ namespace Hl7.Fhir.Model
             get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(); return _Related; }
             set { _Related = value; OnPropertyChanged("Related"); }
         }
+        
         private List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> _Related;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

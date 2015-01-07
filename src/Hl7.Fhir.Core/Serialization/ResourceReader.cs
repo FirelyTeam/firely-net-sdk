@@ -36,27 +36,16 @@ namespace Hl7.Fhir.Serialization
             {
                 // If there's no a priori knowledge of the type of Resource we will encounter,
                 // we'll have to determine from the data itself. 
-                var resourceType = _reader.GetResourceTypeName(nested);
-                var mappedType = _inspector.FindClassMappingForResource(resourceType);
+                var resourceTypeName = _reader.GetResourceTypeName(nested);
+                var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
 
-                if (mappedType == null)
-                    throw Error.Format("Encountered an unknown resource '" + resourceType + "'",_reader);
-
-                if (existing == null)
-                {
-                    var fac = new DefaultModelFactory();
-                    existing = (Resource)fac.Create(mappedType.NativeType);
-                }
-                else
-                {
-                    if (mappedType.NativeType != existing.GetType())
-                        throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, resourceType);
-                }
-               
+                if (mapping == null)
+                    throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader);
+             
                 // Delegate the actual work to the ComplexTypeReader, since
                 // the serialization of Resources and ComplexTypes are virtually the same
                 var cplxReader = new ComplexTypeReader(_reader);
-                return (Resource)cplxReader.Deserialize(mappedType, existing);
+                return (Resource)cplxReader.Deserialize(mapping, existing);
             }
             else
                 throw Error.Format("Trying to read a resource, but reader is not at the start of an object", _reader);

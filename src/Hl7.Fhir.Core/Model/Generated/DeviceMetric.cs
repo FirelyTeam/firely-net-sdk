@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -169,13 +169,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// unspecified | offset | gain | two-point
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> _TypeElement;
             
             /// <summary>
@@ -200,13 +201,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// not-calibrated | calibration-required | calibrated | unspecified
             /// </summary>
-            [FhirElement("state", InSummary=true, Order=30)]
+            [FhirElement("state", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> StateElement
             {
                 get { return _StateElement; }
                 set { _StateElement = value; OnPropertyChanged("StateElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> _StateElement;
             
             /// <summary>
@@ -231,13 +233,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Describes the time last calibration has been performed
             /// </summary>
-            [FhirElement("time", InSummary=true, Order=40)]
+            [FhirElement("time", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Instant TimeElement
             {
                 get { return _TimeElement; }
                 set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
             }
+            
             private Hl7.Fhir.Model.Instant _TimeElement;
             
             /// <summary>
@@ -320,6 +323,7 @@ namespace Hl7.Fhir.Model
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -333,6 +337,7 @@ namespace Hl7.Fhir.Model
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -345,6 +350,7 @@ namespace Hl7.Fhir.Model
             get { return _Unit; }
             set { _Unit = value; OnPropertyChanged("Unit"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Unit;
         
         /// <summary>
@@ -358,6 +364,7 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -371,6 +378,7 @@ namespace Hl7.Fhir.Model
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
@@ -383,6 +391,7 @@ namespace Hl7.Fhir.Model
             get { return _OperationalStateElement; }
             set { _OperationalStateElement = value; OnPropertyChanged("OperationalStateElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState> _OperationalStateElement;
         
         /// <summary>
@@ -414,6 +423,7 @@ namespace Hl7.Fhir.Model
             get { return _MeasurementMode; }
             set { _MeasurementMode = value; OnPropertyChanged("MeasurementMode"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _MeasurementMode;
         
         /// <summary>
@@ -426,6 +436,7 @@ namespace Hl7.Fhir.Model
             get { return _Color; }
             set { _Color = value; OnPropertyChanged("Color"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Color;
         
         /// <summary>
@@ -439,6 +450,7 @@ namespace Hl7.Fhir.Model
             get { return _CategoryElement; }
             set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> _CategoryElement;
         
         /// <summary>
@@ -470,6 +482,7 @@ namespace Hl7.Fhir.Model
             get { return _MeasurementPeriod; }
             set { _MeasurementPeriod = value; OnPropertyChanged("MeasurementPeriod"); }
         }
+        
         private Hl7.Fhir.Model.Timing _MeasurementPeriod;
         
         /// <summary>
@@ -483,6 +496,7 @@ namespace Hl7.Fhir.Model
             get { if(_CalibrationInfo==null) _CalibrationInfo = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent>(); return _CalibrationInfo; }
             set { _CalibrationInfo = value; OnPropertyChanged("CalibrationInfo"); }
         }
+        
         private List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent> _CalibrationInfo;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

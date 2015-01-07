@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
             get { if(_Coding==null) _Coding = new List<Hl7.Fhir.Model.Coding>(); return _Coding; }
             set { _Coding = value; OnPropertyChanged("Coding"); }
         }
+        
         private List<Hl7.Fhir.Model.Coding> _Coding;
         
         /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
             get { return _TextElement; }
             set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _TextElement;
         
         /// <summary>

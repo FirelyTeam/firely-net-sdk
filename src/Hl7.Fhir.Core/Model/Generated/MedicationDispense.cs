@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -95,19 +95,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. "Take with food"
             /// </summary>
-            [FhirElement("additionalInstructions", InSummary=true, Order=20)]
+            [FhirElement("additionalInstructions", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AdditionalInstructions
             {
                 get { return _AdditionalInstructions; }
                 set { _AdditionalInstructions = value; OnPropertyChanged("AdditionalInstructions"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _AdditionalInstructions;
             
             /// <summary>
             /// When medication should be administered
             /// </summary>
-            [FhirElement("schedule", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("schedule", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Schedule
@@ -115,12 +116,13 @@ namespace Hl7.Fhir.Model
                 get { return _Schedule; }
                 set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
+            
             private Hl7.Fhir.Model.Element _Schedule;
             
             /// <summary>
             /// Take "as needed" f(or x)
             /// </summary>
-            [FhirElement("asNeeded", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("asNeeded", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element AsNeeded
@@ -128,78 +130,85 @@ namespace Hl7.Fhir.Model
                 get { return _AsNeeded; }
                 set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
             }
+            
             private Hl7.Fhir.Model.Element _AsNeeded;
             
             /// <summary>
             /// Body site to administer to
             /// </summary>
-            [FhirElement("site", InSummary=true, Order=50)]
+            [FhirElement("site", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Site
             {
                 get { return _Site; }
                 set { _Site = value; OnPropertyChanged("Site"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Site;
             
             /// <summary>
             /// How drug should enter body
             /// </summary>
-            [FhirElement("route", InSummary=true, Order=60)]
+            [FhirElement("route", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Route
             {
                 get { return _Route; }
                 set { _Route = value; OnPropertyChanged("Route"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Route;
             
             /// <summary>
             /// Technique for administering medication
             /// </summary>
-            [FhirElement("method", InSummary=true, Order=70)]
+            [FhirElement("method", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
                 get { return _Method; }
                 set { _Method = value; OnPropertyChanged("Method"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Method;
             
             /// <summary>
             /// Amount of medication per dose
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=80)]
+            [FhirElement("quantity", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Amount of medication per unit of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=90)]
+            [FhirElement("rate", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
+            
             private Hl7.Fhir.Model.Ratio _Rate;
             
             /// <summary>
             /// Upper limit on medication per unit of time
             /// </summary>
-            [FhirElement("maxDosePerPeriod", InSummary=true, Order=100)]
+            [FhirElement("maxDosePerPeriod", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
             {
                 get { return _MaxDosePerPeriod; }
                 set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
             }
+            
             private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -280,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of substitiution
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -288,12 +297,13 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// Why was substitution made
             /// </summary>
-            [FhirElement("reason", InSummary=true, Order=30)]
+            [FhirElement("reason", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -301,12 +311,13 @@ namespace Hl7.Fhir.Model
                 get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
                 set { _Reason = value; OnPropertyChanged("Reason"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
             
             /// <summary>
             /// Who is responsible for the substitution
             /// </summary>
-            [FhirElement("responsibleParty", InSummary=true, Order=40)]
+            [FhirElement("responsibleParty", InSummary=true, Order=60)]
             [References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -315,6 +326,7 @@ namespace Hl7.Fhir.Model
                 get { if(_ResponsibleParty==null) _ResponsibleParty = new List<Hl7.Fhir.Model.ResourceReference>(); return _ResponsibleParty; }
                 set { _ResponsibleParty = value; OnPropertyChanged("ResponsibleParty"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _ResponsibleParty;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -377,25 +389,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// External identifier for individual item
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// in progress | on hold | completed | entered in error | stopped
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=30)]
+            [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
             {
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
             
             /// <summary>
@@ -420,31 +434,33 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Trial fill, partial fill, emergency fill, etc.
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// Amount dispensed
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=50)]
+            [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// What medication was supplied
             /// </summary>
-            [FhirElement("medication", InSummary=true, Order=60)]
+            [FhirElement("medication", InSummary=true, Order=80)]
             [References("Medication")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Medication
@@ -452,18 +468,20 @@ namespace Hl7.Fhir.Model
                 get { return _Medication; }
                 set { _Medication = value; OnPropertyChanged("Medication"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Medication;
             
             /// <summary>
             /// Dispense processing time
             /// </summary>
-            [FhirElement("whenPrepared", InSummary=true, Order=70)]
+            [FhirElement("whenPrepared", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime WhenPreparedElement
             {
                 get { return _WhenPreparedElement; }
                 set { _WhenPreparedElement = value; OnPropertyChanged("WhenPreparedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _WhenPreparedElement;
             
             /// <summary>
@@ -488,13 +506,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Handover time
             /// </summary>
-            [FhirElement("whenHandedOver", InSummary=true, Order=80)]
+            [FhirElement("whenHandedOver", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime WhenHandedOverElement
             {
                 get { return _WhenHandedOverElement; }
                 set { _WhenHandedOverElement = value; OnPropertyChanged("WhenHandedOverElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _WhenHandedOverElement;
             
             /// <summary>
@@ -519,7 +538,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the medication was sent
             /// </summary>
-            [FhirElement("destination", InSummary=true, Order=90)]
+            [FhirElement("destination", InSummary=true, Order=110)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Destination
@@ -527,12 +546,13 @@ namespace Hl7.Fhir.Model
                 get { return _Destination; }
                 set { _Destination = value; OnPropertyChanged("Destination"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Destination;
             
             /// <summary>
             /// Who collected the medication
             /// </summary>
-            [FhirElement("receiver", InSummary=true, Order=100)]
+            [FhirElement("receiver", InSummary=true, Order=120)]
             [References("Patient","Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -541,12 +561,13 @@ namespace Hl7.Fhir.Model
                 get { if(_Receiver==null) _Receiver = new List<Hl7.Fhir.Model.ResourceReference>(); return _Receiver; }
                 set { _Receiver = value; OnPropertyChanged("Receiver"); }
             }
+            
             private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
             
             /// <summary>
             /// Medicine administration instructions to the patient/carer
             /// </summary>
-            [FhirElement("dosage", InSummary=true, Order=110)]
+            [FhirElement("dosage", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseDosageComponent> Dosage
@@ -554,6 +575,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Dosage==null) _Dosage = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseDosageComponent>(); return _Dosage; }
                 set { _Dosage = value; OnPropertyChanged("Dosage"); }
             }
+            
             private List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseDosageComponent> _Dosage;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -630,25 +652,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// in progress | on hold | completed | entered in error | stopped
         /// </summary>
-        [FhirElement("status", Order=60)]
+        [FhirElement("status", Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
         
         /// <summary>
@@ -673,7 +697,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the dispense is for
         /// </summary>
-        [FhirElement("patient", Order=70)]
+        [FhirElement("patient", Order=110)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -681,12 +705,13 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Practitioner responsible for dispensing medication
         /// </summary>
-        [FhirElement("dispenser", Order=80)]
+        [FhirElement("dispenser", Order=120)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Dispenser
@@ -694,12 +719,13 @@ namespace Hl7.Fhir.Model
             get { return _Dispenser; }
             set { _Dispenser = value; OnPropertyChanged("Dispenser"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Dispenser;
         
         /// <summary>
         /// Medication order that authorizes the dispense
         /// </summary>
-        [FhirElement("authorizingPrescription", Order=90)]
+        [FhirElement("authorizingPrescription", Order=130)]
         [References("MedicationPrescription")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -708,12 +734,13 @@ namespace Hl7.Fhir.Model
             get { if(_AuthorizingPrescription==null) _AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(); return _AuthorizingPrescription; }
             set { _AuthorizingPrescription = value; OnPropertyChanged("AuthorizingPrescription"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _AuthorizingPrescription;
         
         /// <summary>
         /// Details for individual dispensed medicationdetails
         /// </summary>
-        [FhirElement("dispense", Order=100)]
+        [FhirElement("dispense", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseComponent> Dispense
@@ -721,18 +748,20 @@ namespace Hl7.Fhir.Model
             get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
+        
         private List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDispenseComponent> _Dispense;
         
         /// <summary>
         /// Deals with substitution of one medicine for another
         /// </summary>
-        [FhirElement("substitution", Order=110)]
+        [FhirElement("substitution", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent Substitution
         {
             get { return _Substitution; }
             set { _Substitution = value; OnPropertyChanged("Substitution"); }
         }
+        
         private Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent _Substitution;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

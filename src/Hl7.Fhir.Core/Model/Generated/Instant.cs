@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("instant")]
     [DataContract]
-    public partial class Instant : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Instant : Hl7.Fhir.Model.Primitive<DateTimeOffset?>, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "instant"; } }
@@ -68,7 +68,6 @@ namespace Hl7.Fhir.Model
             get { return _Value; }
             set { _Value = value; OnPropertyChanged("Value"); }
         }
-        private DateTimeOffset? _Value;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

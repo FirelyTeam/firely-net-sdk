@@ -175,25 +175,50 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        public static Uri MakeAbsoluteToBase(Uri location, Uri baseUrl)
+        {
+            // If called without a location, just return the base endpoint
+            if (location == null) return baseUrl;
+
+            // If the location is absolute, verify whether it is within the endpoint
+            if (location.IsAbsoluteUri)
+            {
+                if (!new RestUrl(baseUrl).IsEndpointFor(location))
+                    throw Error.Argument("location", "Url is not located within the given base endpoint");
+            }
+            else
+            {
+                // Else, make location absolute within the endpoint
+                //location = new Uri(Endpoint, location);
+                location = new RestUrl(baseUrl).AddPath(location).Uri;
+            }
+
+            return location;
+        }
+
         public static bool IsWithin(this Uri me, Uri other)
         {
-            if (!other.IsAbsoluteUri) return false;     // can never be within a relative path
+            if (!other.IsAbsoluteUri)
+                return false;     // can never be within a relative path
 
             if (me.IsAbsoluteUri)
             {
-                if (other.Authority.ToLower() != me.Authority.ToLower()) return false;
+                if (other.Authority.ToLower() != me.Authority.ToLower()) 
+                    return false;
             }
 
-            var meSegments = me.OriginalString.ToLower().Split('/');
-            var otherSegments = other.OriginalString.ToLower().Split('/');
+            var meSegments = me.OriginalString.TrimEnd('/').ToLower().Split('/');
+            var otherSegments = other.OriginalString.TrimEnd('/').ToLower().Split('/');
 
             var otherLength = otherSegments.Length;
             var meLength = meSegments.Length;
 
-            if (meSegments.Length > otherSegments.Length) return false;
-            for (int index = 0; index < meLength; index++)
+            if (meSegments.Length < otherSegments.Length) 
+                return false;
+            for (int index = 0; index < otherLength; index++)
             {
-                if (otherSegments[otherLength-index-1].TrimEnd('/') != meSegments[meLength-index-1].TrimEnd('/')) return false;
+                if (otherSegments[index].TrimEnd('/') != meSegments[index].TrimEnd('/')) 
+                    return false;
             }
 
             return true;

@@ -32,10 +32,10 @@ namespace Hl7.Fhir.Tests.Validation
             id = new Id("!notgood!");
             validateErrorOrFail(id);
 
-            id = new Id("NotGood");
+            id = new Id("NotGood!");
             validateErrorOrFail(id);
 
-            id = new Id("1234567890123456789012345678901234567");
+            id = new Id("123456789012345678901234567890123456745290123456745290123456745290123456745290");
             validateErrorOrFail(id);
         }
 
@@ -180,68 +180,13 @@ namespace Hl7.Fhir.Tests.Validation
             FhirDateTime dt = new FhirDateTime();
             dt.Value = "Ewout Kramer";  // clearly, a wrong datetime
 
-            enc.Hospitalization = new Encounter.EncounterHospitalizationComponent();
-            enc.Hospitalization.Period = new Period() { StartElement = dt };
+            enc.Period = new Period() { StartElement = dt };
 
             // When we do not validate recursively, we should still be ok
             DotNetAttributeValidation.Validate(enc);
 
             // When we recurse, this should fail
             validateErrorOrFail(enc, true, membername: "Value");
-        }
-
-        [TestMethod]
-        public void ValidateEntry()
-        {
-            var pe = new ResourceEntry<Patient>(new Uri("http://www.nu.nl/fhir/Patient/1"), DateTimeOffset.Now, new Patient());
-            Assert.IsNotNull(pe.Id);
-            Assert.IsNotNull(pe.Title);
-            Assert.IsNotNull(pe.LastUpdated);
-            Assert.IsNotNull(pe.Resource);
-            DotNetAttributeValidation.Validate(pe);
-
-            var b = new Bundle("A test feed", DateTimeOffset.Now);
-            b.AuthorName = "Ewout";
-
-            Assert.IsNotNull(pe.Id);
-            Assert.IsNotNull(pe.Title);
-            Assert.IsNotNull(pe.LastUpdated);
-            b.Entries.Add(pe);
-            DotNetAttributeValidation.Validate(b);
-        }
-
-
-        [TestMethod]
-        public void ValidateBundleEntry()
-        {
-            var e = new ResourceEntry<Patient>();
-            e.Id = new Uri("http://someserver.org/fhir/Patient/1");
-            e.Title = "Some title";
-
-            // Validates mandatory fields?
-            validateErrorOrFail(e);
-            e.LastUpdated = DateTimeOffset.Now;
-            e.Resource = new Patient();
-            DotNetAttributeValidation.Validate(e);
-
-            // Checks nested errors on resource content?
-            e.Resource = new Patient { Deceased = new FhirUri() };
-            validateErrorOrFail(e, true);
-
-            e.Resource = new Patient();
-
-            var bundle = new Bundle() { Title = "Some feed title" };
-            bundle.Id = new Uri("http://someserver.org/fhir/feed/1424234232342");
-
-            // Validates mandatory fields?
-            validateErrorOrFail(bundle);
-            bundle.LastUpdated = DateTimeOffset.Now;
-            DotNetAttributeValidation.Validate(bundle);
-
-            // Checks nested errors on nested bundle element?
-            bundle.Entries.Add(e);
-            e.Id = null;
-            validateErrorOrFail(bundle,true);
         }
 
 

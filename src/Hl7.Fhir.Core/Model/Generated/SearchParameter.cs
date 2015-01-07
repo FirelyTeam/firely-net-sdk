@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this search parameter
         /// </summary>
-        [FhirElement("url", Order=50)]
+        [FhirElement("url", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of search parameter
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -95,6 +96,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -119,13 +121,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=70)]
+        [FhirElement("publisher", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
             get { return _PublisherElement; }
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -150,7 +153,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=80)]
+        [FhirElement("telecom", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -158,18 +161,20 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
         /// Why this search parameter is defined
         /// </summary>
-        [FhirElement("requirements", Order=90)]
+        [FhirElement("requirements", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
             get { return _RequirementsElement; }
             set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
@@ -194,7 +199,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The resource type this search parameter applies to
         /// </summary>
-        [FhirElement("base", Order=100)]
+        [FhirElement("base", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code BaseElement
@@ -202,6 +207,7 @@ namespace Hl7.Fhir.Model
             get { return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _BaseElement;
         
         /// <summary>
@@ -226,7 +232,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// number | date | string | token | reference | composite | quantity
         /// </summary>
-        [FhirElement("type", Order=110)]
+        [FhirElement("type", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code TypeElement
@@ -234,6 +240,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
@@ -258,7 +265,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Documentation for  search parameter
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -266,6 +273,7 @@ namespace Hl7.Fhir.Model
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -290,13 +298,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// XPath that extracts the values
         /// </summary>
-        [FhirElement("xpath", Order=130)]
+        [FhirElement("xpath", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString XpathElement
         {
             get { return _XpathElement; }
             set { _XpathElement = value; OnPropertyChanged("XpathElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _XpathElement;
         
         /// <summary>
@@ -321,7 +330,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Types of resource (if a resource reference)
         /// </summary>
-        [FhirElement("target", Order=140)]
+        [FhirElement("target", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> TargetElement
@@ -329,6 +338,7 @@ namespace Hl7.Fhir.Model
             get { if(_TargetElement==null) _TargetElement = new List<Hl7.Fhir.Model.Code>(); return _TargetElement; }
             set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
         }
+        
         private List<Hl7.Fhir.Model.Code> _TargetElement;
         
         /// <summary>

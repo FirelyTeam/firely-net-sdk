@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Message part content
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=20, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
+            
             private Hl7.Fhir.Model.Element _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -178,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -186,24 +187,26 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Message category
         /// </summary>
-        [FhirElement("category", Order=60)]
+        [FhirElement("category", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
         /// Message sender
         /// </summary>
-        [FhirElement("sender", Order=70)]
+        [FhirElement("sender", Order=110)]
         [References("Patient","Practitioner","Device","RelatedPerson","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
@@ -211,12 +214,13 @@ namespace Hl7.Fhir.Model
             get { return _Sender; }
             set { _Sender = value; OnPropertyChanged("Sender"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Sender;
         
         /// <summary>
         /// Message recipient
         /// </summary>
-        [FhirElement("recipient", Order=80)]
+        [FhirElement("recipient", Order=120)]
         [References("Patient","Device","RelatedPerson","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -225,12 +229,13 @@ namespace Hl7.Fhir.Model
             get { if(_Recipient==null) _Recipient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recipient; }
             set { _Recipient = value; OnPropertyChanged("Recipient"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("payload", Order=90)]
+        [FhirElement("payload", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> Payload
@@ -238,12 +243,13 @@ namespace Hl7.Fhir.Model
             get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent>(); return _Payload; }
             set { _Payload = value; OnPropertyChanged("Payload"); }
         }
+        
         private List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> _Payload;
         
         /// <summary>
         /// Communication medium
         /// </summary>
-        [FhirElement("medium", Order=100)]
+        [FhirElement("medium", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -251,12 +257,13 @@ namespace Hl7.Fhir.Model
             get { if(_Medium==null) _Medium = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Medium; }
             set { _Medium = value; OnPropertyChanged("Medium"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
         
         /// <summary>
         /// Requester of communication
         /// </summary>
-        [FhirElement("requester", Order=110)]
+        [FhirElement("requester", Order=150)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
@@ -264,18 +271,20 @@ namespace Hl7.Fhir.Model
             get { return _Requester; }
             set { _Requester = value; OnPropertyChanged("Requester"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
         /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus> _StatusElement;
         
         /// <summary>
@@ -300,7 +309,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter leading to message
         /// </summary>
-        [FhirElement("encounter", Order=130)]
+        [FhirElement("encounter", Order=170)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -308,18 +317,20 @@ namespace Hl7.Fhir.Model
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("scheduledTime", Order=140)]
+        [FhirElement("scheduledTime", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ScheduledTimeElement
         {
             get { return _ScheduledTimeElement; }
             set { _ScheduledTimeElement = value; OnPropertyChanged("ScheduledTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _ScheduledTimeElement;
         
         /// <summary>
@@ -344,7 +355,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", Order=150)]
+        [FhirElement("reason", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -352,18 +363,20 @@ namespace Hl7.Fhir.Model
             get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
         /// When ordered or proposed
         /// </summary>
-        [FhirElement("orderedOn", Order=160)]
+        [FhirElement("orderedOn", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
             get { return _OrderedOnElement; }
             set { _OrderedOnElement = value; OnPropertyChanged("OrderedOnElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _OrderedOnElement;
         
         /// <summary>
@@ -388,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", Order=170)]
+        [FhirElement("subject", Order=210)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -396,18 +409,20 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Message urgency
         /// </summary>
-        [FhirElement("priority", Order=180)]
+        [FhirElement("priority", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
             get { return _Priority; }
             set { _Priority = value; OnPropertyChanged("Priority"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Priority;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

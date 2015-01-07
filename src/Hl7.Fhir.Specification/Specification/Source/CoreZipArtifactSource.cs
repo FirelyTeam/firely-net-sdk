@@ -17,6 +17,7 @@ using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
+//using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class CoreZipArtifactSource : IArtifactSource
     {
-        private const string CACHE_KEY = "FhirArtifactCache";
+        private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(CoreZipArtifactSource).Assembly.GetName().Version.ToString();
 
         private readonly string _contentDirectory;
         

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Study instance uid
             /// </summary>
-            [FhirElement("uid", InSummary=true, Order=20)]
+            [FhirElement("uid", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -227,13 +228,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// AE Title where may be retrieved
             /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=30)]
+            [FhirElement("retrieveAETitle", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Id RetrieveAETitleElement
             {
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -258,13 +260,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=40)]
+            [FhirElement("retrieveUrl", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
             {
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -289,7 +292,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Series identity of the selected instances
             /// </summary>
-            [FhirElement("series", InSummary=true, Order=50)]
+            [FhirElement("series", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent> Series
@@ -297,6 +300,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent>(); return _Series; }
                 set { _Series = value; OnPropertyChanged("Series"); }
             }
+            
             private List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent> _Series;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -362,7 +366,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// SOP class uid of instance
             /// </summary>
-            [FhirElement("sopClass", InSummary=true, Order=20)]
+            [FhirElement("sopClass", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid SopClassElement
@@ -370,6 +374,7 @@ namespace Hl7.Fhir.Model
                 get { return _SopClassElement; }
                 set { _SopClassElement = value; OnPropertyChanged("SopClassElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _SopClassElement;
             
             /// <summary>
@@ -394,7 +399,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Uid of the selected instance
             /// </summary>
-            [FhirElement("uid", InSummary=true, Order=30)]
+            [FhirElement("uid", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -402,6 +407,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -426,13 +432,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// AE Title where may be retrieved
             /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=40)]
+            [FhirElement("retrieveAETitle", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Id RetrieveAETitleElement
             {
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -457,13 +464,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=50)]
+            [FhirElement("retrieveUrl", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
             {
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -548,7 +556,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Series instance uid
             /// </summary>
-            [FhirElement("uid", InSummary=true, Order=20)]
+            [FhirElement("uid", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -556,6 +564,7 @@ namespace Hl7.Fhir.Model
                 get { return _UidElement; }
                 set { _UidElement = value; OnPropertyChanged("UidElement"); }
             }
+            
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
@@ -580,13 +589,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// AE Title where may be retrieved
             /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=30)]
+            [FhirElement("retrieveAETitle", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Id RetrieveAETitleElement
             {
                 get { return _RetrieveAETitleElement; }
                 set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
             }
+            
             private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
             
             /// <summary>
@@ -611,13 +621,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=40)]
+            [FhirElement("retrieveUrl", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
             {
                 get { return _RetrieveUrlElement; }
                 set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
             
             /// <summary>
@@ -642,7 +653,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The selected instance
             /// </summary>
-            [FhirElement("instance", InSummary=true, Order=50)]
+            [FhirElement("instance", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent> Instance
@@ -650,6 +661,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent>(); return _Instance; }
                 set { _Instance = value; OnPropertyChanged("Instance"); }
             }
+            
             private List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent> _Instance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -708,7 +720,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instance UID
         /// </summary>
-        [FhirElement("uid", Order=50)]
+        [FhirElement("uid", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Oid UidElement
@@ -716,6 +728,7 @@ namespace Hl7.Fhir.Model
             get { return _UidElement; }
             set { _UidElement = value; OnPropertyChanged("UidElement"); }
         }
+        
         private Hl7.Fhir.Model.Oid _UidElement;
         
         /// <summary>
@@ -740,7 +753,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient of the selected objects
         /// </summary>
-        [FhirElement("patient", Order=60)]
+        [FhirElement("patient", Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -749,12 +762,13 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Reason for selection
         /// </summary>
-        [FhirElement("title", Order=70)]
+        [FhirElement("title", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Title
@@ -762,18 +776,20 @@ namespace Hl7.Fhir.Model
             get { return _Title; }
             set { _Title = value; OnPropertyChanged("Title"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Title;
         
         /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", Order=80)]
+        [FhirElement("description", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -798,7 +814,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Author (human or machine)
         /// </summary>
-        [FhirElement("author", Order=90)]
+        [FhirElement("author", Order=130)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -806,18 +822,20 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Authoring time of the selection
         /// </summary>
-        [FhirElement("authoringTime", Order=100)]
+        [FhirElement("authoringTime", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
         {
             get { return _AuthoringTimeElement; }
             set { _AuthoringTimeElement = value; OnPropertyChanged("AuthoringTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _AuthoringTimeElement;
         
         /// <summary>
@@ -842,7 +860,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Study identity of the selected instances
         /// </summary>
-        [FhirElement("study", Order=110)]
+        [FhirElement("study", Order=150)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent> Study
@@ -850,6 +868,7 @@ namespace Hl7.Fhir.Model
             get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent>(); return _Study; }
             set { _Study = value; OnPropertyChanged("Study"); }
         }
+        
         private List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent> _Study;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -34,6 +34,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -44,7 +45,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// This is the base URL of the FHIR server that this resource is hosted on
         /// </summary>
-        [Hl7.Fhir.Introspection.NotMapped]
+        [NotMapped]
         public Uri ResourceBase;
 
         /// <summary>
@@ -81,6 +82,29 @@ namespace Hl7.Fhir.Model
             }
 
             return result;
+        }
+
+        [NotMapped]
+        public string VersionId
+        {
+            get 
+            {
+                if (HasVersionId)
+                    return Meta.VersionId;
+                else 
+                    return null;
+            }
+            set
+            {
+                if (Meta == null) Meta = new ResourceMetaComponent();
+                Meta.VersionId = value;
+            }
+        }
+
+        [NotMapped]
+        public bool HasVersionId
+        {
+            get { return Meta != null && Meta.VersionId != null; }
         }
     }
 }

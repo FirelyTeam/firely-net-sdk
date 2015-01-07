@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -136,19 +136,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of person
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
                 get { return _Name; }
                 set { _Name = value; OnPropertyChanged("Name"); }
             }
+            
             private Hl7.Fhir.Model.HumanName _Name;
             
             /// <summary>
             /// Phone, email, etc.
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=30)]
+            [FhirElement("telecom", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -156,6 +157,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
+            
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -215,7 +217,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -223,6 +225,7 @@ namespace Hl7.Fhir.Model
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> _TypeElement;
             
             /// <summary>
@@ -247,7 +250,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -255,6 +258,7 @@ namespace Hl7.Fhir.Model
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
@@ -279,13 +283,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this the id that should be used for this type
             /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=40)]
+            [FhirElement("preferred", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean PreferredElement
             {
                 get { return _PreferredElement; }
                 set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
             
             /// <summary>
@@ -310,13 +315,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
                 get { return _Period; }
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
+            
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -375,7 +381,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// codesystem | identifier | root
         /// </summary>
-        [FhirElement("type", Order=50)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> TypeElement
@@ -383,6 +389,7 @@ namespace Hl7.Fhir.Model
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> _TypeElement;
         
         /// <summary>
@@ -407,7 +414,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", Order=60)]
+        [FhirElement("name", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -415,6 +422,7 @@ namespace Hl7.Fhir.Model
             get { return _NameElement; }
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -439,7 +447,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | active | retired
         /// </summary>
-        [FhirElement("status", Order=70)]
+        [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> StatusElement
@@ -447,6 +455,7 @@ namespace Hl7.Fhir.Model
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> _StatusElement;
         
         /// <summary>
@@ -471,13 +480,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ISO 3-char country code
         /// </summary>
-        [FhirElement("country", Order=80)]
+        [FhirElement("country", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Code CountryElement
         {
             get { return _CountryElement; }
             set { _CountryElement = value; OnPropertyChanged("CountryElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _CountryElement;
         
         /// <summary>
@@ -502,25 +512,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// driver | provider | patient | bank
         /// </summary>
-        [FhirElement("category", Order=90)]
+        [FhirElement("category", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
         /// Who maintains system namespace?
         /// </summary>
-        [FhirElement("responsible", Order=100)]
+        [FhirElement("responsible", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ResponsibleElement
         {
             get { return _ResponsibleElement; }
             set { _ResponsibleElement = value; OnPropertyChanged("ResponsibleElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _ResponsibleElement;
         
         /// <summary>
@@ -545,13 +557,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What does namingsystem identify?
         /// </summary>
-        [FhirElement("description", Order=110)]
+        [FhirElement("description", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
             get { return _DescriptionElement; }
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -576,13 +589,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How/where is it used
         /// </summary>
-        [FhirElement("usage", Order=120)]
+        [FhirElement("usage", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UsageElement
         {
             get { return _UsageElement; }
             set { _UsageElement = value; OnPropertyChanged("UsageElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _UsageElement;
         
         /// <summary>
@@ -607,7 +621,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", Order=130)]
+        [FhirElement("uniqueId", Order=170)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
@@ -615,24 +629,26 @@ namespace Hl7.Fhir.Model
             get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(); return _UniqueId; }
             set { _UniqueId = value; OnPropertyChanged("UniqueId"); }
         }
+        
         private List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> _UniqueId;
         
         /// <summary>
         /// Who should be contacted for questions about namingsystem
         /// </summary>
-        [FhirElement("contact", Order=140)]
+        [FhirElement("contact", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent Contact
         {
             get { return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
+        
         private Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent _Contact;
         
         /// <summary>
         /// Use this instead
         /// </summary>
-        [FhirElement("replacedBy", Order=150)]
+        [FhirElement("replacedBy", Order=190)]
         [References("NamingSystem")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReplacedBy
@@ -640,6 +656,7 @@ namespace Hl7.Fhir.Model
             get { return _ReplacedBy; }
             set { _ReplacedBy = value; OnPropertyChanged("ReplacedBy"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

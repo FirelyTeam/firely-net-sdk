@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// An identifier for this qualification for the practitioner
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -70,12 +70,13 @@ namespace Hl7.Fhir.Model
                 get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// Coded representation of the qualification
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=30)]
+            [FhirElement("code", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -83,24 +84,26 @@ namespace Hl7.Fhir.Model
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Period during which the qualification is valid
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=40)]
+            [FhirElement("period", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
                 get { return _Period; }
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
+            
             private Hl7.Fhir.Model.Period _Period;
             
             /// <summary>
             /// Organization that regulates and issues the qualification
             /// </summary>
-            [FhirElement("issuer", InSummary=true, Order=50)]
+            [FhirElement("issuer", InSummary=true, Order=70)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Issuer
@@ -108,6 +111,7 @@ namespace Hl7.Fhir.Model
                 get { return _Issuer; }
                 set { _Issuer = value; OnPropertyChanged("Issuer"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Issuer;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -166,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A identifier for the person as this agent
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -174,24 +178,26 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=60)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.HumanName Name
         {
             get { return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
+        
         private Hl7.Fhir.Model.HumanName _Name;
         
         /// <summary>
         /// A contact detail for the practitioner
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=70)]
+        [FhirElement("telecom", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -199,12 +205,13 @@ namespace Hl7.Fhir.Model
             get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
+        
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
         /// Where practitioner can be found/visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=80)]
+        [FhirElement("address", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -212,18 +219,20 @@ namespace Hl7.Fhir.Model
             get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
+        
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=90)]
+        [FhirElement("gender", InSummary=true, Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
             get { return _GenderElement; }
             set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
         
         /// <summary>
@@ -248,13 +257,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date and time of birth for the practitioner
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=100)]
+        [FhirElement("birthDate", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime BirthDateElement
         {
             get { return _BirthDateElement; }
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
         
         /// <summary>
@@ -279,7 +289,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=110)]
+        [FhirElement("photo", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -287,12 +297,13 @@ namespace Hl7.Fhir.Model
             get { if(_Photo==null) _Photo = new List<Hl7.Fhir.Model.Attachment>(); return _Photo; }
             set { _Photo = value; OnPropertyChanged("Photo"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
         /// <summary>
         /// The represented organization
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=120)]
+        [FhirElement("organization", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -300,12 +311,13 @@ namespace Hl7.Fhir.Model
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
         /// Roles which this practitioner may perform
         /// </summary>
-        [FhirElement("role", InSummary=true, Order=130)]
+        [FhirElement("role", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -313,12 +325,13 @@ namespace Hl7.Fhir.Model
             get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
             set { _Role = value; OnPropertyChanged("Role"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Role;
         
         /// <summary>
         /// Specific specialty of the practitioner
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=140)]
+        [FhirElement("specialty", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -326,24 +339,26 @@ namespace Hl7.Fhir.Model
             get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
             set { _Specialty = value; OnPropertyChanged("Specialty"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
         
         /// <summary>
         /// The period during which the practitioner is authorized to perform in these role(s)
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=150)]
+        [FhirElement("period", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
         /// The location(s) at which this practitioner provides care
         /// </summary>
-        [FhirElement("location", Order=160)]
+        [FhirElement("location", Order=200)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -352,12 +367,13 @@ namespace Hl7.Fhir.Model
             get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Location;
         
         /// <summary>
         /// Qualifications obtained by training and certification
         /// </summary>
-        [FhirElement("qualification", Order=170)]
+        [FhirElement("qualification", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
@@ -365,12 +381,13 @@ namespace Hl7.Fhir.Model
             get { if(_Qualification==null) _Qualification = new List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent>(); return _Qualification; }
             set { _Qualification = value; OnPropertyChanged("Qualification"); }
         }
+        
         private List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> _Qualification;
         
         /// <summary>
         /// A language the practitioner is able to use in patient communication
         /// </summary>
-        [FhirElement("communication", Order=180)]
+        [FhirElement("communication", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -378,6 +395,7 @@ namespace Hl7.Fhir.Model
             get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Communication; }
             set { _Communication = value; OnPropertyChanged("Communication"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What mitigation?
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=20)]
+            [FhirElement("action", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Action
@@ -70,18 +70,20 @@ namespace Hl7.Fhir.Model
                 get { return _Action; }
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Action;
             
             /// <summary>
             /// Date committed
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=30)]
+            [FhirElement("date", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
                 get { return _DateElement; }
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -106,7 +108,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is committing?
             /// </summary>
-            [FhirElement("author", InSummary=true, Order=40)]
+            [FhirElement("author", InSummary=true, Order=60)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author
@@ -114,6 +116,7 @@ namespace Hl7.Fhir.Model
                 get { return _Author; }
                 set { _Author = value; OnPropertyChanged("Author"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Author;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -169,7 +172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated patient
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=50)]
+        [FhirElement("patient", InSummary=true, Order=90)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -177,30 +180,33 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// E.g. Drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=60)]
+        [FhirElement("category", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
         /// high | medium | low
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=70)]
+        [FhirElement("severity", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Code SeverityElement
         {
             get { return _SeverityElement; }
             set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
         }
+        
         private Hl7.Fhir.Model.Code _SeverityElement;
         
         /// <summary>
@@ -225,7 +231,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Problem resource
         /// </summary>
-        [FhirElement("implicated", InSummary=true, Order=80)]
+        [FhirElement("implicated", InSummary=true, Order=120)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -234,18 +240,20 @@ namespace Hl7.Fhir.Model
             get { if(_Implicated==null) _Implicated = new List<Hl7.Fhir.Model.ResourceReference>(); return _Implicated; }
             set { _Implicated = value; OnPropertyChanged("Implicated"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
         
         /// <summary>
         /// Description and context
         /// </summary>
-        [FhirElement("detail", Order=90)]
+        [FhirElement("detail", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DetailElement
         {
             get { return _DetailElement; }
             set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _DetailElement;
         
         /// <summary>
@@ -270,13 +278,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=100)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -301,7 +310,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who found issue?
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=110)]
+        [FhirElement("author", InSummary=true, Order=150)]
         [References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -309,30 +318,33 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Unique id for the contraindication
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=120)]
+        [FhirElement("identifier", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Authority for issue
         /// </summary>
-        [FhirElement("reference", Order=130)]
+        [FhirElement("reference", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ReferenceElement
         {
             get { return _ReferenceElement; }
             set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirUri _ReferenceElement;
         
         /// <summary>
@@ -357,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Step taken to address
         /// </summary>
-        [FhirElement("mitigation", Order=140)]
+        [FhirElement("mitigation", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> Mitigation
@@ -365,6 +377,7 @@ namespace Hl7.Fhir.Model
             get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
+        
         private List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> _Mitigation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

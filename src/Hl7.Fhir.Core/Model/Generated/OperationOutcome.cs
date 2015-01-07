@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// fatal | error | warning | information
             /// </summary>
-            [FhirElement("severity", InSummary=true, Order=20)]
+            [FhirElement("severity", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement
@@ -236,6 +236,7 @@ namespace Hl7.Fhir.Model
                 get { return _SeverityElement; }
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
+            
             private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
             
             /// <summary>
@@ -260,25 +261,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
             {
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
             /// Additional description of the issue
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=40)]
+            [FhirElement("details", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailsElement
             {
                 get { return _DetailsElement; }
                 set { _DetailsElement = value; OnPropertyChanged("DetailsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
             /// <summary>
@@ -303,7 +306,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", InSummary=true, Order=50)]
+            [FhirElement("location", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> LocationElement
@@ -311,6 +314,7 @@ namespace Hl7.Fhir.Model
                 get { if(_LocationElement==null) _LocationElement = new List<Hl7.Fhir.Model.FhirString>(); return _LocationElement; }
                 set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
             }
+            
             private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             /// <summary>
@@ -388,7 +392,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A single issue associated with the action
         /// </summary>
-        [FhirElement("issue", Order=50)]
+        [FhirElement("issue", Order=90)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> Issue
@@ -396,6 +400,7 @@ namespace Hl7.Fhir.Model
             get { if(_Issue==null) _Issue = new List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent>(); return _Issue; }
             set { _Issue = value; OnPropertyChanged("Issue"); }
         }
+        
         private List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> _Issue;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

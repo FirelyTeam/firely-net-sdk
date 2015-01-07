@@ -30,13 +30,15 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(object instance, bool summary, bool contained = false)
+        public void Serialize(object instance, bool summary, bool contained = false, string root = null)
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
             var mapping = _inspector.ImportType(instance.GetType());
 
-            _writer.WriteStartRootObject(mapping.Name,contained);
+            var rootName = root ?? mapping.Name;
+
+            _writer.WriteStartRootObject(rootName,contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
             complexSerializer.Serialize(mapping, instance, summary);

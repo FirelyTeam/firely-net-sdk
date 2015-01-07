@@ -135,34 +135,7 @@ namespace Hl7.Fhir.Model
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var result = new List<ValidationResult>();
-
-            result.AddRange(base.Validate(validationContext));
-
-            //if (String.IsNullOrWhiteSpace(Title))
-            //    result.Add(new ValidationResult("Feed must contain a title", FhirValidator.SingleMemberName("Title"));
-
-            //if (!UriHasValue(Id))
-            //    result.Add(new ValidationResult("Feed must have an id"));
-            //else
-            //    if (!Id.IsAbsoluteUri)
-            //        result.Add(new ValidationResult("Feed id must be an absolute URI"));
-
-            if (Id != null)
-            {
-                var idAsUri = new Uri(Id, UriKind.RelativeOrAbsolute);
-
-                 if(!idAsUri.IsAbsoluteUri)
-                    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
-            }
-
-            //if (LastUpdated == null)
-            //    result.Add(new ValidationResult("Feed must have a updated date"));
-
-            if (SearchLink != null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
-
-            return result;
+            return base.Validate(validationContext);
         }
 
         internal static bool UriHasValue(Uri u)

@@ -34,11 +34,13 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 
+#if PORTABLE45
+
 namespace System.Net.Mime
 {
     internal class ContentType
     {
-        #region Fields
+#region Fields
         static Encoding utf8unmarked;
 
         string mediaType;
@@ -46,7 +48,7 @@ namespace System.Net.Mime
 
         #endregion // Fields
 
-        #region Constructors
+#region Constructors
 
         public ContentType()
         {
@@ -85,7 +87,7 @@ namespace System.Net.Mime
 
         #endregion // Constructors
 
-        #region Properties
+#region Properties
 
         static Encoding UTF8Unmarked
         {
@@ -139,7 +141,7 @@ namespace System.Net.Mime
 
         #endregion // Properties
 
-        #region Methods
+#region Methods
 
         public override bool Equals(object obj)
         {
@@ -234,3 +236,4 @@ namespace System.Net.Mime
         #endregion // Methods
     }
 }
+#endif

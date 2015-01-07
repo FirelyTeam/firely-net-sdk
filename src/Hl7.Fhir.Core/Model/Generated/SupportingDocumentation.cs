@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// LinkId
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=20)]
+            [FhirElement("linkId", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer LinkIdElement
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _LinkIdElement; }
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
+            
             private Hl7.Fhir.Model.Integer _LinkIdElement;
             
             /// <summary>
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Content
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Attachment))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -103,18 +104,20 @@ namespace Hl7.Fhir.Model
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
+            
             private Hl7.Fhir.Model.Element _Content;
             
             /// <summary>
             /// Creation date and time
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=40)]
+            [FhirElement("dateTime", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
             {
                 get { return _DateTimeElement; }
                 set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
             
             /// <summary>
@@ -189,7 +192,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -197,42 +200,46 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=60)]
+        [FhirElement("ruleset", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
             get { return _Ruleset; }
             set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
         }
+        
         private Hl7.Fhir.Model.Coding _Ruleset;
         
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=70)]
+        [FhirElement("originalRuleset", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
             get { return _OriginalRuleset; }
             set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
         }
+        
         private Hl7.Fhir.Model.Coding _OriginalRuleset;
         
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=80)]
+        [FhirElement("created", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
             get { return _CreatedElement; }
             set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
@@ -257,7 +264,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer or Provider
         /// </summary>
-        [FhirElement("target", Order=90)]
+        [FhirElement("target", Order=130)]
         [References("Organization","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
@@ -265,12 +272,13 @@ namespace Hl7.Fhir.Model
             get { return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Target;
         
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=100)]
+        [FhirElement("provider", Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
@@ -278,12 +286,13 @@ namespace Hl7.Fhir.Model
             get { return _Provider; }
             set { _Provider = value; OnPropertyChanged("Provider"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=110)]
+        [FhirElement("organization", Order=150)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -291,12 +300,13 @@ namespace Hl7.Fhir.Model
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=120)]
+        [FhirElement("request", Order=160)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -304,12 +314,13 @@ namespace Hl7.Fhir.Model
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", Order=130)]
+        [FhirElement("response", Order=170)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
@@ -317,12 +328,13 @@ namespace Hl7.Fhir.Model
             get { return _Response; }
             set { _Response = value; OnPropertyChanged("Response"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Response;
         
         /// <summary>
         /// Author
         /// </summary>
-        [FhirElement("author", Order=140)]
+        [FhirElement("author", Order=180)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -330,12 +342,13 @@ namespace Hl7.Fhir.Model
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Patient
         /// </summary>
-        [FhirElement("subject", Order=150)]
+        [FhirElement("subject", Order=190)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -343,12 +356,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Supporting Files
         /// </summary>
-        [FhirElement("detail", Order=160)]
+        [FhirElement("detail", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SupportingDocumentation.SupportingDocumentationDetailComponent> Detail
@@ -356,6 +370,7 @@ namespace Hl7.Fhir.Model
             get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.SupportingDocumentation.SupportingDocumentationDetailComponent>(); return _Detail; }
             set { _Detail = value; OnPropertyChanged("Detail"); }
         }
+        
         private List<Hl7.Fhir.Model.SupportingDocumentation.SupportingDocumentationDetailComponent> _Detail;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition suffered by relation
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -70,24 +70,26 @@ namespace Hl7.Fhir.Model
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// deceased | permanent disability | etc.
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=30)]
+            [FhirElement("outcome", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Outcome
             {
                 get { return _Outcome; }
                 set { _Outcome = value; OnPropertyChanged("Outcome"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Outcome;
             
             /// <summary>
             /// When condition first manifested
             /// </summary>
-            [FhirElement("onset", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onset", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Onset
@@ -95,18 +97,20 @@ namespace Hl7.Fhir.Model
                 get { return _Onset; }
                 set { _Onset = value; OnPropertyChanged("Onset"); }
             }
+            
             private Hl7.Fhir.Model.Element _Onset;
             
             /// <summary>
             /// Extra information about condition
             /// </summary>
-            [FhirElement("note", InSummary=true, Order=50)]
+            [FhirElement("note", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NoteElement
             {
                 get { return _NoteElement; }
                 set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NoteElement;
             
             /// <summary>
@@ -191,13 +195,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The family member described
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -222,7 +227,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship to the subject
             /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=30)]
+            [FhirElement("relationship", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Relationship
@@ -230,12 +235,13 @@ namespace Hl7.Fhir.Model
                 get { return _Relationship; }
                 set { _Relationship = value; OnPropertyChanged("Relationship"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Relationship;
             
             /// <summary>
             /// (approximate) date of birth
             /// </summary>
-            [FhirElement("born", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("born", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Born
@@ -243,12 +249,13 @@ namespace Hl7.Fhir.Model
                 get { return _Born; }
                 set { _Born = value; OnPropertyChanged("Born"); }
             }
+            
             private Hl7.Fhir.Model.Element _Born;
             
             /// <summary>
             /// (approximate) age
             /// </summary>
-            [FhirElement("age", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("age", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Age
@@ -256,12 +263,13 @@ namespace Hl7.Fhir.Model
                 get { return _Age; }
                 set { _Age = value; OnPropertyChanged("Age"); }
             }
+            
             private Hl7.Fhir.Model.Element _Age;
             
             /// <summary>
             /// Dead? How old/when?
             /// </summary>
-            [FhirElement("deceased", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("deceased", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Deceased
@@ -269,18 +277,20 @@ namespace Hl7.Fhir.Model
                 get { return _Deceased; }
                 set { _Deceased = value; OnPropertyChanged("Deceased"); }
             }
+            
             private Hl7.Fhir.Model.Element _Deceased;
             
             /// <summary>
             /// General note about related person
             /// </summary>
-            [FhirElement("note", InSummary=true, Order=70)]
+            [FhirElement("note", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NoteElement
             {
                 get { return _NoteElement; }
                 set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NoteElement;
             
             /// <summary>
@@ -305,7 +315,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition that the related person had
             /// </summary>
-            [FhirElement("condition", InSummary=true, Order=80)]
+            [FhirElement("condition", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationConditionComponent> Condition
@@ -313,6 +323,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationConditionComponent>(); return _Condition; }
                 set { _Condition = value; OnPropertyChanged("Condition"); }
             }
+            
             private List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationConditionComponent> _Condition;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -380,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Id(s) for this record
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -388,12 +399,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Patient history is about
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=60)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -402,18 +414,20 @@ namespace Hl7.Fhir.Model
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// When history was captured/updated
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=70)]
+        [FhirElement("date", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -438,13 +452,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional details not covered elsewhere
         /// </summary>
-        [FhirElement("note", Order=80)]
+        [FhirElement("note", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
         {
             get { return _NoteElement; }
             set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>
@@ -469,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Relative described by history
         /// </summary>
-        [FhirElement("relation", Order=90)]
+        [FhirElement("relation", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationComponent> Relation
@@ -477,6 +492,7 @@ namespace Hl7.Fhir.Model
             get { if(_Relation==null) _Relation = new List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationComponent>(); return _Relation; }
             set { _Relation = value; OnPropertyChanged("Relation"); }
         }
+        
         private List<Hl7.Fhir.Model.FamilyHistory.FamilyHistoryRelationComponent> _Relation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

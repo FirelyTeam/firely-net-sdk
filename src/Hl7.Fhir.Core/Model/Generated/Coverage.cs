@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the plan issuer
         /// </summary>
-        [FhirElement("issuer", InSummary=true, Order=50)]
+        [FhirElement("issuer", InSummary=true, Order=90)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Issuer
@@ -63,36 +63,39 @@ namespace Hl7.Fhir.Model
             get { return _Issuer; }
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=60)]
+        [FhirElement("period", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
         /// Type of coverage
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=70)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Type
         {
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.Coding _Type;
         
         /// <summary>
         /// The primary coverage ID
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=80)]
+        [FhirElement("identifier", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -100,18 +103,20 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// An identifier for the group
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=90)]
+        [FhirElement("group", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString GroupElement
         {
             get { return _GroupElement; }
             set { _GroupElement = value; OnPropertyChanged("GroupElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _GroupElement;
         
         /// <summary>
@@ -136,13 +141,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the plan
         /// </summary>
-        [FhirElement("plan", InSummary=true, Order=100)]
+        [FhirElement("plan", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PlanElement
         {
             get { return _PlanElement; }
             set { _PlanElement = value; OnPropertyChanged("PlanElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _PlanElement;
         
         /// <summary>
@@ -167,13 +173,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the subsection of the plan
         /// </summary>
-        [FhirElement("subplan", InSummary=true, Order=110)]
+        [FhirElement("subplan", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SubplanElement
         {
             get { return _SubplanElement; }
             set { _SubplanElement = value; OnPropertyChanged("SubplanElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _SubplanElement;
         
         /// <summary>
@@ -198,13 +205,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=true, Order=120)]
+        [FhirElement("dependent", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Integer DependentElement
         {
             get { return _DependentElement; }
             set { _DependentElement = value; OnPropertyChanged("DependentElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _DependentElement;
         
         /// <summary>
@@ -229,13 +237,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The plan instance or sequence counter
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=130)]
+        [FhirElement("sequence", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
         {
             get { return _SequenceElement; }
             set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
         }
+        
         private Hl7.Fhir.Model.Integer _SequenceElement;
         
         /// <summary>
@@ -260,7 +269,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plan holder information
         /// </summary>
-        [FhirElement("subscriber", Order=140)]
+        [FhirElement("subscriber", Order=180)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subscriber
@@ -268,24 +277,26 @@ namespace Hl7.Fhir.Model
             get { return _Subscriber; }
             set { _Subscriber = value; OnPropertyChanged("Subscriber"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subscriber;
         
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=true, Order=150)]
+        [FhirElement("network", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Network
         {
             get { return _Network; }
             set { _Network = value; OnPropertyChanged("Network"); }
         }
+        
         private Hl7.Fhir.Model.Identifier _Network;
         
         /// <summary>
         /// Contract details
         /// </summary>
-        [FhirElement("contract", Order=160)]
+        [FhirElement("contract", Order=200)]
         [References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -294,6 +305,7 @@ namespace Hl7.Fhir.Model
             get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contract; }
             set { _Contract = value; OnPropertyChanged("Contract"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

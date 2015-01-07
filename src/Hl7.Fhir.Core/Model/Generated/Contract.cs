@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Signer Type
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=20)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Type
@@ -67,12 +67,13 @@ namespace Hl7.Fhir.Model
                 get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.Coding>(); return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private List<Hl7.Fhir.Model.Coding> _Type;
             
             /// <summary>
             /// Documentation Signature
             /// </summary>
-            [FhirElement("signature", InSummary=true, Order=30)]
+            [FhirElement("signature", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SignatureElement
@@ -80,6 +81,7 @@ namespace Hl7.Fhir.Model
                 get { return _SignatureElement; }
                 set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _SignatureElement;
             
             /// <summary>
@@ -158,43 +160,46 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Term identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=20)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
+            
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Term type
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=30)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
                 get { return _Type; }
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// Term subtype
             /// </summary>
-            [FhirElement("subtype", InSummary=true, Order=40)]
+            [FhirElement("subtype", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Subtype
             {
                 get { return _Subtype; }
                 set { _Subtype = value; OnPropertyChanged("Subtype"); }
             }
+            
             private Hl7.Fhir.Model.CodeableConcept _Subtype;
             
             /// <summary>
             /// Subject for the Term
             /// </summary>
-            [FhirElement("subject", InSummary=true, Order=50)]
+            [FhirElement("subject", InSummary=true, Order=70)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
@@ -202,18 +207,20 @@ namespace Hl7.Fhir.Model
                 get { return _Subject; }
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
             /// Human readable Term text
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
+            [FhirElement("text", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
                 get { return _TextElement; }
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -238,13 +245,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When issued
             /// </summary>
-            [FhirElement("issued", InSummary=true, Order=70)]
+            [FhirElement("issued", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime IssuedElement
             {
                 get { return _IssuedElement; }
                 set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
             
             /// <summary>
@@ -269,49 +277,53 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When effective
             /// </summary>
-            [FhirElement("applies", InSummary=true, Order=80)]
+            [FhirElement("applies", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Period Applies
             {
                 get { return _Applies; }
                 set { _Applies = value; OnPropertyChanged("Applies"); }
             }
+            
             private Hl7.Fhir.Model.Period _Applies;
             
             /// <summary>
             /// Count of Products or Services
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=90)]
+            [FhirElement("quantity", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
+            
             private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", InSummary=true, Order=100)]
+            [FhirElement("unitPrice", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
+            
             private Hl7.Fhir.Model.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
             /// </summary>
-            [FhirElement("factor", InSummary=true, Order=110)]
+            [FhirElement("factor", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
             {
                 get { return _FactorElement; }
                 set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _FactorElement;
             
             /// <summary>
@@ -336,13 +348,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Difficulty scaling factor
             /// </summary>
-            [FhirElement("points", InSummary=true, Order=120)]
+            [FhirElement("points", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
             {
                 get { return _PointsElement; }
                 set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDecimal _PointsElement;
             
             /// <summary>
@@ -367,13 +380,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Total item cost
             /// </summary>
-            [FhirElement("net", InSummary=true, Order=130)]
+            [FhirElement("net", InSummary=true, Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
+            
             private Hl7.Fhir.Model.Money _Net;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -456,7 +470,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=50)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -464,12 +478,13 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Subject
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=60)]
+        [FhirElement("subject", InSummary=true, Order=100)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -478,12 +493,13 @@ namespace Hl7.Fhir.Model
             get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// Authority
         /// </summary>
-        [FhirElement("authority", Order=70)]
+        [FhirElement("authority", Order=110)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -492,12 +508,13 @@ namespace Hl7.Fhir.Model
             get { if(_Authority==null) _Authority = new List<Hl7.Fhir.Model.ResourceReference>(); return _Authority; }
             set { _Authority = value; OnPropertyChanged("Authority"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Authority;
         
         /// <summary>
         /// Domain
         /// </summary>
-        [FhirElement("domain", Order=80)]
+        [FhirElement("domain", Order=120)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -506,24 +523,26 @@ namespace Hl7.Fhir.Model
             get { if(_Domain==null) _Domain = new List<Hl7.Fhir.Model.ResourceReference>(); return _Domain; }
             set { _Domain = value; OnPropertyChanged("Domain"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Domain;
         
         /// <summary>
         /// Type of contract
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
+        [FhirElement("type", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
             get { return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// Subtype of contract
         /// </summary>
-        [FhirElement("subtype", InSummary=true, Order=100)]
+        [FhirElement("subtype", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Subtype
@@ -531,18 +550,20 @@ namespace Hl7.Fhir.Model
             get { if(_Subtype==null) _Subtype = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Subtype; }
             set { _Subtype = value; OnPropertyChanged("Subtype"); }
         }
+        
         private List<Hl7.Fhir.Model.CodeableConcept> _Subtype;
         
         /// <summary>
         /// When this was issued
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=110)]
+        [FhirElement("issued", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {
             get { return _IssuedElement; }
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
         
         /// <summary>
@@ -567,49 +588,53 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Effective time
         /// </summary>
-        [FhirElement("applies", InSummary=true, Order=120)]
+        [FhirElement("applies", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Period Applies
         {
             get { return _Applies; }
             set { _Applies = value; OnPropertyChanged("Applies"); }
         }
+        
         private Hl7.Fhir.Model.Period _Applies;
         
         /// <summary>
         /// Count of Products or Services
         /// </summary>
-        [FhirElement("quantity", Order=130)]
+        [FhirElement("quantity", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
+        
         private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// Fee, charge or cost per point
         /// </summary>
-        [FhirElement("unitPrice", Order=140)]
+        [FhirElement("unitPrice", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Money UnitPrice
         {
             get { return _UnitPrice; }
             set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
         }
+        
         private Hl7.Fhir.Model.Money _UnitPrice;
         
         /// <summary>
         /// Price scaling factor
         /// </summary>
-        [FhirElement("factor", Order=150)]
+        [FhirElement("factor", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal FactorElement
         {
             get { return _FactorElement; }
             set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _FactorElement;
         
         /// <summary>
@@ -634,13 +659,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Difficulty scaling factor
         /// </summary>
-        [FhirElement("points", Order=160)]
+        [FhirElement("points", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal PointsElement
         {
             get { return _PointsElement; }
             set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDecimal _PointsElement;
         
         /// <summary>
@@ -665,19 +691,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Total item cost
         /// </summary>
-        [FhirElement("net", Order=170)]
+        [FhirElement("net", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Money Net
         {
             get { return _Net; }
             set { _Net = value; OnPropertyChanged("Net"); }
         }
+        
         private Hl7.Fhir.Model.Money _Net;
         
         /// <summary>
         /// Contract author or responsible party
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=180)]
+        [FhirElement("author", InSummary=true, Order=220)]
         [References("Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -686,12 +713,13 @@ namespace Hl7.Fhir.Model
             get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Author;
         
         /// <summary>
         /// First Party or delegator
         /// </summary>
-        [FhirElement("grantor", InSummary=true, Order=190)]
+        [FhirElement("grantor", InSummary=true, Order=230)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -700,12 +728,13 @@ namespace Hl7.Fhir.Model
             get { if(_Grantor==null) _Grantor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Grantor; }
             set { _Grantor = value; OnPropertyChanged("Grantor"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Grantor;
         
         /// <summary>
         /// Second Party or delegatee
         /// </summary>
-        [FhirElement("grantee", InSummary=true, Order=200)]
+        [FhirElement("grantee", InSummary=true, Order=240)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -714,12 +743,13 @@ namespace Hl7.Fhir.Model
             get { if(_Grantee==null) _Grantee = new List<Hl7.Fhir.Model.ResourceReference>(); return _Grantee; }
             set { _Grantee = value; OnPropertyChanged("Grantee"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Grantee;
         
         /// <summary>
         /// Witness to the contract
         /// </summary>
-        [FhirElement("witness", Order=210)]
+        [FhirElement("witness", Order=250)]
         [References("Practitioner","RelatedPerson","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -728,12 +758,13 @@ namespace Hl7.Fhir.Model
             get { if(_Witness==null) _Witness = new List<Hl7.Fhir.Model.ResourceReference>(); return _Witness; }
             set { _Witness = value; OnPropertyChanged("Witness"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Witness;
         
         /// <summary>
         /// Trustee
         /// </summary>
-        [FhirElement("executor", InSummary=true, Order=220)]
+        [FhirElement("executor", InSummary=true, Order=260)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -742,12 +773,13 @@ namespace Hl7.Fhir.Model
             get { if(_Executor==null) _Executor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Executor; }
             set { _Executor = value; OnPropertyChanged("Executor"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Executor;
         
         /// <summary>
         /// Notary Public
         /// </summary>
-        [FhirElement("notary", InSummary=true, Order=230)]
+        [FhirElement("notary", InSummary=true, Order=270)]
         [References("Practitioner","RelatedPerson","Organization","Patient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -756,12 +788,13 @@ namespace Hl7.Fhir.Model
             get { if(_Notary==null) _Notary = new List<Hl7.Fhir.Model.ResourceReference>(); return _Notary; }
             set { _Notary = value; OnPropertyChanged("Notary"); }
         }
+        
         private List<Hl7.Fhir.Model.ResourceReference> _Notary;
         
         /// <summary>
         /// Signer
         /// </summary>
-        [FhirElement("signer", Order=240)]
+        [FhirElement("signer", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ContractSignerComponent> Signer
@@ -769,12 +802,13 @@ namespace Hl7.Fhir.Model
             get { if(_Signer==null) _Signer = new List<Hl7.Fhir.Model.Contract.ContractSignerComponent>(); return _Signer; }
             set { _Signer = value; OnPropertyChanged("Signer"); }
         }
+        
         private List<Hl7.Fhir.Model.Contract.ContractSignerComponent> _Signer;
         
         /// <summary>
         /// The terms of the Contract
         /// </summary>
-        [FhirElement("term", Order=250)]
+        [FhirElement("term", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ContractTermComponent> Term
@@ -782,30 +816,33 @@ namespace Hl7.Fhir.Model
             get { if(_Term==null) _Term = new List<Hl7.Fhir.Model.Contract.ContractTermComponent>(); return _Term; }
             set { _Term = value; OnPropertyChanged("Term"); }
         }
+        
         private List<Hl7.Fhir.Model.Contract.ContractTermComponent> _Term;
         
         /// <summary>
         /// Binding Contract
         /// </summary>
-        [FhirElement("binding", Order=260)]
+        [FhirElement("binding", Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Binding
         {
             get { return _Binding; }
             set { _Binding = value; OnPropertyChanged("Binding"); }
         }
+        
         private Hl7.Fhir.Model.Attachment _Binding;
         
         /// <summary>
         /// Binding Contract effective time
         /// </summary>
-        [FhirElement("bindingDateTime", Order=270)]
+        [FhirElement("bindingDateTime", Order=310)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime BindingDateTimeElement
         {
             get { return _BindingDateTimeElement; }
             set { _BindingDateTimeElement = value; OnPropertyChanged("BindingDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _BindingDateTimeElement;
         
         /// <summary>
@@ -830,7 +867,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human readable contract text
         /// </summary>
-        [FhirElement("friendly", Order=280)]
+        [FhirElement("friendly", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Friendly
@@ -838,18 +875,20 @@ namespace Hl7.Fhir.Model
             get { if(_Friendly==null) _Friendly = new List<Hl7.Fhir.Model.Attachment>(); return _Friendly; }
             set { _Friendly = value; OnPropertyChanged("Friendly"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Friendly;
         
         /// <summary>
         /// Human readable contract text effective time
         /// </summary>
-        [FhirElement("friendlyDateTime", Order=290)]
+        [FhirElement("friendlyDateTime", Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime FriendlyDateTimeElement
         {
             get { return _FriendlyDateTimeElement; }
             set { _FriendlyDateTimeElement = value; OnPropertyChanged("FriendlyDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _FriendlyDateTimeElement;
         
         /// <summary>
@@ -874,7 +913,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Legal contract text
         /// </summary>
-        [FhirElement("legal", Order=300)]
+        [FhirElement("legal", Order=340)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Legal
@@ -882,18 +921,20 @@ namespace Hl7.Fhir.Model
             get { if(_Legal==null) _Legal = new List<Hl7.Fhir.Model.Attachment>(); return _Legal; }
             set { _Legal = value; OnPropertyChanged("Legal"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Legal;
         
         /// <summary>
         /// Legal contract text date time
         /// </summary>
-        [FhirElement("legalDateTime", Order=310)]
+        [FhirElement("legalDateTime", Order=350)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LegalDateTimeElement
         {
             get { return _LegalDateTimeElement; }
             set { _LegalDateTimeElement = value; OnPropertyChanged("LegalDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _LegalDateTimeElement;
         
         /// <summary>
@@ -918,7 +959,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Computable contract text
         /// </summary>
-        [FhirElement("rule", Order=320)]
+        [FhirElement("rule", Order=360)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Rule
@@ -926,18 +967,20 @@ namespace Hl7.Fhir.Model
             get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.Attachment>(); return _Rule; }
             set { _Rule = value; OnPropertyChanged("Rule"); }
         }
+        
         private List<Hl7.Fhir.Model.Attachment> _Rule;
         
         /// <summary>
         /// Computable contract text effect time
         /// </summary>
-        [FhirElement("ruleDateTime", Order=330)]
+        [FhirElement("ruleDateTime", Order=370)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RuleDateTimeElement
         {
             get { return _RuleDateTimeElement; }
             set { _RuleDateTimeElement = value; OnPropertyChanged("RuleDateTimeElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _RuleDateTimeElement;
         
         /// <summary>

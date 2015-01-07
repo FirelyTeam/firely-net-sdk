@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a data type
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -102,12 +103,13 @@ namespace Hl7.Fhir.Model
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
+            
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
             /// If parameter is a whole resource
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=40, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -115,12 +117,13 @@ namespace Hl7.Fhir.Model
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
+            
             private Hl7.Fhir.Model.Resource _Resource;
             
             /// <summary>
             /// Named part of a parameter (e.g. Tuple)
             /// </summary>
-            [FhirElement("part", InSummary=true, Order=50)]
+            [FhirElement("part", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> Part
@@ -128,6 +131,7 @@ namespace Hl7.Fhir.Model
                 get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
+            
             private List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -193,7 +197,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=20)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -201,6 +205,7 @@ namespace Hl7.Fhir.Model
                 get { return _NameElement; }
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -225,7 +230,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value of the part
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -234,6 +239,7 @@ namespace Hl7.Fhir.Model
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
+            
             private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -294,6 +300,7 @@ namespace Hl7.Fhir.Model
             get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
+        
         private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Parameter;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

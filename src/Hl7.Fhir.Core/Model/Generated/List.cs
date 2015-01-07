@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Workflow information about this item
             /// </summary>
-            [FhirElement("flag", InSummary=true, Order=20)]
+            [FhirElement("flag", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Flag
@@ -93,18 +93,20 @@ namespace Hl7.Fhir.Model
                 get { if(_Flag==null) _Flag = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Flag; }
                 set { _Flag = value; OnPropertyChanged("Flag"); }
             }
+            
             private List<Hl7.Fhir.Model.CodeableConcept> _Flag;
             
             /// <summary>
             /// If this item is actually marked as deleted
             /// </summary>
-            [FhirElement("deleted", InSummary=true, Order=30)]
+            [FhirElement("deleted", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean DeletedElement
             {
                 get { return _DeletedElement; }
                 set { _DeletedElement = value; OnPropertyChanged("DeletedElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirBoolean _DeletedElement;
             
             /// <summary>
@@ -129,13 +131,14 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When item added to list
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=40)]
+            [FhirElement("date", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
                 get { return _DateElement; }
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
+            
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -160,7 +163,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual entry
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=50)]
+            [FhirElement("item", InSummary=true, Order=70)]
             [References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -169,6 +172,7 @@ namespace Hl7.Fhir.Model
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
+            
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -227,7 +231,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=50)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -235,24 +239,26 @@ namespace Hl7.Fhir.Model
             get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
+        
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// What the purpose of this list is
         /// </summary>
-        [FhirElement("code", Order=60)]
+        [FhirElement("code", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
             get { return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// If all resources have the same subject
         /// </summary>
-        [FhirElement("subject", Order=70)]
+        [FhirElement("subject", Order=110)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -260,12 +266,13 @@ namespace Hl7.Fhir.Model
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Who and/or what defined the list contents
         /// </summary>
-        [FhirElement("source", Order=80)]
+        [FhirElement("source", Order=120)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -273,18 +280,20 @@ namespace Hl7.Fhir.Model
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
+        
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// When the list was prepared
         /// </summary>
-        [FhirElement("date", Order=90)]
+        [FhirElement("date", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
             get { return _DateElement; }
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -309,13 +318,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether items in the list have a meaningful order
         /// </summary>
-        [FhirElement("ordered", Order=100)]
+        [FhirElement("ordered", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean OrderedElement
         {
             get { return _OrderedElement; }
             set { _OrderedElement = value; OnPropertyChanged("OrderedElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirBoolean _OrderedElement;
         
         /// <summary>
@@ -340,7 +350,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// working | snapshot | changes
         /// </summary>
-        [FhirElement("mode", Order=110)]
+        [FhirElement("mode", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.List.ListMode> ModeElement
@@ -348,6 +358,7 @@ namespace Hl7.Fhir.Model
             get { return _ModeElement; }
             set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.List.ListMode> _ModeElement;
         
         /// <summary>
@@ -372,7 +383,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entries in the list
         /// </summary>
-        [FhirElement("entry", Order=120)]
+        [FhirElement("entry", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
@@ -380,18 +391,20 @@ namespace Hl7.Fhir.Model
             get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
+        
         private List<Hl7.Fhir.Model.List.ListEntryComponent> _Entry;
         
         /// <summary>
         /// Why list is empty
         /// </summary>
-        [FhirElement("emptyReason", Order=130)]
+        [FhirElement("emptyReason", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept EmptyReason
         {
             get { return _EmptyReason; }
             set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
         }
+        
         private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

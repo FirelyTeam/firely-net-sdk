@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-
-/*
-  Copyright (c) 2011+, HL7, Inc.
+﻿/*
+  Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -32,21 +25,38 @@ using System.Runtime.Serialization;
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
   
-
 */
 
-//
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
-//
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using Hl7.Fhir.Support;
+
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Count")]
-    public partial class Count : Quantity
+    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
+    [InvokeIValidatableObject]
+    public abstract partial class DomainResource
     {
-        [NotMapped]
-        public override string TypeName { get { return "Count"; } }
-        
-        // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var result = new List<ValidationResult>(base.Validate(validationContext));
+
+            if (this.Contained != null)
+            {
+                if (!Contained.OfType<DomainResource>().All(dr => dr.Text == null))
+                    result.Add(new ValidationResult("Resource has contained resources with narrative"));
+
+                if(!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
+                    result.Add(new ValidationResult("Resource has contained resources with nested contained resources"));
+            }
+
+            return result;
+        }
     }
 }
+
+

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Dec 15, 2014 13:18+0100 for FHIR v0.4.0
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -103,6 +103,7 @@ namespace Hl7.Fhir.Model
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
+        
         private Code<Hl7.Fhir.Model.HumanName.NameUse> _UseElement;
         
         /// <summary>
@@ -134,6 +135,7 @@ namespace Hl7.Fhir.Model
             get { return _TextElement; }
             set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
+        
         private Hl7.Fhir.Model.FhirString _TextElement;
         
         /// <summary>
@@ -166,6 +168,7 @@ namespace Hl7.Fhir.Model
             get { if(_FamilyElement==null) _FamilyElement = new List<Hl7.Fhir.Model.FhirString>(); return _FamilyElement; }
             set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
         
         /// <summary>
@@ -198,6 +201,7 @@ namespace Hl7.Fhir.Model
             get { if(_GivenElement==null) _GivenElement = new List<Hl7.Fhir.Model.FhirString>(); return _GivenElement; }
             set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _GivenElement;
         
         /// <summary>
@@ -230,6 +234,7 @@ namespace Hl7.Fhir.Model
             get { if(_PrefixElement==null) _PrefixElement = new List<Hl7.Fhir.Model.FhirString>(); return _PrefixElement; }
             set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _PrefixElement;
         
         /// <summary>
@@ -262,6 +267,7 @@ namespace Hl7.Fhir.Model
             get { if(_SuffixElement==null) _SuffixElement = new List<Hl7.Fhir.Model.FhirString>(); return _SuffixElement; }
             set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
         }
+        
         private List<Hl7.Fhir.Model.FhirString> _SuffixElement;
         
         /// <summary>
@@ -293,6 +299,7 @@ namespace Hl7.Fhir.Model
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
+        
         private Hl7.Fhir.Model.Period _Period;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

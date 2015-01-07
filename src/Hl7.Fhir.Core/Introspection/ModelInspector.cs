@@ -190,6 +190,14 @@ namespace Hl7.Fhir.Introspection
                 return null;
         }
 
+        public ClassMapping FindClassMappingByType(string typeName)
+        {
+            var result = FindClassMappingForResource(typeName);
+            if (result != null) return result;
+
+            return FindClassMappingForFhirDataType(typeName);
+        }
+
         public ClassMapping FindClassMappingByType(Type type)
         {
             ClassMapping entry = null;
