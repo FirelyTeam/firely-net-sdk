@@ -80,6 +80,36 @@ namespace Hl7.Fhir.Model
 
             return schemas;
         }
+
+        /*
+         * // This code prevents some exceptions that can occur during debugging that things just proceed naturally afterwards.
+         * // it just interferes with debug flow when you are catching exceptions.
+        private class LocalXmlResolver : XmlUrlResolver
+        {
+            public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
+            {
+                if (absoluteUri.OriginalString.EndsWith("xml.xsd"))
+                    return Properties.Resources.xml;
+                return base.GetEntity(absoluteUri, role, ofObjectToReturn);
+            }
+        }
+
+        private static XmlSchemaSet compileXhtmlSchema()
+        {
+            var assembly = typeof(XHtml).Assembly;
+            XmlSchemaSet schemas = new XmlSchemaSet();
+            schemas.XmlResolver = new LocalXmlResolver();
+
+            var schema = new StringReader(Properties.Resources.xml);
+            schemas.Add("http://www.w3.org/XML/1998/namespace", XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+            schema = new StringReader(Properties.Resources.fhir_xhtml);
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+
+            schemas.Compile();
+
+            return schemas;
+        }
+         */
 #endif
 
     }
