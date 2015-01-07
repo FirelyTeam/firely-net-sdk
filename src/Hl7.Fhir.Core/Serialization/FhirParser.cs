@@ -147,10 +147,5 @@ namespace Hl7.Fhir.Serialization
             var jsonReader = new JsonDomFhirReader(reader);
             return Parse(jsonReader);
         }
-
-        public static Parameters ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
-        {
-            return ParametersParser.Load(resource, parameters);
-        }
     }
 }

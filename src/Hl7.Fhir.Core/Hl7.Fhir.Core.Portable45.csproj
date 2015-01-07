@@ -265,17 +265,10 @@
     <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Rest\RestUrl.cs" />
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Rest\SearchParams.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
-    <Compile Include="Search\CompositeValue.cs" />
-    <Compile Include="Search\ChoiceValue.cs" />
-    <Compile Include="Search\Criterium.cs" />
-    <Compile Include="Search\CriteriumBuilder.cs" />
-    <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\ParametersExtensions.cs" />
-    <Compile Include="Search\ReferenceValue.cs" />
-    <Compile Include="Search\QuantityValue.cs" />
-    <Compile Include="Search\UntypedValue.cs" />
+    <Compile Include="Rest\ParametersExtensions.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>
@@ -291,7 +284,6 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
-    <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
@@ -315,10 +307,6 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Search\DateValue.cs" />
-    <Compile Include="Search\NumberValue.cs" />
-    <Compile Include="Search\StringValue.cs" />
-    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
@@ -338,15 +326,13 @@
     <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Validation\xhtml\xml.xsd">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

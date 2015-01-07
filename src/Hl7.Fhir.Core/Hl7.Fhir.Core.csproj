@@ -240,6 +240,8 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Rest\ParametersExtensions.cs" />
+    <Compile Include="Rest\SearchParams.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\DomainResource.cs" />
     <Compile Include="Model\Primitive.cs" />
@@ -269,15 +271,6 @@
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
-    <Compile Include="Search\CompositeValue.cs" />
-    <Compile Include="Search\ChoiceValue.cs" />
-    <Compile Include="Search\Criterium.cs" />
-    <Compile Include="Search\CriteriumBuilder.cs" />
-    <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\ParametersExtensions.cs" />
-    <Compile Include="Search\ReferenceValue.cs" />
-    <Compile Include="Search\QuantityValue.cs" />
-    <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>
@@ -293,7 +286,6 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
-    <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
@@ -317,10 +309,6 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Search\DateValue.cs" />
-    <Compile Include="Search\NumberValue.cs" />
-    <Compile Include="Search\StringValue.cs" />
-    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />

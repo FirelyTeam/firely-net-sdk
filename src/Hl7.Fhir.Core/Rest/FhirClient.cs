@@ -16,7 +16,6 @@ using Hl7.Fhir.Support;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using Hl7.Fhir.Search;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Rest;
 using System.Threading;
@@ -379,20 +378,18 @@ namespace Hl7.Fhir.Rest
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
         }
 
-     
-
-     
-
+        
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
         /// </summary>
         /// <param name="q">The Query resource containing the search parameters</param>
+        /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-        public Bundle Search(Parameters q)
+        public Bundle Search(SearchParams q, string resourceType = null)
         {
             RestUrl url = new RestUrl(Endpoint);
-            url = url.Search(q);
 
+            url = url.Search(q, resourceType);
             var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(url.Uri, Endpoint), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
         }
@@ -410,7 +407,7 @@ namespace Hl7.Fhir.Rest
         /// of all resources of the given Resource type</remarks>
         public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
-            return Search(typeof(TResource).GetCollectionName(), criteria, includes, pageSize);
+            return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize);
         }
 
         /// <summary>
@@ -428,7 +425,7 @@ namespace Hl7.Fhir.Rest
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
-            return Search(toQuery(resource, criteria, includes, pageSize));
+            return Search(toQuery(criteria, includes, pageSize), resource);
         }
 
         /// <summary>
@@ -443,7 +440,7 @@ namespace Hl7.Fhir.Rest
         /// of all resources of the given Resource type</remarks>
         public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
-            return Search(toQuery(null, criteria, includes, pageSize));
+            return Search(toQuery(criteria, includes, pageSize));
         }
 
         /// <summary>
@@ -482,29 +479,28 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
-            string criterium = Parameters.SEARCH_PARAM_ID + "=" + id;
-            return Search(toQuery(resource, new string[] { criterium }, includes, pageSize));
+            string criterium = "_id=" + id;
+            return Search(toQuery(new string[] { criterium }, includes, pageSize), resource);
         }
 
-        private Parameters toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
+        private SearchParams toQuery(string[] criteria = null, string[] includes = null, int? pageSize = null)
         {
-            Parameters q = new Parameters
-            {
-                ResourceSearchType = collection,
-                Count = pageSize
-            };
+            var q = new SearchParams();
+            
+            q.Count = pageSize;
 
             if (includes != null)
-                foreach (var inc in includes) q.Includes.Add(inc);
+                foreach (var inc in includes) q.Include.Add(inc);
 
             if (criteria != null)
             {
                 foreach (var crit in criteria)
                 {
                     var keyVal = crit.SplitLeft('=');
-                    q.AddParameter(keyVal.Item1,keyVal.Item2);
+                    q.Add(keyVal.Item1,keyVal.Item2);
                 }
             }
+
             return q;
         }
 

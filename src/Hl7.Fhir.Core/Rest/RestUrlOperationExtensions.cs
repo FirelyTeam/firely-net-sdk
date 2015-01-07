@@ -47,28 +47,22 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(RestOperation.HISTORY);
         }
 
-        public static RestUrl Search(this RestUrl url, string collection=null)
+
+        public static RestUrl Search(this RestUrl url, string resourceType=null)
         {
-            if (collection != null)
-                return new RestUrl(url).AddPath(collection, RestOperation.SEARCH);
+           if (resourceType != null)
+              return new RestUrl(url).AddPath(resourceType, RestOperation.SEARCH);
             else
-                return new RestUrl(url).AddPath(RestOperation.SEARCH);
+              return  new RestUrl(url).AddPath(RestOperation.SEARCH);
         }
 
-        public static RestUrl Search(this RestUrl url, Parameters q)
+        public static RestUrl Search(this RestUrl url, SearchParams q, string resourceType=null)
         {
-            // The ResourceType is the only parameter that needs special handling,
-            // since the others are all "normal" parameters. Just make sure we don't
-            // include the special _type parameter on the REST url
-            RestUrl result = url.Search(q.ResourceSearchType);
+            RestUrl result = Search(url,resourceType);
 
-            foreach (var par in q.Parameter)
+            foreach (var par in q.ToUriParamList())
             {
-                if (par.Name != Parameters.SEARCH_PARAM_TYPE)
-                {
-                    result.AddParam(par.Name,
-                                Parameters.ExtractParamValue(par));
-                }
+                result.AddParam(par.Item1, par.Item2);
             }
 
             return result;

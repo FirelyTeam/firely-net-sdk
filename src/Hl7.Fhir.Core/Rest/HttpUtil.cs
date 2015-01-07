@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// "_count" found as a parameter on the REST History operation URL
         /// </summary>
-        public const string HISTORY_PARAM_COUNT = Parameters.SEARCH_PARAM_COUNT;
+        public const string HISTORY_PARAM_COUNT = SearchParams.SEARCH_PARAM_COUNT;
 
         public static async Task<byte[]> ReadAllFromStream(Stream s, int contentLength)
         {

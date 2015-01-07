@@ -16,7 +16,6 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Hl7.Fhir.Search;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 

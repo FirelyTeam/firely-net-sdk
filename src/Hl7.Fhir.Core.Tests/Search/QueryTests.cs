@@ -7,13 +7,13 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Search;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Test.Search
 {
@@ -21,20 +21,9 @@ namespace Hl7.Fhir.Test.Search
     public class QueryTests
     {
         [TestMethod]
-        public void RetrieveCriteria()
-        {
-            var q = new Parameters()
-                .For("Patient").Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
-                .SummaryOnly().Include("Patient.managingOrganization")
-                .LimitTo(20);
-            Assert.AreEqual(1, q.Criteria.Count());
-            Assert.AreEqual("ewout", Parameters.ExtractParamValue(q.Criteria.First()));
-        }
-
-        [TestMethod]
         public void CountSetToNullAndGet()
         {
-            var q = new Parameters();
+            var q = new SearchParams();
             q.Count = null;
             Assert.IsFalse(q.Count.HasValue);
         }
@@ -43,64 +32,62 @@ namespace Hl7.Fhir.Test.Search
         [TestMethod]
         public void ManipulateParameters()
         {
-            var q = new Parameters();
+            var q = new SearchParams();
 
-            q.AddParameter("testX", "someVal");
-            q.AddParameter("testX", "someVal2");
-            q.AddParameter("testXY", "someVal3");
+            q.Add("testX", "someVal");
+            q.Add("testX", "someVal2");
+            q.Add("testXY", "someVal3");
 
-            var vals = q.GetValues("testX");
+            var paramlist = q.ToUriParamList();
+            var vals = paramlist.GetValues("testX");
             Assert.AreEqual(2, vals.Count());
             Assert.AreEqual("someVal", vals.First());
             Assert.AreEqual("someVal2", vals.Skip(1).First());
-            Assert.AreEqual("someVal3", q.GetSingleValue("testXY"));
+            
+            Assert.AreEqual("someVal3", paramlist.GetSingleValue("testXY"));
 
-            q.RemoveParameter("testXY");
-            Assert.IsNull(q.GetSingleValue("testXY"));
-            Assert.AreEqual(2, q.GetValues("testX").Count());
+            paramlist.Remove("testXY");
+            Assert.IsNull(paramlist.GetSingleValue("testXY"));
+            Assert.AreEqual(2, paramlist.GetValues("testX").Count());
         }
 
         [TestMethod]
         public void TestProperties()
         {
-            var q = new Parameters();
+            var q = new SearchParams();
 
-            q.QueryName = "special";
-            q.ResourceSearchType = "Patient";
+            q.Query = "special";
             q.Count = 31;
             q.Summary = true;
-            q.Sort = new List<Tuple<string, SortOrder>>() { Tuple.Create("sorted", SortOrder.Descending) };
-            q.Includes.Add("Patient.name");
-            q.Includes.Add("Observation.subject");
+            q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
+            q.Include.Add("Patient.name");
+            q.Include.Add("Observation.subject");
 
-            Assert.AreEqual("special", q.QueryName);
-            Assert.AreEqual("Patient", q.ResourceSearchType);
+            Assert.AreEqual("special", q.Query);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(true, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
-            Assert.AreEqual(2, q.Includes.Count);
-            Assert.AreEqual("Patient.name", q.Includes.First());
-            Assert.AreEqual("Observation.subject", q.Includes.Skip(1).First());
+            Assert.AreEqual(2, q.Include.Count);
+            Assert.AreEqual("Patient.name", q.Include.First());
+            Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
 
-            q.QueryName = "special2";
-            q.ResourceSearchType = "Observation";
+            q.Query = "special2";
             q.Count = 32;
             q.Summary = false;
-            q.Sort = new List<Tuple<string, SortOrder>>() { Tuple.Create("sorted2", SortOrder.Ascending) };
-            q.Includes.Add("Patient.name2");
-            q.Includes.Remove("Patient.name");
-            q.Includes.Add("Observation.subject2");
+            q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
+            q.Include.Add("Patient.name2");
+            q.Include.Remove("Patient.name");
+            q.Include.Add("Observation.subject2");
 
-            Assert.AreEqual("special2", q.QueryName);
-            Assert.AreEqual("Observation", q.ResourceSearchType);
+            Assert.AreEqual("special2", q.Query);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(false, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Single());
-            Assert.AreEqual(3, q.Includes.Count);
-            Assert.IsTrue(q.Includes.Contains("Patient.name2"));
-            Assert.IsFalse(q.Includes.Contains("Patient.name"));
-            Assert.IsTrue(q.Includes.Contains("Observation.subject"));
-            Assert.IsTrue(q.Includes.Contains("Observation.subject2"));
+            Assert.AreEqual(3, q.Include.Count);
+            Assert.IsTrue(q.Include.Contains("Patient.name2"));
+            Assert.IsFalse(q.Include.Contains("Patient.name"));
+            Assert.IsTrue(q.Include.Contains("Observation.subject"));
+            Assert.IsTrue(q.Include.Contains("Observation.subject2"));
         }
     }
 }
