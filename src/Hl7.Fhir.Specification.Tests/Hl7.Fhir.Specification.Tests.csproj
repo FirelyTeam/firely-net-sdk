@@ -185,10 +185,6 @@
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj">
-      <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>
-      <Name>Hl7.Fhir.Specification</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
