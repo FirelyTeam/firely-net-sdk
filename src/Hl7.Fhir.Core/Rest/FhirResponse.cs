@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Rest
                 var id = new ResourceIdentity(location);
                 if(id.HasVersion)
                 {
-                    Trace.WriteLine(String.Format("Result did not have an ETag on the HTTP Header, using the (Content)Location instead"));
+                    System.Diagnostics.Debug.WriteLine(String.Format("Result did not have an ETag on the HTTP Header, using the (Content)Location instead"));
                     resource.Meta.VersionId = id.VersionId;
                 }
             }

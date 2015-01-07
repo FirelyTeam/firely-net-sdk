@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -110,7 +111,8 @@ namespace Hl7.Fhir.Model
     {
         public static string GetCollectionName(this Type type)
         {
-            if (typeof(Resource).IsAssignableFrom(type))
+            // if (typeof(Resource).IsAssignableFrom(type))
+            if (type.CanBeTreatedAsType(typeof(Resource)))
                 return ModelInfo.GetResourceNameForType(type);
             else
                 throw new ArgumentException(String.Format(

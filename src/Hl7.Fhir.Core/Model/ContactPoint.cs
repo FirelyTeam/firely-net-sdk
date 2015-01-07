@@ -42,6 +42,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class ContactPoint
     {
+        [NotMapped]
         private string DebuggerDisplay
         {
             get

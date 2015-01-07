@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#if PORTABLE45 || NET45
+#if (PORTABLE45 || NET45) && BRIAN
 #region << Async operations >>
 
 

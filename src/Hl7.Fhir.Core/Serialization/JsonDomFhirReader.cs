@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Serialization
 
             if(extensionMembers.Any())
             {
-                extensionMembers.ForEach(prop => current.Remove(prop.Name));
+                foreach (var prop in extensionMembers) { current.Remove(prop.Name); }; // List<>.Foreach not in PCL (http://cureos.blogspot.com.au/2014/05/pcl-tips-and-tricks-listforeach.html)
                 var extProp = convertToExtensionProperty("extension",extensionMembers); 
                 current.Add(extProp);
                 rewriteExtensionProperties(extProp.Value, nested:true);      // The Extension.value[x] themselves might contain data that has extension, so recurse

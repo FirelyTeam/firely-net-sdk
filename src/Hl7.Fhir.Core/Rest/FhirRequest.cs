@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Rest
                 request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
 
             if (ETag != null)
-                request.Headers.Add("ETag", "\"" + ETag + "\"");
+                request.Headers["ETag"] = "\"" + ETag + "\"";
 
             if (IfMatch != null)
-                request.Headers.Add("If-Match", "\"" + IfMatch + "\"");
+                request.Headers["If-Match"] = "\"" + IfMatch + "\"";
 
             if (Body != null)
             {
@@ -157,8 +157,8 @@ namespace Hl7.Fhir.Rest
 			if (acceptFormat != null && !UseFormatParameter)
 				request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
 
-			if (CategoryHeader != null) 
-				request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
+			// if (CategoryHeader != null) 
+			//	request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
 
 			if (Body != null)
 			{

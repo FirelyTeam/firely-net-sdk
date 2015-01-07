@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Tests
             Assert.AreEqual("Den Burg", loc.Address.City);
         }
 
-#if PORTABLE45
+#if PORTABLE45z
 		[TestMethod, TestCategory("FhirClient")]
 		public void ReadRelativeAsync()
 		{
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Tests
             Assert.IsTrue(result.Entry.Count > 0);
         }
 
-#if PORTABLE45
+#if PORTABLE45z
         [TestMethod, TestCategory("FhirClient")]
         public void SearchAsync()
         {
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Tests
             }
         }
 
-#if PORTABLE45
+#if PORTABLE45z
 		/// <summary>
 		/// This test is also used as a "setup" test for the History test.
 		/// If you change the number of operations in here, this will make the History test fail.

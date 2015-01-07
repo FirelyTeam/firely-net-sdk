@@ -13,8 +13,8 @@ using System.Linq;
 using System.Text;
 #if !PORTABLE45 || NET45
 using System.Runtime.Serialization;
-using Hl7.Fhir.Model;
 #endif
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Rest
 {

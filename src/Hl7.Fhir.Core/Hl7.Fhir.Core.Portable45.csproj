@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -11,8 +11,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir</RootNamespace>
     <AssemblyName>Hl7.Fhir.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile151</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <FileUpgradeFlags>
@@ -22,6 +22,7 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>96575f9d</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugPCL45|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,7 +52,7 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wp8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -62,14 +63,16 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net45+win8+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net45+win8+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
+    <Compile Include="Introspection\ClassMapping.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
@@ -77,23 +80,82 @@
     <Compile Include="Introspection\NotMappedAttribute.cs" />
     <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Introspection\XmlSerializationHint.cs" />
-    <Compile Include="Model\Base64Binary.cs" />
+    <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
-    <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
-    <Compile Include="Model\DeletedEntry.cs" />
-    <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />
-    <Compile Include="Model\FhirBoolean.cs" />
-    <Compile Include="Model\FhirDateTime.cs" />
-    <Compile Include="Model\FhirDecimal.cs" />
+    <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
+    <Compile Include="Model\FhirDateTime.cs" />
+    <Compile Include="Model\FhirBoolean.cs" />
+    <Compile Include="Model\Generated\Appointment.cs" />
+    <Compile Include="Model\Generated\AppointmentResponse.cs" />
+    <Compile Include="Model\Generated\BackboneElement.cs" />
+    <Compile Include="Model\Generated\Basic.cs" />
+    <Compile Include="Model\Generated\Bundle.cs" />
+    <Compile Include="Model\Generated\CarePlan2.cs" />
+    <Compile Include="Model\Generated\ClaimResponse.cs" />
+    <Compile Include="Model\Generated\ClinicalAssessment.cs" />
+    <Compile Include="Model\Generated\Communication.cs" />
+    <Compile Include="Model\Generated\CommunicationRequest.cs" />
+    <Compile Include="Model\Generated\ContactPoint.cs" />
+    <Compile Include="Model\Generated\Contract.cs" />
+    <Compile Include="Model\Generated\Contraindication.cs" />
+    <Compile Include="Model\Generated\Coverage.cs" />
+    <Compile Include="Model\Generated\DataElement.cs" />
+    <Compile Include="Model\Generated\DeviceComponent.cs" />
+    <Compile Include="Model\Generated\DeviceMetric.cs" />
+    <Compile Include="Model\Generated\DeviceUseRequest.cs" />
+    <Compile Include="Model\Generated\DeviceUseStatement.cs" />
+    <Compile Include="Model\Generated\DomainResource.cs" />
+    <Compile Include="Model\Generated\ElementDefinition.cs" />
+    <Compile Include="Model\Generated\EligibilityRequest.cs" />
+    <Compile Include="Model\Generated\EligibilityResponse.cs" />
+    <Compile Include="Model\Generated\EnrollmentRequest.cs" />
+    <Compile Include="Model\Generated\EnrollmentResponse.cs" />
+    <Compile Include="Model\Generated\EpisodeOfCare.cs" />
+    <Compile Include="Model\Generated\ExplanationOfBenefit.cs" />
+    <Compile Include="Model\Generated\ExtensionDefinition.cs" />
+    <Compile Include="Model\Generated\Goal.cs" />
+    <Compile Include="Model\Generated\HealthcareService.cs" />
+    <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
+    <Compile Include="Model\Generated\InstitutionalClaim.cs" />
+    <Compile Include="Model\Generated\NamingSystem.cs" />
+    <Compile Include="Model\Generated\NutritionOrder.cs" />
+    <Compile Include="Model\Generated\OperationDefinition.cs" />
+    <Compile Include="Model\Generated\OralHealthClaim.cs" />
+    <Compile Include="Model\Generated\Parameters.cs" />
+    <Compile Include="Model\Generated\PaymentNotice.cs" />
+    <Compile Include="Model\Generated\PaymentReconciliation.cs" />
+    <Compile Include="Model\Generated\PendedRequest.cs" />
+    <Compile Include="Model\Generated\Person.cs" />
+    <Compile Include="Model\Generated\PharmacyClaim.cs" />
+    <Compile Include="Model\Generated\ProcedureRequest.cs" />
+    <Compile Include="Model\Generated\ProfessionalClaim.cs" />
+    <Compile Include="Model\Generated\QuestionnaireAnswers.cs" />
+    <Compile Include="Model\Generated\Readjudicate.cs" />
+    <Compile Include="Model\Generated\ReferralRequest.cs" />
+    <Compile Include="Model\Generated\Reversal.cs" />
+    <Compile Include="Model\Generated\RiskAssessment.cs" />
+    <Compile Include="Model\Generated\Schedule.cs" />
+    <Compile Include="Model\Generated\SearchParameter.cs" />
+    <Compile Include="Model\Generated\Slot.cs" />
+    <Compile Include="Model\Generated\StatusRequest.cs" />
+    <Compile Include="Model\Generated\StatusResponse.cs" />
+    <Compile Include="Model\Generated\Subscription.cs" />
+    <Compile Include="Model\Generated\SupportingDocumentation.cs" />
+    <Compile Include="Model\Generated\Time.cs" />
+    <Compile Include="Model\Generated\Timing.cs" />
+    <Compile Include="Model\Generated\VisionClaim.cs" />
+    <Compile Include="Model\Generated\VisionPrescription.cs" />
+    <Compile Include="Model\IDeepComparable.cs" />
+    <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
     <Compile Include="Model\Generated\Address.cs" />
-    <Compile Include="Model\Generated\AdverseReaction.cs" />
     <Compile Include="Model\Generated\Age.cs" />
     <Compile Include="Model\Generated\Alert.cs" />
     <Compile Include="Model\Generated\AllergyIntolerance.cs" />
@@ -109,11 +171,9 @@
     <Compile Include="Model\Generated\ConceptMap.cs" />
     <Compile Include="Model\Generated\Condition.cs" />
     <Compile Include="Model\Generated\Conformance.cs" />
-    <Compile Include="Model\Generated\Contact.cs" />
     <Compile Include="Model\Generated\Count.cs" />
     <Compile Include="Model\Generated\Date.cs" />
     <Compile Include="Model\Generated\Device.cs" />
-    <Compile Include="Model\Generated\DeviceObservationReport.cs" />
     <Compile Include="Model\Generated\DiagnosticOrder.cs" />
     <Compile Include="Model\Generated\DiagnosticReport.cs" />
     <Compile Include="Model\Generated\Distance.cs" />
@@ -133,7 +193,6 @@
     <Compile Include="Model\Generated\HumanName.cs" />
     <Compile Include="Model\Generated\Id.cs" />
     <Compile Include="Model\Generated\Identifier.cs" />
-    <Compile Include="Model\Generated\IdRef.cs" />
     <Compile Include="Model\Generated\ImagingStudy.cs" />
     <Compile Include="Model\Generated\Immunization.cs" />
     <Compile Include="Model\Generated\ImmunizationRecommendation.cs" />
@@ -165,7 +224,6 @@
     <Compile Include="Model\Generated\Profile.cs" />
     <Compile Include="Model\Generated\Provenance.cs" />
     <Compile Include="Model\Generated\Quantity.cs" />
-    <Compile Include="Model\Generated\Query.cs" />
     <Compile Include="Model\Generated\Questionnaire.cs" />
     <Compile Include="Model\Generated\Range.cs" />
     <Compile Include="Model\Generated\Ratio.cs" />
@@ -173,7 +231,6 @@
     <Compile Include="Model\Generated\Resource.cs" />
     <Compile Include="Model\Generated\ResourceReference.cs" />
     <Compile Include="Model\Generated\SampledData.cs" />
-    <Compile Include="Model\Generated\Schedule.cs" />
     <Compile Include="Model\Generated\SecurityEvent.cs" />
     <Compile Include="Model\Generated\Specimen.cs" />
     <Compile Include="Model\Generated\Substance.cs" />
@@ -182,23 +239,21 @@
     <Compile Include="Model\Generated\ValueSet.cs" />
     <Compile Include="Model\Generated\XHtml.cs" />
     <Compile Include="Model\Id.cs" />
-    <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
+    <Compile Include="Model\FhirDecimal.cs" />
     <Compile Include="Model\Identifier.cs" />
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
-    <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
-    <Compile Include="Model\Query.cs" />
+    <Compile Include="Model\Parameters.cs" />
+    <Compile Include="Model\DomainResource.cs" />
+    <Compile Include="Model\Primitive.cs" />
     <Compile Include="Model\Resource.cs" />
-    <Compile Include="Model\ResourceEntry.cs" />
     <Compile Include="Model\ResourceReference.cs" />
-    <Compile Include="Model\TagList.cs" />
-    <Compile Include="Model\UriLinkList.cs" />
     <Compile Include="Model\Uuid.cs" />
     <Compile Include="Model\ValueSet.cs" />
     <Compile Include="Model\XHtml.cs" />
@@ -206,27 +261,24 @@
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
-    <Compile Include="Rest\HttpUtil.cs" />
-    <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />
+    <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\ResourceIdentity.cs" />
+    <Compile Include="Rest\RestOperation.cs" />
+    <Compile Include="Rest\RestUrl.cs" />
+    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
-    <Compile Include="Introspection\ClassMapping.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Search\Criterium.cs" />
     <Compile Include="Search\CompositeValue.cs" />
     <Compile Include="Search\ChoiceValue.cs" />
+    <Compile Include="Search\Criterium.cs" />
     <Compile Include="Search\CriteriumBuilder.cs" />
     <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\QueryExtensions.cs" />
+    <Compile Include="Search\ParametersExtensions.cs" />
     <Compile Include="Search\ReferenceValue.cs" />
     <Compile Include="Search\QuantityValue.cs" />
     <Compile Include="Search\UntypedValue.cs" />
-    <Compile Include="Serialization\BundleJsonParser.cs" />
-    <Compile Include="Serialization\BundleJsonSerializer.cs" />
-    <Compile Include="Serialization\BundleXmlParser.cs" />
-    <Compile Include="Serialization\BundleXmlSerializer.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>
@@ -244,14 +296,11 @@
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
-    <Compile Include="Serialization\TagListParser.cs" />
-    <Compile Include="Serialization\TagListSerializer.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
-    <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
@@ -261,22 +310,19 @@
     <Compile Include="Introspection\PropertyMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Support\XmlNs.cs" />
+    <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
     <Compile Include="Serialization\ResourceReader.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
-    <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Search\DateValue.cs" />
     <Compile Include="Search\NumberValue.cs" />
     <Compile Include="Search\StringValue.cs" />
     <Compile Include="Search\TokenValue.cs" />
-    <Compile Include="Model\TagListExtensions.cs" />
-    <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Support\StringExtensions.cs" />
-    <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
     <Compile Include="Validation\CodePatternAttribute.cs" />
@@ -306,11 +352,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

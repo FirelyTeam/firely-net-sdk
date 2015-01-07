@@ -54,9 +54,10 @@ namespace Hl7.Fhir.Support
             if(t == null) throw Error.ArgumentNull("t");
 
 #if PORTABLE45
-			return t.GetTypeInfo().DeclaredProperties.Union(t.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties); //(BindingFlags.Instance | BindingFlags.Public);
+			return t.GetRuntimeProperties(); //(BindingFlags.Instance | BindingFlags.Public);
+            // return t.GetTypeInfo().DeclaredProperties.Union(t.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties); //(BindingFlags.Instance | BindingFlags.Public);
 #else
-			return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 #endif
         }
 
