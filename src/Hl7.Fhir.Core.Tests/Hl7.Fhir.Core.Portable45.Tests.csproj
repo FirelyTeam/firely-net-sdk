@@ -99,6 +99,7 @@
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Rest\OperationsTests.cs" />
     <Compile Include="Rest\SearchParamsTests.cs">
       <SubType>Code</SubType>
     </Compile>

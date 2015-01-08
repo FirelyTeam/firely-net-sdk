@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         {
             if (name == null) throw new ArgumentNullException("name");
 
-            foreach(var hit in Find(name,matchPrefix).ToList()) Parameter.Remove(hit);
+            foreach(var hit in Get(name,matchPrefix).ToList()) Parameter.Remove(hit);
         }
 
 
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="key">The name of the parameter</param>
         /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
-        public IEnumerable<ParametersParameterComponent> Find(string name, bool matchPrefix = false)
+        public IEnumerable<ParametersParameterComponent> Get(string name, bool matchPrefix = false)
         {
             if (name == null) throw new ArgumentNullException("name");
 
@@ -133,6 +133,26 @@ namespace Hl7.Fhir.Model
                 return Parameter.Where(p => p.Name.StartsWith(name)).ToList();
             else
                 return Parameter.Where(p => p.Name == name).ToList();
+        }
+
+        /// <summary>
+        /// Searches for a parameter with the given name, and returns the matching parameter(s)
+        /// </summary>
+        /// <param name="key">The name of the parameter</param>
+        /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
+        public ParametersParameterComponent GetSingle(string name, bool matchPrefix = false)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+
+            return Get(name, matchPrefix).SingleOrDefault();
+        }
+
+
+        public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Primitive
+        {
+            if (name == null) throw new ArgumentNullException("name");
+
+            return Get(name, matchPrefix).SingleOrDefault() as T;
         }
     }
 }

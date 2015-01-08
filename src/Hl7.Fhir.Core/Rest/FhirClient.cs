@@ -555,16 +555,89 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        /// <summary>
-        /// Invoke an operation on the server. If the operation fails, then this method will throw an exception
-        /// </summary>
-        /// <param name="url">The url to append to the server base to invoke the operation. Any parameters to the method are simple, and are in the URL, and this is a GET operation</param>
-        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation</returns>
-        public Resource Operation(string url)
+        public Resource WholeSystemOperation(string operationName, Parameters parameters = null)
         {
-            var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(new Uri(Endpoint.ToString() + url), Endpoint), "GET");
+            if (operationName == null) throw Error.ArgumentNull("operationName");
+            return internalOperation(operationName);
+        }
+
+        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null) where TResource : Resource
+        {
+            if (operationName == null) throw Error.ArgumentNull("operationName");
+
+            var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            return TypeOperation(operationName, typeName, parameters);
+        }
+
+        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null)
+        {
+            if (operationName == null) throw Error.ArgumentNull("operationName");
+            if (typeName == null) throw Error.ArgumentNull("typeName");
+
+            return internalOperation(operationName, typeName, null, parameters);
+        }
+
+        public Resource Operation(Uri location, string operationName, Parameters parameters = null)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+            if (operationName == null) throw Error.ArgumentNull("operationName");
+
+            var collection = getResourceTypeFromLocation(location);
+            var id = getIdFromLocation(location);
+            var version = new ResourceIdentity(location).VersionId;
+
+            return internalOperation(operationName, collection, id, parameters);
+        }
+
+
+        /// <summary>
+        /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
+        /// </summary>
+        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.
+        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
+        /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
+        public Resource Get(Uri url)
+        {
+            var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(url, Endpoint), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Resource>());
         }
+
+        /// <summary>
+        /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
+        /// </summary>
+        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.
+        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
+        /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
+        public Resource Get(string url)
+        {
+            if (url == null) throw Error.ArgumentNull("url");
+
+            return Get(new Uri(url, UriKind.RelativeOrAbsolute));
+        }
+
+
+        private Resource internalOperation(string operationName, string type=null, string id=null, Parameters parameters = null)
+        {
+            FhirRequest req;
+            RestUrl url;
+
+            if (type == null)
+                url = new RestUrl(Endpoint).ServerOperation(operationName);
+            else if (id == null)
+                url = new RestUrl(Endpoint).CollectionOperation(type, operationName);
+            else
+                url = new RestUrl(Endpoint).ResourceOperation(type, id, operationName);
+
+            if (parameters == null) parameters = new Parameters();
+
+            req = createFhirRequest(url.Uri, "POST");
+            req.SetBody(parameters, PreferredFormat);
+
+            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Resource>());
+        }
+
+
+
 
    
         /// <summary>
@@ -633,13 +706,10 @@ namespace Hl7.Fhir.Rest
 
             if (collection == null)
                 location = location.ServerTags();
+            else if(id == null)
+                location = location.CollectionTags(collection);
             else
-            {
-                if (id == null)
-                    location = location.CollectionTags(collection);
-                else
-                    location = location.ResourceTags(collection, id, version);
-            }
+                location = location.ResourceTags(collection, id, version);
 
             var req = createFhirRequest(location.Uri, "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsMeta());

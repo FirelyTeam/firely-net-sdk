@@ -240,6 +240,7 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
     <Compile Include="Rest\SearchParams.cs" />

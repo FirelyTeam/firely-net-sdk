@@ -31,6 +31,12 @@ namespace Hl7.Fhir.Rest
             return null;
         }
 
+        public void Add(string key, string value)
+        {
+            Add(Tuple.Create(key, value));
+        }
+
+
         public UriParamList WithKey(string key)
         {
             var match = MatchParam(key);

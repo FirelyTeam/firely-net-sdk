@@ -20,7 +20,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Tests
+namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
 #if PORTABLE45
@@ -32,13 +32,13 @@ namespace Hl7.Fhir.Tests
         // Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
+        public const string testEndpoint = "http://fhir-dev.healthintersections.com.au/open";
         // Uri testEndpoint = new Uri("https://api.fhir.me");
 
         [TestInitialize]
         public void TestInitialize()
         {
-            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint.OriginalString);
+            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
         }
 
         [TestMethod, TestCategory("FhirClient")]

@@ -257,6 +257,7 @@
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />

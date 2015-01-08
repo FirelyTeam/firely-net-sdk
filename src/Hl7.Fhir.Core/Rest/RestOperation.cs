@@ -20,5 +20,6 @@ namespace Hl7.Fhir.Rest
         public const string SEARCH = "_search";
         public const string META = "_meta";
         public const string DELETE = "_delete";
+        public const string OPERATIONPREFIX = "$";
     }
 }

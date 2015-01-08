@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Returs a new ResourceLocation that represents a location after navigating to the specified path
+        /// Returs a new RestUrl that represents a location after navigating to the specified path
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>

@@ -47,6 +47,20 @@ namespace Hl7.Fhir.Rest
             return new RestUrl(url).AddPath(RestOperation.HISTORY);
         }
 
+        public static RestUrl ServerOperation(this RestUrl url, string name)
+        {
+            return new RestUrl(url).AddPath(RestOperation.OPERATIONPREFIX + name);
+        }
+
+        public static RestUrl CollectionOperation(this RestUrl url, string collection, string name)
+        {
+            return new RestUrl(url).AddPath(collection, RestOperation.OPERATIONPREFIX + name);
+        }
+
+        public static RestUrl ResourceOperation(this RestUrl url, string collection, string id, string name)
+        {
+            return new RestUrl(url).AddPath(collection, id, RestOperation.OPERATIONPREFIX + name);
+        }
 
         public static RestUrl Search(this RestUrl url, string resourceType=null)
         {
