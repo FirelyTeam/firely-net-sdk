@@ -19,7 +19,7 @@ using System.Diagnostics;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using SharpCompress.Archive;
+using System.IO.Compression;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -65,13 +65,8 @@ namespace Hl7.Fhir.Tests.Serialization
             // Unzip files into this path
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 
-            ArchiveFactory.WriteToDirectory(examplesZip, examplePath);
-
-            //using (var zipfile = ZipFile.Read(examplesZip))
-            //{
-            //    zipfile.ExtractAll(examplePath, ExtractExistingFileAction.OverwriteSilently);
-            //}
-       
+            ZipFile.ExtractToDirectory(examplesZip, examplePath);
+      
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             convertFiles(examplePath, intermediate1Path);

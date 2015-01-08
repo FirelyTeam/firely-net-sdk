@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Search
 {
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Search
             if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
 
             // Split chained parts (if any) into name + modifier tuples
-            var chainPath = key.Split(new char[] { Parameters.SEARCH_CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
+            var chainPath = key.Split(new char[] { SearchParams.SEARCH_CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
                         .Select(s => pathToKeyModifTuple(s));
 
             if (chainPath.Count() == 0) throw Error.Argument("key", "Supplied an empty search parameter name or chain");
@@ -59,10 +60,6 @@ namespace Hl7.Fhir.Search
             return Parse(keyVal.Item1, keyVal.Item2);
         }
 
-        public static Criterium Parse(Parameters.ParametersParameterComponent parameter)
-        {
-            return Parse(parameter.Name, Parameters.ExtractParamValue(parameter));
-        }
 
         public override string ToString()
         {
@@ -70,16 +67,16 @@ namespace Hl7.Fhir.Search
 
             // Turn ISNULL and NOTNULL operators into the :missing modifier
             if (Type == Operator.ISNULL || Type == Operator.NOTNULL)
-                result += Parameters.SEARCH_MODIFIERSEPARATOR + MISSINGMODIF;
+                result += SearchParams.SEARCH_MODIFIERSEPARATOR + MISSINGMODIF;
             else
-                if (!String.IsNullOrEmpty(Modifier)) result += Parameters.SEARCH_MODIFIERSEPARATOR + Modifier;
+                if (!String.IsNullOrEmpty(Modifier)) result += SearchParams.SEARCH_MODIFIERSEPARATOR + Modifier;
 
             if (Type == Operator.CHAIN)
             {
                 if (Operand is Criterium)
-                    return result + Parameters.SEARCH_CHAINSEPARATOR + Operand.ToString();
+                    return result + SearchParams.SEARCH_CHAINSEPARATOR + Operand.ToString();
                 else
-                    return result + Parameters.SEARCH_CHAINSEPARATOR + " ** INVALID CHAIN OPERATION ** Chain operation must have a Criterium as operand";
+                    return result + SearchParams.SEARCH_CHAINSEPARATOR + " ** INVALID CHAIN OPERATION ** Chain operation must have a Criterium as operand";
             }
             else
             {
@@ -89,7 +86,7 @@ namespace Hl7.Fhir.Search
 
         private static Tuple<string, string> pathToKeyModifTuple(string pathPart)
         {
-            var pair = pathPart.Split(Parameters.SEARCH_MODIFIERSEPARATOR);
+            var pair = pathPart.Split(SearchParams.SEARCH_MODIFIERSEPARATOR);
 
             string name = pair[0];
             string modifier = pair.Length == 2 ? pair[1] : null;

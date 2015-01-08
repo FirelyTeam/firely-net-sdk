@@ -18,10 +18,9 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Search;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Tests
+namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
 #if PORTABLE45
@@ -39,7 +38,7 @@ namespace Hl7.Fhir.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint.OriginalString);
+            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
         }
 
         [TestMethod, TestCategory("FhirClient")]

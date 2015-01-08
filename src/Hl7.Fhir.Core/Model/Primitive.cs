@@ -7,7 +7,11 @@ using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Model
 {
-    public abstract class Primitive<T> : Element
+    public abstract class Primitive : Element
+    {
+    }
+
+    public abstract class Primitive<T> : Primitive
     {
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

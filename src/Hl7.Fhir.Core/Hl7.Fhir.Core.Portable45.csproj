@@ -59,9 +59,6 @@
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net45+win8+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
@@ -261,6 +258,7 @@
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />
@@ -269,17 +267,11 @@
     <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Rest\RestUrl.cs" />
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Rest\SearchParams.cs" />
+    <Compile Include="Rest\SearchParamsExtensions.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
+    <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
-    <Compile Include="Search\CompositeValue.cs" />
-    <Compile Include="Search\ChoiceValue.cs" />
-    <Compile Include="Search\Criterium.cs" />
-    <Compile Include="Search\CriteriumBuilder.cs" />
-    <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\ParametersExtensions.cs" />
-    <Compile Include="Search\ReferenceValue.cs" />
-    <Compile Include="Search\QuantityValue.cs" />
-    <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>
@@ -295,7 +287,6 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
-    <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
@@ -319,10 +310,6 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Search\DateValue.cs" />
-    <Compile Include="Search\NumberValue.cs" />
-    <Compile Include="Search\StringValue.cs" />
-    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
@@ -342,6 +329,7 @@
     <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -349,18 +337,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-  </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
