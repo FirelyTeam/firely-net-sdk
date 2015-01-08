@@ -1,5 +1,12 @@
-﻿/*
-  Copyright (c) 2011-2012, HL7, Inc
+﻿using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Linq;
+using System.Runtime.Serialization;
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -28,50 +35,26 @@
 
 */
 
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
+//
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+//
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{{Value,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class FhirUri
+    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
-        public FhirUri(Uri uri)
+        [NotMapped]
+        private string DebuggerDisplay
         {
-            Value = uri.OriginalString;
+            get
+            {
+                if (!String.IsNullOrEmpty(this.Display))
+                    return "Display = \"" + this.Display + "\"";
+
+                return "Code = \"" + this.Code + "\"";
+            }
         }
-
-
-        public static bool IsValidValue(string value)
-        {
-            Uri uri = null;
-
-            try
-            {
-                uri = new Uri((string)value, UriKind.RelativeOrAbsolute);
-            }
-            catch
-            {
-                return false;
-            }
-
-            if (uri.IsAbsoluteUri)
-            {
-                var uris = uri.ToString();
-
-                if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
-                    return false;
-                else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
-                    return false;
-            }
-
-            return true;
-        }
-
+        
     }
+    
 }

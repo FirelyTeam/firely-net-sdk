@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Rest
 
             if (Body != null)
             {
-                request.WriteBody(Body);
+                request.WriteBodyAsync(Body).Wait();
                 request.ContentType = ContentType;
                 if (ContentLocation != null)
                     request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
@@ -131,51 +131,25 @@ namespace Hl7.Fhir.Rest
                 _beforeRequest(this,request);
 
             // Make sure the HttpResponse gets disposed!
+            // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
-                fhirResponse = FhirResponse.FromHttpWebResponse(webResponse).Result;
-                if (_afterRequest != null) _afterRequest(fhirResponse,webResponse);
+                try
+                {
+                    fhirResponse = FhirResponse.FromHttpWebResponse(webResponse).Result;
+                    if (_afterRequest != null) _afterRequest(fhirResponse, webResponse);
+                }
+                catch (AggregateException ae)
+                {
+                    if (ae.GetBaseException() is WebException)
+                    {
+                    }
+                    throw ae.GetBaseException();
+                }
             }
 
             return fhirResponse;
         }
-
-#if PORTABLE45 || NET45
-		public async Task<WebResponse> GetResponseAsync(ResourceFormat? acceptFormat)
-		{
-			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
-
-			var location = new RestUrl(Location);
-
-			if (needsFormatParam)
-				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(acceptFormat.Value));
-
-			System.Diagnostics.Debug.WriteLine("(async) {0}: {1}", Method, location.ToString());
-
-			HttpWebRequest request = createRequest(location.Uri, Method);
-
-			if (acceptFormat != null && !UseFormatParameter)
-				request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, forBundle: false);
-
-			// if (CategoryHeader != null) 
-			//	request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
-
-			if (Body != null)
-			{
-				request.ContentType = ContentType;
-				if (ContentLocation != null) 
-					request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
-				await request.WriteBodyAsync(Body);
-			}
-
-			// Make sure the caller disposes the HttpResponse gets disposed...
-            if (_beforeRequest != null) _beforeRequest(null,request);
-            var webResponse = await request.GetResponseAsync(TimeSpan.FromMilliseconds(Timeout));
-            if (_afterRequest != null) _afterRequest(null,webResponse);
-
-            return webResponse;
-		}
-#endif
 
         private HttpWebRequest createRequest(Uri location, string method)
         {
@@ -207,7 +181,5 @@ namespace Hl7.Fhir.Rest
 
             return request;
         }
-
-        
     }
 }

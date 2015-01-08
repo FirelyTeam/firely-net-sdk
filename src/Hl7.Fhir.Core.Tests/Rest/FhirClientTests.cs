@@ -439,8 +439,18 @@ namespace Hl7.Fhir.Tests
             meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ1-" + key));
             meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
             meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
-
             pat.Meta = meta;
+
+            // Before we begin, ensure that our new tags are not actually used when doing System Meta()
+            var wsm = client.WholeSystemMeta();
+            Assert.IsFalse(wsm.Profile.Contains("http://someserver.org/fhir/Profile/XYZ1-" + key));
+            Assert.IsFalse(wsm.Security.Select(c => c.Code + "@" + c.System).Contains("1234-" + key + "@http://mysystem.com/sec"));
+            Assert.IsFalse(wsm.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag1-" + key + "@http://mysystem.com/tag"));
+
+            Assert.IsFalse(wsm.Profile.Contains("http://someserver.org/fhir/Profile/XYZ2-" + key));
+            Assert.IsFalse(wsm.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
+            Assert.IsFalse(wsm.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
+
 
             // First, create a patient with the first set of meta
             var pat2 = client.Create(pat);
@@ -500,6 +510,9 @@ namespace Hl7.Fhir.Tests
             // Should no longer be present when doing type Meta()
             meta2 = client.TypeMeta<Patient>();
             verifyMeta(meta2, false, key);
+
+            // clear out the client that we created, no point keeping it around
+            client.Delete(pat4);
 
             // Should no longer be present when doing System Meta()
             meta2 = client.WholeSystemMeta();

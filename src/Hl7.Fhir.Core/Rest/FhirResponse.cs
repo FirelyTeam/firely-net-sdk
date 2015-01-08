@@ -57,8 +57,7 @@ namespace Hl7.Fhir.Rest
                     Location = response.Headers[HttpUtil.LOCATION],                   
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
                     ETag = response.Headers[HttpUtil.ETAG] != null ? response.Headers[HttpUtil.ETAG].Trim('\"') : null,
-                    Body = await readBody(response),
-                    // Response = response
+                    Body = await readBody(response)
                 };
         }
 
@@ -72,7 +71,7 @@ namespace Hl7.Fhir.Rest
         {
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-#if PORTABLE45 && !NET45
+#if PORTABLE45
 				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
 #else
 				return new System.Net.Mime.ContentType(response.ContentType).MediaType;
@@ -88,7 +87,7 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(response.ContentType))
 			{
-#if PORTABLE45 && !NET45
+#if PORTABLE45
 				var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
 #else
 				var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
@@ -112,14 +111,6 @@ namespace Hl7.Fhir.Rest
 
             return (new StreamReader(new MemoryStream(Body), enc, true)).ReadToEnd();
         }
-
-
-		//public TagList BodyAsTagList()
-		//{
-		//	return parseBody(BodyAsString(), ContentType,
-		//				(b) => FhirParser.ParseTagListFromXml(b),
-		//				(b) => FhirParser.ParseTagListFromJson(b));
-		//}
 
         public T BodyAsResource<T>() where T : Resource
         {

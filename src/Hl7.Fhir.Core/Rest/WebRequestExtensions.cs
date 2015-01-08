@@ -19,47 +19,14 @@ namespace Hl7.Fhir.Rest
 {
     public static class WebRequestExtensions
     {
-        public static void WriteBody(this WebRequest request, byte[] data)
-        {
-            Stream outs = getRequestStream(request);
-
-            outs.Write(data, 0, (int)data.Length);
-            outs.Flush();
-        }
-
-        private static Stream getRequestStream(WebRequest request)
-        {
-            Stream requestStream = null;
-            ManualResetEvent getRequestFinished = new ManualResetEvent(false);
-
-            AsyncCallback callBack = new AsyncCallback(ar =>
-            {
-                var req = (HttpWebRequest)ar.AsyncState;
-                requestStream = req.EndGetRequestStream(ar);
-                getRequestFinished.Set();
-            });
-
-            var async = request.BeginGetRequestStream(callBack, request);
-
-            getRequestFinished.WaitOne();
-
-            return requestStream;
-        }
-
-#if PORTABLE45 || NET45
         internal static async Task WriteBodyAsync(this HttpWebRequest request, byte[] data)
         {
-            Stream outs = await getRequestStreamAsync(request);
+            Stream outs = await request.GetRequestStreamAsync();
             await outs.WriteAsync(data, 0, (int)data.Length);
             outs.Flush();
 			outs.Dispose();
         }
 	
-		private static Task<Stream> getRequestStreamAsync(HttpWebRequest request)
-		{
-			return request.GetRequestStreamAsync();
-		}
-
         internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
         {
             return Task.Factory.StartNew<WebResponse>(() =>
@@ -69,17 +36,42 @@ namespace Hl7.Fhir.Rest
                     request.EndGetResponse,
                     null);
 
-                if (!t.Wait(timeout)) throw new TimeoutException();
-
+                if (t.IsFaulted)
+                {
+                    WebException wex = t.Exception.GetBaseException() as WebException;
+                    if (wex != null)
+                    {
+                        var resp = wex.Response as HttpWebResponse;
+                        if (resp == null)
+                            throw t.Exception.GetBaseException();
+                        return resp;
+                    }
+                    throw t.Exception.GetBaseException();
+                }
+                else
+                {
+                    try
+                    {
+                        if (!t.Wait(timeout))
+                            throw new TimeoutException();
+                    }
+                    catch (AggregateException we)
+                    {
+                        WebException wex = we.GetBaseException() as WebException;
+                        if (wex != null)
+                        {
+                            var resp = wex.Response as HttpWebResponse;
+                            if (resp == null)
+                                throw we.GetBaseException();
+                            return resp;
+                        }
+                        throw we.GetBaseException();
+                    }
+                }
                 return t.Result;
             });
         }
 
-		//public static Task<WebResponse> GetResponseAsync(this HttpWebRequest req)
-		//{
-		//	return req.GetResponseAsync();
-		//}
-#endif
 
 		public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
         {
