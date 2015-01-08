@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
     public class RestUrl
     {
         private UriBuilder _builder;
-        private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
+        private UriParamList _parameters = new UriParamList();
 
         public RestUrl(RestUrl url) : this(url.Uri)
         {
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Rest
             _builder = new UriBuilder(url);
 
             if (!String.IsNullOrEmpty(_builder.Query))
-                _parameters = new List<Tuple<string,string>>( HttpUtil.SplitParams(_builder.Query) ); 
+                _parameters = UriParamList.FromQueryString(_builder.Query); 
         }
         public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
         {
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Rest
         { 
             get
             {
-                _builder.Query = HttpUtil.JoinParams(_parameters);
+                _builder.Query = _parameters.ToQueryString();
                 return _builder.Uri;
             } 
         }

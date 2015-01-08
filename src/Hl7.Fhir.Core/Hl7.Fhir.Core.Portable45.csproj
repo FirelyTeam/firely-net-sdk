@@ -266,9 +266,10 @@
     <Compile Include="Rest\RestUrl.cs" />
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />
     <Compile Include="Rest\SearchParams.cs" />
+    <Compile Include="Rest\SearchParamsExtensions.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
+    <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
-    <Compile Include="Rest\ParametersExtensions.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />
     <Compile Include="Serialization\ComplexTypeReader.cs">
       <SubType>Code</SubType>

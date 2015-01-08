@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class ParametersExtensions
+    public static class SearchParamsExtensions
     {
         public static SearchParams Include(this SearchParams qry, string path)
         {

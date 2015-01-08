@@ -26,9 +26,9 @@ namespace Hl7.Fhir.Test.Serialization
         {
             var uriParams = parseParams("_id=1");
 
-            var test = SearchParams.FromUriParamList(uriParams);
+            var test = SearchParams.FromUriParamList(uriParams).ToUriParamList();
 
-            Assert.AreEqual("1", test.GetSingleValue("_id"));
+            Assert.AreEqual("1", test.SingleValue("_id"));
         }
 
         [TestMethod]
@@ -48,8 +48,7 @@ namespace Hl7.Fhir.Test.Serialization
 
             var test = SearchParams.FromUriParamList(uriParams);
 
-            var paramTeun = test.ToUriParamList().SingleWithName("Observation.Subject.name");
-            Assert.AreEqual("Teun", Parameters.ExtractParamValue(paramTeun));
+            Assert.AreEqual("Teun", test.ToUriParamList().SingleValue("Observation.Subject.name"));
         }
 
         private IEnumerable<Tuple<String, String>> parseParams(string uriParams)

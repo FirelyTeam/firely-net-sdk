@@ -254,41 +254,5 @@ namespace Hl7.Fhir.Rest
     {
         Ascending,
         Descending
-    }
-
-
-    public class UriParamList : List<Tuple<string,string>>
-    {
-        public UriParamList WithName(string key)
-        {
-            throw new NotImplementedException();
-            //var match = MatchParam(key);
-            //return pars.Where(par => match(par));
-        }
-
-        public Tuple<string,string> SingleWithName(string key)
-        {
-            throw new NotImplementedException();
-            //var match = MatchParam(key);
-            //return pars.SingleOrDefault(par => match(par));
-        }
-
-        internal static Predicate<Parameters.ParametersParameterComponent> MatchParam(string key)
-        {
-            // PCL does not have an overload on this routine that takes a char, only string
-            if (key.Contains(SearchParams.SEARCH_MODIFIERSEPARATOR.ToString()))
-            {
-                return (Parameters.ParametersParameterComponent ext) => ext.Name == key;
-            }
-            else
-            {
-                // Add a modifier separator to the end if there's no modifier,
-                // this way we can assure we don't match just a prefix 
-                // (e.g. a param _querySpecial when looking for_query)
-                var paramWithSep = key + SearchParams.SEARCH_MODIFIERSEPARATOR;
-                return (Parameters.ParametersParameterComponent ext) => ext.Name.StartsWith(paramWithSep) ||
-                                ext.Name == key;
-            }
-        }
-    }
+    }  
 }
