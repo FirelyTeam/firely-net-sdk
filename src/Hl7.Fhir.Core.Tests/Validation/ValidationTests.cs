@@ -19,7 +19,11 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
+#if PORTABLE45
+    public class PortableValidationTests
+#else
     public class ValidationTests
+#endif
     {
         [TestMethod]
         public void TestIdValidation()

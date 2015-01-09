@@ -17,9 +17,24 @@ namespace Hl7.Fhir.Rest
 {
     public static class FhirClientOperations
     {
+        /// <summary>
+        /// "everything" operation
+        /// </summary>
         public static string FETCH_PATIENT_RECORD = "everything";
+
+        /// <summary>
+        /// "expand" operation
+        /// </summary>
         public static string EXPAND_VALUESET = "expand";
+
+        /// <summary>
+        /// "lookup" operation
+        /// </summary>
         public static string CONCEPT_LOOKUP = "lookup";
+
+        /// <summary>
+        /// "validate" operation
+        /// </summary>
         public static string VALIDATE_RESOURCE = "validate";
 
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)

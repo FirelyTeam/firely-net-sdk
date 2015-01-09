@@ -96,25 +96,26 @@
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
     <Compile Include="Introspection\PropertyMappingTest.cs" />
-    <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
+    <Compile Include="Model\DeepCompareTest.cs" />
+    <Compile Include="Model\DeepCopyTest.cs" />
+    <Compile Include="Model\DeepMatchTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
-    <Compile Include="Rest\OperationsTests.cs" />
-    <Compile Include="Rest\SearchParamsTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="JsonAssert.cs" />
     <Compile Include="Rest\FhirClientTests.cs" />
+    <Compile Include="Rest\OperationsTests.cs" />
+    <Compile Include="Rest\SearchParamsTests.cs" />
     <Compile Include="Rest\TestResourceIdentifier.cs" />
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
-    <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\MeasurePerformance.cs" />
-    <Compile Include="JsonAssert.cs" />
+    <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
+    <Compile Include="Serialization\QueryParserTests.cs" />
+    <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
-    <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="Validation\ValidatePatient.cs" />
     <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />
@@ -126,18 +127,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\examples-json.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\examples.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\TestPatient.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="TestData\TestPatient.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
