@@ -2,10 +2,16 @@
 layout: default
 title: What's new?
 ---
-### Coming Soon
-* ValueSet expansion
-* More model/metadata support
-* Profile Validation
+### In 0.20.0
+* This is the new DSTU2 release
+* Supports the new DSTU2 resources and DSTU2 serialization
+* Uses the new DSTU2 class hierarchy with Base, Resource, DomainResource and Bundle
+* Further alignment between the Java RM and HAPI
+* Support for using the DSTU2 Operation framework
+* Many API improvements, including:
+ * deep compare (IsExactly) and deep copy (DeepCopy)
+ * Collections will be created on-demand, so you can just do patient.Name.Add() without having to set patient.Name to a collection first
+* Note: support for .NET 4.0 has been dropped, we support .NET 4.5 and PCL 4.5
 
 ### In 0.11.1
 * Project now contains two assemblies: a "lightweight" core assembly (available across all platforms) and an additional library with profile and validation support.
