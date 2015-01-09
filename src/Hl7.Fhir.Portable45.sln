@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11899A8A-5232-4F5D-97C7-135467A73FC9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{92CC9186-0A21-4E06-B11F-907584FBFD81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Portable45", "Hl7.Fhir.Core\Hl7.Fhir.Core.Portable45.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"

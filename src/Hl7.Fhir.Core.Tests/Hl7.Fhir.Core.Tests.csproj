@@ -44,7 +44,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -69,6 +69,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Introspection\ClassMappingTest.cs" />
+    <Compile Include="Introspection\EnumMappingTest.cs" />
+    <Compile Include="Introspection\ModelInspectorTest.cs" />
+    <Compile Include="Introspection\PropertyMappingTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Model\DeepCompareTest.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
@@ -94,7 +98,6 @@
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="TestData\edgecases.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

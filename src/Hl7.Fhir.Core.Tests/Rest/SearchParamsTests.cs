@@ -18,7 +18,11 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Test.Rest
 {
     [TestClass]
-    public class SearchParamsTests
+#if PORTABLE45
+	public class PortableSearchParamsTests
+#else
+	public class SearchParamsTests
+#endif    
     {
         [TestMethod]
         public void CountSetToNullAndGet()
