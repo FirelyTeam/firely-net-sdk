@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
+    <DocumentationFile>bin\Debug\Portable45\Hl7.Fhir.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePCL45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

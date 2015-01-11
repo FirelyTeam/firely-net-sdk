@@ -28,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016, 3015</NoWarn>
+    <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,6 +80,7 @@
     <Compile Include="Model\Coding.cs" />
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
+    <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
