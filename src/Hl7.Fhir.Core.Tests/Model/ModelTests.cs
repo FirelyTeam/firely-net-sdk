@@ -19,7 +19,11 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-    public class ModelTests
+#if PORTABLE45
+	public class PortableModelTests
+#else
+	public class ModelTests
+#endif
     {
         [TestMethod]
         public void ValidateElementAssertions()

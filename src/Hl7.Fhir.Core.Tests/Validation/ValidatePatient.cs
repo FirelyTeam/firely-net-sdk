@@ -21,7 +21,11 @@ using System.IO;
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-    public class ValidatePatient
+#if PORTABLE45
+	public class PortableValidatePatient
+#else
+	public class ValidatePatient
+#endif    
     {
         [TestMethod]
         public void ValidateDemoPatient()
