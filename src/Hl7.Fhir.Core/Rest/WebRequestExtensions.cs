@@ -26,7 +26,15 @@ namespace Hl7.Fhir.Rest
             outs.Flush();
 			outs.Dispose();
         }
-	
+
+        internal static void WriteBody(this HttpWebRequest request, byte[] data)
+        {
+            Stream outs = request.GetRequestStream();
+            outs.Write(data, 0, (int)data.Length);
+            outs.Flush();
+            outs.Dispose();
+        }
+
         internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
         {
             return Task.Factory.StartNew<WebResponse>(() =>

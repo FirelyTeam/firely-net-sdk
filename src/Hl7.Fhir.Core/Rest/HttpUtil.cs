@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public const string HISTORY_PARAM_COUNT = SearchParams.SEARCH_PARAM_COUNT;
 
-        public static async Task<byte[]> ReadAllFromStream(Stream s, int contentLength)
+        public static byte[] ReadAllFromStream(Stream s, int contentLength)
         {
             if (contentLength == 0)
                 return null;
@@ -76,12 +76,12 @@ namespace Hl7.Fhir.Rest
             byte[] byteBuffer = new byte[bufferSize];
             MemoryStream buffer = new MemoryStream();
 
-            int readLen = await s.ReadAsync(byteBuffer, 0, byteBuffer.Length);
+            int readLen = s.Read(byteBuffer, 0, byteBuffer.Length);
 
             while (readLen > 0)
             {
-                await buffer.WriteAsync(byteBuffer, 0, readLen);
-                readLen = await s.ReadAsync (byteBuffer, 0, byteBuffer.Length);
+                buffer.Write(byteBuffer, 0, readLen);
+                readLen = s.Read(byteBuffer, 0, byteBuffer.Length);
             }
 
             return buffer.ToArray();

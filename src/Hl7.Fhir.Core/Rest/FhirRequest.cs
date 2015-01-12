@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Rest
 
             if (Body != null)
             {
-                request.WriteBodyAsync(Body).Wait();
+                request.WriteBody(Body);
                 request.ContentType = ContentType;
                 if (ContentLocation != null)
                     request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Rest
             {
                 try
                 {
-                    fhirResponse = FhirResponse.FromHttpWebResponse(webResponse).Result;
+                    fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
                     if (_afterRequest != null) _afterRequest(fhirResponse, webResponse);
                 }
                 catch (AggregateException ae)

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Rest
             get { return new ResourceIdentity(ResponseUri).ResourceType == ModelInfo.GetResourceNameForType(typeof(Binary)); }
         }
 
-        public static async Task<FhirResponse> FromHttpWebResponse(HttpWebResponse response)
+        public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
         {
             
             return new FhirResponse
@@ -57,11 +57,11 @@ namespace Hl7.Fhir.Rest
                     Location = response.Headers[HttpUtil.LOCATION],                   
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
                     ETag = response.Headers[HttpUtil.ETAG] != null ? response.Headers[HttpUtil.ETAG].Trim('\"') : null,
-                    Body = await readBody(response)
+                    Body = readBody(response)
                 };
         }
 
-        private static Task<byte[]> readBody(HttpWebResponse response)
+        private static byte[] readBody(HttpWebResponse response)
         {
             long contentlength = response.ContentLength;
             return HttpUtil.ReadAllFromStream(response.GetResponseStream(), (int)contentlength);

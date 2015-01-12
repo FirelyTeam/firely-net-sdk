@@ -393,7 +393,19 @@ namespace Hl7.Fhir.Rest
             var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(url.Uri, Endpoint), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
         }
-        
+
+        /// <summary>
+        /// Search for Resources based on criteria specified in a Query resource
+        /// </summary>
+        /// <param name="q">The Query resource containing the search parameters</param>
+        /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
+        /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        public Bundle Search<TResource>(SearchParams q)
+            where TResource : DomainResource
+        {
+            return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
+        }
+
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
         /// </summary>
@@ -405,7 +417,8 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) 
+            where TResource : DomainResource, new()
         {
             return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize);
         }
