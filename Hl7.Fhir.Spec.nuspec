@@ -1,35 +1,31 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Hl7.Fhir.Specification</id>
-    <version>0.11.2</version>
-	<title>HL7 FHIR Additional functionality support API</title>
+    <id>Hl7.Fhir.Specification.DSTU2</id>
+    <version>0.20.0-alpha2</version>
+	<title>HL7 FHIR Additional functionality support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
     <description>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU1 (0.0.83).</description>
-    <releaseNotes>DSTU1 (0.0.83) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+    <releaseNotes>DSTU2 (0.4.0) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
 	<summary>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir).
 	It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation 
 	and publication</summary>
 	<language>en-us</language>
 	<projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>	
 	<iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2015</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</tags>
     <dependencies>
-	  <dependency id="Hl7.Fhir" version="0.11.2" />
-      <dependency id="Newtonsoft.Json" version="6.0.3" />
-	  <dependency id="p3-sharpcompress" version="0.10.5" />
+	  <dependency id="Hl7.Fhir.DSTU2" version="0.20.0-alpha1" />
+      <dependency id="Newtonsoft.Json" version="6.0.7" />
     </dependencies>
   </metadata>
     <files>
 		<file src="install.ps1" target="tools\" />
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Net40\validation.zip" target="content" />
+		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\validation.zip" target="content" />
 		
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Net40\Hl7.Fhir.Specification.dll" target="lib\net40\" />
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Net40\Hl7.Fhir.Specification.xml" target="lib\net40\" />
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Net40\Hl7.Fhir.Specification.pdb" target="lib\net40\" />
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\Hl7.Fhir.Specification.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\Hl7.Fhir.Specification.xml" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\Hl7.Fhir.Specification.pdb" target="lib\net45\" />

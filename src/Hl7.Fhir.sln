@@ -24,7 +24,6 @@ Global
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.DebugNet45|Any CPU.ActiveCfg = DebugNet45|Any CPU
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.DebugNet45|Any CPU.Build.0 = DebugNet45|Any CPU
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.ReleaseNet45|Any CPU.ActiveCfg = ReleaseNet45|Any CPU
-		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.ReleaseNet45|Any CPU.Build.0 = ReleaseNet45|Any CPU
 		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.DebugNet45|Any CPU.ActiveCfg = DebugNet45|Any CPU
 		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.DebugNet45|Any CPU.Build.0 = DebugNet45|Any CPU
 		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.ReleaseNet45|Any CPU.ActiveCfg = ReleaseNet45|Any CPU
@@ -32,7 +31,6 @@ Global
 		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.DebugNet45|Any CPU.ActiveCfg = DebugNet45|Any CPU
 		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.DebugNet45|Any CPU.Build.0 = DebugNet45|Any CPU
 		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.ReleaseNet45|Any CPU.ActiveCfg = ReleaseNet45|Any CPU
-		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.ReleaseNet45|Any CPU.Build.0 = ReleaseNet45|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
