@@ -151,33 +151,51 @@ namespace Hl7.Fhir.Rest
             return fhirResponse;
         }
 
+        /// <summary>
+        /// Flag to control the setting of the User Agent string (different platforms have different abilities)
+        /// </summary>
+        public static bool SetUserAgentUsingReflection = true;
+        public static bool SetUserAgentUsingDirectHeaderManipulation = true;
+
         private HttpWebRequest createRequest(Uri location, string method)
         {
             var request = (HttpWebRequest)HttpWebRequest.Create(location);
             var agent = ".NET FhirClient for FHIR " + Model.ModelInfo.Version;
             request.Method = method;
 
-			try
-			{
+            bool userAgentSet = false;
+            if (SetUserAgentUsingReflection)
+            {
+                try
+                {
 #if PORTABLE45
-				System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
+					System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
 #else
-                System.Reflection.PropertyInfo prop = request.GetType().GetProperty("UserAgent");
+                    System.Reflection.PropertyInfo prop = request.GetType().GetProperty("UserAgent");
 #endif
 
-				if (prop != null) prop.SetValue(request, agent, null);
-			}
-			catch (Exception)
-			{
-				// platform does not support UserAgent property...too bad
-				try
-				{
-					request.Headers[HttpRequestHeader.UserAgent] = agent;
-				}
-				catch (ArgumentException)
-				{
-				}
-			}
+                    if (prop != null)
+                        prop.SetValue(request, agent, null);
+                    userAgentSet = true;
+                }
+                catch (Exception)
+                {
+                    // This approach doesn't work on this platform, so don't try it again.
+                    SetUserAgentUsingReflection = false;
+                }
+            }
+            if (!userAgentSet && SetUserAgentUsingDirectHeaderManipulation)
+            {
+                // platform does not support UserAgent property...too bad
+                try
+                {
+                    request.Headers[HttpRequestHeader.UserAgent] = agent;
+                }
+                catch (ArgumentException)
+                {
+                    SetUserAgentUsingDirectHeaderManipulation = false;
+                }
+            }
 
             return request;
         }
