@@ -51,7 +51,6 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Creates a default cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
-
         /// </summary>
         public static IArtifactSource CreateCachedDefault()
         {

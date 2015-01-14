@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)
         /// and reads an artifact with the given id from it.
         /// </summary>
-        /// <param name="artifactId"></param>
+        /// <param name="identifier">identifying uri of the conformance resource to find</param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located. If both an
         /// xml and a json version is available, the xml version is returned</returns>
         public Resource ReadConformanceResource(string identifier)

@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Scan a supplied (bundle or single resource) file with the core artifacts for an entry with an id equal to the given uri 
         /// </summary>
-        /// <param name="entryUri"></param>
+        /// <param name="identifier">identifying uri of the conformance resource to find</param>
         /// <returns></returns>
         public XElement FindConformanceResourceById(string identifier)
         {

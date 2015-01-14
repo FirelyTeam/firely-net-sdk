@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="source">ArtifactSource that will be used to get data from on a cache miss</param>
         /// <param name="cacheDuration">Duration before trying to refresh the cache, in seconds</param>
         public CachedArtifactSource(IArtifactSource source, int cacheDuration)
         {
