@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !PORTABLE45 || NET45
+#if !PORTABLE45
     [SerializableAttribute]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
-        /// The logical id of the resource as it occurs in the Resource url
+        /// The logical id of the resource as it occurs in the Resource url (without the Version)
         /// </summary>
         public string Id
         {
