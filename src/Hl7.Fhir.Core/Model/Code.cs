@@ -41,6 +41,7 @@ using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class Code
     {
         public static bool IsValidValue(string value)
@@ -51,6 +52,7 @@ namespace Hl7.Fhir.Model
 
     [FhirType("codeOfT")]
     [DataContract]
+    [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public class Code<T> : Element where T : struct
     {
         // Primitive value of element

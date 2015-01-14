@@ -54,7 +54,5 @@ namespace Hl7.Fhir.Model
                 return "Code = \"" + this.Code + "\"";
             }
         }
-        
     }
-    
 }
