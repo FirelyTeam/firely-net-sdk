@@ -80,15 +80,6 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public RestUrl AddPath(Uri uri)
-        {
-            if (!uri.IsAbsoluteUri)
-            {
-                return AddPath(uri.ToString());
-            }
-            else throw new ArgumentException("An absolute path cannot be added to a rest URL.");
-        }
-
         /// <summary>
         /// Add a query parameter to the RestUrl
         /// </summary>

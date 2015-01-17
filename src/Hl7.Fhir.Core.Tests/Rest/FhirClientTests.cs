@@ -426,6 +426,14 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
+        [TestMethod]
+        public void TestWithParam()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            var res = client.Get("ValueSet/extensional-case-1/$validate?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
+            Assert.IsNotNull(res);
+        }
+
         [TestMethod, TestCategory("FhirClient")]
         public void ManipulateMeta()
         {
@@ -454,7 +462,7 @@ namespace Hl7.Fhir.Tests.Rest
             // First, create a patient with the first set of meta
             var pat2 = client.Create(pat);
           //  var loc = pat2.GetResourceLocation(testEndpoint).WithoutVersion();
-            var loc = pat2.GetResourceLocation(testEndpoint);
+            var loc = pat2.ResourceIdentity(testEndpoint);
 
             // Meta should be present on created patient
             verifyMeta(pat2.Meta, false,key);
