@@ -35,6 +35,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Model
 {
@@ -55,13 +56,25 @@ namespace Hl7.Fhir.Model
         /// It is not stored, but reconstructed from the components of the resource
         /// </remarks>
         /// <returns></returns>
-        public Hl7.Fhir.Rest.ResourceIdentity ResourceIdentity()
+        public ResourceIdentity ResourceIdentity(string baseUrl = null)
         {
-            if(this.ResourceBase != null)
-                return Rest.ResourceIdentity.Build(this.ResourceBase, this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
+            var versionId = Meta != null && Meta.VersionId != null ? Meta.VersionId : null;
+
+            var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, versionId);
+
+            var resourceBase = baseUrl ?? (ResourceBase != null ? ResourceBase.OriginalString : null);
+
+            if(resourceBase != null)
+                return result.WithBase(resourceBase);
             else
-                return Rest.ResourceIdentity.Build(this.TypeName, this.Id, (Meta != null && !string.IsNullOrEmpty(Meta.VersionId)) ? Meta.VersionId : null);
+                return result;
         }
+
+        public ResourceIdentity ResourceIdentity(Uri baseUrl)
+        {
+            return ResourceIdentity(baseUrl.OriginalString);
+        }
+
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

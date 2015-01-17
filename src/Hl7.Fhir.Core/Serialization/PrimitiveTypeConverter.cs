@@ -188,14 +188,15 @@ namespace Hl7.Fhir.Serialization
         }
 
      
-        public static string GetValueAsString<T>(this Primitive<T> primitive)
+        public static string GetValueAsString(this Primitive p)
         {
-            if (primitive == null) throw Error.ArgumentNull("primitive");
+            var value = ReflectionHelper.FindPublicProperty(p.GetType(), "Value").GetValue(p);
 
-            if (primitive._Value != null)
-                return primitive._Value.ConvertTo<string>();
-            else
+            if (value == null) 
                 return null;
+            else
+                return value.ConvertTo<string>();
         }
+
     }
 }

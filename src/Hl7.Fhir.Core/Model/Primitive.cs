@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Model

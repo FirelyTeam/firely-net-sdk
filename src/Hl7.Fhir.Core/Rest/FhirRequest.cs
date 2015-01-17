@@ -20,39 +20,32 @@ using System.IO;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirRequest
+    internal class FhirRequest
     {
-        public bool UseFormatParameter { get; set; }
-
-        public FhirRequest(Uri location, string method = "GET",
-             Action<FhirRequest, HttpWebRequest> beforeRequest = null, Action<FhirResponse,WebResponse> afterRequest = null)
+        public FhirRequest()
         {
-            if (location == null) throw Error.ArgumentNull("location");
-            if (method == null) throw Error.ArgumentNull("method");
-            if (!location.IsAbsoluteUri) throw Error.Argument("location", "Must be absolute uri");
-
-            Location = location;
-            Method = method;
-            Timeout = 100*1000;       // Default timeout is 100 seconds
-            
-            _beforeRequest = beforeRequest;
-            _afterRequest = afterRequest;
+            Method = "GET";
+            Format = ResourceFormat.Xml;
+            Timeout = 100*1000;       // Default timeout is 100 seconds            
         }
 
-        private Action<FhirRequest,HttpWebRequest> _beforeRequest;
-        private Action<FhirResponse,WebResponse> _afterRequest;
+        public Action<FhirRequest, HttpWebRequest> BeforeRequest { get; internal set; }
+        public Action<FhirResponse, WebResponse> AfterRequest { get; internal set; }
 
-        public string Method { get; private set; }
-        public Uri Location { get; private set; }
-        public int Timeout { get; set; }
+        public bool UseFormatParameter { get; internal set; }
+        public string Method { get; internal set; }
+        public Uri BaseUrl { get; internal set; }
+        public Uri Path { get; internal set; }
+        public int Timeout { get; internal set; }
         public byte[] Body { get; private set; }
         public string ContentType { get; private set; }
         public string CategoryHeader { get; private set; }
-        public Uri ContentLocation { get; set; }
-        public string ETag { get; set; }
-        public string IfMatch { get; set; }
+        public Uri ContentLocation { get; internal set; }
+        public string ETag { get; internal set; }
+        public string IfMatch { get; internal set; }
+        public ResourceFormat Format { get; internal set; }
 
-        public void SetBody(Resource data, ResourceFormat format)
+        public void SetBody(Resource data)
         {
             if (data == null) throw Error.ArgumentNull("data");
 
@@ -64,23 +57,23 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                Body = format == ResourceFormat.Xml ?
+                Body = Format == ResourceFormat.Xml ?
                     FhirSerializer.SerializeToXmlBytes(data, summary: false) :
                     FhirSerializer.SerializeToJsonBytes(data, summary: false);
 
-                ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(Format, forBundle: false);
             }
         }
 
-        public void SetMeta(Resource.ResourceMetaComponent data, ResourceFormat format)
+        public void SetMeta(Resource.ResourceMetaComponent data)
         {
             if (data == null) throw Error.ArgumentNull("data");
 
-            Body = format == ResourceFormat.Xml ?
+            Body = Format == ResourceFormat.Xml ?
                 FhirSerializer.SerializeToXmlBytes(data, summary: false, root: "meta") :
                 FhirSerializer.SerializeToJsonBytes(data, summary: false, root: "meta");
 
-            ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+            ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(Format, forBundle: false);
         }
 
     
@@ -95,7 +88,8 @@ namespace Hl7.Fhir.Rest
         {
 			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
 
-            var location = new RestUrl(Location);
+            var location = new RestUrl(BaseUrl);            
+            if(Path != null) location.AddPath(Path.OriginalString);
 
             if(needsFormatParam)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(acceptFormat.Value));
@@ -127,8 +121,7 @@ namespace Hl7.Fhir.Rest
             request.Timeout = Timeout;
 #endif
 
-            if (_beforeRequest != null) 
-                _beforeRequest(this,request);
+            if (BeforeRequest != null) BeforeRequest(this,request);
 
             // Make sure the HttpResponse gets disposed!
             // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
@@ -137,7 +130,7 @@ namespace Hl7.Fhir.Rest
                 try
                 {
                     fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
-                    if (_afterRequest != null) _afterRequest(fhirResponse, webResponse);
+                    if (AfterRequest != null) AfterRequest(fhirResponse, webResponse);
                 }
                 catch (AggregateException ae)
                 {

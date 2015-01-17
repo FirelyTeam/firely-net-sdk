@@ -20,7 +20,7 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirResponse
+    internal class FhirResponse
     {
         public HttpStatusCode Result { get; set; }
         public string ContentType { get; set; }
@@ -41,12 +41,15 @@ namespace Hl7.Fhir.Rest
 
         public bool IsBinaryResponse
         {
-            get { return new ResourceIdentity(ResponseUri).ResourceType == ModelInfo.GetResourceNameForType(typeof(Binary)); }
+            get
+            {
+                return ResponseUri.OriginalString.EndsWith("/Binary") || ResponseUri.OriginalString.EndsWith("/Binary?") ||
+                  ResponseUri.OriginalString.Contains("/Binary/");
+            }
         }
 
         public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
         {
-            
             return new FhirResponse
                 {
                     ResponseUri = response.ResponseUri,
@@ -135,6 +138,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
+
         public Resource BodyAsResource()
         {
             Resource resource = null;
@@ -148,43 +152,6 @@ namespace Hl7.Fhir.Rest
                     b => FhirParser.ParseResourceFromJson(b));
             }
 
-            if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
-
-            var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
-
-            if (!String.IsNullOrEmpty(location))
-            {
-                ResourceIdentity reqId = new ResourceIdentity(location);
-
-                if(resource.Id == null) resource.Id = reqId.Id;
-
-                resource.ResourceBase = reqId.BaseUri;
-            }
-
-            if (!String.IsNullOrEmpty(ETag) && !resource.HasVersionId)
-                resource.VersionId = ETag;
-            else
-            {
-                var id = new ResourceIdentity(location);
-                if(id.HasVersion)
-                {
-                    System.Diagnostics.Debug.WriteLine(String.Format("Result did not have an ETag on the HTTP Header, using the (Content)Location instead"));
-                    resource.Meta.VersionId = id.VersionId;
-                }
-            }
-
-            if (!String.IsNullOrEmpty(LastModified) && (resource.Meta != null && resource.Meta.LastUpdated == null))
-                resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
-
-            if (resource is Bundle)
-            {
-                var bundle = (Bundle)resource;
-                foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
-                {
-                    entry.Resource.ResourceBase = bundle.ResourceBase;
-                }
-
-            }
             return resource;
         }
 
@@ -219,6 +186,26 @@ namespace Hl7.Fhir.Rest
             }
 
             return result;
+        }
+
+        public ResourceIdentity GetIdentityFromHeaders()
+        {
+            var location = Location ?? ContentLocation;
+
+            if (!String.IsNullOrEmpty(location))
+            {
+                ResourceIdentity reqId = new ResourceIdentity(location);
+
+                if (reqId.VersionId == null && !String.IsNullOrEmpty(ETag))
+                {
+                    Debug.WriteLine("Result did not have version nor location, using ETag instead");
+                    reqId = reqId.WithVersion(ETag);
+                }
+
+                return reqId;
+            }
+
+            return null;
         }
     }
 }

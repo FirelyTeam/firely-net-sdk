@@ -143,26 +143,6 @@ namespace Hl7.Fhir.Model
             else
                 return result;
         }
-
-
-        public static ResourceIdentity GetResourceLocation(this Resource resource, string baseUrl = null)
-        {
-            ResourceIdentity result;
-
-            var versionId = resource.Meta != null && resource.Meta.VersionId != null ? resource.Meta.VersionId : null;
-
-            result = ResourceIdentity.Build(resource.TypeName, resource.Id, versionId);
-
-            if (baseUrl != null)
-                return result.WithBase(baseUrl);
-            else
-                return result;
-        }
-
-        public static ResourceIdentity GetResourceLocation(this Resource resource, Uri baseUrl = null)
-        {
-            return GetResourceLocation(resource, baseUrl.OriginalString);
-        }
     }
 
 }

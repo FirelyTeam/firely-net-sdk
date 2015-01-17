@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Rest
         /// Update (or create) a resource
         /// </summary>
         /// <param name="resource">A ResourceEntry containing the resource to update</param>
-        /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
+        /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
         /// <returns>If refresh=true, 
         /// this function will return a ResourceEntry with all newly created data from the server. Otherwise
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Rest
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            Delete(entry.GetResourceLocation(Endpoint).WithoutVersion());
+            Delete(entry.ResourceIdentity(Endpoint).WithoutVersion());
         }
 
 
@@ -276,7 +276,8 @@ namespace Hl7.Fhir.Rest
 
         internal TResource Refresh<TResource>(TResource entry, bool versionSpecific = false) where TResource : Resource
         {
-            if (entry == null) throw Error.ArgumentNull("entry");
+     
+       if (entry == null) throw Error.ArgumentNull("entry");
 
             if (!versionSpecific)
                 return Read<TResource>(entry.Id);
@@ -401,7 +402,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Bundle Search<TResource>(SearchParams q)
-            where TResource : DomainResource
+            where TResource : Resource
         {
             return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
         }
@@ -418,7 +419,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) 
-            where TResource : DomainResource, new()
+            where TResource : Resource, new()
         {
             return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize);
         }
@@ -795,6 +796,36 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        // TODO: Depending on type of response, update identity & always update lastupdated?
+
+        private void updateIdentity(Resource resource, ResourceIdentity identity)
+        {
+            if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
+
+            if (resource.Id == null)
+            {
+                resource.Id = identity.Id;
+                resource.VersionId = identity.VersionId;
+            }
+        }
+
+
+        private void setResourceBase(Resource resource, string baseUri)
+        {
+            resource.ResourceBase = new Uri(baseUri);
+
+            if (resource is Bundle)
+            {
+                var bundle = resource as Bundle;
+                foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
+                {
+                    var entryBaseUri = entry.Base ?? baseUri;
+                    entry.Resource.ResourceBase = new Uri(entryBaseUri);
+                }
+            }
+        }
+
+
         public event BeforeRequestEventHandler OnBeforeRequest;
 
         public event AfterResponseEventHandler OnAfterResponse;
@@ -821,66 +852,7 @@ namespace Hl7.Fhir.Rest
             if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(fhirResponse,webResponse));
         }
 
-
-
-        private T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess)
-        {
-            return doRequest<T>(request, new HttpStatusCode[] { success }, onSuccess);
-        }
-
-        private T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse,T> onSuccess)
-        {
-            request.UseFormatParameter = this.UseFormatParam;
-            var response = request.GetResponse(PreferredFormat);
-
-            LastResponseDetails = response;
-
-            if (success.Contains(response.Result))
-                return onSuccess(response);
-            else
-            {
-                // Try to parse the body as an OperationOutcome resource, but it is no
-                // problem if it's something else, or there is no parseable body at all
-
-                OperationOutcome outcome = null;
-
-                try
-                {
-                    outcome = response.BodyAsResource<OperationOutcome>();
-                }
-                catch
-                {
-                    // failed, so the body does not contain an OperationOutcome.
-                    // Put the raw body as a message in the OperationOutcome as a fallback scenario
-                    var body = response.BodyAsString();
-                    if( !String.IsNullOrEmpty(body) )
-                        outcome = OperationOutcome.ForMessage(body);
-                }
-
-				if (outcome != null)
-				{
-					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-                    if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
-                    {
-                        System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
-                        System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-                    }
-
-					foreach (var issue in outcome.Issue)
-					{
-						System.Diagnostics.Debug.WriteLine("	" + issue.Details);
-					}
-					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
-				}
-				else
-				{
-					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
-				}
-            }
-        }
+     
 
 #if (PORTABLE45 || NET45) && BRIAN
 #region << Async operations >>

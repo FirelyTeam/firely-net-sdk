@@ -9,6 +9,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Test
 {
@@ -19,6 +20,17 @@ namespace Hl7.Fhir.Test
     public class TestResourceIdentifier
 #endif
     {
+        [TestMethod]
+        public void TestMcKessonBug()
+        {
+            var client = new FhirClient("http://bp.oridashi.com.au");
+            var b = client.Search("Observation");
+            //var id1 = b.ResourceIdentity();
+            var obs = b.Entry[0].Resource as Observation;
+            var id2 = obs.ResourceIdentity();
+        }
+
+
         [TestMethod]
         public void TestBuild()
         {
