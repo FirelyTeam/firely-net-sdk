@@ -163,3 +163,6 @@ $RECYCLE.BIN/
 src/Hl7.Fhir.Api/EwoutFhirNetApi.snk
 src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
 *.snk
+src/Hl7.Fhir.Specification.Tests/TestData/profile.Diagnosis.xml
+src/Hl7.Fhir.Specification.Tests/TestData/profile.OperationNote.xml
+src/Hl7.Fhir.Specification.Tests/TestData/profile.Procedure.xml
