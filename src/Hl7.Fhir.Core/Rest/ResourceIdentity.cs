@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Rest
         public bool IsLocal { get { return Form == ResourceIdentityForm.Local; } }
 
 
-        [Obsolete]
+        [Obsolete("Recommend using the ResourceBase property")]
         public Uri Endpoint
         {
             get { return BaseUri; }
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        [Obsolete]
+        [Obsolete("Use the ResourceType instead")]
         public string Collection
         {
             get { return ResourceType; }

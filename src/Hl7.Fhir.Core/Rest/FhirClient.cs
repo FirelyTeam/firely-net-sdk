@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Bundle Search<TResource>(SearchParams q)
-            where TResource : DomainResource
+            where TResource : Resource
         {
             return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
         }
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) 
-            where TResource : DomainResource, new()
+            where TResource : Resource, new()
         {
             return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize);
         }
