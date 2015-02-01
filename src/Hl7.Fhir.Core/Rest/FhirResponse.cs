@@ -55,7 +55,11 @@ namespace Hl7.Fhir.Rest
                     CharacterEncoding = getContentEncoding(response),
                     ContentLocation = response.Headers[HttpUtil.CONTENTLOCATION],
                     Location = response.Headers[HttpUtil.LOCATION],                   
+#if PORTABLE45
                     LastModified = response.Headers[HttpUtil.LASTMODIFIED],
+#else
+                    LastModified = response.LastModified.ToString(),
+#endif
                     ETag = response.Headers[HttpUtil.ETAG] != null ? response.Headers[HttpUtil.ETAG].Trim('\"') : null,
                     Body = readBody(response)
                 };
@@ -174,8 +178,18 @@ namespace Hl7.Fhir.Rest
             }
 
             if (!String.IsNullOrEmpty(LastModified) && (resource.Meta != null && resource.Meta.LastUpdated == null))
-                resource.Meta.LastUpdated = DateTimeOffset.Parse(LastModified);
-
+            {
+                DateTimeOffset result;
+                DateTime dtResult;
+                if (DateTimeOffset.TryParse(LastModified, out result))
+                {
+                    resource.Meta.LastUpdated = result;
+                }
+                else if (DateTime.TryParse(LastModified, out dtResult))
+                {
+                    resource.Meta.LastUpdated = dtResult;
+                }
+            }
             if (resource is Bundle)
             {
                 var bundle = (Bundle)resource;
