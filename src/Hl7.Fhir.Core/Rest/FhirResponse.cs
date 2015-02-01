@@ -41,7 +41,11 @@ namespace Hl7.Fhir.Rest
 
         public bool IsBinaryResponse
         {
-            get { return new ResourceIdentity(ResponseUri).ResourceType == ModelInfo.GetResourceNameForType(typeof(Binary)); }
+            get
+            {
+                return ResponseUri.OriginalString.EndsWith("/Binary") || ResponseUri.OriginalString.EndsWith("/Binary?") ||
+                  ResponseUri.OriginalString.Contains("/Binary/");
+            }
         }
 
         public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
@@ -154,28 +158,19 @@ namespace Hl7.Fhir.Rest
 
             if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
 
-            var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
+            var location = Location ?? ContentLocation;
 
             if (!String.IsNullOrEmpty(location))
             {
                 ResourceIdentity reqId = new ResourceIdentity(location);
 
                 if(resource.Id == null) resource.Id = reqId.Id;
-
+                if (resource.VersionId == null && reqId.HasVersion) resource.VersionId = reqId.VersionId;
                 resource.ResourceBase = reqId.BaseUri;
             }
 
             if (!String.IsNullOrEmpty(ETag) && !resource.HasVersionId)
                 resource.VersionId = ETag;
-            else
-            {
-                var id = new ResourceIdentity(location);
-                if(id.HasVersion)
-                {
-                    System.Diagnostics.Debug.WriteLine(String.Format("Result did not have an ETag on the HTTP Header, using the (Content)Location instead"));
-                    resource.Meta.VersionId = id.VersionId;
-                }
-            }
 
             if (!String.IsNullOrEmpty(LastModified) && (resource.Meta != null && resource.Meta.LastUpdated == null))
             {

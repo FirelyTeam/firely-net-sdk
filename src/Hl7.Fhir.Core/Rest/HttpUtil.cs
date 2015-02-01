@@ -103,7 +103,10 @@ namespace Hl7.Fhir.Rest
             {
                 // Else, make location absolute within the endpoint
                 //location = new Uri(Endpoint, location);
-                location = new RestUrl(baseUrl).AddPath(location).Uri;
+                var endp = baseUrl.OriginalString;
+                if (!endp.EndsWith("/")) endp += "/";
+                endp += location;
+                location = new Uri(endp);
             }
 
             return location;

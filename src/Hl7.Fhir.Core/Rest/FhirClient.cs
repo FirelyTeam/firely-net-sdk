@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Rest
         /// Update (or create) a resource
         /// </summary>
         /// <param name="resource">A ResourceEntry containing the resource to update</param>
-        /// <param name="refresh">Optional. When true, fetches the newly updated resource from the server.</param>
+        /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
         /// <returns>If refresh=true, 
         /// this function will return a ResourceEntry with all newly created data from the server. Otherwise
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Rest
             if (entry == null) throw Error.ArgumentNull("entry");
             if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            Delete(entry.GetResourceLocation(Endpoint).WithoutVersion());
+            Delete(entry.ResourceIdentity(Endpoint).WithoutVersion());
         }
 
 
