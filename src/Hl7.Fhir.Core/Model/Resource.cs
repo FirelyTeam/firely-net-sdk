@@ -62,10 +62,11 @@ namespace Hl7.Fhir.Model
 
             var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, versionId);
 
-            var resourceBase = baseUrl ?? ResourceBase.OriginalString;
+            if (!string.IsNullOrEmpty(baseUrl))
+                return result.WithBase(baseUrl);
 
-            if(resourceBase != null)
-                return result.WithBase(resourceBase);
+            if (ResourceBase != null)
+                return result.WithBase(ResourceBase);
             else
                 return result;
         }
