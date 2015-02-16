@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,6 @@ namespace Hl7.Fhir.Model
         /// Unique Identifier for the set of documents
         /// </summary>
         [FhirElement("masterIdentifier", Order=90)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
         {
@@ -85,15 +84,14 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subject", Order=110)]
         [References("Patient","Practitioner","Group","Device")]
-        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+            get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Intended to get notified about this set of documents
@@ -127,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// Who and/or what authored the document
         /// </summary>
         [FhirElement("author", Order=140)]
-        [References("Practitioner","Device","Patient","RelatedPerson")]
+        [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author
@@ -203,7 +201,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// current | superceded | entered in error
+        /// current | superceded | entered-in-error
         /// </summary>
         [FhirElement("status", Order=170)]
         [Cardinality(Min=1,Max=1)]
@@ -217,7 +215,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Code _StatusElement;
         
         /// <summary>
-        /// current | superceded | entered in error
+        /// current | superceded | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -318,7 +316,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(MasterIdentifier != null) dest.MasterIdentifier = (Hl7.Fhir.Model.Identifier)MasterIdentifier.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());

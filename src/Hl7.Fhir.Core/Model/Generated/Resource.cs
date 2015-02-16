@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,194 +50,6 @@ namespace Hl7.Fhir.Model
         public virtual ResourceType ResourceType { get { return ResourceType.Resource; } }
         [NotMapped]
         public override string TypeName { get { return "Resource"; } }
-        
-        [FhirType("ResourceMetaComponent")]
-        [DataContract]
-        public partial class ResourceMetaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ResourceMetaComponent"; } }
-            
-            /// <summary>
-            /// Version specific identifier
-            /// </summary>
-            [FhirElement("versionId", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id VersionIdElement
-            {
-                get { return _VersionIdElement; }
-                set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _VersionIdElement;
-            
-            /// <summary>
-            /// Version specific identifier
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string VersionId
-            {
-                get { return VersionIdElement != null ? VersionIdElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      VersionIdElement = null; 
-                    else
-                      VersionIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("VersionId");
-                }
-            }
-            
-            /// <summary>
-            /// When the resource version last changed
-            /// </summary>
-            [FhirElement("lastUpdated", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Instant LastUpdatedElement
-            {
-                get { return _LastUpdatedElement; }
-                set { _LastUpdatedElement = value; OnPropertyChanged("LastUpdatedElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Instant _LastUpdatedElement;
-            
-            /// <summary>
-            /// When the resource version last changed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public DateTimeOffset? LastUpdated
-            {
-                get { return LastUpdatedElement != null ? LastUpdatedElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      LastUpdatedElement = null; 
-                    else
-                      LastUpdatedElement = new Hl7.Fhir.Model.Instant(value);
-                    OnPropertyChanged("LastUpdated");
-                }
-            }
-            
-            /// <summary>
-            /// Profiles this resource claims to conform to
-            /// </summary>
-            [FhirElement("profile", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> ProfileElement
-            {
-                get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
-                set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
-            
-            /// <summary>
-            /// Profiles this resource claims to conform to
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Profile
-            {
-                get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if(value == null)
-                      ProfileElement = null; 
-                    else
-                      ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
-                    OnPropertyChanged("Profile");
-                }
-            }
-            
-            /// <summary>
-            /// Security Labels applied to this resource
-            /// </summary>
-            [FhirElement("security", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Security
-            {
-                get { if(_Security==null) _Security = new List<Hl7.Fhir.Model.Coding>(); return _Security; }
-                set { _Security = value; OnPropertyChanged("Security"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _Security;
-            
-            /// <summary>
-            /// Tags applied
-            /// </summary>
-            [FhirElement("tag", InSummary=true, Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Tag
-            {
-                get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Coding>(); return _Tag; }
-                set { _Tag = value; OnPropertyChanged("Tag"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _Tag;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ResourceMetaComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
-                    if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
-                    if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
-                    if(Security != null) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
-                    if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ResourceMetaComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ResourceMetaComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(VersionIdElement, otherT.VersionIdElement)) return false;
-                if( !DeepComparable.Matches(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
-                if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
-                if( !DeepComparable.Matches(Security, otherT.Security)) return false;
-                if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ResourceMetaComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(VersionIdElement, otherT.VersionIdElement)) return false;
-                if( !DeepComparable.IsExactly(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
-                if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
-                if( !DeepComparable.IsExactly(Security, otherT.Security)) return false;
-                if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         /// <summary>
         /// Logical id of this artefact
@@ -276,13 +88,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("meta", Order=20)]
         [DataMember]
-        public Hl7.Fhir.Model.Resource.ResourceMetaComponent Meta
+        public Hl7.Fhir.Model.Meta Meta
         {
             get { return _Meta; }
             set { _Meta = value; OnPropertyChanged("Meta"); }
         }
         
-        private Hl7.Fhir.Model.Resource.ResourceMetaComponent _Meta;
+        private Hl7.Fhir.Model.Meta _Meta;
         
         /// <summary>
         /// A set of rules under which this content was created
@@ -356,7 +168,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopy();
-                if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Resource.ResourceMetaComponent)Meta.DeepCopy();
+                if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Meta)Meta.DeepCopy();
                 if(ImplicitRulesElement != null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)ImplicitRulesElement.DeepCopy();
                 if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                 return dest;

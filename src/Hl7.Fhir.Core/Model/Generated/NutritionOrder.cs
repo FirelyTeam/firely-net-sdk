@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -85,12 +85,179 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
         
-        [FhirType("NutritionOrderItemSupplementComponent")]
+        [FhirType("NutritionOrderOralDietComponent")]
         [DataContract]
-        public partial class NutritionOrderItemSupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutritionOrderOralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemSupplementComponent"; } }
+            public override string TypeName { get { return "NutritionOrderOralDietComponent"; } }
+            
+            /// <summary>
+            /// Type of oral diet or diet restrictions that describe what can be consumed orally
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Type
+            {
+                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+            
+            /// <summary>
+            /// Scheduled frequency of diet
+            /// </summary>
+            [FhirElement("scheduled", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Scheduled
+            {
+                get { return _Scheduled; }
+                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Scheduled;
+            
+            /// <summary>
+            /// Required  nutrient modifications
+            /// </summary>
+            [FhirElement("nutrients", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientsComponent> Nutrients
+            {
+                get { if(_Nutrients==null) _Nutrients = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientsComponent>(); return _Nutrients; }
+                set { _Nutrients = value; OnPropertyChanged("Nutrients"); }
+            }
+            
+            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientsComponent> _Nutrients;
+            
+            /// <summary>
+            /// Required  texture modifications
+            /// </summary>
+            [FhirElement("texture", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent> Texture
+            {
+                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent>(); return _Texture; }
+                set { _Texture = value; OnPropertyChanged("Texture"); }
+            }
+            
+            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent> _Texture;
+            
+            /// <summary>
+            /// The required consistency of fluids and liquids provided to the patient
+            /// </summary>
+            [FhirElement("fluidConsistencyType", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
+            {
+                get { if(_FluidConsistencyType==null) _FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FluidConsistencyType; }
+                set { _FluidConsistencyType = value; OnPropertyChanged("FluidConsistencyType"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _FluidConsistencyType;
+            
+            /// <summary>
+            /// Instructions or additional information about the oral diet
+            /// </summary>
+            [FhirElement("instruction", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString InstructionElement
+            {
+                get { return _InstructionElement; }
+                set { _InstructionElement = value; OnPropertyChanged("InstructionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _InstructionElement;
+            
+            /// <summary>
+            /// Instructions or additional information about the oral diet
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Instruction
+            {
+                get { return InstructionElement != null ? InstructionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      InstructionElement = null; 
+                    else
+                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Instruction");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as NutritionOrderOralDietComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
+                    if(Nutrients != null) dest.Nutrients = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientsComponent>(Nutrients.DeepCopy());
+                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent>(Texture.DeepCopy());
+                    if(FluidConsistencyType != null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopy());
+                    if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new NutritionOrderOralDietComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as NutritionOrderOralDietComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.Matches(Nutrients, otherT.Nutrients)) return false;
+                if( !DeepComparable.Matches(Texture, otherT.Texture)) return false;
+                if( !DeepComparable.Matches(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
+                if( !DeepComparable.Matches(InstructionElement, otherT.InstructionElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as NutritionOrderOralDietComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.IsExactly(Nutrients, otherT.Nutrients)) return false;
+                if( !DeepComparable.IsExactly(Texture, otherT.Texture)) return false;
+                if( !DeepComparable.IsExactly(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
+                if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("NutritionOrderSupplementComponent")]
+        [DataContract]
+        public partial class NutritionOrderSupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "NutritionOrderSupplementComponent"; } }
             
             /// <summary>
             /// Type of supplement product requested
@@ -106,9 +273,54 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
+            /// Product or brand name of the nutritional supplement
+            /// </summary>
+            [FhirElement("productName", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ProductNameElement
+            {
+                get { return _ProductNameElement; }
+                set { _ProductNameElement = value; OnPropertyChanged("ProductNameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ProductNameElement;
+            
+            /// <summary>
+            /// Product or brand name of the nutritional supplement
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ProductName
+            {
+                get { return ProductNameElement != null ? ProductNameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ProductNameElement = null; 
+                    else
+                      ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("ProductName");
+                }
+            }
+            
+            /// <summary>
+            /// Scheduled frequency of supplement
+            /// </summary>
+            [FhirElement("scheduled", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Scheduled
+            {
+                get { return _Scheduled; }
+                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Scheduled;
+            
+            /// <summary>
             /// Amount of the nutritional supplement
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=50)]
+            [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -118,48 +330,17 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Quantity _Quantity;
             
-            /// <summary>
-            /// Product or brand name of the nutritional supplement
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Product or brand name of the nutritional supplement
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderItemSupplementComponent;
+                var dest = other as NutritionOrderSupplementComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopy();
+                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -168,260 +349,33 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderItemSupplementComponent());
+                return CopyTo(new NutritionOrderSupplementComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemSupplementComponent;
+                var otherT = other as NutritionOrderSupplementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(ProductNameElement, otherT.ProductNameElement)) return false;
+                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemSupplementComponent;
+                var otherT = other as NutritionOrderSupplementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("NutritionOrderItemOralDietTextureComponent")]
-        [DataContract]
-        public partial class NutritionOrderItemOralDietTextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemOralDietTextureComponent"; } }
-            
-            /// <summary>
-            /// Code to indicate how to alter the texture of the foods, e.g., pureed
-            /// </summary>
-            [FhirElement("modifier", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Modifier
-            {
-                get { return _Modifier; }
-                set { _Modifier = value; OnPropertyChanged("Modifier"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Modifier;
-            
-            /// <summary>
-            /// Concepts that are used to identify an entity that is ingested for nutritional purposes
-            /// </summary>
-            [FhirElement("foodType", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept FoodType
-            {
-                get { return _FoodType; }
-                set { _FoodType = value; OnPropertyChanged("FoodType"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _FoodType;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as NutritionOrderItemOralDietTextureComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopy();
-                    if(FoodType != null) dest.FoodType = (Hl7.Fhir.Model.CodeableConcept)FoodType.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new NutritionOrderItemOralDietTextureComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as NutritionOrderItemOralDietTextureComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
-                if( !DeepComparable.Matches(FoodType, otherT.FoodType)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as NutritionOrderItemOralDietTextureComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
-                if( !DeepComparable.IsExactly(FoodType, otherT.FoodType)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("NutritionOrderItemComponent")]
-        [DataContract]
-        public partial class NutritionOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemComponent"; } }
-            
-            /// <summary>
-            /// Frequency to offer nutrition item
-            /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Scheduled
-            {
-                get { return _Scheduled; }
-                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Scheduled;
-            
-            /// <summary>
-            /// Indicates whether the nutrition item is  currently in effect
-            /// </summary>
-            [FhirElement("isInEffect", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean IsInEffectElement
-            {
-                get { return _IsInEffectElement; }
-                set { _IsInEffectElement = value; OnPropertyChanged("IsInEffectElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _IsInEffectElement;
-            
-            /// <summary>
-            /// Indicates whether the nutrition item is  currently in effect
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? IsInEffect
-            {
-                get { return IsInEffectElement != null ? IsInEffectElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      IsInEffectElement = null; 
-                    else
-                      IsInEffectElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("IsInEffect");
-                }
-            }
-            
-            /// <summary>
-            /// Oral diet components
-            /// </summary>
-            [FhirElement("oralDiet", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietComponent OralDiet
-            {
-                get { return _OralDiet; }
-                set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
-            }
-            
-            private Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietComponent _OralDiet;
-            
-            /// <summary>
-            /// Supplement components
-            /// </summary>
-            [FhirElement("supplement", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemSupplementComponent Supplement
-            {
-                get { return _Supplement; }
-                set { _Supplement = value; OnPropertyChanged("Supplement"); }
-            }
-            
-            private Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemSupplementComponent _Supplement;
-            
-            /// <summary>
-            /// Enteral formula components
-            /// </summary>
-            [FhirElement("enteralFormula", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemEnteralFormulaComponent EnteralFormula
-            {
-                get { return _EnteralFormula; }
-                set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
-            }
-            
-            private Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemEnteralFormulaComponent _EnteralFormula;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as NutritionOrderItemComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
-                    if(IsInEffectElement != null) dest.IsInEffectElement = (Hl7.Fhir.Model.FhirBoolean)IsInEffectElement.DeepCopy();
-                    if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietComponent)OralDiet.DeepCopy();
-                    if(Supplement != null) dest.Supplement = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemSupplementComponent)Supplement.DeepCopy();
-                    if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemEnteralFormulaComponent)EnteralFormula.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new NutritionOrderItemComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as NutritionOrderItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
-                if( !DeepComparable.Matches(IsInEffectElement, otherT.IsInEffectElement)) return false;
-                if( !DeepComparable.Matches(OralDiet, otherT.OralDiet)) return false;
-                if( !DeepComparable.Matches(Supplement, otherT.Supplement)) return false;
-                if( !DeepComparable.Matches(EnteralFormula, otherT.EnteralFormula)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as NutritionOrderItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ProductNameElement, otherT.ProductNameElement)) return false;
                 if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
-                if( !DeepComparable.IsExactly(IsInEffectElement, otherT.IsInEffectElement)) return false;
-                if( !DeepComparable.IsExactly(OralDiet, otherT.OralDiet)) return false;
-                if( !DeepComparable.IsExactly(Supplement, otherT.Supplement)) return false;
-                if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 
                 return true;
             }
@@ -429,12 +383,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderItemEnteralFormulaComponent")]
+        [FhirType("NutritionOrderEnteralFormulaComponent")]
         [DataContract]
-        public partial class NutritionOrderItemEnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutritionOrderEnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemEnteralFormulaComponent"; } }
+            public override string TypeName { get { return "NutritionOrderEnteralFormulaComponent"; } }
             
             /// <summary>
             /// Formula feeding instructions expressed as text
@@ -484,15 +438,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaName", InSummary=true, Order=60)]
+            [FhirElement("baseFormulaProductName", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString BaseFormulaNameElement
+            public Hl7.Fhir.Model.FhirString BaseFormulaProductNameElement
             {
-                get { return _BaseFormulaNameElement; }
-                set { _BaseFormulaNameElement = value; OnPropertyChanged("BaseFormulaNameElement"); }
+                get { return _BaseFormulaProductNameElement; }
+                set { _BaseFormulaProductNameElement = value; OnPropertyChanged("BaseFormulaProductNameElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _BaseFormulaNameElement;
+            private Hl7.Fhir.Model.FhirString _BaseFormulaProductNameElement;
             
             /// <summary>
             /// Product or brand name of the enteral or infant formula
@@ -500,23 +454,36 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string BaseFormulaName
+            public string BaseFormulaProductName
             {
-                get { return BaseFormulaNameElement != null ? BaseFormulaNameElement.Value : null; }
+                get { return BaseFormulaProductNameElement != null ? BaseFormulaProductNameElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      BaseFormulaNameElement = null; 
+                      BaseFormulaProductNameElement = null; 
                     else
-                      BaseFormulaNameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("BaseFormulaName");
+                      BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("BaseFormulaProductName");
                 }
             }
             
             /// <summary>
+            /// Scheduled frequency of enteral feeding
+            /// </summary>
+            [FhirElement("scheduled", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Scheduled
+            {
+                get { return _Scheduled; }
+                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Scheduled;
+            
+            /// <summary>
             /// Type of modular component to add to the feeding
             /// </summary>
-            [FhirElement("additiveType", InSummary=true, Order=70)]
+            [FhirElement("additiveType", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AdditiveType
             {
@@ -529,15 +496,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the modular additive
             /// </summary>
-            [FhirElement("additiveName", InSummary=true, Order=80)]
+            [FhirElement("additiveProductName", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString AdditiveNameElement
+            public Hl7.Fhir.Model.FhirString AdditiveProductNameElement
             {
-                get { return _AdditiveNameElement; }
-                set { _AdditiveNameElement = value; OnPropertyChanged("AdditiveNameElement"); }
+                get { return _AdditiveProductNameElement; }
+                set { _AdditiveProductNameElement = value; OnPropertyChanged("AdditiveProductNameElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _AdditiveNameElement;
+            private Hl7.Fhir.Model.FhirString _AdditiveProductNameElement;
             
             /// <summary>
             /// Product or brand name of the modular additive
@@ -545,23 +512,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string AdditiveName
+            public string AdditiveProductName
             {
-                get { return AdditiveNameElement != null ? AdditiveNameElement.Value : null; }
+                get { return AdditiveProductNameElement != null ? AdditiveProductNameElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      AdditiveNameElement = null; 
+                      AdditiveProductNameElement = null; 
                     else
-                      AdditiveNameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("AdditiveName");
+                      AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("AdditiveProductName");
                 }
             }
             
             /// <summary>
             /// Amount of energy per specified volume that is required
             /// </summary>
-            [FhirElement("caloricDensity", InSummary=true, Order=90)]
+            [FhirElement("caloricDensity", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity CaloricDensity
             {
@@ -574,7 +541,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How the formula should enter the patient's gastrointestinal tract
             /// </summary>
-            [FhirElement("routeofAdministration", InSummary=true, Order=100)]
+            [FhirElement("routeofAdministration", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RouteofAdministration
             {
@@ -587,7 +554,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The volume of formula to provide
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=110)]
+            [FhirElement("quantity", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Quantity
             {
@@ -600,7 +567,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Speed with which the formula is provided per period of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=120)]
+            [FhirElement("rate", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Rate
             {
@@ -613,7 +580,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Change in the rate of administration over a given time
             /// </summary>
-            [FhirElement("rateAdjustment", InSummary=true, Order=130)]
+            [FhirElement("rateAdjustment", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity RateAdjustment
             {
@@ -626,7 +593,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Upper limit on formula volume per unit of time
             /// </summary>
-            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=140)]
+            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
             {
@@ -638,16 +605,17 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderItemEnteralFormulaComponent;
+                var dest = other as NutritionOrderEnteralFormulaComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(AdministrationInstructionsElement != null) dest.AdministrationInstructionsElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionsElement.DeepCopy();
                     if(BaseFormulaType != null) dest.BaseFormulaType = (Hl7.Fhir.Model.CodeableConcept)BaseFormulaType.DeepCopy();
-                    if(BaseFormulaNameElement != null) dest.BaseFormulaNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaNameElement.DeepCopy();
+                    if(BaseFormulaProductNameElement != null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaProductNameElement.DeepCopy();
+                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
                     if(AdditiveType != null) dest.AdditiveType = (Hl7.Fhir.Model.CodeableConcept)AdditiveType.DeepCopy();
-                    if(AdditiveNameElement != null) dest.AdditiveNameElement = (Hl7.Fhir.Model.FhirString)AdditiveNameElement.DeepCopy();
+                    if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
                     if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -662,20 +630,21 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderItemEnteralFormulaComponent());
+                return CopyTo(new NutritionOrderEnteralFormulaComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemEnteralFormulaComponent;
+                var otherT = other as NutritionOrderEnteralFormulaComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(AdministrationInstructionsElement, otherT.AdministrationInstructionsElement)) return false;
                 if( !DeepComparable.Matches(BaseFormulaType, otherT.BaseFormulaType)) return false;
-                if( !DeepComparable.Matches(BaseFormulaNameElement, otherT.BaseFormulaNameElement)) return false;
+                if( !DeepComparable.Matches(BaseFormulaProductNameElement, otherT.BaseFormulaProductNameElement)) return false;
+                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.Matches(AdditiveType, otherT.AdditiveType)) return false;
-                if( !DeepComparable.Matches(AdditiveNameElement, otherT.AdditiveNameElement)) return false;
+                if( !DeepComparable.Matches(AdditiveProductNameElement, otherT.AdditiveProductNameElement)) return false;
                 if( !DeepComparable.Matches(CaloricDensity, otherT.CaloricDensity)) return false;
                 if( !DeepComparable.Matches(RouteofAdministration, otherT.RouteofAdministration)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
@@ -688,15 +657,16 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemEnteralFormulaComponent;
+                var otherT = other as NutritionOrderEnteralFormulaComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(AdministrationInstructionsElement, otherT.AdministrationInstructionsElement)) return false;
                 if( !DeepComparable.IsExactly(BaseFormulaType, otherT.BaseFormulaType)) return false;
-                if( !DeepComparable.IsExactly(BaseFormulaNameElement, otherT.BaseFormulaNameElement)) return false;
+                if( !DeepComparable.IsExactly(BaseFormulaProductNameElement, otherT.BaseFormulaProductNameElement)) return false;
+                if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.IsExactly(AdditiveType, otherT.AdditiveType)) return false;
-                if( !DeepComparable.IsExactly(AdditiveNameElement, otherT.AdditiveNameElement)) return false;
+                if( !DeepComparable.IsExactly(AdditiveProductNameElement, otherT.AdditiveProductNameElement)) return false;
                 if( !DeepComparable.IsExactly(CaloricDensity, otherT.CaloricDensity)) return false;
                 if( !DeepComparable.IsExactly(RouteofAdministration, otherT.RouteofAdministration)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
@@ -710,113 +680,48 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderItemOralDietComponent")]
+        [FhirType("NutritionOrderOralDietTextureComponent")]
         [DataContract]
-        public partial class NutritionOrderItemOralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutritionOrderOralDietTextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemOralDietComponent"; } }
+            public override string TypeName { get { return "NutritionOrderOralDietTextureComponent"; } }
             
             /// <summary>
-            /// Type of oral diet or diet restrictions that describe what can be consumed orally
+            /// Code to indicate how to alter the texture of the foods, e.g., pureed
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("modifier", InSummary=true, Order=40)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Type
+            public Hl7.Fhir.Model.CodeableConcept Modifier
             {
-                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _Modifier; }
+                set { _Modifier = value; OnPropertyChanged("Modifier"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+            private Hl7.Fhir.Model.CodeableConcept _Modifier;
             
             /// <summary>
-            /// Required  nutrient modifications
+            /// Concepts that are used to identify an entity that is ingested for nutritional purposes
             /// </summary>
-            [FhirElement("nutrients", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("foodType", InSummary=true, Order=50)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietNutrientsComponent> Nutrients
+            public Hl7.Fhir.Model.CodeableConcept FoodType
             {
-                get { if(_Nutrients==null) _Nutrients = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietNutrientsComponent>(); return _Nutrients; }
-                set { _Nutrients = value; OnPropertyChanged("Nutrients"); }
+                get { return _FoodType; }
+                set { _FoodType = value; OnPropertyChanged("FoodType"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietNutrientsComponent> _Nutrients;
-            
-            /// <summary>
-            /// Required  texture modifications
-            /// </summary>
-            [FhirElement("texture", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietTextureComponent> Texture
-            {
-                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietTextureComponent>(); return _Texture; }
-                set { _Texture = value; OnPropertyChanged("Texture"); }
-            }
-            
-            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietTextureComponent> _Texture;
-            
-            /// <summary>
-            /// The required consistency of fluids and liquids provided to the patient
-            /// </summary>
-            [FhirElement("fluidConsistencyType", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
-            {
-                get { if(_FluidConsistencyType==null) _FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FluidConsistencyType; }
-                set { _FluidConsistencyType = value; OnPropertyChanged("FluidConsistencyType"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _FluidConsistencyType;
-            
-            /// <summary>
-            /// Instructions or additional information about the oral diet
-            /// </summary>
-            [FhirElement("instruction", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString InstructionElement
-            {
-                get { return _InstructionElement; }
-                set { _InstructionElement = value; OnPropertyChanged("InstructionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _InstructionElement;
-            
-            /// <summary>
-            /// Instructions or additional information about the oral diet
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Instruction
-            {
-                get { return InstructionElement != null ? InstructionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      InstructionElement = null; 
-                    else
-                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Instruction");
-                }
-            }
+            private Hl7.Fhir.Model.CodeableConcept _FoodType;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderItemOralDietComponent;
+                var dest = other as NutritionOrderOralDietTextureComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                    if(Nutrients != null) dest.Nutrients = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietNutrientsComponent>(Nutrients.DeepCopy());
-                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemOralDietTextureComponent>(Texture.DeepCopy());
-                    if(FluidConsistencyType != null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopy());
-                    if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
+                    if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopy();
+                    if(FoodType != null) dest.FoodType = (Hl7.Fhir.Model.CodeableConcept)FoodType.DeepCopy();
                     return dest;
                 }
                 else
@@ -825,35 +730,29 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderItemOralDietComponent());
+                return CopyTo(new NutritionOrderOralDietTextureComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemOralDietComponent;
+                var otherT = other as NutritionOrderOralDietTextureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Nutrients, otherT.Nutrients)) return false;
-                if( !DeepComparable.Matches(Texture, otherT.Texture)) return false;
-                if( !DeepComparable.Matches(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
-                if( !DeepComparable.Matches(InstructionElement, otherT.InstructionElement)) return false;
+                if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.Matches(FoodType, otherT.FoodType)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemOralDietComponent;
+                var otherT = other as NutritionOrderOralDietTextureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Nutrients, otherT.Nutrients)) return false;
-                if( !DeepComparable.IsExactly(Texture, otherT.Texture)) return false;
-                if( !DeepComparable.IsExactly(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
-                if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
+                if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.IsExactly(FoodType, otherT.FoodType)) return false;
                 
                 return true;
             }
@@ -861,12 +760,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderItemOralDietNutrientsComponent")]
+        [FhirType("NutritionOrderOralDietNutrientsComponent")]
         [DataContract]
-        public partial class NutritionOrderItemOralDietNutrientsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutritionOrderOralDietNutrientsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderItemOralDietNutrientsComponent"; } }
+            public override string TypeName { get { return "NutritionOrderOralDietNutrientsComponent"; } }
             
             /// <summary>
             /// Type of nutrient that is being modified
@@ -884,26 +783,25 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of the specified nutrient
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
+            [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Amount
+            public Hl7.Fhir.Model.Quantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Element _Amount;
+            private Hl7.Fhir.Model.Quantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderItemOralDietNutrientsComponent;
+                var dest = other as NutritionOrderOralDietNutrientsComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -912,12 +810,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderItemOralDietNutrientsComponent());
+                return CopyTo(new NutritionOrderOralDietNutrientsComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemOralDietNutrientsComponent;
+                var otherT = other as NutritionOrderOralDietNutrientsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -929,7 +827,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderItemOralDietNutrientsComponent;
+                var otherT = other as NutritionOrderOralDietNutrientsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -945,17 +843,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("patient", Order=90)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
@@ -1076,23 +974,49 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ExcludeFoodModifier;
         
         /// <summary>
-        /// Set of nutrition items or components that comprise the nutrition order
+        /// Oral diet components
         /// </summary>
-        [FhirElement("item", Order=170)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("oralDiet", Order=170)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemComponent> Item
+        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent OralDiet
         {
-            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemComponent>(); return _Item; }
-            set { _Item = value; OnPropertyChanged("Item"); }
+            get { return _OralDiet; }
+            set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
         }
         
-        private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemComponent> _Item;
+        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent _OralDiet;
+        
+        /// <summary>
+        /// Supplement components
+        /// </summary>
+        [FhirElement("supplement", Order=180)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> Supplement
+        {
+            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(); return _Supplement; }
+            set { _Supplement = value; OnPropertyChanged("Supplement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> _Supplement;
+        
+        /// <summary>
+        /// Enteral formula components
+        /// </summary>
+        [FhirElement("enteralFormula", Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent EnteralFormula
+        {
+            get { return _EnteralFormula; }
+            set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
+        }
+        
+        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent _EnteralFormula;
         
         /// <summary>
         /// requested | active | inactive | held | cancelled
         /// </summary>
-        [FhirElement("status", Order=180)]
+        [FhirElement("status", Order=200)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
         {
@@ -1128,7 +1052,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
@@ -1136,7 +1060,9 @@ namespace Hl7.Fhir.Model
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
                 if(FoodPreferenceModifier != null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopy());
                 if(ExcludeFoodModifier != null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopy());
-                if(Item != null) dest.Item = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderItemComponent>(Item.DeepCopy());
+                if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent)OralDiet.DeepCopy();
+                if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(Supplement.DeepCopy());
+                if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent)EnteralFormula.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
                 return dest;
             }
@@ -1155,7 +1081,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
@@ -1163,7 +1089,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.Matches(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.Matches(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
-            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+            if( !DeepComparable.Matches(OralDiet, otherT.OralDiet)) return false;
+            if( !DeepComparable.Matches(Supplement, otherT.Supplement)) return false;
+            if( !DeepComparable.Matches(EnteralFormula, otherT.EnteralFormula)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             
             return true;
@@ -1175,7 +1103,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
@@ -1183,7 +1111,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.IsExactly(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.IsExactly(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
-            if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+            if( !DeepComparable.IsExactly(OralDiet, otherT.OralDiet)) return false;
+            if( !DeepComparable.IsExactly(Supplement, otherT.Supplement)) return false;
+            if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             
             return true;

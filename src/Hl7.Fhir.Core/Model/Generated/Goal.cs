@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The goal has been met and no further action is needed.
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposed | planned | in progress | achieved | sustaining | cancelled | accepted | rejected
+        /// proposed | planned | in-progress | achieved | sustaining | cancelled | accepted | rejected
         /// </summary>
         [FhirElement("status", Order=120)]
         [DataMember]
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Goal.GoalStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | planned | in progress | achieved | sustaining | cancelled | accepted | rejected
+        /// proposed | planned | in-progress | achieved | sustaining | cancelled | accepted | rejected
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -118,6 +118,7 @@
     <Compile Include="Model\Generated\HealthcareService.cs" />
     <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
     <Compile Include="Model\Generated\InstitutionalClaim.cs" />
+    <Compile Include="Model\Generated\Meta.cs" />
     <Compile Include="Model\Generated\NamingSystem.cs" />
     <Compile Include="Model\Generated\NutritionOrder.cs" />
     <Compile Include="Model\Generated\OperationDefinition.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Model\Generated\Slot.cs" />
     <Compile Include="Model\Generated\StatusRequest.cs" />
     <Compile Include="Model\Generated\StatusResponse.cs" />
+    <Compile Include="Model\Generated\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Subscription.cs" />
     <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
@@ -211,12 +213,10 @@
     <Compile Include="Model\Generated\Order.cs" />
     <Compile Include="Model\Generated\OrderResponse.cs" />
     <Compile Include="Model\Generated\Organization.cs" />
-    <Compile Include="Model\Generated\Other.cs" />
     <Compile Include="Model\Generated\Patient.cs" />
     <Compile Include="Model\Generated\Period.cs" />
     <Compile Include="Model\Generated\Practitioner.cs" />
     <Compile Include="Model\Generated\Procedure.cs" />
-    <Compile Include="Model\Generated\Profile.cs" />
     <Compile Include="Model\Generated\Provenance.cs" />
     <Compile Include="Model\Generated\Quantity.cs" />
     <Compile Include="Model\Generated\Questionnaire.cs" />

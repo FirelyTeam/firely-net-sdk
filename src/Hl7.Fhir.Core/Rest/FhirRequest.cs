@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public void SetMeta(Resource.ResourceMetaComponent data)
+        public void SetMeta(Meta data)
         {
             if (data == null) throw Error.ArgumentNull("data");
 

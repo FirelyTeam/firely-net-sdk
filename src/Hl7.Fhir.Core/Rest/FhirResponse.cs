@@ -134,11 +134,11 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Resource.ResourceMetaComponent BodyAsMeta()
+        public Meta BodyAsMeta()
         {
-            return (Resource.ResourceMetaComponent)parseBody(ContentType,
-                        b => (Resource.ResourceMetaComponent)FhirParser.ParseFromXml(b, typeof(Resource.ResourceMetaComponent)),
-                        b => (Resource.ResourceMetaComponent)FhirParser.ParseFromJson(b, typeof(Resource.ResourceMetaComponent)));
+            return (Meta)parseBody(ContentType,
+                        b => (Meta)FhirParser.ParseFromXml(b, typeof(Meta)),
+                        b => (Meta)FhirParser.ParseFromJson(b, typeof(Meta)));
         }
 
 
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Rest
                     b => FhirParser.ParseResourceFromJson(b));
             }
 
-            if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
+            if (resource.Meta == null) resource.Meta = new Meta();
 
             var location = Location ?? ContentLocation;
 

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// This QuestionnaireAnswers has been partially filled out with answers, but changes or additions are still expected to be made to it.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// This QuestionnaireAnswers has been filled out with answers, and the current content is regarded as definitive.
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Questionnaire;
         
         /// <summary>
-        /// in progress | completed | amended
+        /// in-progress | completed | amended
         /// </summary>
         [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.QuestionnaireAnswers.QuestionnaireAnswersStatus> _StatusElement;
         
         /// <summary>
-        /// in progress | completed | amended
+        /// in-progress | completed | amended
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

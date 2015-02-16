@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public Requester WithMeta(Resource.ResourceMetaComponent meta, ResourceFormat format)
+        public Requester WithMeta(Meta meta, ResourceFormat format)
         {
             _request.SetMeta(meta);
             return this;
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Rest
         {
         }
 
-        public Resource.ResourceMetaComponent FetchMeta(ResourceFormat format)
+        public Meta FetchMeta(ResourceFormat format)
         {
         }
 

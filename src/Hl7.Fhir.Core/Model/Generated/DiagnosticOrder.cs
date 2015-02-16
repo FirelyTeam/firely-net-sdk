@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The work to fulfill the order is happening.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The work is complete, and the outcomes are being reviewed for approval.
@@ -172,18 +172,19 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location of requested test (if applicable)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=60)]
+            [FhirElement("bodySite", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept BodySite
+            public Hl7.Fhir.Model.Element BodySite
             {
                 get { return _BodySite; }
                 set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _BodySite;
+            private Hl7.Fhir.Model.Element _BodySite;
             
             /// <summary>
-            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
             /// </summary>
             [FhirElement("status", InSummary=true, Order=70)]
             [DataMember]
@@ -196,7 +197,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
             /// <summary>
-            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -237,7 +238,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
+                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
                     return dest;
@@ -292,7 +293,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DiagnosticOrderEventComponent"; } }
             
             /// <summary>
-            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -306,7 +307,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
             /// <summary>
-            /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+            /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -557,7 +558,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
         /// </summary>
         [FhirElement("status", Order=160)]
         [DataMember]
@@ -570,7 +571,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
         
         /// <summary>
-        /// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
+        /// requested | received | accepted | in-progress | review | completed | suspended | rejected | failed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

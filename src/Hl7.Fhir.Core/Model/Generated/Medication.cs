@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -349,6 +349,17 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
             
+            [FhirElement("batch", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent> Batch
+            {
+                get { if(_Batch==null) _Batch = new List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent>(); return _Batch; }
+                set { _Batch = value; OnPropertyChanged("Batch"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent> _Batch;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MedicationProductComponent;
@@ -358,6 +369,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                     if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent>(Ingredient.DeepCopy());
+                    if(Batch != null) dest.Batch = new List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent>(Batch.DeepCopy());
                     return dest;
                 }
                 else
@@ -377,6 +389,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Form, otherT.Form)) return false;
                 if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
+                if( !DeepComparable.Matches(Batch, otherT.Batch)) return false;
                 
                 return true;
             }
@@ -389,6 +402,111 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
                 if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
+                if( !DeepComparable.IsExactly(Batch, otherT.Batch)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("MedicationProductBatchComponent")]
+        [DataContract]
+        public partial class MedicationProductBatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "MedicationProductBatchComponent"; } }
+            
+            [FhirElement("lotNumber", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LotNumberElement
+            {
+                get { return _LotNumberElement; }
+                set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LotNumberElement;
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string LotNumber
+            {
+                get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LotNumberElement = null; 
+                    else
+                      LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("LotNumber");
+                }
+            }
+            
+            [FhirElement("expirationDate", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
+            {
+                get { return _ExpirationDateElement; }
+                set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
+            
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ExpirationDate
+            {
+                get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ExpirationDateElement = null; 
+                    else
+                      ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("ExpirationDate");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as MedicationProductBatchComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
+                    if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new MedicationProductBatchComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductBatchComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
+                if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationProductBatchComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
+                if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
                 
                 return true;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -167,15 +167,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Anatomical collection site
             /// </summary>
-            [FhirElement("sourceSite", InSummary=true, Order=90)]
+            [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept SourceSite
+            public Hl7.Fhir.Model.Element BodySite
             {
-                get { return _SourceSite; }
-                set { _SourceSite = value; OnPropertyChanged("SourceSite"); }
+                get { return _BodySite; }
+                set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _SourceSite;
+            private Hl7.Fhir.Model.Element _BodySite;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -189,7 +190,7 @@ namespace Hl7.Fhir.Model
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(SourceSite != null) dest.SourceSite = (Hl7.Fhir.Model.CodeableConcept)SourceSite.DeepCopy();
+                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                     return dest;
                 }
                 else
@@ -212,7 +213,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Collected, otherT.Collected)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-                if( !DeepComparable.Matches(SourceSite, otherT.SourceSite)) return false;
+                if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
                 
                 return true;
             }
@@ -228,7 +229,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Collected, otherT.Collected)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-                if( !DeepComparable.IsExactly(SourceSite, otherT.SourceSite)) return false;
+                if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
                 
                 return true;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The observation has been withdrawn following previous Final release.
             /// </summary>
-            [EnumLiteral("entered in error")]
+            [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
@@ -643,15 +643,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observed body part
         /// </summary>
-        [FhirElement("bodySite", Order=180)]
+        [FhirElement("bodySite", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept BodySite
+        public Hl7.Fhir.Model.Element BodySite
         {
             get { return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _BodySite;
+        private Hl7.Fhir.Model.Element _BodySite;
         
         /// <summary>
         /// How it was done
@@ -711,7 +712,7 @@ namespace Hl7.Fhir.Model
         /// Who did the observation
         /// </summary>
         [FhirElement("performer", Order=230)]
-        [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
+        [References("Practitioner","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -723,9 +724,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
-        /// Healthcare event related to the observation
+        /// (Measurement) Device
         /// </summary>
-        [FhirElement("encounter", Order=240)]
+        [FhirElement("device", Order=240)]
+        [References("Device","DeviceMetric")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Device
+        {
+            get { return _Device; }
+            set { _Device = value; OnPropertyChanged("Device"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Device;
+        
+        /// <summary>
+        /// Healthcare event during which this observation is made
+        /// </summary>
+        [FhirElement("encounter", Order=250)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -739,7 +754,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Provides guide for interpretation
         /// </summary>
-        [FhirElement("referenceRange", Order=250)]
+        [FhirElement("referenceRange", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
@@ -753,7 +768,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observations related to this observation
         /// </summary>
-        [FhirElement("related", Order=260)]
+        [FhirElement("related", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related
@@ -780,12 +795,13 @@ namespace Hl7.Fhir.Model
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
                 if(ReliabilityElement != null) dest.ReliabilityElement = (Code<Hl7.Fhir.Model.Observation.ObservationReliability>)ReliabilityElement.DeepCopy();
-                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
+                if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
                 if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(Related.DeepCopy());
@@ -821,6 +837,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
             if( !DeepComparable.Matches(Related, otherT.Related)) return false;
@@ -849,6 +866,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
             if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The Encounter has begun, but the patient is temporarily on leave.
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EncounterStatusHistoryComponent"; } }
             
             /// <summary>
-            /// planned | arrived | in progress | onleave | finished | cancelled
+            /// planned | arrived | in-progress | onleave | finished | cancelled
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
             
             /// <summary>
-            /// planned | arrived | in progress | onleave | finished | cancelled
+            /// planned | arrived | in-progress | onleave | finished | cancelled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | arrived | in progress | onleave | finished | cancelled
+        /// planned | arrived | in-progress | onleave | finished | cancelled
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
         
         /// <summary>
-        /// planned | arrived | in progress | onleave | finished | cancelled
+        /// planned | arrived | in-progress | onleave | finished | cancelled
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

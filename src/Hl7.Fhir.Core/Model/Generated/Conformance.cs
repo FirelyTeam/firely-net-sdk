@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1162,9 +1162,105 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// If allows/uses conditional create
+            /// </summary>
+            [FhirElement("conditionalCreate", InSummary=true, Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ConditionalCreateElement
+            {
+                get { return _ConditionalCreateElement; }
+                set { _ConditionalCreateElement = value; OnPropertyChanged("ConditionalCreateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ConditionalCreateElement;
+            
+            /// <summary>
+            /// If allows/uses conditional create
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? ConditionalCreate
+            {
+                get { return ConditionalCreateElement != null ? ConditionalCreateElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ConditionalCreateElement = null; 
+                    else
+                      ConditionalCreateElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ConditionalCreate");
+                }
+            }
+            
+            /// <summary>
+            /// If allows/uses conditional update
+            /// </summary>
+            [FhirElement("conditionalUpdate", InSummary=true, Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ConditionalUpdateElement
+            {
+                get { return _ConditionalUpdateElement; }
+                set { _ConditionalUpdateElement = value; OnPropertyChanged("ConditionalUpdateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ConditionalUpdateElement;
+            
+            /// <summary>
+            /// If allows/uses conditional update
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? ConditionalUpdate
+            {
+                get { return ConditionalUpdateElement != null ? ConditionalUpdateElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ConditionalUpdateElement = null; 
+                    else
+                      ConditionalUpdateElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ConditionalUpdate");
+                }
+            }
+            
+            /// <summary>
+            /// If allows/uses conditional delete
+            /// </summary>
+            [FhirElement("conditionalDelete", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ConditionalDeleteElement
+            {
+                get { return _ConditionalDeleteElement; }
+                set { _ConditionalDeleteElement = value; OnPropertyChanged("ConditionalDeleteElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ConditionalDeleteElement;
+            
+            /// <summary>
+            /// If allows/uses conditional delete
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? ConditionalDelete
+            {
+                get { return ConditionalDeleteElement != null ? ConditionalDeleteElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ConditionalDeleteElement = null; 
+                    else
+                      ConditionalDeleteElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ConditionalDelete");
+                }
+            }
+            
+            /// <summary>
             /// _include values supported by the server
             /// </summary>
-            [FhirElement("searchInclude", InSummary=true, Order=100)]
+            [FhirElement("searchInclude", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement
@@ -1195,9 +1291,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Additional search params defined
+            /// Search params supported by implementation
             /// </summary>
-            [FhirElement("searchParam", InSummary=true, Order=110)]
+            [FhirElement("searchParam", InSummary=true, Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam
@@ -1221,6 +1317,9 @@ namespace Hl7.Fhir.Model
                     if(VersioningElement != null) dest.VersioningElement = (Code<Hl7.Fhir.Model.Conformance.ResourceVersionPolicy>)VersioningElement.DeepCopy();
                     if(ReadHistoryElement != null) dest.ReadHistoryElement = (Hl7.Fhir.Model.FhirBoolean)ReadHistoryElement.DeepCopy();
                     if(UpdateCreateElement != null) dest.UpdateCreateElement = (Hl7.Fhir.Model.FhirBoolean)UpdateCreateElement.DeepCopy();
+                    if(ConditionalCreateElement != null) dest.ConditionalCreateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalCreateElement.DeepCopy();
+                    if(ConditionalUpdateElement != null) dest.ConditionalUpdateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalUpdateElement.DeepCopy();
+                    if(ConditionalDeleteElement != null) dest.ConditionalDeleteElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalDeleteElement.DeepCopy();
                     if(SearchIncludeElement != null) dest.SearchIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchIncludeElement.DeepCopy());
                     if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(SearchParam.DeepCopy());
                     return dest;
@@ -1246,6 +1345,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(VersioningElement, otherT.VersioningElement)) return false;
                 if( !DeepComparable.Matches(ReadHistoryElement, otherT.ReadHistoryElement)) return false;
                 if( !DeepComparable.Matches(UpdateCreateElement, otherT.UpdateCreateElement)) return false;
+                if( !DeepComparable.Matches(ConditionalCreateElement, otherT.ConditionalCreateElement)) return false;
+                if( !DeepComparable.Matches(ConditionalUpdateElement, otherT.ConditionalUpdateElement)) return false;
+                if( !DeepComparable.Matches(ConditionalDeleteElement, otherT.ConditionalDeleteElement)) return false;
                 if( !DeepComparable.Matches(SearchIncludeElement, otherT.SearchIncludeElement)) return false;
                 if( !DeepComparable.Matches(SearchParam, otherT.SearchParam)) return false;
                 
@@ -1264,6 +1366,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(VersioningElement, otherT.VersioningElement)) return false;
                 if( !DeepComparable.IsExactly(ReadHistoryElement, otherT.ReadHistoryElement)) return false;
                 if( !DeepComparable.IsExactly(UpdateCreateElement, otherT.UpdateCreateElement)) return false;
+                if( !DeepComparable.IsExactly(ConditionalCreateElement, otherT.ConditionalCreateElement)) return false;
+                if( !DeepComparable.IsExactly(ConditionalUpdateElement, otherT.ConditionalUpdateElement)) return false;
+                if( !DeepComparable.IsExactly(ConditionalDeleteElement, otherT.ConditionalDeleteElement)) return false;
                 if( !DeepComparable.IsExactly(SearchIncludeElement, otherT.SearchIncludeElement)) return false;
                 if( !DeepComparable.IsExactly(SearchParam, otherT.SearchParam)) return false;
                 
@@ -2201,7 +2306,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The the operation/query is defined
+            /// The defined operation/query
             /// </summary>
             [FhirElement("definition", InSummary=true, Order=50)]
             [References("OperationDefinition")]

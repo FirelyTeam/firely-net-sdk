@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully compareable.
             /// </summary>
-            [EnumLiteral("fully specified")]
+            [EnumLiteral("fully-specified")]
             FullySpecified,
             /// <summary>
             /// The data element allows multiple units of measure having equivalent meaning.  E.g. "cc" (cubic centimeter) and "mL".
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// comparable | fully specified | equivalent | convertable | scaleable | flexible
+        /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
         /// </summary>
         [FhirElement("granularity", InSummary=true, Order=170)]
         [DataMember]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.DataElement.DataElementGranularity> _GranularityElement;
         
         /// <summary>
-        /// comparable | fully specified | equivalent | convertable | scaleable | flexible
+        /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

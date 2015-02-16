@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
             /// </summary>
-            [EnumLiteral("entered in error")]
+            [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered in error
+        /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Composition.CompositionStatus> _StatusElement;
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered in error
+        /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

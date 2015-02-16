@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actions implied by the prescription have been temporarily halted, but are expected to continue later.  May also be called "suspended".
             /// </summary>
-            [EnumLiteral("on hold")]
+            [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
             /// All actions that are implied by the prescription have occurred (this will rarely be made explicit).
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The prescription was entered in error and therefore nullified.
             /// </summary>
-            [EnumLiteral("entered in error")]
+            [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
             /// Actions implied by the prescription have been permanently halted, before all of them occurred.
@@ -88,6 +88,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("superceded")]
             Superceded,
+            /// <summary>
+            /// The prescription is not yet 'actionable', i.e. it is a work in progress, required sign-off, need to be run through decision support.
+            /// </summary>
+            [EnumLiteral("draft")]
+            Draft,
         }
         
         [FhirType("MedicationPrescriptionDosageInstructionComponent")]
@@ -212,15 +217,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of medication per dose
             /// </summary>
-            [FhirElement("doseQuantity", InSummary=true, Order=110)]
+            [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity DoseQuantity
+            public Hl7.Fhir.Model.Element Dose
             {
-                get { return _DoseQuantity; }
-                set { _DoseQuantity = value; OnPropertyChanged("DoseQuantity"); }
+                get { return _Dose; }
+                set { _Dose = value; OnPropertyChanged("Dose"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _DoseQuantity;
+            private Hl7.Fhir.Model.Element _Dose;
             
             /// <summary>
             /// Amount of medication per unit of time
@@ -262,7 +268,7 @@ namespace Hl7.Fhir.Model
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.Quantity)DoseQuantity.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Ratio)Rate.DeepCopy();
                     if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                     return dest;
@@ -289,7 +295,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Site, otherT.Site)) return false;
                 if( !DeepComparable.Matches(Route, otherT.Route)) return false;
                 if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-                if( !DeepComparable.Matches(DoseQuantity, otherT.DoseQuantity)) return false;
+                if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
                 if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
                 if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
@@ -309,7 +315,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
                 if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-                if( !DeepComparable.IsExactly(DoseQuantity, otherT.DoseQuantity)) return false;
+                if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
                 if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
                 if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
@@ -595,7 +601,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// active | on hold | completed | entered in error | stopped | superceded
+        /// active | on-hold | completed | entered-in-error | stopped | superceded | draft
         /// </summary>
         [FhirElement("status", Order=110)]
         [DataMember]
@@ -608,7 +614,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionStatus> _StatusElement;
         
         /// <summary>
-        /// active | on hold | completed | entered in error | stopped | superceded
+        /// active | on-hold | completed | entered-in-error | stopped | superceded | draft
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -683,9 +689,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
+        /// Information about the prescription
+        /// </summary>
+        [FhirElement("note", Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString NoteElement
+        {
+            get { return _NoteElement; }
+            set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _NoteElement;
+        
+        /// <summary>
+        /// Information about the prescription
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Note
+        {
+            get { return NoteElement != null ? NoteElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  NoteElement = null; 
+                else
+                  NoteElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Note");
+            }
+        }
+        
+        /// <summary>
         /// Medication to be taken
         /// </summary>
-        [FhirElement("medication", Order=160)]
+        [FhirElement("medication", Order=170)]
         [References("Medication")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Medication
@@ -699,7 +737,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How medication should be taken
         /// </summary>
-        [FhirElement("dosageInstruction", Order=170)]
+        [FhirElement("dosageInstruction", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDosageInstructionComponent> DosageInstruction
@@ -713,7 +751,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication supply authorization
         /// </summary>
-        [FhirElement("dispense", Order=180)]
+        [FhirElement("dispense", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDispenseComponent Dispense
         {
@@ -726,7 +764,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Any restrictions on medication substitution?
         /// </summary>
-        [FhirElement("substitution", Order=190)]
+        [FhirElement("substitution", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionSubstitutionComponent Substitution
         {
@@ -750,6 +788,7 @@ namespace Hl7.Fhir.Model
                 if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
                 if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDosageInstructionComponent>(DosageInstruction.DeepCopy());
                 if(Dispense != null) dest.Dispense = (Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDispenseComponent)Dispense.DeepCopy();
@@ -778,6 +817,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Prescriber, otherT.Prescriber)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
             if( !DeepComparable.Matches(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.Matches(Dispense, otherT.Dispense)) return false;
@@ -799,6 +839,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Prescriber, otherT.Prescriber)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
             if( !DeepComparable.IsExactly(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.IsExactly(Dispense, otherT.Dispense)) return false;

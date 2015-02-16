@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,28 +53,69 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>
-        /// The status of a resource in the bundle. Used for search (to differentiate between resources included as a match, and resources included as an _include), and for transactions (create/update/delete)
+        /// HTTP verbs (in the HTTP command line)
         /// </summary>
-        [FhirEnumeration("BundleEntryStatus")]
-        public enum BundleEntryStatus
+        [FhirEnumeration("HTTPVerb")]
+        public enum HTTPVerb
         {
             /// <summary>
-            /// Transaction: perform a create operation on this resource.
+            /// HTTP GET.
             /// </summary>
-            [EnumLiteral("create")]
-            Create,
+            [EnumLiteral("GET")]
+            GET,
             /// <summary>
-            /// Transaction: perform an update operation on this resource.
+            /// HTTP POST.
+            /// </summary>
+            [EnumLiteral("POST")]
+            POST,
+            /// <summary>
+            /// HTTP PUT.
+            /// </summary>
+            [EnumLiteral("PUT")]
+            PUT,
+            /// <summary>
+            /// HTTP DELETE.
+            /// </summary>
+            [EnumLiteral("DELETE")]
+            DELETE,
+        }
+        
+        /// <summary>
+        /// Defines how a match URL should be used when processing a transaction
+        /// </summary>
+        [FhirEnumeration("TransactionProcessingMode")]
+        public enum TransactionProcessingMode
+        {
+            /// <summary>
+            /// If a matching resource is found, then ignore the resource and do not process it as part of the transaction (and return the matching resource information in the transaction response).
+            /// </summary>
+            [EnumLiteral("ignore")]
+            Ignore,
+            /// <summary>
+            /// If a matching resource is found, then update it with this resource, otherwise create a new one.
             /// </summary>
             [EnumLiteral("update")]
             Update,
             /// <summary>
-            /// Transaction: look for this resource using the search url provided. If there's no match, create it. Search: this resource is returned because it matches the search criteria.
+            /// If a resource matching the information provided is found, delete it. If no matching resource is found, the transaction fails.
+            /// </summary>
+            [EnumLiteral("delete")]
+            Delete,
+        }
+        
+        /// <summary>
+        /// Why an entry is in the result set - whether it's included as a match or because of an _include requirement
+        /// </summary>
+        [FhirEnumeration("SearchEntryMode")]
+        public enum SearchEntryMode
+        {
+            /// <summary>
+            /// This resource matched the search specification.
             /// </summary>
             [EnumLiteral("match")]
             Match,
             /// <summary>
-            /// Search: this resource is returned because it meets an _include criteria.
+            /// This resource is returned because it is referred to from another resource in the search set.
             /// </summary>
             [EnumLiteral("include")]
             Include,
@@ -123,156 +164,239 @@ namespace Hl7.Fhir.Model
             Collection,
         }
         
-        [FhirType("BundleEntryDeletedComponent")]
+        /// <summary>
+        /// The operation associated with an entry in either a update history, or a transaction/ transaction response
+        /// </summary>
+        [FhirEnumeration("TransactionOperation")]
+        public enum TransactionOperation
+        {
+            [EnumLiteral("create")]
+            Create,
+            [EnumLiteral("update")]
+            Update,
+            [EnumLiteral("delete")]
+            Delete,
+            /// <summary>
+            /// No Operation occurred - only valid in a transaction response.
+            /// </summary>
+            [EnumLiteral("noop")]
+            Noop,
+        }
+        
+        [FhirType("BundleEntryTransactionComponent")]
         [DataContract]
-        public partial class BundleEntryDeletedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BundleEntryTransactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryDeletedComponent"; } }
+            public override string TypeName { get { return "BundleEntryTransactionComponent"; } }
             
             /// <summary>
-            /// Type of resource that was deleted
+            /// GET | POST | PUT | DELETE
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("method", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code TypeElement
+            public Code<Hl7.Fhir.Model.Bundle.HTTPVerb> MethodElement
             {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+                get { return _MethodElement; }
+                set { _MethodElement = value; OnPropertyChanged("MethodElement"); }
             }
             
-            private Hl7.Fhir.Model.Code _TypeElement;
+            private Code<Hl7.Fhir.Model.Bundle.HTTPVerb> _MethodElement;
             
             /// <summary>
-            /// Type of resource that was deleted
+            /// GET | POST | PUT | DELETE
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Type
+            public Hl7.Fhir.Model.Bundle.HTTPVerb? Method
             {
-                get { return TypeElement != null ? TypeElement.Value : null; }
+                get { return MethodElement != null ? MethodElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      TypeElement = null; 
+                      MethodElement = null; 
                     else
-                      TypeElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("Type");
+                      MethodElement = new Code<Hl7.Fhir.Model.Bundle.HTTPVerb>(value);
+                    OnPropertyChanged("Method");
                 }
             }
             
             /// <summary>
-            /// Id of resource that was deleted
+            /// The URL for the transaction
             /// </summary>
-            [FhirElement("resourceId", InSummary=true, Order=50)]
+            [FhirElement("url", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Id ResourceIdElement
+            public Hl7.Fhir.Model.FhirUri UrlElement
             {
-                get { return _ResourceIdElement; }
-                set { _ResourceIdElement = value; OnPropertyChanged("ResourceIdElement"); }
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.Id _ResourceIdElement;
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Id of resource that was deleted
+            /// The URL for the transaction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string ResourceId
+            public string Url
             {
-                get { return ResourceIdElement != null ? ResourceIdElement.Value : null; }
+                get { return UrlElement != null ? UrlElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      ResourceIdElement = null; 
+                      UrlElement = null; 
                     else
-                      ResourceIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("ResourceId");
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
                 }
             }
             
             /// <summary>
-            /// Version id for releted resource
+            /// For managing cache currency
             /// </summary>
-            [FhirElement("versionId", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("ifNoneMatch", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Id VersionIdElement
+            public Hl7.Fhir.Model.FhirString IfNoneMatchElement
             {
-                get { return _VersionIdElement; }
-                set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
+                get { return _IfNoneMatchElement; }
+                set { _IfNoneMatchElement = value; OnPropertyChanged("IfNoneMatchElement"); }
             }
             
-            private Hl7.Fhir.Model.Id _VersionIdElement;
+            private Hl7.Fhir.Model.FhirString _IfNoneMatchElement;
             
             /// <summary>
-            /// Version id for releted resource
+            /// For managing cache currency
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string VersionId
+            public string IfNoneMatch
             {
-                get { return VersionIdElement != null ? VersionIdElement.Value : null; }
+                get { return IfNoneMatchElement != null ? IfNoneMatchElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      VersionIdElement = null; 
+                      IfNoneMatchElement = null; 
                     else
-                      VersionIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("VersionId");
+                      IfNoneMatchElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("IfNoneMatch");
                 }
             }
             
             /// <summary>
-            /// When the resource was deleted
+            /// For managing update contention
             /// </summary>
-            [FhirElement("instant", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("ifMatch", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Instant InstantElement
+            public Hl7.Fhir.Model.FhirString IfMatchElement
             {
-                get { return _InstantElement; }
-                set { _InstantElement = value; OnPropertyChanged("InstantElement"); }
+                get { return _IfMatchElement; }
+                set { _IfMatchElement = value; OnPropertyChanged("IfMatchElement"); }
             }
             
-            private Hl7.Fhir.Model.Instant _InstantElement;
+            private Hl7.Fhir.Model.FhirString _IfMatchElement;
             
             /// <summary>
-            /// When the resource was deleted
+            /// For managing update contention
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public DateTimeOffset? Instant
+            public string IfMatch
             {
-                get { return InstantElement != null ? InstantElement.Value : null; }
+                get { return IfMatchElement != null ? IfMatchElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      InstantElement = null; 
+                      IfMatchElement = null; 
                     else
-                      InstantElement = new Hl7.Fhir.Model.Instant(value);
-                    OnPropertyChanged("Instant");
+                      IfMatchElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("IfMatch");
+                }
+            }
+            
+            /// <summary>
+            /// For managing update contention
+            /// </summary>
+            [FhirElement("ifModifiedSince", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString IfModifiedSinceElement
+            {
+                get { return _IfModifiedSinceElement; }
+                set { _IfModifiedSinceElement = value; OnPropertyChanged("IfModifiedSinceElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _IfModifiedSinceElement;
+            
+            /// <summary>
+            /// For managing update contention
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string IfModifiedSince
+            {
+                get { return IfModifiedSinceElement != null ? IfModifiedSinceElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IfModifiedSinceElement = null; 
+                    else
+                      IfModifiedSinceElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("IfModifiedSince");
+                }
+            }
+            
+            /// <summary>
+            /// For conditional creates
+            /// </summary>
+            [FhirElement("ifNoneExist", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString IfNoneExistElement
+            {
+                get { return _IfNoneExistElement; }
+                set { _IfNoneExistElement = value; OnPropertyChanged("IfNoneExistElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _IfNoneExistElement;
+            
+            /// <summary>
+            /// For conditional creates
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string IfNoneExist
+            {
+                get { return IfNoneExistElement != null ? IfNoneExistElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IfNoneExistElement = null; 
+                    else
+                      IfNoneExistElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("IfNoneExist");
                 }
             }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryDeletedComponent;
+                var dest = other as BundleEntryTransactionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
-                    if(ResourceIdElement != null) dest.ResourceIdElement = (Hl7.Fhir.Model.Id)ResourceIdElement.DeepCopy();
-                    if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
-                    if(InstantElement != null) dest.InstantElement = (Hl7.Fhir.Model.Instant)InstantElement.DeepCopy();
+                    if(MethodElement != null) dest.MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>)MethodElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(IfNoneMatchElement != null) dest.IfNoneMatchElement = (Hl7.Fhir.Model.FhirString)IfNoneMatchElement.DeepCopy();
+                    if(IfMatchElement != null) dest.IfMatchElement = (Hl7.Fhir.Model.FhirString)IfMatchElement.DeepCopy();
+                    if(IfModifiedSinceElement != null) dest.IfModifiedSinceElement = (Hl7.Fhir.Model.FhirString)IfModifiedSinceElement.DeepCopy();
+                    if(IfNoneExistElement != null) dest.IfNoneExistElement = (Hl7.Fhir.Model.FhirString)IfNoneExistElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -281,33 +405,310 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryDeletedComponent());
+                return CopyTo(new BundleEntryTransactionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryDeletedComponent;
+                var otherT = other as BundleEntryTransactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(ResourceIdElement, otherT.ResourceIdElement)) return false;
-                if( !DeepComparable.Matches(VersionIdElement, otherT.VersionIdElement)) return false;
-                if( !DeepComparable.Matches(InstantElement, otherT.InstantElement)) return false;
+                if( !DeepComparable.Matches(MethodElement, otherT.MethodElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(IfNoneMatchElement, otherT.IfNoneMatchElement)) return false;
+                if( !DeepComparable.Matches(IfMatchElement, otherT.IfMatchElement)) return false;
+                if( !DeepComparable.Matches(IfModifiedSinceElement, otherT.IfModifiedSinceElement)) return false;
+                if( !DeepComparable.Matches(IfNoneExistElement, otherT.IfNoneExistElement)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryDeletedComponent;
+                var otherT = other as BundleEntryTransactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(ResourceIdElement, otherT.ResourceIdElement)) return false;
-                if( !DeepComparable.IsExactly(VersionIdElement, otherT.VersionIdElement)) return false;
-                if( !DeepComparable.IsExactly(InstantElement, otherT.InstantElement)) return false;
+                if( !DeepComparable.IsExactly(MethodElement, otherT.MethodElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(IfNoneMatchElement, otherT.IfNoneMatchElement)) return false;
+                if( !DeepComparable.IsExactly(IfMatchElement, otherT.IfMatchElement)) return false;
+                if( !DeepComparable.IsExactly(IfModifiedSinceElement, otherT.IfModifiedSinceElement)) return false;
+                if( !DeepComparable.IsExactly(IfNoneExistElement, otherT.IfNoneExistElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("BundleEntryTransactionResponseComponent")]
+        [DataContract]
+        public partial class BundleEntryTransactionResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "BundleEntryTransactionResponseComponent"; } }
+            
+            /// <summary>
+            /// Status return code for entry
+            /// </summary>
+            [FhirElement("status", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString StatusElement
+            {
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _StatusElement;
+            
+            /// <summary>
+            /// Status return code for entry
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
+            /// The location, if the operation returns a location
+            /// </summary>
+            [FhirElement("location", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri LocationElement
+            {
+                get { return _LocationElement; }
+                set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _LocationElement;
+            
+            /// <summary>
+            /// The location, if the operation returns a location
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Location
+            {
+                get { return LocationElement != null ? LocationElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LocationElement = null; 
+                    else
+                      LocationElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Location");
+                }
+            }
+            
+            /// <summary>
+            /// The etag for the resource (if relevant)
+            /// </summary>
+            [FhirElement("etag", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirString> EtagElement
+            {
+                get { if(_EtagElement==null) _EtagElement = new List<Hl7.Fhir.Model.FhirString>(); return _EtagElement; }
+                set { _EtagElement = value; OnPropertyChanged("EtagElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirString> _EtagElement;
+            
+            /// <summary>
+            /// The etag for the resource (if relevant)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Etag
+            {
+                get { return EtagElement != null ? EtagElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      EtagElement = null; 
+                    else
+                      EtagElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("Etag");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as BundleEntryTransactionResponseComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.FhirString)StatusElement.DeepCopy();
+                    if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopy();
+                    if(EtagElement != null) dest.EtagElement = new List<Hl7.Fhir.Model.FhirString>(EtagElement.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new BundleEntryTransactionResponseComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as BundleEntryTransactionResponseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
+                if( !DeepComparable.Matches(EtagElement, otherT.EtagElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as BundleEntryTransactionResponseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
+                if( !DeepComparable.IsExactly(EtagElement, otherT.EtagElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("BundleEntrySearchComponent")]
+        [DataContract]
+        public partial class BundleEntrySearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "BundleEntrySearchComponent"; } }
+            
+            /// <summary>
+            /// match | include - why this is in the result set
+            /// </summary>
+            [FhirElement("mode", InSummary=true, Order=40)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> _ModeElement;
+            
+            /// <summary>
+            /// match | include - why this is in the result set
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Bundle.SearchEntryMode? Mode
+            {
+                get { return ModeElement != null ? ModeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ModeElement = null; 
+                    else
+                      ModeElement = new Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>(value);
+                    OnPropertyChanged("Mode");
+                }
+            }
+            
+            /// <summary>
+            /// Search ranking (between 0 and 1)
+            /// </summary>
+            [FhirElement("score", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal ScoreElement
+            {
+                get { return _ScoreElement; }
+                set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _ScoreElement;
+            
+            /// <summary>
+            /// Search ranking (between 0 and 1)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Score
+            {
+                get { return ScoreElement != null ? ScoreElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ScoreElement = null; 
+                    else
+                      ScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Score");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as BundleEntrySearchComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>)ModeElement.DeepCopy();
+                    if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new BundleEntrySearchComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as BundleEntrySearchComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(ScoreElement, otherT.ScoreElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as BundleEntrySearchComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(ScoreElement, otherT.ScoreElement)) return false;
                 
                 return true;
             }
@@ -355,118 +756,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// create | update | match | include - for search &amp; transaction
-            /// </summary>
-            [FhirElement("status", InSummary=true, Order=50)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus> StatusElement
-            {
-                get { return _StatusElement; }
-                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus> _StatusElement;
-            
-            /// <summary>
-            /// create | update | match | include - for search &amp; transaction
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Bundle.BundleEntryStatus? Status
-            {
-                get { return StatusElement != null ? StatusElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StatusElement = null; 
-                    else
-                      StatusElement = new Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus>(value);
-                    OnPropertyChanged("Status");
-                }
-            }
-            
-            /// <summary>
-            /// Search URL (see transaction)
-            /// </summary>
-            [FhirElement("search", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri SearchElement
-            {
-                get { return _SearchElement; }
-                set { _SearchElement = value; OnPropertyChanged("SearchElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _SearchElement;
-            
-            /// <summary>
-            /// Search URL (see transaction)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Search
-            {
-                get { return SearchElement != null ? SearchElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SearchElement = null; 
-                    else
-                      SearchElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Search");
-                }
-            }
-            
-            /// <summary>
-            /// Search ranking (between 0 and 1)
-            /// </summary>
-            [FhirElement("score", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal ScoreElement
-            {
-                get { return _ScoreElement; }
-                set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDecimal _ScoreElement;
-            
-            /// <summary>
-            /// Search ranking (between 0 and 1)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? Score
-            {
-                get { return ScoreElement != null ? ScoreElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ScoreElement = null; 
-                    else
-                      ScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("Score");
-                }
-            }
-            
-            /// <summary>
-            /// If this is a deleted resource (transaction/history)
-            /// </summary>
-            [FhirElement("deleted", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntryDeletedComponent Deleted
-            {
-                get { return _Deleted; }
-                set { _Deleted = value; OnPropertyChanged("Deleted"); }
-            }
-            
-            private Hl7.Fhir.Model.Bundle.BundleEntryDeletedComponent _Deleted;
-            
-            /// <summary>
             /// Resources in this bundle
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=90, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=50, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -477,6 +769,45 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Resource _Resource;
             
+            /// <summary>
+            /// Search related information
+            /// </summary>
+            [FhirElement("search", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent Search
+            {
+                get { return _Search; }
+                set { _Search = value; OnPropertyChanged("Search"); }
+            }
+            
+            private Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent _Search;
+            
+            /// <summary>
+            /// Transaction Related Information
+            /// </summary>
+            [FhirElement("transaction", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent Transaction
+            {
+                get { return _Transaction; }
+                set { _Transaction = value; OnPropertyChanged("Transaction"); }
+            }
+            
+            private Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent _Transaction;
+            
+            /// <summary>
+            /// Transaction Related Information
+            /// </summary>
+            [FhirElement("transactionResponse", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent TransactionResponse
+            {
+                get { return _TransactionResponse; }
+                set { _TransactionResponse = value; OnPropertyChanged("TransactionResponse"); }
+            }
+            
+            private Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent _TransactionResponse;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BundleEntryComponent;
@@ -485,11 +816,10 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Bundle.BundleEntryStatus>)StatusElement.DeepCopy();
-                    if(SearchElement != null) dest.SearchElement = (Hl7.Fhir.Model.FhirUri)SearchElement.DeepCopy();
-                    if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
-                    if(Deleted != null) dest.Deleted = (Hl7.Fhir.Model.Bundle.BundleEntryDeletedComponent)Deleted.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
+                    if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent)Search.DeepCopy();
+                    if(Transaction != null) dest.Transaction = (Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent)Transaction.DeepCopy();
+                    if(TransactionResponse != null) dest.TransactionResponse = (Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent)TransactionResponse.DeepCopy();
                     return dest;
                 }
                 else
@@ -508,11 +838,10 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
-                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.Matches(SearchElement, otherT.SearchElement)) return false;
-                if( !DeepComparable.Matches(ScoreElement, otherT.ScoreElement)) return false;
-                if( !DeepComparable.Matches(Deleted, otherT.Deleted)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+                if( !DeepComparable.Matches(Search, otherT.Search)) return false;
+                if( !DeepComparable.Matches(Transaction, otherT.Transaction)) return false;
+                if( !DeepComparable.Matches(TransactionResponse, otherT.TransactionResponse)) return false;
                 
                 return true;
             }
@@ -524,11 +853,10 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
-                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.IsExactly(SearchElement, otherT.SearchElement)) return false;
-                if( !DeepComparable.IsExactly(ScoreElement, otherT.ScoreElement)) return false;
-                if( !DeepComparable.IsExactly(Deleted, otherT.Deleted)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
+                if( !DeepComparable.IsExactly(Search, otherT.Search)) return false;
+                if( !DeepComparable.IsExactly(Transaction, otherT.Transaction)) return false;
+                if( !DeepComparable.IsExactly(TransactionResponse, otherT.TransactionResponse)) return false;
                 
                 return true;
             }
@@ -768,7 +1096,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
         
         /// <summary>
-        /// Entry in the bundle - will have deleted or resource
+        /// Entry in the bundle - will have a resource, or information
         /// </summary>
         [FhirElement("entry", Order=90)]
         [Cardinality(Min=0,Max=-1)]

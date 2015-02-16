@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supply has been requested, but not dispensed.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// Supply is part of a pharmacy order and has been dispensed.
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
-            /// in progress | dispensed | abandoned
+            /// in-progress | dispensed | abandoned
             /// </summary>
             [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> _StatusElement;
             
             /// <summary>
-            /// in progress | dispensed | abandoned
+            /// in-progress | dispensed | abandoned
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -232,13 +232,32 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("whenHandedOver", InSummary=true, Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Period WhenHandedOver
+            public Hl7.Fhir.Model.FhirDateTime WhenHandedOverElement
             {
-                get { return _WhenHandedOver; }
-                set { _WhenHandedOver = value; OnPropertyChanged("WhenHandedOver"); }
+                get { return _WhenHandedOverElement; }
+                set { _WhenHandedOverElement = value; OnPropertyChanged("WhenHandedOverElement"); }
             }
             
-            private Hl7.Fhir.Model.Period _WhenHandedOver;
+            private Hl7.Fhir.Model.FhirDateTime _WhenHandedOverElement;
+            
+            /// <summary>
+            /// Handover time
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string WhenHandedOver
+            {
+                get { return WhenHandedOverElement != null ? WhenHandedOverElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      WhenHandedOverElement = null; 
+                    else
+                      WhenHandedOverElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("WhenHandedOver");
+                }
+            }
             
             /// <summary>
             /// Where the Supply was sent
@@ -283,7 +302,7 @@ namespace Hl7.Fhir.Model
                     if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
                     if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                     if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();
-                    if(WhenHandedOver != null) dest.WhenHandedOver = (Hl7.Fhir.Model.Period)WhenHandedOver.DeepCopy();
+                    if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
                     if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                     if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
                     return dest;
@@ -310,7 +329,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SuppliedItem, otherT.SuppliedItem)) return false;
                 if( !DeepComparable.Matches(Supplier, otherT.Supplier)) return false;
                 if( !DeepComparable.Matches(WhenPrepared, otherT.WhenPrepared)) return false;
-                if( !DeepComparable.Matches(WhenHandedOver, otherT.WhenHandedOver)) return false;
+                if( !DeepComparable.Matches(WhenHandedOverElement, otherT.WhenHandedOverElement)) return false;
                 if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
                 
@@ -330,7 +349,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SuppliedItem, otherT.SuppliedItem)) return false;
                 if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
                 if( !DeepComparable.IsExactly(WhenPrepared, otherT.WhenPrepared)) return false;
-                if( !DeepComparable.IsExactly(WhenHandedOver, otherT.WhenHandedOver)) return false;
+                if( !DeepComparable.IsExactly(WhenHandedOverElement, otherT.WhenHandedOverElement)) return false;
                 if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
                 

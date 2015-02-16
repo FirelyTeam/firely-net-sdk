@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// Patient this order is about
         /// </summary>
         [FhirElement("subject", Order=110)]
-        [References("Patient")]
+        [References("Patient","Group","Device","Substance")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {

@@ -72,10 +72,6 @@ namespace Hl7.Fhir.Rest
         }
 
 
-
-
-
-
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
         /// </summary>
@@ -109,15 +105,6 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull("location");
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
         }
-
-
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -658,7 +645,7 @@ namespace Hl7.Fhir.Rest
         /// Get all meta known by the FHIR server
         /// </summary>
         /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system</returns>
-        public Resource.ResourceMetaComponent WholeSystemMeta()
+        public Meta WholeSystemMeta()
         {
             return internalGetMeta(null, null, null);
         }
@@ -667,7 +654,7 @@ namespace Hl7.Fhir.Rest
         /// Get all meta known by the FHIR server for a given resource type
         /// </summary>
         /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given type</returns>
-        public Resource.ResourceMetaComponent TypeMeta<TResource>() where TResource : Resource
+        public Meta TypeMeta<TResource>() where TResource : Resource
         {
             var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
             return internalGetMeta(typeName, null, null);
@@ -677,7 +664,7 @@ namespace Hl7.Fhir.Rest
         /// Get all meta known by the FHIR server for a given resource type
         /// </summary>
         /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given type</returns>
-        public Resource.ResourceMetaComponent TypeMeta(string type)
+        public Meta TypeMeta(string type)
         {
             if (type == null) throw Error.ArgumentNull("type");
 
@@ -690,7 +677,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The url of the Resource to get the meta for. This can be a Resource id url or a version-specific
         /// Resource url, and may be relative.</param>
         /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given instance</returns>
-        public Resource.ResourceMetaComponent Meta(Uri location)
+        public Meta Meta(Uri location)
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -707,14 +694,14 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The url of the Resource to get the meta for. This can be a Resource id url or a version-specific
         /// Resource url, and may be relative.</param>
         /// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given instance</returns>
-        public Resource.ResourceMetaComponent Meta(string location)
+        public Meta Meta(string location)
         {
             var identity = new ResourceIdentity(location);
             return Meta(identity);
         }
 
 
-        private Resource.ResourceMetaComponent internalGetMeta(string collection, string id, string version)
+        private Meta internalGetMeta(string collection, string id, string version)
         {
             RestUrl location = new RestUrl(this.Endpoint);
 
@@ -737,7 +724,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="meta">Meta to add to the resource</param>
         /// <remarks>Affixing mea to a resource (or version of the resource) is not considered an update, so does 
         /// not create a new version.</remarks>
-        public void AffixMeta(Uri location, Resource.ResourceMetaComponent meta)
+        public void AffixMeta(Uri location, Meta meta)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (meta == null) throw Error.ArgumentNull("meta");
@@ -762,7 +749,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="meta">Meta to add to the resource</param>
         /// <remarks>Affixing meta to a resource (or version of the resource) is not considered an update, so does 
         /// not create a new version.</remarks>
-        public void AffixMeta(string location, Resource.ResourceMetaComponent meta)
+        public void AffixMeta(string location, Meta meta)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (meta == null) throw Error.ArgumentNull("meta");
@@ -778,7 +765,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="tags">Meta to delete</param>
         /// <remarks>Removing meta from a resource (or version of the resource) is not considered an update, 
         /// so does not create a new version.</remarks>
-        public void DeleteMeta(Uri location, Resource.ResourceMetaComponent meta)
+        public void DeleteMeta(Uri location, Meta meta)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (meta == null) throw Error.ArgumentNull("meta");
@@ -800,7 +787,7 @@ namespace Hl7.Fhir.Rest
 
         private void updateIdentity(Resource resource, ResourceIdentity identity)
         {
-            if (resource.Meta == null) resource.Meta = new Resource.ResourceMetaComponent();
+            if (resource.Meta == null) resource.Meta = new Meta();
 
             if (resource.Id == null)
             {

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The alert was added in error, and should no longer be displayed.
             /// </summary>
-            [EnumLiteral("entered in error")]
+            [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
-        /// active | inactive | entered in error
+        /// active | inactive | entered-in-error
         /// </summary>
         [FhirElement("status", Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Alert.AlertStatus> _StatusElement;
         
         /// <summary>
-        /// active | inactive | entered in error
+        /// active | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The communication transmission is ongoing.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The message transmission is complete, i.e., delivered to the recipient's destination.
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
         
         /// <summary>
-        /// in progress | completed | suspended | rejected | failed
+        /// in-progress | completed | suspended | rejected | failed
         /// </summary>
         [FhirElement("status", Order=150)]
         [DataMember]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Communication.CommunicationStatus> _StatusElement;
         
         /// <summary>
-        /// in progress | completed | suspended | rejected | failed
+        /// in-progress | completed | suspended | rejected | failed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

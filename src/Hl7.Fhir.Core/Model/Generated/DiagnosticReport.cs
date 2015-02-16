@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The report has been withdrawn following previous Final release.
             /// </summary>
-            [EnumLiteral("entered in error")]
+            [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
@@ -312,9 +312,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
+        /// Health care event when test ordered
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=140)]
+        [FhirElement("identifier", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -327,7 +341,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What was requested
         /// </summary>
-        [FhirElement("requestDetail", Order=150)]
+        [FhirElement("requestDetail", Order=160)]
         [References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -342,7 +356,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Biochemistry, Hematology etc.
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=160)]
+        [FhirElement("serviceCategory", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -355,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physiologically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("diagnostic", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("diagnostic", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -370,7 +384,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specimens this report is based on
         /// </summary>
-        [FhirElement("specimen", Order=180)]
+        [FhirElement("specimen", Order=190)]
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -385,7 +399,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observations - simple, or complex nested groups
         /// </summary>
-        [FhirElement("result", Order=190)]
+        [FhirElement("result", Order=200)]
         [References("Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -400,7 +414,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
-        [FhirElement("imagingStudy", Order=200)]
+        [FhirElement("imagingStudy", Order=210)]
         [References("ImagingStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -415,7 +429,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", InSummary=true, Order=210)]
+        [FhirElement("image", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> Image
@@ -429,7 +443,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical Interpretation of test results
         /// </summary>
-        [FhirElement("conclusion", Order=220)]
+        [FhirElement("conclusion", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ConclusionElement
         {
@@ -461,7 +475,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Codes for the conclusion
         /// </summary>
-        [FhirElement("codedDiagnosis", Order=230)]
+        [FhirElement("codedDiagnosis", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
@@ -475,7 +489,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entire Report as issued
         /// </summary>
-        [FhirElement("presentedForm", Order=240)]
+        [FhirElement("presentedForm", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> PresentedForm
@@ -498,6 +512,7 @@ namespace Hl7.Fhir.Model
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(RequestDetail != null) dest.RequestDetail = new List<Hl7.Fhir.Model.ResourceReference>(RequestDetail.DeepCopy());
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
@@ -531,6 +546,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(RequestDetail, otherT.RequestDetail)) return false;
             if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
@@ -557,6 +573,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
             if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The are no known applicable values in this context
         /// </summary>
-        [EnumLiteral("nil known")]
+        [EnumLiteral("nil-known")]
         NilKnown,
     }
     
@@ -205,6 +205,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Binary")]
         Binary,
+        /// <summary>
+        /// The BodySite resource
+        /// </summary>
+        [EnumLiteral("BodySite")]
+        BodySite,
         /// <summary>
         /// The Bundle resource
         /// </summary>
@@ -635,6 +640,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("StatusResponse")]
         StatusResponse,
+        /// <summary>
+        /// The StructureDefinition resource
+        /// </summary>
+        [EnumLiteral("StructureDefinition")]
+        StructureDefinition,
         /// <summary>
         /// The Subscription resource
         /// </summary>

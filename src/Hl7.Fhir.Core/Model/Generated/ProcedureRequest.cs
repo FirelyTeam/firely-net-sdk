@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The work to fulfill the request is happening.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
+        /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
         [FhirElement("status", Order=170)]
         [DataMember]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | planned | requested | received | accepted | in progress | completed | suspended | rejected | aborted
+        /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

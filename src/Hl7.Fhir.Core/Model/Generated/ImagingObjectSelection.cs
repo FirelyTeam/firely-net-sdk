@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -226,49 +226,17 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RetrieveAETitleElement
-            {
-                get { return _RetrieveAETitleElement; }
-                set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
-            
-            /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RetrieveAETitle
-            {
-                get { return RetrieveAETitleElement != null ? RetrieveAETitleElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RetrieveAETitleElement = null; 
-                    else
-                      RetrieveAETitleElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RetrieveAETitle");
-                }
-            }
-            
-            /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=60)]
+            [FhirElement("url", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
+            public Hl7.Fhir.Model.FhirUri UrlElement
             {
-                get { return _RetrieveUrlElement; }
-                set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
             /// Retrieve URL
@@ -276,23 +244,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string RetrieveUrl
+            public string Url
             {
-                get { return RetrieveUrlElement != null ? RetrieveUrlElement.Value : null; }
+                get { return UrlElement != null ? UrlElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      RetrieveUrlElement = null; 
+                      UrlElement = null; 
                     else
-                      RetrieveUrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("RetrieveUrl");
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
                 }
             }
             
             /// <summary>
             /// Series identity of the selected instances
             /// </summary>
-            [FhirElement("series", InSummary=true, Order=70)]
+            [FhirElement("series", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent> Series
@@ -311,8 +279,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(RetrieveAETitleElement != null) dest.RetrieveAETitleElement = (Hl7.Fhir.Model.Id)RetrieveAETitleElement.DeepCopy();
-                    if(RetrieveUrlElement != null) dest.RetrieveUrlElement = (Hl7.Fhir.Model.FhirUri)RetrieveUrlElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent>(Series.DeepCopy());
                     return dest;
                 }
@@ -332,8 +299,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.Matches(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.Matches(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.Matches(Series, otherT.Series)) return false;
                 
                 return true;
@@ -346,8 +312,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
                 
                 return true;
@@ -430,49 +395,18 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RetrieveAETitleElement
-            {
-                get { return _RetrieveAETitleElement; }
-                set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
-            
-            /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RetrieveAETitle
-            {
-                get { return RetrieveAETitleElement != null ? RetrieveAETitleElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RetrieveAETitleElement = null; 
-                    else
-                      RetrieveAETitleElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RetrieveAETitle");
-                }
-            }
-            
-            /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=70)]
+            [FhirElement("url", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
+            public Hl7.Fhir.Model.FhirUri UrlElement
             {
-                get { return _RetrieveUrlElement; }
-                set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
             /// Retrieve URL
@@ -480,18 +414,32 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string RetrieveUrl
+            public string Url
             {
-                get { return RetrieveUrlElement != null ? RetrieveUrlElement.Value : null; }
+                get { return UrlElement != null ? UrlElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      RetrieveUrlElement = null; 
+                      UrlElement = null; 
                     else
-                      RetrieveUrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("RetrieveUrl");
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
                 }
             }
+            
+            /// <summary>
+            /// The frame set
+            /// </summary>
+            [FhirElement("frames", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> Frames
+            {
+                get { if(_Frames==null) _Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(); return _Frames; }
+                set { _Frames = value; OnPropertyChanged("Frames"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> _Frames;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -502,8 +450,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopy();
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(RetrieveAETitleElement != null) dest.RetrieveAETitleElement = (Hl7.Fhir.Model.Id)RetrieveAETitleElement.DeepCopy();
-                    if(RetrieveUrlElement != null) dest.RetrieveUrlElement = (Hl7.Fhir.Model.FhirUri)RetrieveUrlElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(Frames != null) dest.Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(Frames.DeepCopy());
                     return dest;
                 }
                 else
@@ -523,8 +471,8 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(SopClassElement, otherT.SopClassElement)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.Matches(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.Matches(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(Frames, otherT.Frames)) return false;
                 
                 return true;
             }
@@ -537,8 +485,8 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(SopClassElement, otherT.SopClassElement)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(Frames, otherT.Frames)) return false;
                 
                 return true;
             }
@@ -557,7 +505,6 @@ namespace Hl7.Fhir.Model
             /// Series instance uid
             /// </summary>
             [FhirElement("uid", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
             {
@@ -587,49 +534,17 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            [FhirElement("retrieveAETitle", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RetrieveAETitleElement
-            {
-                get { return _RetrieveAETitleElement; }
-                set { _RetrieveAETitleElement = value; OnPropertyChanged("RetrieveAETitleElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RetrieveAETitleElement;
-            
-            /// <summary>
-            /// AE Title where may be retrieved
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RetrieveAETitle
-            {
-                get { return RetrieveAETitleElement != null ? RetrieveAETitleElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RetrieveAETitleElement = null; 
-                    else
-                      RetrieveAETitleElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RetrieveAETitle");
-                }
-            }
-            
-            /// <summary>
             /// Retrieve URL
             /// </summary>
-            [FhirElement("retrieveUrl", InSummary=true, Order=60)]
+            [FhirElement("url", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri RetrieveUrlElement
+            public Hl7.Fhir.Model.FhirUri UrlElement
             {
-                get { return _RetrieveUrlElement; }
-                set { _RetrieveUrlElement = value; OnPropertyChanged("RetrieveUrlElement"); }
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _RetrieveUrlElement;
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
             /// Retrieve URL
@@ -637,23 +552,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string RetrieveUrl
+            public string Url
             {
-                get { return RetrieveUrlElement != null ? RetrieveUrlElement.Value : null; }
+                get { return UrlElement != null ? UrlElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      RetrieveUrlElement = null; 
+                      UrlElement = null; 
                     else
-                      RetrieveUrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("RetrieveUrl");
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
                 }
             }
             
             /// <summary>
             /// The selected instance
             /// </summary>
-            [FhirElement("instance", InSummary=true, Order=70)]
+            [FhirElement("instance", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent> Instance
@@ -672,8 +587,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(RetrieveAETitleElement != null) dest.RetrieveAETitleElement = (Hl7.Fhir.Model.Id)RetrieveAETitleElement.DeepCopy();
-                    if(RetrieveUrlElement != null) dest.RetrieveUrlElement = (Hl7.Fhir.Model.FhirUri)RetrieveUrlElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingObjectSelection.InstanceComponent>(Instance.DeepCopy());
                     return dest;
                 }
@@ -693,8 +607,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.Matches(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.Matches(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
                 
                 return true;
@@ -707,9 +620,128 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveAETitleElement, otherT.RetrieveAETitleElement)) return false;
-                if( !DeepComparable.IsExactly(RetrieveUrlElement, otherT.RetrieveUrlElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("FramesComponent")]
+        [DataContract]
+        public partial class FramesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "FramesComponent"; } }
+            
+            /// <summary>
+            /// Frame numbers
+            /// </summary>
+            [FhirElement("frameNumbers", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> FrameNumbersElement
+            {
+                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(); return _FrameNumbersElement; }
+                set { _FrameNumbersElement = value; OnPropertyChanged("FrameNumbersElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Integer> _FrameNumbersElement;
+            
+            /// <summary>
+            /// Frame numbers
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> FrameNumbers
+            {
+                get { return FrameNumbersElement != null ? FrameNumbersElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      FrameNumbersElement = null; 
+                    else
+                      FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("FrameNumbers");
+                }
+            }
+            
+            /// <summary>
+            /// Retrieve URL
+            /// </summary>
+            [FhirElement("url", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UrlElement
+            {
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            
+            /// <summary>
+            /// Retrieve URL
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Url
+            {
+                get { return UrlElement != null ? UrlElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UrlElement = null; 
+                    else
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as FramesComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(FrameNumbersElement.DeepCopy());
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new FramesComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as FramesComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as FramesComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 
                 return true;
             }

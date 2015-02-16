@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// The goal has been met and no further action is needed.
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Activity is planned but no action has yet been taken.
             /// </summary>
-            [EnumLiteral("not started")]
+            [EnumLiteral("not-started")]
             NotStarted,
             /// <summary>
             /// Appointment or other booking has occurred but activity has not yet begun.
@@ -165,12 +165,12 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Activity has been started but is not yet complete.
             /// </summary>
-            [EnumLiteral("in progress")]
+            [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
             /// Activity was started but has temporarily ceased with an expectation of resumption at a future time.
             /// </summary>
-            [EnumLiteral("on hold")]
+            [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
             /// The activities have been completed (more or less) as planned.
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// in progress | achieved | sustaining | cancelled
+            /// in-progress | achieved | sustaining | cancelled
             /// </summary>
             [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus> _StatusElement;
             
             /// <summary>
-            /// in progress | achieved | sustaining | cancelled
+            /// in-progress | achieved | sustaining | cancelled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// not started | scheduled | in progress | on hold | completed | cancelled
+            /// not-started | scheduled | in-progress | on-hold | completed | cancelled
             /// </summary>
             [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> _StatusElement;
             
             /// <summary>
-            /// not started | scheduled | in progress | on hold | completed | cancelled
+            /// not-started | scheduled | in-progress | on-hold | completed | cancelled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
