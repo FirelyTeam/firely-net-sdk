@@ -41,6 +41,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Model
 {
     [InvokeIValidatableObject]
+    [System.Runtime.Serialization.DataContract]
     public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable
     {
         public abstract bool IsExactly(IDeepComparable other);
