@@ -297,14 +297,15 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null) where TResource : Resource, new()
+	    public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, bool? summary = false) where TResource : Resource, new()
         {          
             var collection = typeof(TResource).GetCollectionName();
 
-            return internalHistory(collection, null, since, pageSize);
+            return internalHistory(collection, null, since, pageSize, summary);
         }
 
         /// <summary>
@@ -313,24 +314,25 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The address of the resource to get the history for</param>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, bool? summary = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
 
             var collection = getResourceTypeFromLocation(location);
             var id = getIdFromLocation(location);
 
-            return internalHistory(collection, id, since, pageSize);
+            return internalHistory(collection, id, since, pageSize, summary);
         }
 
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null)
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, bool? summary = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
             Uri uri = new Uri(location, UriKind.Relative);
 
-            return History(uri, since, pageSize);
+            return History(uri, since, pageSize, summary);
         }
 
 
@@ -341,12 +343,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null)
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, bool? summary = false)
         {
-            return internalHistory(null, null, since, pageSize);
+            return internalHistory(null, null, since, pageSize, summary);
         }
 
-        private Bundle internalHistory(string collection = null, string id = null, DateTimeOffset? since = null, int? pageSize = null)
+        private Bundle internalHistory(string collection = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, bool? summary = false)
         {
             RestUrl location = null;
 
@@ -361,6 +363,7 @@ namespace Hl7.Fhir.Rest
 
             if (since != null) location = location.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
             if (pageSize != null) location = location.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.ToString());
+            if (summary != null) location = location.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.ToString());
 
             var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(location.Uri, Endpoint), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
