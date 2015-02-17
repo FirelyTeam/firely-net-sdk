@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
+// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -165,37 +165,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Text of alert
+        /// Partially deaf, Requires easy open caps, No permanent address, etc.
         /// </summary>
         [FhirElement("note", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NoteElement
+        public Hl7.Fhir.Model.CodeableConcept Note
         {
-            get { return _NoteElement; }
-            set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
+            get { return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _NoteElement;
-        
-        /// <summary>
-        /// Text of alert
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Note
-        {
-            get { return NoteElement != null ? NoteElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  NoteElement = null; 
-                else
-                  NoteElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Note");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Note;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -209,7 +190,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Alert.AlertStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
+                if(Note != null) dest.Note = (Hl7.Fhir.Model.CodeableConcept)Note.DeepCopy();
                 return dest;
             }
             else
@@ -232,7 +213,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -248,7 +229,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }

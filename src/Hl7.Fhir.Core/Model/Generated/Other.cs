@@ -43,14 +43,14 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource for non-supported content
     /// </summary>
-    [FhirType("Basic", IsResource=true)]
+    [FhirType("Other", IsResource=true)]
     [DataContract]
-    public partial class Basic : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Other : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Basic; } }
+        public override ResourceType ResourceType { get { return ResourceType.Other; } }
         [NotMapped]
-        public override string TypeName { get { return "Basic"; } }
+        public override string TypeName { get { return "Other"; } }
         
         /// <summary>
         /// Business identifier
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Basic;
+            var dest = other as Other;
             
             if (dest != null)
             {
@@ -160,12 +160,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Basic());
+            return CopyTo(new Other());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Basic;
+            var otherT = other as Other;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Basic;
+            var otherT = other as Other;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

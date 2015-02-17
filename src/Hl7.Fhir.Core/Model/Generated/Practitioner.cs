@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
+// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,156 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Practitioner; } }
         [NotMapped]
         public override string TypeName { get { return "Practitioner"; } }
+        
+        [FhirType("PractitionerPractitionerRoleComponent")]
+        [DataContract]
+        public partial class PractitionerPractitionerRoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PractitionerPractitionerRoleComponent"; } }
+            
+            /// <summary>
+            /// The Organization where the Practitioner performs the roles associated
+            /// </summary>
+            [FhirElement("managingOrganization", InSummary=true, Order=40)]
+            [References("Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+            {
+                get { return _ManagingOrganization; }
+                set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+            
+            /// <summary>
+            /// Roles which this practitioner may perform
+            /// </summary>
+            [FhirElement("role", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Role;
+            
+            /// <summary>
+            /// Specific specialty of the practitioner
+            /// </summary>
+            [FhirElement("specialty", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Specialty
+            {
+                get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+                set { _Specialty = value; OnPropertyChanged("Specialty"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+            
+            /// <summary>
+            /// The period during which the practitioner is authorized to perform in these role(s)
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// The location(s) at which this practitioner provides care
+            /// </summary>
+            [FhirElement("location", InSummary=true, Order=80)]
+            [References("Location")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Location
+            {
+                get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
+                set { _Location = value; OnPropertyChanged("Location"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Location;
+            
+            /// <summary>
+            /// The list of healthcare services that this worker offers at this location of this organization
+            /// </summary>
+            [FhirElement("healthcareService", InSummary=true, Order=90)]
+            [References("HealthcareService")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
+            {
+                get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
+                set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PractitionerPractitionerRoleComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
+                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                    if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PractitionerPractitionerRoleComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PractitionerPractitionerRoleComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+                if( !DeepComparable.Matches(HealthcareService, otherT.HealthcareService)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PractitionerPractitionerRoleComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+                if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("PractitionerQualificationComponent")]
         [DataContract]
@@ -259,13 +409,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("birthDate", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime BirthDateElement
+        public Hl7.Fhir.Model.Date BirthDateElement
         {
             get { return _BirthDateElement; }
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
+        private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
         /// The date and time of birth for the practitioner
@@ -281,7 +431,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   BirthDateElement = null; 
                 else
-                  BirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                  BirthDateElement = new Hl7.Fhir.Model.Date(value);
                 OnPropertyChanged("BirthDate");
             }
         }
@@ -301,79 +451,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
         /// <summary>
-        /// The represented organization
+        /// The list of Roles/Organizations that the Practitioner is associated with
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=160)]
-        [References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Organization;
-        
-        /// <summary>
-        /// Roles which this practitioner may perform
-        /// </summary>
-        [FhirElement("role", InSummary=true, Order=170)]
+        [FhirElement("practitionerRole", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Role
+        public List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent> PractitionerRole
         {
-            get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
-            set { _Role = value; OnPropertyChanged("Role"); }
+            get { if(_PractitionerRole==null) _PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent>(); return _PractitionerRole; }
+            set { _PractitionerRole = value; OnPropertyChanged("PractitionerRole"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Role;
-        
-        /// <summary>
-        /// Specific specialty of the practitioner
-        /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=180)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Specialty
-        {
-            get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
-            set { _Specialty = value; OnPropertyChanged("Specialty"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
-        
-        /// <summary>
-        /// The period during which the practitioner is authorized to perform in these role(s)
-        /// </summary>
-        [FhirElement("period", InSummary=true, Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Period
-        {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _Period;
-        
-        /// <summary>
-        /// The location(s) at which this practitioner provides care
-        /// </summary>
-        [FhirElement("location", Order=200)]
-        [References("Location")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Location
-        {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
-            set { _Location = value; OnPropertyChanged("Location"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Location;
+        private List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent> _PractitionerRole;
         
         /// <summary>
         /// Qualifications obtained by training and certification
         /// </summary>
-        [FhirElement("qualification", Order=210)]
+        [FhirElement("qualification", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
@@ -387,7 +481,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A language the practitioner is able to use in patient communication
         /// </summary>
-        [FhirElement("communication", Order=220)]
+        [FhirElement("communication", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -410,13 +504,9 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.FhirDateTime)BirthDateElement.DeepCopy();
+                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-                if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                if(PractitionerRole != null) dest.PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent>(PractitionerRole.DeepCopy());
                 if(Qualification != null) dest.Qualification = new List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent>(Qualification.DeepCopy());
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
                 return dest;
@@ -443,11 +533,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-            if( !DeepComparable.Matches(Role, otherT.Role)) return false;
-            if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+            if( !DeepComparable.Matches(PractitionerRole, otherT.PractitionerRole)) return false;
             if( !DeepComparable.Matches(Qualification, otherT.Qualification)) return false;
             if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
             
@@ -467,11 +553,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-            if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
-            if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+            if( !DeepComparable.IsExactly(PractitionerRole, otherT.PractitionerRole)) return false;
             if( !DeepComparable.IsExactly(Qualification, otherT.Qualification)) return false;
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
             

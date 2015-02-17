@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
+// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -325,13 +325,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("ifModifiedSince", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString IfModifiedSinceElement
+            public Hl7.Fhir.Model.Instant IfModifiedSinceElement
             {
                 get { return _IfModifiedSinceElement; }
                 set { _IfModifiedSinceElement = value; OnPropertyChanged("IfModifiedSinceElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _IfModifiedSinceElement;
+            private Hl7.Fhir.Model.Instant _IfModifiedSinceElement;
             
             /// <summary>
             /// For managing update contention
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string IfModifiedSince
+            public DateTimeOffset? IfModifiedSince
             {
                 get { return IfModifiedSinceElement != null ? IfModifiedSinceElement.Value : null; }
                 set
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       IfModifiedSinceElement = null; 
                     else
-                      IfModifiedSinceElement = new Hl7.Fhir.Model.FhirString(value);
+                      IfModifiedSinceElement = new Hl7.Fhir.Model.Instant(value);
                     OnPropertyChanged("IfModifiedSince");
                 }
             }
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(IfNoneMatchElement != null) dest.IfNoneMatchElement = (Hl7.Fhir.Model.FhirString)IfNoneMatchElement.DeepCopy();
                     if(IfMatchElement != null) dest.IfMatchElement = (Hl7.Fhir.Model.FhirString)IfMatchElement.DeepCopy();
-                    if(IfModifiedSinceElement != null) dest.IfModifiedSinceElement = (Hl7.Fhir.Model.FhirString)IfModifiedSinceElement.DeepCopy();
+                    if(IfModifiedSinceElement != null) dest.IfModifiedSinceElement = (Hl7.Fhir.Model.Instant)IfModifiedSinceElement.DeepCopy();
                     if(IfNoneExistElement != null) dest.IfNoneExistElement = (Hl7.Fhir.Model.FhirString)IfNoneExistElement.DeepCopy();
                     return dest;
                 }
@@ -519,15 +519,14 @@ namespace Hl7.Fhir.Model
             /// The etag for the resource (if relevant)
             /// </summary>
             [FhirElement("etag", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> EtagElement
+            public Hl7.Fhir.Model.FhirString EtagElement
             {
-                get { if(_EtagElement==null) _EtagElement = new List<Hl7.Fhir.Model.FhirString>(); return _EtagElement; }
+                get { return _EtagElement; }
                 set { _EtagElement = value; OnPropertyChanged("EtagElement"); }
             }
             
-            private List<Hl7.Fhir.Model.FhirString> _EtagElement;
+            private Hl7.Fhir.Model.FhirString _EtagElement;
             
             /// <summary>
             /// The etag for the resource (if relevant)
@@ -535,16 +534,48 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Etag
+            public string Etag
             {
-                get { return EtagElement != null ? EtagElement.Select(elem => elem.Value) : null; }
+                get { return EtagElement != null ? EtagElement.Value : null; }
                 set
                 {
                     if(value == null)
                       EtagElement = null; 
                     else
-                      EtagElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                      EtagElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Etag");
+                }
+            }
+            
+            /// <summary>
+            /// Server's date time modified
+            /// </summary>
+            [FhirElement("lastModified", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Instant LastModifiedElement
+            {
+                get { return _LastModifiedElement; }
+                set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Instant _LastModifiedElement;
+            
+            /// <summary>
+            /// Server's date time modified
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public DateTimeOffset? LastModified
+            {
+                get { return LastModifiedElement != null ? LastModifiedElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LastModifiedElement = null; 
+                    else
+                      LastModifiedElement = new Hl7.Fhir.Model.Instant(value);
+                    OnPropertyChanged("LastModified");
                 }
             }
             
@@ -557,7 +588,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.FhirString)StatusElement.DeepCopy();
                     if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopy();
-                    if(EtagElement != null) dest.EtagElement = new List<Hl7.Fhir.Model.FhirString>(EtagElement.DeepCopy());
+                    if(EtagElement != null) dest.EtagElement = (Hl7.Fhir.Model.FhirString)EtagElement.DeepCopy();
+                    if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.Instant)LastModifiedElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -578,6 +610,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.Matches(EtagElement, otherT.EtagElement)) return false;
+                if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
                 
                 return true;
             }
@@ -591,6 +624,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.IsExactly(EtagElement, otherT.EtagElement)) return false;
+                if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
                 
                 return true;
             }

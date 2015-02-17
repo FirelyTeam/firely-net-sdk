@@ -90,6 +90,7 @@
     <Compile Include="Model\Generated\AppointmentResponse.cs" />
     <Compile Include="Model\Generated\BackboneElement.cs" />
     <Compile Include="Model\Generated\Basic.cs" />
+    <Compile Include="Model\Generated\BodySite.cs" />
     <Compile Include="Model\Generated\Bundle.cs" />
     <Compile Include="Model\Generated\CarePlan2.cs" />
     <Compile Include="Model\Generated\ClaimResponse.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
+    <Compile Include="Rest\BundleEntryExtensions.cs" />
     <Compile Include="Rest\Requester.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
@@ -269,8 +271,6 @@
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
-    <Compile Include="Rest\FhirRequest.cs" />
-    <Compile Include="Rest\FhirResponse.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\RestOperation.cs" />

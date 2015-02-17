@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Feb 16, 2015 14:50+0100 for FHIR v0.4.0
+// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
 //
 
 using Hl7.Fhir.Model;
@@ -993,17 +993,19 @@ namespace Hl7.Fhir.Model
                 new SearchParamDefinition() { Resource = "PharmacyClaim", Name = "priority", Description = @"Processing priority requested", Type = Conformance.SearchParamType.Token, Path = new string[] { "PharmacyClaim.priority", } }, 
                 new SearchParamDefinition() { Resource = "PharmacyClaim", Name = "use", Description = @"The kind of financial resource", Type = Conformance.SearchParamType.Token, Path = new string[] { "PharmacyClaim.use", } }, 
                 new SearchParamDefinition() { Resource = "PharmacyClaim", Name = "identifier", Description = @"The primary identifier of the financial resource", Type = Conformance.SearchParamType.Token, Path = new string[] { "PharmacyClaim.identifier", } }, 
-                new SearchParamDefinition() { Resource = "Practitioner", Name = "organization", Description = @"The identity of the organization the practitioner represents / acts on behalf of", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Practitioner.organization", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "phonetic", Description = @"A portion of either family or given name using some kind of phonetic matching algorithm", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.name", } }, 
-                new SearchParamDefinition() { Resource = "Practitioner", Name = "given", Description = @"A portion of the given name", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.name", } }, 
-                new SearchParamDefinition() { Resource = "Practitioner", Name = "location", Description = @"One of the locations at which this practitioner provides care", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Practitioner.location", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "communication", Description = @"One of the languages that the practitioner can communicate with", Type = Conformance.SearchParamType.Token, Path = new string[] { "Practitioner.communication", } }, 
+                new SearchParamDefinition() { Resource = "Practitioner", Name = "location", Description = @"One of the locations at which this practitioner provides care", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Practitioner.practitionerRole.location", } }, 
+                new SearchParamDefinition() { Resource = "Practitioner", Name = "organization", Description = @"The identity of the organization the practitioner represents / acts on behalf of", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Practitioner.practitionerRole.managingOrganization", } }, 
+                new SearchParamDefinition() { Resource = "Practitioner", Name = "given", Description = @"A portion of the given name", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.name", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "address", Description = @"An address in any kind of address/part", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.address", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "family", Description = @"A portion of the family name", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.name", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "name", Description = @"A portion of either family or given name", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.name", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "telecom", Description = @"The value in any kind of contact", Type = Conformance.SearchParamType.String, Path = new string[] { "Practitioner.telecom", } }, 
+                new SearchParamDefinition() { Resource = "Practitioner", Name = "role", Description = @"The practitioner can perform this role at for the organization", Type = Conformance.SearchParamType.Token, Path = new string[] { "Practitioner.practitionerRole.role", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "gender", Description = @"Gender of the practitioner", Type = Conformance.SearchParamType.Token, Path = new string[] { "Practitioner.gender", } }, 
                 new SearchParamDefinition() { Resource = "Practitioner", Name = "identifier", Description = @"A practitioner's Identifier", Type = Conformance.SearchParamType.Token, Path = new string[] { "Practitioner.identifier", } }, 
+                new SearchParamDefinition() { Resource = "Practitioner", Name = "specialty", Description = @"The practitioner has this specailty at an organization", Type = Conformance.SearchParamType.Token, Path = new string[] { "Practitioner.practitionerRole.specialty", } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "patient", Description = @"The identity of a patient to list procedures  for", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Procedure.patient", } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "date", Description = @"The date the procedure was performed on", Type = Conformance.SearchParamType.Date, Path = new string[] { "Procedure.date", } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "type", Description = @"Type of procedure", Type = Conformance.SearchParamType.Token, Path = new string[] { "Procedure.type", } }, 
