@@ -141,4 +141,18 @@ namespace Hl7.Fhir.Rest
         }
 
     }
+
+
+    public enum Prefer
+    {
+        /// <summary>
+        /// Prefer to receive the full resource in the body after completion of the interaction
+        /// </summary>
+        ReturnRepresentation,
+
+        /// <summary>
+        /// Prefer to not a receive a body after completion of the interaction
+        /// </summary>
+        ReturnMinimal
+    }
 }

@@ -27,111 +27,41 @@ namespace Hl7.Fhir.Rest
 {
     internal class Requester
     {
-        private FhirRequest _request;
+        public Uri BaseUrl { get; internal set; }
 
-        public Requester(Uri baseUri)
+        public bool UseFormatParameter { get; internal set; }
+        public ResourceFormat PreferredFormat { get; internal set; }
+
+        public int Timeout { get; internal set; }           // In miliseconds
+
+        public Action<HttpWebRequest> BeforeRequest { get; internal set; }
+        public Action<WebResponse> AfterRequest { get; internal set; }
+
+
+        public Requester(Uri baseUrl)
         {
-            _request = new FhirRequest();
-            _request.BaseUrl = baseUri;
+            BaseUrl = baseUrl;
+            PreferredFormat = ResourceFormat.Xml;
+            Timeout = 100 * 1000;       // Default timeout is 100 seconds            
         }
 
-        public Requester Post()
+
+        public Bundle.BundleEntryComponent Execute<T>(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect, Prefer bodyPreference) where T : Resource
         {
-            _request.Method = "POST";
-            return this;
-        }
-
-        public Requester Put()
-        {
-            _request.Method = "PUT";
-            return this;
-        }
-
-        public Requester Delete()
-        {
-            _request.Method = "DELETE";
-            return this;
-        }
-
-        public Requester Options()
-        {
-            _request.Method = "OPTIONS";
-            return this;
-        }
-
-        public Requester At(Uri location)
-        {
-            _request.Path = location;
-            return this;
-        }
-
-        public Requester Using(ResourceFormat format)
-        {
-            _request.Format = format;
-            return this;
-        }
-
-        public Requester WithBody(Resource resource)
-        {
-            _request.SetBody(resource);
-            return this;
-        }
-
-        public Requester WithMeta(Meta meta, ResourceFormat format)
-        {
-            _request.SetMeta(meta);
-            return this;
-        }
-
-        private List<HttpStatusCode> _expected = new List<HttpStatusCode>();
-
-        public Requester Expect(HttpStatusCode code)
-        {
-            _expected.Add(code);
-            return this;
-        }
-
-        public Resource FetchResource<T>(ResourceFormat format) where T:Resource
-        {
-            return doRequest<T>(_request, _expected, resp => resp.BodyAsResource<T>());
-        }
-
-        public ResourceIdentity FetchIdentity(ResourceFormat format)
-        {
-        }
-
-        public Meta FetchMeta(ResourceFormat format)
-        {
-        }
-
-        private T doRequest<T>(Func<FhirResponse, T> onSuccess)
-        {
-            _request.UseFormatParameter = this.UseFormatParam;
-            var response = _request.GetResponse(PreferredFormat);
-
-            LastResponseDetails = response;
-
-            if (success.Contains(response.Result))
-                return onSuccess(response);
+            var response = doRequest(interaction, bodyPreference); 
+            
+            if (expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
+            {
+                return response;
+            }
             else
             {
+                //TODO: Handle 304 Not Modified
+
                 // Try to parse the body as an OperationOutcome resource, but it is no
                 // problem if it's something else, or there is no parseable body at all
 
-                OperationOutcome outcome = null;
-
-                try
-                {
-                    outcome = response.BodyAsResource<OperationOutcome>();
-                }
-                catch
-                {
-                    // failed, so the body does not contain an OperationOutcome.
-                    // Put the raw body as a message in the OperationOutcome as a fallback scenario
-                    var body = response.BodyAsString();
-                    if (!String.IsNullOrEmpty(body))
-                        outcome = OperationOutcome.ForMessage(body);
-                }
+ 
 
                 if (outcome != null)
                 {
@@ -156,6 +86,38 @@ namespace Hl7.Fhir.Rest
                     throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
                 }
             }
+        }
+  
+
+        private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction, Prefer bodyPreference)
+        {
+            var request = interaction.ToHttpRequest(bodyPreference, PreferredFormat, UseFormatParameter);
+
+#if !PORTABLE45
+            request.Timeout = Timeout;
+#endif
+
+            if (BeforeRequest != null) BeforeRequest(request);
+
+            // Make sure the HttpResponse gets disposed!
+            // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
+            using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
+            {
+                try
+                {
+                    fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
+                    if (AfterRequest != null) AfterRequest(fhirResponse, webResponse);
+                }
+                catch (AggregateException ae)
+                {
+                    if (ae.GetBaseException() is WebException)
+                    {
+                    }
+                    throw ae.GetBaseException();
+                }
+            }
+
+            return fhirResponse;
         }
     }
 }
