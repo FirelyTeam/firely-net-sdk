@@ -46,48 +46,22 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Bundle.BundleEntryComponent Execute<T>(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect, Prefer bodyPreference) where T : Resource
+        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect, Prefer bodyPreference)
         {
-            var response = doRequest(interaction, bodyPreference); 
-            
+            //TODO: Handle 304 Not Modified
+
+            var response = doRequest(interaction, bodyPreference);
+
             if (expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
-            {
                 return response;
-            }
             else
             {
-                //TODO: Handle 304 Not Modified
-
-                // Try to parse the body as an OperationOutcome resource, but it is no
-                // problem if it's something else, or there is no parseable body at all
-
- 
-
-                if (outcome != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-                    if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
-                    {
-                        System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
-                        System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-                    }
-
-                    foreach (var issue in outcome.Issue)
-                    {
-                        System.Diagnostics.Debug.WriteLine("	" + issue.Details);
-                    }
-                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-                    throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
-                }
-                else
-                {
-                    throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
-                }
+                reportFailure(response);        // will always throw()
+                return null;    // unreachable code
             }
         }
-  
+
+
 
         private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction, Prefer bodyPreference)
         {
@@ -105,19 +79,57 @@ namespace Hl7.Fhir.Rest
             {
                 try
                 {
-                    fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
-                    if (AfterRequest != null) AfterRequest(fhirResponse, webResponse);
+                    var response = webResponse.ToBundleEntry();
+                    if (AfterRequest != null) AfterRequest(webResponse);
+
+                    return response;
                 }
                 catch (AggregateException ae)
                 {
+                    //EK: This code looks weird. Is this correct?
                     if (ae.GetBaseException() is WebException)
                     {
                     }
                     throw ae.GetBaseException();
                 }
             }
+        }
 
-            return fhirResponse;
+
+        private static void reportFailure(Bundle.BundleEntryComponent response)
+        {
+            if (response.Resource != null)
+            {
+                if (response.Resource is OperationOutcome)
+                {
+                    var outcome = (OperationOutcome)response.Resource;
+
+                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+
+                    if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
+                    {
+                        System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
+                        System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+                    }
+
+                    if (outcome.Issue != null)
+                    {
+                        foreach (var issue in outcome.Issue)
+                        {
+                            System.Diagnostics.Debug.WriteLine("	" + issue.Details);
+                        }
+
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+
+                    throw new FhirOperationException("Operation failed with status code " + response.TransactionResponse.Status, outcome);
+                }
+                else
+                    throw new FhirOperationException(String.Format("Operation failed with status code {0}, but returned a {1} resource", response.TransactionResponse.Status, response.Resource.GetType().Name));
+            }
+            else
+                throw new FhirOperationException("Operation failed with status code " + response.TransactionResponse.Status);
         }
     }
 }
