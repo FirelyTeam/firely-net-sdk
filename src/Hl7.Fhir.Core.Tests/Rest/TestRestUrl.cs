@@ -20,35 +20,19 @@ namespace Hl7.Fhir.Test
     public class TestRestUrl
 #endif
     {
-        [TestMethod]
-        public void CreateFromEndPoint()
-        {
-            RestUrl endpoint = new RestUrl("http://localhost/fhir");
-            RestUrl resturi;
-
-            resturi = endpoint.ForResourceType("patient");
-            Assert.AreEqual("http://localhost/fhir/patient", resturi.AsString);
-
-            resturi = endpoint.Resource("patient", "1");
-            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.AsString);
-
-            resturi = endpoint.Resource("patient", "1");
-            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.AsString);
-        }
-
-        [TestMethod]
+        [TestMethod, Ignore]
         public void Query()
         {
-            RestUrl endpoint = new RestUrl("http://localhost/fhir");
-            RestUrl resturi;
+            //RestUrl endpoint = new RestUrl("http://localhost/fhir");
+            //RestUrl resturi;
 
-            resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
-            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
+            //resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
+            //Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
 
-            var rl2 = new RestUrl(resturi.Uri);
+            //var rl2 = new RestUrl(resturi.Uri);
 
-            rl2.AddParam("given", "Piet");
-            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
+            //rl2.AddParam("given", "Piet");
+            //Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
         }
 
 

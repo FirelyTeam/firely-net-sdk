@@ -27,33 +27,53 @@ namespace Hl7.Fhir.Rest
 {
     internal class Requester
     {
-        public Uri BaseUrl { get; internal set; }
+        public Uri BaseUrl { get; private set; }
 
-        public bool UseFormatParameter { get; internal set; }
-        public ResourceFormat PreferredFormat { get; internal set; }
+        public bool UseFormatParameter { get; set; }
+        public ResourceFormat PreferredFormat { get; set; }
+        public int Timeout { get; set; }           // In miliseconds
+        public Prefer Prefer { get; set; }
 
-        public int Timeout { get; internal set; }           // In miliseconds
+        public Action<HttpWebRequest> BeforeRequest { get; set; }
+        public Action<WebResponse> AfterRequest { get; set; }
 
-        public Action<HttpWebRequest> BeforeRequest { get; internal set; }
-        public Action<WebResponse> AfterRequest { get; internal set; }
+        public Bundle.BundleEntryTransactionResponseComponent LastResult { get; private set; }
+
 
 
         public Requester(Uri baseUrl)
         {
             BaseUrl = baseUrl;
+            UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
+            Prefer = Rest.Prefer.ReturnRepresentation;
         }
 
 
-        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect, Prefer bodyPreference)
+        public TResource Execute<TResource>(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect) where TResource : Resource
         {
             //TODO: Handle 304 Not Modified
 
-            var response = doRequest(interaction, bodyPreference);
-
+            var response = doRequest(interaction);
+            
             if (expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
-                return response;
+            {
+                LastResult = response.TransactionResponse;
+                
+                bool noBody = response.TransactionResponse.Status == HttpStatusCode.NoContent.ToString();
+                if (!noBody && Prefer == Rest.Prefer.ReturnRepresentation && response.Resource == null)
+                {
+                    if (response.Resource == null) throw Error.InvalidOperation("Operation {0} on {1} expected a body but none was returned", interaction.Transaction.Method,
+                                        interaction.Transaction.Url);
+                }
+                
+                if (response.Resource != null && !response.Resource.GetType().CanBeTreatedAsType(typeof(TResource)))
+                        throw Error.InvalidOperation("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
+                            interaction.Transaction.Url, typeof(TResource).Name, response.Resource.GetType().Name);
+
+                return (TResource)response.Resource;
+            }
             else
             {
                 reportFailure(response);        // will always throw()
@@ -62,10 +82,15 @@ namespace Hl7.Fhir.Rest
         }
 
 
-
-        private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction, Prefer bodyPreference)
+        public TResource Execute<TResource>(Bundle.BundleEntryComponent interaction, HttpStatusCode expect) where TResource: Resource
         {
-            var request = interaction.ToHttpRequest(bodyPreference, PreferredFormat, UseFormatParameter);
+            return Execute<TResource>(interaction, new[] { expect });
+        }
+
+
+        private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction)
+        {
+            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter);
 
 #if !PORTABLE45
             request.Timeout = Timeout;

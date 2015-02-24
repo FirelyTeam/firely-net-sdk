@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
             }
             set
             {
-                if (Meta == null) Meta = new ResourceMetaComponent();
+                if (Meta == null) Meta = new Meta();
                 Meta.VersionId = value;
             }
         }

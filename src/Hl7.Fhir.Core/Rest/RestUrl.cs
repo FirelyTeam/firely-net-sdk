@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Rest
         public RestUrl(RestUrl url) : this(url.Uri)
         {
         }
+
         public RestUrl(Uri url)
         {
             if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
@@ -36,6 +37,7 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(_builder.Query))
                 _parameters = UriParamList.FromQueryString(_builder.Query); 
         }
+
         public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
         {
         }

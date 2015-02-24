@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Model
             if (identity == null) throw Error.ArgumentNull("reference");
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 
-            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || (be.Deleted == null)));
+            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || (be.Resource != null && be.Resource.Meta != null && be.Resource.Meta.Deleted != true)));
         }
 
 
@@ -125,23 +125,10 @@ namespace Hl7.Fhir.Model
 
         public static ResourceIdentity GetResourceLocation(this Bundle.BundleEntryComponent entry, string baseUrl = null)
         {
+            if (entry.Resource == null) return null;
+
             var url = entry.Base ?? baseUrl;
-            ResourceIdentity result;
-
-            if (entry.Deleted != null)
-                result = ResourceIdentity.Build(entry.Deleted.Type, entry.Deleted.ResourceId, entry.Deleted.VersionId);
-            else
-            {
-                var versionId = entry.Resource.Meta != null && entry.Resource.Meta.VersionId != null ?
-                    entry.Resource.Meta.VersionId : null;
-
-                result = ResourceIdentity.Build(entry.Resource.TypeName, entry.Resource.Id, versionId);
-            }
-
-            if (url != null)
-                return result.WithBase(url);
-            else
-                return result;
+            return entry.Resource.ResourceIdentity(url);
         }
     }
 

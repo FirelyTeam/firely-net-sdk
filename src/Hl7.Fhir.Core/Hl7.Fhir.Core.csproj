@@ -274,9 +274,8 @@
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
-    <Compile Include="Rest\RestOperation.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Rest\InteractionBuilder.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />

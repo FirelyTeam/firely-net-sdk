@@ -42,18 +42,20 @@ namespace Hl7.Fhir.Rest
             }
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
-            result.Meta = new Resource.ResourceMetaComponent();
+            result.Meta = new Meta();
             result.Meta.LastUpdated = DateTimeOffset.Now;
             result.Entry = new List<Bundle.BundleEntryComponent>();
+
             foreach (var entry in bundle.Entry)
             {
                 if (entry.Resource != null)
                 {
-                    Resource newEntry = client.Read<Resource>(entry.GetResourceLocation());
-                    result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });
+                    if (!entry.Resource.Meta.Deleted != true)
+                    {
+                        Resource newEntry = client.Read<Resource>(entry.GetResourceLocation());
+                        result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });
+                    }
                 }
-                else if (entry.Deleted != null)
-                    result.Entry.Add(entry);
                 else
                     throw Error.NotSupported("Cannot refresh an entry of type {0}", messageArgs: entry.GetType().Name);
             }

@@ -21,17 +21,6 @@ namespace Hl7.Fhir.Test
 #endif
     {
         [TestMethod]
-        public void TestMcKessonBug()
-        {
-            var client = new FhirClient("http://bp.oridashi.com.au");
-            var b = client.Search("Observation");
-            //var id1 = b.ResourceIdentity();
-            var obs = b.Entry[0].Resource as Observation;
-            var id2 = obs.ResourceIdentity();
-        }
-
-
-        [TestMethod]
         public void TestBuild()
         {
             var id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3");

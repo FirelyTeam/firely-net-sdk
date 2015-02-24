@@ -184,15 +184,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             var rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Condition");
             Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is Profile);
+            Assert.IsTrue(rs is StructureDefinition);
 
             rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/ValueSet");
             Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is Profile);
+            Assert.IsTrue(rs is StructureDefinition);
 
             var dt = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Money");
             Assert.IsNotNull(rs);
-            Assert.IsTrue(dt is Profile);
+            Assert.IsTrue(dt is StructureDefinition);
         }
 
 

@@ -29,9 +29,9 @@ namespace Hl7.Fhir.Tests.Model
         {
             var testBundle = new Bundle();
 
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Resource.ResourceMetaComponent { VersionId = "v2" } } });
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Resource.ResourceMetaComponent { VersionId = "v3" } } });
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Deleted = new Bundle.BundleEntryDeletedComponent { ResourceId = "1234", Type = "Patient", VersionId = "v4" } });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v2" } } });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v3" } } });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v4", Deleted = true } } });
 
             testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "5678" }, Base = "http://server1.com/fhir" });
 
