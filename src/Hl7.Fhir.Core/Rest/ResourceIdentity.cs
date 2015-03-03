@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Creates an absolute urn representing the Resource identitity outside of a REST context
         /// </summary>
-        /// <param name="baseUrn">An urn, either an urn:oid: or urn:uuid:</param>
+        /// <param name="urnType">Type of urn to create, either OID or UUID</param>
         /// <param name="id">The resource's logical id</param>
         /// <returns></returns>
         public static ResourceIdentity Build(UrnType urnType, string id)
@@ -190,9 +190,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Creates an local id that can be the target of an anchored reference to a contained resource elative url representing a Resource identitity for a given resource type, id and optional version.
         /// </summary>
-        /// <param name="collection">Name of the collection (resource type)</param>
         /// <param name="id">The resource's logical id</param>
-        /// <param name="vid">The resource's version id</param>
         /// <returns></returns>
         public static ResourceIdentity Build(string id)
         {
@@ -448,7 +446,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Relocate an absolute identity to a new base, or make a relative identity absolute to a base
         /// </summary>
-        /// <param name="endpoint"></param>
+        /// <param name="baseUri"></param>
         /// <returns></returns>
         public ResourceIdentity WithBase(string baseUri)
         {

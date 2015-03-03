@@ -99,6 +99,8 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
         /// Resource url.</param>
+        /// <param name="ifNoneMatch">The (weak) ETag to use in a conditional read. Optional.</param>
+        /// <param name="ifModifiedSince">Last modified since date in a conditional read. Optional.</param>
         /// <typeparam name="TResource">The type of resource to read. Resource or DomainResource is allowed if exact type is unknown</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
@@ -138,6 +140,8 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="location">The url of the Resource to fetch as a string. This can be a Resource id url or a version-specific
         /// Resource url.</param>
+        /// <param name="ifNoneMatch">The (weak) ETag to use in a conditional read. Optional.</param>
+        /// <param name="ifModifiedSince">Last modified since date in a conditional read. Optional.</param>
         /// <typeparam name="TResource">The type of resource to read. Resource or DomainResource is allowed if exact type is unknown</typeparam>
         /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
@@ -229,8 +233,6 @@ namespace Hl7.Fhir.Rest
         /// Create a resource on a FHIR endpoint
         /// </summary>
         /// <param name="resource">The resource instance to create</param>
-        /// <param name="tags">Optional. List of Tags to add to the created instance.</param>
-        /// <param name="refresh">Optional. When true, fetches the newly created resource from the server.</param>
         /// <returns>A ResourceEntry containing the metadata (id, selflink) associated with the resource as created on the server, or an exception if the create failed.</returns>
         /// <typeparam name="TResource">The type of resource to create</typeparam>
         public TResource Create<TResource>(TResource resource) where TResource : Resource
@@ -246,7 +248,6 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Get a conformance statement for the system
         /// </summary>
-        /// <param name="useOptionsVerb">If true, uses the Http OPTIONS verb to get the conformance, otherwise uses the /metadata endpoint</param>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
         public Conformance Conformance()
         {
@@ -258,7 +259,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Retrieve the version history for a specific resource type
         /// </summary>
-        /// <param name="resourceType">The type of Resource to get the history for</typeparam>
+        /// <param name="resourceType">The type of Resource to get the history for</param>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
@@ -298,6 +299,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
         public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
@@ -397,7 +399,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
         /// </summary>
-        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.
+        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(Uri url)
@@ -411,7 +413,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
         /// </summary>
-        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.
+        /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(string url)
@@ -615,8 +617,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
-        /// <param name="request">The request as it is about to be sent to the server</param>
-        /// <param name="body">Body of the request for POST, PUT, etc</param>
+        /// <param name="rawRequest">The request as it is about to be sent to the server</param>
         protected virtual void BeforeRequest(HttpWebRequest rawRequest) 
         {
             // Default implementation: call event
@@ -627,8 +628,7 @@ namespace Hl7.Fhir.Rest
         /// Inspect the HttpWebResponse as it came back from the server 
         /// </summary>
         /// <param name="webResponse"></param>
-        /// <param name="fhirResponse"></param>
-        protected virtual void AfterResponse(WebResponse webResponse )
+        protected virtual void AfterResponse(WebResponse webResponse)
         {
             // Default implementation: call event
             if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse));

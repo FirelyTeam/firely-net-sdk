@@ -161,8 +161,6 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Builds a query string based on a set of key,value pairs
         /// </summary>
-        /// <param name="pars"></param>
-        /// <returns></returns>
         public string ToQueryString()
         {
             StringBuilder result = new StringBuilder();

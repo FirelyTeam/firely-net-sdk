@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Searches for a parameter with the given name, and returns the matching parameter(s)
         /// </summary>
-        /// <param name="key">The name of the parameter</param>
+        /// <param name="name">The name of the parameter</param>
         /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
         public IEnumerable<ParametersParameterComponent> Get(string name, bool matchPrefix = false)
         {
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Searches for a parameter with the given name, and returns the matching parameter(s)
         /// </summary>
-        /// <param name="key">The name of the parameter</param>
+        /// <param name="name">The name of the parameter</param>
         /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
         public ParametersParameterComponent GetSingle(string name, bool matchPrefix = false)
         {

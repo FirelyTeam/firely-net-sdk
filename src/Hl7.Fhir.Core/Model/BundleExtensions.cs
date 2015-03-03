@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         /// Filter all ResourceEntries that have a given tag.
         /// </summary>
         /// <typeparam name="T">Type of Resource to filter</typeparam>
-        /// <param name="res">List of resources to filter on</param>
+        /// <param name="entries">List of resources to filter on</param>
         /// <param name="tag">Tag to filter Resources on</param>
         /// <returns>A list of typed ResourceEntries having the given tag, or an empty list if none were found.</returns>
         public static IEnumerable<T> ByTag<T>(this IEnumerable<Resource> entries, Coding tag) where T : Resource, new()
