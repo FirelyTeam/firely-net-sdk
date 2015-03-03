@@ -20,9 +20,19 @@ namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
-        public static object ConvertTo(this object value, Type to)
+        internal static T ConvertTo<T>(this object value)
+        {
+            return (T)Convert(value, typeof(T));
+        }
+
+        internal static object ConvertTo(this object value, Type to)
         {
             return Convert(value, to);            
+        }
+
+        public static T Convert<T>(object value)
+        {
+            return value.ConvertTo<T>();
         }
 
         public static object Convert(object value, Type to)
@@ -145,12 +155,6 @@ namespace Hl7.Fhir.Serialization
 
             throw Error.NotSupported("Cannot convert string value '{0}' to a {1}", value, to.Name);
         }
-
-        public static T ConvertTo<T>(this object value)
-        {
-            return (T)Convert(value,typeof(T));
-        }
-
 
 
         public static bool CanConvert(Type type)
