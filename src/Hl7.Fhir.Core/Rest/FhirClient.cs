@@ -332,14 +332,13 @@ namespace Hl7.Fhir.Rest
         /// <param name="bundle">The bundled creates, updates and delted</param>
         /// <returns>A bundle as returned by the server after it has processed the transaction, or null
         /// if an error occurred.</returns>
-        //public Bundle Transaction(Bundle bundle)
-        //{
-        //    if (bundle == null) throw new ArgumentNullException("bundle");
+        public Bundle Transaction(Bundle bundle)
+        {
+            if (bundle == null) throw new ArgumentNullException("bundle");
 
-        //    var req = createFhirRequest(Endpoint, "POST");
-        //    req.SetBody(bundle, PreferredFormat);
-        //    return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
-        //}
+            var tx = new InteractionBuilder(Endpoint).Transaction(bundle).Build();
+            return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
+        }
 
 
         public Resource WholeSystemOperation(string operationName, Parameters parameters = null)

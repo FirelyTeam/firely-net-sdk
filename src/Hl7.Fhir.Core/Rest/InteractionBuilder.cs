@@ -238,7 +238,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-      
 
+        public IBuilder Transaction(Bundle transaction)
+        {
+            _result.Transaction.Method = Bundle.HTTPVerb.POST;
+            _result.Resource = transaction;
+
+            return this;
+        }
     }
 }
