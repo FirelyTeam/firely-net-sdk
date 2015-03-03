@@ -111,11 +111,11 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull("location");
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
-            Bundle.BundleEntryComponent tx;
+            Bundle tx;
 
             if (!id.HasVersion)
             {
-                var ri = new InteractionBuilder(Endpoint).Read(id.ResourceType, id.Id);
+                var ri = new TransactionBuilder(Endpoint).Read(id.ResourceType, id.Id);
 
                 if (ifNoneMatch != null) 
                     tx = ri.IfNoneMatch(ifNoneMatch).Build();
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                tx = new InteractionBuilder(Endpoint).VRead(id.ResourceType, id.Id, id.VersionId).Build();
+                tx = new TransactionBuilder(Endpoint).VRead(id.ResourceType, id.Id, id.VersionId).Build();
             }
 
             return _requester.Execute<TResource>(tx, HttpStatusCode.OK);
@@ -171,14 +171,13 @@ namespace Hl7.Fhir.Rest
             if (resource.Id == null) throw Error.Argument("resource", "Resource needs a non-null Id to send the update to");
 
             resource.ResourceBase = Endpoint;
-            var id = resource.ResourceIdentity();
 
-            var upd = new InteractionBuilder(Endpoint).Update(id.ResourceType, id.Id, resource);
-            Bundle.BundleEntryComponent tx;
+            var upd = new TransactionBuilder(Endpoint).Update(resource.Id, resource);
+            Bundle tx;
 
             // Supply the version we are updating if we use version-aware updates.
             if (versionAware && resource.HasVersionId)
-                tx = upd.IfMatch(id.VersionId).Build();
+                tx = upd.IfMatch(resource.VersionId).Build();
             else 
                 tx = upd.Build();
 
@@ -201,7 +200,7 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull("location");
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
-            var tx = new InteractionBuilder(Endpoint).Delete(id.ResourceType, id.Id).Build();
+            var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).Build();
 
             _requester.Execute<Resource>(tx, HttpStatusCode.NoContent);
 
@@ -239,8 +238,7 @@ namespace Hl7.Fhir.Rest
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             
-            var id = resource.ResourceIdentity();
-            var tx = new InteractionBuilder(Endpoint).Create(id.ResourceType, resource).Build();
+            var tx = new TransactionBuilder(Endpoint).Create(resource).Build();
 
             return _requester.Execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -251,7 +249,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
         public Conformance Conformance()
         {
-            var tx = new InteractionBuilder(Endpoint).Conformance().Build();          
+            var tx = new TransactionBuilder(Endpoint).Conformance().Build();          
             return _requester.Execute<Conformance>(tx, HttpStatusCode.OK);
         }
 
@@ -309,14 +307,14 @@ namespace Hl7.Fhir.Rest
 
         private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
         {
-            IHistoryBuilder history;
+            IHistoryEntryBuilder history;
 
             if(resourceType == null)
-                history = new InteractionBuilder(Endpoint).ServerHistory();
+                history = new TransactionBuilder(Endpoint).ServerHistory();
             else if(id == null)
-                history = new InteractionBuilder(Endpoint).CollectionHistory(resourceType);
+                history = new TransactionBuilder(Endpoint).CollectionHistory(resourceType);
             else
-                history = new InteractionBuilder(Endpoint).ResourceHistory(resourceType,id);
+                history = new TransactionBuilder(Endpoint).ResourceHistory(resourceType,id);
 
             if (since != null) history = history.Since(since.Value);
             if (pageSize != null) history = history.PageSize(pageSize.Value);
@@ -336,7 +334,7 @@ namespace Hl7.Fhir.Rest
         {
             if (bundle == null) throw new ArgumentNullException("bundle");
 
-            var tx = new InteractionBuilder(Endpoint).Transaction(bundle).Build();
+            var tx = new TransactionBuilder(Endpoint).Transaction(bundle).Build();
             return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
         }
 
@@ -379,14 +377,14 @@ namespace Hl7.Fhir.Rest
         {
             if (parameters == null) parameters = new Parameters();
 
-            Bundle.BundleEntryComponent tx;
+            Bundle tx;
 
             if (type == null)
-                tx = new InteractionBuilder(Endpoint).ServerOperation(operationName, parameters).Build();
+                tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters).Build();
             else if (id == null)
-                tx = new InteractionBuilder(Endpoint).TypeOperation(type, operationName, parameters).Build();
+                tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters).Build();
             else
-                tx = new InteractionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters).Build();
+                tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters).Build();
 
             return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
         }
@@ -405,7 +403,7 @@ namespace Hl7.Fhir.Rest
         {
             if (url == null) throw Error.ArgumentNull("url");
 
-            var tx = InteractionBuilder.Get(url);
+            var tx = new TransactionBuilder(Endpoint).Get(url).Build();
             return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
         }
 

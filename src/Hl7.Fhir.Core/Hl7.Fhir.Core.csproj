@@ -249,6 +249,7 @@
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
     <Compile Include="Rest\HttpToEntryExtensions.cs" />
+    <Compile Include="Rest\IInteractionBuilder.cs" />
     <Compile Include="Rest\Requester.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
@@ -276,7 +277,7 @@
     <Compile Include="Rest\HttpUtil.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\RestUrl.cs" />
-    <Compile Include="Rest\InteractionBuilder.cs" />
+    <Compile Include="Rest\TransactionBuilder.cs" />
     <Compile Include="Rest\SystemNetMimeContentType.cs" />
     <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Serialization\ComplexTypeWriter.cs" />

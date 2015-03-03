@@ -51,9 +51,10 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TResource Execute<TResource>(Bundle.BundleEntryComponent interaction, IEnumerable<HttpStatusCode> expect) where TResource : Resource
+        public TResource Execute<TResource>(Bundle transaction, IEnumerable<HttpStatusCode> expect) where TResource : Resource
         {
             //TODO: Handle 304 Not Modified
+            var interaction = transaction.Entry.First();
 
             var response = doRequest(interaction);
             
@@ -82,9 +83,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TResource Execute<TResource>(Bundle.BundleEntryComponent interaction, HttpStatusCode expect) where TResource: Resource
+        public TResource Execute<TResource>(Bundle transaction, HttpStatusCode expect) where TResource: Resource
         {
-            return Execute<TResource>(interaction, new[] { expect });
+            return Execute<TResource>(transaction, new[] { expect });
         }
 
 
