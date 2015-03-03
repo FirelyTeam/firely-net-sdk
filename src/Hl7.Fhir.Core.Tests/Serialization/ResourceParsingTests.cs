@@ -61,6 +61,20 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
+
+        [TestMethod]
+        public void AcceptNsStuffOnElements()
+        {
+            var xml = "<ValueSet xmlns=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\" value=\"...\"/></ValueSet>";
+
+            FhirParser.ParseResourceFromXml(xml);
+
+            SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
+
+            Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
+        }
+         
+
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
