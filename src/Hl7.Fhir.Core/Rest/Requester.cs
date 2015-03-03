@@ -68,10 +68,15 @@ namespace Hl7.Fhir.Rest
                     if (response.Resource == null) throw Error.InvalidOperation("Operation {0} on {1} expected a body but none was returned", interaction.Transaction.Method,
                                         interaction.Transaction.Url);
                 }
-                
+
                 if (response.Resource != null && !response.Resource.GetType().CanBeTreatedAsType(typeof(TResource)))
+                {
+                    if (response.Resource is OperationOutcome)
+                        reportFailure(response);
+                    else
                         throw Error.InvalidOperation("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
                             interaction.Transaction.Url, typeof(TResource).Name, response.Resource.GetType().Name);
+                }
 
                 return (TResource)response.Resource;
             }

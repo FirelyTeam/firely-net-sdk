@@ -56,17 +56,13 @@ namespace Hl7.Fhir.Rest
                 {
                     var bodyText = decodeBody(body, charEncoding);
 
-                    bool isResource = false;
-                    var resource = tryParseResource(bodyText, contentType, out isResource);
+                    bool success = false;
+                    var resource = tryParseResource(bodyText, contentType, out success);
 
-                    if (isResource)
-                    {
-                        result.Resource = resource;
-                        if (result.TransactionResponse.Location != null)
-                            result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
-                    }
-                    else
-                        result.Resource = OperationOutcome.ForMessage(bodyText);
+                    // tryParseResource will create an OperationOutcome if success == false
+                    result.Resource = resource;
+                    if (result.TransactionResponse.Location != null)
+                        result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
                 }
             }
 
@@ -131,27 +127,35 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static Resource tryParseResource(string bodyText, string contentType, out bool isResource)
+        private static Resource tryParseResource(string bodyText, string contentType, out bool success)
         {           
             Resource result= null;
 
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
-         
+
+            // Special case...this isn't even xml or json...probably some diagnostic text or html sent
+            // by the server. Package in an OperationOutcome
+            if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
+            {
+                success = false;
+                return OperationOutcome.ForMessage(bodyText);
+            }
+
             try
             {
                 if(fhirType == ResourceFormat.Json)
                     result = (Resource)FhirParser.ParseFromJson(bodyText);
                 else
-                    result = (Resource)FhirParser.ParseFromJson(bodyText);
+                    result = (Resource)FhirParser.ParseFromXml(bodyText);
 
-                isResource = true;
+                success = true;
+                return result;
             }
-            catch(FormatException)
+            catch(FormatException exc)
             {
-                isResource = false;
+                success = false;
+                return OperationOutcome.ForException(exc);
             }
-
-            return result;
         }
 
 

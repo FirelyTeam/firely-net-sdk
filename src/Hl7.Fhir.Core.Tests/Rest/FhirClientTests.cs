@@ -138,41 +138,41 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
-        [TestMethod, TestCategory("FhirClient"), Ignore]
+        [TestMethod, TestCategory("FhirClient")]
         public void Search()
         {
-            //FhirClient client = new FhirClient(testEndpoint);
-            //Bundle result;
+            FhirClient client = new FhirClient(testEndpoint);
+            Bundle result;
 
-            //result = client.Search<DiagnosticReport>();
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
+            result = client.Search<DiagnosticReport>();
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
-            //result = client.Search<DiagnosticReport>(pageSize: 10);
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Entry.Count <= 10);
+            result = client.Search<DiagnosticReport>(pageSize: 10);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count <= 10);
 
-            //var withSubject =
-            //    result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
-            //Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
+            var withSubject =
+                result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
+            Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
 
-            //ResourceIdentity ri = withSubject.ResourceIdentity();
+            ResourceIdentity ri = withSubject.ResourceIdentity();
 
-            //result = client.SearchById<DiagnosticReport>(ri.Id,
-            //            includes: new string[] { "DiagnosticReport.subject" });
-            //Assert.IsNotNull(result);
+            result = client.SearchById<DiagnosticReport>(ri.Id,
+                        includes: new string[] { "DiagnosticReport.subject" });
+            Assert.IsNotNull(result);
 
-            //Assert.AreEqual(2, result.Entry.Count);  // should have subject too
+            Assert.AreEqual(2, result.Entry.Count);  // should have subject too
 
-            //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
-            //            typeof(DiagnosticReport).GetCollectionName()));
-            //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
-            //            typeof(Patient).GetCollectionName()));
+            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
+                        typeof(DiagnosticReport).GetCollectionName()));
+            Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
+                        typeof(Patient).GetCollectionName()));
 
-            //result = client.Search<Patient>(new string[] { "name=Everywoman", "name=Eve" });
+            result = client.Search<Patient>(new string[] { "name=Everywoman", "name=Eve" });
 
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Entry.Count > 0);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count > 0);
         }
 
 #if PORTABLE45z
@@ -214,69 +214,69 @@ namespace Hl7.Fhir.Tests.Rest
         }
 #endif
 
-        [TestMethod, TestCategory("FhirClient"),Ignore]
+        [TestMethod, TestCategory("FhirClient")]
         public void Paging()
         {
-            //FhirClient client = new FhirClient(testEndpoint);
+            FhirClient client = new FhirClient(testEndpoint);
 
-            //var result = client.Search<DiagnosticReport>(pageSize: 10);
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Entry.Count <= 10);
+            var result = client.Search<DiagnosticReport>(pageSize: 10);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count <= 10);
 
-            //var firstId = result.Entry.First().Resource.Id;
+            var firstId = result.Entry.First().Resource.Id;
 
-            //// Browse forward
-            //result = client.Continue(result);
-            //Assert.IsNotNull(result);
-            //var nextId = result.Entry.First().Resource.Id;
-            //Assert.AreNotEqual(firstId, nextId);
+            // Browse forward
+            result = client.Continue(result);
+            Assert.IsNotNull(result);
+            var nextId = result.Entry.First().Resource.Id;
+            Assert.AreNotEqual(firstId, nextId);
 
-            //// Browse to first
-            //result = client.Continue(result, PageDirection.First);
-            //Assert.IsNotNull(result);
-            //var prevId = result.Entry.First().Resource.Id;
-            //Assert.AreEqual(firstId, prevId);
+            // Browse to first
+            result = client.Continue(result, PageDirection.First);
+            Assert.IsNotNull(result);
+            var prevId = result.Entry.First().Resource.Id;
+            Assert.AreEqual(firstId, prevId);
 
-            //// Forward, then backwards
-            //result = client.Continue(result, PageDirection.Next);
-            //Assert.IsNotNull(result);
-            //result = client.Continue(result, PageDirection.Previous);
-            //Assert.IsNotNull(result);
-            //prevId = result.Entry.First().Resource.Id;
-            //Assert.AreEqual(firstId, prevId);
+            // Forward, then backwards
+            result = client.Continue(result, PageDirection.Next);
+            Assert.IsNotNull(result);
+            result = client.Continue(result, PageDirection.Previous);
+            Assert.IsNotNull(result);
+            prevId = result.Entry.First().Resource.Id;
+            Assert.AreEqual(firstId, prevId);
         }
 
-        [TestMethod, TestCategory("FhirClient"),Ignore]
+        [TestMethod, TestCategory("FhirClient")]
         public void PagingInJson()
         {
-            //FhirClient client = new FhirClient(testEndpoint);
-            //client.PreferredFormat = ResourceFormat.Json;
+            FhirClient client = new FhirClient(testEndpoint);
+            client.PreferredFormat = ResourceFormat.Json;
 
-            //var result = client.Search<DiagnosticReport>(pageSize: 10);
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Entry.Count <= 10);
+            var result = client.Search<DiagnosticReport>(pageSize: 10);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count <= 10);
 
-            //var firstId = result.Entry.First().Resource.Id;
+            var firstId = result.Entry.First().Resource.Id;
 
-            //// Browse forward
-            //result = client.Continue(result);
-            //Assert.IsNotNull(result);
-            //var nextId = result.Entry.First().Resource.Id;
-            //Assert.AreNotEqual(firstId, nextId);
+            // Browse forward
+            result = client.Continue(result);
+            Assert.IsNotNull(result);
+            var nextId = result.Entry.First().Resource.Id;
+            Assert.AreNotEqual(firstId, nextId);
 
-            //// Browse to first
-            //result = client.Continue(result, PageDirection.First);
-            //Assert.IsNotNull(result);
-            //var prevId = result.Entry.First().Resource.Id;
-            //Assert.AreEqual(firstId, prevId);
+            // Browse to first
+            result = client.Continue(result, PageDirection.First);
+            Assert.IsNotNull(result);
+            var prevId = result.Entry.First().Resource.Id;
+            Assert.AreEqual(firstId, prevId);
 
-            //// Forward, then backwards
-            //result = client.Continue(result, PageDirection.Next);
-            //Assert.IsNotNull(result);
-            //result = client.Continue(result, PageDirection.Previous);
-            //Assert.IsNotNull(result);
-            //prevId = result.Entry.First().Resource.Id;
-            //Assert.AreEqual(firstId, prevId);
+            // Forward, then backwards
+            result = client.Continue(result, PageDirection.Next);
+            Assert.IsNotNull(result);
+            result = client.Continue(result, PageDirection.Previous);
+            Assert.IsNotNull(result);
+            prevId = result.Entry.First().Resource.Id;
+            Assert.AreEqual(firstId, prevId);
         }
 
 
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Tests.Rest
 		}
 #endif
 
-        [TestMethod, TestCategory("FhirClient"), Ignore]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void History()
         {
             //DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -413,8 +413,7 @@ namespace Hl7.Fhir.Tests.Rest
             //Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             //Assert.AreEqual(1, history.Entry.Where(entry => entry.Deleted != null).Count());
 
-            //EK: Our server can't yet do this
-            //history = client.WholeSystemHistory(now);
+            //history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
             //Assert.IsNotNull(history);
             //Assert.AreEqual(3, history.Entry.Count());
             //Assert.AreEqual(2, history.Entry.Where(entry => entry.Resource != null).Count());

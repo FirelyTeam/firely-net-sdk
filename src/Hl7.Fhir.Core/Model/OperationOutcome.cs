@@ -15,5 +15,19 @@ namespace Hl7.Fhir.Model
                                     { Severity = severity, Details = message } 
                             } };
         }
+
+        public static OperationOutcome ForException(Exception e, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
+        {
+            var result = OperationOutcome.ForMessage(e.Message);
+            var ie = e.InnerException;
+
+            while(ie != null)
+            {
+                result.Issue.Add(new OperationOutcomeIssueComponent { Details = ie.Message, Severity = IssueSeverity.Information });
+                ie = ie.InnerException;
+            }
+
+            return result;
+        }
     }
 }
