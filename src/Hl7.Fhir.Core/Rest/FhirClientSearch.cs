@@ -27,8 +27,6 @@ namespace Hl7.Fhir.Rest
 {
     public partial class FhirClient
     {
-        public const string SEARCH = "_search";
-
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
         /// </summary>
@@ -37,18 +35,15 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Bundle Search(SearchParams q, string resourceType = null)
         {
-            RestUrl url = new RestUrl(Endpoint);
-
-            url = url.Search(q, resourceType);
-            var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(url.Uri, Endpoint), "GET");
-            return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
+            var tx = new InteractionBuilder(Endpoint).Search(resourceType).Build();
+            return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
         }
 
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
         /// </summary>
         /// <param name="q">The Query resource containing the search parameters</param>
-        /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
+        /// <typeparam name="TResource">The type of resource to filter on</typeparam>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Bundle Search<TResource>(SearchParams q)
             where TResource : Resource
@@ -195,8 +190,8 @@ namespace Hl7.Fhir.Rest
 
             if (continueAt != null)
             {
-                var req = createFhirRequest(HttpUtil.MakeAbsoluteToBase(continueAt, Endpoint), "GET");
-                return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsResource<Bundle>());
+                var tx = InteractionBuilder.Get(continueAt);
+                return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);                
             }
             else
                 return null;

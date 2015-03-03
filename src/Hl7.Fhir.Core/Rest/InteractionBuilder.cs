@@ -215,25 +215,30 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-       
-        //public static RestUrl Search(this RestUrl url, string resourceType=null)
-        //{
-        //   if (resourceType != null)
-        //      return new RestUrl(url).AddPath(resourceType, RestOperation.SEARCH);
-        //    else
-        //      return  new RestUrl(url).AddPath(RestOperation.SEARCH);
-        //}
 
-        //public static RestUrl Search(this RestUrl url, SearchParams q, string resourceType=null)
-        //{
-        //    RestUrl result = Search(url,resourceType);
+        public IBuilder Search(SearchParams q, string resourceType = null)
+        {
+            _result.Transaction.Method = Bundle.HTTPVerb.GET;
+            if (resourceType != null) _path = _path.AddPath(resourceType);
 
-        //    foreach (var par in q.ToUriParamList())
-        //    {
-        //        result.AddParam(par.Item1, par.Item2);
-        //    }
+            foreach (var par in q.ToUriParamList())
+            {
+                _path.AddParam(par.Item1, par.Item2);
+            }
 
-        //    return result;
-        //}
+            return this;
+        }
+
+
+        public IBuilder Search(string resourceType = null)
+        {
+            _result.Transaction.Method = Bundle.HTTPVerb.GET;
+            if (resourceType != null) _path = _path.AddPath(resourceType);
+
+            return this;
+        }
+
+      
+
     }
 }
