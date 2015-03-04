@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Rest
 
             var interaction = entry.Transaction;
             
-            if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.POST))
+            if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
             var location = new RestUrl(interaction.Url);

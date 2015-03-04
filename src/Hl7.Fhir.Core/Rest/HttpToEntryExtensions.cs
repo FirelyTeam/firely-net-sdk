@@ -55,11 +55,8 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = decodeBody(body, charEncoding);
+                    var resource = parseResource(bodyText, contentType);
 
-                    bool success = false;
-                    var resource = tryParseResource(bodyText, contentType, out success);
-
-                    // tryParseResource will create an OperationOutcome if success == false
                     result.Resource = resource;
                     if (result.TransactionResponse.Location != null)
                         result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
@@ -127,18 +124,17 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static Resource tryParseResource(string bodyText, string contentType, out bool success)
+        private static Resource parseResource(string bodyText, string contentType)
         {           
             Resource result= null;
 
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
             // Special case...this isn't even xml or json...probably some diagnostic text or html sent
-            // by the server. Package in an OperationOutcome
+            // by the server.
             if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
             {
-                success = false;
-                return OperationOutcome.ForMessage(bodyText);
+                return OperationOutcome.ForMessage("Encountered non xml/json in body: " + bodyText);
             }
 
             try
@@ -148,13 +144,11 @@ namespace Hl7.Fhir.Rest
                 else
                     result = (Resource)FhirParser.ParseFromXml(bodyText);
 
-                success = true;
                 return result;
             }
             catch(FormatException exc)
             {
-                success = false;
-                return OperationOutcome.ForException(exc);
+                return OperationOutcome.ForException(new FhirOperationException("Body returned by server cannot be parsed", exc));
             }
         }
 

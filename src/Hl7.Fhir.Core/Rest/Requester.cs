@@ -57,33 +57,48 @@ namespace Hl7.Fhir.Rest
             var interaction = transaction.Entry.First();
 
             var response = doRequest(interaction);
+            LastResult = response.TransactionResponse;
             
             if (expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
-            {
-                LastResult = response.TransactionResponse;
-                
+            {                
                 bool noBody = response.TransactionResponse.Status == HttpStatusCode.NoContent.ToString();
                 if (!noBody && Prefer == Rest.Prefer.ReturnRepresentation && response.Resource == null)
                 {
-                    if (response.Resource == null) throw Error.InvalidOperation("Operation {0} on {1} expected a body but none was returned", interaction.Transaction.Method,
-                                        interaction.Transaction.Url);
+                    var message = String.Format("Operation {0} on {1} expected a body but none was returned", interaction.Transaction.Method,
+                                interaction.Transaction.Url);
+                    throw new FhirOperationException(message);
                 }
 
                 if (response.Resource != null && !response.Resource.GetType().CanBeTreatedAsType(typeof(TResource)))
                 {
                     if (response.Resource is OperationOutcome)
-                        reportFailure(response);
+                    {
+                        var outcome = response.Resource as OperationOutcome;
+                        reportOutcome(outcome);
+                        throw new FhirOperationException("Operation succeeded, but returned an OperationOutcome", outcome); 
+                    }
                     else
-                        throw Error.InvalidOperation("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
+                    {
+                        var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
                             interaction.Transaction.Url, typeof(TResource).Name, response.Resource.GetType().Name);
+                        throw new FhirOperationException(message);
+                    }
                 }
 
                 return (TResource)response.Resource;
             }
             else
             {
-                reportFailure(response);        // will always throw()
-                return null;    // unreachable code
+                var message = String.Format("Operation returned unexpected status {0}", response.TransactionResponse.Status);
+
+                if (response.Resource is OperationOutcome)
+                {
+                    var outcome = response.Resource as OperationOutcome;
+                    reportOutcome(outcome);
+                    throw new FhirOperationException(message + ", an OperationOutcome was included in the body", outcome);
+                }
+
+                throw new FhirOperationException(message);
             }
         }
 
@@ -127,40 +142,25 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void reportFailure(Bundle.BundleEntryComponent response)
+        private static void reportOutcome(OperationOutcome outcome)
         {
-            if (response.Resource != null)
+            System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+
+            if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
             {
-                if (response.Resource is OperationOutcome)
-                {
-                    var outcome = (OperationOutcome)response.Resource;
-
-                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-                    if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
-                    {
-                        System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
-                        System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-                    }
-
-                    if (outcome.Issue != null)
-                    {
-                        foreach (var issue in outcome.Issue)
-                        {
-                            System.Diagnostics.Debug.WriteLine("	" + issue.Details);
-                        }
-
-                    }
-
-                    System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
-                    throw new FhirOperationException("Operation failed with status code " + response.TransactionResponse.Status, outcome);
-                }
-                else
-                    throw new FhirOperationException(String.Format("Operation failed with status code {0}, but returned a {1} resource", response.TransactionResponse.Status, response.Resource.GetType().Name));
+                System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
+                System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
             }
-            else
-                throw new FhirOperationException("Operation failed with status code " + response.TransactionResponse.Status);
+
+            if (outcome.Issue != null)
+            {
+                foreach (var issue in outcome.Issue)
+                {
+                    System.Diagnostics.Debug.WriteLine("	" + issue.Details);
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
         }
     }
 }
