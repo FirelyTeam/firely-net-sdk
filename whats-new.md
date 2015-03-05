@@ -2,6 +2,15 @@
 layout: default
 title: What's new?
 ---
+### In 0.20.2
+* FhirClient updated to handle conditional create/read/update, Preference header
+* Introduction of TransactionBuilder class to easily compose Bundles containing transactions
+* Model classes updated to the latest DSTU2 changes
+* Serialization of extensions back to "DSTU1" style (as agreed in San Antonio)
+
+### In 0.20.1
+* Added support for async
+
 ### In 0.20.0
 * This is the new DSTU2 release
 * Supports the new DSTU2 resources and DSTU2 serialization
