@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -182,18 +182,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Target Body Site
+        /// Target body site
         /// </summary>
-        [FhirElement("bodySite", Order=120)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("bodySite", Order=120, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        public Hl7.Fhir.Model.Element BodySite
         {
-            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+            get { return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        private Hl7.Fhir.Model.Element _BodySite;
         
         /// <summary>
         /// Indication
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

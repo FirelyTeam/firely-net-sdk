@@ -9,7 +9,10 @@
         "value": "12345"
     }],
     "managingOrganization": {"reference": "Organization/1"},
-    "_active": {"http://hl7.org/fhir/example-do-not-use#recordStatus": [{"valueCode": "archived"}]},
+    "_active": {"extension": [{
+        "url": "http://example.org/fhir/StructureDefinition/recordStatus",
+        "valueCode": "archived"
+    }]},
     "name": [
         {
             "given": [
@@ -24,14 +27,53 @@
             "use": "usual"
         }
     ],
-    "http://hl7.org/fhir/example-do-not-use#Patient.avatar": [{"valueReference": {
-        "reference": "#pic1",
-        "display": "Duck image"
-    }}],
-    "modifier": {
-        "urn:example-do-not-use:pi": [{"valueDecimal": 3.141592653589793}],
-        "urn:example-do-not-use:avogadro": [{"valueDecimal": 6.0221416246424E23}]
-    },
+    "extension": [
+        {
+            "url": "http://example.org/fhir/StructureDefinition/patientAvatar",
+            "valueReference": {
+                "reference": "#pic1",
+                "display": "Duck image"
+            }
+        },
+        {
+            "url": "http://example.org/fhir/StructureDefinition/complexExtensionExample",
+            "extension": [
+                {
+                    "url": "nestedA",
+                    "valueCoding": {
+                        "system": "http://demo.org/id/4",
+                        "code": "AB45",
+                        "extension": [{
+                            "url": "http://example.org/fhir/StructureDefinition/extraforcoding",
+                            "extension": [{
+                                "url": "extra1",
+                                "valueString": "extra info"
+                            }],
+                            "valueInteger": 45
+                        }]
+                    }
+                },
+                {
+                    "url": "nestedB",
+                    "id": "q4",
+                    "extension": [{
+                        "url": "nestedB1",
+                        "valueString": "hello"
+                    }]
+                }
+            ]
+        }
+    ],
+    "modifierExtension": [
+        {
+            "url": "http://example.org/fhir/StructureDefinition/pi",
+            "valueDecimal": 3.141592653589793
+        },
+        {
+            "url": "http://example.org/fhir/StructureDefinition/avogadro",
+            "valueDecimal": 6.0221416246424E23
+        }
+    ],
     "gender": "male",
     "birthDate": "1974-12",
     "deceasedBoolean": true,
@@ -42,7 +84,10 @@
         "state": "Vic",
         "postalCode": "3999"
     }],
-    "maritalStatus": {"http://hl7.org/fhir/Profileiso-21090#nullFlavor": [{"valueCode": "ASKU"}]},
+    "maritalStatus": {"extension": [{
+        "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
+        "valueCode": "ASKU"
+    }]},
     "multipleBirthInteger": 3,
     "text": {
         "status": "generated",
@@ -69,20 +114,6 @@
             "name": "Good Health Clinic"
         }
     ],
-    "http://example.com/fhir/ExtensionDefn/nested": [{
-        "nestedA": [{"valueCoding": {
-            "system": "http://demo.org/id/4",
-            "code": "AB45",
-            "http://example.com/fhir/ExtensionDefn/extraforcoding": [{
-                "extra1": [{"valueString": "extra info"}],
-                "valueInteger": 45
-            }]
-        }}],
-        "nestedB": [{
-            "id": "q4",
-            "nestedB1": [{"valueString": "hello"}]
-        }]
-    }],
     "contact": [{
         "name": {
             "family": [
@@ -93,20 +124,35 @@
                 null
             ],
             "_family": [
-                {"http://hl7.org/fhir/Profileiso-21090#nullFlavor": [{"valueCode": "ASKU"}]},
+                {"extension": [{
+                    "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
+                    "valueCode": "ASKU"
+                }]},
                 {
                     "id": "a2",
-                    "http://hl7.org/fhir/Profileiso-21090#qualifier": [{"valueCode": "VV"}]
+                    "extension": [{
+                        "url": "http://example.org/fhir/StructureDefinition/qualifier",
+                        "valueCode": "VV"
+                    }]
                 },
-                {"http://hl7.org/fhir/Profileiso-21090#nullFlavor": [{"valueCode": "ASKU"}]},
+                {"extension": [{
+                    "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
+                    "valueCode": "ASKU"
+                }]},
                 null,
-                {"http://hl7.org/fhir/Profileiso-21090#nullFlavor": [{"valueCode": "ASKU"}]}
+                {"extension": [{
+                    "url": "http://hl7.org/fhir/StructureDefinition/nullFlavor",
+                    "valueCode": "ASKU"
+                }]}
             ],
             "_given": [
                 null,
                 {
                     "id": "a3",
-                    "http://hl7.org/fhir/Profileiso-21090#qualifier": [{"valueCode": "MID"}]
+                    "extension": [{
+                        "url": "http://hl7.org/fhir/StructureDefinition/qualifier",
+                        "valueCode": "MID"
+                    }]
                 },
                 null
             ],

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,6 +66,29 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("unknown")]
         Unknown,
+    }
+    
+    /// <summary>
+    /// The lifecycle status of a Value Set or Concept Map
+    /// </summary>
+    [FhirEnumeration("ConformanceResourceStatus")]
+    public enum ConformanceResourceStatus
+    {
+        /// <summary>
+        /// This resource is still under development
+        /// </summary>
+        [EnumLiteral("draft")]
+        Draft,
+        /// <summary>
+        /// This resource is ready for normal use
+        /// </summary>
+        [EnumLiteral("active")]
+        Active,
+        /// <summary>
+        /// This resource has been withdrawn or superceded and should no longer be used
+        /// </summary>
+        [EnumLiteral("retired")]
+        Retired,
     }
     
     /// <summary>
@@ -195,6 +218,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("AppointmentResponse")]
         AppointmentResponse,
+        /// <summary>
+        /// The AuditEvent resource
+        /// </summary>
+        [EnumLiteral("AuditEvent")]
+        AuditEvent,
         /// <summary>
         /// The Basic resource
         /// </summary>
@@ -365,11 +393,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ExplanationOfBenefit")]
         ExplanationOfBenefit,
-        /// <summary>
-        /// The ExtensionDefinition resource
-        /// </summary>
-        [EnumLiteral("ExtensionDefinition")]
-        ExtensionDefinition,
         /// <summary>
         /// The FamilyHistory resource
         /// </summary>
@@ -561,11 +584,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("ProfessionalClaim")]
         ProfessionalClaim,
         /// <summary>
-        /// The Profile resource
-        /// </summary>
-        [EnumLiteral("Profile")]
-        Profile,
-        /// <summary>
         /// The Provenance resource
         /// </summary>
         [EnumLiteral("Provenance")]
@@ -615,11 +633,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("SearchParameter")]
         SearchParameter,
-        /// <summary>
-        /// The SecurityEvent resource
-        /// </summary>
-        [EnumLiteral("SecurityEvent")]
-        SecurityEvent,
         /// <summary>
         /// The Slot resource
         /// </summary>

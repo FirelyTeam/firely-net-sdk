@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -141,16 +141,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", Order=90)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("bodySite", Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        public Hl7.Fhir.Model.Element BodySite
         {
-            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+            get { return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        private Hl7.Fhir.Model.Element _BodySite;
         
         /// <summary>
         /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus>)StatusElement.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

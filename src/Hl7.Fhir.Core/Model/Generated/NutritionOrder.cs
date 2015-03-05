@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,36 +53,56 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "NutritionOrder"; } }
         
         /// <summary>
-        /// TODO
+        /// Codes specifying the state of the request. Describes the lifecycle of the nutrition order.
         /// </summary>
         [FhirEnumeration("NutritionOrderStatus")]
         public enum NutritionOrderStatus
         {
             /// <summary>
-            /// TODO.
+            /// The request has been proposed.
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
+            /// <summary>
+            /// The request has been planned.
+            /// </summary>
+            [EnumLiteral("planned")]
+            Planned,
+            /// <summary>
+            /// The request has been placed.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// TODO.
+            /// The request is 'actionable', but not all actions that are implied by it have occurred yet.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// TODO.
+            /// Actions implied by the request have been temporarily halted, but are expected to continue later. May also be called "suspended".
             /// </summary>
-            [EnumLiteral("inactive")]
-            Inactive,
+            [EnumLiteral("on-hold")]
+            OnHold,
             /// <summary>
-            /// TODO.
+            /// All actions that are implied by the prescription have occurred (this will rarely be made explicit).
             /// </summary>
-            [EnumLiteral("held")]
-            Held,
+            [EnumLiteral("completed")]
+            Completed,
             /// <summary>
-            /// TODO.
+            /// The prescription was entered in error and therefore nullified.
             /// </summary>
-            [EnumLiteral("cancelled")]
-            Cancelled,
+            [EnumLiteral("entered-in-error")]
+            EnteredInError,
+            /// <summary>
+            /// Actions implied by the prescription have been permanently halted, before all of them occurred.
+            /// </summary>
+            [EnumLiteral("stopped")]
+            Stopped,
+            /// <summary>
+            /// The prescription was replaced by a newer one, which encompasses all the information in the previous one.
+            /// </summary>
+            [EnumLiteral("superceded")]
+            Superceded,
         }
         
         [FhirType("NutritionOrderOralDietComponent")]
@@ -330,6 +350,38 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Quantity _Quantity;
             
+            /// <summary>
+            /// Instructions or additional information about the oral supplement
+            /// </summary>
+            [FhirElement("instruction", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString InstructionElement
+            {
+                get { return _InstructionElement; }
+                set { _InstructionElement = value; OnPropertyChanged("InstructionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _InstructionElement;
+            
+            /// <summary>
+            /// Instructions or additional information about the oral supplement
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Instruction
+            {
+                get { return InstructionElement != null ? InstructionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      InstructionElement = null; 
+                    else
+                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Instruction");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NutritionOrderSupplementComponent;
@@ -341,6 +393,7 @@ namespace Hl7.Fhir.Model
                     if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopy();
                     if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -362,6 +415,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(ProductNameElement, otherT.ProductNameElement)) return false;
                 if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
             }
@@ -376,6 +430,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ProductNameElement, otherT.ProductNameElement)) return false;
                 if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
             }
@@ -1014,7 +1069,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent _EnteralFormula;
         
         /// <summary>
-        /// requested | active | inactive | held | cancelled
+        /// proposed | planned | requested | active | on-hold | completed | entered-in-error | stopped | superceded
         /// </summary>
         [FhirElement("status", Order=200)]
         [DataMember]
@@ -1027,7 +1082,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> _StatusElement;
         
         /// <summary>
-        /// requested | active | inactive | held | cancelled
+        /// proposed | planned | requested | active | on-hold | completed | entered-in-error | stopped | superceded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

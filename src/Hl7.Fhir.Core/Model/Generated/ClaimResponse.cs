@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1857,16 +1857,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer added line items
         /// </summary>
-        [FhirElement("additem", Order=210)]
+        [FhirElement("addItem", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> Additem
+        public List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> AddItem
         {
-            get { if(_Additem==null) _Additem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(); return _Additem; }
-            set { _Additem = value; OnPropertyChanged("Additem"); }
+            get { if(_AddItem==null) _AddItem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(); return _AddItem; }
+            set { _AddItem = value; OnPropertyChanged("AddItem"); }
         }
         
-        private List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> _Additem;
+        private List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> _AddItem;
         
         /// <summary>
         /// Processing errors
@@ -2064,7 +2064,7 @@ namespace Hl7.Fhir.Model
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(PayeeType != null) dest.PayeeType = (Hl7.Fhir.Model.Coding)PayeeType.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ClaimResponse.ItemsComponent>(Item.DeepCopy());
-                if(Additem != null) dest.Additem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(Additem.DeepCopy());
+                if(AddItem != null) dest.AddItem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(AddItem.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.ClaimResponse.ErrorsComponent>(Error.DeepCopy());
                 if(TotalCost != null) dest.TotalCost = (Hl7.Fhir.Model.Money)TotalCost.DeepCopy();
                 if(UnallocDeductable != null) dest.UnallocDeductable = (Hl7.Fhir.Model.Money)UnallocDeductable.DeepCopy();
@@ -2106,7 +2106,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(PayeeType, otherT.PayeeType)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
-            if( !DeepComparable.Matches(Additem, otherT.Additem)) return false;
+            if( !DeepComparable.Matches(AddItem, otherT.AddItem)) return false;
             if( !DeepComparable.Matches(Error, otherT.Error)) return false;
             if( !DeepComparable.Matches(TotalCost, otherT.TotalCost)) return false;
             if( !DeepComparable.Matches(UnallocDeductable, otherT.UnallocDeductable)) return false;
@@ -2141,7 +2141,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(PayeeType, otherT.PayeeType)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-            if( !DeepComparable.IsExactly(Additem, otherT.Additem)) return false;
+            if( !DeepComparable.IsExactly(AddItem, otherT.AddItem)) return false;
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
             if( !DeepComparable.IsExactly(TotalCost, otherT.TotalCost)) return false;
             if( !DeepComparable.IsExactly(UnallocDeductable, otherT.UnallocDeductable)) return false;

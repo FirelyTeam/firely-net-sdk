@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,29 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.ValueSet; } }
         [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
-        
-        /// <summary>
-        /// The lifecycle status of a Value Set or Concept Map
-        /// </summary>
-        [FhirEnumeration("ValueSetStatus")]
-        public enum ValueSetStatus
-        {
-            /// <summary>
-            /// This valueset is still under development.
-            /// </summary>
-            [EnumLiteral("draft")]
-            Draft,
-            /// <summary>
-            /// This valueset is ready for normal use.
-            /// </summary>
-            [EnumLiteral("active")]
-            Active,
-            /// <summary>
-            /// This valueset has been withdrawn or superceded and should no longer be used.
-            /// </summary>
-            [EnumLiteral("retired")]
-            Retired,
-        }
         
         /// <summary>
         /// The kind of operation to perform as a part of a property based filter
@@ -1327,6 +1304,106 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ValueSetContactComponent")]
+        [DataContract]
+        public partial class ValueSetContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ValueSetContactComponent"; } }
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Contact details for individual or publisher
+            /// </summary>
+            [FhirElement("telecom", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
+            {
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+                set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ValueSetContactComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ValueSetContactComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ValueSetContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ValueSetContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("ValueSetComposeComponent")]
         [DataContract]
         public partial class ValueSetComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1565,15 +1642,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Globally unique logical id for  value set
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri IdentifierElement
+        public Hl7.Fhir.Model.FhirUri UrlElement
         {
-            get { return _IdentifierElement; }
-            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+            get { return _UrlElement; }
+            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _IdentifierElement;
+        private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
         /// Globally unique logical id for  value set
@@ -1581,23 +1658,36 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Identifier
+        public string Url
         {
-            get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+            get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
                 if(value == null)
-                  IdentifierElement = null; 
+                  UrlElement = null; 
                 else
-                  IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("Identifier");
+                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Url");
             }
         }
         
         /// <summary>
+        /// Additional identifier for the value set (v2 / CDA)
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// Logical id for this version of the value set
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -1629,7 +1719,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Informal name for this value set
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -1661,7 +1751,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates whether or not any change to the content logical definition may occur
         /// </summary>
-        [FhirElement("immutable", Order=120)]
+        [FhirElement("immutable", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ImmutableElement
         {
@@ -1693,7 +1783,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=130)]
+        [FhirElement("publisher", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -1723,23 +1813,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Contact information of the publisher
+        /// Contact details of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=140)]
+        [FhirElement("contact", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactPoint> Telecom
+        public List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent> Contact
         {
-            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(); return _Contact; }
+            set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+        private List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent> _Contact;
         
         /// <summary>
         /// Human language description of the value set
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=150)]
+        [FhirElement("description", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -1769,9 +1859,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Publishing restrictions for the value set
+        /// Why is this needed?
         /// </summary>
-        [FhirElement("copyright", Order=160)]
+        [FhirElement("requirements", Order=170)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString RequirementsElement
+        {
+            get { return _RequirementsElement; }
+            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _RequirementsElement;
+        
+        /// <summary>
+        /// Why is this needed?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Requirements
+        {
+            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RequirementsElement = null; 
+                else
+                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Requirements");
+            }
+        }
+        
+        /// <summary>
+        /// Use and/or Publishing restrictions
+        /// </summary>
+        [FhirElement("copyright", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -1782,7 +1904,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Publishing restrictions for the value set
+        /// Use and/or Publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1803,16 +1925,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=170)]
+        [FhirElement("status", InSummary=true, Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> StatusElement
+        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired
@@ -1820,7 +1942,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ValueSet.ValueSetStatus? Status
+        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -1828,7 +1950,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1836,7 +1958,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=180)]
+        [FhirElement("experimental", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -1868,7 +1990,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether this is intended to be used with an extensible binding
         /// </summary>
-        [FhirElement("extensible", Order=190)]
+        [FhirElement("extensible", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
         {
@@ -1900,7 +2022,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=200)]
+        [FhirElement("date", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -1932,7 +2054,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Fixed date for the version of all referenced code systems and value sets
         /// </summary>
-        [FhirElement("stableDate", Order=210)]
+        [FhirElement("stableDate", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Date StableDateElement
         {
@@ -1964,7 +2086,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When value set defines its own codes
         /// </summary>
-        [FhirElement("define", InSummary=true, Order=220)]
+        [FhirElement("define", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent Define
         {
@@ -1977,7 +2099,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When value set includes codes from elsewhere
         /// </summary>
-        [FhirElement("compose", Order=230)]
+        [FhirElement("compose", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent Compose
         {
@@ -1990,7 +2112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used when the value set is "expanded"
         /// </summary>
-        [FhirElement("expansion", Order=240)]
+        [FhirElement("expansion", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent Expansion
         {
@@ -2007,15 +2129,17 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.FhirUri)IdentifierElement.DeepCopy();
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(ImmutableElement != null) dest.ImmutableElement = (Hl7.Fhir.Model.FhirBoolean)ImmutableElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(Contact.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ValueSet.ValueSetStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -2040,13 +2164,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(ImmutableElement, otherT.ImmutableElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
@@ -2066,13 +2192,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(ImmutableElement, otherT.ImmutableElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;

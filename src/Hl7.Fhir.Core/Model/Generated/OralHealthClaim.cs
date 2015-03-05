@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1887,15 +1887,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date of Extraction
             /// </summary>
-            [FhirElement("extractiondate", InSummary=true, Order=60)]
+            [FhirElement("extractionDate", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Date ExtractiondateElement
+            public Hl7.Fhir.Model.Date ExtractionDateElement
             {
-                get { return _ExtractiondateElement; }
-                set { _ExtractiondateElement = value; OnPropertyChanged("ExtractiondateElement"); }
+                get { return _ExtractionDateElement; }
+                set { _ExtractionDateElement = value; OnPropertyChanged("ExtractionDateElement"); }
             }
             
-            private Hl7.Fhir.Model.Date _ExtractiondateElement;
+            private Hl7.Fhir.Model.Date _ExtractionDateElement;
             
             /// <summary>
             /// Date of Extraction
@@ -1903,16 +1903,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Extractiondate
+            public string ExtractionDate
             {
-                get { return ExtractiondateElement != null ? ExtractiondateElement.Value : null; }
+                get { return ExtractionDateElement != null ? ExtractionDateElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      ExtractiondateElement = null; 
+                      ExtractionDateElement = null; 
                     else
-                      ExtractiondateElement = new Hl7.Fhir.Model.Date(value);
-                    OnPropertyChanged("Extractiondate");
+                      ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
+                    OnPropertyChanged("ExtractionDate");
                 }
             }
             
@@ -1925,7 +1925,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Tooth != null) dest.Tooth = (Hl7.Fhir.Model.Coding)Tooth.DeepCopy();
                     if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Coding)Reason.DeepCopy();
-                    if(ExtractiondateElement != null) dest.ExtractiondateElement = (Hl7.Fhir.Model.Date)ExtractiondateElement.DeepCopy();
+                    if(ExtractionDateElement != null) dest.ExtractionDateElement = (Hl7.Fhir.Model.Date)ExtractionDateElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -1945,7 +1945,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Tooth, otherT.Tooth)) return false;
                 if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-                if( !DeepComparable.Matches(ExtractiondateElement, otherT.ExtractiondateElement)) return false;
+                if( !DeepComparable.Matches(ExtractionDateElement, otherT.ExtractionDateElement)) return false;
                 
                 return true;
             }
@@ -1958,7 +1958,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Tooth, otherT.Tooth)) return false;
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-                if( !DeepComparable.IsExactly(ExtractiondateElement, otherT.ExtractiondateElement)) return false;
+                if( !DeepComparable.IsExactly(ExtractionDateElement, otherT.ExtractionDateElement)) return false;
                 
                 return true;
             }
@@ -2358,16 +2358,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Missing Teeth
         /// </summary>
-        [FhirElement("missingteeth", Order=320)]
+        [FhirElement("missingTeeth", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent> Missingteeth
+        public List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent> MissingTeeth
         {
-            get { if(_Missingteeth==null) _Missingteeth = new List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent>(); return _Missingteeth; }
-            set { _Missingteeth = value; OnPropertyChanged("Missingteeth"); }
+            get { if(_MissingTeeth==null) _MissingTeeth = new List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent>(); return _MissingTeeth; }
+            set { _MissingTeeth = value; OnPropertyChanged("MissingTeeth"); }
         }
         
-        private List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent> _Missingteeth;
+        private List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent> _MissingTeeth;
         
         /// <summary>
         /// Orthodontic Treatment Plan
@@ -2440,7 +2440,7 @@ namespace Hl7.Fhir.Model
                 if(AccidentElement != null) dest.AccidentElement = (Hl7.Fhir.Model.Date)AccidentElement.DeepCopy();
                 if(AccidentType != null) dest.AccidentType = (Hl7.Fhir.Model.Coding)AccidentType.DeepCopy();
                 if(InterventionException != null) dest.InterventionException = new List<Hl7.Fhir.Model.Coding>(InterventionException.DeepCopy());
-                if(Missingteeth != null) dest.Missingteeth = new List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent>(Missingteeth.DeepCopy());
+                if(MissingTeeth != null) dest.MissingTeeth = new List<Hl7.Fhir.Model.OralHealthClaim.MissingTeethComponent>(MissingTeeth.DeepCopy());
                 if(OrthoPlan != null) dest.OrthoPlan = (Hl7.Fhir.Model.OralHealthClaim.OrthodonticPlanComponent)OrthoPlan.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.OralHealthClaim.ItemsComponent>(Item.DeepCopy());
                 if(AdditionalMaterials != null) dest.AdditionalMaterials = new List<Hl7.Fhir.Model.Coding>(AdditionalMaterials.DeepCopy());
@@ -2484,7 +2484,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AccidentElement, otherT.AccidentElement)) return false;
             if( !DeepComparable.Matches(AccidentType, otherT.AccidentType)) return false;
             if( !DeepComparable.Matches(InterventionException, otherT.InterventionException)) return false;
-            if( !DeepComparable.Matches(Missingteeth, otherT.Missingteeth)) return false;
+            if( !DeepComparable.Matches(MissingTeeth, otherT.MissingTeeth)) return false;
             if( !DeepComparable.Matches(OrthoPlan, otherT.OrthoPlan)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             if( !DeepComparable.Matches(AdditionalMaterials, otherT.AdditionalMaterials)) return false;
@@ -2521,7 +2521,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AccidentElement, otherT.AccidentElement)) return false;
             if( !DeepComparable.IsExactly(AccidentType, otherT.AccidentType)) return false;
             if( !DeepComparable.IsExactly(InterventionException, otherT.InterventionException)) return false;
-            if( !DeepComparable.IsExactly(Missingteeth, otherT.Missingteeth)) return false;
+            if( !DeepComparable.IsExactly(MissingTeeth, otherT.MissingTeeth)) return false;
             if( !DeepComparable.IsExactly(OrthoPlan, otherT.OrthoPlan)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             if( !DeepComparable.IsExactly(AdditionalMaterials, otherT.AdditionalMaterials)) return false;

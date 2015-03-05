@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = fa.ReadConformanceResource("urn:uuid:256a5231-a2bb-49bd-9fea-f349d428b70d") as ValueSet;
             Assert.IsNotNull(vs);
 
-            var ed = fa.ReadConformanceResource("http://hl7.org/fhir/ExtensionDefinition/openEHR-location") as ExtensionDefinition;
+            var ed = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/openEHR-location") as StructureDefinition;
             Assert.IsNotNull(ed);
 
             var cis = fa.ListConformanceResources();

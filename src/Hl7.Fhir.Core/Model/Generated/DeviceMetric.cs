@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -45,12 +45,60 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DeviceMetric", IsResource=true)]
     [DataContract]
-    public partial class DeviceMetric : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DeviceMetric; } }
         [NotMapped]
         public override string TypeName { get { return "DeviceMetric"; } }
+        
+        /// <summary>
+        /// Describes the typical color of representation
+        /// </summary>
+        [FhirEnumeration("DeviceMetricColor")]
+        public enum DeviceMetricColor
+        {
+            /// <summary>
+            /// Color for representation - black.
+            /// </summary>
+            [EnumLiteral("black")]
+            Black,
+            /// <summary>
+            /// Color for representation - red.
+            /// </summary>
+            [EnumLiteral("red")]
+            Red,
+            /// <summary>
+            /// Color for representation - green.
+            /// </summary>
+            [EnumLiteral("green")]
+            Green,
+            /// <summary>
+            /// Color for representation - yellow.
+            /// </summary>
+            [EnumLiteral("yellow")]
+            Yellow,
+            /// <summary>
+            /// Color for representation - blue.
+            /// </summary>
+            [EnumLiteral("blue")]
+            Blue,
+            /// <summary>
+            /// Color for representation - magenta.
+            /// </summary>
+            [EnumLiteral("magenta")]
+            Magenta,
+            /// <summary>
+            /// Color for representation - cyan.
+            /// </summary>
+            [EnumLiteral("cyan")]
+            Cyan,
+            /// <summary>
+            /// Color for representation - white.
+            /// </summary>
+            [EnumLiteral("white")]
+            White,
+        }
         
         /// <summary>
         /// Describes the state of a metric calibration
@@ -109,29 +157,6 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the operational status of the DeviceMetric
-        /// </summary>
-        [FhirEnumeration("DeviceMetricOperationalState")]
-        public enum DeviceMetricOperationalState
-        {
-            /// <summary>
-            /// The DeviceMetric is operating and will generate DeviceObservations.
-            /// </summary>
-            [EnumLiteral("on")]
-            On,
-            /// <summary>
-            /// The DeviceMetric is not operating.
-            /// </summary>
-            [EnumLiteral("off")]
-            Off,
-            /// <summary>
-            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
-            /// </summary>
-            [EnumLiteral("standby")]
-            Standby,
-        }
-        
-        /// <summary>
         /// Describes the category of the metric
         /// </summary>
         [FhirEnumeration("DeviceMetricCategory")]
@@ -159,12 +184,35 @@ namespace Hl7.Fhir.Model
             Unspecified,
         }
         
-        [FhirType("DeviceMetricCalibrationInfoComponent")]
+        /// <summary>
+        /// Describes the operational status of the DeviceMetric
+        /// </summary>
+        [FhirEnumeration("DeviceMetricOperationalStatus")]
+        public enum DeviceMetricOperationalStatus
+        {
+            /// <summary>
+            /// The DeviceMetric is operating and will generate DeviceObservations.
+            /// </summary>
+            [EnumLiteral("on")]
+            On,
+            /// <summary>
+            /// The DeviceMetric is not operating.
+            /// </summary>
+            [EnumLiteral("off")]
+            Off,
+            /// <summary>
+            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
+            /// </summary>
+            [EnumLiteral("standby")]
+            Standby,
+        }
+        
+        [FhirType("DeviceMetricCalibrationComponent")]
         [DataContract]
-        public partial class DeviceMetricCalibrationInfoComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DeviceMetricCalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DeviceMetricCalibrationInfoComponent"; } }
+            public override string TypeName { get { return "DeviceMetricCalibrationComponent"; } }
             
             /// <summary>
             /// unspecified | offset | gain | two-point
@@ -264,7 +312,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DeviceMetricCalibrationInfoComponent;
+                var dest = other as DeviceMetricCalibrationComponent;
                 
                 if (dest != null)
                 {
@@ -280,12 +328,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DeviceMetricCalibrationInfoComponent());
+                return CopyTo(new DeviceMetricCalibrationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationInfoComponent;
+                var otherT = other as DeviceMetricCalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -298,7 +346,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationInfoComponent;
+                var otherT = other as DeviceMetricCalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -315,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of metric
         /// </summary>
-        [FhirElement("type", Order=50)]
+        [FhirElement("type", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -329,7 +377,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier of this DeviceMetric
         /// </summary>
-        [FhirElement("identifier", Order=60)]
+        [FhirElement("identifier", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -343,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unit of metric
         /// </summary>
-        [FhirElement("unit", Order=70)]
+        [FhirElement("unit", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Unit
         {
@@ -356,7 +404,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the link to the source Device
         /// </summary>
-        [FhirElement("source", Order=80)]
+        [FhirElement("source", Order=120)]
         [References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -370,7 +418,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the link to the parent DeviceComponent
         /// </summary>
-        [FhirElement("parent", Order=90)]
+        [FhirElement("parent", Order=130)]
         [References("DeviceComponent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
@@ -384,15 +432,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// on | off | standby
         /// </summary>
-        [FhirElement("operationalState", Order=100)]
+        [FhirElement("operationalStatus", Order=140)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState> OperationalStateElement
+        public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> OperationalStatusElement
         {
-            get { return _OperationalStateElement; }
-            set { _OperationalStateElement = value; OnPropertyChanged("OperationalStateElement"); }
+            get { return _OperationalStatusElement; }
+            set { _OperationalStatusElement = value; OnPropertyChanged("OperationalStatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState> _OperationalStateElement;
+        private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> _OperationalStatusElement;
         
         /// <summary>
         /// on | off | standby
@@ -400,49 +448,55 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState? OperationalState
+        public Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus? OperationalStatus
         {
-            get { return OperationalStateElement != null ? OperationalStateElement.Value : null; }
+            get { return OperationalStatusElement != null ? OperationalStatusElement.Value : null; }
             set
             {
                 if(value == null)
-                  OperationalStateElement = null; 
+                  OperationalStatusElement = null; 
                 else
-                  OperationalStateElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState>(value);
-                OnPropertyChanged("OperationalState");
+                  OperationalStatusElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
+                OnPropertyChanged("OperationalStatus");
             }
         }
         
         /// <summary>
-        /// Describes the physical principle of the measurement
+        /// black | red | green | yellow | blue | magenta | cyan | white
         /// </summary>
-        [FhirElement("measurementMode", Order=110)]
+        [FhirElement("color", Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier MeasurementMode
+        public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> ColorElement
         {
-            get { return _MeasurementMode; }
-            set { _MeasurementMode = value; OnPropertyChanged("MeasurementMode"); }
+            get { return _ColorElement; }
+            set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _MeasurementMode;
+        private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> _ColorElement;
         
         /// <summary>
-        /// Describes the typical color of representation
+        /// black | red | green | yellow | blue | magenta | cyan | white
         /// </summary>
-        [FhirElement("color", Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Color
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor? Color
         {
-            get { return _Color; }
-            set { _Color = value; OnPropertyChanged("Color"); }
+            get { return ColorElement != null ? ColorElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ColorElement = null; 
+                else
+                  ColorElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>(value);
+                OnPropertyChanged("Color");
+            }
         }
-        
-        private Hl7.Fhir.Model.Identifier _Color;
         
         /// <summary>
         /// measurement | setting | calculation | unspecified
         /// </summary>
-        [FhirElement("category", Order=130)]
+        [FhirElement("category", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> CategoryElement
@@ -475,7 +529,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the measurement repetition time
         /// </summary>
-        [FhirElement("measurementPeriod", Order=140)]
+        [FhirElement("measurementPeriod", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Timing MeasurementPeriod
         {
@@ -488,16 +542,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the calibrations that have been performed or that are required to be performed
         /// </summary>
-        [FhirElement("calibrationInfo", Order=150)]
+        [FhirElement("calibration", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent> CalibrationInfo
+        public List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> Calibration
         {
-            get { if(_CalibrationInfo==null) _CalibrationInfo = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent>(); return _CalibrationInfo; }
-            set { _CalibrationInfo = value; OnPropertyChanged("CalibrationInfo"); }
+            get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(); return _Calibration; }
+            set { _Calibration = value; OnPropertyChanged("Calibration"); }
         }
         
-        private List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent> _CalibrationInfo;
+        private List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> _Calibration;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -511,12 +565,11 @@ namespace Hl7.Fhir.Model
                 if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
-                if(OperationalStateElement != null) dest.OperationalStateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalState>)OperationalStateElement.DeepCopy();
-                if(MeasurementMode != null) dest.MeasurementMode = (Hl7.Fhir.Model.Identifier)MeasurementMode.DeepCopy();
-                if(Color != null) dest.Color = (Hl7.Fhir.Model.Identifier)Color.DeepCopy();
+                if(OperationalStatusElement != null) dest.OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>)OperationalStatusElement.DeepCopy();
+                if(ColorElement != null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)ColorElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)CategoryElement.DeepCopy();
                 if(MeasurementPeriod != null) dest.MeasurementPeriod = (Hl7.Fhir.Model.Timing)MeasurementPeriod.DeepCopy();
-                if(CalibrationInfo != null) dest.CalibrationInfo = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationInfoComponent>(CalibrationInfo.DeepCopy());
+                if(Calibration != null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(Calibration.DeepCopy());
                 return dest;
             }
             else
@@ -539,12 +592,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Unit, otherT.Unit)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
-            if( !DeepComparable.Matches(OperationalStateElement, otherT.OperationalStateElement)) return false;
-            if( !DeepComparable.Matches(MeasurementMode, otherT.MeasurementMode)) return false;
-            if( !DeepComparable.Matches(Color, otherT.Color)) return false;
+            if( !DeepComparable.Matches(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
+            if( !DeepComparable.Matches(ColorElement, otherT.ColorElement)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
-            if( !DeepComparable.Matches(CalibrationInfo, otherT.CalibrationInfo)) return false;
+            if( !DeepComparable.Matches(Calibration, otherT.Calibration)) return false;
             
             return true;
         }
@@ -560,12 +612,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Unit, otherT.Unit)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
-            if( !DeepComparable.IsExactly(OperationalStateElement, otherT.OperationalStateElement)) return false;
-            if( !DeepComparable.IsExactly(MeasurementMode, otherT.MeasurementMode)) return false;
-            if( !DeepComparable.IsExactly(Color, otherT.Color)) return false;
+            if( !DeepComparable.IsExactly(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
+            if( !DeepComparable.IsExactly(ColorElement, otherT.ColorElement)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
-            if( !DeepComparable.IsExactly(CalibrationInfo, otherT.CalibrationInfo)) return false;
+            if( !DeepComparable.IsExactly(Calibration, otherT.Calibration)) return false;
             
             return true;
         }

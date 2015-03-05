@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -433,41 +433,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Custodian;
         
         /// <summary>
-        /// Manages access policies for the document
-        /// </summary>
-        [FhirElement("policyManager", Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri PolicyManagerElement
-        {
-            get { return _PolicyManagerElement; }
-            set { _PolicyManagerElement = value; OnPropertyChanged("PolicyManagerElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirUri _PolicyManagerElement;
-        
-        /// <summary>
-        /// Manages access policies for the document
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PolicyManager
-        {
-            get { return PolicyManagerElement != null ? PolicyManagerElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  PolicyManagerElement = null; 
-                else
-                  PolicyManagerElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("PolicyManager");
-            }
-        }
-        
-        /// <summary>
         /// Who/What authenticated the document
         /// </summary>
-        [FhirElement("authenticator", Order=180)]
+        [FhirElement("authenticator", Order=170)]
         [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Authenticator
@@ -481,7 +449,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", Order=190)]
+        [FhirElement("created", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -513,7 +481,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this document reference created
         /// </summary>
-        [FhirElement("indexed", Order=200)]
+        [FhirElement("indexed", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IndexedElement
@@ -546,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// current | superceded | entered-in-error
         /// </summary>
-        [FhirElement("status", Order=210)]
+        [FhirElement("status", Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus> StatusElement
@@ -579,7 +547,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
-        [FhirElement("docStatus", Order=220)]
+        [FhirElement("docStatus", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DocStatus
         {
@@ -592,7 +560,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", Order=230)]
+        [FhirElement("relatesTo", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> RelatesTo
@@ -606,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", Order=240)]
+        [FhirElement("description", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -638,7 +606,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sensitivity of source document
         /// </summary>
-        [FhirElement("confidentiality", Order=250)]
+        [FhirElement("confidentiality", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Confidentiality
@@ -652,7 +620,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where to access the document
         /// </summary>
-        [FhirElement("content", Order=260)]
+        [FhirElement("content", Order=250)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Content
@@ -666,7 +634,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", Order=270)]
+        [FhirElement("context", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent Context
         {
@@ -691,7 +659,6 @@ namespace Hl7.Fhir.Model
                 if(FormatElement != null) dest.FormatElement = new List<Hl7.Fhir.Model.FhirUri>(FormatElement.DeepCopy());
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
-                if(PolicyManagerElement != null) dest.PolicyManagerElement = (Hl7.Fhir.Model.FhirUri)PolicyManagerElement.DeepCopy();
                 if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.ResourceReference)Authenticator.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
@@ -727,7 +694,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(FormatElement, otherT.FormatElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
-            if( !DeepComparable.Matches(PolicyManagerElement, otherT.PolicyManagerElement)) return false;
             if( !DeepComparable.Matches(Authenticator, otherT.Authenticator)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(IndexedElement, otherT.IndexedElement)) return false;
@@ -756,7 +722,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(FormatElement, otherT.FormatElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
-            if( !DeepComparable.IsExactly(PolicyManagerElement, otherT.PolicyManagerElement)) return false;
             if( !DeepComparable.IsExactly(Authenticator, otherT.Authenticator)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(IndexedElement, otherT.IndexedElement)) return false;

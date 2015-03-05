@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -536,9 +536,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Computable language of mapping
+            /// </summary>
+            [FhirElement("language", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code LanguageElement
+            {
+                get { return _LanguageElement; }
+                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Code _LanguageElement;
+            
+            /// <summary>
+            /// Computable language of mapping
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Language
+            {
+                get { return LanguageElement != null ? LanguageElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LanguageElement = null; 
+                    else
+                      LanguageElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Language");
+                }
+            }
+            
+            /// <summary>
             /// Details of the mapping
             /// </summary>
-            [FhirElement("map", InSummary=true, Order=50)]
+            [FhirElement("map", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MapElement
@@ -576,6 +608,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
+                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                     if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
                     return dest;
                 }
@@ -595,6 +628,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
                 
                 return true;
@@ -607,6 +641,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
                 
                 return true;
@@ -1148,9 +1183,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Name for element to display with or prompt for element
+        /// </summary>
+        [FhirElement("label", InSummary=true, Order=60)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString LabelElement
+        {
+            get { return _LabelElement; }
+            set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _LabelElement;
+        
+        /// <summary>
+        /// Name for element to display with or prompt for element
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Label
+        {
+            get { return LabelElement != null ? LabelElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  LabelElement = null; 
+                else
+                  LabelElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Label");
+            }
+        }
+        
+        /// <summary>
+        /// Defining code
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=70)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Coding> Code
+        {
+            get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Coding> _Code;
+        
+        /// <summary>
         /// This element is sliced - slices follow
         /// </summary>
-        [FhirElement("slicing", InSummary=true, Order=60)]
+        [FhirElement("slicing", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.ElementDefinition.ElementDefinitionSlicingComponent Slicing
         {
@@ -1163,7 +1244,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Concise definition for xml presentation
         /// </summary>
-        [FhirElement("short", InSummary=true, Order=70)]
+        [FhirElement("short", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ShortElement
         {
@@ -1193,41 +1274,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Full formal definition in human language
+        /// Full formal definition as narrative text
         /// </summary>
-        [FhirElement("formal", InSummary=true, Order=80)]
+        [FhirElement("definition", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString FormalElement
+        public Hl7.Fhir.Model.FhirString DefinitionElement
         {
-            get { return _FormalElement; }
-            set { _FormalElement = value; OnPropertyChanged("FormalElement"); }
+            get { return _DefinitionElement; }
+            set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _FormalElement;
+        private Hl7.Fhir.Model.FhirString _DefinitionElement;
         
         /// <summary>
-        /// Full formal definition in human language
+        /// Full formal definition as narrative text
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Formal
+        public string Definition
         {
-            get { return FormalElement != null ? FormalElement.Value : null; }
+            get { return DefinitionElement != null ? DefinitionElement.Value : null; }
             set
             {
                 if(value == null)
-                  FormalElement = null; 
+                  DefinitionElement = null; 
                 else
-                  FormalElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Formal");
+                  DefinitionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Definition");
             }
         }
         
         /// <summary>
         /// Comments about the use of this element
         /// </summary>
-        [FhirElement("comments", InSummary=true, Order=90)]
+        [FhirElement("comments", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentsElement
         {
@@ -1259,7 +1340,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why is this needed?
         /// </summary>
-        [FhirElement("requirements", InSummary=true, Order=100)]
+        [FhirElement("requirements", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -1291,7 +1372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other names
         /// </summary>
-        [FhirElement("synonym", InSummary=true, Order=110)]
+        [FhirElement("synonym", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SynonymElement
@@ -1324,7 +1405,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Minimum Cardinality
         /// </summary>
-        [FhirElement("min", InSummary=true, Order=120)]
+        [FhirElement("min", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Integer MinElement
         {
@@ -1356,7 +1437,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Maximum Cardinality (a number or *)
         /// </summary>
-        [FhirElement("max", InSummary=true, Order=130)]
+        [FhirElement("max", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MaxElement
         {
@@ -1388,7 +1469,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data type and Profile for this element
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=140)]
+        [FhirElement("type", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent> Type
@@ -1402,7 +1483,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// To another element constraint (by element.name)
         /// </summary>
-        [FhirElement("nameReference", InSummary=true, Order=150)]
+        [FhirElement("nameReference", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameReferenceElement
         {
@@ -1434,7 +1515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specified value it missing from instance
         /// </summary>
-        [FhirElement("defaultValue", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("defaultValue", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element DefaultValue
@@ -1448,7 +1529,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Implicit meaning when this element is missing
         /// </summary>
-        [FhirElement("meaningWhenMissing", InSummary=true, Order=170)]
+        [FhirElement("meaningWhenMissing", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MeaningWhenMissingElement
         {
@@ -1480,7 +1561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value must be exactly this
         /// </summary>
-        [FhirElement("fixed", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("fixed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Fixed
@@ -1494,7 +1575,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value must have at least these property values
         /// </summary>
-        [FhirElement("pattern", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("pattern", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Pattern
@@ -1508,7 +1589,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Example value: [as defined for type]
         /// </summary>
-        [FhirElement("example", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("example", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
         [DataMember]
         public Hl7.Fhir.Model.Element Example
@@ -1522,7 +1603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Max length for strings
         /// </summary>
-        [FhirElement("maxLength", InSummary=true, Order=210)]
+        [FhirElement("maxLength", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Integer MaxLengthElement
         {
@@ -1554,7 +1635,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to invariant about presence
         /// </summary>
-        [FhirElement("condition", InSummary=true, Order=220)]
+        [FhirElement("condition", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Id> ConditionElement
@@ -1587,7 +1668,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Condition that must evaluate to true
         /// </summary>
-        [FhirElement("constraint", InSummary=true, Order=230)]
+        [FhirElement("constraint", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ElementDefinition.ElementDefinitionConstraintComponent> Constraint
@@ -1601,7 +1682,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If the element must supported
         /// </summary>
-        [FhirElement("mustSupport", InSummary=true, Order=240)]
+        [FhirElement("mustSupport", InSummary=true, Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean MustSupportElement
         {
@@ -1633,7 +1714,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this modifies the meaning of other elements
         /// </summary>
-        [FhirElement("isModifier", InSummary=true, Order=250)]
+        [FhirElement("isModifier", InSummary=true, Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsModifierElement
         {
@@ -1665,7 +1746,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Include when _summary = true?
         /// </summary>
-        [FhirElement("isSummary", InSummary=true, Order=260)]
+        [FhirElement("isSummary", InSummary=true, Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsSummaryElement
         {
@@ -1697,7 +1778,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ValueSet details if this is coded
         /// </summary>
-        [FhirElement("binding", InSummary=true, Order=270)]
+        [FhirElement("binding", InSummary=true, Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent Binding
         {
@@ -1710,7 +1791,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Map element to another set of definitions
         /// </summary>
-        [FhirElement("mapping", InSummary=true, Order=280)]
+        [FhirElement("mapping", InSummary=true, Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ElementDefinition.ElementDefinitionMappingComponent> Mapping
@@ -1731,9 +1812,11 @@ namespace Hl7.Fhir.Model
                 if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                 if(RepresentationElement != null) dest.RepresentationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(RepresentationElement.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+                if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                 if(Slicing != null) dest.Slicing = (Hl7.Fhir.Model.ElementDefinition.ElementDefinitionSlicingComponent)Slicing.DeepCopy();
                 if(ShortElement != null) dest.ShortElement = (Hl7.Fhir.Model.FhirString)ShortElement.DeepCopy();
-                if(FormalElement != null) dest.FormalElement = (Hl7.Fhir.Model.FhirString)FormalElement.DeepCopy();
+                if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(SynonymElement != null) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
@@ -1774,9 +1857,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
             if( !DeepComparable.Matches(RepresentationElement, otherT.RepresentationElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
-            if( !DeepComparable.Matches(FormalElement, otherT.FormalElement)) return false;
+            if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(SynonymElement, otherT.SynonymElement)) return false;
@@ -1810,9 +1895,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
             if( !DeepComparable.IsExactly(RepresentationElement, otherT.RepresentationElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
-            if( !DeepComparable.IsExactly(FormalElement, otherT.FormalElement)) return false;
+            if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(SynonymElement, otherT.SynonymElement)) return false;

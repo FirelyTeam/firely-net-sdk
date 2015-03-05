@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The date and time of birth for the practitioner
+        /// The date  of birth for the practitioner
         /// </summary>
         [FhirElement("birthDate", InSummary=true, Order=140)]
         [DataMember]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
-        /// The date and time of birth for the practitioner
+        /// The date  of birth for the practitioner
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

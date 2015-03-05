@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -114,12 +114,12 @@ namespace Hl7.Fhir.Model
         public enum RestfulConformanceMode
         {
             /// <summary>
-            /// The application acts as a server for this resource.
+            /// The application acts as a client for this resource.
             /// </summary>
             [EnumLiteral("client")]
             Client,
             /// <summary>
-            /// The application acts as a client for this resource.
+            /// The application acts as a server for this resource.
             /// </summary>
             [EnumLiteral("server")]
             Server,
@@ -213,29 +213,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Notification")]
             Notification,
-        }
-        
-        /// <summary>
-        /// The status of this conformance statement
-        /// </summary>
-        [FhirEnumeration("ConformanceStatementStatus")]
-        public enum ConformanceStatementStatus
-        {
-            /// <summary>
-            /// This conformance statement is still under development.
-            /// </summary>
-            [EnumLiteral("draft")]
-            Draft,
-            /// <summary>
-            /// This conformance statement is ready for use in production systems.
-            /// </summary>
-            [EnumLiteral("active")]
-            Active,
-            /// <summary>
-            /// This conformance statement has been withdrawn or superceded and should no longer be used.
-            /// </summary>
-            [EnumLiteral("retired")]
-            Retired,
         }
         
         /// <summary>
@@ -936,7 +913,7 @@ namespace Hl7.Fhir.Model
             /// Constraint on a resource used in the document
             /// </summary>
             [FhirElement("profile", InSummary=true, Order=60)]
-            [References("Profile")]
+            [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
@@ -1041,7 +1018,7 @@ namespace Hl7.Fhir.Model
             /// What structural features are supported
             /// </summary>
             [FhirElement("profile", InSummary=true, Order=50)]
-            [References("Profile")]
+            [References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
             {
@@ -1497,6 +1474,106 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ConformanceContactComponent")]
+        [DataContract]
+        public partial class ConformanceContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ConformanceContactComponent"; } }
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Contact details for individual or publisher
+            /// </summary>
+            [FhirElement("telecom", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
+            {
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+                set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ConformanceContactComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ConformanceContactComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConformanceContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ConformanceContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("ConformanceMessagingEventComponent")]
         [DataContract]
         public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1634,7 +1711,7 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the request
             /// </summary>
             [FhirElement("request", InSummary=true, Order=90)]
-            [References("Profile")]
+            [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Request
@@ -1649,7 +1726,7 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the response
             /// </summary>
             [FhirElement("response", InSummary=true, Order=100)]
-            [References("Profile")]
+            [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Response
@@ -2630,34 +2707,34 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical id to reference this statement
+        /// Logical uri to reference this statement
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString IdentifierElement
+        public Hl7.Fhir.Model.FhirUri UrlElement
         {
-            get { return _IdentifierElement; }
-            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+            get { return _UrlElement; }
+            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _IdentifierElement;
+        private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical id to reference this statement
+        /// Logical uri to reference this statement
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Identifier
+        public string Url
         {
-            get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+            get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
                 if(value == null)
-                  IdentifierElement = null; 
+                  UrlElement = null; 
                 else
-                  IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Identifier");
+                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Url");
             }
         }
         
@@ -2726,10 +2803,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Publishing Organization
+        /// Name of the publisher (Organization or individual)
         /// </summary>
         [FhirElement("publisher", InSummary=true, Order=120)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -2740,7 +2816,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
-        /// Publishing Organization
+        /// Name of the publisher (Organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2759,18 +2835,18 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Contacts for Organization
+        /// Contact details of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=130)]
+        [FhirElement("contact", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactPoint> Telecom
+        public List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent> Contact
         {
-            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent>(); return _Contact; }
+            set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+        private List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent> _Contact;
         
         /// <summary>
         /// Human description of the conformance statement
@@ -2805,17 +2881,81 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Why is this needed?
+        /// </summary>
+        [FhirElement("requirements", Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString RequirementsElement
+        {
+            get { return _RequirementsElement; }
+            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _RequirementsElement;
+        
+        /// <summary>
+        /// Why is this needed?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Requirements
+        {
+            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RequirementsElement = null; 
+                else
+                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Requirements");
+            }
+        }
+        
+        /// <summary>
+        /// Use and/or Publishing restrictions
+        /// </summary>
+        [FhirElement("copyright", Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString CopyrightElement
+        {
+            get { return _CopyrightElement; }
+            set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _CopyrightElement;
+        
+        /// <summary>
+        /// Use and/or Publishing restrictions
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Copyright
+        {
+            get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CopyrightElement = null; 
+                else
+                  CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Copyright");
+            }
+        }
+        
+        /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
+        [FhirElement("status", InSummary=true, Order=170)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> StatusElement
+        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired
@@ -2823,7 +2963,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Conformance.ConformanceStatementStatus? Status
+        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -2831,7 +2971,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -2839,7 +2979,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=160)]
+        [FhirElement("experimental", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -2871,7 +3011,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Publication Date(/time)
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=170)]
+        [FhirElement("date", InSummary=true, Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -2904,7 +3044,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Software that is covered by this conformance statement
         /// </summary>
-        [FhirElement("software", InSummary=true, Order=180)]
+        [FhirElement("software", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent Software
         {
@@ -2917,7 +3057,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
-        [FhirElement("implementation", InSummary=true, Order=190)]
+        [FhirElement("implementation", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent Implementation
         {
@@ -2930,7 +3070,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FHIR Version
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=200)]
+        [FhirElement("fhirVersion", InSummary=true, Order=220)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
@@ -2963,7 +3103,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if application accepts unknown elements
         /// </summary>
-        [FhirElement("acceptUnknown", InSummary=true, Order=210)]
+        [FhirElement("acceptUnknown", InSummary=true, Order=230)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AcceptUnknownElement
@@ -2996,7 +3136,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// formats supported (xml | json | mime type)
         /// </summary>
-        [FhirElement("format", Order=220)]
+        [FhirElement("format", Order=240)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> FormatElement
@@ -3029,8 +3169,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles supported by the system
         /// </summary>
-        [FhirElement("profile", Order=230)]
-        [References("Profile")]
+        [FhirElement("profile", Order=250)]
+        [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Profile
@@ -3044,7 +3184,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If the endpoint is a RESTful one
         /// </summary>
-        [FhirElement("rest", Order=240)]
+        [FhirElement("rest", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> Rest
@@ -3058,7 +3198,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If messaging is supported
         /// </summary>
-        [FhirElement("messaging", Order=250)]
+        [FhirElement("messaging", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> Messaging
@@ -3072,7 +3212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Document definition
         /// </summary>
-        [FhirElement("document", Order=260)]
+        [FhirElement("document", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> Document
@@ -3090,13 +3230,15 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.FhirString)IdentifierElement.DeepCopy();
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent>(Contact.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Conformance.ConformanceStatementStatus>)StatusElement.DeepCopy();
+                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
+                if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Software != null) dest.Software = (Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent)Software.DeepCopy();
@@ -3125,12 +3267,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -3153,12 +3297,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,24 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Specimen; } }
         [NotMapped]
         public override string TypeName { get { return "Specimen"; } }
-        
-        /// <summary>
-        /// Type indicating if this is a parent or child relationship
-        /// </summary>
-        [FhirEnumeration("HierarchicalRelationshipType")]
-        public enum HierarchicalRelationshipType
-        {
-            /// <summary>
-            /// The target resource is the parent of the focal specimen resource.
-            /// </summary>
-            [EnumLiteral("parent")]
-            Parent,
-            /// <summary>
-            /// The target resource is the child of the focal specimen resource.
-            /// </summary>
-            [EnumLiteral("child")]
-            Child,
-        }
         
         [FhirType("SpecimenCollectionComponent")]
         [DataContract]
@@ -230,108 +212,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("SpecimenSourceComponent")]
-        [DataContract]
-        public partial class SpecimenSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "SpecimenSourceComponent"; } }
-            
-            /// <summary>
-            /// parent | child
-            /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> RelationshipElement
-            {
-                get { return _RelationshipElement; }
-                set { _RelationshipElement = value; OnPropertyChanged("RelationshipElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> _RelationshipElement;
-            
-            /// <summary>
-            /// parent | child
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType? Relationship
-            {
-                get { return RelationshipElement != null ? RelationshipElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RelationshipElement = null; 
-                    else
-                      RelationshipElement = new Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType>(value);
-                    OnPropertyChanged("Relationship");
-                }
-            }
-            
-            /// <summary>
-            /// The subject of the relationship
-            /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
-            [References("Specimen")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Target
-            {
-                get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
-                set { _Target = value; OnPropertyChanged("Target"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Target;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SpecimenSourceComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType>)RelationshipElement.DeepCopy();
-                    if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SpecimenSourceComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SpecimenSourceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
-                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SpecimenSourceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RelationshipElement, otherT.RelationshipElement)) return false;
-                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
             }
@@ -649,18 +529,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Parent of specimen
+        /// Parent specimen
         /// </summary>
-        [FhirElement("source", Order=110)]
+        [FhirElement("parent", Order=110)]
+        [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent> Source
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent>(); return _Source; }
-            set { _Source = value; OnPropertyChanged("Source"); }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
+            set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent> _Source;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
@@ -772,7 +653,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Source != null) dest.Source = new List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent>(Source.DeepCopy());
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(AccessionIdentifier != null) dest.AccessionIdentifier = (Hl7.Fhir.Model.Identifier)AccessionIdentifier.DeepCopy();
                 if(ReceivedTimeElement != null) dest.ReceivedTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedTimeElement.DeepCopy();
@@ -798,7 +679,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(AccessionIdentifier, otherT.AccessionIdentifier)) return false;
             if( !DeepComparable.Matches(ReceivedTimeElement, otherT.ReceivedTimeElement)) return false;
@@ -817,7 +698,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(AccessionIdentifier, otherT.AccessionIdentifier)) return false;
             if( !DeepComparable.IsExactly(ReceivedTimeElement, otherT.ReceivedTimeElement)) return false;

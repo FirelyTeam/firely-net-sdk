@@ -88,6 +88,7 @@
     <Compile Include="Model\FhirBoolean.cs" />
     <Compile Include="Model\Generated\Appointment.cs" />
     <Compile Include="Model\Generated\AppointmentResponse.cs" />
+    <Compile Include="Model\Generated\AuditEvent.cs" />
     <Compile Include="Model\Generated\BackboneElement.cs" />
     <Compile Include="Model\Generated\Basic.cs" />
     <Compile Include="Model\Generated\BodySite.cs" />
@@ -114,7 +115,6 @@
     <Compile Include="Model\Generated\EnrollmentResponse.cs" />
     <Compile Include="Model\Generated\EpisodeOfCare.cs" />
     <Compile Include="Model\Generated\ExplanationOfBenefit.cs" />
-    <Compile Include="Model\Generated\ExtensionDefinition.cs" />
     <Compile Include="Model\Generated\Goal.cs" />
     <Compile Include="Model\Generated\HealthcareService.cs" />
     <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="Model\Generated\NutritionOrder.cs" />
     <Compile Include="Model\Generated\OperationDefinition.cs" />
     <Compile Include="Model\Generated\OralHealthClaim.cs" />
+    <Compile Include="Model\Generated\Other.cs" />
     <Compile Include="Model\Generated\Parameters.cs" />
     <Compile Include="Model\Generated\PaymentNotice.cs" />
     <Compile Include="Model\Generated\PaymentReconciliation.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Model\Generated\RiskAssessment.cs" />
     <Compile Include="Model\Generated\Schedule.cs" />
     <Compile Include="Model\Generated\SearchParameter.cs" />
+    <Compile Include="Model\Generated\Signature.cs" />
     <Compile Include="Model\Generated\Slot.cs" />
     <Compile Include="Model\Generated\StatusRequest.cs" />
     <Compile Include="Model\Generated\StatusResponse.cs" />
@@ -227,7 +229,6 @@
     <Compile Include="Model\Generated\Resource.cs" />
     <Compile Include="Model\Generated\ResourceReference.cs" />
     <Compile Include="Model\Generated\SampledData.cs" />
-    <Compile Include="Model\Generated\SecurityEvent.cs" />
     <Compile Include="Model\Generated\Specimen.cs" />
     <Compile Include="Model\Generated\Substance.cs" />
     <Compile Include="Model\Generated\Supply.cs" />

@@ -49,91 +49,94 @@ namespace Hl7.Fhir.Serialization
         {
             if (!contained)
             {
-                rewriteExtensionProperties(_root);
+               // rewriteExtensionProperties(_root);
 
                 if (jw != null) _root.WriteTo(jw);
             }
         }
 
+        // This code implements the San Antonio timeframe DSTU2 Json serialization of extensions
+        // (using full urls as property names). This has been retracted, but keep the code here
+        // in case we change our mind again.
 
-        private void rewriteExtensionProperties(JToken current)
-        {
-            if (current is JObject)
-                rewriteExtensionProperties((JObject)current);
-            else if (current is JArray)
-                rewriteExtensionProperties((JArray)current);
-        }
-
-
-        private bool isExtensionProperty(string name)
-        {
-            return name == "extension" || name == "modifierExtension";
-        }
-
-        private void rewriteExtensionProperties(JObject current)
-        {
-            foreach (var property in current.Properties().ToList())  // Properties() is modified, so do a ToList()
-            {
-                if (property.Name == "extension")
-                {
-                    var dstu1Extensions = (JArray)property.Value;
-                    var convertedExtensions = convertExtensionArray(dstu1Extensions);
-
-                    foreach (var extension in convertedExtensions) current.Add(extension);
-                    property.Remove();
-                }
-                else if (property.Name == "modifierExtension")
-                {
-                    var dstu1Extensions = (JArray)property.Value;
-                    var convertedExtensions = convertExtensionArray(dstu1Extensions);
-
-                    var modifierObject = new JObject();
-                    var modifierProp = new JProperty("modifier", modifierObject);
-                    foreach (var extension in convertedExtensions) modifierObject.Add(extension);
-                    property.Remove();
-
-                    current.Add(modifierProp);
-                }
-                else
-                {
-                    // not an extension property, so this is an actual element.
-                    rewriteExtensionProperties(property.Value);
-                }
-            }
-        }
-
-        private List<JProperty> convertExtensionArray(JArray dstu1Extensions)
-        {
-            var result = new List<JProperty>();
-
-            // DSTU2 extensions are grouped by url, so sort them together
-            var urlGroups = dstu1Extensions.GroupBy(token => ((JObject)token)["url"].Value<string>());
-
-            foreach (var urlGroup in urlGroups.ToList())
-            {
-                var dstu2extensions = new JArray();
-                var dstu2extensionProperty = new JProperty(urlGroup.Key, dstu2extensions);
-
-                foreach (var dstu1extension in urlGroup)
-                {
-                    dstu1Extensions.Remove(dstu1extension);
-                    dstu2extensions.Add(dstu1extension);
-                    ((JObject)dstu1extension).Remove("url");
-                }
-
-                result.Add(dstu2extensionProperty);
-                rewriteExtensionProperties(dstu2extensionProperty.Value);
-            }
-
-            return result;
-        }
+        //private void rewriteExtensionProperties(JToken current)
+        //{
+        //    if (current is JObject)
+        //        rewriteExtensionProperties((JObject)current);
+        //    else if (current is JArray)
+        //        rewriteExtensionProperties((JArray)current);
+        //}
 
 
-        private void rewriteExtensionProperties(JArray current)
-        {
-            foreach (var element in current.Children())
-                rewriteExtensionProperties(element);
-        }
+        //private bool isExtensionProperty(string name)
+        //{
+        //    return name == "extension" || name == "modifierExtension";
+        //}
+
+        //private void rewriteExtensionProperties(JObject current)
+        //{
+        //    foreach (var property in current.Properties().ToList())  // Properties() is modified, so do a ToList()
+        //    {
+        //        if (property.Name == "extension")
+        //        {
+        //            var dstu1Extensions = (JArray)property.Value;
+        //            var convertedExtensions = convertExtensionArray(dstu1Extensions);
+
+        //            foreach (var extension in convertedExtensions) current.Add(extension);
+        //            property.Remove();
+        //        }
+        //        else if (property.Name == "modifierExtension")
+        //        {
+        //            var dstu1Extensions = (JArray)property.Value;
+        //            var convertedExtensions = convertExtensionArray(dstu1Extensions);
+
+        //            var modifierObject = new JObject();
+        //            var modifierProp = new JProperty("modifier", modifierObject);
+        //            foreach (var extension in convertedExtensions) modifierObject.Add(extension);
+        //            property.Remove();
+
+        //            current.Add(modifierProp);
+        //        }
+        //        else
+        //        {
+        //            // not an extension property, so this is an actual element.
+        //            rewriteExtensionProperties(property.Value);
+        //        }
+        //    }
+        //}
+
+        //private List<JProperty> convertExtensionArray(JArray dstu1Extensions)
+        //{
+        //    var result = new List<JProperty>();
+
+        //    // DSTU2 extensions are grouped by url, so sort them together
+        //    var urlGroups = dstu1Extensions.GroupBy(token => ((JObject)token)["url"].Value<string>());
+
+        //    foreach (var urlGroup in urlGroups.ToList())
+        //    {
+        //        var dstu2extensions = new JArray();
+        //        var dstu2extensionProperty = new JProperty(urlGroup.Key, dstu2extensions);
+
+        //        foreach (var dstu1extension in urlGroup)
+        //        {
+        //            dstu1Extensions.Remove(dstu1extension);
+        //            dstu2extensions.Add(dstu1extension);
+        //            ((JObject)dstu1extension).Remove("url");
+        //        }
+
+        //        result.Add(dstu2extensionProperty);
+        //        rewriteExtensionProperties(dstu2extensionProperty.Value);
+        //    }
+
+        //    return result;
+        //}
+
+
+        //private void rewriteExtensionProperties(JArray current)
+        //{
+        //    foreach (var element in current.Children())
+        //        rewriteExtensionProperties(element);
+        //}
 
 
 

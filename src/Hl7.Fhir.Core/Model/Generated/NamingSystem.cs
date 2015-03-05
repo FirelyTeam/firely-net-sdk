@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,29 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
         [NotMapped]
         public override string TypeName { get { return "NamingSystem"; } }
-        
-        /// <summary>
-        /// Indicates whether the namingsystem should be used
-        /// </summary>
-        [FhirEnumeration("NamingSystemStatus")]
-        public enum NamingSystemStatus
-        {
-            /// <summary>
-            /// System has been submitted but not yet approved.
-            /// </summary>
-            [EnumLiteral("proposed")]
-            Proposed,
-            /// <summary>
-            /// System is valid for use.
-            /// </summary>
-            [EnumLiteral("active")]
-            Active,
-            /// <summary>
-            /// System should no longer be used.
-            /// </summary>
-            [EnumLiteral("retired")]
-            Retired,
-        }
         
         /// <summary>
         /// Identifies the purpose of the namingsystem
@@ -134,20 +111,39 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "NamingSystemContactComponent"; } }
             
             /// <summary>
-            /// Name of person
+            /// Name of a individual to contact
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.HumanName Name
+            public Hl7.Fhir.Model.FhirString NameElement
             {
-                get { return _Name; }
-                set { _Name = value; OnPropertyChanged("Name"); }
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
-            private Hl7.Fhir.Model.HumanName _Name;
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Phone, email, etc.
+            /// Name of a individual to contact
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Contact details for individual or publisher
             /// </summary>
             [FhirElement("telecom", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
@@ -167,7 +163,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                     return dest;
                 }
@@ -186,7 +182,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
                 
                 return true;
@@ -198,7 +194,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 
                 return true;
@@ -445,26 +441,59 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposed | active | retired
+        /// Publication Date(/time)
         /// </summary>
-        [FhirElement("status", Order=110)]
+        [FhirElement("date", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> StatusElement
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Publication Date(/time)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
+        /// draft | active | retired
+        /// </summary>
+        [FhirElement("status", Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | active | retired
+        /// draft | active | retired
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.NamingSystem.NamingSystemStatus? Status
+        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -472,7 +501,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -480,7 +509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ISO 3-char country code
         /// </summary>
-        [FhirElement("country", Order=120)]
+        [FhirElement("country", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Code CountryElement
         {
@@ -512,7 +541,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// driver | provider | patient | bank
         /// </summary>
-        [FhirElement("category", Order=130)]
+        [FhirElement("category", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -525,7 +554,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who maintains system namespace?
         /// </summary>
-        [FhirElement("responsible", Order=140)]
+        [FhirElement("responsible", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ResponsibleElement
         {
@@ -557,7 +586,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What does namingsystem identify?
         /// </summary>
-        [FhirElement("description", Order=150)]
+        [FhirElement("description", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -589,7 +618,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How/where is it used
         /// </summary>
-        [FhirElement("usage", Order=160)]
+        [FhirElement("usage", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UsageElement
         {
@@ -621,7 +650,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", Order=170)]
+        [FhirElement("uniqueId", Order=180)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
@@ -633,22 +662,55 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> _UniqueId;
         
         /// <summary>
-        /// Who should be contacted for questions about namingsystem
+        /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("contact", Order=180)]
+        [FhirElement("publisher", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent Contact
+        public Hl7.Fhir.Model.FhirString PublisherElement
         {
-            get { return _Contact; }
+            get { return _PublisherElement; }
+            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _PublisherElement;
+        
+        /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Publisher
+        {
+            get { return PublisherElement != null ? PublisherElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  PublisherElement = null; 
+                else
+                  PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Publisher");
+            }
+        }
+        
+        /// <summary>
+        /// Contact details of the publisher
+        /// </summary>
+        [FhirElement("contact", InSummary=true, Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> Contact
+        {
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent _Contact;
+        private List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> _Contact;
         
         /// <summary>
         /// Use this instead
         /// </summary>
-        [FhirElement("replacedBy", Order=190)]
+        [FhirElement("replacedBy", Order=210)]
         [References("NamingSystem")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReplacedBy
@@ -668,14 +730,16 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>)TypeElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemStatus>)StatusElement.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(CountryElement != null) dest.CountryElement = (Hl7.Fhir.Model.Code)CountryElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(ResponsibleElement != null) dest.ResponsibleElement = (Hl7.Fhir.Model.FhirString)ResponsibleElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
                 if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(UniqueId.DeepCopy());
-                if(Contact != null) dest.Contact = (Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent)Contact.DeepCopy();
+                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(Contact.DeepCopy());
                 if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }
@@ -696,6 +760,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
@@ -703,6 +768,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(UsageElement, otherT.UsageElement)) return false;
             if( !DeepComparable.Matches(UniqueId, otherT.UniqueId)) return false;
+            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(ReplacedBy, otherT.ReplacedBy)) return false;
             
@@ -717,6 +783,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
@@ -724,6 +791,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(UsageElement, otherT.UsageElement)) return false;
             if( !DeepComparable.IsExactly(UniqueId, otherT.UniqueId)) return false;
+            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(ReplacedBy, otherT.ReplacedBy)) return false;
             

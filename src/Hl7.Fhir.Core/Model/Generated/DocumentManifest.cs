@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -234,23 +234,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If this document manifest replaces another
-        /// </summary>
-        [FhirElement("supercedes", Order=180)]
-        [References("DocumentManifest")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Supercedes
-        {
-            get { return _Supercedes; }
-            set { _Supercedes = value; OnPropertyChanged("Supercedes"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Supercedes;
-        
-        /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", Order=190)]
+        [FhirElement("description", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -280,22 +266,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Sensitivity of set of documents
-        /// </summary>
-        [FhirElement("confidentiality", Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Confidentiality
-        {
-            get { return _Confidentiality; }
-            set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Confidentiality;
-        
-        /// <summary>
         /// Contents of this set of documents
         /// </summary>
-        [FhirElement("content", Order=210)]
+        [FhirElement("content", Order=190)]
         [References("DocumentReference","Binary","Media")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -323,9 +296,7 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
-                if(Supercedes != null) dest.Supercedes = (Hl7.Fhir.Model.ResourceReference)Supercedes.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Confidentiality != null) dest.Confidentiality = (Hl7.Fhir.Model.CodeableConcept)Confidentiality.DeepCopy();
                 if(Content != null) dest.Content = new List<Hl7.Fhir.Model.ResourceReference>(Content.DeepCopy());
                 return dest;
             }
@@ -353,9 +324,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(SourceElement, otherT.SourceElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Supercedes, otherT.Supercedes)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.Matches(Confidentiality, otherT.Confidentiality)) return false;
             if( !DeepComparable.Matches(Content, otherT.Content)) return false;
             
             return true;
@@ -376,9 +345,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Supercedes, otherT.Supercedes)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.IsExactly(Confidentiality, otherT.Confidentiality)) return false;
             if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
             
             return true;

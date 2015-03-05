@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -131,6 +131,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
+            /// <summary>
+            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// </summary>
+            [EnumLiteral("unknown")]
+            Unknown,
         }
         
         /// <summary>
@@ -427,16 +432,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("name", Order=90)]
+        [FhirElement("code", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Name
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
-            get { return _Name; }
-            set { _Name = value; OnPropertyChanged("Name"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Name;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// Actual result
@@ -453,36 +458,17 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Value;
         
         /// <summary>
-        /// unknown | asked | temp | notasked +
+        /// Why the result is missing
         /// </summary>
         [FhirElement("dataAbsentReason", Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DataAbsentReason> DataAbsentReasonElement
+        public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
         {
-            get { return _DataAbsentReasonElement; }
-            set { _DataAbsentReasonElement = value; OnPropertyChanged("DataAbsentReasonElement"); }
+            get { return _DataAbsentReason; }
+            set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
         }
         
-        private Code<Hl7.Fhir.Model.DataAbsentReason> _DataAbsentReasonElement;
-        
-        /// <summary>
-        /// unknown | asked | temp | notasked +
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DataAbsentReason? DataAbsentReason
-        {
-            get { return DataAbsentReasonElement != null ? DataAbsentReasonElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DataAbsentReasonElement = null; 
-                else
-                  DataAbsentReasonElement = new Code<Hl7.Fhir.Model.DataAbsentReason>(value);
-                OnPropertyChanged("DataAbsentReason");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
         
         /// <summary>
         /// High, low, normal, etc.
@@ -671,14 +657,15 @@ namespace Hl7.Fhir.Model
         /// Unique Id for this particular observation
         /// </summary>
         [FhirElement("identifier", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Who and/or what this is about
@@ -786,9 +773,9 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
-                if(DataAbsentReasonElement != null) dest.DataAbsentReasonElement = (Code<Hl7.Fhir.Model.DataAbsentReason>)DataAbsentReasonElement.DeepCopy();
+                if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                 if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Element)Applies.DeepCopy();
@@ -797,7 +784,7 @@ namespace Hl7.Fhir.Model
                 if(ReliabilityElement != null) dest.ReliabilityElement = (Code<Hl7.Fhir.Model.Observation.ObservationReliability>)ReliabilityElement.DeepCopy();
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
@@ -822,9 +809,9 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-            if( !DeepComparable.Matches(DataAbsentReasonElement, otherT.DataAbsentReasonElement)) return false;
+            if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.Matches(Applies, otherT.Applies)) return false;
@@ -851,9 +838,9 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-            if( !DeepComparable.IsExactly(DataAbsentReasonElement, otherT.DataAbsentReasonElement)) return false;
+            if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.IsExactly(Applies, otherT.Applies)) return false;

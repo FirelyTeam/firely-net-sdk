@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Feb 17, 2015 17:24+0100 for FHIR v0.4.0
+// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,6 +126,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("text")]
             Text,
+            /// <summary>
+            /// Answer is a url (website, FTP site, etc.).
+            /// </summary>
+            [EnumLiteral("url")]
+            Url,
             /// <summary>
             /// Answer is a choice from a list of options.
             /// </summary>
@@ -271,7 +276,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Must group be included in data results?
+            /// Must question be answered in data results?
             /// </summary>
             [FhirElement("required", InSummary=true, Order=80)]
             [DataMember]
@@ -284,7 +289,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
-            /// Must group be included in data results?
+            /// Must question be answered in data results?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -303,7 +308,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Whether the group may repeat
+            /// Can question  have multiple answers?
             /// </summary>
             [FhirElement("repeats", InSummary=true, Order=90)]
             [DataMember]
@@ -316,7 +321,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
             
             /// <summary>
-            /// Whether the group may repeat
+            /// Can question  have multiple answers?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -813,7 +818,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Organization who designed the questionnaire
+        /// Organization/individual who designed the questionnaire
         /// </summary>
         [FhirElement("publisher", InSummary=true, Order=130)]
         [DataMember]
@@ -826,7 +831,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
-        /// Organization who designed the questionnaire
+        /// Organization/individual who designed the questionnaire
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -845,9 +850,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Contact information of the publisher
+        /// </summary>
+        [FhirElement("telecom", InSummary=true, Order=140)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
+        {
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+        
+        /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=140)]
+        [FhirElement("group", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Questionnaire.GroupComponent Group
@@ -870,6 +889,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Group != null) dest.Group = (Hl7.Fhir.Model.Questionnaire.GroupComponent)Group.DeepCopy();
                 return dest;
             }
@@ -893,6 +913,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
             
             return true;
@@ -909,6 +930,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
             
             return true;

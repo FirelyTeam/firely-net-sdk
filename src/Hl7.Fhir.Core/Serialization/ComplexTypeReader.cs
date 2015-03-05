@@ -94,19 +94,7 @@ namespace Hl7.Fhir.Serialization
             {
                 //hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member
-
-                //if (memberName.StartsWith("http:"))
-                //{
-                //    // This is the special json-style extension
-                //    var mappedProperty = mapping.FindMappedElementByName("extension");
-                //    var value = (List<Extension>)mappedProperty.GetValue(existing);
-
-                //    var reader = new DispatchingReader(memberData.Item2);
-                //    value = (List<Extension>)reader.Deserialize(mappedProperty, "extension", value);
-
-                //    foreach (var ext in value) ext.Url = memberName;
-                //    mappedProperty.SetValue(existing, value);
-                //}
+             
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
                 var mappedProperty = mapping.FindMappedElementByName(memberName);
