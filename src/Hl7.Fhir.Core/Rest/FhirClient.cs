@@ -143,9 +143,10 @@ namespace Hl7.Fhir.Rest
         /// <param name="ifNoneMatch">The (weak) ETag to use in a conditional read. Optional.</param>
         /// <param name="ifModifiedSince">Last modified since date in a conditional read. Optional.</param>
         /// <typeparam name="TResource">The type of resource to read. Resource or DomainResource is allowed if exact type is unknown</typeparam>
-        /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
+        /// <returns>The requested resource</returns>
+        /// <remarks>This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
-        /// url, it must reference an address within the endpoint.</returns>
+        /// url, it must reference an address within the endpoint.</remarks>
         public TResource Read<TResource>(string location, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), ifNoneMatch, ifModifiedSince);
@@ -155,30 +156,53 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Update (or create) a resource
         /// </summary>
-        /// <param name="resource">A ResourceEntry containing the resource to update</param>
+        /// <param name="resource">The resource to update</param>
         /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
-        /// <returns>If refresh=true, 
-        /// this function will return a ResourceEntry with all newly created data from the server. Otherwise
-        /// the returned result will only contain a SelfLink if the update was actually a create.
-        /// Throws an exception when the update failed,
-        /// in particular when an update conflict is detected and the server returns a HTTP 409. When the ResourceEntry
-        /// passed as the argument does not have a SelfLink, the server may return a HTTP 412 to indicate it
-        /// requires version-aware updates.</returns>
+        /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
+        /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
+        /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
+        /// created.</remarks>
         public TResource Update<TResource>(TResource resource, bool versionAware=false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             if (resource.Id == null) throw Error.Argument("resource", "Resource needs a non-null Id to send the update to");
 
-            resource.ResourceBase = Endpoint;
-
             var upd = new TransactionBuilder(Endpoint).Update(resource.Id, resource);
+
+            return internalUpdate<TResource>(resource, versionAware, upd);
+        }
+
+
+        /// <summary>
+        /// Conditionally update (or create) a resource
+        /// </summary>
+        /// <param name="resource">The resource to update</param>
+        /// <param name="condition">Criteria used to locate the resource to update</param>
+        /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
+        /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
+        /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
+        /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
+        /// If the criteria passed in condition do not match a resource a new resource with a server assigned id will be created.</remarks>
+        public TResource Update<TResource>(TResource resource, SearchParams condition, bool versionAware = false) where TResource : Resource
+        {
+            if (resource == null) throw Error.ArgumentNull("resource");
+            if (condition == null) throw Error.ArgumentNull("condition");
+            
+            var upd = new TransactionBuilder(Endpoint).Update(condition, resource);
+
+            return internalUpdate<TResource>(resource, versionAware, upd);
+        }
+
+        private TResource internalUpdate<TResource>(TResource resource, bool versionAware, IUpdateEntryBuilder upd) where TResource : Resource
+        {
+            resource.ResourceBase = Endpoint;
             Bundle tx;
 
             // Supply the version we are updating if we use version-aware updates.
             if (versionAware && resource.HasVersionId)
                 tx = upd.IfMatch(resource.VersionId).Build();
-            else 
+            else
                 tx = upd.Build();
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
@@ -213,26 +237,39 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Delete a resource represented by the entry
+        /// Delete a resource
         /// </summary>
-        /// <param name="entry">Entry containing the id of the resource to delete</param>
-        /// <returns>Throws an exception when the delete failed, though this might
-        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
-        /// already deleted).</returns>
-        public void Delete(Resource entry)
+        /// <param name="resource">The resource to delete</param>
+        public void Delete(Resource resource)
         {
-            if (entry == null) throw Error.ArgumentNull("entry");
-            if (entry.Id == null) throw Error.Argument("entry", "Entry must have an id");
+            if (resource == null) throw Error.ArgumentNull("entry");
+            if (resource.Id == null) throw Error.Argument("entry", "Entry must have an id");
 
-            Delete(entry.ResourceIdentity(Endpoint).WithoutVersion());
+            Delete(resource.ResourceIdentity(Endpoint).WithoutVersion());
         }
 
+
+        /// <summary>
+        /// Conditionally delete a resource
+        /// </summary>
+        /// <param name="resourceType">The type of resource to delete</param>
+        /// <param name="condition">Criteria to use to match the resource to delete.</param>
+        public void Delete(string resourceType, SearchParams condition)
+        {
+            if (resourceType == null) throw Error.ArgumentNull("resourceType");
+            if (condition == null) throw Error.ArgumentNull("condition");
+
+            var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).Build();
+            _requester.Execute<Resource>(tx, HttpStatusCode.NoContent);
+
+            return;
+        }
 
         /// <summary>
         /// Create a resource on a FHIR endpoint
         /// </summary>
         /// <param name="resource">The resource instance to create</param>
-        /// <returns>A ResourceEntry containing the metadata (id, selflink) associated with the resource as created on the server, or an exception if the create failed.</returns>
+        /// <returns>The resource as created on the server, or an exception if the create failed.</returns>
         /// <typeparam name="TResource">The type of resource to create</typeparam>
         public TResource Create<TResource>(TResource resource) where TResource : Resource
         {
@@ -241,6 +278,24 @@ namespace Hl7.Fhir.Rest
             var tx = new TransactionBuilder(Endpoint).Create(resource).Build();
 
             return _requester.Execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+
+
+        /// <summary>
+        /// Conditionally Create a resource on a FHIR endpoint
+        /// </summary>
+        /// <param name="resource">The resource instance to create</param>
+        /// <param name="condition">The criteria</param>
+        /// <returns>The resource as created on the server, or an exception if the create failed.</returns>
+        /// <typeparam name="TResource">The type of resource to create</typeparam>
+        public TResource Create<TResource>(TResource resource, SearchParams condition) where TResource : Resource
+        {
+            if (resource == null) throw Error.ArgumentNull("resource");
+            if (condition == null) throw Error.ArgumentNull("condition");
+
+            var tx = new TransactionBuilder(Endpoint).Create(resource,condition).Build();
+
+            return _requester.Execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
 
         /// <summary>

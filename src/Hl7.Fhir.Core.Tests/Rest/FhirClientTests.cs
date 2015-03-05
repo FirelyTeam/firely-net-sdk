@@ -421,11 +421,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestWithParam()
         {
-            //BUG: The "?" in the url gets encoded into %3F, which is not correct
-            FhirClient client = new FhirClient(testEndpoint);
+            var client = new FhirClient(testEndpoint);
             var res = client.Get("ValueSet/101/$validate?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
             Assert.IsNotNull(res);
         }

@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Rest
             if (uri.IsAbsoluteUri)
                 _path = new RestUrl(url);
             else
-                _path = _path.AddPath(url);
+                _path = new RestUrl(_path.ToString() + url);
 
             return this;
         }
@@ -119,6 +119,17 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public IUpdateEntryBuilder Update(SearchParams condition, Resource body)
+        {
+            _newEntry.Transaction.Method = Bundle.HTTPVerb.PUT;
+            _newEntry.Resource = body;
+            _path = _path.AddPath(body.TypeName);
+            _path.AddParams(condition.ToUriParamList());
+
+            return this;
+        }
+
+
         IEntryBuilder IUpdateEntryBuilder.IfMatch(string eTag)
         {
             _newEntry.Transaction.IfMatch = eTag;
@@ -132,6 +143,15 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public IEntryBuilder Delete(string resourceType, SearchParams condition)
+        {
+            _newEntry.Transaction.Method = Bundle.HTTPVerb.DELETE;
+            _path = _path.AddPath(resourceType);
+            _path.AddParams(condition.ToUriParamList());
+
+            return this;
+        }
+
         public IEntryBuilder Create(Resource body)
         {
             _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
@@ -140,6 +160,20 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public IEntryBuilder Create(Resource body, SearchParams condition)
+        {
+            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
+            _newEntry.Resource = body;
+            _path = _path.AddPath(body.TypeName);
+
+            var nonExist = new RestUrl(_path);
+            nonExist.AddParams(condition.ToUriParamList());
+            _newEntry.Transaction.IfNoneExist = nonExist.ToString();
+
+            return this;
+        }
+
+        
         public IEntryBuilder Conformance()
         {
             _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
@@ -221,10 +255,7 @@ namespace Hl7.Fhir.Rest
             _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
             if (resourceType != null) _path = _path.AddPath(resourceType);
 
-            foreach (var par in q.ToUriParamList())
-            {
-                _path.AddParam(par.Item1, par.Item2);
-            }
+            _path.AddParams(q.ToUriParamList());
 
             return this;
         }

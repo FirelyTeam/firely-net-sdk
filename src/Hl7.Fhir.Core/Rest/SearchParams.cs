@@ -46,7 +46,7 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Rest
 {
     /// <summary>
-    /// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
+    /// Contains criteria that can be passed to a search operation or conditional update/delete/create
     /// </summary>
     public class SearchParams
     {
