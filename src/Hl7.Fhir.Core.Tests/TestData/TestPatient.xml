@@ -8,7 +8,7 @@
       <meta>
         <lastUpdated value="2012-05-29T23:45:32Z"/>
       </meta>
-      <text>
+      <!--<text>
         <status value="generated"/>
         <div xmlns="http://www.w3.org/1999/xhtml">
           Everywoman, Eve. SSN: &amp;45
@@ -20,7 +20,7 @@
 					.Replace("&nbsp;", "&#160;").Replace("&iexcl;", "&#161;").Replace("&cent;", "&#162;").Replace("&pound;", "&#163;").Replace("&curren;", "&#164;").Replace("&yen;", "&#165;").Replace("&brvbar;", "&#166;").Replace("&sect;", "&#167;").Replace("&uml;", "&#168;").Replace("&copy;", "&#169;").Replace("&ordf;", "&#170;").Replace("&laquo;", "&#171;").Replace("&not;", "&#172;").Replace("&shy;", "&#173;").Replace("&reg;", "&#174;").Replace("&macr;", "&#175;").Replace("&deg;", "&#176;").Replace("&plusmn;", "&#177;").Replace("&sup2;", "&#178;").Replace("&sup3;", "&#179;").Replace("&acute;", "&#180;").Replace("&micro;", "&#181;").Replace("&para;", "&#182;").Replace("&middot;", "&#183;").Replace("&cedil;", "&#184;").Replace("&sup1;", "&#185;").Replace("&ordm;", "&#186;").Replace("&raquo;", "&#187;").Replace("&frac14;", "&#188;").Replace("&frac12;", "&#189;").Replace("&frac34;", "&#190;").Replace("&iquest;", "&#191;").Replace("&Agrave;", "&#192;").Replace("&Aacute;", "&#193;").Replace("&Acirc;", "&#194;").Replace("&Atilde;", "&#195;").Replace("&Auml;", "&#196;").Replace("&Aring;", "&#197;").Replace("&AElig;", "&#198;").Replace("&Ccedil;", "&#199;").Replace("&Egrave;", "&#200;").Replace("&Eacute;", "&#201;").Replace("&Ecirc;", "&#202;").Replace("&Euml;", "&#203;").Replace("&Igrave;", "&#204;").Replace("&Iacute;", "&#205;").Replace("&Icirc;", "&#206;").Replace("&Iuml;", "&#207;").Replace("&ETH;", "&#208;").Replace("&Ntilde;", "&#209;").Replace("&Ograve;", "&#210;").Replace("&Oacute;", "&#211;").Replace("&Ocirc;", "&#212;").Replace("&Otilde;", "&#213;").Replace("&Ouml;", "&#214;").Replace("&times;", "&#215;").Replace("&Oslash;", "&#216;");
 
 				</div>
-      </text>
+      </text>-->
       <identifier>
         <label value="SSN"/>
         <system value="http://hl7.org/fhir/sid/us-ssn"/>
