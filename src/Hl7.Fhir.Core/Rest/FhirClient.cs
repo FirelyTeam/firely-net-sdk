@@ -44,6 +44,8 @@ namespace Hl7.Fhir.Rest
 
             Endpoint = endpoint;
             _requester = new Requester(Endpoint);
+            _requester.BeforeRequest = this.BeforeRequest;
+            _requester.AfterResponse = this.AfterResponse;
         }
 
 
