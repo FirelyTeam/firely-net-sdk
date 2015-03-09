@@ -12,7 +12,7 @@
         <id>http://lab03.ielab.nl/lm/fhir/MessageHeader/1cbdfb97-5859-48a4-8301-d54eab818d69</id>
         <updated>2014-09-08T11:47:14+02:00</updated>
         <category term="http://hl7.org/fhir/Profile/example-lipid-profile#lipidResultMessage" scheme="http://hl7.org/fhir/tag/profile"/>
-        <content type="text/xml">
+        <content type="text/xml">          
             <MessageHeader xmlns="http://hl7.org/fhir">               
                 <identifier value="1cbdfb97-5859-48a4-8301-d54eab818d69"/>
                 <timestamp value="2014-09-08T11:47:14+02:00"/>

@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -26,37 +27,10 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static bool IsConformanceResource(string name)
         {
-            return name == "Profile" || name == "ExtensionDefinition" || name == "SearchParameter" ||
-                    name == "OperationDefinition" || name == "ValueSet" || name == "ConceptMap" ||
-                    name == "Conformance" || name == "NamingSystem" || name == "DataElement";
+            return name == "Conformance" || name == "StructureDefinition" || name == "ValueSet" || name == "ConceptMap" ||
+                name == "DataElement" || name == "OperationDefinition" || name == "SearchParameter" || name == "NamingSystem";
         }
-
-        public static string GetIdentifyingElementName(string name)
-        {
-            switch(name)
-            {
-                case "Profile": return "url";
-                case "ExtensionDefinition": return "url";
-                case "SearchParameter": return "url";
-                case "OperationDefinition": return "identifier";
-                case "ValueSet": return "identifier";
-                case "ConceptMap": return "identifier";
-                case "Conformance": return "identifier";
-                case "DataElement" : throw Error.NotImplemented("DataElement used Identifier datatype to represent identity. This is unsupported");
-                case "NamingSystem": throw Error.NotImplemented("NamingSystem does not have an identifying element");
-                default: return null;
-            }
-        }
-
-        public static string GetNameElementName(string name)
-        {
-            if(!IsConformanceResource(name)) return null;
-
-            if (name == "OperationDefinition") return "title";
-
-            return "name";
-        }
-
+     
         private Stream _input;
         private string _origin;
 
@@ -78,9 +52,7 @@ namespace Hl7.Fhir.Specification.Source
             var resources = StreamResources();
 
             return resources.Where(res => IsConformanceResource(res.Name.LocalName) &&
-                res.Element(XmlNs.XFHIR + GetIdentifyingElementName(res.Name.LocalName))
-                            .Attribute("value").Value == identifier)
-                            .SingleOrDefault();
+                getPrimitiveValueElement(res,"url") == identifier).SingleOrDefault();
         }
 
         private string getPrimitiveValueElement(XElement element, string name)
@@ -108,10 +80,10 @@ namespace Hl7.Fhir.Specification.Source
                 .Select(res =>
                         new ConformanceInformation()
                         {
-                                Identifier = getPrimitiveValueElement(res, GetIdentifyingElementName(res.Name.LocalName)),
-                                Name = getPrimitiveValueElement(res, GetNameElementName(res.Name.LocalName)),
-                                Origin = _origin,
-                                Type = stringNameToEnum(res.Name.LocalName)
+                            Url = getPrimitiveValueElement(res, "url"),
+                            Name = getPrimitiveValueElement(res, "name"),
+                            Origin = _origin,
+                            Type = stringNameToEnum(res.Name.LocalName)
                         });                       
         }
 
@@ -136,7 +108,9 @@ namespace Hl7.Fhir.Specification.Source
 
             if (root == "Bundle")
             {
-                while (reader.Read())
+                if (!reader.ReadToDescendant("entry", XmlNs.FHIR)) yield break;
+
+                while (!reader.EOF)
                 {
                     if (reader.NodeType == XmlNodeType.Element
                         && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
@@ -144,6 +118,8 @@ namespace Hl7.Fhir.Specification.Source
                         var entryNode = (XElement)XElement.ReadFrom(reader);
                         yield return entryNode.Elements().First().Elements().First();
                     }
+                    else
+                        reader.Read();
                 }
             }
             else if (root != null)
@@ -153,29 +129,6 @@ namespace Hl7.Fhir.Specification.Source
             }
             else
                 yield break;
-        }
-
-
-        //public static string GetIdentifierFromConformanceResource(DomainResource r)
-        //{
-        //    if (r is Profile)
-        //        return ((Profile)r).Url;
-        //    else if (r is ExtensionDefinition)
-        //        return ((ExtensionDefinition)r).Url;
-        //    else if (r is SearchParameter)
-        //        return ((SearchParameter)r).Url;
-        //    else if (r is OperationDefinition)
-        //        return ((OperationDefinition)r).Identifier;
-        //    else if (r is ValueSet)
-        //        return ((ValueSet)r).Identifier;
-        //    else if (r is ConceptMap)
-        //        return ((ConceptMap)r).Identifier;
-        //    else if (r is Conformance)
-        //        return ((Conformance)r).Identifier;
-        //    else if (r is NamingSystem)
-        //        throw Error.NotImplemented("NamingSystem is not yet identifiable by any element");
-        //    else
-        //        return null;
-        //}
+        }      
     }
 }

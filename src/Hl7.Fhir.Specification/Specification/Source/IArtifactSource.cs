@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
 
     public class ConformanceInformation
     {
-        public string Identifier { get; set; }
+        public string Url { get; set; }
 
         public ResourceType Type { get; set; }
                 
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public override string ToString()
         {
-            return String.Format("{0} resource with id {1} ({2}), read from {3}", Type.ToString(), Identifier, Name, Origin);
+            return String.Format("{0} resource with id {1} ({2}), read from {3}", Type.ToString(), Url, Name, Origin);
         }
     }
 }

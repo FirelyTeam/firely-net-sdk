@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Specification.Source
             if (identifier == null) throw Error.ArgumentNull("identifier");
             prepareResources();
 
-            var info = _resourceInformation.SingleOrDefault(ci => ci.Identifier == identifier);
+            var info = _resourceInformation.SingleOrDefault(ci => ci.Url == identifier);
             
             if(info == null) return null;
 

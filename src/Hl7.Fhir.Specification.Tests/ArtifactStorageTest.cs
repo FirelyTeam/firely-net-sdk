@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation-min.zip");
 
             var fa = new ZipCacher(zipFile,cacheKey);
 
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private string prepareExampleDirectory()
         {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation-min.zip");
             var zip = new ZipCacher(zipFile);
             var zipPath = zip.GetContentDirectory();
 
@@ -127,11 +127,10 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(pat);
             }
 
-            var vs = fa.ReadConformanceResource("urn:uuid:256a5231-a2bb-49bd-9fea-f349d428b70d") as ValueSet;
+            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase") as StructureDefinition;
+    //        var vs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/observation-reason") as StructureDefinition;
+           
             Assert.IsNotNull(vs);
-
-            var ed = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/openEHR-location") as StructureDefinition;
-            Assert.IsNotNull(ed);
 
             var cis = fa.ListConformanceResources();
             foreach (var ci in cis) Debug.WriteLine(ci.ToString());
@@ -182,17 +181,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Condition");
+            var rs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
 
-            rs = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/ValueSet");
+            rs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
 
-            var dt = fa.ReadConformanceResource("http://hl7.org/fhir/Profile/Money");
-            Assert.IsNotNull(rs);
+            var dt = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/Money");
+            Assert.IsNotNull(dt);
             Assert.IsTrue(dt is StructureDefinition);
+
+            var ext = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/observation-reason");
+            Assert.IsNotNull(ext);
+            Assert.IsTrue(ext is StructureDefinition);           
         }
 
 
@@ -216,44 +219,39 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-       // //Re-enable when servers support DSTU2
-       // [TestMethod,Ignore]
-       // public void RetrieveWebArtifact()
-       // {
-       //     var wa = new WebArtifactSource();
+        [TestMethod]
+        public void RetrieveWebArtifact()
+        {
+            var wa = new WebArtifactSource();
 
-       //     var artifact = wa.ReadConformanceResource(new Uri("http://fhir.healthintersections.com.au/open/Profile/Alert"));
+            var artifact = wa.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Alert");
 
-       //     Assert.IsNotNull(artifact);
-       //     Assert.IsTrue(artifact is Profile);
-       //     Assert.AreEqual("alert", ((Profile) artifact).Name);
-       // }
+            Assert.IsNotNull(artifact);
+            Assert.IsTrue(artifact is StructureDefinition);
+            Assert.AreEqual("Alert", ((StructureDefinition)artifact).Name);
+        }
 
-       // [TestMethod]
-       // public void RetrieveArtifactMulti()
-       // {
-       //     var resolver = ArtifactResolver.CreateDefault();
+        [TestMethod]
+        public void RetrieveArtifactMulti()
+        {
+            var resolver = ArtifactResolver.CreateDefault();
 
-       //     resolver.Prepare();
+            var vs = resolver.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
 
-       //     var vs = resolver.ReadConformanceResource(new Uri("http://hl7.org/fhir/v2/vs/0292"));
-       //     Assert.IsNotNull(vs);
-       //     Assert.IsTrue(vs is ValueSet);
+            using (var a = resolver.ReadContentArtifact("patient.sch"))
+            {
 
-       //     using (var a = resolver.ReadContentArtifact("patient.sch"))
-       //     {
+                Assert.IsNotNull(a);
+            }
 
-       //         Assert.IsNotNull(a);
-       //     }
+            var artifact = resolver.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/alert");
 
-       //     //TODO: Re-enable when servers support DSTU2
-
-       //     //var artifact = resolver.ReadResourceArtifact(new Uri("http://fhir.healthintersections.com.au/open/Profile/alert"));
-
-       //     //Assert.IsNotNull(artifact);
-       //     //Assert.IsTrue(artifact is Profile);
-       //     //Assert.AreEqual("alert", ((Profile)artifact).Name);
-       // }
+            Assert.IsNotNull(artifact);
+            Assert.IsTrue(artifact is StructureDefinition);
+            Assert.AreEqual("Alert", ((StructureDefinition)artifact).Name);
+        }
 
         [TestMethod]
         public void TestSourceCaching()

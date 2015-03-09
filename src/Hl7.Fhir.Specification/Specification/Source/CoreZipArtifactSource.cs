@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Source
 #if !PORTABLE45
 
     /// <summary>
-    /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip
+    /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip/validation-min.zip
     /// </summary>
     public class CoreZipArtifactSource : IArtifactSource
     {
@@ -64,8 +64,10 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (_prepared) return;
 
-            var zipPath = Path.Combine(_contentDirectory, "validation.zip");
-            if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation.zip");
+            var zipPath = Path.Combine(_contentDirectory, "validation-min.zip");
+            if (!File.Exists(zipPath)) zipPath = Path.Combine(_contentDirectory, "validation.zip");
+
+            if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation-min.zip nor validation.zip");
            
             var zc = new ZipCacher(zipPath, CACHE_KEY);
 

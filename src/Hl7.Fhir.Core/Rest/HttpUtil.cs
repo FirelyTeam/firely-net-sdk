@@ -67,7 +67,6 @@ namespace Hl7.Fhir.Rest
 
         public static byte[] ReadAllFromStream(Stream s)
         {
-            //int bufferSize = contentLength < 4096 ? contentLength : 4096;
             int bufferSize = 4096;
 
             byte[] byteBuffer = new byte[bufferSize];

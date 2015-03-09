@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 //using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
@@ -34,27 +36,21 @@ namespace Hl7.Fhir.Specification.Source
 
         public Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier)
         {
-            throw new NotImplementedException();
+            if (identifier == null) throw Error.ArgumentNull("identifier");
 
-            //if (artifactId == null) throw Error.ArgumentNull("artifactId");
-            //if (!artifactId.IsAbsoluteUri) Error.Argument("artifactId", "Uri must be absolute");
+            var id = new ResourceIdentity(identifier);
 
-            //var id = new ResourceIdentity(artifactId);
+            var client = new FhirClient(id.BaseUri);
+            client.Timeout = 5000;  //ms
 
-            //var client = new FhirClient(id.Endpoint);
-            //client.Timeout = 5000;  //ms
-
-            //try
-            //{
-            //    var artifactEntry = client.Read(id);
-
-            //    return artifactEntry != null ? artifactEntry.Resource : null;
-            //}
-            //catch
-            //{
-            //    return null;
-            //}
-            
+            try
+            {
+                return client.Read<Resource>(id);
+            }
+            catch(FhirOperationException)
+            {
+                return null;
+            }            
         }
     }
 }

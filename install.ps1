@@ -1,7 +1,7 @@
 param($installPath, $toolsPath, $package, $project)
 echo "Project: $project"
 
-$validation_file = $project.ProjectItems.Item("validation.zip")
+$validation_file = $project.ProjectItems.Item("validation-min.zip")
  
 # set 'Copy To Output Directory' to 'Copy if newer'
 $copyToOutput1 = $validation_file.Properties.Item("CopyToOutputDirectory")

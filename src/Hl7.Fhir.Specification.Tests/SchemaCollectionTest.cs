@@ -54,14 +54,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSchemaCollectionValidation()
         {
-            var s = File.ReadAllText(@"TestData\example-lipid-profile-testmessage.xml");
+            var s = File.ReadAllText(@"TestData\TestPatient.xml");
             var doc = FhirParser.XDocumentFromXml(s);
 
-            bool hasError = false;
+            string message = null;
 
-            doc.Validate(SchemaCollection.ValidationSchemaSet, (source, args) => hasError = true);
+            doc.Validate(SchemaCollection.ValidationSchemaSet, (source, args) => message = args.Message);
 
-            Assert.IsFalse(hasError);
+            Debug.WriteLine(message);
+            Assert.IsNull(message);
         }
 
     }
