@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Rest
         public Prefer Prefer { get; set; }
 
         public Action<HttpWebRequest> BeforeRequest { get; set; }
-        public Action<WebResponse> AfterResponse { get; set; }
+        public Action<HttpWebResponse> AfterResponse { get; set; }
 
         public Bundle.BundleEntryTransactionResponseComponent LastResult { get; private set; }
 

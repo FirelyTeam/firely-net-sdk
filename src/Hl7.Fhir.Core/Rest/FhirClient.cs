@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Rest
         /// Inspect the HttpWebResponse as it came back from the server 
         /// </summary>
         /// <param name="webResponse"></param>
-        protected virtual void AfterResponse(WebResponse webResponse)
+        protected virtual void AfterResponse(HttpWebResponse webResponse)
         {
             // Default implementation: call event
             if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse));
@@ -1201,11 +1201,11 @@ namespace Hl7.Fhir.Rest
 
     public class AfterResponseEventArgs : EventArgs
     {
-        public AfterResponseEventArgs(WebResponse webResponse)
+        public AfterResponseEventArgs(HttpWebResponse webResponse)
         {
             this.RawResponse = webResponse;
         }
 
-        public WebResponse RawResponse { get; internal set; }
+        public HttpWebResponse RawResponse { get; internal set; }
     }
 }
