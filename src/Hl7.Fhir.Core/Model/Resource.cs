@@ -58,9 +58,9 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public ResourceIdentity ResourceIdentity(string baseUrl = null)
         {
-            var versionId = Meta != null && Meta.VersionId != null ? Meta.VersionId : null;
+            if (Id == null) return null;
 
-            var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, versionId);
+            var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, VersionId);
 
             if (!string.IsNullOrEmpty(baseUrl))
                 return result.WithBase(baseUrl);

@@ -156,6 +156,9 @@ namespace Hl7.Fhir.Rest
         private static bool isBinaryResponse(HttpWebResponse response)
         {
             var responseUri = response.ResponseUri.OriginalString;
+
+            if (responseUri.Contains("/_history")) return false;
+
             return responseUri.EndsWith("/Binary") || responseUri.EndsWith("/Binary?") || responseUri.Contains("/Binary/");
         }
 

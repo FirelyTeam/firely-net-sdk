@@ -545,6 +545,19 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
+        public void TestSearchByPersonaCode()
+        {
+            var client = new FhirClient(testEndpoint);
+
+            var pats =
+              client.Search<Patient>(
+                new[] { string.Format("identifier={0}|{1}", "http://hl7.org/fhir/sid/us-ssn", "444222222") });
+            var pat = (Patient)pats.Entry.First().Resource;
+            client.Update<Patient>(pat);
+        }
+
+
+        [TestMethod]
         public void CreateDynamic()
         {
             Resource furore = new Organization

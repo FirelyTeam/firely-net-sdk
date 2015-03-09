@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("Hl7.Fhir.Core")]
-[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2014")]
+[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.20.1.*")]
+[assembly: AssemblyVersion("0.20.2.*")]
 
 #if DEBUG
 [assembly:InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
