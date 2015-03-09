@@ -575,5 +575,21 @@ namespace Hl7.Fhir.Tests.Rest
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);
         }
+
+        [TestMethod]
+        public void CallsCallbacks()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            bool calledBefore=false;
+            HttpStatusCode? status=null;
+
+            client.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) => calledBefore = true;
+            client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => status = e.RawResponse.StatusCode;
+
+            client.Read<Patient>("Patient/1");
+            Assert.IsTrue(calledBefore);
+            Assert.IsNotNull(status);
+        }
     }
 }

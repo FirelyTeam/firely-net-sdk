@@ -114,10 +114,14 @@ namespace Hl7.Fhir.Rest
 
         private static byte[] readBody(HttpWebResponse response)
         {
-            if (response.ContentLength > 0)
+            if (response.ContentLength != 0)
             {
-                long contentlength = response.ContentLength;
-                return HttpUtil.ReadAllFromStream(response.GetResponseStream(), (int)contentlength);
+                var body = HttpUtil.ReadAllFromStream(response.GetResponseStream());
+
+                if (body.Length > 0) 
+                    return body; 
+                else 
+                    return null;
             }
             else
                 return null;

@@ -65,11 +65,8 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public const string HISTORY_PARAM_COUNT = SearchParams.SEARCH_PARAM_COUNT;
 
-        public static byte[] ReadAllFromStream(Stream s, int contentLength)
+        public static byte[] ReadAllFromStream(Stream s)
         {
-            if (contentLength == 0)
-                return null;
-
             //int bufferSize = contentLength < 4096 ? contentLength : 4096;
             int bufferSize = 4096;
 
