@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirClient(testEndpoint);

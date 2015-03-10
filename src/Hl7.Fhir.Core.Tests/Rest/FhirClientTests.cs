@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void CreateEditDelete()
         {
             var pat = (Patient)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
@@ -394,31 +394,31 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"),Ignore]
         public void History()
         {
-            //DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
+            DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
 
-            //CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
+            CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
 
-            //FhirClient client = new FhirClient(testEndpoint);
-            //Bundle history = client.History(createdTestPatientUrl);
-            //Assert.IsNotNull(history);
-            //Assert.AreEqual(4, history.Entry.Count());
-            //Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
-            //Assert.AreEqual(1, history.Entry.Where(entry => entry.Deleted != null).Count());
+            FhirClient client = new FhirClient(testEndpoint);
+            Bundle history = client.History(createdTestPatientUrl);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());            
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
 
             //// Now, assume no one is quick enough to insert something between now and the next
             //// tests....
 
-            //history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions);
-            //Assert.IsNotNull(history);
-            //Assert.AreEqual(4, history.Entry.Count());
-            //Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
-            //Assert.AreEqual(1, history.Entry.Where(entry => entry.Deleted != null).Count());
+            history = client.TypeHistory("Patient",timestampBeforeCreationAndDeletions);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
 
-            //history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
-            //Assert.IsNotNull(history);
-            //Assert.AreEqual(3, history.Entry.Count());
-            //Assert.AreEqual(2, history.Entry.Where(entry => entry.Resource != null).Count());
-            //Assert.AreEqual(1, history.Entry.Where(entry => entry.Deleted != null).Count());
+            history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(3, history.Entry.Count());
+            Assert.AreEqual(2, history.Entry.Where(entry => entry.Resource != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
         }
 
 
@@ -430,96 +430,97 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(res);
         }
 
-        [TestMethod, TestCategory("FhirClient"), Ignore]
+        [TestMethod, TestCategory("FhirClient"),Ignore]
         public void ManipulateMeta()
         {
-          //  FhirClient client = new FhirClient(testEndpoint);
-          //  var pat = FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
-          //  var key = new Random().Next();
-          //  pat.Id = "NetApiMetaTestPatient" + key;
+           FhirClient client = new FhirClient(testEndpoint);
+           var pat = FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
+           var key = new Random().Next();
+           pat.Id = "NetApiMetaTestPatient" + key;
 
-          //  var meta = new Resource.ResourceMetaComponent();
-          //  meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ1-" + key));
-          //  meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
-          //  meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
-          //  pat.Meta = meta;
+           var meta = new Meta();
+           meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ1-" + key));
+           meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
+           meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
+           pat.Meta = meta;
 
-          //  // Before we begin, ensure that our new tags are not actually used when doing System Meta()
-          //  var wsm = client.WholeSystemMeta();
-          //  Assert.IsFalse(wsm.Profile.Contains("http://someserver.org/fhir/Profile/XYZ1-" + key));
-          //  Assert.IsFalse(wsm.Security.Select(c => c.Code + "@" + c.System).Contains("1234-" + key + "@http://mysystem.com/sec"));
-          //  Assert.IsFalse(wsm.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag1-" + key + "@http://mysystem.com/tag"));
+          //Before we begin, ensure that our new tags are not actually used when doing System Meta()
+          var wsm = client.Meta();
+          Assert.IsFalse(wsm.Meta.Profile.Contains("http://someserver.org/fhir/Profile/XYZ1-" + key));
+          Assert.IsFalse(wsm.Meta.Security.Select(c => c.Code + "@" + c.System).Contains("1234-" + key + "@http://mysystem.com/sec"));
+          Assert.IsFalse(wsm.Meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag1-" + key + "@http://mysystem.com/tag"));
 
-          //  Assert.IsFalse(wsm.Profile.Contains("http://someserver.org/fhir/Profile/XYZ2-" + key));
-          //  Assert.IsFalse(wsm.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
-          //  Assert.IsFalse(wsm.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
+          Assert.IsFalse(wsm.Meta.Profile.Contains("http://someserver.org/fhir/Profile/XYZ2-" + key));
+          Assert.IsFalse(wsm.Meta.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
+          Assert.IsFalse(wsm.Meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
 
 
-          //  // First, create a patient with the first set of meta
-          //  var pat2 = client.Create(pat);
-          ////  var loc = pat2.GetResourceLocation(testEndpoint).WithoutVersion();
-          //  var loc = pat2.ResourceIdentity(testEndpoint);
+          // First, create a patient with the first set of meta
+          var pat2 = client.Create(pat);
+          var loc = pat2.ResourceIdentity(testEndpoint);          
 
-          //  // Meta should be present on created patient
-          //  verifyMeta(pat2.Meta, false,key);
+          // Meta should be present on created patient
+          verifyMeta(pat2.Meta, false,key);
 
-          //  // Should be present when doing instance Meta()
-          //  var meta2 = client.Meta(loc);
-          //  verifyMeta(meta2, false,key);
+          // Should be present when doing instance Meta()
+          var par = client.Meta(loc);
+          verifyMeta(par.Meta, false,key);
 
-          //  // Should be present when doing type Meta()
-          //  meta2 = client.TypeMeta<Patient>();
-          //  verifyMeta(meta2, false,key);
+          // Should be present when doing type Meta()
+          par = client.Meta(ResourceType.Patient);
+          verifyMeta(par.Meta, false,key);
 
-          //  // Should be present when doing System Meta()
-          //  meta2 = client.WholeSystemMeta();
-          //  verifyMeta(meta2, false,key);
+          // Should be present when doing System Meta()
+          par = client.Meta();
+          verifyMeta(par.Meta, false,key);
 
-          //  // Now add some additional meta to the patient
-          //  var newMeta = new Resource.ResourceMetaComponent();
-          //  newMeta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ2-" + key));
-          //  newMeta.Security.Add(new Coding("http://mysystem.com/sec", "5678-" + key));
-          //  newMeta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag2-" + key));
+          // Now add some additional meta to the patient
 
-          //  client.AffixMeta(loc, newMeta);
-          //  var pat3 = client.Read<Patient>(loc);
+          var newMeta = new Meta();
+          newMeta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/Profile/XYZ2-" + key));
+          newMeta.Security.Add(new Coding("http://mysystem.com/sec", "5678-" + key));
+          newMeta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag2-" + key));       
 
-          //  // New and old meta should be present on instance
-          //  verifyMeta(pat3.Meta, true, key);
+          
+          client.AddMeta(loc, newMeta);
+          var pat3 = client.Read<Patient>(loc);
 
-          //  // New and old meta should be present on Meta()
-          //  var newMeta2 = client.Meta(loc);
-          //  verifyMeta(newMeta2, true, key);
+          // New and old meta should be present on instance
+          verifyMeta(pat3.Meta, true, key);
 
-          //  // New and old meta should be present when doing type Meta()
-          //  newMeta2 = client.TypeMeta<Patient>();
-          //  verifyMeta(newMeta2, true, key);
+          // New and old meta should be present on Meta()
+          par = client.Meta(loc);
+          verifyMeta(par.Meta, true, key);
 
-          //  // New and old meta should be present when doing system Meta()
-          //  newMeta2 = client.WholeSystemMeta();
-          //  verifyMeta(newMeta2, true, key);
+          // New and old meta should be present when doing type Meta()
+          par = client.Meta(ResourceType.Patient);
+          verifyMeta(par.Meta, true, key);
 
-          //  // Now, remove those new meta tags
-          //  client.DeleteMeta(loc, newMeta);
+          // New and old meta should be present when doing system Meta()
+          par = client.Meta();
+          verifyMeta(par.Meta, true, key);
 
-          //  // Should no longer be present on instance
-          //  var pat4 = client.Read<Patient>(loc);
-          //  verifyMeta(pat4.Meta, false, key);
+          // Now, remove those new meta tags
+          client.DeleteMeta(loc, newMeta);
 
-          //  // Should no longer be present when doing instance Meta()
-          //  meta2 = client.Meta(loc);
-          //  verifyMeta(meta2, false, key);
+          // Should no longer be present on instance
+          var pat4 = client.Read<Patient>(loc);
+          verifyMeta(pat4.Meta, false, key);
 
-          //  // Should no longer be present when doing type Meta()
-          //  meta2 = client.TypeMeta<Patient>();
-          //  verifyMeta(meta2, false, key);
+          // Should no longer be present when doing instance Meta()
+          par = client.Meta(loc);
+          verifyMeta(par.Meta, false, key);
 
-          //  // clear out the client that we created, no point keeping it around
-          //  client.Delete(pat4);
+          // Should no longer be present when doing type Meta()
+          par = client.Meta(ResourceType.Patient);
+          verifyMeta(par.Meta, false, key);
 
-          //  // Should no longer be present when doing System Meta()
-          //  meta2 = client.WholeSystemMeta();
-          //  verifyMeta(meta2, false, key);
+          // clear out the client that we created, no point keeping it around
+          client.Delete(pat4);
+
+          // Should no longer be present when doing System Meta()
+          par = client.Meta();
+          verifyMeta(par.Meta, false, key);
         }
 
 

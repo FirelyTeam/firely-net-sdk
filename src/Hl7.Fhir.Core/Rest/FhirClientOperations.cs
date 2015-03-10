@@ -37,6 +37,17 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public static string VALIDATE_RESOURCE = "validate";
 
+        /// <summary>
+        /// "meta" operation
+        /// </summary>
+        public static string META = "meta";
+
+        /// <summary>
+        /// "meta-change" operation
+        /// </summary>
+        public static string META_CHANGE = "meta-change";
+
+
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             var par = new Parameters();
@@ -129,6 +140,41 @@ namespace Hl7.Fhir.Rest
             return expect<Parameters>(client.TypeOperation<ValueSet>(CONCEPT_LOOKUP, par));
         }
 
+        //[base]/$meta
+        public static Parameters Meta(this FhirClient client)
+        {
+            return expect<Parameters>(client.WholeSystemOperation(META));
+        }
+
+        //[base]/Resource/$meta
+        public static Parameters Meta(this FhirClient client, ResourceType type)
+        {             
+            return expect<Parameters>(client.TypeOperation(META, type.ToString()));
+        }
+
+        //[base]/Resource/id/$meta/[_history/vid]
+        public static Parameters Meta(this FhirClient client, Uri location)
+        {
+            Resource result;
+            result = client.Operation(location, META);
+
+            return expect<Parameters>(result);
+        }
+
+
+        public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
+        {
+            var par = new Parameters().Add("meta", meta).Add("mode", new Code("add"));
+            return expect<Parameters>(client.Operation(location, META_CHANGE, par));
+        }
+
+
+        public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
+        {
+            var par = new Parameters().Add("meta", meta).Add("mode", new Code("delete"));
+            return expect<Parameters>(client.Operation(location, META_CHANGE, par));
+        }
+
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
@@ -177,5 +223,7 @@ namespace Hl7.Fhir.Rest
                 return expect<OperationOutcome>(client.Operation(loc, VALIDATE_RESOURCE, par));
             }
         }
+
+        
     }
 }
