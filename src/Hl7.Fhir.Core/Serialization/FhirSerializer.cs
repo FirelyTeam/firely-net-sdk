@@ -66,14 +66,14 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary = false, string root = null)
+        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
         {
-            Serialize(resource, new XmlFhirWriter(writer), summary, root);
+            Serialize(resource, new XmlFhirWriter(writer), summary);
         }
 
-        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false, string root = null)
+        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
         {
-            Serialize(resource, new JsonDomFhirWriter(writer), summary, root);
+            Serialize(resource, new JsonDomFhirWriter(writer), summary);
         }
 
 

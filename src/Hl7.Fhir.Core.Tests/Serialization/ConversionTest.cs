@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var x = Quantity.QuantityComparator.LessOrEqual;
 
-            Assert.AreEqual("<=", x.ConvertTo<string>());
+            Assert.AreEqual("<=", PrimitiveTypeConverter.ConvertTo<string>(x));
         }
 
         [TestMethod]

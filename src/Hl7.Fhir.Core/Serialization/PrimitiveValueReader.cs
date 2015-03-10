@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
+                return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);
             }
             catch (NotSupportedException exc)
             {

@@ -20,22 +20,12 @@ namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
-        internal static T ConvertTo<T>(this object value)
+        public static T ConvertTo<T>(object value)
         {
-            return (T)Convert(value, typeof(T));
+            return (T)ConvertTo(value, typeof(T));
         }
 
-        internal static object ConvertTo(this object value, Type to)
-        {
-            return Convert(value, to);            
-        }
-
-        public static T Convert<T>(object value)
-        {
-            return value.ConvertTo<T>();
-        }
-
-        public static object Convert(object value, Type to)
+        public static object ConvertTo(object value, Type to)
         {
             if(to == null) throw Error.ArgumentNull("to");
             if(value == null) throw Error.ArgumentNull("value");
@@ -196,10 +186,10 @@ namespace Hl7.Fhir.Serialization
         {
             var value = ReflectionHelper.FindPublicProperty(p.GetType(), "Value").GetValue(p);
 
-            if (value == null) 
+            if (value == null)
                 return null;
             else
-                return value.ConvertTo<string>();
+                return ConvertTo<string>(value);
         }
 
     }
