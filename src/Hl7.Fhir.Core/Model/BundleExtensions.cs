@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Model
             if (identity == null) throw Error.ArgumentNull("reference");
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
 
-            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || (be.Resource != null && be.Resource.Meta != null && be.Resource.Meta.Deleted != true)));
+            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || !be.Resource.IsDeleted));
         }
 
 
