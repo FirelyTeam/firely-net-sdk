@@ -27,12 +27,16 @@ namespace Hl7.Fhir.Rest
 {
     internal static class HttpToEntryExtensions
     {
+        private const string USERDATA_BODY = "$body";
+        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
+
         public static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response)
         {
             var result = new Bundle.BundleEntryComponent();
 
             result.TransactionResponse = new Bundle.BundleEntryTransactionResponseComponent();
             result.TransactionResponse.Status = response.StatusCode.ToString();
+            result.TransactionResponse.SetHeaders(response.Headers);
 
             var contentType = getContentType(response);
             var charEncoding = getCharacterEncoding(response);
@@ -50,6 +54,8 @@ namespace Hl7.Fhir.Rest
 
             if (body != null)
             {
+                result.TransactionResponse.SetBody(body);
+
                 if (isBinaryResponse(response))
                     result.Resource = makeBinaryResource(body, contentType);
                 else
@@ -184,6 +190,54 @@ namespace Hl7.Fhir.Rest
             binary.ContentType = contentType;
 
             return binary;
+        }
+
+
+        public static string GetBodyAsText(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        {
+            var body = interaction.GetBody();
+
+            if (body != null)
+                return decodeBody(body, Encoding.UTF8);
+            else
+                return null;
+        }
+
+        public static byte[] GetBody(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        {
+            if (interaction.UserData.ContainsKey(USERDATA_BODY))
+                return (byte[])interaction.UserData[USERDATA_BODY];
+            else
+                return null;
+        }
+
+        internal static void SetBody(this Bundle.BundleEntryTransactionResponseComponent interaction, byte[] data)
+        {
+            interaction.UserData[USERDATA_BODY] = data;
+        }
+
+        internal static void SetHeaders(this Bundle.BundleEntryTransactionResponseComponent interaction, WebHeaderCollection headers)
+        {
+            foreach (var key in headers.AllKeys)
+            {
+                interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(key + ":" + headers[key]));
+            }
+        }
+
+        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        {
+            foreach (var headerExt in interaction.GetExtensions(EXTENSION_RESPONSE_HEADER))
+            {
+                if(headerExt.Value != null && headerExt.Value is FhirString)
+                {
+                    var header = ((FhirString)headerExt.Value).Value;
+
+                    if (header != null)
+                    {
+                        yield return header.SplitLeft(':');
+                    }
+                }
+            }
         }
 
 

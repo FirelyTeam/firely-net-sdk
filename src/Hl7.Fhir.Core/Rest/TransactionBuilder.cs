@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Rest
 
         IHistoryEntryBuilder IHistoryEntryBuilder.SummaryOnly()
         {
-            _path = _path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, true.ConvertTo<string>());
+            _path = _path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, PrimitiveTypeConverter.ConvertTo<string>(true));
             return this;
         }
 
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Rest
 
         IHistoryEntryBuilder IHistoryEntryBuilder.Since(DateTimeOffset since)
         {
-            _path = _path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, since.ConvertTo<string>());
+            _path = _path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since));
             return this;
         }
 

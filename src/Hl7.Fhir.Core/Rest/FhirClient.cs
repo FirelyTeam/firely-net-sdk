@@ -681,11 +681,10 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Inspect the HttpWebResponse as it came back from the server 
         /// </summary>
-        /// <param name="webResponse"></param>
-        protected virtual void AfterResponse(HttpWebResponse webResponse)
+        protected virtual void AfterResponse(HttpWebResponse webResponse, Bundle.BundleEntryTransactionResponseComponent interaction, Resource resource)
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse));
+            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, interaction, resource));
         }
 
      
@@ -1201,11 +1200,15 @@ namespace Hl7.Fhir.Rest
 
     public class AfterResponseEventArgs : EventArgs
     {
-        public AfterResponseEventArgs(HttpWebResponse webResponse)
+        public AfterResponseEventArgs(HttpWebResponse webResponse, Bundle.BundleEntryTransactionResponseComponent interaction, Resource resource)
         {
             this.RawResponse = webResponse;
+            this.Interaction = interaction;
+            this.Resource = resource;
         }
 
         public HttpWebResponse RawResponse { get; internal set; }
+        public Bundle.BundleEntryTransactionResponseComponent Interaction { get; internal set; }
+        public Resource Resource { get; internal set; }
     }
 }

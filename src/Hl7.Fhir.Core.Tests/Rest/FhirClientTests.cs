@@ -32,9 +32,9 @@ namespace Hl7.Fhir.Tests.Rest
         // Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-        Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
 
         [TestInitialize]
         public void TestInitialize()
@@ -584,13 +584,24 @@ namespace Hl7.Fhir.Tests.Rest
 
             bool calledBefore=false;
             HttpStatusCode? status=null;
+            Resource res = null;
+            Bundle.BundleEntryTransactionResponseComponent interaction = null;
 
-            client.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) => calledBefore = true;
-            client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => status = e.RawResponse.StatusCode;
+            client.OnBeforeRequest += (sender, e) => calledBefore = true;
+            client.OnAfterResponse += (sender, e) =>
+                {
+                    res = e.Resource;
+                    status = e.RawResponse.StatusCode;
+                    interaction = e.Interaction;
+                };
 
             client.Read<Patient>("Patient/1");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
+            Assert.IsNotNull(res);
+            Assert.IsTrue(res is Patient);
+            Assert.IsTrue(interaction.GetBodyAsText().Contains("<Patient"));
+            Assert.AreEqual("application/xml+fhir; charset=UTF-8", interaction.GetHeaders().Single(t => t.Item1 == "Content-Type").Item2);
         }
     }
 }
