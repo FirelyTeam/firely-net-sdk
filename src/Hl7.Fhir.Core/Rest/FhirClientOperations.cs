@@ -37,6 +37,17 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public static string VALIDATE_RESOURCE = "validate";
 
+        /// <summary>
+        /// "meta" operation
+        /// </summary>
+        public static string META = "meta";
+
+        /// <summary>
+        /// "meta-change" operation
+        /// </summary>
+        public static string META_CHANGE = "meta-change";
+
+
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             var par = new Parameters();
@@ -129,6 +140,73 @@ namespace Hl7.Fhir.Rest
             return expect<Parameters>(client.TypeOperation<ValueSet>(CONCEPT_LOOKUP, par));
         }
 
+        //[base]/$meta
+        public static Parameters Meta(this FhirClient client)
+        {
+            return expect<Parameters>(client.TypeOperation(META, "system"));
+        }
+
+        //[base]/Resource/$meta
+        public static Parameters Meta(this FhirClient client, ResourceType type)
+        {             
+            return expect<Parameters>(client.TypeOperation(META, type.ToString()));
+        }
+
+        //[base]/Resource/id/$meta/[_history/vid]
+        public static Parameters Meta(this FhirClient client, Uri location, string vid = null)
+        {
+            Resource result;
+            if (vid == null)
+            {
+                var resourcelocation = new ResourceIdentity(location);
+                result = client.Operation(resourcelocation.WithoutVersion().MakeRelative(), META);
+            }
+            else
+            {
+                var resourcelocation = new ResourceIdentity(location + "/_history/" + vid);
+                result = client.Operation(resourcelocation, META);
+            }   
+            return expect<Parameters>(result);
+        } 
+      
+        public static Parameters ChangeMeta(this FhirClient client, Uri location, Meta meta, bool deleteMeta = false)
+        {
+            var resourcelocation = new ResourceIdentity(location);
+            Resource resource  = client.Get(location);            
+            if (!deleteMeta)
+            {
+                foreach (var profile in meta.ProfileElement)
+                {
+                    resource.Meta.ProfileElement.Add(profile);
+                }
+                foreach(var security in meta.Security)
+                {
+                    resource.Meta.Security.Add(security);
+                }
+                foreach(var tag in meta.Tag)
+                {
+                    resource.Meta.Tag.Add(tag);
+                }            
+            }
+            else
+            {
+                foreach (var profile in meta.ProfileElement)
+                {
+                    resource.Meta.ProfileElement.Remove(profile);
+                }
+                foreach (var security in meta.Security)
+                {
+                    resource.Meta.Security.Remove(security);
+                }
+                foreach (var tag in meta.Tag)
+                {
+                    resource.Meta.Tag.Remove(tag);
+                }            
+            }
+            client.Update(resource);
+            return expect<Parameters>(client.Operation(resourcelocation.WithoutVersion().MakeRelative(), META_CHANGE));
+        }
+
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
@@ -177,5 +255,7 @@ namespace Hl7.Fhir.Rest
                 return expect<OperationOutcome>(client.Operation(loc, VALIDATE_RESOURCE, par));
             }
         }
+
+        
     }
 }
