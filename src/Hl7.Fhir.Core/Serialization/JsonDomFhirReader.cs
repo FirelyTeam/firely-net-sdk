@@ -212,35 +212,27 @@ namespace Hl7.Fhir.Serialization
             if (complex == null)
                 throw Error.Format("Need to be at a complex object to list child members", this);
 
-            collapseMembers(complex);
+            var expanded = JsonTreeRewriter.ExpandComplexObject(complex);
 
-            foreach(var member in complex)
+            foreach(var member in expanded.Properties())
             {
-                var memberName = member.Key;
+                var memberName = member.Name;
 
                 //When enumerating properties for a complex object, make sure not to let resourceType get through
                 if(memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
                 {
                     IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
 
-                    // Map contents of _membername elements to the normal 'membername'
-                    // effectively treating this as if an objects properies are spread out
-                    // over two separate json objects
-                    if (memberName.StartsWith("_")) memberName = memberName.Remove(0, 1);
+                    // Remove [nn] appendix that was there to allow a JObject have repeating members
+                    // with the same name
+                    var pos = memberName.IndexOf('[');
+                    if (pos > 0) memberName = memberName.Substring(0, pos);
 
                     yield return Tuple.Create(memberName,nestedReader);
                 }
             }
         }
 
-
-        /// <summary>
-        /// Find primitive member & complex _member combinations (as used in json) and combine them into a single complex member
-        /// </summary>
-        /// <param name="complex"></param>
-        private void collapseMembers(JObject complex)
-        {
-        }
 
         public IEnumerable<IFhirReader> GetArrayElements()
         {

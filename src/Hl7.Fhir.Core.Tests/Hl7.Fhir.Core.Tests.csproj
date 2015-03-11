@@ -88,6 +88,7 @@
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
+    <Compile Include="Serialization\TreeRewriterTests.cs" />
     <Compile Include="Serialization\MeasurePerformance.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Serialization\QueryParserTests.cs" />
