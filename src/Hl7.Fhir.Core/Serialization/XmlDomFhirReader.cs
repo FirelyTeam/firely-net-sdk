@@ -57,16 +57,9 @@ namespace Hl7.Fhir.Serialization
                 _current = root;
         }
 
-        public string GetResourceTypeName(bool nested)
+        public string GetResourceTypeName()
         {
-            if (nested)
-            {
-                if (_current is XElement)
-                    _current = ((XElement)_current).FirstNode;
-            }
-
             if (_current is XElement)
-
                 return ((XElement)_current).Name.LocalName;
             else
                 throw Error.Format("Cannot get resource type name: reader not at an element", this);
@@ -106,12 +99,21 @@ namespace Hl7.Fhir.Serialization
                     {
                         var elem = (XElement)node;
                         
-                        // All normal elements
-                        if(elem.Name.NamespaceName == XmlNs.FHIR)
-                            result.Add(Tuple.Create(elem.Name.LocalName, (IFhirReader)new XmlDomFhirReader(elem)));
+                        // All normal FHIR elements
+                        if (elem.Name.NamespaceName == XmlNs.FHIR)
+                        {
+                            var value = elem;
+                            
+                            // special case - nested resources -> the value is the nested resource in the element, not
+                            // the current element itself.
+                            if (elem.FirstNode as XElement != null && ModelInfo.IsKnownResource(((XElement)elem.FirstNode).Name.LocalName))
+                                value = (XElement)elem.FirstNode;
+
+                            result.Add(Tuple.Create(elem.Name.LocalName, (IFhirReader)new XmlDomFhirReader(value)));
+                        }
 
                         // The special xhtml div element
-                        else if(elem.Name == XHTMLDIV)
+                        else if (elem.Name == XHTMLDIV)
                             result.Add(Tuple.Create(XHTMLDIV.LocalName,
                                 (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 

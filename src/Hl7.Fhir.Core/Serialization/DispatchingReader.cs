@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
                 var reader = new ResourceReader(_current);
-                return reader.Deserialize(null, nested:true);
+                return reader.Deserialize(null);
             }
 
             ClassMapping mapping;

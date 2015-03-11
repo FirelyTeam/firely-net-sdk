@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Tried to read a primitive value while reader is not at a json primitive", this);
         }
 
-        public string GetResourceTypeName(bool nested)
+        public string GetResourceTypeName()
         {
             if (CurrentToken != TokenType.Object)
                 throw Error.Format("Need to be at a complex object to determine resource type", this);
@@ -204,10 +204,6 @@ namespace Hl7.Fhir.Serialization
                             JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
         }
 
-        //When enumerating properties for a complex object, make sure not to let resourceType get through
-        //TODO: Detecting whether this is a special, serialization format-specific member should be
-        //done in an abstraction around the json or xml readers.
-
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
@@ -215,11 +211,14 @@ namespace Hl7.Fhir.Serialization
  
             if (complex == null)
                 throw Error.Format("Need to be at a complex object to list child members", this);
-           
+
+            collapseMembers(complex);
+
             foreach(var member in complex)
             {
                 var memberName = member.Key;
 
+                //When enumerating properties for a complex object, make sure not to let resourceType get through
                 if(memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
                 {
                     IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
@@ -232,6 +231,15 @@ namespace Hl7.Fhir.Serialization
                     yield return Tuple.Create(memberName,nestedReader);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Find primitive member & complex _member combinations (as used in json) and combine them into a single complex member
+        /// </summary>
+        /// <param name="complex"></param>
+        private void collapseMembers(JObject complex)
+        {
         }
 
         public IEnumerable<IFhirReader> GetArrayElements()

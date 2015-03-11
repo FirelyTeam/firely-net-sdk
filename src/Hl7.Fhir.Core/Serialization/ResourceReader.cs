@@ -30,13 +30,13 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public Resource Deserialize(Resource existing=null, bool nested = false)
+        public Resource Deserialize(Resource existing=null)
         {
             if (_reader.CurrentToken == TokenType.Object)
             {
                 // If there's no a priori knowledge of the type of Resource we will encounter,
                 // we'll have to determine from the data itself. 
-                var resourceTypeName = _reader.GetResourceTypeName(nested);
+                var resourceTypeName = _reader.GetResourceTypeName();
                 var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
 
                 if (mapping == null)

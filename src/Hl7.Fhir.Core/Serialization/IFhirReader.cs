@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization
 {
     public interface IFhirReader : IPostitionInfo
     {
-        string GetResourceTypeName(bool nested);
+        string GetResourceTypeName();
 
         IEnumerable<Tuple<string, IFhirReader>> GetMembers();
 
