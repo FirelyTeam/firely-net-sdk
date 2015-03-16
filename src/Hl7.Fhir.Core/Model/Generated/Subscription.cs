@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -156,15 +156,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the channel points to
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=50)]
+            [FhirElement("endpoint", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
+            public Hl7.Fhir.Model.FhirUri EndpointElement
             {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+                get { return _EndpointElement; }
+                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            private Hl7.Fhir.Model.FhirUri _EndpointElement;
             
             /// <summary>
             /// Where the channel points to
@@ -172,16 +172,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Url
+            public string Endpoint
             {
-                get { return UrlElement != null ? UrlElement.Value : null; }
+                get { return EndpointElement != null ? EndpointElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      UrlElement = null; 
+                      EndpointElement = null; 
                     else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
+                      EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Endpoint");
                 }
             }
             
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>)TypeElement.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     if(PayloadElement != null) dest.PayloadElement = (Hl7.Fhir.Model.FhirString)PayloadElement.DeepCopy();
                     if(HeaderElement != null) dest.HeaderElement = (Hl7.Fhir.Model.FhirString)HeaderElement.DeepCopy();
                     return dest;
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
                 if( !DeepComparable.Matches(PayloadElement, otherT.PayloadElement)) return false;
                 if( !DeepComparable.Matches(HeaderElement, otherT.HeaderElement)) return false;
                 
@@ -293,164 +293,9 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
                 if( !DeepComparable.IsExactly(PayloadElement, otherT.PayloadElement)) return false;
                 if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("SubscriptionTagComponent")]
-        [DataContract]
-        public partial class SubscriptionTagComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "SubscriptionTagComponent"; } }
-            
-            /// <summary>
-            /// The term that identifies the tag
-            /// </summary>
-            [FhirElement("term", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri TermElement
-            {
-                get { return _TermElement; }
-                set { _TermElement = value; OnPropertyChanged("TermElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _TermElement;
-            
-            /// <summary>
-            /// The term that identifies the tag
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Term
-            {
-                get { return TermElement != null ? TermElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TermElement = null; 
-                    else
-                      TermElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Term");
-                }
-            }
-            
-            /// <summary>
-            /// The scheme for the tag (kind of tag)
-            /// </summary>
-            [FhirElement("scheme", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri SchemeElement
-            {
-                get { return _SchemeElement; }
-                set { _SchemeElement = value; OnPropertyChanged("SchemeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _SchemeElement;
-            
-            /// <summary>
-            /// The scheme for the tag (kind of tag)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Scheme
-            {
-                get { return SchemeElement != null ? SchemeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SchemeElement = null; 
-                    else
-                      SchemeElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Scheme");
-                }
-            }
-            
-            /// <summary>
-            /// Tag description label
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Tag description label
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SubscriptionTagComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TermElement != null) dest.TermElement = (Hl7.Fhir.Model.FhirUri)TermElement.DeepCopy();
-                    if(SchemeElement != null) dest.SchemeElement = (Hl7.Fhir.Model.FhirUri)SchemeElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SubscriptionTagComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SubscriptionTagComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TermElement, otherT.TermElement)) return false;
-                if( !DeepComparable.Matches(SchemeElement, otherT.SchemeElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SubscriptionTagComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TermElement, otherT.TermElement)) return false;
-                if( !DeepComparable.IsExactly(SchemeElement, otherT.SchemeElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
             }
@@ -655,13 +500,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("tag", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent> Tag
+        public List<Hl7.Fhir.Model.Coding> Tag
         {
-            get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent>(); return _Tag; }
+            get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Coding>(); return _Tag; }
             set { _Tag = value; OnPropertyChanged("Tag"); }
         }
         
-        private List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent> _Tag;
+        private List<Hl7.Fhir.Model.Coding> _Tag;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -677,7 +522,7 @@ namespace Hl7.Fhir.Model
                 if(ErrorElement != null) dest.ErrorElement = (Hl7.Fhir.Model.FhirString)ErrorElement.DeepCopy();
                 if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent)Channel.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
-                if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Subscription.SubscriptionTagComponent>(Tag.DeepCopy());
+                if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;
             }
             else

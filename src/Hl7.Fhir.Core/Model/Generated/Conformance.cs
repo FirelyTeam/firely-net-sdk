@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -256,6 +256,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("quantity")]
             Quantity,
+            /// <summary>
+            /// A search parameter that searches on a URI (RFC 3986).
+            /// </summary>
+            [EnumLiteral("uri")]
+            Uri,
         }
         
         /// <summary>
@@ -451,6 +456,39 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Compartments served/used by system
+            /// </summary>
+            [FhirElement("compartment", InSummary=true, Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirUri> CompartmentElement
+            {
+                get { if(_CompartmentElement==null) _CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(); return _CompartmentElement; }
+                set { _CompartmentElement = value; OnPropertyChanged("CompartmentElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirUri> _CompartmentElement;
+            
+            /// <summary>
+            /// Compartments served/used by system
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Compartment
+            {
+                get { return CompartmentElement != null ? CompartmentElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      CompartmentElement = null; 
+                    else
+                      CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    OnPropertyChanged("Compartment");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ConformanceRestComponent;
@@ -465,6 +503,7 @@ namespace Hl7.Fhir.Model
                     if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.Conformance.SystemInteractionComponent>(Interaction.DeepCopy());
                     if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent>(Operation.DeepCopy());
                     if(DocumentMailboxElement != null) dest.DocumentMailboxElement = new List<Hl7.Fhir.Model.FhirUri>(DocumentMailboxElement.DeepCopy());
+                    if(CompartmentElement != null) dest.CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(CompartmentElement.DeepCopy());
                     return dest;
                 }
                 else
@@ -489,6 +528,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
                 if( !DeepComparable.Matches(DocumentMailboxElement, otherT.DocumentMailboxElement)) return false;
+                if( !DeepComparable.Matches(CompartmentElement, otherT.CompartmentElement)) return false;
                 
                 return true;
             }
@@ -506,6 +546,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
                 if( !DeepComparable.IsExactly(DocumentMailboxElement, otherT.DocumentMailboxElement)) return false;
+                if( !DeepComparable.IsExactly(CompartmentElement, otherT.CompartmentElement)) return false;
                 
                 return true;
             }
@@ -2517,7 +2558,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// number | date | string | token | reference | composite | quantity
+            /// number | date | string | token | reference | composite | quantity | uri
             /// </summary>
             [FhirElement("type", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -2531,7 +2572,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Conformance.SearchParamType> _TypeElement;
             
             /// <summary>
-            /// number | date | string | token | reference | composite | quantity
+            /// number | date | string | token | reference | composite | quantity | uri
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

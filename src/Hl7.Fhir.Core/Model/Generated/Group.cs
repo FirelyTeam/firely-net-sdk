@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> _Characteristic;
         
         /// <summary>
-        /// Who is in group
+        /// Who or what is in group
         /// </summary>
         [FhirElement("member", Order=160)]
         [References("Patient","Practitioner","Device","Medication","Substance")]

@@ -36,26 +36,171 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// PendedRequest request
+    /// Process request
     /// </summary>
-    [FhirType("PendedRequest", IsResource=true)]
+    [FhirType("ProcessRequest", IsResource=true)]
     [DataContract]
-    public partial class PendedRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.PendedRequest; } }
+        public override ResourceType ResourceType { get { return ResourceType.ProcessRequest; } }
         [NotMapped]
-        public override string TypeName { get { return "PendedRequest"; } }
+        public override string TypeName { get { return "ProcessRequest"; } }
+        
+        /// <summary>
+        /// List of allowable action which this resource can request
+        /// </summary>
+        [FhirEnumeration("ActionList")]
+        public enum ActionList
+        {
+            /// <summary>
+            /// Check for previously un-read/ not-retrieved resources.
+            /// </summary>
+            [EnumLiteral("poll")]
+            Poll,
+            /// <summary>
+            /// Re-process the target resource.
+            /// </summary>
+            [EnumLiteral("reprocess")]
+            Reprocess,
+            /// <summary>
+            /// Reverse or nullify the target resource.
+            /// </summary>
+            [EnumLiteral("reverse")]
+            Reverse,
+            /// <summary>
+            /// Retrieve the processing status of the target resource.
+            /// </summary>
+            [EnumLiteral("status")]
+            Status,
+        }
+        
+        [FhirType("ItemsComponent")]
+        [DataContract]
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ItemsComponent"; } }
+            
+            /// <summary>
+            /// Service instance
+            /// </summary>
+            [FhirElement("sequenceLinkId", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer SequenceLinkIdElement
+            {
+                get { return _SequenceLinkIdElement; }
+                set { _SequenceLinkIdElement = value; OnPropertyChanged("SequenceLinkIdElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _SequenceLinkIdElement;
+            
+            /// <summary>
+            /// Service instance
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? SequenceLinkId
+            {
+                get { return SequenceLinkIdElement != null ? SequenceLinkIdElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      SequenceLinkIdElement = null; 
+                    else
+                      SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("SequenceLinkId");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ItemsComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(SequenceLinkIdElement != null) dest.SequenceLinkIdElement = (Hl7.Fhir.Model.Integer)SequenceLinkIdElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ItemsComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ItemsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SequenceLinkIdElement, otherT.SequenceLinkIdElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ItemsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SequenceLinkIdElement, otherT.SequenceLinkIdElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        /// <summary>
+        /// poll | reprocess | reverse | status
+        /// </summary>
+        [FhirElement("action", Order=90)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
+        {
+            get { return _ActionElement; }
+            set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.ProcessRequest.ActionList> _ActionElement;
+        
+        /// <summary>
+        /// poll | reprocess | reverse | status
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ProcessRequest.ActionList? Action
+        {
+            get { return ActionElement != null ? ActionElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ActionElement = null; 
+                else
+                  ActionElement = new Code<Hl7.Fhir.Model.ProcessRequest.ActionList>(value);
+                OnPropertyChanged("Action");
+            }
+        }
         
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -69,7 +214,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=100)]
+        [FhirElement("ruleset", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -82,7 +227,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=110)]
+        [FhirElement("originalRuleset", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -95,7 +240,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=120)]
+        [FhirElement("created", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -125,9 +270,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Insurer
+        /// Target of the request
         /// </summary>
-        [FhirElement("target", Order=130)]
+        [FhirElement("target", Order=140)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
@@ -141,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=140)]
+        [FhirElement("provider", Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
@@ -155,7 +300,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=150)]
+        [FhirElement("organization", Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -169,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=160)]
+        [FhirElement("request", Order=170)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -181,9 +326,101 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
+        /// Response reference
+        /// </summary>
+        [FhirElement("response", Order=180)]
+        [References()]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Response
+        {
+            get { return _Response; }
+            set { _Response = value; OnPropertyChanged("Response"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Response;
+        
+        /// <summary>
+        /// Nullify
+        /// </summary>
+        [FhirElement("nullify", Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean NullifyElement
+        {
+            get { return _NullifyElement; }
+            set { _NullifyElement = value; OnPropertyChanged("NullifyElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _NullifyElement;
+        
+        /// <summary>
+        /// Nullify
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Nullify
+        {
+            get { return NullifyElement != null ? NullifyElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  NullifyElement = null; 
+                else
+                  NullifyElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Nullify");
+            }
+        }
+        
+        /// <summary>
+        /// Reference number/string
+        /// </summary>
+        [FhirElement("reference", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString ReferenceElement
+        {
+            get { return _ReferenceElement; }
+            set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _ReferenceElement;
+        
+        /// <summary>
+        /// Reference number/string
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Reference
+        {
+            get { return ReferenceElement != null ? ReferenceElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ReferenceElement = null; 
+                else
+                  ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Reference");
+            }
+        }
+        
+        /// <summary>
+        /// Items to re-adjudicate
+        /// </summary>
+        [FhirElement("item", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
+        {
+            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent>(); return _Item; }
+            set { _Item = value; OnPropertyChanged("Item"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> _Item;
+        
+        /// <summary>
         /// Resource type(s) to include
         /// </summary>
-        [FhirElement("include", Order=170)]
+        [FhirElement("include", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> IncludeElement
@@ -216,7 +453,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to exclude
         /// </summary>
-        [FhirElement("exclude", Order=180)]
+        [FhirElement("exclude", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ExcludeElement
@@ -249,7 +486,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period
         /// </summary>
-        [FhirElement("period", Order=190)]
+        [FhirElement("period", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -261,11 +498,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as PendedRequest;
+            var dest = other as ProcessRequest;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.ProcessRequest.ActionList>)ActionElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
@@ -274,6 +512,10 @@ namespace Hl7.Fhir.Model
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
+                if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
+                if(NullifyElement != null) dest.NullifyElement = (Hl7.Fhir.Model.FhirBoolean)NullifyElement.DeepCopy();
+                if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
+                if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent>(Item.DeepCopy());
                 if(IncludeElement != null) dest.IncludeElement = new List<Hl7.Fhir.Model.FhirString>(IncludeElement.DeepCopy());
                 if(ExcludeElement != null) dest.ExcludeElement = new List<Hl7.Fhir.Model.FhirString>(ExcludeElement.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -285,15 +527,16 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new PendedRequest());
+            return CopyTo(new ProcessRequest());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as PendedRequest;
+            var otherT = other as ProcessRequest;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
@@ -302,6 +545,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
+            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
+            if( !DeepComparable.Matches(NullifyElement, otherT.NullifyElement)) return false;
+            if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             if( !DeepComparable.Matches(IncludeElement, otherT.IncludeElement)) return false;
             if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -311,10 +558,11 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as PendedRequest;
+            var otherT = other as ProcessRequest;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
@@ -323,6 +571,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
+            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
+            if( !DeepComparable.IsExactly(NullifyElement, otherT.NullifyElement)) return false;
+            if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             if( !DeepComparable.IsExactly(IncludeElement, otherT.IncludeElement)) return false;
             if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;

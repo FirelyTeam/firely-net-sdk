@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Signature"; } }
         
         /// <summary>
-        /// Indication of the reason the entity signed the document
+        /// Indication of the reason the entity signed the object(s)
         /// </summary>
         [FhirElement("type", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=-1)]

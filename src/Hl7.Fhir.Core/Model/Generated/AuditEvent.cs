@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
             /// Direct reference to resource
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
-            [References("Practitioner","Patient","Device")]
+            [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -1112,9 +1112,56 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Where
+            /// </summary>
+            [FhirElement("location", InSummary=true, Order=100)]
+            [References("Location")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Location
+            {
+                get { return _Location; }
+                set { _Location = value; OnPropertyChanged("Location"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Location;
+            
+            /// <summary>
+            /// Policy that authorized event
+            /// </summary>
+            [FhirElement("policy", InSummary=true, Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirUri> PolicyElement
+            {
+                get { if(_PolicyElement==null) _PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(); return _PolicyElement; }
+                set { _PolicyElement = value; OnPropertyChanged("PolicyElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirUri> _PolicyElement;
+            
+            /// <summary>
+            /// Policy that authorized event
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Policy
+            {
+                get { return PolicyElement != null ? PolicyElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      PolicyElement = null; 
+                    else
+                      PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    OnPropertyChanged("Policy");
+                }
+            }
+            
+            /// <summary>
             /// Type of media
             /// </summary>
-            [FhirElement("media", InSummary=true, Order=100)]
+            [FhirElement("media", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Media
             {
@@ -1127,7 +1174,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Logical network location for application activity
             /// </summary>
-            [FhirElement("network", InSummary=true, Order=110)]
+            [FhirElement("network", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent Network
             {
@@ -1150,6 +1197,8 @@ namespace Hl7.Fhir.Model
                     if(AltIdElement != null) dest.AltIdElement = (Hl7.Fhir.Model.FhirString)AltIdElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(RequestorElement != null) dest.RequestorElement = (Hl7.Fhir.Model.FhirBoolean)RequestorElement.DeepCopy();
+                    if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                    if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                     if(Media != null) dest.Media = (Hl7.Fhir.Model.Coding)Media.DeepCopy();
                     if(Network != null) dest.Network = (Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent)Network.DeepCopy();
                     return dest;
@@ -1175,6 +1224,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(AltIdElement, otherT.AltIdElement)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(RequestorElement, otherT.RequestorElement)) return false;
+                if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+                if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
                 if( !DeepComparable.Matches(Media, otherT.Media)) return false;
                 if( !DeepComparable.Matches(Network, otherT.Network)) return false;
                 
@@ -1193,6 +1244,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(AltIdElement, otherT.AltIdElement)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(RequestorElement, otherT.RequestorElement)) return false;
+                if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+                if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
                 if( !DeepComparable.IsExactly(Media, otherT.Media)) return false;
                 if( !DeepComparable.IsExactly(Network, otherT.Network)) return false;
                 

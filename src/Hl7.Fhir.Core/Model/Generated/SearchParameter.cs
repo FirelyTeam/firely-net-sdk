@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// number | date | string | token | reference | composite | quantity
+        /// number | date | string | token | reference | composite | quantity | uri
         /// </summary>
         [FhirElement("type", Order=180)]
         [Cardinality(Min=1,Max=1)]
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
-        /// number | date | string | token | reference | composite | quantity
+        /// number | date | string | token | reference | composite | quantity | uri
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

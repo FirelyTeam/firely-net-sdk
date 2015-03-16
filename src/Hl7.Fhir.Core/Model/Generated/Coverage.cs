@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -173,15 +173,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An identifier for the subsection of the plan
         /// </summary>
-        [FhirElement("subplan", InSummary=true, Order=150)]
+        [FhirElement("subPlan", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString SubplanElement
+        public Hl7.Fhir.Model.FhirString SubPlanElement
         {
-            get { return _SubplanElement; }
-            set { _SubplanElement = value; OnPropertyChanged("SubplanElement"); }
+            get { return _SubPlanElement; }
+            set { _SubPlanElement = value; OnPropertyChanged("SubPlanElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _SubplanElement;
+        private Hl7.Fhir.Model.FhirString _SubPlanElement;
         
         /// <summary>
         /// An identifier for the subsection of the plan
@@ -189,16 +189,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Subplan
+        public string SubPlan
         {
-            get { return SubplanElement != null ? SubplanElement.Value : null; }
+            get { return SubPlanElement != null ? SubPlanElement.Value : null; }
             set
             {
                 if(value == null)
-                  SubplanElement = null; 
+                  SubPlanElement = null; 
                 else
-                  SubplanElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Subplan");
+                  SubPlanElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("SubPlan");
             }
         }
         
@@ -308,6 +308,21 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
+        /// <summary>
+        /// Covered parties
+        /// </summary>
+        [FhirElement("subject", Order=210)]
+        [References("Patient")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
+        {
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coverage;
@@ -321,12 +336,13 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
                 if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
-                if(SubplanElement != null) dest.SubplanElement = (Hl7.Fhir.Model.FhirString)SubplanElement.DeepCopy();
+                if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
                 if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.Integer)DependentElement.DeepCopy();
                 if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
                 if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopy();
                 if(Network != null) dest.Network = (Hl7.Fhir.Model.Identifier)Network.DeepCopy();
                 if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 return dest;
             }
             else
@@ -350,12 +366,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(GroupElement, otherT.GroupElement)) return false;
             if( !DeepComparable.Matches(PlanElement, otherT.PlanElement)) return false;
-            if( !DeepComparable.Matches(SubplanElement, otherT.SubplanElement)) return false;
+            if( !DeepComparable.Matches(SubPlanElement, otherT.SubPlanElement)) return false;
             if( !DeepComparable.Matches(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.Matches(Subscriber, otherT.Subscriber)) return false;
             if( !DeepComparable.Matches(Network, otherT.Network)) return false;
             if( !DeepComparable.Matches(Contract, otherT.Contract)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             
             return true;
         }
@@ -372,12 +389,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(GroupElement, otherT.GroupElement)) return false;
             if( !DeepComparable.IsExactly(PlanElement, otherT.PlanElement)) return false;
-            if( !DeepComparable.IsExactly(SubplanElement, otherT.SubplanElement)) return false;
+            if( !DeepComparable.IsExactly(SubPlanElement, otherT.SubPlanElement)) return false;
             if( !DeepComparable.IsExactly(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.IsExactly(Subscriber, otherT.Subscriber)) return false;
             if( !DeepComparable.IsExactly(Network, otherT.Network)) return false;
             if( !DeepComparable.IsExactly(Contract, otherT.Contract)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             
             return true;
         }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -331,16 +331,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service Sub-location
             /// </summary>
-            [FhirElement("subsite", InSummary=true, Order=170)]
+            [FhirElement("subSite", InSummary=true, Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Subsite
+            public List<Hl7.Fhir.Model.Coding> SubSite
             {
-                get { if(_Subsite==null) _Subsite = new List<Hl7.Fhir.Model.Coding>(); return _Subsite; }
-                set { _Subsite = value; OnPropertyChanged("Subsite"); }
+                get { if(_SubSite==null) _SubSite = new List<Hl7.Fhir.Model.Coding>(); return _SubSite; }
+                set { _SubSite = value; OnPropertyChanged("SubSite"); }
             }
             
-            private List<Hl7.Fhir.Model.Coding> _Subsite;
+            private List<Hl7.Fhir.Model.Coding> _SubSite;
             
             /// <summary>
             /// Service/Product billing modifiers
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
                     if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Coding)Udi.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
-                    if(Subsite != null) dest.Subsite = new List<Hl7.Fhir.Model.Coding>(Subsite.DeepCopy());
+                    if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.Coding>(SubSite.DeepCopy());
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.Coding>(Modifier.DeepCopy());
                     if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ProfessionalClaim.DetailComponent>(Detail.DeepCopy());
                     return dest;
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Net, otherT.Net)) return false;
                 if( !DeepComparable.Matches(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-                if( !DeepComparable.Matches(Subsite, otherT.Subsite)) return false;
+                if( !DeepComparable.Matches(SubSite, otherT.SubSite)) return false;
                 if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
                 if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
                 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Net, otherT.Net)) return false;
                 if( !DeepComparable.IsExactly(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-                if( !DeepComparable.IsExactly(Subsite, otherT.Subsite)) return false;
+                if( !DeepComparable.IsExactly(SubSite, otherT.SubSite)) return false;
                 if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
@@ -865,16 +865,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Pre-Authorization/Determination Reference
             /// </summary>
-            [FhirElement("preauthref", InSummary=true, Order=90)]
+            [FhirElement("preAuthRef", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> PreauthrefElement
+            public List<Hl7.Fhir.Model.FhirString> PreAuthRefElement
             {
-                get { if(_PreauthrefElement==null) _PreauthrefElement = new List<Hl7.Fhir.Model.FhirString>(); return _PreauthrefElement; }
-                set { _PreauthrefElement = value; OnPropertyChanged("PreauthrefElement"); }
+                get { if(_PreAuthRefElement==null) _PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(); return _PreAuthRefElement; }
+                set { _PreAuthRefElement = value; OnPropertyChanged("PreAuthRefElement"); }
             }
             
-            private List<Hl7.Fhir.Model.FhirString> _PreauthrefElement;
+            private List<Hl7.Fhir.Model.FhirString> _PreAuthRefElement;
             
             /// <summary>
             /// Pre-Authorization/Determination Reference
@@ -882,16 +882,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Preauthref
+            public IEnumerable<string> PreAuthRef
             {
-                get { return PreauthrefElement != null ? PreauthrefElement.Select(elem => elem.Value) : null; }
+                get { return PreAuthRefElement != null ? PreAuthRefElement.Select(elem => elem.Value) : null; }
                 set
                 {
                     if(value == null)
-                      PreauthrefElement = null; 
+                      PreAuthRefElement = null; 
                     else
-                      PreauthrefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                    OnPropertyChanged("Preauthref");
+                      PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("PreAuthRef");
                 }
             }
             
@@ -934,7 +934,7 @@ namespace Hl7.Fhir.Model
                     if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
                     if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
                     if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.Coding)Relationship.DeepCopy();
-                    if(PreauthrefElement != null) dest.PreauthrefElement = new List<Hl7.Fhir.Model.FhirString>(PreauthrefElement.DeepCopy());
+                    if(PreAuthRefElement != null) dest.PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(PreAuthRefElement.DeepCopy());
                     if(ClaimResponse != null) dest.ClaimResponse = (Hl7.Fhir.Model.ResourceReference)ClaimResponse.DeepCopy();
                     if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
                     return dest;
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
                 if( !DeepComparable.Matches(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
                 if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
-                if( !DeepComparable.Matches(PreauthrefElement, otherT.PreauthrefElement)) return false;
+                if( !DeepComparable.Matches(PreAuthRefElement, otherT.PreAuthRefElement)) return false;
                 if( !DeepComparable.Matches(ClaimResponse, otherT.ClaimResponse)) return false;
                 if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
                 
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
                 if( !DeepComparable.IsExactly(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
                 if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
-                if( !DeepComparable.IsExactly(PreauthrefElement, otherT.PreauthrefElement)) return false;
+                if( !DeepComparable.IsExactly(PreAuthRefElement, otherT.PreAuthRefElement)) return false;
                 if( !DeepComparable.IsExactly(ClaimResponse, otherT.ClaimResponse)) return false;
                 if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
                 

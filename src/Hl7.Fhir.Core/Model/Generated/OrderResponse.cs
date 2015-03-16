@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The status of the response to an order
         /// </summary>
-        [FhirEnumeration("OrderOutcomeStatus")]
-        public enum OrderOutcomeStatus
+        [FhirEnumeration("OrderStatus")]
+        public enum OrderStatus
         {
             /// <summary>
             /// The order is known, but no processing has occurred at this time.
@@ -101,8 +101,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The order has been completed.
             /// </summary>
-            [EnumLiteral("complete")]
-            Complete,
+            [EnumLiteral("completed")]
+            Completed,
         }
         
         /// <summary>
@@ -195,35 +195,35 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Authority;
         
         /// <summary>
-        /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
+        /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
         /// </summary>
-        [FhirElement("code", Order=140)]
+        [FhirElement("orderStatus", Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> CodeElement
+        public Code<Hl7.Fhir.Model.OrderResponse.OrderStatus> OrderStatus_Element
         {
-            get { return _CodeElement; }
-            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            get { return _OrderStatus_Element; }
+            set { _OrderStatus_Element = value; OnPropertyChanged("OrderStatus_Element"); }
         }
         
-        private Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus> _CodeElement;
+        private Code<Hl7.Fhir.Model.OrderResponse.OrderStatus> _OrderStatus_Element;
         
         /// <summary>
-        /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | complete
+        /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus? Code
+        public Hl7.Fhir.Model.OrderResponse.OrderStatus? OrderStatus_
         {
-            get { return CodeElement != null ? CodeElement.Value : null; }
+            get { return OrderStatus_Element != null ? OrderStatus_Element.Value : null; }
             set
             {
                 if(value == null)
-                  CodeElement = null; 
+                  OrderStatus_Element = null; 
                 else
-                  CodeElement = new Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus>(value);
-                OnPropertyChanged("Code");
+                  OrderStatus_Element = new Code<Hl7.Fhir.Model.OrderResponse.OrderStatus>(value);
+                OnPropertyChanged("OrderStatus_");
             }
         }
         
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
                 if(Authority != null) dest.Authority = (Hl7.Fhir.Model.Element)Authority.DeepCopy();
-                if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus>)CodeElement.DeepCopy();
+                if(OrderStatus_Element != null) dest.OrderStatus_Element = (Code<Hl7.Fhir.Model.OrderResponse.OrderStatus>)OrderStatus_Element.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(Fulfillment.DeepCopy());
                 return dest;
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
             if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
-            if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+            if( !DeepComparable.Matches(OrderStatus_Element, otherT.OrderStatus_Element)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Fulfillment, otherT.Fulfillment)) return false;
             
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
             if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
-            if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+            if( !DeepComparable.IsExactly(OrderStatus_Element, otherT.OrderStatus_Element)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Fulfillment, otherT.Fulfillment)) return false;
             

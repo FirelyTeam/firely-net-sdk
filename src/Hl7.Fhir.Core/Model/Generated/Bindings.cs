@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -549,11 +549,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("PaymentReconciliation")]
         PaymentReconciliation,
         /// <summary>
-        /// The PendedRequest resource
-        /// </summary>
-        [EnumLiteral("PendedRequest")]
-        PendedRequest,
-        /// <summary>
         /// The Person resource
         /// </summary>
         [EnumLiteral("Person")]
@@ -579,6 +574,16 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("ProcedureRequest")]
         ProcedureRequest,
         /// <summary>
+        /// The ProcessRequest resource
+        /// </summary>
+        [EnumLiteral("ProcessRequest")]
+        ProcessRequest,
+        /// <summary>
+        /// The ProcessResponse resource
+        /// </summary>
+        [EnumLiteral("ProcessResponse")]
+        ProcessResponse,
+        /// <summary>
         /// The ProfessionalClaim resource
         /// </summary>
         [EnumLiteral("ProfessionalClaim")]
@@ -599,11 +604,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("QuestionnaireAnswers")]
         QuestionnaireAnswers,
         /// <summary>
-        /// The Readjudicate resource
-        /// </summary>
-        [EnumLiteral("Readjudicate")]
-        Readjudicate,
-        /// <summary>
         /// The ReferralRequest resource
         /// </summary>
         [EnumLiteral("ReferralRequest")]
@@ -613,11 +613,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("RelatedPerson")]
         RelatedPerson,
-        /// <summary>
-        /// The Reversal resource
-        /// </summary>
-        [EnumLiteral("Reversal")]
-        Reversal,
         /// <summary>
         /// The RiskAssessment resource
         /// </summary>
@@ -643,16 +638,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Specimen")]
         Specimen,
-        /// <summary>
-        /// The StatusRequest resource
-        /// </summary>
-        [EnumLiteral("StatusRequest")]
-        StatusRequest,
-        /// <summary>
-        /// The StatusResponse resource
-        /// </summary>
-        [EnumLiteral("StatusResponse")]
-        StatusResponse,
         /// <summary>
         /// The StructureDefinition resource
         /// </summary>

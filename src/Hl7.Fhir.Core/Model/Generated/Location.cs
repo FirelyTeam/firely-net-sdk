@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "LocationPositionComponent"; } }
             
             /// <summary>
-            /// Longitude as expressed in KML
+            /// Longitude with WGS84 datum
             /// </summary>
             [FhirElement("longitude", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _LongitudeElement;
             
             /// <summary>
-            /// Longitude as expressed in KML
+            /// Longitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Latitude as expressed in KML
+            /// Latitude with WGS84 datum
             /// </summary>
             [FhirElement("latitude", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _LatitudeElement;
             
             /// <summary>
-            /// Latitude as expressed in KML
+            /// Latitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Altitude as expressed in KML
+            /// Altitude with WGS84 datum
             /// </summary>
             [FhirElement("altitude", InSummary=true, Order=60)]
             [DataMember]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _AltitudeElement;
             
             /// <summary>
-            /// Altitude as expressed in KML
+            /// Altitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

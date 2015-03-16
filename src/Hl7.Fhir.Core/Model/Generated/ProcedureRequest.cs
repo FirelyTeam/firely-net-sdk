@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -92,10 +92,10 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// The request has been planned.
+            /// The request is in preliminary form, prior to being requested.
             /// </summary>
-            [EnumLiteral("planned")]
-            Planned,
+            [EnumLiteral("draft")]
+            Draft,
             /// <summary>
             /// The request has been placed.
             /// </summary>
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
+        /// proposed | draft | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
         [FhirElement("status", Order=170)]
         [DataMember]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
+        /// proposed | draft | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

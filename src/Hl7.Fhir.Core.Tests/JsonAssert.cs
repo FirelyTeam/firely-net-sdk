@@ -110,6 +110,8 @@ namespace Hl7.Fhir.Tests
                     // Hack for timestamps
                     if (lValue.EndsWith("+00:00")) lValue = lValue.Replace("+00:00", "Z");
                     if (rValue.EndsWith("+00:00")) rValue = rValue.Replace("+00:00", "Z");
+                    if (lValue.Contains(".000+")) lValue = lValue.Replace(".000+", "+");
+                    if (rValue.Contains(".000+")) rValue = rValue.Replace(".000+", "+");
 
                     Assert.AreEqual(lValue, rValue);
                 }

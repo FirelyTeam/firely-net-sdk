@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// driver | provider | patient | bank
+        /// e.g. driver,  provider,  patient, bank etc
         /// </summary>
         [FhirElement("category", Order=140)]
         [DataMember]

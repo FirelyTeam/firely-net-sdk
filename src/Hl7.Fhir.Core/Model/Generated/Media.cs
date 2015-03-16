@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the Media is a photo, video, or audio
         /// </summary>
-        [FhirEnumeration("MediaType")]
-        public enum MediaType
+        [FhirEnumeration("DigitalMediaType")]
+        public enum DigitalMediaType
         {
             /// <summary>
             /// The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents.
@@ -81,13 +81,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Media.MediaType> TypeElement
+        public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement
         {
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Media.MediaType> _TypeElement;
+        private Code<Hl7.Fhir.Model.Media.DigitalMediaType> _TypeElement;
         
         /// <summary>
         /// photo | video | audio
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Media.MediaType? Type
+        public Hl7.Fhir.Model.Media.DigitalMediaType? Type
         {
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   TypeElement = null; 
                 else
-                  TypeElement = new Code<Hl7.Fhir.Model.Media.MediaType>(value);
+                  TypeElement = new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
                 OnPropertyChanged("Type");
             }
         }
@@ -136,41 +136,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// When the media was taken/recorded (start)
-        /// </summary>
-        [FhirElement("created", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime CreatedElement
-        {
-            get { return _CreatedElement; }
-            set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
-        
-        /// <summary>
-        /// When the media was taken/recorded (start)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Created
-        {
-            get { return CreatedElement != null ? CreatedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  CreatedElement = null; 
-                else
-                  CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Created");
-            }
-        }
-        
-        /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -184,7 +152,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=true, Order=140)]
+        [FhirElement("operator", InSummary=true, Order=130)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Operator
@@ -198,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Imaging view e.g Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=true, Order=150)]
+        [FhirElement("view", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
         {
@@ -211,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the device/manufacturer
         /// </summary>
-        [FhirElement("deviceName", InSummary=true, Order=160)]
+        [FhirElement("deviceName", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DeviceNameElement
         {
@@ -243,7 +211,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Height of the image in pixels(photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=true, Order=170)]
+        [FhirElement("height", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Integer HeightElement
         {
@@ -275,7 +243,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=true, Order=180)]
+        [FhirElement("width", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Integer WidthElement
         {
@@ -307,7 +275,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=true, Order=190)]
+        [FhirElement("frames", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Integer FramesElement
         {
@@ -339,7 +307,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=true, Order=200)]
+        [FhirElement("duration", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Integer DurationElement
         {
@@ -371,7 +339,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actual Media - reference or data
         /// </summary>
-        [FhirElement("content", Order=210)]
+        [FhirElement("content", Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Content
@@ -389,10 +357,9 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Media.MediaType>)TypeElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>)TypeElement.DeepCopy();
                 if(Subtype != null) dest.Subtype = (Hl7.Fhir.Model.CodeableConcept)Subtype.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopy();
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
@@ -422,7 +389,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Operator, otherT.Operator)) return false;
             if( !DeepComparable.Matches(View, otherT.View)) return false;
@@ -445,7 +411,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Operator, otherT.Operator)) return false;
             if( !DeepComparable.IsExactly(View, otherT.View)) return false;

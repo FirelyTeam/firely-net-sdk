@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,37 +116,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
-            /// Identity of agent (urn or url)
+            /// Identity of agent
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("reference", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri ReferenceElement
+            public Hl7.Fhir.Model.Element Reference
             {
-                get { return _ReferenceElement; }
-                set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
+                get { return _Reference; }
+                set { _Reference = value; OnPropertyChanged("Reference"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _ReferenceElement;
-            
-            /// <summary>
-            /// Identity of agent (urn or url)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Reference
-            {
-                get { return ReferenceElement != null ? ReferenceElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ReferenceElement = null; 
-                    else
-                      ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Reference");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Reference;
             
             /// <summary>
             /// Human description of participant
@@ -189,7 +170,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.Coding)Role.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.Element)Reference.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     return dest;
                 }
@@ -210,7 +191,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Role, otherT.Role)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
                 
                 return true;
@@ -224,7 +205,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
                 
                 return true;
@@ -571,36 +552,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> _Entity;
         
         /// <summary>
-        /// Base64 signature (DigSig) - integrity check
+        /// Signature on target
         /// </summary>
-        [FhirElement("integritySignature", Order=170)]
+        [FhirElement("signature", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString IntegritySignatureElement
+        public List<Hl7.Fhir.Model.Signature> Signature
         {
-            get { return _IntegritySignatureElement; }
-            set { _IntegritySignatureElement = value; OnPropertyChanged("IntegritySignatureElement"); }
+            get { if(_Signature==null) _Signature = new List<Hl7.Fhir.Model.Signature>(); return _Signature; }
+            set { _Signature = value; OnPropertyChanged("Signature"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _IntegritySignatureElement;
-        
-        /// <summary>
-        /// Base64 signature (DigSig) - integrity check
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string IntegritySignature
-        {
-            get { return IntegritySignatureElement != null ? IntegritySignatureElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  IntegritySignatureElement = null; 
-                else
-                  IntegritySignatureElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("IntegritySignature");
-            }
-        }
+        private List<Hl7.Fhir.Model.Signature> _Signature;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -617,7 +580,7 @@ namespace Hl7.Fhir.Model
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(Agent.DeepCopy());
                 if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(Entity.DeepCopy());
-                if(IntegritySignatureElement != null) dest.IntegritySignatureElement = (Hl7.Fhir.Model.FhirString)IntegritySignatureElement.DeepCopy();
+                if(Signature != null) dest.Signature = new List<Hl7.Fhir.Model.Signature>(Signature.DeepCopy());
                 return dest;
             }
             else
@@ -643,7 +606,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
             if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
-            if( !DeepComparable.Matches(IntegritySignatureElement, otherT.IntegritySignatureElement)) return false;
+            if( !DeepComparable.Matches(Signature, otherT.Signature)) return false;
             
             return true;
         }
@@ -662,7 +625,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
             if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
-            if( !DeepComparable.IsExactly(IntegritySignatureElement, otherT.IntegritySignatureElement)) return false;
+            if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
             
             return true;
         }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StructureDefinitionDifferentialComponent"; } }
             
             /// <summary>
-            /// Definition of elements in the resource (if no profile)
+            /// Definition of elements in the resource (if no StructureDefinition)
             /// </summary>
             [FhirElement("element", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=-1)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StructureDefinitionSnapshotComponent"; } }
             
             /// <summary>
-            /// Definition of elements in the resource (if no profile)
+            /// Definition of elements in the resource (if no StructureDefinition)
             /// </summary>
             [FhirElement("element", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=-1)]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Literal URL used to reference this profile
+        /// Literal URL used to reference this StructureDefinition
         /// </summary>
         [FhirElement("url", Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Literal URL used to reference this profile
+        /// Literal URL used to reference this StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Other identifiers for the profile
+        /// Other identifiers for the StructureDefinition
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Logical id for this version of the profile
+        /// Logical id for this version of the StructureDefinition
         /// </summary>
         [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
-        /// Logical id for this version of the profile
+        /// Logical id for this version of the StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Informal name for this profile
+        /// Informal name for this StructureDefinition
         /// </summary>
         [FhirElement("name", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// Informal name for this profile
+        /// Informal name for this StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -640,9 +640,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Content intends to support these contexts
+        /// </summary>
+        [FhirElement("useContext", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
+        {
+            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
+            set { _UseContext = value; OnPropertyChanged("UseContext"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
+        
+        /// <summary>
         /// Use this name when displaying the value
         /// </summary>
-        [FhirElement("display", Order=130)]
+        [FhirElement("display", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -674,7 +688,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=140)]
+        [FhirElement("publisher", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -706,7 +720,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=150)]
+        [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent> Contact
@@ -718,9 +732,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent> _Contact;
         
         /// <summary>
-        /// Natural language description of the profile
+        /// Natural language description of the StructureDefinition
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=160)]
+        [FhirElement("description", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -731,7 +745,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// Natural language description of the profile
+        /// Natural language description of the StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -752,7 +766,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Scope and Usage this structure definition is for
         /// </summary>
-        [FhirElement("requirements", Order=170)]
+        [FhirElement("requirements", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -784,7 +798,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or Publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=180)]
+        [FhirElement("copyright", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -816,7 +830,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assist with indexing and finding
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=190)]
+        [FhirElement("code", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Code
@@ -830,7 +844,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=200)]
+        [FhirElement("status", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
@@ -863,7 +877,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=210)]
+        [FhirElement("experimental", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -893,9 +907,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date for this version of the profile
+        /// Date for this version of the StructureDefinition
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=220)]
+        [FhirElement("date", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -906,7 +920,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date for this version of the profile
+        /// Date for this version of the StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -925,9 +939,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// FHIR Version this profile targets
+        /// FHIR Version this StructureDefinition targets
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=230)]
+        [FhirElement("fhirVersion", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
         {
@@ -938,7 +952,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Id _FhirVersionElement;
         
         /// <summary>
-        /// FHIR Version this profile targets
+        /// FHIR Version this StructureDefinition targets
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -959,7 +973,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External specification that the content is mapped to
         /// </summary>
-        [FhirElement("mapping", Order=240)]
+        [FhirElement("mapping", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionMappingComponent> Mapping
@@ -973,7 +987,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// type | resource | constraint | extension
         /// </summary>
-        [FhirElement("type", Order=250)]
+        [FhirElement("type", Order=260)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionType> TypeElement
@@ -1006,7 +1020,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the structure is abstract
         /// </summary>
-        [FhirElement("abstract", Order=260)]
+        [FhirElement("abstract", Order=270)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AbstractElement
@@ -1039,7 +1053,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// resource | datatype | mapping | extension
         /// </summary>
-        [FhirElement("contextType", Order=270)]
+        [FhirElement("contextType", Order=280)]
         [DataMember]
         public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext> ContextTypeElement
         {
@@ -1071,7 +1085,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the extension can be used in instances
         /// </summary>
-        [FhirElement("context", Order=280)]
+        [FhirElement("context", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ContextElement
@@ -1104,7 +1118,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Structure that this set of constraints applies to
         /// </summary>
-        [FhirElement("base", Order=290)]
+        [FhirElement("base", Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri BaseElement
         {
@@ -1136,7 +1150,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Snapshot view of the structure
         /// </summary>
-        [FhirElement("snapshot", Order=300)]
+        [FhirElement("snapshot", Order=310)]
         [DataMember]
         public Hl7.Fhir.Model.StructureDefinition.StructureDefinitionSnapshotComponent Snapshot
         {
@@ -1149,7 +1163,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Differential view of the structure
         /// </summary>
-        [FhirElement("differential", Order=310)]
+        [FhirElement("differential", Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.StructureDefinition.StructureDefinitionDifferentialComponent Differential
         {
@@ -1170,6 +1184,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent>(Contact.DeepCopy());
@@ -1210,6 +1225,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
@@ -1243,6 +1259,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;

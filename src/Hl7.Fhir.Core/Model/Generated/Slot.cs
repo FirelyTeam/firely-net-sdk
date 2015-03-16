@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Slot"; } }
         
         /// <summary>
-        /// The free/busy status of an appointment
+        /// The free/busy status of a slot
         /// </summary>
         [FhirEnumeration("SlotStatus")]
         public enum SlotStatus
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The schedule resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("schedule", Order=110)]
+        [FhirElement("schedule", InSummary=true, Order=110)]
         [References("Schedule")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// BUSY | FREE | BUSY-UNAVAILABLE | BUSY-TENTATIVE
         /// </summary>
-        [FhirElement("freeBusyType", Order=120)]
+        [FhirElement("freeBusyType", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Slot.SlotStatus> FreeBusyTypeElement
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the slot is to begin
         /// </summary>
-        [FhirElement("start", Order=130)]
+        [FhirElement("start", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the slot is to conclude
         /// </summary>
-        [FhirElement("end", Order=140)]
+        [FhirElement("end", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement

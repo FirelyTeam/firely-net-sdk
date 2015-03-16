@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -81,8 +81,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The recipient has declined to accept the referral.
             /// </summary>
-            [EnumLiteral("refused")]
-            Refused,
+            [EnumLiteral("rejected")]
+            Rejected,
             /// <summary>
             /// The referral has been completely actioned.
             /// </summary>
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// draft | sent | active | cancelled | refused | completed
+        /// draft | sent | active | cancelled | rejected | completed
         /// </summary>
         [FhirElement("status", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus> _StatusElement;
         
         /// <summary>
-        /// draft | sent | active | cancelled | refused | completed
+        /// draft | sent | active | cancelled | rejected | completed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

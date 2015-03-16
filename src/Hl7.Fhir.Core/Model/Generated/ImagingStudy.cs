@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -522,9 +522,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _BodySite;
             
             /// <summary>
+            /// Body part laterality
+            /// </summary>
+            [FhirElement("laterality", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.Coding Laterality
+            {
+                get { return _Laterality; }
+                set { _Laterality = value; OnPropertyChanged("Laterality"); }
+            }
+            
+            private Hl7.Fhir.Model.Coding _Laterality;
+            
+            /// <summary>
             /// When the series started
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=120)]
+            [FhirElement("dateTime", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
             {
@@ -556,7 +569,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A single instance taken from a patient (image or other)
             /// </summary>
-            [FhirElement("instance", InSummary=true, Order=130)]
+            [FhirElement("instance", InSummary=true, Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent> Instance
@@ -582,6 +595,7 @@ namespace Hl7.Fhir.Model
                     if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
+                    if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.Coding)Laterality.DeepCopy();
                     if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                     if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent>(Instance.DeepCopy());
                     return dest;
@@ -609,6 +623,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(AvailabilityElement, otherT.AvailabilityElement)) return false;
                 if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.Matches(Laterality, otherT.Laterality)) return false;
                 if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
                 
@@ -629,6 +644,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.IsExactly(Laterality, otherT.Laterality)) return false;
                 if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
                 
@@ -808,50 +824,18 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// WADO-RS service where instance is available  (0008,1199 &gt; 0008,1190)
+            /// Content of the instance
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=90)]
+            [FhirElement("content", InSummary=true, Order=90)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
+            public List<Hl7.Fhir.Model.Attachment> Content
             {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Attachment>(); return _Content; }
+                set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// WADO-RS service where instance is available  (0008,1199 &gt; 0008,1190)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UrlElement = null; 
-                    else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            /// <summary>
-            /// Content for this instance
-            /// </summary>
-            [FhirElement("attachment", InSummary=true, Order=100)]
-            [References()]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Attachment
-            {
-                get { return _Attachment; }
-                set { _Attachment = value; OnPropertyChanged("Attachment"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Attachment;
+            private List<Hl7.Fhir.Model.Attachment> _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -865,8 +849,7 @@ namespace Hl7.Fhir.Model
                     if(SopclassElement != null) dest.SopclassElement = (Hl7.Fhir.Model.Oid)SopclassElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.ResourceReference)Attachment.DeepCopy();
+                    if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Attachment>(Content.DeepCopy());
                     return dest;
                 }
                 else
@@ -889,8 +872,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SopclassElement, otherT.SopclassElement)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.Matches(Attachment, otherT.Attachment)) return false;
+                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
                 
                 return true;
             }
@@ -906,8 +888,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SopclassElement, otherT.SopclassElement)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.IsExactly(Attachment, otherT.Attachment)) return false;
+                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
             }

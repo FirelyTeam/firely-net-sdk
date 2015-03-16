@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -105,6 +105,34 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Indication of the degree of conformance expectations associated with a binding
+        /// </summary>
+        [FhirEnumeration("BindingStrength")]
+        public enum BindingStrength
+        {
+            /// <summary>
+            /// To be conformant, instances of this element SHALL include a code from the specified value set.
+            /// </summary>
+            [EnumLiteral("required")]
+            Required,
+            /// <summary>
+            /// To be conformant, instances of this element SHALL include a code from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the valueset does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.
+            /// </summary>
+            [EnumLiteral("extensible")]
+            Extensible,
+            /// <summary>
+            /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
+            /// </summary>
+            [EnumLiteral("preferred")]
+            Preferred,
+            /// <summary>
+            /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.
+            /// </summary>
+            [EnumLiteral("example")]
+            Example,
+        }
+        
+        /// <summary>
         /// How resource references can be aggregated
         /// </summary>
         [FhirEnumeration("AggregationMode")]
@@ -144,7 +172,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("open")]
             Open,
             /// <summary>
-            /// Additional content is allowed, but only at the end of the list.
+            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
             /// </summary>
             [EnumLiteral("openAtEnd")]
             OpenAtEnd,
@@ -691,74 +719,42 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Can additional codes be used?
+            /// required | extensible | preferred | example
             /// </summary>
-            [FhirElement("isExtensible", InSummary=true, Order=50)]
+            [FhirElement("strength", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean IsExtensibleElement
+            public Code<Hl7.Fhir.Model.ElementDefinition.BindingStrength> StrengthElement
             {
-                get { return _IsExtensibleElement; }
-                set { _IsExtensibleElement = value; OnPropertyChanged("IsExtensibleElement"); }
+                get { return _StrengthElement; }
+                set { _StrengthElement = value; OnPropertyChanged("StrengthElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirBoolean _IsExtensibleElement;
+            private Code<Hl7.Fhir.Model.ElementDefinition.BindingStrength> _StrengthElement;
             
             /// <summary>
-            /// Can additional codes be used?
+            /// required | extensible | preferred | example
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public bool? IsExtensible
+            public Hl7.Fhir.Model.ElementDefinition.BindingStrength? Strength
             {
-                get { return IsExtensibleElement != null ? IsExtensibleElement.Value : null; }
+                get { return StrengthElement != null ? StrengthElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      IsExtensibleElement = null; 
+                      StrengthElement = null; 
                     else
-                      IsExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("IsExtensible");
-                }
-            }
-            
-            /// <summary>
-            /// required | preferred | example
-            /// </summary>
-            [FhirElement("conformance", InSummary=true, Order=60)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.ElementDefinition.BindingConformance> ConformanceElement
-            {
-                get { return _ConformanceElement; }
-                set { _ConformanceElement = value; OnPropertyChanged("ConformanceElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.ElementDefinition.BindingConformance> _ConformanceElement;
-            
-            /// <summary>
-            /// required | preferred | example
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ElementDefinition.BindingConformance? Conformance
-            {
-                get { return ConformanceElement != null ? ConformanceElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ConformanceElement = null; 
-                    else
-                      ConformanceElement = new Code<Hl7.Fhir.Model.ElementDefinition.BindingConformance>(value);
-                    OnPropertyChanged("Conformance");
+                      StrengthElement = new Code<Hl7.Fhir.Model.ElementDefinition.BindingStrength>(value);
+                    OnPropertyChanged("Strength");
                 }
             }
             
             /// <summary>
             /// Human explanation of the value set
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=70)]
+            [FhirElement("description", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -790,7 +786,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Source of value set
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("reference", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Reference
@@ -809,8 +805,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(IsExtensibleElement != null) dest.IsExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)IsExtensibleElement.DeepCopy();
-                    if(ConformanceElement != null) dest.ConformanceElement = (Code<Hl7.Fhir.Model.ElementDefinition.BindingConformance>)ConformanceElement.DeepCopy();
+                    if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.ElementDefinition.BindingStrength>)StrengthElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.Element)Reference.DeepCopy();
                     return dest;
@@ -831,8 +826,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(IsExtensibleElement, otherT.IsExtensibleElement)) return false;
-                if( !DeepComparable.Matches(ConformanceElement, otherT.ConformanceElement)) return false;
+                if( !DeepComparable.Matches(StrengthElement, otherT.StrengthElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
                 
@@ -846,8 +840,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(IsExtensibleElement, otherT.IsExtensibleElement)) return false;
-                if( !DeepComparable.IsExactly(ConformanceElement, otherT.ConformanceElement)) return false;
+                if( !DeepComparable.IsExactly(StrengthElement, otherT.StrengthElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
                 

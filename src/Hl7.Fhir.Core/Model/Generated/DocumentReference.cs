@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -150,6 +150,33 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.CodeableConcept _FacilityType;
             
+            /// <summary>
+            /// Additional details about where the content was created (e.g. clinical specialty)
+            /// </summary>
+            [FhirElement("practiceSetting", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept PracticeSetting
+            {
+                get { return _PracticeSetting; }
+                set { _PracticeSetting = value; OnPropertyChanged("PracticeSetting"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _PracticeSetting;
+            
+            /// <summary>
+            /// Source patient info
+            /// </summary>
+            [FhirElement("sourcePatientInfo", InSummary=true, Order=80)]
+            [References("Patient")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference SourcePatientInfo
+            {
+                get { return _SourcePatientInfo; }
+                set { _SourcePatientInfo = value; OnPropertyChanged("SourcePatientInfo"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _SourcePatientInfo;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DocumentReferenceContextComponent;
@@ -160,6 +187,8 @@ namespace Hl7.Fhir.Model
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.CodeableConcept>(Event.DeepCopy());
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     if(FacilityType != null) dest.FacilityType = (Hl7.Fhir.Model.CodeableConcept)FacilityType.DeepCopy();
+                    if(PracticeSetting != null) dest.PracticeSetting = (Hl7.Fhir.Model.CodeableConcept)PracticeSetting.DeepCopy();
+                    if(SourcePatientInfo != null) dest.SourcePatientInfo = (Hl7.Fhir.Model.ResourceReference)SourcePatientInfo.DeepCopy();
                     return dest;
                 }
                 else
@@ -180,6 +209,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Event, otherT.Event)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 if( !DeepComparable.Matches(FacilityType, otherT.FacilityType)) return false;
+                if( !DeepComparable.Matches(PracticeSetting, otherT.PracticeSetting)) return false;
+                if( !DeepComparable.Matches(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
                 
                 return true;
             }
@@ -193,6 +224,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(FacilityType, otherT.FacilityType)) return false;
+                if( !DeepComparable.IsExactly(PracticeSetting, otherT.PracticeSetting)) return false;
+                if( !DeepComparable.IsExactly(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
                 
                 return true;
             }
@@ -344,7 +377,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Precice type of document
+        /// Precise type of document
         /// </summary>
         [FhirElement("type", Order=120)]
         [Cardinality(Min=1,Max=1)]

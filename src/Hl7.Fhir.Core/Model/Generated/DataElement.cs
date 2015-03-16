@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates the degree of precision of the data element definition
         /// </summary>
-        [FhirEnumeration("DataElementGranularity")]
-        public enum DataElementGranularity
+        [FhirEnumeration("DataElementSpecificity")]
+        public enum DataElementSpecificity
         {
             /// <summary>
             /// The data element is sufficiently well-constrained that multiple pieces of data captured according to the constraints of the data element will be comparable (though in some cases, a degree of automated conversion/normalization may be required).
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Assist with indexing and finding
+        /// Content intends to support these contexts
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
@@ -680,15 +680,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
         /// </summary>
-        [FhirElement("granularity", InSummary=true, Order=200)]
+        [FhirElement("specificity", InSummary=true, Order=200)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DataElement.DataElementGranularity> GranularityElement
+        public Code<Hl7.Fhir.Model.DataElement.DataElementSpecificity> SpecificityElement
         {
-            get { return _GranularityElement; }
-            set { _GranularityElement = value; OnPropertyChanged("GranularityElement"); }
+            get { return _SpecificityElement; }
+            set { _SpecificityElement = value; OnPropertyChanged("SpecificityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.DataElement.DataElementGranularity> _GranularityElement;
+        private Code<Hl7.Fhir.Model.DataElement.DataElementSpecificity> _SpecificityElement;
         
         /// <summary>
         /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
@@ -696,16 +696,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DataElement.DataElementGranularity? Granularity
+        public Hl7.Fhir.Model.DataElement.DataElementSpecificity? Specificity
         {
-            get { return GranularityElement != null ? GranularityElement.Value : null; }
+            get { return SpecificityElement != null ? SpecificityElement.Value : null; }
             set
             {
                 if(value == null)
-                  GranularityElement = null; 
+                  SpecificityElement = null; 
                 else
-                  GranularityElement = new Code<Hl7.Fhir.Model.DataElement.DataElementGranularity>(value);
-                OnPropertyChanged("Granularity");
+                  SpecificityElement = new Code<Hl7.Fhir.Model.DataElement.DataElementSpecificity>(value);
+                OnPropertyChanged("Specificity");
             }
         }
         
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.DataElement.DataElementContactComponent>(Contact.DeepCopy());
-                if(GranularityElement != null) dest.GranularityElement = (Code<Hl7.Fhir.Model.DataElement.DataElementGranularity>)GranularityElement.DeepCopy();
+                if(SpecificityElement != null) dest.SpecificityElement = (Code<Hl7.Fhir.Model.DataElement.DataElementSpecificity>)SpecificityElement.DeepCopy();
                 if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.DataElement.DataElementMappingComponent>(Mapping.DeepCopy());
                 if(Element != null) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(Element.DeepCopy());
                 return dest;
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(GranularityElement, otherT.GranularityElement)) return false;
+            if( !DeepComparable.Matches(SpecificityElement, otherT.SpecificityElement)) return false;
             if( !DeepComparable.Matches(Mapping, otherT.Mapping)) return false;
             if( !DeepComparable.Matches(Element, otherT.Element)) return false;
             
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(GranularityElement, otherT.GranularityElement)) return false;
+            if( !DeepComparable.IsExactly(SpecificityElement, otherT.SpecificityElement)) return false;
             if( !DeepComparable.IsExactly(Mapping, otherT.Mapping)) return false;
             if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
             

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -274,6 +274,38 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Date attachment was first created
+        /// </summary>
+        [FhirElement("creation", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime CreationElement
+        {
+            get { return _CreationElement; }
+            set { _CreationElement = value; OnPropertyChanged("CreationElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _CreationElement;
+        
+        /// <summary>
+        /// Date attachment was first created
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Creation
+        {
+            get { return CreationElement != null ? CreationElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CreationElement = null; 
+                else
+                  CreationElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Creation");
+            }
+        }
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Attachment;
@@ -288,6 +320,7 @@ namespace Hl7.Fhir.Model
                 if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.Integer)SizeElement.DeepCopy();
                 if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+                if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopy();
                 return dest;
             }
             else
@@ -312,6 +345,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(SizeElement, otherT.SizeElement)) return false;
             if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.Matches(CreationElement, otherT.CreationElement)) return false;
             
             return true;
         }
@@ -329,6 +363,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SizeElement, otherT.SizeElement)) return false;
             if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.IsExactly(CreationElement, otherT.CreationElement)) return false;
             
             return true;
         }

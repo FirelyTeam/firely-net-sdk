@@ -36,28 +36,28 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// StatusResponse resource
+    /// ProcessResponse resource
     /// </summary>
-    [FhirType("StatusResponse", IsResource=true)]
+    [FhirType("ProcessResponse", IsResource=true)]
     [DataContract]
-    public partial class StatusResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.StatusResponse; } }
+        public override ResourceType ResourceType { get { return ResourceType.ProcessResponse; } }
         [NotMapped]
-        public override string TypeName { get { return "StatusResponse"; } }
+        public override string TypeName { get { return "ProcessResponse"; } }
         
-        [FhirType("StatusResponseNotesComponent")]
+        [FhirType("ProcessResponseNotesComponent")]
         [DataContract]
-        public partial class StatusResponseNotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessResponseNotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "StatusResponseNotesComponent"; } }
+            public override string TypeName { get { return "ProcessResponseNotesComponent"; } }
             
             /// <summary>
             /// display | print | printoper
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as StatusResponseNotesComponent;
+                var dest = other as ProcessResponseNotesComponent;
                 
                 if (dest != null)
                 {
@@ -121,12 +121,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new StatusResponseNotesComponent());
+                return CopyTo(new ProcessResponseNotesComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as StatusResponseNotesComponent;
+                var otherT = other as ProcessResponseNotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as StatusResponseNotesComponent;
+                var otherT = other as ProcessResponseNotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Insurer
+        /// Authoring Organization
         /// </summary>
         [FhirElement("organization", Order=160)]
         [References("Organization")]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
-        /// Responsible practitioner
+        /// Responsible Practitioner
         /// </summary>
         [FhirElement("requestProvider", Order=170)]
         [References("Practitioner")]
@@ -343,13 +343,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("notes", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.StatusResponse.StatusResponseNotesComponent> Notes
+        public List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> Notes
         {
-            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.StatusResponse.StatusResponseNotesComponent>(); return _Notes; }
+            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(); return _Notes; }
             set { _Notes = value; OnPropertyChanged("Notes"); }
         }
         
-        private List<Hl7.Fhir.Model.StatusResponse.StatusResponseNotesComponent> _Notes;
+        private List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> _Notes;
         
         /// <summary>
         /// Error code
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as StatusResponse;
+            var dest = other as ProcessResponse;
             
             if (dest != null)
             {
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.Coding)Form.DeepCopy();
-                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.StatusResponse.StatusResponseNotesComponent>(Notes.DeepCopy());
+                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(Notes.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.Coding>(Error.DeepCopy());
                 return dest;
             }
@@ -393,12 +393,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new StatusResponse());
+            return CopyTo(new ProcessResponse());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as StatusResponse;
+            var otherT = other as ProcessResponse;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as StatusResponse;
+            var otherT = other as ProcessResponse;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

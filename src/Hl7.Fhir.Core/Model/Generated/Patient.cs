@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -250,6 +250,106 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
                 if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("PatientCommunicationComponent")]
+        [DataContract]
+        public partial class PatientCommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PatientCommunicationComponent"; } }
+            
+            /// <summary>
+            /// The language which can be used to communicate with the patient about his or her health
+            /// </summary>
+            [FhirElement("language", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Language
+            {
+                get { return _Language; }
+                set { _Language = value; OnPropertyChanged("Language"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Language;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            [FhirElement("preferred", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean PreferredElement
+            {
+                get { return _PreferredElement; }
+                set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Preferred
+            {
+                get { return PreferredElement != null ? PreferredElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PreferredElement = null; 
+                    else
+                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Preferred");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PatientCommunicationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
+                    if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PatientCommunicationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PatientCommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Language, otherT.Language)) return false;
+                if( !DeepComparable.Matches(PreferredElement, otherT.PreferredElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PatientCommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Language, otherT.Language)) return false;
+                if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
                 
                 return true;
             }
@@ -691,18 +791,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Patient.AnimalComponent _Animal;
         
         /// <summary>
-        /// Languages which may be used to communicate with the patient about his or her health
+        /// A list of Languages which may be used to communicate with the patient about his or her health
         /// </summary>
         [FhirElement("communication", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Communication
+        public List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> Communication
         {
-            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Communication; }
+            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent>(); return _Communication; }
             set { _Communication = value; OnPropertyChanged("Communication"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
+        private List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> _Communication;
         
         /// <summary>
         /// Patient's nominated care provider
@@ -799,7 +899,7 @@ namespace Hl7.Fhir.Model
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
-                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
+                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent>(Communication.DeepCopy());
                 if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(Link.DeepCopy());

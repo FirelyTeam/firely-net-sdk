@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Mar 5, 2015 16:19+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -108,6 +108,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("forbidden")]
             Forbidden,
+            /// <summary>
+            /// One or more records in the query response have been suppressed due to consent or privacy restrictions.
+            /// </summary>
+            [EnumLiteral("suppressed")]
+            Suppressed,
             /// <summary>
             /// processing issues.
             /// </summary>
@@ -261,18 +266,19 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Type
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Coding _Type;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// Additional description of the issue
+            /// Additional diagnostic information about the issue
             /// </summary>
             [FhirElement("details", InSummary=true, Order=60)]
             [DataMember]
@@ -285,7 +291,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DetailsElement;
             
             /// <summary>
-            /// Additional description of the issue
+            /// Additional diagnostic information about the issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -344,7 +350,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>)SeverityElement.DeepCopy();
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(DetailsElement != null) dest.DetailsElement = (Hl7.Fhir.Model.FhirString)DetailsElement.DeepCopy();
                     if(LocationElement != null) dest.LocationElement = new List<Hl7.Fhir.Model.FhirString>(LocationElement.DeepCopy());
                     return dest;
@@ -365,7 +371,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(DetailsElement, otherT.DetailsElement)) return false;
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
                 
@@ -379,7 +385,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(DetailsElement, otherT.DetailsElement)) return false;
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
                 
