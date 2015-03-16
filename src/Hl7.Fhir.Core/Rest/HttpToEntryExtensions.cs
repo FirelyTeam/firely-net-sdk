@@ -25,12 +25,12 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Rest
 {
-    internal static class HttpToEntryExtensions
+    public static class HttpToEntryExtensions
     {
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        public static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response)
+        internal static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response)
         {
             var result = new Bundle.BundleEntryComponent();
 
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Rest
 
 
 
-        public static string decodeBody(byte[] body, Encoding enc)
+        private static string decodeBody(byte[] body, Encoding enc)
         {
             if (body == null) return null;
             if (enc == null) enc = Encoding.UTF8;
@@ -240,6 +240,11 @@ namespace Hl7.Fhir.Rest
             }
         }
 
+
+        public static IEnumerable<string> GetHeader(this Bundle.BundleEntryTransactionResponseComponent interaction, string header)
+        {
+            return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
+        }
 
         //public T BodyAsResource<T>() where T : Resource
         //{

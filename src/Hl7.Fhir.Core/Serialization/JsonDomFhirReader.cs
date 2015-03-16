@@ -235,9 +235,8 @@ namespace Hl7.Fhir.Serialization
 
 
         /// <summary>
-        /// Find primitive member & complex _member combinations (as used in json) and combine them into a single complex member
+        /// Find primitive member and complex _member combinations (as used in json) and combine them into a single complex member
         /// </summary>
-        /// <param name="complex"></param>
         private void collapseMembers(JObject complex)
         {
         }
