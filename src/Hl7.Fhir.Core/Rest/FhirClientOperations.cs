@@ -43,9 +43,15 @@ namespace Hl7.Fhir.Rest
         public static string META = "meta";
 
         /// <summary>
-        /// "meta-change" operation
+        /// "meta-add" operation
         /// </summary>
-        public static string META_CHANGE = "meta-change";
+        public static string META_ADD = "meta-add";
+
+        /// <summary>
+        /// "meta-delete" operation
+        /// </summary>
+        public static string META_DELETE= "meta-delete";
+
 
 
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
@@ -164,15 +170,15 @@ namespace Hl7.Fhir.Rest
 
         public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
         {
-            var par = new Parameters().Add("meta", meta).Add("mode", new Code("add"));
-            return expect<Parameters>(client.Operation(location, META_CHANGE, par));
+            var par = new Parameters().Add("meta", meta);
+            return expect<Parameters>(client.Operation(location, META_ADD, par));
         }
 
 
         public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
         {
-            var par = new Parameters().Add("meta", meta).Add("mode", new Code("delete"));
-            return expect<Parameters>(client.Operation(location, META_CHANGE, par));
+            var par = new Parameters().Add("meta", meta);
+            return expect<Parameters>(client.Operation(location, META_DELETE, par));
         }
 
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
