@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static bool IsValidResourceContentType(string contentType)
         {
-            var f = contentType.ToLowerInvariant();
+            var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
 
             return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f);
         }
