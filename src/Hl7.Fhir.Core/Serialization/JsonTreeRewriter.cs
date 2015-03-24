@@ -20,6 +20,10 @@ namespace Hl7.Fhir.Serialization
     internal static class JsonTreeRewriter
     {
         private const string PRIMITIVE_PROP_NAME = "value";
+        private const string SPEC_CHILD_ID = "id";
+        private const string SPEC_CHILD_URL = "url";
+        private const string SPEC_PARENT_EXTENSION = "modifier";
+        private const string SPEC_PARENT_MODIFIEREXTENSION = "modifierExtension";
 
         // Expand the children of a property given in the parameter. The property may only contain either a primitive JValue or a
         // complex JObject, and will list its children, which are only JValues and JObjects as well (JArrays get expanded to a list
@@ -46,8 +50,12 @@ namespace Hl7.Fhir.Serialization
         {
             var result = new JObject();
 
+            string parentName = null;
+
+            if (parent.Parent as JProperty != null)
+                parentName = ((JProperty)(parent.Parent)).Name;
             var step1 = expandArrayChildren(parent.Properties());
-            var step2 = expandPrimitiveChildren(step1);
+            var step2 = expandPrimitiveChildren(step1, parentName);
             var step3 = combineChildren(step2);
 
             foreach (var child in step3) result.Add(child);
@@ -75,11 +83,11 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static IEnumerable<JProperty> expandPrimitiveChildren(IEnumerable<JProperty> children)
+        private static IEnumerable<JProperty> expandPrimitiveChildren(IEnumerable<JProperty> children, string parentName)
         {
             foreach (var child in children)
             {
-                if (child.Value is JValue && child.Name != PRIMITIVE_PROP_NAME)
+                if (isPrimitive(child,parentName))
                 {
                     if (child.Value.Type == JTokenType.Null) continue;
 
@@ -90,6 +98,14 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        private static bool isPrimitive(JProperty property, string parentName)
+        {
+            return property.Value is JValue && 
+                property.Name == PRIMITIVE_PROP_NAME ||
+                property.Name == SPEC_CHILD_ID ||               // id attr that all types can have
+                (property.Name == SPEC_CHILD_URL && parentName == SPEC_PARENT_EXTENSION) ||     // url attr of extension
+                (property.Name == SPEC_CHILD_URL && parentName == SPEC_PARENT_MODIFIEREXTENSION);    // contentType attr of Binary resource
+        }
 
         private static IEnumerable<JProperty> combineChildren(IEnumerable<JProperty> children)
         {
