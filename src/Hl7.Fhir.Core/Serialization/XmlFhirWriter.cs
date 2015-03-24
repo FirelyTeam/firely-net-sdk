@@ -24,7 +24,10 @@ namespace Hl7.Fhir.Serialization
 
         public XmlFhirWriter(XmlWriter xwriter)
         {
-            xw = xwriter;
+            var settings = new XmlWriterSettings();
+            settings.NewLineHandling = NewLineHandling.Entitize;
+
+            xw = XmlWriter.Create(xwriter, settings);
         }
 
         public void WriteStartRootObject(string name, bool contained = false)

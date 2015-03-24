@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Rest
             {
                 result.TransactionResponse.SetBody(body);
 
-                if (isBinaryResponse(response))
+                if (IsBinaryResponse(response.ResponseUri.OriginalString))
                     result.Resource = makeBinaryResource(body, contentType);
                 else
                 {
@@ -163,13 +163,16 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static bool isBinaryResponse(HttpWebResponse response)
+        internal static bool IsBinaryResponse(string responseUri)
         {
-            var responseUri = response.ResponseUri.OriginalString;
+            var id = new ResourceIdentity(responseUri);
 
-            if (responseUri.Contains("/_history")) return false;
+            if (id.ResourceType != ResourceType.Binary.ToString()) return false;
 
-            return responseUri.EndsWith("/Binary") || responseUri.EndsWith("/Binary?") || responseUri.Contains("/Binary/");
+            if(id.Id != null && Id.IsValidValue(id.Id)) return true;
+            if(id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
+
+            return false;
         }
 
 

@@ -604,5 +604,16 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(interaction.GetBodyAsText().Contains("<Patient"));
             Assert.AreEqual("application/xml+fhir; charset=UTF-8", interaction.GetHeaders().Single(t => t.Item1 == "Content-Type").Item2);
         }
+
+        [TestMethod]
+        public void TestBinaryDetection()
+        {
+            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary"));
+            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary?param=x"));
+            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/_history"));
+
+            Assert.IsTrue(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2"));
+            Assert.IsTrue(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2/_history/1"));
+        }
     }
 }

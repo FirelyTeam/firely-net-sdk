@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Serialization
             settings.IgnoreComments = true;
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
+            
 
             var internalReader = XmlReader.Create(reader, settings);
             XDocument doc;

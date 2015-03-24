@@ -10,6 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
 using System.IO;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -73,7 +74,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
         }
-         
+
+
+        [TestMethod]
+        public void RetainSpacesInAttribute()
+        {
+            var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
+
+            var basic = (DomainResource)FhirParser.ParseFromXml(xml);
+
+            Assert.IsTrue(((FhirString)basic.GetExtensionValue("http://blabla.nl")).Value.Contains("\n"));
+
+            var outp = FhirSerializer.SerializeResourceToXml(basic);
+            Assert.IsTrue(outp.Contains("&#xA;"));
+        }
 
         [TestMethod]
         public void EdgecaseRoundtrip()
