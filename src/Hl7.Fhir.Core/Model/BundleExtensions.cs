@@ -29,10 +29,20 @@ namespace Hl7.Fhir.Model
         {
             if (identity == null) throw Error.ArgumentNull("reference");
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
-
-            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || !be.Resource.IsDeleted));
+            
+            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || !be.IsDeleted()));
         }
 
+
+        public static bool IsDeleted(this Bundle.BundleEntryComponent entry)
+        {
+            if (entry.Transaction != null)
+            {
+                return entry.Transaction.Method == Bundle.HTTPVerb.DELETE;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Find all entries in a Bundle with the given type/id/version

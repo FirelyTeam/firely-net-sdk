@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
             {
                 if (entry.Resource != null)
                 {
-                    if (!entry.Resource.Meta.Deleted != true)
+                    if (!entry.IsDeleted())
                     {
                         Resource newEntry = client.Read<Resource>(entry.GetResourceLocation());
                         result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });

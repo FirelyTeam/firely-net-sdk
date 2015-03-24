@@ -89,8 +89,9 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var client = new FhirClient(testEndpoint);
 
-            var pat = client.Read<Patient>(ResourceIdentity.Build("Patient", "uslab-example1"));
-            var vresult = client.ValidateResource(pat, null, new FhirUri("http://fhir-dev.healthintersections.com.au/open/Profile/patient-uslab-uslabpatient"));
+            var pat = client.Read<Patient>("Patient/uslab-example1");
+            var vresult = client.ValidateResource(pat, null,
+                new FhirUri("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/patient-uslab-uslabpatient"));
 
             Assert.IsTrue(vresult.Success());
         }

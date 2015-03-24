@@ -94,8 +94,9 @@
     <Compile Include="Model\Generated\BodySite.cs" />
     <Compile Include="Model\Generated\Bundle.cs" />
     <Compile Include="Model\Generated\CarePlan2.cs" />
+    <Compile Include="Model\Generated\Claim.cs" />
     <Compile Include="Model\Generated\ClaimResponse.cs" />
-    <Compile Include="Model\Generated\ClinicalAssessment.cs" />
+    <Compile Include="Model\Generated\ClinicalImpression.cs" />
     <Compile Include="Model\Generated\Communication.cs" />
     <Compile Include="Model\Generated\CommunicationRequest.cs" />
     <Compile Include="Model\Generated\ContactPoint.cs" />
@@ -118,18 +119,15 @@
     <Compile Include="Model\Generated\Goal.cs" />
     <Compile Include="Model\Generated\HealthcareService.cs" />
     <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
-    <Compile Include="Model\Generated\InstitutionalClaim.cs" />
     <Compile Include="Model\Generated\Meta.cs" />
     <Compile Include="Model\Generated\NamingSystem.cs" />
     <Compile Include="Model\Generated\NutritionOrder.cs" />
     <Compile Include="Model\Generated\OperationDefinition.cs" />
-    <Compile Include="Model\Generated\OralHealthClaim.cs" />
     <Compile Include="Model\Generated\Other.cs" />
     <Compile Include="Model\Generated\Parameters.cs" />
     <Compile Include="Model\Generated\PaymentNotice.cs" />
     <Compile Include="Model\Generated\PaymentReconciliation.cs" />
     <Compile Include="Model\Generated\Person.cs" />
-    <Compile Include="Model\Generated\PharmacyClaim.cs" />
     <Compile Include="Model\Generated\ProcedureRequest.cs" />
     <Compile Include="Model\Generated\ProcessRequest.cs" />
     <Compile Include="Model\Generated\ProcessResponse.cs" />
@@ -146,7 +144,6 @@
     <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
-    <Compile Include="Model\Generated\VisionClaim.cs" />
     <Compile Include="Model\Generated\VisionPrescription.cs" />
     <Compile Include="Model\HumanName.cs" />
     <Compile Include="Model\IDeepComparable.cs" />

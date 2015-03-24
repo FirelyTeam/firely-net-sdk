@@ -120,12 +120,6 @@ namespace Hl7.Fhir.Model
         {
             get { return Meta != null && Meta.VersionId != null; }
         }
-
-        [NotMapped]
-        public bool IsDeleted
-        {
-            get { return Meta != null && Meta.Deleted == true; }
-        }
     }
 }
 

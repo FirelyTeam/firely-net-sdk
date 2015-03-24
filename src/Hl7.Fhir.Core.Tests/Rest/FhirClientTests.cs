@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());            
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             //// Now, assume no one is quick enough to insert something between now and the next
             //// tests....
@@ -412,13 +412,13 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
             Assert.AreEqual(3, history.Entry.Count());
             Assert.AreEqual(2, history.Entry.Where(entry => entry.Resource != null).Count());
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.Resource.Meta.Deleted != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
         }
 
 
