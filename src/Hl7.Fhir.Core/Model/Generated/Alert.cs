@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -138,17 +138,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is alert about?
         /// </summary>
-        [FhirElement("subject", Order=120)]
+        [FhirElement("patient", Order=120)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Alert creator
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Alert.AlertStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.CodeableConcept)Note.DeepCopy();
                 return dest;
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             

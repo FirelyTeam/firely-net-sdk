@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,6 +59,11 @@ namespace Hl7.Fhir.Model
         public enum ActionList
         {
             /// <summary>
+            /// Cancel, Reverse or nullify the target resource.
+            /// </summary>
+            [EnumLiteral("cancel")]
+            Cancel,
+            /// <summary>
             /// Check for previously un-read/ not-retrieved resources.
             /// </summary>
             [EnumLiteral("poll")]
@@ -68,11 +73,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("reprocess")]
             Reprocess,
-            /// <summary>
-            /// Reverse or nullify the target resource.
-            /// </summary>
-            [EnumLiteral("reverse")]
-            Reverse,
             /// <summary>
             /// Retrieve the processing status of the target resource.
             /// </summary>
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// poll | reprocess | reverse | status
+        /// cancel | poll | reprocess | status
         /// </summary>
         [FhirElement("action", Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ProcessRequest.ActionList> _ActionElement;
         
         /// <summary>
-        /// poll | reprocess | reverse | status
+        /// cancel | poll | reprocess | status
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

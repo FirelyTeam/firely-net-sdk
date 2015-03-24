@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -316,36 +316,17 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Whether items in the list have a meaningful order
+        /// What order the list has
         /// </summary>
-        [FhirElement("ordered", Order=140)]
+        [FhirElement("orderedBy", Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean OrderedElement
+        public Hl7.Fhir.Model.CodeableConcept OrderedBy
         {
-            get { return _OrderedElement; }
-            set { _OrderedElement = value; OnPropertyChanged("OrderedElement"); }
+            get { return _OrderedBy; }
+            set { _OrderedBy = value; OnPropertyChanged("OrderedBy"); }
         }
         
-        private Hl7.Fhir.Model.FhirBoolean _OrderedElement;
-        
-        /// <summary>
-        /// Whether items in the list have a meaningful order
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Ordered
-        {
-            get { return OrderedElement != null ? OrderedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  OrderedElement = null; 
-                else
-                  OrderedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Ordered");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _OrderedBy;
         
         /// <summary>
         /// working | snapshot | changes
@@ -419,7 +400,7 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(OrderedElement != null) dest.OrderedElement = (Hl7.Fhir.Model.FhirBoolean)OrderedElement.DeepCopy();
+                if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.List.ListMode>)ModeElement.DeepCopy();
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(Entry.DeepCopy());
                 if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
@@ -445,7 +426,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(OrderedElement, otherT.OrderedElement)) return false;
+            if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
             if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
             if( !DeepComparable.Matches(EmptyReason, otherT.EmptyReason)) return false;
@@ -464,7 +445,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(OrderedElement, otherT.OrderedElement)) return false;
+            if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
             if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
             if( !DeepComparable.IsExactly(EmptyReason, otherT.EmptyReason)) return false;

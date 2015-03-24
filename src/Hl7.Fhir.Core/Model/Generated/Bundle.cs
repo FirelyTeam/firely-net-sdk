@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -790,9 +790,23 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Links related to this entry
+            /// </summary>
+            [FhirElement("link", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> Link
+            {
+                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(); return _Link; }
+                set { _Link = value; OnPropertyChanged("Link"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
+            
+            /// <summary>
             /// Resources in this bundle
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=50, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -806,7 +820,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Search related information
             /// </summary>
-            [FhirElement("search", InSummary=true, Order=60)]
+            [FhirElement("search", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent Search
             {
@@ -819,7 +833,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("transaction", InSummary=true, Order=70)]
+            [FhirElement("transaction", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent Transaction
             {
@@ -832,7 +846,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("transactionResponse", InSummary=true, Order=80)]
+            [FhirElement("transactionResponse", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent TransactionResponse
             {
@@ -850,6 +864,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
+                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
                     if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent)Search.DeepCopy();
                     if(Transaction != null) dest.Transaction = (Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent)Transaction.DeepCopy();
@@ -872,6 +887,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
+                if( !DeepComparable.Matches(Link, otherT.Link)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Search, otherT.Search)) return false;
                 if( !DeepComparable.Matches(Transaction, otherT.Transaction)) return false;
@@ -887,6 +903,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
+                if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Search, otherT.Search)) return false;
                 if( !DeepComparable.IsExactly(Transaction, otherT.Transaction)) return false;

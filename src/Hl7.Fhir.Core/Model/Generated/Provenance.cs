@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProvenanceAgentComponent"; } }
             
             /// <summary>
-            /// e.g. author | overseer | enterer | attester | source | cc: +
+            /// Agents Role
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Role;
             
             /// <summary>
-            /// e.g. Resource | Person | Application | Record | Document +
+            /// Agent Type
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Resource Type, or something else
+            /// Entity Type
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
-            /// Identity of participant (urn or url)
+            /// Identity of entity
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _ReferenceElement;
             
             /// <summary>
-            /// Identity of participant (urn or url)
+            /// Identity of entity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Human description of participant
+            /// Human description of entity
             /// </summary>
             [FhirElement("display", InSummary=true, Order=70)]
             [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
-            /// Human description of participant
+            /// Human description of entity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Person, organization, records, etc. involved in creating resource
+        /// Agents involved in creating resource
         /// </summary>
         [FhirElement("agent", Order=150)]
         [Cardinality(Min=0,Max=-1)]

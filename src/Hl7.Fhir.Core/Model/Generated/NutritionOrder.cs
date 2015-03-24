@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
-            /// All actions that are implied by the prescription have occurred (this will rarely be made explicit).
+            /// All actions that are implied by the order have occurred and no continuation is planned (this will rarely be made explicit).
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("patient", Order=90)]
+        [FhirElement("patient", InSummary=true, Order=90)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("orderer", Order=100)]
+        [FhirElement("orderer", InSummary=true, Order=100)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date and time the nutrition order was requested
         /// </summary>
-        [FhirElement("dateTime", Order=130)]
+        [FhirElement("dateTime", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -981,92 +981,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// List of the patient's food and nutrition-related allergies and intolerances
-        /// </summary>
-        [FhirElement("allergyIntolerance", Order=140)]
-        [References("AllergyIntolerance")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
-        {
-            get { if(_AllergyIntolerance==null) _AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(); return _AllergyIntolerance; }
-            set { _AllergyIntolerance = value; OnPropertyChanged("AllergyIntolerance"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _AllergyIntolerance;
-        
-        /// <summary>
-        /// Order-specific modifier about the type of food that should be given
-        /// </summary>
-        [FhirElement("foodPreferenceModifier", Order=150)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
-        {
-            get { if(_FoodPreferenceModifier==null) _FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FoodPreferenceModifier; }
-            set { _FoodPreferenceModifier = value; OnPropertyChanged("FoodPreferenceModifier"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _FoodPreferenceModifier;
-        
-        /// <summary>
-        /// Order-specific modifier about the type of food that should not be given
-        /// </summary>
-        [FhirElement("excludeFoodModifier", Order=160)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
-        {
-            get { if(_ExcludeFoodModifier==null) _ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ExcludeFoodModifier; }
-            set { _ExcludeFoodModifier = value; OnPropertyChanged("ExcludeFoodModifier"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _ExcludeFoodModifier;
-        
-        /// <summary>
-        /// Oral diet components
-        /// </summary>
-        [FhirElement("oralDiet", Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent OralDiet
-        {
-            get { return _OralDiet; }
-            set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
-        }
-        
-        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent _OralDiet;
-        
-        /// <summary>
-        /// Supplement components
-        /// </summary>
-        [FhirElement("supplement", Order=180)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> Supplement
-        {
-            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(); return _Supplement; }
-            set { _Supplement = value; OnPropertyChanged("Supplement"); }
-        }
-        
-        private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> _Supplement;
-        
-        /// <summary>
-        /// Enteral formula components
-        /// </summary>
-        [FhirElement("enteralFormula", Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent EnteralFormula
-        {
-            get { return _EnteralFormula; }
-            set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
-        }
-        
-        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent _EnteralFormula;
-        
-        /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled
         /// </summary>
-        [FhirElement("status", Order=200)]
+        [FhirElement("status", InSummary=true, Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
         {
@@ -1095,6 +1012,89 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// List of the patient's food and nutrition-related allergies and intolerances
+        /// </summary>
+        [FhirElement("allergyIntolerance", Order=150)]
+        [References("AllergyIntolerance")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
+        {
+            get { if(_AllergyIntolerance==null) _AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(); return _AllergyIntolerance; }
+            set { _AllergyIntolerance = value; OnPropertyChanged("AllergyIntolerance"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _AllergyIntolerance;
+        
+        /// <summary>
+        /// Order-specific modifier about the type of food that should be given
+        /// </summary>
+        [FhirElement("foodPreferenceModifier", Order=160)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
+        {
+            get { if(_FoodPreferenceModifier==null) _FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FoodPreferenceModifier; }
+            set { _FoodPreferenceModifier = value; OnPropertyChanged("FoodPreferenceModifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _FoodPreferenceModifier;
+        
+        /// <summary>
+        /// Order-specific modifier about the type of food that should not be given
+        /// </summary>
+        [FhirElement("excludeFoodModifier", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
+        {
+            get { if(_ExcludeFoodModifier==null) _ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ExcludeFoodModifier; }
+            set { _ExcludeFoodModifier = value; OnPropertyChanged("ExcludeFoodModifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ExcludeFoodModifier;
+        
+        /// <summary>
+        /// Oral diet components
+        /// </summary>
+        [FhirElement("oralDiet", Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent OralDiet
+        {
+            get { return _OralDiet; }
+            set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
+        }
+        
+        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent _OralDiet;
+        
+        /// <summary>
+        /// Supplement components
+        /// </summary>
+        [FhirElement("supplement", Order=190)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> Supplement
+        {
+            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(); return _Supplement; }
+            set { _Supplement = value; OnPropertyChanged("Supplement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> _Supplement;
+        
+        /// <summary>
+        /// Enteral formula components
+        /// </summary>
+        [FhirElement("enteralFormula", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent EnteralFormula
+        {
+            get { return _EnteralFormula; }
+            set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
+        }
+        
+        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent _EnteralFormula;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NutritionOrder;
@@ -1107,13 +1107,13 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
                 if(FoodPreferenceModifier != null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopy());
                 if(ExcludeFoodModifier != null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopy());
                 if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent)OralDiet.DeepCopy();
                 if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(Supplement.DeepCopy());
                 if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent)EnteralFormula.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
                 return dest;
             }
             else
@@ -1136,13 +1136,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.Matches(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.Matches(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
             if( !DeepComparable.Matches(OralDiet, otherT.OralDiet)) return false;
             if( !DeepComparable.Matches(Supplement, otherT.Supplement)) return false;
             if( !DeepComparable.Matches(EnteralFormula, otherT.EnteralFormula)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             
             return true;
         }
@@ -1158,13 +1158,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.IsExactly(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.IsExactly(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
             if( !DeepComparable.IsExactly(OralDiet, otherT.OralDiet)) return false;
             if( !DeepComparable.IsExactly(Supplement, otherT.Supplement)) return false;
             if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             
             return true;
         }

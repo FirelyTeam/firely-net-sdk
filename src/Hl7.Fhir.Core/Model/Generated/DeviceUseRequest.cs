@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Request for device use
+    /// A request for a patient to use or be given a medical device
     /// </summary>
     [FhirType("DeviceUseRequest", IsResource=true)]
     [DataContract]

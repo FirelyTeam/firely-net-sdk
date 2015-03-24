@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("optional")]
             Optional,
             /// <summary>
-            /// The participant is not required to attend the appointment (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
+            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
             /// </summary>
             [EnumLiteral("information-only")]
             InformationOnly,
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The type of appointments that is being booked (ideally this would be an identifiable service - which is at a location, rather than the location itself)
+        /// The type of appointment that is being booked
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
@@ -572,52 +572,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> _Participant;
         
-        /// <summary>
-        /// Who recorded the appointment
-        /// </summary>
-        [FhirElement("lastModifiedBy", Order=210)]
-        [References("Practitioner","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference LastModifiedBy
-        {
-            get { return _LastModifiedBy; }
-            set { _LastModifiedBy = value; OnPropertyChanged("LastModifiedBy"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _LastModifiedBy;
-        
-        /// <summary>
-        /// Date when the appointment was recorded
-        /// </summary>
-        [FhirElement("lastModified", Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
-        {
-            get { return _LastModifiedElement; }
-            set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
-        
-        /// <summary>
-        /// Date when the appointment was recorded
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string LastModified
-        {
-            get { return LastModifiedElement != null ? LastModifiedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  LastModifiedElement = null; 
-                else
-                  LastModifiedElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("LastModified");
-            }
-        }
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Appointment;
@@ -637,8 +591,6 @@ namespace Hl7.Fhir.Model
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(Order != null) dest.Order = (Hl7.Fhir.Model.ResourceReference)Order.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(Participant.DeepCopy());
-                if(LastModifiedBy != null) dest.LastModifiedBy = (Hl7.Fhir.Model.ResourceReference)LastModifiedBy.DeepCopy();
-                if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();
                 return dest;
             }
             else
@@ -668,8 +620,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(Order, otherT.Order)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
-            if( !DeepComparable.Matches(LastModifiedBy, otherT.LastModifiedBy)) return false;
-            if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }
@@ -692,8 +642,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(Order, otherT.Order)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
-            if( !DeepComparable.IsExactly(LastModifiedBy, otherT.LastModifiedBy)) return false;
-            if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }

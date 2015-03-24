@@ -36,28 +36,211 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// A clinical assessment performed when planning treatments and management strategies for a patient
     /// </summary>
-    [FhirType("ClinicalAssessment", IsResource=true)]
+    [FhirType("ClinicalImpression", IsResource=true)]
     [DataContract]
-    public partial class ClinicalAssessment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ClinicalAssessment; } }
+        public override ResourceType ResourceType { get { return ResourceType.ClinicalImpression; } }
         [NotMapped]
-        public override string TypeName { get { return "ClinicalAssessment"; } }
+        public override string TypeName { get { return "ClinicalImpression"; } }
         
-        [FhirType("ClinicalAssessmentRuledOutComponent")]
+        [FhirType("ClinicalImpressionInvestigationsComponent")]
         [DataContract]
-        public partial class ClinicalAssessmentRuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ClinicalImpressionInvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ClinicalAssessmentRuledOutComponent"; } }
+            public override string TypeName { get { return "ClinicalImpressionInvestigationsComponent"; } }
+            
+            /// <summary>
+            /// A name/code for the set
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Record of a specific investigation
+            /// </summary>
+            [FhirElement("item", InSummary=true, Order=50)]
+            [References("Observation","QuestionnaireAnswers","FamilyHistory","DiagnosticReport")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Item
+            {
+                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.ResourceReference>(); return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Item;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ClinicalImpressionInvestigationsComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ResourceReference>(Item.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ClinicalImpressionInvestigationsComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ClinicalImpressionFindingComponent")]
+        [DataContract]
+        public partial class ClinicalImpressionFindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ClinicalImpressionFindingComponent"; } }
+            
+            /// <summary>
+            /// Specific text or code for finding
+            /// </summary>
+            [FhirElement("item", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Item;
+            
+            /// <summary>
+            /// Which investigations support finding
+            /// </summary>
+            [FhirElement("cause", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString CauseElement
+            {
+                get { return _CauseElement; }
+                set { _CauseElement = value; OnPropertyChanged("CauseElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _CauseElement;
+            
+            /// <summary>
+            /// Which investigations support finding
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Cause
+            {
+                get { return CauseElement != null ? CauseElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CauseElement = null; 
+                    else
+                      CauseElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Cause");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ClinicalImpressionFindingComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableConcept)Item.DeepCopy();
+                    if(CauseElement != null) dest.CauseElement = (Hl7.Fhir.Model.FhirString)CauseElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ClinicalImpressionFindingComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionFindingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(CauseElement, otherT.CauseElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionFindingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(CauseElement, otherT.CauseElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ClinicalImpressionRuledOutComponent")]
+        [DataContract]
+        public partial class ClinicalImpressionRuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ClinicalImpressionRuledOutComponent"; } }
             
             /// <summary>
             /// Specific text of code for diagnosis
@@ -107,7 +290,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ClinicalAssessmentRuledOutComponent;
+                var dest = other as ClinicalImpressionRuledOutComponent;
                 
                 if (dest != null)
                 {
@@ -122,12 +305,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ClinicalAssessmentRuledOutComponent());
+                return CopyTo(new ClinicalImpressionRuledOutComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ClinicalAssessmentRuledOutComponent;
+                var otherT = other as ClinicalImpressionRuledOutComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -139,195 +322,12 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ClinicalAssessmentRuledOutComponent;
+                var otherT = other as ClinicalImpressionRuledOutComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ClinicalAssessmentInvestigationsComponent")]
-        [DataContract]
-        public partial class ClinicalAssessmentInvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ClinicalAssessmentInvestigationsComponent"; } }
-            
-            /// <summary>
-            /// A name/code for the set
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Record of a specific investigation
-            /// </summary>
-            [FhirElement("item", InSummary=true, Order=50)]
-            [References("Observation","QuestionnaireAnswers","FamilyHistory","DiagnosticReport")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Item
-            {
-                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.ResourceReference>(); return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Item;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ClinicalAssessmentInvestigationsComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ResourceReference>(Item.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ClinicalAssessmentInvestigationsComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ClinicalAssessmentInvestigationsComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ClinicalAssessmentInvestigationsComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ClinicalAssessmentDiagnosisComponent")]
-        [DataContract]
-        public partial class ClinicalAssessmentDiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ClinicalAssessmentDiagnosisComponent"; } }
-            
-            /// <summary>
-            /// Specific text or code for diagnosis
-            /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Item
-            {
-                get { return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Item;
-            
-            /// <summary>
-            /// Which investigations support diagnosis
-            /// </summary>
-            [FhirElement("cause", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString CauseElement
-            {
-                get { return _CauseElement; }
-                set { _CauseElement = value; OnPropertyChanged("CauseElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _CauseElement;
-            
-            /// <summary>
-            /// Which investigations support diagnosis
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Cause
-            {
-                get { return CauseElement != null ? CauseElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      CauseElement = null; 
-                    else
-                      CauseElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Cause");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ClinicalAssessmentDiagnosisComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableConcept)Item.DeepCopy();
-                    if(CauseElement != null) dest.CauseElement = (Hl7.Fhir.Model.FhirString)CauseElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ClinicalAssessmentDiagnosisComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ClinicalAssessmentDiagnosisComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
-                if( !DeepComparable.Matches(CauseElement, otherT.CauseElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ClinicalAssessmentDiagnosisComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-                if( !DeepComparable.IsExactly(CauseElement, otherT.CauseElement)) return false;
                 
                 return true;
             }
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// Reference to last assessment
         /// </summary>
         [FhirElement("previous", Order=130)]
-        [References("ClinicalAssessment")]
+        [References("ClinicalImpression")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Previous
         {
@@ -460,51 +460,37 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Problem;
         
         /// <summary>
-        /// A specific careplan that prompted this assessment
+        /// Request or event that necessitated this assessment
         /// </summary>
-        [FhirElement("careplan", Order=150)]
-        [References("CarePlan")]
+        [FhirElement("trigger", Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Careplan
+        public Hl7.Fhir.Model.Element Trigger
         {
-            get { return _Careplan; }
-            set { _Careplan = value; OnPropertyChanged("Careplan"); }
+            get { return _Trigger; }
+            set { _Trigger = value; OnPropertyChanged("Trigger"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Careplan;
-        
-        /// <summary>
-        /// A specific referral that lead to this assessment
-        /// </summary>
-        [FhirElement("referral", Order=160)]
-        [References("ReferralRequest")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Referral
-        {
-            get { return _Referral; }
-            set { _Referral = value; OnPropertyChanged("Referral"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Referral;
+        private Hl7.Fhir.Model.Element _Trigger;
         
         /// <summary>
         /// One or more sets of investigations (signs, symptions, etc)
         /// </summary>
-        [FhirElement("investigations", Order=170)]
+        [FhirElement("investigations", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentInvestigationsComponent> Investigations
+        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent> Investigations
         {
-            get { if(_Investigations==null) _Investigations = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentInvestigationsComponent>(); return _Investigations; }
+            get { if(_Investigations==null) _Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent>(); return _Investigations; }
             set { _Investigations = value; OnPropertyChanged("Investigations"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentInvestigationsComponent> _Investigations;
+        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent> _Investigations;
         
         /// <summary>
         /// Clinical Protocol followed
         /// </summary>
-        [FhirElement("protocol", Order=180)]
+        [FhirElement("protocol", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ProtocolElement
         {
@@ -536,7 +522,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Summary of the assessment
         /// </summary>
-        [FhirElement("summary", Order=190)]
+        [FhirElement("summary", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SummaryElement
         {
@@ -566,23 +552,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Possible or likely diagnosis
+        /// Possible or likely findings and diagnoses
         /// </summary>
-        [FhirElement("diagnosis", Order=200)]
+        [FhirElement("finding", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent> Diagnosis
+        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent> Finding
         {
-            get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent>(); return _Diagnosis; }
-            set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
+            get { if(_Finding==null) _Finding = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent>(); return _Finding; }
+            set { _Finding = value; OnPropertyChanged("Finding"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent> _Diagnosis;
+        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent> _Finding;
         
         /// <summary>
         /// Diagnosies/conditions resolved since previous assessment
         /// </summary>
-        [FhirElement("resolved", Order=210)]
+        [FhirElement("resolved", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Resolved
@@ -596,21 +582,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Diagnosis considered not possible
         /// </summary>
-        [FhirElement("ruledOut", Order=220)]
+        [FhirElement("ruledOut", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentRuledOutComponent> RuledOut
+        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent> RuledOut
         {
-            get { if(_RuledOut==null) _RuledOut = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentRuledOutComponent>(); return _RuledOut; }
+            get { if(_RuledOut==null) _RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent>(); return _RuledOut; }
             set { _RuledOut = value; OnPropertyChanged("RuledOut"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentRuledOutComponent> _RuledOut;
+        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent> _RuledOut;
         
         /// <summary>
         /// Estimate of likely outcome
         /// </summary>
-        [FhirElement("prognosis", Order=230)]
+        [FhirElement("prognosis", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PrognosisElement
         {
@@ -642,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plan of action after assessment
         /// </summary>
-        [FhirElement("plan", Order=240)]
+        [FhirElement("plan", Order=230)]
         [References("CarePlan")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Plan
@@ -656,7 +642,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actions taken during assessment
         /// </summary>
-        [FhirElement("action", Order=250)]
+        [FhirElement("action", Order=240)]
         [References("ReferralRequest","ProcedureRequest","Procedure","MedicationPrescription","DiagnosticOrder","NutritionOrder","Supply","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -670,7 +656,7 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as ClinicalAssessment;
+            var dest = other as ClinicalImpression;
             
             if (dest != null)
             {
@@ -681,14 +667,13 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Previous != null) dest.Previous = (Hl7.Fhir.Model.ResourceReference)Previous.DeepCopy();
                 if(Problem != null) dest.Problem = new List<Hl7.Fhir.Model.ResourceReference>(Problem.DeepCopy());
-                if(Careplan != null) dest.Careplan = (Hl7.Fhir.Model.ResourceReference)Careplan.DeepCopy();
-                if(Referral != null) dest.Referral = (Hl7.Fhir.Model.ResourceReference)Referral.DeepCopy();
-                if(Investigations != null) dest.Investigations = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentInvestigationsComponent>(Investigations.DeepCopy());
+                if(Trigger != null) dest.Trigger = (Hl7.Fhir.Model.Element)Trigger.DeepCopy();
+                if(Investigations != null) dest.Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent>(Investigations.DeepCopy());
                 if(ProtocolElement != null) dest.ProtocolElement = (Hl7.Fhir.Model.FhirUri)ProtocolElement.DeepCopy();
                 if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.FhirString)SummaryElement.DeepCopy();
-                if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentDiagnosisComponent>(Diagnosis.DeepCopy());
+                if(Finding != null) dest.Finding = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent>(Finding.DeepCopy());
                 if(Resolved != null) dest.Resolved = new List<Hl7.Fhir.Model.CodeableConcept>(Resolved.DeepCopy());
-                if(RuledOut != null) dest.RuledOut = new List<Hl7.Fhir.Model.ClinicalAssessment.ClinicalAssessmentRuledOutComponent>(RuledOut.DeepCopy());
+                if(RuledOut != null) dest.RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent>(RuledOut.DeepCopy());
                 if(PrognosisElement != null) dest.PrognosisElement = (Hl7.Fhir.Model.FhirString)PrognosisElement.DeepCopy();
                 if(Plan != null) dest.Plan = (Hl7.Fhir.Model.ResourceReference)Plan.DeepCopy();
                 if(Action != null) dest.Action = new List<Hl7.Fhir.Model.ResourceReference>(Action.DeepCopy());
@@ -700,12 +685,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new ClinicalAssessment());
+            return CopyTo(new ClinicalImpression());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as ClinicalAssessment;
+            var otherT = other as ClinicalImpression;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -715,12 +700,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Previous, otherT.Previous)) return false;
             if( !DeepComparable.Matches(Problem, otherT.Problem)) return false;
-            if( !DeepComparable.Matches(Careplan, otherT.Careplan)) return false;
-            if( !DeepComparable.Matches(Referral, otherT.Referral)) return false;
+            if( !DeepComparable.Matches(Trigger, otherT.Trigger)) return false;
             if( !DeepComparable.Matches(Investigations, otherT.Investigations)) return false;
             if( !DeepComparable.Matches(ProtocolElement, otherT.ProtocolElement)) return false;
             if( !DeepComparable.Matches(SummaryElement, otherT.SummaryElement)) return false;
-            if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
+            if( !DeepComparable.Matches(Finding, otherT.Finding)) return false;
             if( !DeepComparable.Matches(Resolved, otherT.Resolved)) return false;
             if( !DeepComparable.Matches(RuledOut, otherT.RuledOut)) return false;
             if( !DeepComparable.Matches(PrognosisElement, otherT.PrognosisElement)) return false;
@@ -732,7 +716,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as ClinicalAssessment;
+            var otherT = other as ClinicalImpression;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
@@ -742,12 +726,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Previous, otherT.Previous)) return false;
             if( !DeepComparable.IsExactly(Problem, otherT.Problem)) return false;
-            if( !DeepComparable.IsExactly(Careplan, otherT.Careplan)) return false;
-            if( !DeepComparable.IsExactly(Referral, otherT.Referral)) return false;
+            if( !DeepComparable.IsExactly(Trigger, otherT.Trigger)) return false;
             if( !DeepComparable.IsExactly(Investigations, otherT.Investigations)) return false;
             if( !DeepComparable.IsExactly(ProtocolElement, otherT.ProtocolElement)) return false;
             if( !DeepComparable.IsExactly(SummaryElement, otherT.SummaryElement)) return false;
-            if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
+            if( !DeepComparable.IsExactly(Finding, otherT.Finding)) return false;
             if( !DeepComparable.IsExactly(Resolved, otherT.Resolved)) return false;
             if( !DeepComparable.IsExactly(RuledOut, otherT.RuledOut)) return false;
             if( !DeepComparable.IsExactly(PrognosisElement, otherT.PrognosisElement)) return false;

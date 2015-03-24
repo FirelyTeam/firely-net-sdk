@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -177,6 +177,20 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.ResourceReference _SourcePatientInfo;
             
+            /// <summary>
+            /// Related things
+            /// </summary>
+            [FhirElement("related", InSummary=true, Order=90)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent> Related
+            {
+                get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent>(); return _Related; }
+                set { _Related = value; OnPropertyChanged("Related"); }
+            }
+            
+            private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent> _Related;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DocumentReferenceContextComponent;
@@ -189,6 +203,7 @@ namespace Hl7.Fhir.Model
                     if(FacilityType != null) dest.FacilityType = (Hl7.Fhir.Model.CodeableConcept)FacilityType.DeepCopy();
                     if(PracticeSetting != null) dest.PracticeSetting = (Hl7.Fhir.Model.CodeableConcept)PracticeSetting.DeepCopy();
                     if(SourcePatientInfo != null) dest.SourcePatientInfo = (Hl7.Fhir.Model.ResourceReference)SourcePatientInfo.DeepCopy();
+                    if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent>(Related.DeepCopy());
                     return dest;
                 }
                 else
@@ -211,6 +226,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(FacilityType, otherT.FacilityType)) return false;
                 if( !DeepComparable.Matches(PracticeSetting, otherT.PracticeSetting)) return false;
                 if( !DeepComparable.Matches(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
+                if( !DeepComparable.Matches(Related, otherT.Related)) return false;
                 
                 return true;
             }
@@ -226,6 +242,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(FacilityType, otherT.FacilityType)) return false;
                 if( !DeepComparable.IsExactly(PracticeSetting, otherT.PracticeSetting)) return false;
                 if( !DeepComparable.IsExactly(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
+                if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
                 
                 return true;
             }
@@ -328,6 +345,87 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("DocumentReferenceContextRelatedComponent")]
+        [DataContract]
+        public partial class DocumentReferenceContextRelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DocumentReferenceContextRelatedComponent"; } }
+            
+            /// <summary>
+            /// Related Identifier
+            /// </summary>
+            [FhirElement("identifier", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Identifier Identifier
+            {
+                get { return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            
+            private Hl7.Fhir.Model.Identifier _Identifier;
+            
+            /// <summary>
+            /// Related Resource
+            /// </summary>
+            [FhirElement("ref", InSummary=true, Order=50)]
+            [References()]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Ref
+            {
+                get { return _Ref; }
+                set { _Ref = value; OnPropertyChanged("Ref"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Ref;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DocumentReferenceContextRelatedComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Ref != null) dest.Ref = (Hl7.Fhir.Model.ResourceReference)Ref.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DocumentReferenceContextRelatedComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceContextRelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Ref, otherT.Ref)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentReferenceContextRelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
                 
                 return true;
             }
@@ -637,7 +735,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Sensitivity of source document
+        /// Document security-tags
         /// </summary>
         [FhirElement("confidentiality", Order=240)]
         [Cardinality(Min=0,Max=-1)]

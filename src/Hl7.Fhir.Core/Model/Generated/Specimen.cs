@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of material that forms the specimen
         /// </summary>
-        [FhirElement("type", Order=100)]
+        [FhirElement("type", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Parent specimen
+        /// Specimen from which this specimen originated
         /// </summary>
         [FhirElement("parent", Order=110)]
         [References("Specimen")]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
         /// </summary>
-        [FhirElement("subject", Order=120)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [References("Patient","Group","Device","Substance")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier assigned by the lab
         /// </summary>
-        [FhirElement("accessionIdentifier", Order=130)]
+        [FhirElement("accessionIdentifier", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier AccessionIdentifier
         {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The time when specimen was received for processing
         /// </summary>
-        [FhirElement("receivedTime", Order=140)]
+        [FhirElement("receivedTime", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement
         {

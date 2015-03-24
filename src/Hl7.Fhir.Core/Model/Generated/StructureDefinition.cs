@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this StructureDefinition
         /// </summary>
-        [FhirElement("url", Order=90)]
+        [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use this name when displaying the value
         /// </summary>
-        [FhirElement("display", Order=140)]
+        [FhirElement("display", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// type | resource | constraint | extension
         /// </summary>
-        [FhirElement("type", Order=260)]
+        [FhirElement("type", InSummary=true, Order=260)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionType> TypeElement
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the structure is abstract
         /// </summary>
-        [FhirElement("abstract", Order=270)]
+        [FhirElement("abstract", InSummary=true, Order=270)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AbstractElement
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// resource | datatype | mapping | extension
         /// </summary>
-        [FhirElement("contextType", Order=280)]
+        [FhirElement("contextType", InSummary=true, Order=280)]
         [DataMember]
         public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext> ContextTypeElement
         {
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the extension can be used in instances
         /// </summary>
-        [FhirElement("context", Order=290)]
+        [FhirElement("context", InSummary=true, Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ContextElement
@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Structure that this set of constraints applies to
         /// </summary>
-        [FhirElement("base", Order=300)]
+        [FhirElement("base", InSummary=true, Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri BaseElement
         {

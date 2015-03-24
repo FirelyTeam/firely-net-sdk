@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("=")]
             Equal,
             /// <summary>
-            /// The specified property of the code has an is-a relationship with the provided value.
+            /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself.
             /// </summary>
             [EnumLiteral("is-a")]
             IsA,
@@ -1634,14 +1634,34 @@ namespace Hl7.Fhir.Model
             /// Uniquely identifies this expansion
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.FhirUri IdentifierElement
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _IdentifierElement; }
+                set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
+            private Hl7.Fhir.Model.FhirUri _IdentifierElement;
+            
+            /// <summary>
+            /// Uniquely identifies this expansion
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Identifier
+            {
+                get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IdentifierElement = null; 
+                    else
+                      IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Identifier");
+                }
+            }
             
             /// <summary>
             /// Time valueset expansion happened
@@ -1711,7 +1731,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.FhirUri)IdentifierElement.DeepCopy();
                     if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.FhirDateTime)TimestampElement.DeepCopy();
                     if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent>(Parameter.DeepCopy());
                     if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(Contains.DeepCopy());
@@ -1732,7 +1752,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
                 if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
                 if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
                 if( !DeepComparable.Matches(Contains, otherT.Contains)) return false;
@@ -1746,7 +1766,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
                 if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
                 if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
                 if( !DeepComparable.IsExactly(Contains, otherT.Contains)) return false;
@@ -2184,34 +2204,34 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Fixed date for the version of all referenced code systems and value sets
+        /// Fixed date for all referenced code systems and value sets
         /// </summary>
-        [FhirElement("stableDate", InSummary=true, Order=240)]
+        [FhirElement("lockedDate", InSummary=true, Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.Date StableDateElement
+        public Hl7.Fhir.Model.Date LockedDateElement
         {
-            get { return _StableDateElement; }
-            set { _StableDateElement = value; OnPropertyChanged("StableDateElement"); }
+            get { return _LockedDateElement; }
+            set { _LockedDateElement = value; OnPropertyChanged("LockedDateElement"); }
         }
         
-        private Hl7.Fhir.Model.Date _StableDateElement;
+        private Hl7.Fhir.Model.Date _LockedDateElement;
         
         /// <summary>
-        /// Fixed date for the version of all referenced code systems and value sets
+        /// Fixed date for all referenced code systems and value sets
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string StableDate
+        public string LockedDate
         {
-            get { return StableDateElement != null ? StableDateElement.Value : null; }
+            get { return LockedDateElement != null ? LockedDateElement.Value : null; }
             set
             {
                 if(value == null)
-                  StableDateElement = null; 
+                  LockedDateElement = null; 
                 else
-                  StableDateElement = new Hl7.Fhir.Model.Date(value);
-                OnPropertyChanged("StableDate");
+                  LockedDateElement = new Hl7.Fhir.Model.Date(value);
+                OnPropertyChanged("LockedDate");
             }
         }
         
@@ -2276,7 +2296,7 @@ namespace Hl7.Fhir.Model
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(StableDateElement != null) dest.StableDateElement = (Hl7.Fhir.Model.Date)StableDateElement.DeepCopy();
+                if(LockedDateElement != null) dest.LockedDateElement = (Hl7.Fhir.Model.Date)LockedDateElement.DeepCopy();
                 if(Define != null) dest.Define = (Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent)Define.DeepCopy();
                 if(Compose != null) dest.Compose = (Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent)Compose.DeepCopy();
                 if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent)Expansion.DeepCopy();
@@ -2312,7 +2332,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(ExtensibleElement, otherT.ExtensibleElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(StableDateElement, otherT.StableDateElement)) return false;
+            if( !DeepComparable.Matches(LockedDateElement, otherT.LockedDateElement)) return false;
             if( !DeepComparable.Matches(Define, otherT.Define)) return false;
             if( !DeepComparable.Matches(Compose, otherT.Compose)) return false;
             if( !DeepComparable.Matches(Expansion, otherT.Expansion)) return false;
@@ -2341,7 +2361,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(ExtensibleElement, otherT.ExtensibleElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(StableDateElement, otherT.StableDateElement)) return false;
+            if( !DeepComparable.IsExactly(LockedDateElement, otherT.LockedDateElement)) return false;
             if( !DeepComparable.IsExactly(Define, otherT.Define)) return false;
             if( !DeepComparable.IsExactly(Compose, otherT.Compose)) return false;
             if( !DeepComparable.IsExactly(Expansion, otherT.Expansion)) return false;

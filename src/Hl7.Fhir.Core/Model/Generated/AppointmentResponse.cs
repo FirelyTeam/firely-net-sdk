@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parent appointment that this response is replying to
         /// </summary>
-        [FhirElement("appointment", Order=100)]
+        [FhirElement("appointment", InSummary=true, Order=100)]
         [References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Role of participant in the appointment
         /// </summary>
-        [FhirElement("participantType", Order=110)]
+        [FhirElement("participantType", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -134,24 +134,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
         
         /// <summary>
-        /// A Person of device that is participating in the appointment, usually Practitioner, Patient, RelatedPerson or Device
+        /// A Person, Location/HealthcareService or Device that is participating in the appointment
         /// </summary>
-        [FhirElement("individual", Order=120)]
-        [References()]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("actor", InSummary=true, Order=120)]
+        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Individual
+        public Hl7.Fhir.Model.ResourceReference Actor
         {
-            get { if(_Individual==null) _Individual = new List<Hl7.Fhir.Model.ResourceReference>(); return _Individual; }
-            set { _Individual = value; OnPropertyChanged("Individual"); }
+            get { return _Actor; }
+            set { _Actor = value; OnPropertyChanged("Actor"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Individual;
+        private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
         /// </summary>
-        [FhirElement("participantStatus", Order=130)]
+        [FhirElement("participantStatus", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> ParticipantStatus_Element
@@ -214,7 +213,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date/Time that the appointment is to take place
+        /// Date/Time that the appointment is to take place, or requested new start time
         /// </summary>
         [FhirElement("start", Order=150)]
         [DataMember]
@@ -227,7 +226,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to take place
+        /// Date/Time that the appointment is to take place, or requested new start time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -246,7 +245,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude
+        /// Date/Time that the appointment is to conclude, or requested new end time
         /// </summary>
         [FhirElement("end", Order=160)]
         [DataMember]
@@ -259,7 +258,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude
+        /// Date/Time that the appointment is to conclude, or requested new end time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -277,52 +276,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        /// <summary>
-        /// Who recorded the appointment response
-        /// </summary>
-        [FhirElement("lastModifiedBy", Order=170)]
-        [References("Practitioner","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference LastModifiedBy
-        {
-            get { return _LastModifiedBy; }
-            set { _LastModifiedBy = value; OnPropertyChanged("LastModifiedBy"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _LastModifiedBy;
-        
-        /// <summary>
-        /// Date when the response was recorded or last updated
-        /// </summary>
-        [FhirElement("lastModified", Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
-        {
-            get { return _LastModifiedElement; }
-            set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
-        
-        /// <summary>
-        /// Date when the response was recorded or last updated
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string LastModified
-        {
-            get { return LastModifiedElement != null ? LastModifiedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  LastModifiedElement = null; 
-                else
-                  LastModifiedElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("LastModified");
-            }
-        }
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;
@@ -333,13 +286,11 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(ParticipantType != null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopy());
-                if(Individual != null) dest.Individual = new List<Hl7.Fhir.Model.ResourceReference>(Individual.DeepCopy());
+                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                 if(ParticipantStatus_Element != null) dest.ParticipantStatus_Element = (Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>)ParticipantStatus_Element.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
-                if(LastModifiedBy != null) dest.LastModifiedBy = (Hl7.Fhir.Model.ResourceReference)LastModifiedBy.DeepCopy();
-                if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();
                 return dest;
             }
             else
@@ -360,13 +311,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Appointment, otherT.Appointment)) return false;
             if( !DeepComparable.Matches(ParticipantType, otherT.ParticipantType)) return false;
-            if( !DeepComparable.Matches(Individual, otherT.Individual)) return false;
+            if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
             if( !DeepComparable.Matches(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-            if( !DeepComparable.Matches(LastModifiedBy, otherT.LastModifiedBy)) return false;
-            if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }
@@ -380,13 +329,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Appointment, otherT.Appointment)) return false;
             if( !DeepComparable.IsExactly(ParticipantType, otherT.ParticipantType)) return false;
-            if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
+            if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
             if( !DeepComparable.IsExactly(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-            if( !DeepComparable.IsExactly(LastModifiedBy, otherT.LastModifiedBy)) return false;
-            if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }

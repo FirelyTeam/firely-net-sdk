@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -210,20 +210,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        /// <summary>
-        /// Set this coding was chosen from
-        /// </summary>
-        [FhirElement("valueSet", InSummary=true, Order=80)]
-        [References("ValueSet")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ValueSet
-        {
-            get { return _ValueSet; }
-            set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _ValueSet;
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coding;
@@ -236,7 +222,6 @@ namespace Hl7.Fhir.Model
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 if(PrimaryElement != null) dest.PrimaryElement = (Hl7.Fhir.Model.FhirBoolean)PrimaryElement.DeepCopy();
-                if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.ResourceReference)ValueSet.DeepCopy();
                 return dest;
             }
             else
@@ -259,7 +244,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.Matches(PrimaryElement, otherT.PrimaryElement)) return false;
-            if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
             
             return true;
         }
@@ -275,7 +259,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.IsExactly(PrimaryElement, otherT.PrimaryElement)) return false;
-            if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
             
             return true;
         }

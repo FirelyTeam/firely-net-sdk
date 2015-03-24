@@ -131,7 +131,6 @@
     <Compile Include="Model\Generated\ProcedureRequest.cs" />
     <Compile Include="Model\Generated\ProcessRequest.cs" />
     <Compile Include="Model\Generated\ProcessResponse.cs" />
-    <Compile Include="Model\Generated\ProfessionalClaim.cs" />
     <Compile Include="Model\Generated\QuestionnaireAnswers.cs" />
     <Compile Include="Model\Generated\ReferralRequest.cs" />
     <Compile Include="Model\Generated\RiskAssessment.cs" />

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -115,41 +115,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// True if the resource is deleted
-        /// </summary>
-        [FhirElement("deleted", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean DeletedElement
-        {
-            get { return _DeletedElement; }
-            set { _DeletedElement = value; OnPropertyChanged("DeletedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _DeletedElement;
-        
-        /// <summary>
-        /// True if the resource is deleted
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Deleted
-        {
-            get { return DeletedElement != null ? DeletedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DeletedElement = null; 
-                else
-                  DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Deleted");
-            }
-        }
-        
-        /// <summary>
         /// Profiles this resource claims to conform to
         /// </summary>
-        [FhirElement("profile", InSummary=true, Order=60)]
+        [FhirElement("profile", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> ProfileElement
@@ -182,7 +150,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Security Labels applied to this resource
         /// </summary>
-        [FhirElement("security", InSummary=true, Order=70)]
+        [FhirElement("security", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Security
@@ -196,7 +164,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Tags applied
         /// </summary>
-        [FhirElement("tag", InSummary=true, Order=80)]
+        [FhirElement("tag", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Tag
@@ -216,7 +184,6 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
                 if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
-                if(DeletedElement != null) dest.DeletedElement = (Hl7.Fhir.Model.FhirBoolean)DeletedElement.DeepCopy();
                 if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
                 if(Security != null) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
@@ -239,7 +206,6 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(VersionIdElement, otherT.VersionIdElement)) return false;
             if( !DeepComparable.Matches(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
-            if( !DeepComparable.Matches(DeletedElement, otherT.DeletedElement)) return false;
             if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.Matches(Security, otherT.Security)) return false;
             if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
@@ -255,7 +221,6 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(VersionIdElement, otherT.VersionIdElement)) return false;
             if( !DeepComparable.IsExactly(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
-            if( !DeepComparable.IsExactly(DeletedElement, otherT.DeletedElement)) return false;
             if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.IsExactly(Security, otherT.Security)) return false;
             if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;

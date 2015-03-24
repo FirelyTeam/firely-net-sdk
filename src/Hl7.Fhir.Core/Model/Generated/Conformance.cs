@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// If allows/uses update to a new location
+            /// If update can commit to a new identity
             /// </summary>
             [FhirElement("updateCreate", InSummary=true, Order=90)]
             [DataMember]
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _UpdateCreateElement;
             
             /// <summary>
-            /// If allows/uses update to a new location
+            /// If update can commit to a new identity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,17 +59,17 @@ namespace Hl7.Fhir.Model
         public enum IssueType
         {
             /// <summary>
-            /// Content invalid against Specification or Profile.
+            /// Content invalid against the Specification or a Profile.
             /// </summary>
             [EnumLiteral("invalid")]
             Invalid,
             /// <summary>
-            /// content structural issue.
+            /// A structural issue in the content such as wrong namespace, or unable to parse the content completely, or invalid json syntax.
             /// </summary>
             [EnumLiteral("structure")]
             Structure,
             /// <summary>
-            /// required element missing.
+            /// A required element is missing.
             /// </summary>
             [EnumLiteral("required")]
             Required,
@@ -79,112 +79,117 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("value")]
             Value,
             /// <summary>
-            /// schematron rule.
+            /// A content validation rule failed - e.g. a schematron rule.
             /// </summary>
             [EnumLiteral("invariant")]
             Invariant,
             /// <summary>
-            /// authorization/permissions issue.
+            /// An authentication/authorization/permissions issueof some kind.
             /// </summary>
             [EnumLiteral("security")]
             Security,
             /// <summary>
-            /// the client needs to initiate the authentication process ().
+            /// the client needs to initiate an authentication process.
             /// </summary>
             [EnumLiteral("login")]
             Login,
             /// <summary>
-            /// user/system not able to be authenticated.
+            /// The user or system was not able to be authenticated (either there is no process, or the proferred token is unacceptable).
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,
             /// <summary>
-            /// user session expired.
+            /// User session expired; a login may be required.
             /// </summary>
             [EnumLiteral("expired")]
             Expired,
             /// <summary>
-            /// user rights failure.
+            /// The user does not have the rights to perform this action.
             /// </summary>
             [EnumLiteral("forbidden")]
             Forbidden,
             /// <summary>
-            /// One or more records in the query response have been suppressed due to consent or privacy restrictions.
+            /// Some information was not or may not have been returned due to business rules, consent or privacy rules, or access permission constraints.  This information may be accessible through alternate processes.
             /// </summary>
             [EnumLiteral("suppressed")]
             Suppressed,
             /// <summary>
-            /// processing issues.
+            /// Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.
             /// </summary>
             [EnumLiteral("processing")]
             Processing,
             /// <summary>
-            /// resource not supported.
+            /// The resource or profile is not supported.
             /// </summary>
             [EnumLiteral("not-supported")]
             NotSupported,
             /// <summary>
-            /// duplicate resource.
+            /// An attempt was made to create a duplicate record.
             /// </summary>
             [EnumLiteral("duplicate")]
             Duplicate,
             /// <summary>
-            /// reference not found.
+            /// The reference provided was not found. In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the content is not found further into the application architecture.
             /// </summary>
             [EnumLiteral("not-found")]
             NotFound,
             /// <summary>
-            /// existing content too long.
+            /// Provided content is too long (typically, this is a denial of service protection type of error).
             /// </summary>
             [EnumLiteral("too-long")]
             TooLong,
             /// <summary>
-            /// code could not be understood.
+            /// The code or system could not be understood, or it was not valid in the context of a particular ValueSet.
             /// </summary>
-            [EnumLiteral("code-unknown")]
-            CodeUnknown,
+            [EnumLiteral("code-invalid")]
+            CodeInvalid,
             /// <summary>
-            /// extension not recognized.
+            /// An extension was found that was not acceptable, or that could not be resolved, or a modifierExtension that was not recognised.
             /// </summary>
             [EnumLiteral("extension")]
             Extension,
             /// <summary>
-            /// operation denied to protect server resources.
+            /// The operation was stopped to protect server resources. E.g. a request for a value set expansion on all of SNOMED CT.
             /// </summary>
             [EnumLiteral("too-costly")]
             TooCostly,
             /// <summary>
-            /// content failed to pass some business rule.
+            /// The content/operation failed to pass some business rule, and so could not proceed.
             /// </summary>
             [EnumLiteral("business-rule")]
             BusinessRule,
             /// <summary>
-            /// content could not be accepted because of an edit conflict (i.e. version aware updates).
+            /// content could not be accepted because of an edit conflict (i.e. version aware updates) (In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the conflict is discovered further into the application architecture).
             /// </summary>
             [EnumLiteral("conflict")]
             Conflict,
             /// <summary>
-            /// transient processing issues.
+            /// Not all data sources typically accessed could be reached, or responded in time, so the returned information may not be complete.
+            /// </summary>
+            [EnumLiteral("incomplete")]
+            Incomplete,
+            /// <summary>
+            /// Transient processing issues. The system receiving the error may be able to resubmit the same content once an underlying issue is resolved.
             /// </summary>
             [EnumLiteral("transient")]
             Transient,
             /// <summary>
-            /// resource/record locking failure.
+            /// A resource/record locking failure (usually in an underlying database).
             /// </summary>
             [EnumLiteral("lock-error")]
             LockError,
             /// <summary>
-            /// persistent store unavailable.
+            /// The persistent store unavailable. E.g. the database is down for maintenance or similar.
             /// </summary>
             [EnumLiteral("no-store")]
             NoStore,
             /// <summary>
-            /// unexpected internal error.
+            /// An unexpected internal error.
             /// </summary>
             [EnumLiteral("exception")]
             Exception,
             /// <summary>
-            /// internal timeout.
+            /// An internal timeout occurred.
             /// </summary>
             [EnumLiteral("timeout")]
             Timeout,
@@ -193,6 +198,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("throttled")]
             Throttled,
+            /// <summary>
+            /// A message unrelated to the processing success of the completed operation (Examples of the latter include things like reminders of password expiry, system maintenance times, etc.).
+            /// </summary>
+            [EnumLiteral("informational")]
+            Informational,
         }
         
         /// <summary>

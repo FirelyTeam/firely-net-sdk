@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("name", Order=90)]
+        [FhirElement("name", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Name

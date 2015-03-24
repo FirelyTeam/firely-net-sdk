@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -232,7 +232,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -241,6 +240,20 @@ namespace Hl7.Fhir.Model
             }
             
             private Hl7.Fhir.Model.Element _Value;
+            
+            /// <summary>
+            /// If part is a whole resource
+            /// </summary>
+            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+            [DataMember]
+            public Hl7.Fhir.Model.Resource Resource
+            {
+                get { return _Resource; }
+                set { _Resource = value; OnPropertyChanged("Resource"); }
+            }
+            
+            private Hl7.Fhir.Model.Resource _Resource;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -251,6 +264,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
                     return dest;
                 }
                 else
@@ -270,6 +284,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 
                 return true;
             }
@@ -282,6 +297,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 
                 return true;
             }

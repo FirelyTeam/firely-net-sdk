@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,17 +90,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The resource to which this actual person is associated
             /// </summary>
-            [FhirElement("other", InSummary=true, Order=40)]
+            [FhirElement("target", InSummary=true, Order=40)]
             [References("Patient","Practitioner","RelatedPerson","Person")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Other
+            public Hl7.Fhir.Model.ResourceReference Target
             {
-                get { return _Other; }
-                set { _Other = value; OnPropertyChanged("Other"); }
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Other;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// level1 | level2 | level3 | level4
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(AssuranceElement != null) dest.AssuranceElement = (Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>)AssuranceElement.DeepCopy();
                     return dest;
                 }
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Other, otherT.Other)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
                 if( !DeepComparable.Matches(AssuranceElement, otherT.AssuranceElement)) return false;
                 
                 return true;
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Other, otherT.Other)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 if( !DeepComparable.IsExactly(AssuranceElement, otherT.AssuranceElement)) return false;
                 
                 return true;
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Link to a resource that converns the same actual person
+        /// Link to a resource that concerns the same actual person
         /// </summary>
         [FhirElement("link", Order=180)]
         [Cardinality(Min=0,Max=-1)]

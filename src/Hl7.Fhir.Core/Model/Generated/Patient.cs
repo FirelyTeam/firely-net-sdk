@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Information about a person or animal receiving health care services
+    /// Information about an individual or animal receiving health care services
     /// </summary>
     [FhirType("Patient", IsResource=true)]
     [DataContract]
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Relationship;
             
             /// <summary>
-            /// A name associated with the person
+            /// A name associated with the contact person
             /// </summary>
             [FhirElement("name", InSummary=true, Order=50)]
             [DataMember]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
-            /// The period during which this person or organization is valid to be contacted relating to this patient
+            /// The period during which this contact person or organization is valid to be contacted relating to this patient
             /// </summary>
             [FhirElement("period", InSummary=true, Order=100)]
             [DataMember]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// An identifier for the person as this patient
+        /// An identifier for this patient
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -663,41 +663,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The time of birth for the individual
-        /// </summary>
-        [FhirElement("birthTime", InSummary=true, Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.Time BirthTimeElement
-        {
-            get { return _BirthTimeElement; }
-            set { _BirthTimeElement = value; OnPropertyChanged("BirthTimeElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Time _BirthTimeElement;
-        
-        /// <summary>
-        /// The time of birth for the individual
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string BirthTime
-        {
-            get { return BirthTimeElement != null ? BirthTimeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  BirthTimeElement = null; 
-                else
-                  BirthTimeElement = new Hl7.Fhir.Model.Time(value);
-                OnPropertyChanged("BirthTime");
-            }
-        }
-        
-        /// <summary>
         /// Indicates if the individual is deceased or not
         /// </summary>
-        [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
@@ -711,7 +679,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Addresses for the individual
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=160)]
+        [FhirElement("address", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -723,9 +691,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
-        /// Marital (civil) status of a person
+        /// Marital (civil) status of a patient
         /// </summary>
-        [FhirElement("maritalStatus", InSummary=true, Order=170)]
+        [FhirElement("maritalStatus", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept MaritalStatus
         {
@@ -738,7 +706,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether patient is part of a multiple birth
         /// </summary>
-        [FhirElement("multipleBirth", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("multipleBirth", Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
         [DataMember]
         public Hl7.Fhir.Model.Element MultipleBirth
@@ -750,9 +718,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _MultipleBirth;
         
         /// <summary>
-        /// Image of the person
+        /// Image of the patient
         /// </summary>
-        [FhirElement("photo", Order=190)]
+        [FhirElement("photo", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -766,7 +734,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact party (e.g. guardian, partner, friend) for the patient
         /// </summary>
-        [FhirElement("contact", Order=200)]
+        [FhirElement("contact", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
@@ -780,7 +748,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this patient is an animal (non-human)
         /// </summary>
-        [FhirElement("animal", InSummary=true, Order=210)]
+        [FhirElement("animal", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Patient.AnimalComponent Animal
         {
@@ -793,7 +761,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A list of Languages which may be used to communicate with the patient about his or her health
         /// </summary>
-        [FhirElement("communication", Order=220)]
+        [FhirElement("communication", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> Communication
@@ -807,7 +775,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated care provider
         /// </summary>
-        [FhirElement("careProvider", Order=230)]
+        [FhirElement("careProvider", Order=220)]
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -822,7 +790,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization that is the custodian of the patient record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=240)]
+        [FhirElement("managingOrganization", InSummary=true, Order=230)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
@@ -836,7 +804,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=250)]
+        [FhirElement("link", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.PatientLinkComponent> Link
@@ -850,7 +818,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether this patient's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=260)]
+        [FhirElement("active", InSummary=true, Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -891,7 +859,6 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
-                if(BirthTimeElement != null) dest.BirthTimeElement = (Hl7.Fhir.Model.Time)BirthTimeElement.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopy();
@@ -926,7 +893,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
-            if( !DeepComparable.Matches(BirthTimeElement, otherT.BirthTimeElement)) return false;
             if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(MaritalStatus, otherT.MaritalStatus)) return false;
@@ -954,7 +920,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(BirthDateElement, otherT.BirthDateElement)) return false;
-            if( !DeepComparable.IsExactly(BirthTimeElement, otherT.BirthTimeElement)) return false;
             if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(MaritalStatus, otherT.MaritalStatus)) return false;

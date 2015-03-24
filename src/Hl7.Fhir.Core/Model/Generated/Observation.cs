@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("code", Order=90)]
+        [FhirElement("code", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actual result
         /// </summary>
-        [FhirElement("value", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physiologically Relevant time/time-period for observation
         /// </summary>
-        [FhirElement("applies", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("applies", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Applies
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time this was made available
         /// </summary>
-        [FhirElement("issued", Order=150)]
+        [FhirElement("issued", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
         {
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// registered | preliminary | final | amended +
         /// </summary>
-        [FhirElement("status", Order=160)]
+        [FhirElement("status", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what this is about
         /// </summary>
-        [FhirElement("subject", Order=210)]
+        [FhirElement("subject", InSummary=true, Order=210)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who did the observation
         /// </summary>
-        [FhirElement("performer", Order=230)]
+        [FhirElement("performer", InSummary=true, Order=230)]
         [References("Practitioner","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observations related to this observation
         /// </summary>
-        [FhirElement("related", Order=270)]
+        [FhirElement("related", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related

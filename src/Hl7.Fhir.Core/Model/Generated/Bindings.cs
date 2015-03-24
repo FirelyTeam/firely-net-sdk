@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -254,15 +254,20 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("CarePlan2")]
         CarePlan2,
         /// <summary>
+        /// The Claim resource
+        /// </summary>
+        [EnumLiteral("Claim")]
+        Claim,
+        /// <summary>
         /// The ClaimResponse resource
         /// </summary>
         [EnumLiteral("ClaimResponse")]
         ClaimResponse,
         /// <summary>
-        /// The ClinicalAssessment resource
+        /// The ClinicalImpression resource
         /// </summary>
-        [EnumLiteral("ClinicalAssessment")]
-        ClinicalAssessment,
+        [EnumLiteral("ClinicalImpression")]
+        ClinicalImpression,
         /// <summary>
         /// The Communication resource
         /// </summary>
@@ -434,11 +439,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("ImmunizationRecommendation")]
         ImmunizationRecommendation,
         /// <summary>
-        /// The InstitutionalClaim resource
-        /// </summary>
-        [EnumLiteral("InstitutionalClaim")]
-        InstitutionalClaim,
-        /// <summary>
         /// The List resource
         /// </summary>
         [EnumLiteral("List")]
@@ -509,11 +509,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("OperationOutcome")]
         OperationOutcome,
         /// <summary>
-        /// The OralHealthClaim resource
-        /// </summary>
-        [EnumLiteral("OralHealthClaim")]
-        OralHealthClaim,
-        /// <summary>
         /// The Order resource
         /// </summary>
         [EnumLiteral("Order")]
@@ -554,11 +549,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Person")]
         Person,
         /// <summary>
-        /// The PharmacyClaim resource
-        /// </summary>
-        [EnumLiteral("PharmacyClaim")]
-        PharmacyClaim,
-        /// <summary>
         /// The Practitioner resource
         /// </summary>
         [EnumLiteral("Practitioner")]
@@ -583,11 +573,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ProcessResponse")]
         ProcessResponse,
-        /// <summary>
-        /// The ProfessionalClaim resource
-        /// </summary>
-        [EnumLiteral("ProfessionalClaim")]
-        ProfessionalClaim,
         /// <summary>
         /// The Provenance resource
         /// </summary>
@@ -668,11 +653,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ValueSet")]
         ValueSet,
-        /// <summary>
-        /// The VisionClaim resource
-        /// </summary>
-        [EnumLiteral("VisionClaim")]
-        VisionClaim,
         /// <summary>
         /// The VisionPrescription resource
         /// </summary>

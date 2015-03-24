@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what test is about
         /// </summary>
-        [FhirElement("subject", Order=90)]
+        [FhirElement("subject", InSummary=true, Order=90)]
         [References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the test
         /// </summary>
-        [FhirElement("orderer", Order=100)]
+        [FhirElement("orderer", InSummary=true, Order=100)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", Order=110)]
+        [FhirElement("identifier", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter that this diagnostic order is associated with
         /// </summary>
-        [FhirElement("encounter", Order=120)]
+        [FhirElement("encounter", InSummary=true, Order=120)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=160)]
+        [FhirElement("status", InSummary=true, Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
         {
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=170)]
+        [FhirElement("priority", InSummary=true, Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement
         {

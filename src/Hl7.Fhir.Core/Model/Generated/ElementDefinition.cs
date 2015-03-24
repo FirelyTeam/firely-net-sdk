@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -786,16 +786,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Source of value set
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("valueSet", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Reference
+            public Hl7.Fhir.Model.Element ValueSet
             {
-                get { return _Reference; }
-                set { _Reference = value; OnPropertyChanged("Reference"); }
+                get { return _ValueSet; }
+                set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
             }
             
-            private Hl7.Fhir.Model.Element _Reference;
+            private Hl7.Fhir.Model.Element _ValueSet;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.ElementDefinition.BindingStrength>)StrengthElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.Element)Reference.DeepCopy();
+                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
                     return dest;
                 }
                 else
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(StrengthElement, otherT.StrengthElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
                 
                 return true;
             }
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(StrengthElement, otherT.StrengthElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
                 
                 return true;
             }
@@ -1365,16 +1365,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other names
         /// </summary>
-        [FhirElement("synonym", InSummary=true, Order=130)]
+        [FhirElement("alias", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> SynonymElement
+        public List<Hl7.Fhir.Model.FhirString> AliasElement
         {
-            get { if(_SynonymElement==null) _SynonymElement = new List<Hl7.Fhir.Model.FhirString>(); return _SynonymElement; }
-            set { _SynonymElement = value; OnPropertyChanged("SynonymElement"); }
+            get { if(_AliasElement==null) _AliasElement = new List<Hl7.Fhir.Model.FhirString>(); return _AliasElement; }
+            set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _SynonymElement;
+        private List<Hl7.Fhir.Model.FhirString> _AliasElement;
         
         /// <summary>
         /// Other names
@@ -1382,16 +1382,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Synonym
+        public IEnumerable<string> Alias
         {
-            get { return SynonymElement != null ? SynonymElement.Select(elem => elem.Value) : null; }
+            get { return AliasElement != null ? AliasElement.Select(elem => elem.Value) : null; }
             set
             {
                 if(value == null)
-                  SynonymElement = null; 
+                  AliasElement = null; 
                 else
-                  SynonymElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("Synonym");
+                  AliasElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Alias");
             }
         }
         
@@ -1812,7 +1812,7 @@ namespace Hl7.Fhir.Model
                 if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
-                if(SynonymElement != null) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
+                if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent>(Type.DeepCopy());
@@ -1857,7 +1857,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
-            if( !DeepComparable.Matches(SynonymElement, otherT.SynonymElement)) return false;
+            if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
@@ -1895,7 +1895,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
-            if( !DeepComparable.IsExactly(SynonymElement, otherT.SynonymElement)) return false;
+            if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;

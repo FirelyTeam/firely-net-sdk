@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("preliminary")]
             Preliminary,
             /// <summary>
-            /// The composition or document is complete and verified by an appropriate person, and no further work is planned.
+            /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
             /// </summary>
             [EnumLiteral("final")]
             Final,
@@ -180,10 +180,10 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
             
             /// <summary>
-            /// The Content of the section
+            /// The Content of the section (narrative + data entries)
             /// </summary>
             [FhirElement("content", InSummary=true, Order=70)]
-            [References()]
+            [References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Content
             {
@@ -623,21 +623,39 @@ namespace Hl7.Fhir.Model
         /// As defined by affinity domain
         /// </summary>
         [FhirElement("confidentiality", InSummary=true, Order=150)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Confidentiality
+        public Hl7.Fhir.Model.Code ConfidentialityElement
         {
-            get { return _Confidentiality; }
-            set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
+            get { return _ConfidentialityElement; }
+            set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Confidentiality;
+        private Hl7.Fhir.Model.Code _ConfidentialityElement;
+        
+        /// <summary>
+        /// As defined by affinity domain
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Confidentiality
+        {
+            get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ConfidentialityElement = null; 
+                else
+                  ConfidentialityElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Confidentiality");
+            }
+        }
         
         /// <summary>
         /// Who and/or what the composition is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=160)]
-        [References("Patient","Practitioner","Group","Device","Location")]
+        [References()]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -746,7 +764,7 @@ namespace Hl7.Fhir.Model
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Composition.CompositionStatus>)StatusElement.DeepCopy();
-                if(Confidentiality != null) dest.Confidentiality = (Hl7.Fhir.Model.Coding)Confidentiality.DeepCopy();
+                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Hl7.Fhir.Model.Code)ConfidentialityElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(Attester.DeepCopy());
@@ -777,7 +795,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Confidentiality, otherT.Confidentiality)) return false;
+            if( !DeepComparable.Matches(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Attester, otherT.Attester)) return false;
@@ -801,7 +819,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Confidentiality, otherT.Confidentiality)) return false;
+            if( !DeepComparable.IsExactly(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Attester, otherT.Attester)) return false;

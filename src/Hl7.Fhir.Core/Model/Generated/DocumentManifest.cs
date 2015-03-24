@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,87 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.DocumentManifest; } }
         [NotMapped]
         public override string TypeName { get { return "DocumentManifest"; } }
+        
+        [FhirType("DocumentManifestRelatedComponent")]
+        [DataContract]
+        public partial class DocumentManifestRelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DocumentManifestRelatedComponent"; } }
+            
+            /// <summary>
+            /// Related Identifier
+            /// </summary>
+            [FhirElement("identifier", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Identifier Identifier
+            {
+                get { return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            
+            private Hl7.Fhir.Model.Identifier _Identifier;
+            
+            /// <summary>
+            /// Related Resource
+            /// </summary>
+            [FhirElement("ref", InSummary=true, Order=50)]
+            [References()]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Ref
+            {
+                get { return _Ref; }
+                set { _Ref = value; OnPropertyChanged("Ref"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Ref;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DocumentManifestRelatedComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Ref != null) dest.Ref = (Hl7.Fhir.Model.ResourceReference)Ref.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DocumentManifestRelatedComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestRelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Ref, otherT.Ref)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestRelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         /// <summary>
         /// Unique Identifier for the set of documents
@@ -280,6 +361,20 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Content;
         
+        /// <summary>
+        /// Related things
+        /// </summary>
+        [FhirElement("related", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent> Related
+        {
+            get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent>(); return _Related; }
+            set { _Related = value; OnPropertyChanged("Related"); }
+        }
+        
+        private List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent> _Related;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DocumentManifest;
@@ -298,6 +393,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Content != null) dest.Content = new List<Hl7.Fhir.Model.ResourceReference>(Content.DeepCopy());
+                if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent>(Related.DeepCopy());
                 return dest;
             }
             else
@@ -326,6 +422,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+            if( !DeepComparable.Matches(Related, otherT.Related)) return false;
             
             return true;
         }
@@ -347,6 +444,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+            if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
             
             return true;
         }

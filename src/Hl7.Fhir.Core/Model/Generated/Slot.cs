@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 16, 2015 22:38+0100 for FHIR v0.4.0
+// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -285,38 +285,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        /// <summary>
-        /// When this slot was created, or last revised
-        /// </summary>
-        [FhirElement("lastModified", Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
-        {
-            get { return _LastModifiedElement; }
-            set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _LastModifiedElement;
-        
-        /// <summary>
-        /// When this slot was created, or last revised
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string LastModified
-        {
-            get { return LastModifiedElement != null ? LastModifiedElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  LastModifiedElement = null; 
-                else
-                  LastModifiedElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("LastModified");
-            }
-        }
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Slot;
@@ -332,7 +300,6 @@ namespace Hl7.Fhir.Model
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(OverbookedElement != null) dest.OverbookedElement = (Hl7.Fhir.Model.FhirBoolean)OverbookedElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();
                 return dest;
             }
             else
@@ -358,7 +325,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.Matches(OverbookedElement, otherT.OverbookedElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }
@@ -377,7 +343,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.IsExactly(OverbookedElement, otherT.OverbookedElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
             
             return true;
         }
