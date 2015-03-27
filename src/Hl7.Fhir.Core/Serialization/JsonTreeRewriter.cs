@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
         private const string PRIMITIVE_PROP_NAME = "value";
         private const string SPEC_CHILD_ID = "id";
         private const string SPEC_CHILD_URL = "url";
-        private const string SPEC_PARENT_EXTENSION = "modifier";
+        private const string SPEC_PARENT_EXTENSION = "extension";
         private const string SPEC_PARENT_MODIFIEREXTENSION = "modifierExtension";
 
         // Expand the children of a property given in the parameter. The property may only contain either a primitive JValue or a
@@ -46,20 +46,18 @@ namespace Hl7.Fhir.Serialization
         //            null ]
         //
         // Expansion reuses the existing JTokens from the original document as much as possible to avoid wasting memory
-        public static JObject ExpandComplexObject(JObject parent)
+        public static IEnumerable<JProperty> ExpandComplexObject(JObject parent)
         {
-            var result = new JObject();
-
             string parentName = null;
 
             if (parent.Parent as JProperty != null)
                 parentName = ((JProperty)(parent.Parent)).Name;
-            var step1 = expandArrayChildren(parent.Properties());
-            var step2 = expandPrimitiveChildren(step1, parentName);
-            var step3 = combineChildren(step2);
 
-            foreach (var child in step3) result.Add(child);
-            return result;
+            var step1 = expandArrayChildren(parent.Properties()).ToList();
+            var step2 = expandPrimitiveChildren(step1, parentName).ToList();
+            var step3 = combineChildren(step2).ToList();
+
+            return step3;
         }
 
         private static IEnumerable<JProperty> expandArrayChildren(IEnumerable<JProperty> children)
@@ -87,24 +85,23 @@ namespace Hl7.Fhir.Serialization
         {
             foreach (var child in children)
             {
-                if (isPrimitive(child,parentName))
-                {
-                    if (child.Value.Type == JTokenType.Null) continue;
-
+                if (child.Value.Type == JTokenType.Null) 
+                    yield return child;
+                else if (child.Value is JValue && !isTruePrimitive(child,parentName))
                     yield return new JProperty(child.Name, new JObject(new JProperty(PRIMITIVE_PROP_NAME, child.Value)));
-                }
                 else
                     yield return child;
             }
         }
 
-        private static bool isPrimitive(JProperty property, string parentName)
+        private static bool isTruePrimitive(JProperty property, string parentName)
         {
             return property.Value is JValue && 
                 property.Name == PRIMITIVE_PROP_NAME ||
                 property.Name == SPEC_CHILD_ID ||               // id attr that all types can have
-                (property.Name == SPEC_CHILD_URL && parentName == SPEC_PARENT_EXTENSION) ||     // url attr of extension
-                (property.Name == SPEC_CHILD_URL && parentName == SPEC_PARENT_MODIFIEREXTENSION);    // contentType attr of Binary resource
+                (property.Name == "div" && parentName == "text") ||
+                (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_EXTENSION)) ||     // url attr of extension
+                (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_MODIFIEREXTENSION));    // contentType attr of Binary resource
         }
 
         private static IEnumerable<JProperty> combineChildren(IEnumerable<JProperty> children)
@@ -139,10 +136,10 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static bool isArrayProperty(JProperty appendixProp)
-        {
-            return appendixProp.Name.EndsWith("]");
-        }
+        //private static bool isArrayProperty(JProperty appendixProp)
+        //{
+        //    return appendixProp.Name.EndsWith("]");
+        //}
 
 
         // Merge a JObject property (e.g. name: { (value) : p } ) with the corresponding "appendix"
@@ -150,6 +147,9 @@ namespace Hl7.Fhir.Serialization
         // The main property may be null, in which case the resulting merge has no (value):p property with the primitive value.
         private static JProperty mergeAppendix(JProperty prop, JProperty appendix)
         {
+            if (prop != null && prop.Value.Type == JTokenType.Null) prop = null;
+            if (appendix != null && appendix.Value.Type == JTokenType.Null) appendix = null;
+
             if (appendix == null && prop == null) throw new ArgumentException("prop and appendix cannot both be null");
 
             // If there is no corresponding appendix property, return the base contents

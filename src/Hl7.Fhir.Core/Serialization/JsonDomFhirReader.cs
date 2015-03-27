@@ -154,14 +154,12 @@ namespace Hl7.Fhir.Serialization
             get
             {
                 if (_current is JObject) return TokenType.Object;
-                if (_current is JArray) return TokenType.Array;
                 if (_current is JValue)
                 {
                     var val = (JValue)_current;
                     if(val.Type == JTokenType.Integer || val.Type == JTokenType.Float) return TokenType.Number;
                     if(val.Type == JTokenType.Boolean) return TokenType.Boolean;
                     if(val.Type == JTokenType.String) return TokenType.String;
-                    if (val.Type == JTokenType.Null) return TokenType.Null;
 
                     throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", this, val.Type);
                 }
@@ -212,9 +210,9 @@ namespace Hl7.Fhir.Serialization
             if (complex == null)
                 throw Error.Format("Need to be at a complex object to list child members", this);
 
-            var expanded = JsonTreeRewriter.ExpandComplexObject(complex);
+            var members = JsonTreeRewriter.ExpandComplexObject(complex);
 
-            foreach(var member in expanded.Properties())
+            foreach(var member in members)
             {
                 var memberName = member.Name;
 
