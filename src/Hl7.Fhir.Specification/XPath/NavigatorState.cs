@@ -34,7 +34,7 @@ namespace Hl7.Fhir.XPath
         public int? NamespacePos { get; set; }
 
         // Transient variable containing cached list of children,
-        // so we safe time recompiling these when navigating back and forth
+        // so we save time recompiling these when navigating back and forth
         private List<JProperty> _children;
 
         public IEnumerable<JProperty> Children

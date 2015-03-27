@@ -20,8 +20,6 @@ namespace Hl7.Fhir.Serialization
 
         IEnumerable<Tuple<string, IFhirReader>> GetMembers();
 
-        IEnumerable<IFhirReader> GetArrayElements();
-
         object GetPrimitiveValue();
 
         TokenType CurrentToken { get; }
@@ -30,11 +28,9 @@ namespace Hl7.Fhir.Serialization
     public enum TokenType
     {
         Object,
-        Array,
         String,
         Boolean,
         Number,
-        Null,
     }
 
     public static class FhirReaderExtensions
