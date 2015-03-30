@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -281,24 +281,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> _Contact;
         
         /// <summary>
-        /// Location(s) the organization uses to provide services
-        /// </summary>
-        [FhirElement("location", Order=160)]
-        [References("Location")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Location
-        {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
-            set { _Location = value; OnPropertyChanged("Location"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Location;
-        
-        /// <summary>
         /// Whether the organization's record is still in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=170)]
+        [FhirElement("active", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -341,7 +326,6 @@ namespace Hl7.Fhir.Model
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(Contact.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 return dest;
             }
@@ -367,7 +351,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             
             return true;
@@ -386,7 +369,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             
             return true;

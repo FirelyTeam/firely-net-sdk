@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// Person who received and recorded the answers
         /// </summary>
         [FhirElement("author", InSummary=true, Order=130)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

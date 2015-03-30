@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,11 +199,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Resource")]
         Resource,
         /// <summary>
-        /// The Alert resource
-        /// </summary>
-        [EnumLiteral("Alert")]
-        Alert,
-        /// <summary>
         /// The AllergyIntolerance resource
         /// </summary>
         [EnumLiteral("AllergyIntolerance")]
@@ -248,11 +243,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("CarePlan")]
         CarePlan,
-        /// <summary>
-        /// The CarePlan2 resource
-        /// </summary>
-        [EnumLiteral("CarePlan2")]
-        CarePlan2,
         /// <summary>
         /// The Claim resource
         /// </summary>
@@ -399,10 +389,15 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("ExplanationOfBenefit")]
         ExplanationOfBenefit,
         /// <summary>
-        /// The FamilyHistory resource
+        /// The FamilyMemberHistory resource
         /// </summary>
-        [EnumLiteral("FamilyHistory")]
-        FamilyHistory,
+        [EnumLiteral("FamilyMemberHistory")]
+        FamilyMemberHistory,
+        /// <summary>
+        /// The Flag resource
+        /// </summary>
+        [EnumLiteral("Flag")]
+        Flag,
         /// <summary>
         /// The Goal resource
         /// </summary>
@@ -523,11 +518,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Organization")]
         Organization,
-        /// <summary>
-        /// The Other resource
-        /// </summary>
-        [EnumLiteral("Other")]
-        Other,
         /// <summary>
         /// The Patient resource
         /// </summary>

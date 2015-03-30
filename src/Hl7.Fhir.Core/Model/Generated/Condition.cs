@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
             /// Formal record of assessment
             /// </summary>
             [FhirElement("assessment", InSummary=true, Order=50)]
-            [References()]
+            [References("ClinicalImpression","DiagnosticReport","Observation")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Assessment
@@ -426,47 +426,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location - may include laterality
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("site", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.Element Site
             {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
+                get { return _Site; }
+                set { _Site = value; OnPropertyChanged("Site"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Precise location details
-            /// </summary>
-            [FhirElement("detail", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DetailElement
-            {
-                get { return _DetailElement; }
-                set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DetailElement;
-            
-            /// <summary>
-            /// Precise location details
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Detail
-            {
-                get { return DetailElement != null ? DetailElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DetailElement = null; 
-                    else
-                      DetailElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Detail");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Site;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -475,8 +444,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
                     return dest;
                 }
                 else
@@ -494,8 +462,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
                 
                 return true;
             }
@@ -506,8 +473,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
+                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
                 
                 return true;
             }

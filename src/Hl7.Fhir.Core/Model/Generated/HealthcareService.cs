@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,205 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.HealthcareService; } }
         [NotMapped]
         public override string TypeName { get { return "HealthcareService"; } }
+        
+        /// <summary>
+        /// The code(s) that detail the conditions under which the healthcare service is available/offered
+        /// </summary>
+        [FhirEnumeration("ServiceProvisionConditions")]
+        public enum ServiceProvisionConditions
+        {
+            /// <summary>
+            /// This service is available for no patient cost.
+            /// </summary>
+            [EnumLiteral("free")]
+            Free,
+            /// <summary>
+            /// There are discounts available on this service for qualifying patients.
+            /// </summary>
+            [EnumLiteral("disc")]
+            Disc,
+            /// <summary>
+            /// Fees apply for this service.
+            /// </summary>
+            [EnumLiteral("cost")]
+            Cost,
+        }
+        
+        /// <summary>
+        /// The methods of referral can be used when referring to a specific HealthCareService resource
+        /// </summary>
+        [FhirEnumeration("ReferralMethod")]
+        public enum ReferralMethod
+        {
+            /// <summary>
+            /// Referrals may be accepted by fax.
+            /// </summary>
+            [EnumLiteral("fax")]
+            Fax,
+            /// <summary>
+            /// Referrals may be accepted over the phone from a Practitioner.
+            /// </summary>
+            [EnumLiteral("phone")]
+            Phone,
+            /// <summary>
+            /// Referrals may be accepted via a secure messaging system. To determine the types of secure messaging systems supported, refer to the identifiers collection. Callers will need to understand the specific identifier system used to know that they are able to transmit messages.
+            /// </summary>
+            [EnumLiteral("elec")]
+            Elec,
+            /// <summary>
+            /// Referrals may be accepted via a secure email. To send please enrypt with the services public key.
+            /// </summary>
+            [EnumLiteral("semail")]
+            Semail,
+            /// <summary>
+            /// Referrals may be accepted via regular postage (or hand delivered).
+            /// </summary>
+            [EnumLiteral("mail")]
+            Mail,
+        }
+        
+        /// <summary>
+        /// The days of the week
+        /// </summary>
+        [FhirEnumeration("DaysOfWeek")]
+        public enum DaysOfWeek
+        {
+            /// <summary>
+            /// Monday.
+            /// </summary>
+            [EnumLiteral("mon")]
+            Mon,
+            /// <summary>
+            /// Tuesday.
+            /// </summary>
+            [EnumLiteral("tue")]
+            Tue,
+            /// <summary>
+            /// Wednesday.
+            /// </summary>
+            [EnumLiteral("wed")]
+            Wed,
+            /// <summary>
+            /// Thursday.
+            /// </summary>
+            [EnumLiteral("thu")]
+            Thu,
+            /// <summary>
+            /// Friday.
+            /// </summary>
+            [EnumLiteral("fri")]
+            Fri,
+            /// <summary>
+            /// Saturday.
+            /// </summary>
+            [EnumLiteral("sat")]
+            Sat,
+            /// <summary>
+            /// Sunday.
+            /// </summary>
+            [EnumLiteral("sun")]
+            Sun,
+        }
+        
+        [FhirType("HealthcareServiceNotAvailableComponent")]
+        [DataContract]
+        public partial class HealthcareServiceNotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "HealthcareServiceNotAvailableComponent"; } }
+            
+            /// <summary>
+            /// The reason that can be presented to the user as to why this time is not available
+            /// </summary>
+            [FhirElement("description", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// The reason that can be presented to the user as to why this time is not available
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Service is not available (seasonally or for a public holiday) from this date
+            /// </summary>
+            [FhirElement("during", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period During
+            {
+                get { return _During; }
+                set { _During = value; OnPropertyChanged("During"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _During;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as HealthcareServiceNotAvailableComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new HealthcareServiceNotAvailableComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as HealthcareServiceNotAvailableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(During, otherT.During)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as HealthcareServiceNotAvailableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(During, otherT.During)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ServiceTypeComponent")]
         [DataContract]
@@ -142,18 +341,37 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "HealthcareServiceAvailableTimeComponent"; } }
             
             /// <summary>
-            /// Indicates which Days of the week are available between the Start and End Times
+            /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
             [FhirElement("daysOfWeek", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> DaysOfWeek
+            public List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> DaysOfWeekElement
             {
-                get { if(_DaysOfWeek==null) _DaysOfWeek = new List<Hl7.Fhir.Model.CodeableConcept>(); return _DaysOfWeek; }
-                set { _DaysOfWeek = value; OnPropertyChanged("DaysOfWeek"); }
+                get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(); return _DaysOfWeekElement; }
+                set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeableConcept> _DaysOfWeek;
+            private List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> _DaysOfWeekElement;
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<Hl7.Fhir.Model.HealthcareService.DaysOfWeek?> DaysOfWeek
+            {
+                get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      DaysOfWeekElement = null; 
+                    else
+                      DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>(elem)));
+                    OnPropertyChanged("DaysOfWeek");
+                }
+            }
             
             /// <summary>
             /// Is this always available? (hence times are irrelevant) e.g. 24 hour service
@@ -188,20 +406,20 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The opening time of day (the date is not included). Note: If the AllDay flag is set, then this time is ignored
+            /// The opening time of day. Note: If the AllDay flag is set, then this time is ignored
             /// </summary>
             [FhirElement("availableStartTime", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime AvailableStartTimeElement
+            public Hl7.Fhir.Model.Time AvailableStartTimeElement
             {
                 get { return _AvailableStartTimeElement; }
                 set { _AvailableStartTimeElement = value; OnPropertyChanged("AvailableStartTimeElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDateTime _AvailableStartTimeElement;
+            private Hl7.Fhir.Model.Time _AvailableStartTimeElement;
             
             /// <summary>
-            /// The opening time of day (the date is not included). Note: If the AllDay flag is set, then this time is ignored
+            /// The opening time of day. Note: If the AllDay flag is set, then this time is ignored
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -214,26 +432,26 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       AvailableStartTimeElement = null; 
                     else
-                      AvailableStartTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                      AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableStartTime");
                 }
             }
             
             /// <summary>
-            /// The closing time of day (the date is not included). Note: If the AllDay flag is set, then this time is ignored
+            /// The closing time of day. Note: If the AllDay flag is set, then this time is ignored
             /// </summary>
             [FhirElement("availableEndTime", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime AvailableEndTimeElement
+            public Hl7.Fhir.Model.Time AvailableEndTimeElement
             {
                 get { return _AvailableEndTimeElement; }
                 set { _AvailableEndTimeElement = value; OnPropertyChanged("AvailableEndTimeElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDateTime _AvailableEndTimeElement;
+            private Hl7.Fhir.Model.Time _AvailableEndTimeElement;
             
             /// <summary>
-            /// The closing time of day (the date is not included). Note: If the AllDay flag is set, then this time is ignored
+            /// The closing time of day. Note: If the AllDay flag is set, then this time is ignored
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -246,7 +464,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       AvailableEndTimeElement = null; 
                     else
-                      AvailableEndTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                      AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableEndTime");
                 }
             }
@@ -258,10 +476,10 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DaysOfWeek != null) dest.DaysOfWeek = new List<Hl7.Fhir.Model.CodeableConcept>(DaysOfWeek.DeepCopy());
+                    if(DaysOfWeekElement != null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
                     if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
-                    if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.FhirDateTime)AvailableStartTimeElement.DeepCopy();
-                    if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.FhirDateTime)AvailableEndTimeElement.DeepCopy();
+                    if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopy();
+                    if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -279,7 +497,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DaysOfWeek, otherT.DaysOfWeek)) return false;
+                if( !DeepComparable.Matches(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
                 if( !DeepComparable.Matches(AllDayElement, otherT.AllDayElement)) return false;
                 if( !DeepComparable.Matches(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
                 if( !DeepComparable.Matches(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
@@ -293,7 +511,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DaysOfWeek, otherT.DaysOfWeek)) return false;
+                if( !DeepComparable.IsExactly(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
                 if( !DeepComparable.IsExactly(AllDayElement, otherT.AllDayElement)) return false;
                 if( !DeepComparable.IsExactly(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
                 if( !DeepComparable.IsExactly(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
@@ -304,164 +522,10 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HealthcareServiceNotAvailableTimeComponent")]
-        [DataContract]
-        public partial class HealthcareServiceNotAvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "HealthcareServiceNotAvailableTimeComponent"; } }
-            
-            /// <summary>
-            /// The reason that can be presented to the user as to why this time is not available
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// The reason that can be presented to the user as to why this time is not available
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Service is not available (seasonally or for a public holiday) from this date
-            /// </summary>
-            [FhirElement("startDate", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime StartDateElement
-            {
-                get { return _StartDateElement; }
-                set { _StartDateElement = value; OnPropertyChanged("StartDateElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDateTime _StartDateElement;
-            
-            /// <summary>
-            /// Service is not available (seasonally or for a public holiday) from this date
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string StartDate
-            {
-                get { return StartDateElement != null ? StartDateElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StartDateElement = null; 
-                    else
-                      StartDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                    OnPropertyChanged("StartDate");
-                }
-            }
-            
-            /// <summary>
-            /// Service is not available (seasonally or for a public holiday) until this date
-            /// </summary>
-            [FhirElement("endDate", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime EndDateElement
-            {
-                get { return _EndDateElement; }
-                set { _EndDateElement = value; OnPropertyChanged("EndDateElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDateTime _EndDateElement;
-            
-            /// <summary>
-            /// Service is not available (seasonally or for a public holiday) until this date
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string EndDate
-            {
-                get { return EndDateElement != null ? EndDateElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      EndDateElement = null; 
-                    else
-                      EndDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                    OnPropertyChanged("EndDate");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as HealthcareServiceNotAvailableTimeComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopy();
-                    if(EndDateElement != null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)EndDateElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new HealthcareServiceNotAvailableTimeComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as HealthcareServiceNotAvailableTimeComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(StartDateElement, otherT.StartDateElement)) return false;
-                if( !DeepComparable.Matches(EndDateElement, otherT.EndDateElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as HealthcareServiceNotAvailableTimeComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(StartDateElement, otherT.StartDateElement)) return false;
-                if( !DeepComparable.IsExactly(EndDateElement, otherT.EndDateElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         /// <summary>
-        /// External Ids for this item
+        /// External Identifiers for this item
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -473,9 +537,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// The organization that provides this Healthcare Service
+        /// </summary>
+        [FhirElement("providedBy", InSummary=true, Order=100)]
+        [References("Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference ProvidedBy
+        {
+            get { return _ProvidedBy; }
+            set { _ProvidedBy = value; OnPropertyChanged("ProvidedBy"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _ProvidedBy;
+        
+        /// <summary>
         /// The location where this healthcare service may be provided
         /// </summary>
-        [FhirElement("location", Order=100)]
+        [FhirElement("location", InSummary=true, Order=110)]
         [References("Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -490,7 +568,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies the broad category of service being performed or delivered. Selecting a Service Category then determines the list of relevant service types that can be selected in the Primary Service Type
         /// </summary>
-        [FhirElement("serviceCategory", Order=110)]
+        [FhirElement("serviceCategory", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -503,7 +581,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A specific type of service that may be delivered or performed
         /// </summary>
-        [FhirElement("serviceType", Order=120)]
+        [FhirElement("serviceType", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent> ServiceType
@@ -517,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Further description of the service as it would be presented to a consumer while searching
         /// </summary>
-        [FhirElement("serviceName", Order=130)]
+        [FhirElement("serviceName", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ServiceNameElement
         {
@@ -547,9 +625,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Additional description of the  or any specific issues not covered by the other attributes, which can be displayed as further detail under the serviceName
+        /// Any additional description of the service and/or any specific issues not covered by the other attributes, which can be displayed as further detail under the serviceName
         /// </summary>
-        [FhirElement("comment", Order=140)]
+        [FhirElement("comment", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -560,7 +638,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Additional description of the  or any specific issues not covered by the other attributes, which can be displayed as further detail under the serviceName
+        /// Any additional description of the service and/or any specific issues not covered by the other attributes, which can be displayed as further detail under the serviceName
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -581,7 +659,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Extra details about the service that can't be placed in the other fields
         /// </summary>
-        [FhirElement("extraDetails", Order=150)]
+        [FhirElement("extraDetails", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ExtraDetailsElement
         {
@@ -611,22 +689,65 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The free provision code provides a link to the Free Provision reference entity to enable the selection of one free provision type
+        /// If there is a photo/symbol associated with this HealthcareService, it may be included here to facilitate quick identification of the service in a list
         /// </summary>
-        [FhirElement("freeProvisionCode", Order=160)]
+        [FhirElement("photo", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept FreeProvisionCode
+        public Hl7.Fhir.Model.Attachment Photo
         {
-            get { return _FreeProvisionCode; }
-            set { _FreeProvisionCode = value; OnPropertyChanged("FreeProvisionCode"); }
+            get { return _Photo; }
+            set { _Photo = value; OnPropertyChanged("Photo"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _FreeProvisionCode;
+        private Hl7.Fhir.Model.Attachment _Photo;
+        
+        /// <summary>
+        /// List of contacts related to this specific healthcare service. If this is empty, then refer to the location's contacts
+        /// </summary>
+        [FhirElement("telecom", Order=180)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
+        {
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+        
+        /// <summary>
+        /// The location(s) that this service is available to (not where the service is provided)
+        /// </summary>
+        [FhirElement("coverageArea", Order=190)]
+        [References("Location")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
+        {
+            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(); return _CoverageArea; }
+            set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _CoverageArea;
+        
+        /// <summary>
+        /// The code(s) that detail the conditions under which the healthcare service is available/offered
+        /// </summary>
+        [FhirElement("serviceProvisionCode", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
+        {
+            get { if(_ServiceProvisionCode==null) _ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceProvisionCode; }
+            set { _ServiceProvisionCode = value; OnPropertyChanged("ServiceProvisionCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ServiceProvisionCode;
         
         /// <summary>
         /// Does this service have specific eligibility requirements that need to be met in order to use the service
         /// </summary>
-        [FhirElement("eligibility", Order=170)]
+        [FhirElement("eligibility", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Eligibility
         {
@@ -639,7 +760,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the eligibility conditions for the service
         /// </summary>
-        [FhirElement("eligibilityNote", Order=180)]
+        [FhirElement("eligibilityNote", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString EligibilityNoteElement
         {
@@ -669,146 +790,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates whether or not a prospective consumer will require an appointment for a particular service at a Site to be provided by the Organization. Indicates if an appointment is required for access to this service. If this flag is 'NotDefined', then this flag is overridden by the Site's availability flag. (ConditionalIndicator Enum)
-        /// </summary>
-        [FhirElement("appointmentRequired", Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept AppointmentRequired
-        {
-            get { return _AppointmentRequired; }
-            set { _AppointmentRequired = value; OnPropertyChanged("AppointmentRequired"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _AppointmentRequired;
-        
-        /// <summary>
-        /// If there is an image associated with this Service Site, its URI can be included here
-        /// </summary>
-        [FhirElement("imageURI", Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri ImageURIElement
-        {
-            get { return _ImageURIElement; }
-            set { _ImageURIElement = value; OnPropertyChanged("ImageURIElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirUri _ImageURIElement;
-        
-        /// <summary>
-        /// If there is an image associated with this Service Site, its URI can be included here
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ImageURI
-        {
-            get { return ImageURIElement != null ? ImageURIElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ImageURIElement = null; 
-                else
-                  ImageURIElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("ImageURI");
-            }
-        }
-        
-        /// <summary>
-        /// A Collection of times that the Service Site is available
-        /// </summary>
-        [FhirElement("availableTime", Order=210)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> AvailableTime
-        {
-            get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(); return _AvailableTime; }
-            set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
-        }
-        
-        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> _AvailableTime;
-        
-        /// <summary>
-        /// Not avail times - need better description
-        /// </summary>
-        [FhirElement("notAvailableTime", Order=220)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent> NotAvailableTime
-        {
-            get { if(_NotAvailableTime==null) _NotAvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent>(); return _NotAvailableTime; }
-            set { _NotAvailableTime = value; OnPropertyChanged("NotAvailableTime"); }
-        }
-        
-        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent> _NotAvailableTime;
-        
-        /// <summary>
-        /// A description of Site availability exceptions, e.g., public holiday availability. Succinctly describing all possible exceptions to normal Site availability as details in the Available Times and Not Available Times
-        /// </summary>
-        [FhirElement("availabilityExceptions", Order=230)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
-        {
-            get { return _AvailabilityExceptionsElement; }
-            set { _AvailabilityExceptionsElement = value; OnPropertyChanged("AvailabilityExceptionsElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _AvailabilityExceptionsElement;
-        
-        /// <summary>
-        /// A description of Site availability exceptions, e.g., public holiday availability. Succinctly describing all possible exceptions to normal Site availability as details in the Available Times and Not Available Times
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string AvailabilityExceptions
-        {
-            get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  AvailabilityExceptionsElement = null; 
-                else
-                  AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("AvailabilityExceptions");
-            }
-        }
-        
-        /// <summary>
-        /// The public part of the 'keys' allocated to an Organization by an accredited body to support secure exchange of data over the internet. To be provided by the Organization, where available
-        /// </summary>
-        [FhirElement("publicKey", Order=240)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PublicKeyElement
-        {
-            get { return _PublicKeyElement; }
-            set { _PublicKeyElement = value; OnPropertyChanged("PublicKeyElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PublicKeyElement;
-        
-        /// <summary>
-        /// The public part of the 'keys' allocated to an Organization by an accredited body to support secure exchange of data over the internet. To be provided by the Organization, where available
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PublicKey
-        {
-            get { return PublicKeyElement != null ? PublicKeyElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  PublicKeyElement = null; 
-                else
-                  PublicKeyElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("PublicKey");
-            }
-        }
-        
-        /// <summary>
         /// Program Names that can be used to categorize the service
         /// </summary>
-        [FhirElement("programName", Order=250)]
+        [FhirElement("programName", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ProgramNameElement
@@ -839,23 +823,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// List of contacts related to this specific healthcare service. If this is empty, then refer to the location's contacts
-        /// </summary>
-        [FhirElement("contactPoint", Order=260)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ContactPoint> ContactPoint
-        {
-            get { if(_ContactPoint==null) _ContactPoint = new List<Hl7.Fhir.Model.ContactPoint>(); return _ContactPoint; }
-            set { _ContactPoint = value; OnPropertyChanged("ContactPoint"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ContactPoint> _ContactPoint;
-        
-        /// <summary>
         /// Collection of Characteristics (attributes)
         /// </summary>
-        [FhirElement("characteristic", Order=270)]
+        [FhirElement("characteristic", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -869,86 +839,140 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Ways that the service accepts referrals
         /// </summary>
-        [FhirElement("referralMethod", Order=280)]
+        [FhirElement("referralMethod", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
+        public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod_
         {
-            get { if(_ReferralMethod==null) _ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod; }
-            set { _ReferralMethod = value; OnPropertyChanged("ReferralMethod"); }
+            get { if(_ReferralMethod_==null) _ReferralMethod_ = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod_; }
+            set { _ReferralMethod_ = value; OnPropertyChanged("ReferralMethod_"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod_;
         
         /// <summary>
-        /// The setting where this service can be provided, such is in home, or at location in organisation
+        /// The public part of the 'keys' allocated to an Organization by an accredited body to support secure exchange of data over the internet. To be provided by the Organization, where available
         /// </summary>
-        [FhirElement("setting", Order=290)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("publicKey", Order=260)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Setting
+        public Hl7.Fhir.Model.FhirString PublicKeyElement
         {
-            get { if(_Setting==null) _Setting = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Setting; }
-            set { _Setting = value; OnPropertyChanged("Setting"); }
+            get { return _PublicKeyElement; }
+            set { _PublicKeyElement = value; OnPropertyChanged("PublicKeyElement"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Setting;
+        private Hl7.Fhir.Model.FhirString _PublicKeyElement;
         
         /// <summary>
-        /// Collection of Target Groups for the Service Site (The target audience that this service is for)
+        /// The public part of the 'keys' allocated to an Organization by an accredited body to support secure exchange of data over the internet. To be provided by the Organization, where available
         /// </summary>
-        [FhirElement("targetGroup", Order=300)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> TargetGroup
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string PublicKey
         {
-            get { if(_TargetGroup==null) _TargetGroup = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetGroup; }
-            set { _TargetGroup = value; OnPropertyChanged("TargetGroup"); }
+            get { return PublicKeyElement != null ? PublicKeyElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  PublicKeyElement = null; 
+                else
+                  PublicKeyElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("PublicKey");
+            }
         }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _TargetGroup;
         
         /// <summary>
-        /// Need better description
+        /// Indicates if an appointment is required for access to this service
         /// </summary>
-        [FhirElement("coverageArea", Order=310)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("appointmentRequired", Order=270)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> CoverageArea
+        public Hl7.Fhir.Model.FhirBoolean AppointmentRequiredElement
         {
-            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CoverageArea; }
-            set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
+            get { return _AppointmentRequiredElement; }
+            set { _AppointmentRequiredElement = value; OnPropertyChanged("AppointmentRequiredElement"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _CoverageArea;
+        private Hl7.Fhir.Model.FhirBoolean _AppointmentRequiredElement;
         
         /// <summary>
-        /// Need better description
+        /// Indicates if an appointment is required for access to this service
         /// </summary>
-        [FhirElement("catchmentArea", Order=320)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> CatchmentArea
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? AppointmentRequired
         {
-            get { if(_CatchmentArea==null) _CatchmentArea = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CatchmentArea; }
-            set { _CatchmentArea = value; OnPropertyChanged("CatchmentArea"); }
+            get { return AppointmentRequiredElement != null ? AppointmentRequiredElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  AppointmentRequiredElement = null; 
+                else
+                  AppointmentRequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("AppointmentRequired");
+            }
         }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _CatchmentArea;
         
         /// <summary>
-        /// List of the specific
+        /// A Collection of times that the Service Site is available
         /// </summary>
-        [FhirElement("serviceCode", Order=330)]
+        [FhirElement("availableTime", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ServiceCode
+        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> AvailableTime
         {
-            get { if(_ServiceCode==null) _ServiceCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCode; }
-            set { _ServiceCode = value; OnPropertyChanged("ServiceCode"); }
+            get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(); return _AvailableTime; }
+            set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCode;
+        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> _AvailableTime;
+        
+        /// <summary>
+        /// The HealthcareService is not available during this period of time due to the provided reason
+        /// </summary>
+        [FhirElement("notAvailable", Order=290)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent> NotAvailable
+        {
+            get { if(_NotAvailable==null) _NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent>(); return _NotAvailable; }
+            set { _NotAvailable = value; OnPropertyChanged("NotAvailable"); }
+        }
+        
+        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent> _NotAvailable;
+        
+        /// <summary>
+        /// A description of Site availability exceptions, e.g., public holiday availability. Succinctly describing all possible exceptions to normal Site availability as details in the Available Times and Not Available Times
+        /// </summary>
+        [FhirElement("availabilityExceptions", Order=300)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
+        {
+            get { return _AvailabilityExceptionsElement; }
+            set { _AvailabilityExceptionsElement = value; OnPropertyChanged("AvailabilityExceptionsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _AvailabilityExceptionsElement;
+        
+        /// <summary>
+        /// A description of Site availability exceptions, e.g., public holiday availability. Succinctly describing all possible exceptions to normal Site availability as details in the Available Times and Not Available Times
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string AvailabilityExceptions
+        {
+            get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  AvailabilityExceptionsElement = null; 
+                else
+                  AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("AvailabilityExceptions");
+            }
+        }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -958,30 +982,27 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent>(ServiceType.DeepCopy());
                 if(ServiceNameElement != null) dest.ServiceNameElement = (Hl7.Fhir.Model.FhirString)ServiceNameElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)ExtraDetailsElement.DeepCopy();
-                if(FreeProvisionCode != null) dest.FreeProvisionCode = (Hl7.Fhir.Model.CodeableConcept)FreeProvisionCode.DeepCopy();
+                if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
+                if(ServiceProvisionCode != null) dest.ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceProvisionCode.DeepCopy());
                 if(Eligibility != null) dest.Eligibility = (Hl7.Fhir.Model.CodeableConcept)Eligibility.DeepCopy();
                 if(EligibilityNoteElement != null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)EligibilityNoteElement.DeepCopy();
-                if(AppointmentRequired != null) dest.AppointmentRequired = (Hl7.Fhir.Model.CodeableConcept)AppointmentRequired.DeepCopy();
-                if(ImageURIElement != null) dest.ImageURIElement = (Hl7.Fhir.Model.FhirUri)ImageURIElement.DeepCopy();
-                if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(AvailableTime.DeepCopy());
-                if(NotAvailableTime != null) dest.NotAvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableTimeComponent>(NotAvailableTime.DeepCopy());
-                if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
-                if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
                 if(ProgramNameElement != null) dest.ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(ProgramNameElement.DeepCopy());
-                if(ContactPoint != null) dest.ContactPoint = new List<Hl7.Fhir.Model.ContactPoint>(ContactPoint.DeepCopy());
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(Characteristic.DeepCopy());
-                if(ReferralMethod != null) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod.DeepCopy());
-                if(Setting != null) dest.Setting = new List<Hl7.Fhir.Model.CodeableConcept>(Setting.DeepCopy());
-                if(TargetGroup != null) dest.TargetGroup = new List<Hl7.Fhir.Model.CodeableConcept>(TargetGroup.DeepCopy());
-                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.CodeableConcept>(CoverageArea.DeepCopy());
-                if(CatchmentArea != null) dest.CatchmentArea = new List<Hl7.Fhir.Model.CodeableConcept>(CatchmentArea.DeepCopy());
-                if(ServiceCode != null) dest.ServiceCode = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCode.DeepCopy());
+                if(ReferralMethod_ != null) dest.ReferralMethod_ = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod_.DeepCopy());
+                if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
+                if(AppointmentRequiredElement != null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AppointmentRequiredElement.DeepCopy();
+                if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(AvailableTime.DeepCopy());
+                if(NotAvailable != null) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent>(NotAvailable.DeepCopy());
+                if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
                 return dest;
             }
             else
@@ -1000,30 +1021,27 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ProvidedBy, otherT.ProvidedBy)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
             if( !DeepComparable.Matches(ServiceNameElement, otherT.ServiceNameElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
-            if( !DeepComparable.Matches(FreeProvisionCode, otherT.FreeProvisionCode)) return false;
+            if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
+            if( !DeepComparable.Matches(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
             if( !DeepComparable.Matches(Eligibility, otherT.Eligibility)) return false;
             if( !DeepComparable.Matches(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-            if( !DeepComparable.Matches(AppointmentRequired, otherT.AppointmentRequired)) return false;
-            if( !DeepComparable.Matches(ImageURIElement, otherT.ImageURIElement)) return false;
-            if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
-            if( !DeepComparable.Matches(NotAvailableTime, otherT.NotAvailableTime)) return false;
-            if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
-            if( !DeepComparable.Matches(PublicKeyElement, otherT.PublicKeyElement)) return false;
             if( !DeepComparable.Matches(ProgramNameElement, otherT.ProgramNameElement)) return false;
-            if( !DeepComparable.Matches(ContactPoint, otherT.ContactPoint)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
-            if( !DeepComparable.Matches(ReferralMethod, otherT.ReferralMethod)) return false;
-            if( !DeepComparable.Matches(Setting, otherT.Setting)) return false;
-            if( !DeepComparable.Matches(TargetGroup, otherT.TargetGroup)) return false;
-            if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
-            if( !DeepComparable.Matches(CatchmentArea, otherT.CatchmentArea)) return false;
-            if( !DeepComparable.Matches(ServiceCode, otherT.ServiceCode)) return false;
+            if( !DeepComparable.Matches(ReferralMethod_, otherT.ReferralMethod_)) return false;
+            if( !DeepComparable.Matches(PublicKeyElement, otherT.PublicKeyElement)) return false;
+            if( !DeepComparable.Matches(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
+            if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
+            if( !DeepComparable.Matches(NotAvailable, otherT.NotAvailable)) return false;
+            if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
             
             return true;
         }
@@ -1035,30 +1053,27 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ProvidedBy, otherT.ProvidedBy)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
             if( !DeepComparable.IsExactly(ServiceNameElement, otherT.ServiceNameElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
-            if( !DeepComparable.IsExactly(FreeProvisionCode, otherT.FreeProvisionCode)) return false;
+            if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
+            if( !DeepComparable.IsExactly(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
             if( !DeepComparable.IsExactly(Eligibility, otherT.Eligibility)) return false;
             if( !DeepComparable.IsExactly(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-            if( !DeepComparable.IsExactly(AppointmentRequired, otherT.AppointmentRequired)) return false;
-            if( !DeepComparable.IsExactly(ImageURIElement, otherT.ImageURIElement)) return false;
-            if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
-            if( !DeepComparable.IsExactly(NotAvailableTime, otherT.NotAvailableTime)) return false;
-            if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
-            if( !DeepComparable.IsExactly(PublicKeyElement, otherT.PublicKeyElement)) return false;
             if( !DeepComparable.IsExactly(ProgramNameElement, otherT.ProgramNameElement)) return false;
-            if( !DeepComparable.IsExactly(ContactPoint, otherT.ContactPoint)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
-            if( !DeepComparable.IsExactly(ReferralMethod, otherT.ReferralMethod)) return false;
-            if( !DeepComparable.IsExactly(Setting, otherT.Setting)) return false;
-            if( !DeepComparable.IsExactly(TargetGroup, otherT.TargetGroup)) return false;
-            if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
-            if( !DeepComparable.IsExactly(CatchmentArea, otherT.CatchmentArea)) return false;
-            if( !DeepComparable.IsExactly(ServiceCode, otherT.ServiceCode)) return false;
+            if( !DeepComparable.IsExactly(ReferralMethod_, otherT.ReferralMethod_)) return false;
+            if( !DeepComparable.IsExactly(PublicKeyElement, otherT.PublicKeyElement)) return false;
+            if( !DeepComparable.IsExactly(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
+            if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
+            if( !DeepComparable.IsExactly(NotAvailable, otherT.NotAvailable)) return false;
+            if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
             
             return true;
         }

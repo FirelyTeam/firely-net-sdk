@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -166,23 +166,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// Nested Section
-            /// </summary>
-            [FhirElement("section", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
-            {
-                get { if(_Section==null) _Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(); return _Section; }
-                set { _Section = value; OnPropertyChanged("Section"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
-            
-            /// <summary>
             /// The Content of the section (narrative + data entries)
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=70)]
+            [FhirElement("content", InSummary=true, Order=60)]
             [References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Content
@@ -193,6 +179,20 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.ResourceReference _Content;
             
+            /// <summary>
+            /// Nested Section
+            /// </summary>
+            [FhirElement("section", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
+            {
+                get { if(_Section==null) _Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(); return _Section; }
+                set { _Section = value; OnPropertyChanged("Section"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SectionComponent;
@@ -202,8 +202,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                     if(Content != null) dest.Content = (Hl7.Fhir.Model.ResourceReference)Content.DeepCopy();
+                    if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                     return dest;
                 }
                 else
@@ -223,8 +223,8 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Section, otherT.Section)) return false;
                 if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+                if( !DeepComparable.Matches(Section, otherT.Section)) return false;
                 
                 return true;
             }
@@ -237,8 +237,8 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
                 
                 return true;
             }

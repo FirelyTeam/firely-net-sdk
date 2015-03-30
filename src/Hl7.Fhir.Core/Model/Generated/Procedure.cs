@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -97,6 +97,72 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
+        
+        [FhirType("ProcedureBodySiteComponent")]
+        [DataContract]
+        public partial class ProcedureBodySiteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProcedureBodySiteComponent"; } }
+            
+            /// <summary>
+            /// Precise location details
+            /// </summary>
+            [FhirElement("site", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Site
+            {
+                get { return _Site; }
+                set { _Site = value; OnPropertyChanged("Site"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Site;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProcedureBodySiteComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProcedureBodySiteComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProcedureBodySiteComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProcedureBodySiteComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ProcedureDeviceComponent")]
         [DataContract]
@@ -223,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// The related item - e.g. a procedure
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("AllergyIntolerance","CarePlan","Condition","DiagnosticReport","FamilyHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationPrescription","MedicationStatement","Observation","Procedure")]
+            [References("AllergyIntolerance","CarePlan","Condition","DiagnosticReport","FamilyMemberHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationPrescription","MedicationStatement","Observation","Procedure")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
             {
@@ -456,13 +522,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("bodySite", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        public List<Hl7.Fhir.Model.Procedure.ProcedureBodySiteComponent> BodySite
         {
-            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.Procedure.ProcedureBodySiteComponent>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        private List<Hl7.Fhir.Model.Procedure.ProcedureBodySiteComponent> _BodySite;
         
         /// <summary>
         /// Reason procedure performed
@@ -650,6 +716,21 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Procedure.ProcedureDeviceComponent> _Device;
         
+        /// <summary>
+        /// Items used during procedure
+        /// </summary>
+        [FhirElement("used", Order=270)]
+        [References("Device","Medication","Substance")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Used
+        {
+            get { if(_Used==null) _Used = new List<Hl7.Fhir.Model.ResourceReference>(); return _Used; }
+            set { _Used = value; OnPropertyChanged("Used"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Used;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;
@@ -662,7 +743,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Procedure.ProcedureStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.Procedure.ProcedureBodySiteComponent>(BodySite.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent>(Performer.DeepCopy());
                 if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
@@ -675,6 +756,7 @@ namespace Hl7.Fhir.Model
                 if(RelatedItem != null) dest.RelatedItem = new List<Hl7.Fhir.Model.Procedure.ProcedureRelatedItemComponent>(RelatedItem.DeepCopy());
                 if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
                 if(Device != null) dest.Device = new List<Hl7.Fhir.Model.Procedure.ProcedureDeviceComponent>(Device.DeepCopy());
+                if(Used != null) dest.Used = new List<Hl7.Fhir.Model.ResourceReference>(Used.DeepCopy());
                 return dest;
             }
             else
@@ -710,6 +792,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RelatedItem, otherT.RelatedItem)) return false;
             if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
+            if( !DeepComparable.Matches(Used, otherT.Used)) return false;
             
             return true;
         }
@@ -738,6 +821,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RelatedItem, otherT.RelatedItem)) return false;
             if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
+            if( !DeepComparable.IsExactly(Used, otherT.Used)) return false;
             
             return true;
         }

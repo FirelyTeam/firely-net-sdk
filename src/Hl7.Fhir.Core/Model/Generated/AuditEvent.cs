@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AuditEvent"; } }
         
         /// <summary>
-        /// Code representing the functional application role of Participant Object being audited
+        /// Code representing the role the Object played in the event
         /// </summary>
         [FhirEnumeration("AuditEventObjectRole")]
         public enum AuditEventObjectRole
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("3")]
             N3,
             /// <summary>
-            /// A logical object related to the event.  (Deprecated).
+            /// A logical object related to a health record event.  This is any healthcare  specific resource (object) not restricted to FHIR defined Resources.
             /// </summary>
             [EnumLiteral("4")]
             N4,
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Identifier for the data life-cycle stage for the participant object
+        /// Identifier for the data life-cycle stage for the object
         /// </summary>
         [FhirEnumeration("AuditEventObjectLifecycle")]
         public enum AuditEventObjectLifecycle
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Code for the participant object type being audited
+        /// Code for the object type involved audited
         /// </summary>
         [FhirEnumeration("AuditEventObjectType")]
         public enum AuditEventObjectType
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The type of network access point that originated the audit event
+        /// The type of network access point of this participant in the audit event
         /// </summary>
         [FhirEnumeration("AuditEventParticipantNetworkType")]
         public enum AuditEventParticipantNetworkType
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
-            /// Object type being audited
+            /// Type of object involved
             /// </summary>
             [FhirElement("type", InSummary=true, Order=60)]
             [DataMember]
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.AuditEvent.AuditEventObjectType> _TypeElement;
             
             /// <summary>
-            /// Object type being audited
+            /// Type of object involved
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Functional application role of Object
+            /// What role the Object played
             /// </summary>
             [FhirElement("role", InSummary=true, Order=70)]
             [DataMember]
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.AuditEvent.AuditEventObjectRole> _RoleElement;
             
             /// <summary>
-            /// Functional application role of Object
+            /// What role the Object played
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1184,6 +1184,20 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent _Network;
             
+            /// <summary>
+            /// Participant purposeOfUse
+            /// </summary>
+            [FhirElement("purposeOfUse", InSummary=true, Order=140)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Coding> PurposeOfUse
+            {
+                get { if(_PurposeOfUse==null) _PurposeOfUse = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfUse; }
+                set { _PurposeOfUse = value; OnPropertyChanged("PurposeOfUse"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Coding> _PurposeOfUse;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AuditEventParticipantComponent;
@@ -1201,6 +1215,7 @@ namespace Hl7.Fhir.Model
                     if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                     if(Media != null) dest.Media = (Hl7.Fhir.Model.Coding)Media.DeepCopy();
                     if(Network != null) dest.Network = (Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent)Network.DeepCopy();
+                    if(PurposeOfUse != null) dest.PurposeOfUse = new List<Hl7.Fhir.Model.Coding>(PurposeOfUse.DeepCopy());
                     return dest;
                 }
                 else
@@ -1228,6 +1243,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
                 if( !DeepComparable.Matches(Media, otherT.Media)) return false;
                 if( !DeepComparable.Matches(Network, otherT.Network)) return false;
+                if( !DeepComparable.Matches(PurposeOfUse, otherT.PurposeOfUse)) return false;
                 
                 return true;
             }
@@ -1248,6 +1264,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
                 if( !DeepComparable.IsExactly(Media, otherT.Media)) return false;
                 if( !DeepComparable.IsExactly(Network, otherT.Network)) return false;
+                if( !DeepComparable.IsExactly(PurposeOfUse, otherT.PurposeOfUse)) return false;
                 
                 return true;
             }
@@ -1419,6 +1436,20 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// The purposeOfUse of the event
+            /// </summary>
+            [FhirElement("purposeOfEvent", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Coding> PurposeOfEvent
+            {
+                get { if(_PurposeOfEvent==null) _PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfEvent; }
+                set { _PurposeOfEvent = value; OnPropertyChanged("PurposeOfEvent"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Coding> _PurposeOfEvent;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AuditEventEventComponent;
@@ -1432,6 +1463,7 @@ namespace Hl7.Fhir.Model
                     if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.Instant)DateTimeElement.DeepCopy();
                     if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
                     if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
+                    if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(PurposeOfEvent.DeepCopy());
                     return dest;
                 }
                 else
@@ -1455,6 +1487,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
                 if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
                 if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+                if( !DeepComparable.Matches(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
                 
                 return true;
             }
@@ -1471,6 +1504,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
                 if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
                 if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+                if( !DeepComparable.IsExactly(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
                 
                 return true;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,30 +64,30 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
+            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
+            /// </summary>
+            [EnumLiteral("waitlist")]
+            Waitlist,
+            /// <summary>
             /// This episode of care is current.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// This episode of care is on hold, the organization has limitted responsibility for the patient (such as while on respite).
+            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
             /// </summary>
             [EnumLiteral("onhold")]
             Onhold,
             /// <summary>
-            /// This episode of care is finished at the organization is not expecting to be providing care to the patient.
+            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
             /// </summary>
             [EnumLiteral("finished")]
             Finished,
             /// <summary>
-            /// The episode of care was withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care.
+            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
             /// </summary>
-            [EnumLiteral("withdrawn")]
-            Withdrawn,
-            /// <summary>
-            /// The status is outside one of these values, an extension should be used to define what the status reason is.
-            /// </summary>
-            [EnumLiteral("other")]
-            Other,
+            [EnumLiteral("cancelled")]
+            Cancelled,
         }
         
         [FhirType("EpisodeOfCareStatusHistoryComponent")]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EpisodeOfCareStatusHistoryComponent"; } }
             
             /// <summary>
-            /// planned | active | onhold | finished | withdrawn | other
+            /// planned | waitlist | active | onhold | finished | cancelled
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
             
             /// <summary>
-            /// planned | active | onhold | finished | withdrawn | other
+            /// planned | waitlist | active | onhold | finished | cancelled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The period during this episodeofcare that the specific status applied
+            /// The period during this EpisodeOfCare that the specific status applied
             /// </summary>
             [FhirElement("period", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -199,10 +199,10 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EpisodeOfCareCareTeamComponent"; } }
             
             /// <summary>
-            /// The practitioner within the team
+            /// The practitioner (or Organization) within the team
             /// </summary>
             [FhirElement("member", InSummary=true, Order=40)]
-            [References("Practitioner")]
+            [References("Practitioner","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
             {
@@ -304,35 +304,35 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | active | onhold | finished | withdrawn | other
+        /// planned | waitlist | active | onhold | finished | cancelled
         /// </summary>
-        [FhirElement("currentStatus", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> CurrentStatusElement
+        public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
         {
-            get { return _CurrentStatusElement; }
-            set { _CurrentStatusElement = value; OnPropertyChanged("CurrentStatusElement"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _CurrentStatusElement;
+        private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
         
         /// <summary>
-        /// planned | active | onhold | finished | withdrawn | other
+        /// planned | waitlist | active | onhold | finished | cancelled
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? CurrentStatus
+        public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
         {
-            get { return CurrentStatusElement != null ? CurrentStatusElement.Value : null; }
+            get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
                 if(value == null)
-                  CurrentStatusElement = null; 
+                  StatusElement = null; 
                 else
-                  CurrentStatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
-                OnPropertyChanged("CurrentStatus");
+                  StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> _StatusHistory;
         
         /// <summary>
-        /// Specific type of EpisodeOfcare
+        /// Specific type of EpisodeOfCare
         /// </summary>
         [FhirElement("type", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
-        /// The patient that this episodeofcare applies to
+        /// The patient that this EpisodeOfCare applies to
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=130)]
         [References("Patient")]
@@ -422,18 +422,19 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Condition;
         
         /// <summary>
-        /// A Referral Request that this EpisodeOfCare manages activities within
+        /// Referral Request(s) that this EpisodeOfCare manages activities within
         /// </summary>
         [FhirElement("referralRequest", Order=170)]
         [References("ReferralRequest")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ReferralRequest
+        public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
         {
-            get { return _ReferralRequest; }
+            get { if(_ReferralRequest==null) _ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReferralRequest; }
             set { _ReferralRequest = value; OnPropertyChanged("ReferralRequest"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _ReferralRequest;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReferralRequest;
         
         /// <summary>
         /// The practitioner that is the care manager/care co-ordinator for this patient
@@ -471,14 +472,14 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(CurrentStatusElement != null) dest.CurrentStatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)CurrentStatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.ResourceReference>(Condition.DeepCopy());
-                if(ReferralRequest != null) dest.ReferralRequest = (Hl7.Fhir.Model.ResourceReference)ReferralRequest.DeepCopy();
+                if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
                 if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
                 if(CareTeam != null) dest.CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent>(CareTeam.DeepCopy());
                 return dest;
@@ -499,7 +500,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(CurrentStatusElement, otherT.CurrentStatusElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
@@ -520,7 +521,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(CurrentStatusElement, otherT.CurrentStatusElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;

@@ -93,7 +93,6 @@
     <Compile Include="Model\Generated\Basic.cs" />
     <Compile Include="Model\Generated\BodySite.cs" />
     <Compile Include="Model\Generated\Bundle.cs" />
-    <Compile Include="Model\Generated\CarePlan2.cs" />
     <Compile Include="Model\Generated\Claim.cs" />
     <Compile Include="Model\Generated\ClaimResponse.cs" />
     <Compile Include="Model\Generated\ClinicalImpression.cs" />
@@ -116,6 +115,8 @@
     <Compile Include="Model\Generated\EnrollmentResponse.cs" />
     <Compile Include="Model\Generated\EpisodeOfCare.cs" />
     <Compile Include="Model\Generated\ExplanationOfBenefit.cs" />
+    <Compile Include="Model\Generated\FamilyMemberHistory.cs" />
+    <Compile Include="Model\Generated\Flag.cs" />
     <Compile Include="Model\Generated\Goal.cs" />
     <Compile Include="Model\Generated\HealthcareService.cs" />
     <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="Model\Generated\NamingSystem.cs" />
     <Compile Include="Model\Generated\NutritionOrder.cs" />
     <Compile Include="Model\Generated\OperationDefinition.cs" />
-    <Compile Include="Model\Generated\Other.cs" />
     <Compile Include="Model\Generated\Parameters.cs" />
     <Compile Include="Model\Generated\PaymentNotice.cs" />
     <Compile Include="Model\Generated\PaymentReconciliation.cs" />
@@ -150,7 +150,6 @@
     <Compile Include="Model\FhirUri.cs" />
     <Compile Include="Model\Generated\Address.cs" />
     <Compile Include="Model\Generated\Age.cs" />
-    <Compile Include="Model\Generated\Alert.cs" />
     <Compile Include="Model\Generated\AllergyIntolerance.cs" />
     <Compile Include="Model\Generated\Attachment.cs" />
     <Compile Include="Model\Generated\Base64Binary.cs" />
@@ -176,7 +175,6 @@
     <Compile Include="Model\Generated\Element.cs" />
     <Compile Include="Model\Generated\Encounter.cs" />
     <Compile Include="Model\Generated\Extension.cs" />
-    <Compile Include="Model\Generated\FamilyHistory.cs" />
     <Compile Include="Model\Generated\FhirBoolean.cs" />
     <Compile Include="Model\Generated\FhirDateTime.cs" />
     <Compile Include="Model\Generated\FhirDecimal.cs" />

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -214,17 +214,17 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
             
             /// <summary>
-            /// Dietary restrictions for the patient
+            /// Diet preferences reported by the patient
             /// </summary>
-            [FhirElement("diet", InSummary=true, Order=70)]
+            [FhirElement("dietPreference", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Diet
+            public Hl7.Fhir.Model.CodeableConcept DietPreference
             {
-                get { return _Diet; }
-                set { _Diet = value; OnPropertyChanged("Diet"); }
+                get { return _DietPreference; }
+                set { _DietPreference = value; OnPropertyChanged("DietPreference"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Diet;
+            private Hl7.Fhir.Model.CodeableConcept _DietPreference;
             
             /// <summary>
             /// Special courtesies (VIP, board member)
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
                     if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
                     if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
                     if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-                    if(Diet != null) dest.Diet = (Hl7.Fhir.Model.CodeableConcept)Diet.DeepCopy();
+                    if(DietPreference != null) dest.DietPreference = (Hl7.Fhir.Model.CodeableConcept)DietPreference.DeepCopy();
                     if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
                     if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
                     if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.Matches(Diet, otherT.Diet)) return false;
+                if( !DeepComparable.Matches(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.IsExactly(Diet, otherT.Diet)) return false;
+                if( !DeepComparable.IsExactly(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
@@ -779,7 +779,6 @@ namespace Hl7.Fhir.Model
         /// inpatient | outpatient | ambulatory | emergency +
         /// </summary>
         [FhirElement("class", InSummary=true, Order=120)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Encounter.EncounterClass> ClassElement
         {
@@ -907,7 +906,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
-        /// Quantity of time the encounter lasted
+        /// Quantity of time the encounter lasted (less time absent)
         /// </summary>
         [FhirElement("length", Order=200)]
         [DataMember]

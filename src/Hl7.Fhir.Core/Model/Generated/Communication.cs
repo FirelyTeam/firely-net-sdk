@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// Message sender
         /// </summary>
         [FhirElement("sender", Order=110)]
-        [References("Patient","Practitioner","Device","RelatedPerson","Organization")]
+        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
         {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// Message recipient
         /// </summary>
         [FhirElement("recipient", Order=120)]
-        [References("Patient","Device","RelatedPerson","Practitioner")]
+        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient

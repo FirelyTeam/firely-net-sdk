@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,29 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.List; } }
         [NotMapped]
         public override string TypeName { get { return "List"; } }
+        
+        /// <summary>
+        /// The current state of the list
+        /// </summary>
+        [FhirEnumeration("ListStatus")]
+        public enum ListStatus
+        {
+            /// <summary>
+            /// The list is considered to be an active part of the patient's record.
+            /// </summary>
+            [EnumLiteral("current")]
+            Current,
+            /// <summary>
+            /// The list is "old" and should no longer be considered accurate or relevant.
+            /// </summary>
+            [EnumLiteral("retired")]
+            Retired,
+            /// <summary>
+            /// The list was never accurate.  It is retained for medico-legal purposes only.
+            /// </summary>
+            [EnumLiteral("entered-in-error")]
+            EnteredInError,
+        }
         
         /// <summary>
         /// The processing mode that applies to this list
@@ -243,9 +266,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Descriptive name for the list
+        /// </summary>
+        [FhirElement("title", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString TitleElement
+        {
+            get { return _TitleElement; }
+            set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _TitleElement;
+        
+        /// <summary>
+        /// Descriptive name for the list
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Title
+        {
+            get { return TitleElement != null ? TitleElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  TitleElement = null; 
+                else
+                  TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Title");
+            }
+        }
+        
+        /// <summary>
         /// What the purpose of this list is
         /// </summary>
-        [FhirElement("code", Order=100)]
+        [FhirElement("code", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -258,7 +313,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If all resources have the same subject
         /// </summary>
-        [FhirElement("subject", Order=110)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -272,7 +327,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what defined the list contents
         /// </summary>
-        [FhirElement("source", Order=120)]
+        [FhirElement("source", InSummary=true, Order=130)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -284,9 +339,42 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
+        /// current | retired | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=140)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.List.ListStatus> _StatusElement;
+        
+        /// <summary>
+        /// current | retired | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.List.ListStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.List.ListStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// When the list was prepared
         /// </summary>
-        [FhirElement("date", Order=130)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -318,7 +406,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What order the list has
         /// </summary>
-        [FhirElement("orderedBy", Order=140)]
+        [FhirElement("orderedBy", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept OrderedBy
         {
@@ -331,7 +419,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// working | snapshot | changes
         /// </summary>
-        [FhirElement("mode", Order=150)]
+        [FhirElement("mode", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.List.ListMode> ModeElement
@@ -362,9 +450,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Comments about the note
+        /// </summary>
+        [FhirElement("note", Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString NoteElement
+        {
+            get { return _NoteElement; }
+            set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _NoteElement;
+        
+        /// <summary>
+        /// Comments about the note
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Note
+        {
+            get { return NoteElement != null ? NoteElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  NoteElement = null; 
+                else
+                  NoteElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Note");
+            }
+        }
+        
+        /// <summary>
         /// Entries in the list
         /// </summary>
-        [FhirElement("entry", Order=160)]
+        [FhirElement("entry", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
@@ -378,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why list is empty
         /// </summary>
-        [FhirElement("emptyReason", Order=170)]
+        [FhirElement("emptyReason", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept EmptyReason
         {
@@ -396,12 +516,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.List.ListStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.List.ListMode>)ModeElement.DeepCopy();
+                if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(Entry.DeepCopy());
                 if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
                 return dest;
@@ -422,12 +545,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
             if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
             if( !DeepComparable.Matches(EmptyReason, otherT.EmptyReason)) return false;
             
@@ -441,12 +567,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
             if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
             if( !DeepComparable.IsExactly(EmptyReason, otherT.EmptyReason)) return false;
             

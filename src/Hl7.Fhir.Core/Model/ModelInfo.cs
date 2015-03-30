@@ -56,6 +56,12 @@ namespace Hl7.Fhir.Model
             /// uses 
             /// </summary>
             public string[] Path { get; set; }
+
+            /// <summary>
+            /// If this is a reference, the possible types of resources that the
+            /// parameters references to
+            /// </summary>
+            public ResourceType[] Target { get; set; }
         }
 
 

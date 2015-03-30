@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,6 +126,72 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("DocumentManifestContentComponent")]
+        [DataContract]
+        public partial class DocumentManifestContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DocumentManifestContentComponent"; } }
+            
+            /// <summary>
+            /// Contents of this set of documents
+            /// </summary>
+            [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element P
+            {
+                get { return _P; }
+                set { _P = value; OnPropertyChanged("P"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _P;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DocumentManifestContentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(P != null) dest.P = (Hl7.Fhir.Model.Element)P.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DocumentManifestContentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(P, otherT.P)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(P, otherT.P)) return false;
                 
                 return true;
             }
@@ -347,19 +413,18 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Contents of this set of documents
+        /// Contents of the manifest
         /// </summary>
         [FhirElement("content", Order=190)]
-        [References("DocumentReference","Binary","Media")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Content
+        public List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestContentComponent> Content
         {
-            get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.ResourceReference>(); return _Content; }
+            get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestContentComponent>(); return _Content; }
             set { _Content = value; OnPropertyChanged("Content"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Content;
+        private List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestContentComponent> _Content;
         
         /// <summary>
         /// Related things
@@ -392,7 +457,7 @@ namespace Hl7.Fhir.Model
                 if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Content != null) dest.Content = new List<Hl7.Fhir.Model.ResourceReference>(Content.DeepCopy());
+                if(Content != null) dest.Content = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestContentComponent>(Content.DeepCopy());
                 if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent>(Related.DeepCopy());
                 return dest;
             }

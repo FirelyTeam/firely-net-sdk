@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 24, 2015 14:24+0100 for FHIR v0.4.0
+// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -138,6 +138,72 @@ namespace Hl7.Fhir.Model
             Aborted,
         }
         
+        [FhirType("ProcedureRequestBodySiteComponent")]
+        [DataContract]
+        public partial class ProcedureRequestBodySiteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProcedureRequestBodySiteComponent"; } }
+            
+            /// <summary>
+            /// Target body site
+            /// </summary>
+            [FhirElement("site", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Site
+            {
+                get { return _Site; }
+                set { _Site = value; OnPropertyChanged("Site"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Site;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProcedureRequestBodySiteComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProcedureRequestBodySiteComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProcedureRequestBodySiteComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProcedureRequestBodySiteComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         /// <summary>
         /// Identifier
         /// </summary>
@@ -182,18 +248,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Target body site
+        /// Target body sites
         /// </summary>
-        [FhirElement("bodySite", Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("bodySite", Order=120)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element BodySite
+        public List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent> BodySite
         {
-            get { return _BodySite; }
+            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private Hl7.Fhir.Model.Element _BodySite;
+        private List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent> _BodySite;
         
         /// <summary>
         /// Indication
@@ -210,7 +276,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
-        /// Timing
+        /// Procedure timing schedule
         /// </summary>
         [FhirElement("timing", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
@@ -418,7 +484,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
+                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent>(BodySite.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
