@@ -83,22 +83,26 @@ namespace Hl7.Fhir.Serialization
 
         private static IEnumerable<JProperty> expandPrimitiveChildren(IEnumerable<JProperty> children, string parentName)
         {
+            bool inResource = children.Any(prop => prop.Name == JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
+
             foreach (var child in children)
             {
                 if (child.Value.Type == JTokenType.Null) 
                     yield return child;
-                else if (child.Value is JValue && !isTruePrimitive(child,parentName))
+                else if (child.Value is JValue && !isTruePrimitive(child,parentName,inResource))
                     yield return new JProperty(child.Name, new JObject(new JProperty(PRIMITIVE_PROP_NAME, child.Value)));
                 else
                     yield return child;
             }
         }
 
-        private static bool isTruePrimitive(JProperty property, string parentName)
+        // parentName and inResource provide just enough context to guess which json properties are actually
+        // attributes (so always primitive) in the Xml representation
+        private static bool isTruePrimitive(JProperty property, string parentName,bool inResource)
         {
             return property.Value is JValue && 
                 property.Name == PRIMITIVE_PROP_NAME ||
-                property.Name == SPEC_CHILD_ID ||               // id attr that all types can have
+                property.Name == SPEC_CHILD_ID && !inResource ||               // id attr that all types can have
                 (property.Name == "div" && parentName == "text") ||
                 (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_EXTENSION)) ||     // url attr of extension
                 (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_MODIFIEREXTENSION));    // contentType attr of Binary resource
