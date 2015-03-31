@@ -49,8 +49,8 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement._Value))
-                    return "Text = \"" + this._TextElement._Value + "\"";
+                if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement.Value))
+                    return "Text = \"" + this._TextElement.Value + "\"";
 
                 StringBuilder sb = new StringBuilder();
                 if (this._GivenElement != null)

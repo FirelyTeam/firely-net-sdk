@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SequenceElement
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
             {
                 get { return _SequenceElement; }
                 set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
             
             /// <summary>
             /// Service instance
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("diagnosisLinkId", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Integer> DiagnosisLinkIdElement
+            public List<Hl7.Fhir.Model.PositiveInt> DiagnosisLinkIdElement
             {
-                get { if(_DiagnosisLinkIdElement==null) _DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(); return _DiagnosisLinkIdElement; }
+                get { if(_DiagnosisLinkIdElement==null) _DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(); return _DiagnosisLinkIdElement; }
                 set { _DiagnosisLinkIdElement = value; OnPropertyChanged("DiagnosisLinkIdElement"); }
             }
             
-            private List<Hl7.Fhir.Model.Integer> _DiagnosisLinkIdElement;
+            private List<Hl7.Fhir.Model.PositiveInt> _DiagnosisLinkIdElement;
             
             /// <summary>
             /// Diagnosis Link
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       DiagnosisLinkIdElement = null; 
                     else
-                      DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                      DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("DiagnosisLinkId");
                 }
             }
@@ -451,10 +451,10 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                    if(DiagnosisLinkIdElement != null) dest.DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.Integer>(DiagnosisLinkIdElement.DeepCopy());
+                    if(DiagnosisLinkIdElement != null) dest.DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(DiagnosisLinkIdElement.DeepCopy());
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(ServiceDateElement != null) dest.ServiceDateElement = (Hl7.Fhir.Model.Date)ServiceDateElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -549,13 +549,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SequenceElement
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
             {
                 get { return _SequenceElement; }
                 set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
             
             /// <summary>
             /// Service instance
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -818,13 +818,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SequenceElement
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
             {
                 get { return _SequenceElement; }
                 set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
             
             /// <summary>
             /// Service instance identifier
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(FocalElement != null) dest.FocalElement = (Hl7.Fhir.Model.FhirBoolean)FocalElement.DeepCopy();
                     if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
                     if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
@@ -1192,13 +1192,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SequenceElement
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
             {
                 get { return _SequenceElement; }
                 set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
             
             /// <summary>
             /// Sequence of diagnosis
@@ -1214,7 +1214,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1240,7 +1240,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.Coding)Diagnosis.DeepCopy();
                     return dest;
                 }
@@ -1427,13 +1427,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("sequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SequenceElement
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
             {
                 get { return _SequenceElement; }
                 set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
             
             /// <summary>
             /// Service instance
@@ -1449,7 +1449,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1605,7 +1605,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();

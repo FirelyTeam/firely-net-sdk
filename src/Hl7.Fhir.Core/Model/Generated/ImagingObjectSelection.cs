@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -642,13 +642,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("frameNumbers", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Integer> FrameNumbersElement
+            public List<Hl7.Fhir.Model.UnsignedInt> FrameNumbersElement
             {
-                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(); return _FrameNumbersElement; }
+                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(); return _FrameNumbersElement; }
                 set { _FrameNumbersElement = value; OnPropertyChanged("FrameNumbersElement"); }
             }
             
-            private List<Hl7.Fhir.Model.Integer> _FrameNumbersElement;
+            private List<Hl7.Fhir.Model.UnsignedInt> _FrameNumbersElement;
             
             /// <summary>
             /// Frame numbers
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       FrameNumbersElement = null; 
                     else
-                      FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                      FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(value.Select(elem=>new Hl7.Fhir.Model.UnsignedInt(elem)));
                     OnPropertyChanged("FrameNumbers");
                 }
             }
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.Integer>(FrameNumbersElement.DeepCopy());
+                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(FrameNumbersElement.DeepCopy());
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     return dest;
                 }

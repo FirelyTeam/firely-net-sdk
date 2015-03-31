@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -113,34 +113,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of identifier
         /// </summary>
-        [FhirElement("label", InSummary=true, Order=40)]
+        [FhirElement("type", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString LabelElement
+        public Hl7.Fhir.Model.CodeableConcept Type
         {
-            get { return _LabelElement; }
-            set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _LabelElement;
-        
-        /// <summary>
-        /// Description of identifier
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Label
-        {
-            get { return LabelElement != null ? LabelElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  LabelElement = null; 
-                else
-                  LabelElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Label");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// The namespace for the identifier
@@ -241,7 +222,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)UseElement.DeepCopy();
-                if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -264,7 +245,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
-            if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -280,7 +261,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
-            if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;

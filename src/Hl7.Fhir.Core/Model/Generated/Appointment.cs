@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -372,13 +372,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("priority", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer PriorityElement
+        public Hl7.Fhir.Model.UnsignedInt PriorityElement
         {
             get { return _PriorityElement; }
             set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _PriorityElement;
+        private Hl7.Fhir.Model.UnsignedInt _PriorityElement;
         
         /// <summary>
         /// The priority of the appointment. Can be used to make informed decisions if needing to re-prioritize appointments. (The iCal Standard specifies 0 as undefined, 1 as highest, 9 as lowest priority)
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   PriorityElement = null; 
                 else
-                  PriorityElement = new Hl7.Fhir.Model.Integer(value);
+                  PriorityElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Priority");
             }
         }
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.Integer)PriorityElement.DeepCopy();
+                if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.UnsignedInt)PriorityElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -65,13 +65,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("doseSequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer DoseSequenceElement
+            public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
             {
                 get { return _DoseSequenceElement; }
                 set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _DoseSequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
             
             /// <summary>
             /// What dose number within series?
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -175,13 +175,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("seriesDoses", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer SeriesDosesElement
+            public Hl7.Fhir.Model.PositiveInt SeriesDosesElement
             {
                 get { return _SeriesDosesElement; }
                 set { _SeriesDosesElement = value; OnPropertyChanged("SeriesDosesElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _SeriesDosesElement;
+            private Hl7.Fhir.Model.PositiveInt _SeriesDosesElement;
             
             /// <summary>
             /// Recommended number of doses for immunity
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       SeriesDosesElement = null; 
                     else
-                      SeriesDosesElement = new Hl7.Fhir.Model.Integer(value);
+                      SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("SeriesDoses");
                 }
             }
@@ -250,11 +250,11 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.Integer)DoseSequenceElement.DeepCopy();
+                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)DoseSequenceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-                    if(SeriesDosesElement != null) dest.SeriesDosesElement = (Hl7.Fhir.Model.Integer)SeriesDosesElement.DeepCopy();
+                    if(SeriesDosesElement != null) dest.SeriesDosesElement = (Hl7.Fhir.Model.PositiveInt)SeriesDosesElement.DeepCopy();
                     if(DoseTarget != null) dest.DoseTarget = (Hl7.Fhir.Model.CodeableConcept)DoseTarget.DeepCopy();
                     if(DoseStatus != null) dest.DoseStatus = (Hl7.Fhir.Model.CodeableConcept)DoseStatus.DeepCopy();
                     if(DoseStatusReason != null) dest.DoseStatusReason = (Hl7.Fhir.Model.CodeableConcept)DoseStatusReason.DeepCopy();

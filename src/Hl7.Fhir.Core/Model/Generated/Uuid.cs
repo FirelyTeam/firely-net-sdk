@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -68,8 +68,8 @@ namespace Hl7.Fhir.Model
         [DataMember]
         public string Value
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { return (string)ObjectValue; }
+            set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)

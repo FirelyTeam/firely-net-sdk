@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -213,13 +213,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("height", InSummary=true, Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer HeightElement
+        public Hl7.Fhir.Model.PositiveInt HeightElement
         {
             get { return _HeightElement; }
             set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _HeightElement;
+        private Hl7.Fhir.Model.PositiveInt _HeightElement;
         
         /// <summary>
         /// Height of the image in pixels(photo/video)
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   HeightElement = null; 
                 else
-                  HeightElement = new Hl7.Fhir.Model.Integer(value);
+                  HeightElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Height");
             }
         }
@@ -245,13 +245,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("width", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer WidthElement
+        public Hl7.Fhir.Model.PositiveInt WidthElement
         {
             get { return _WidthElement; }
             set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _WidthElement;
+        private Hl7.Fhir.Model.PositiveInt _WidthElement;
         
         /// <summary>
         /// Width of the image in pixels (photo/video)
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   WidthElement = null; 
                 else
-                  WidthElement = new Hl7.Fhir.Model.Integer(value);
+                  WidthElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Width");
             }
         }
@@ -277,13 +277,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("frames", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer FramesElement
+        public Hl7.Fhir.Model.PositiveInt FramesElement
         {
             get { return _FramesElement; }
             set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _FramesElement;
+        private Hl7.Fhir.Model.PositiveInt _FramesElement;
         
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   FramesElement = null; 
                 else
-                  FramesElement = new Hl7.Fhir.Model.Integer(value);
+                  FramesElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Frames");
             }
         }
@@ -309,13 +309,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("duration", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer DurationElement
+        public Hl7.Fhir.Model.UnsignedInt DurationElement
         {
             get { return _DurationElement; }
             set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _DurationElement;
+        private Hl7.Fhir.Model.UnsignedInt _DurationElement;
         
         /// <summary>
         /// Length in seconds (audio / video)
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   DurationElement = null; 
                 else
-                  DurationElement = new Hl7.Fhir.Model.Integer(value);
+                  DurationElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Duration");
             }
         }
@@ -364,10 +364,10 @@ namespace Hl7.Fhir.Model
                 if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopy();
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
                 if(DeviceNameElement != null) dest.DeviceNameElement = (Hl7.Fhir.Model.FhirString)DeviceNameElement.DeepCopy();
-                if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.Integer)HeightElement.DeepCopy();
-                if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.Integer)WidthElement.DeepCopy();
-                if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.Integer)FramesElement.DeepCopy();
-                if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.Integer)DurationElement.DeepCopy();
+                if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)HeightElement.DeepCopy();
+                if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)WidthElement.DeepCopy();
+                if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)FramesElement.DeepCopy();
+                if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.UnsignedInt)DurationElement.DeepCopy();
                 if(Content != null) dest.Content = (Hl7.Fhir.Model.Attachment)Content.DeepCopy();
                 return dest;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1105,13 +1105,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("total", Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer TotalElement
+        public Hl7.Fhir.Model.UnsignedInt TotalElement
         {
             get { return _TotalElement; }
             set { _TotalElement = value; OnPropertyChanged("TotalElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _TotalElement;
+        private Hl7.Fhir.Model.UnsignedInt _TotalElement;
         
         /// <summary>
         /// If search, the total number of matches
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   TotalElement = null; 
                 else
-                  TotalElement = new Hl7.Fhir.Model.Integer(value);
+                  TotalElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Total");
             }
         }
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
                 if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
-                if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.Integer)TotalElement.DeepCopy();
+                if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.BundleEntryComponent>(Entry.DeepCopy());
                 if(SignatureElement != null) dest.SignatureElement = (Hl7.Fhir.Model.Base64Binary)SignatureElement.DeepCopy();

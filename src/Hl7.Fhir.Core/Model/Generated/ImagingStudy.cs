@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -286,13 +286,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("number", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer NumberElement
+            public Hl7.Fhir.Model.UnsignedInt NumberElement
             {
                 get { return _NumberElement; }
                 set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _NumberElement;
+            private Hl7.Fhir.Model.UnsignedInt _NumberElement;
             
             /// <summary>
             /// Numeric identifier of this series (0020,0011)
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       NumberElement = null; 
                     else
-                      NumberElement = new Hl7.Fhir.Model.Integer(value);
+                      NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Number");
                 }
             }
@@ -417,13 +417,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("numberOfInstances", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer NumberOfInstancesElement
+            public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
             {
                 get { return _NumberOfInstancesElement; }
                 set { _NumberOfInstancesElement = value; OnPropertyChanged("NumberOfInstancesElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
+            private Hl7.Fhir.Model.UnsignedInt _NumberOfInstancesElement;
             
             /// <summary>
             /// Number of Series Related Instances (0020,1209)
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       NumberOfInstancesElement = null; 
                     else
-                      NumberOfInstancesElement = new Hl7.Fhir.Model.Integer(value);
+                      NumberOfInstancesElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("NumberOfInstances");
                 }
             }
@@ -587,11 +587,11 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.Integer)NumberElement.DeepCopy();
+                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
                     if(ModalityElement != null) dest.ModalityElement = (Code<Hl7.Fhir.Model.ImagingStudy.Modality>)ModalityElement.DeepCopy();
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.Integer)NumberOfInstancesElement.DeepCopy();
+                    if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
                     if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
@@ -666,13 +666,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("number", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer NumberElement
+            public Hl7.Fhir.Model.UnsignedInt NumberElement
             {
                 get { return _NumberElement; }
                 set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _NumberElement;
+            private Hl7.Fhir.Model.UnsignedInt _NumberElement;
             
             /// <summary>
             /// The number of this instance in the series (0020,0013)
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       NumberElement = null; 
                     else
-                      NumberElement = new Hl7.Fhir.Model.Integer(value);
+                      NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Number");
                 }
             }
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.Integer)NumberElement.DeepCopy();
+                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(SopclassElement != null) dest.SopclassElement = (Hl7.Fhir.Model.Oid)SopclassElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
@@ -1135,13 +1135,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("numberOfSeries", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer NumberOfSeriesElement
+        public Hl7.Fhir.Model.UnsignedInt NumberOfSeriesElement
         {
             get { return _NumberOfSeriesElement; }
             set { _NumberOfSeriesElement = value; OnPropertyChanged("NumberOfSeriesElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _NumberOfSeriesElement;
+        private Hl7.Fhir.Model.UnsignedInt _NumberOfSeriesElement;
         
         /// <summary>
         /// Number of Study Related Series (0020,1206)
@@ -1157,7 +1157,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   NumberOfSeriesElement = null; 
                 else
-                  NumberOfSeriesElement = new Hl7.Fhir.Model.Integer(value);
+                  NumberOfSeriesElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("NumberOfSeries");
             }
         }
@@ -1168,13 +1168,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("numberOfInstances", Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer NumberOfInstancesElement
+        public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
         {
             get { return _NumberOfInstancesElement; }
             set { _NumberOfInstancesElement = value; OnPropertyChanged("NumberOfInstancesElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _NumberOfInstancesElement;
+        private Hl7.Fhir.Model.UnsignedInt _NumberOfInstancesElement;
         
         /// <summary>
         /// Number of Study Related Instances (0020,1208)
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   NumberOfInstancesElement = null; 
                 else
-                  NumberOfInstancesElement = new Hl7.Fhir.Model.Integer(value);
+                  NumberOfInstancesElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("NumberOfInstances");
             }
         }
@@ -1318,8 +1318,8 @@ namespace Hl7.Fhir.Model
                 if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
                 if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(NumberOfSeriesElement != null) dest.NumberOfSeriesElement = (Hl7.Fhir.Model.Integer)NumberOfSeriesElement.DeepCopy();
-                if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.Integer)NumberOfInstancesElement.DeepCopy();
+                if(NumberOfSeriesElement != null) dest.NumberOfSeriesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfSeriesElement.DeepCopy();
+                if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
                 if(ClinicalInformationElement != null) dest.ClinicalInformationElement = (Hl7.Fhir.Model.FhirString)ClinicalInformationElement.DeepCopy();
                 if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.Coding>(Procedure.DeepCopy());
                 if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.ResourceReference)Interpreter.DeepCopy();

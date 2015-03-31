@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -382,13 +382,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("doseNumber", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer DoseNumberElement
+            public Hl7.Fhir.Model.PositiveInt DoseNumberElement
             {
                 get { return _DoseNumberElement; }
                 set { _DoseNumberElement = value; OnPropertyChanged("DoseNumberElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _DoseNumberElement;
+            private Hl7.Fhir.Model.PositiveInt _DoseNumberElement;
             
             /// <summary>
             /// Recommended dose number
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       DoseNumberElement = null; 
                     else
-                      DoseNumberElement = new Hl7.Fhir.Model.Integer(value);
+                      DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseNumber");
                 }
             }
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(VaccineType != null) dest.VaccineType = (Hl7.Fhir.Model.CodeableConcept)VaccineType.DeepCopy();
-                    if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.Integer)DoseNumberElement.DeepCopy();
+                    if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.PositiveInt)DoseNumberElement.DeepCopy();
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(DateCriterion.DeepCopy());
                     if(Protocol != null) dest.Protocol = (Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent)Protocol.DeepCopy();

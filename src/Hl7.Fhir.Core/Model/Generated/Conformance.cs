@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -752,13 +752,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("reliableCache", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer ReliableCacheElement
+            public Hl7.Fhir.Model.UnsignedInt ReliableCacheElement
             {
                 get { return _ReliableCacheElement; }
                 set { _ReliableCacheElement = value; OnPropertyChanged("ReliableCacheElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _ReliableCacheElement;
+            private Hl7.Fhir.Model.UnsignedInt _ReliableCacheElement;
             
             /// <summary>
             /// Reliable Message Cache Length (min)
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       ReliableCacheElement = null; 
                     else
-                      ReliableCacheElement = new Hl7.Fhir.Model.Integer(value);
+                      ReliableCacheElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("ReliableCache");
                 }
             }
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
-                    if(ReliableCacheElement != null) dest.ReliableCacheElement = (Hl7.Fhir.Model.Integer)ReliableCacheElement.DeepCopy();
+                    if(ReliableCacheElement != null) dest.ReliableCacheElement = (Hl7.Fhir.Model.UnsignedInt)ReliableCacheElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent>(Event.DeepCopy());
                     return dest;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
 //
 
 using Hl7.Fhir.Model;
@@ -189,11 +189,12 @@ namespace Hl7.Fhir.Model
                 { "instant", typeof(Hl7.Fhir.Model.Instant) },
                 { "integer", typeof(Hl7.Fhir.Model.Integer) },
                 { "oid", typeof(Hl7.Fhir.Model.Oid) },
+                { "positiveInt", typeof(Hl7.Fhir.Model.PositiveInt) },
                 { "string", typeof(Hl7.Fhir.Model.FhirString) },
                 { "time", typeof(Hl7.Fhir.Model.Time) },
+                { "unsignedInt", typeof(Hl7.Fhir.Model.UnsignedInt) },
                 { "uri", typeof(Hl7.Fhir.Model.FhirUri) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
-                { "xhtml", typeof(Hl7.Fhir.Model.XHtml) },
                 { "DomainResource", typeof(Hl7.Fhir.Model.DomainResource) },
                 { "Parameters", typeof(Hl7.Fhir.Model.Parameters) },
                 { "Resource", typeof(Hl7.Fhir.Model.Resource) },
@@ -328,11 +329,12 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.Instant), "instant" },
                 { typeof(Hl7.Fhir.Model.Integer), "integer" },
                 { typeof(Hl7.Fhir.Model.Oid), "oid" },
+                { typeof(Hl7.Fhir.Model.PositiveInt), "positiveInt" },
                 { typeof(Hl7.Fhir.Model.FhirString), "string" },
                 { typeof(Hl7.Fhir.Model.Time), "time" },
+                { typeof(Hl7.Fhir.Model.UnsignedInt), "unsignedInt" },
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
-                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
                 { typeof(Hl7.Fhir.Model.DomainResource), "DomainResource" },
                 { typeof(Hl7.Fhir.Model.Parameters), "Parameters" },
                 { typeof(Hl7.Fhir.Model.Resource), "Resource" },

@@ -128,6 +128,7 @@
     <Compile Include="Model\Generated\PaymentNotice.cs" />
     <Compile Include="Model\Generated\PaymentReconciliation.cs" />
     <Compile Include="Model\Generated\Person.cs" />
+    <Compile Include="Model\Generated\PositiveInt.cs" />
     <Compile Include="Model\Generated\ProcedureRequest.cs" />
     <Compile Include="Model\Generated\ProcessRequest.cs" />
     <Compile Include="Model\Generated\ProcessResponse.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
+    <Compile Include="Model\Generated\UnsignedInt.cs" />
     <Compile Include="Model\Generated\VisionPrescription.cs" />
     <Compile Include="Model\HumanName.cs" />
     <Compile Include="Model\IDeepComparable.cs" />
@@ -225,7 +227,6 @@
     <Compile Include="Model\Generated\Supply.cs" />
     <Compile Include="Model\Generated\Uuid.cs" />
     <Compile Include="Model\Generated\ValueSet.cs" />
-    <Compile Include="Model\Generated\XHtml.cs" />
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
     <Compile Include="Model\FhirDecimal.cs" />
