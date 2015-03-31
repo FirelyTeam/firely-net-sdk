@@ -44,9 +44,10 @@ namespace Hl7.Fhir.Rest
             result.TransactionResponse.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
 #if PORTABLE45
-                    result.TransactionResponse.LastModified = response.Headers[HttpUtil.LASTMODIFIED];
+            if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
+                    result.TransactionResponse.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else
-                    result.TransactionResponse.LastModified = response.LastModified;
+            result.TransactionResponse.LastModified = response.LastModified;
 #endif
             result.TransactionResponse.Etag = getETag(response);
             
