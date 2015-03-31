@@ -17,33 +17,26 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public class ElementNavigator : BaseElementNavigator
     {
-        public ElementNavigator(Profile.ConstraintComponent elements)
+        public ElementNavigator(StructureDefinition structure)
         {
-            if (elements == null) throw Error.ArgumentNull("elements");
-            setupElems(elements.Element);
-            Elements = elements;
+            if (structure == null) throw Error.ArgumentNull("structure");
+            if (structure.Snapshot == null) throw Error.Argument("structure", "structure must have a 'snapshot' representation included");
+            if (structure.Snapshot.Element == null) throw Error.Argument("structure", "snapshot in structure does not have elements");
+
+            setupElems(structure.Snapshot.Element);
+            Structure = structure;
         }
-
-
-        //public ElementNavigator(Profile.ProfileStructureComponent structure)
-        //{
-        //    if (structure == null) throw Error.ArgumentNull("structure");
-        //    if (structure.Snapshot == null) throw Error.Argument("structure", "structure must have a 'snapshot' representation included");
-            
-        //    setupElems(structure.Snapshot.Element);
-        //    Elements = structure.Snapshot;
-        //}
 
         public ElementNavigator(ElementNavigator other)
         {
             if (other == null) throw Error.ArgumentNull("other");
 
             setupElems(other._elements);
-            Elements = other.Elements;
             OrdinalPosition = other.OrdinalPosition;
+            Structure = other.Structure;
         }
 
-        private void setupElems(IList<Profile.ElementComponent> elements)
+        private void setupElems(IList<ElementDefinition> elements)
         {
             if (elements == null) throw Error.ArgumentNull("elements");
 
@@ -51,13 +44,13 @@ namespace Hl7.Fhir.Specification.Navigation
             OrdinalPosition = null;
         }
 
-        internal int? OrdinalPosition { get; private set;  }
+        internal int? OrdinalPosition { get; private set; }
 
-        public Profile.ConstraintComponent Elements { get; private set; }
+        public StructureDefinition Structure { get; private set; }
 
-        private IList<Profile.ElementComponent> _elements;
+        private IList<ElementDefinition> _elements;
 
-        public override Profile.ElementComponent Current
+        public override ElementDefinition Current
         {
             get { return OrdinalPosition != null ? _elements[OrdinalPosition.Value] : null; }
         }
@@ -233,7 +226,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if (bookmark.data == null)
                  return OrdinalPosition == null;
 
-            var elem = bookmark.data as Profile.ElementComponent;
+            var elem = bookmark.data as ElementDefinition;
 
             return this.Current == elem;
         }
@@ -247,7 +240,7 @@ namespace Hl7.Fhir.Specification.Navigation
             }
             else
             {
-                var elem = bookmark.data as Profile.ElementComponent;
+                var elem = bookmark.data as ElementDefinition;
 
                 if (elem == null) return false;
 
@@ -278,7 +271,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="sibling"></param>
         /// <returns></returns>
-        public override bool InsertBefore(Profile.ElementComponent sibling)
+        public override bool InsertBefore(ElementDefinition sibling)
         {
             if (!canInsertSiblingHere()) return false;
 
@@ -312,7 +305,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="sibling"></param>
         /// <returns></returns>
-        public override bool InsertAfter(Profile.ElementComponent sibling)
+        public override bool InsertAfter(ElementDefinition sibling)
         {
             if (!canInsertSiblingHere()) return false;
 
@@ -338,10 +331,10 @@ namespace Hl7.Fhir.Specification.Navigation
         /// Inserts the element passed in as a child of the element the navigator is currently on. 
         /// The navigator will move to the inserted element.
         /// </summary>
-        /// <param name="sibling"></param>
+        /// <param name="child"></param>
         /// <returns></returns>
         /// <remarks>You can only insert a child for an element does not have children yet.</remarks>
-        public override bool InsertFirstChild(Profile.ElementComponent child)
+        public override bool InsertFirstChild(ElementDefinition child)
         {
             if(Count == 0)
             {
@@ -382,8 +375,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
             var source = _elements.Skip(start).Take(end-start).ToList();
 
-            foreach (var elem in source.Reverse<Profile.ElementComponent>())
-                _elements.Insert(start, (Profile.ElementComponent)elem.DeepCopy());
+            foreach (var elem in source.Reverse<ElementDefinition>())
+                _elements.Insert(start, (ElementDefinition)elem.DeepCopy());
 
             return true;
         }
@@ -426,7 +419,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public void CommitChanges()
         {
-            Elements.Element = new List<Profile.ElementComponent>(_elements);
+            Structure.Snapshot.Element = new List<ElementDefinition>(_elements);
+            Structure.Differential = null;
         }
 
         private static bool isDeeperPath(string me, string that)

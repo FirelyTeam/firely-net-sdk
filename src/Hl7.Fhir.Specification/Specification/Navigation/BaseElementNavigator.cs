@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public abstract Profile.ElementComponent Current { get; }
+        public abstract ElementDefinition Current { get; }
 
         public abstract int Count { get; }
 
@@ -88,11 +88,11 @@ namespace Hl7.Fhir.Specification.Navigation
 // 
 //----------------------------------
 
-        public abstract bool InsertBefore(Profile.ElementComponent sibling);
+        public abstract bool InsertBefore(ElementDefinition sibling);
 
-        public abstract bool InsertAfter(Profile.ElementComponent sibling);
+        public abstract bool InsertAfter(ElementDefinition sibling);
 
-        public abstract bool InsertFirstChild(Profile.ElementComponent child);
+        public abstract bool InsertFirstChild(ElementDefinition child);
     
         public abstract bool Delete();       
     }

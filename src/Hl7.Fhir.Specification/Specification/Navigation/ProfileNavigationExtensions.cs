@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
     {
-        public static ElementNavigator JumpToNameReference(this Profile.ConstraintComponent elements, string nameReference)
+        public static ElementNavigator JumpToNameReference(this StructureDefinition elements, string nameReference)
         {
             var nav = new ElementNavigator(elements);
 
@@ -50,21 +50,24 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="root">The structure that will be rebased on the path</param>
         /// <param name="path">The path to rebase the structure on</param>
-        public static void Rebase(this Profile.ConstraintComponent root, string path)
+        public static void Rebase(this StructureDefinition root, string path)
         {
             var nav = new ElementNavigator(root);
 
             if (nav.MoveToFirstChild())
             {
-                var newPaths = new List<string>();
-                newPaths.Add(path);
+                var newPaths = new List<string>() { path };
 
                 rebaseChildren(nav, path, newPaths);
 
+                var snapshot = root.Snapshot.Element;
+
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
-                for (var i = 0; i < root.Element.Count; i++)
-                    root.Element[i].Path = newPaths[i];
+                for (var i = 0; i < root.Snapshot.Element.Count; i++)
+                    root.Snapshot.Element[i].Path = newPaths[i];
+
+                root.Differential = null;       // this is now invalid, because the snapshot has changed
             }
         }
 
@@ -90,7 +93,7 @@ namespace Hl7.Fhir.Specification.Navigation
             }
         }
 
-        public static bool InRange(this Profile.ElementDefinitionComponent defn, int count)
+        public static bool InRange(this ElementDefinition defn, int count)
         {
             int min = Convert.ToInt32(defn.Min);
             if (count < min)
@@ -106,37 +109,29 @@ namespace Hl7.Fhir.Specification.Navigation
             return true;
         }
 
-        public static bool IsRepeating(this Profile.ElementDefinitionComponent defn)
+        public static bool IsRepeating(this ElementDefinition defn)
         {
             return defn.Max != "1" && defn.Max != "0";
         }
 
-        public static bool IsRepeating(this Profile.ElementComponent elem)
-        {
-            if (elem.Definition != null)
-                return elem.Definition.IsRepeating();
-            else
-                return false;
-        }
-
-        public static bool IsExtension(this Profile.ElementComponent elem)
+        public static bool IsExtension(this ElementDefinition elem)
         {
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
         }
 
-        public static string CardinalityAsString(this Profile.ElementDefinitionComponent defn)
+        public static string CardinalityAsString(this ElementDefinition defn)
         {
             return defn.Min + ".." + defn.Max;
         }
 
-        public static string GetNameFromPath(this Profile.ElementComponent element)
+        public static string GetNameFromPath(this ElementDefinition element)
         {
  	        var pos = element.Path.LastIndexOf(".");
 
             return pos != -1 ? element.Path.Substring(pos+1) : element.Path;
         }
 
-        public static string GetParentNameFromPath(this Profile.ElementComponent element)
+        public static string GetParentNameFromPath(this ElementDefinition element)
         {
             return ElementNavigator.GetParentPath(element.Path);
         }      

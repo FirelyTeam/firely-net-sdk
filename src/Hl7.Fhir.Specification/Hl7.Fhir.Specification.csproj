@@ -63,6 +63,11 @@
       <Link>Support\ReflectionHelper.cs</Link>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigator.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
     <Compile Include="Specification\Source\CoreZipArtifactSource.cs" />

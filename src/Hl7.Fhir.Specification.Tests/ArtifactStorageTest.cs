@@ -128,7 +128,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             var vs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase") as StructureDefinition;
-    //        var vs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/observation-reason") as StructureDefinition;
            
             Assert.IsNotNull(vs);
 
@@ -193,9 +192,15 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(dt);
             Assert.IsTrue(dt is StructureDefinition);
 
-            var ext = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/observation-reason");
+            // Try to find a core extension
+            var ext = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason");
             Assert.IsNotNull(ext);
-            Assert.IsTrue(ext is StructureDefinition);           
+            Assert.IsTrue(ext is StructureDefinition);
+
+            // Try to find an additional US profile (they are distributed with the spec for now)
+            var us = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/cond-uslab-uslabcond");
+            Assert.IsNotNull(us);
+            Assert.IsTrue(us is StructureDefinition);           
         }
 
 

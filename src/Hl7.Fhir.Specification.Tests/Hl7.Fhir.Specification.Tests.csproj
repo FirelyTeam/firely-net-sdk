@@ -63,6 +63,7 @@
       <Link>XmlAssert.cs</Link>
     </Compile>
     <Compile Include="ArtifactStorageTest.cs" />
+    <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

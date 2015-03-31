@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var struc = createTestStructure();
 
-            struc.Snapshot.Rebase("Parent.child1");
+            struc.Rebase("Parent.child1");
 
             Assert.AreEqual("Parent.child1", struc.Snapshot.Element[0].Path);
             Assert.AreEqual("Parent.child1.B", struc.Snapshot.Element[1].Path);
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSiblingAlterations()
         {
             var nav = createTestNav();
-            var newCNode = new Profile.ElementComponent() { Path = "X.C" };
+            var newCNode = new ElementDefinition() { Path = "X.C" };
 
             Assert.AreEqual(9, nav.Count);
 
@@ -346,8 +346,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var nav = createTestNav();
 
-            var newENode = new Profile.ElementComponent() { Path = "X.Y.E" };
-            var newC3Node = new Profile.ElementComponent() { Path = "X.Y.C3" };
+            var newENode = new ElementDefinition() { Path = "X.Y.E" };
+            var newC3Node = new ElementDefinition() { Path = "X.Y.C3" };
 
             Assert.IsTrue(nav.JumpToFirst("A.B.C1.D"));
             Assert.IsTrue(nav.InsertFirstChild(newENode));
@@ -389,17 +389,17 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var dest = createTestNav();
 
-            var struc = new Profile.ProfileStructureComponent();
-            struc.Snapshot = new Profile.ConstraintComponent();
-            struc.Snapshot.Element = new List<Profile.ElementComponent>();
+            var struc = new StructureDefinition();
+            struc.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent();
+            struc.Snapshot.Element = new List<ElementDefinition>();
             var e = struc.Snapshot.Element;
 
-            e.Add(new Profile.ElementComponent() { Path = "X" });
-            e.Add(new Profile.ElementComponent() { Path = "X.Y1" });
-            e.Add(new Profile.ElementComponent() { Path = "X.Y2" });
-            e.Add(new Profile.ElementComponent() { Path = "X.Y2.Z1" });
-            e.Add(new Profile.ElementComponent() { Path = "X.Y2.Z2" });
-            var source = new ElementNavigator(struc.Snapshot);
+            e.Add(new ElementDefinition() { Path = "X" });
+            e.Add(new ElementDefinition() { Path = "X.Y1" });
+            e.Add(new ElementDefinition() { Path = "X.Y2" });
+            e.Add(new ElementDefinition() { Path = "X.Y2.Z1" });
+            e.Add(new ElementDefinition() { Path = "X.Y2.Z2" });
+            var source = new ElementNavigator(struc);
 
             Assert.IsTrue(dest.JumpToFirst("A.D"));
             var dstPos = dest.OrdinalPosition;
@@ -487,58 +487,26 @@ namespace Hl7.Fhir.Specification.Tests
         private static ElementNavigator createTestNav()
         {
             var struc = createTestStructure();
-            return new ElementNavigator(struc.Snapshot);
+            return new ElementNavigator(struc);
         }
 
-        private static Profile.ProfileStructureComponent createTestStructure()
+        private static StructureDefinition createTestStructure()
         {
-            var struc = new Profile.ProfileStructureComponent();
-            struc.Snapshot = new Profile.ConstraintComponent();
-            struc.Snapshot.Element = new List<Profile.ElementComponent>();
+            var struc = new StructureDefinition();
+            struc.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent();
+            struc.Snapshot.Element = new List<ElementDefinition>();
             var e = struc.Snapshot.Element;
 
-            e.Add(new Profile.ElementComponent() { Path = "A" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B.C2" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B.C1" });
-            e.Add(new Profile.ElementComponent() { Path = "A.B.C1.D" });
-            e.Add(new Profile.ElementComponent() { Path = "A.D" });
+            e.Add(new ElementDefinition() { Path = "A" });
+            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C2" });
+            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
+            e.Add(new ElementDefinition() { Path = "A.D" });
             return struc;
         }
     }
-
-    internal class TestProfileSource : IArtifactSource
-    {
-        private Profile profile;
-        private bool prepared = false;
-
-        public void Prepare()
-        {
-            var str = this.GetType().Assembly.GetManifestResourceStream("Hl7.Fhir.Test.profile.profile.xml");
-            profile = (Profile)FhirParser.ParseResource(XmlReader.Create(str));
-        }
-
-        public Stream ReadContentArtifact(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resource ReadResourceArtifact(Uri artifactId)
-        {
-            if (!prepared)
-            {
-                Prepare();
-                prepared = true;
-            }
-
-            if (artifactId.ToString() == "http://hl7.org/fhir/Profile/Profile")
-                return profile;
-            else
-                return null;
-        }
-    }
-
 }
