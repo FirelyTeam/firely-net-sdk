@@ -39,7 +39,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{{_Value}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class FhirDateTime
     {
         public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
