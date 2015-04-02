@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 
 using Hl7.Fhir.Model;
@@ -140,14 +140,13 @@ namespace Hl7.Fhir.Model
                 "Subscription",
                 "Substance",
                 "Supply",
-                "SupportingDocumentation",
                 "ValueSet",
                 "VisionPrescription",
             };
         
         public static string Version
         {
-            get { return "0.4.0"; }
+            get { return "0.5.0"; }
         }
         
         public static Dictionary<string,Type> FhirTypeToCsType =
@@ -285,7 +284,6 @@ namespace Hl7.Fhir.Model
                 { "Subscription", typeof(Hl7.Fhir.Model.Subscription) },
                 { "Substance", typeof(Hl7.Fhir.Model.Substance) },
                 { "Supply", typeof(Hl7.Fhir.Model.Supply) },
-                { "SupportingDocumentation", typeof(Hl7.Fhir.Model.SupportingDocumentation) },
                 { "ValueSet", typeof(Hl7.Fhir.Model.ValueSet) },
                 { "VisionPrescription", typeof(Hl7.Fhir.Model.VisionPrescription) },
             };
@@ -425,7 +423,6 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.Subscription), "Subscription" },
                 { typeof(Hl7.Fhir.Model.Substance), "Substance" },
                 { typeof(Hl7.Fhir.Model.Supply), "Supply" },
-                { typeof(Hl7.Fhir.Model.SupportingDocumentation), "SupportingDocumentation" },
                 { typeof(Hl7.Fhir.Model.ValueSet), "ValueSet" },
                 { typeof(Hl7.Fhir.Model.VisionPrescription), "VisionPrescription" },
             };
@@ -1040,6 +1037,7 @@ namespace Hl7.Fhir.Model
                 new SearchParamDefinition() { Resource = "Procedure", Name = "patient", Description = @"The identity of a patient to list procedures  for", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Procedure.patient", }, Target = new ResourceType[] { ResourceType.Patient, } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "location", Description = @"Where the procedure happened", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Procedure.location", }, Target = new ResourceType[] { ResourceType.Location, } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "performer", Description = @"The reference to the practitioner", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Procedure.performer.person", }, Target = new ResourceType[] { ResourceType.Practitioner, ResourceType.Patient, ResourceType.RelatedPerson, } }, 
+                new SearchParamDefinition() { Resource = "Procedure", Name = "encounter", Description = @"The encounter when procedure performed", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Procedure.encounter", }, Target = new ResourceType[] { ResourceType.Encounter, } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "date", Description = @"Date/Period the procedure was performed", Type = Conformance.SearchParamType.Date, Path = new string[] { "Procedure.performed[x]", } }, 
                 new SearchParamDefinition() { Resource = "Procedure", Name = "type", Description = @"Type of procedure", Type = Conformance.SearchParamType.Token, Path = new string[] { "Procedure.type", } }, 
                 new SearchParamDefinition() { Resource = "ProcedureRequest", Name = "orderer", Description = @"Ordering Party", Type = Conformance.SearchParamType.Reference, Path = new string[] { "ProcedureRequest.orderer", }, Target = new ResourceType[] { ResourceType.Practitioner, ResourceType.Patient, ResourceType.RelatedPerson, ResourceType.Device, } }, 
@@ -1163,10 +1161,6 @@ namespace Hl7.Fhir.Model
                 new SearchParamDefinition() { Resource = "Supply", Name = "supplier", Description = @"Dispenser", Type = Conformance.SearchParamType.Reference, Path = new string[] { "Supply.dispense.supplier", }, Target = new ResourceType[] { ResourceType.Practitioner, } }, 
                 new SearchParamDefinition() { Resource = "Supply", Name = "kind", Description = @"The kind of supply (central, non-stock, etc)", Type = Conformance.SearchParamType.Token, Path = new string[] { "Supply.kind", } }, 
                 new SearchParamDefinition() { Resource = "Supply", Name = "dispensestatus", Description = @"in-progress | dispensed | abandoned", Type = Conformance.SearchParamType.Token, Path = new string[] { "Supply.dispense.status", } }, 
-                new SearchParamDefinition() { Resource = "SupportingDocumentation", Name = "author", Description = @"The person who generated this resource", Type = Conformance.SearchParamType.Reference, Path = new string[] { "SupportingDocumentation.author", }, Target = new ResourceType[] { ResourceType.Practitioner, } }, 
-                new SearchParamDefinition() { Resource = "SupportingDocumentation", Name = "patient", Description = @"The patient to  whom the documents refer", Type = Conformance.SearchParamType.Reference, Path = new string[] { "SupportingDocumentation.subject", }, Target = new ResourceType[] { ResourceType.Patient, } }, 
-                new SearchParamDefinition() { Resource = "SupportingDocumentation", Name = "subject", Description = @"The patient to  whom the documents refer", Type = Conformance.SearchParamType.Reference, Path = new string[] { "SupportingDocumentation.subject", }, Target = new ResourceType[] { ResourceType.Patient, } }, 
-                new SearchParamDefinition() { Resource = "SupportingDocumentation", Name = "identifier", Description = @"The business identifier of the Eligibility", Type = Conformance.SearchParamType.Token, Path = new string[] { "SupportingDocumentation.identifier", } }, 
                 new SearchParamDefinition() { Resource = "ValueSet", Name = "system", Description = @"The system for any codes defined by this value set", Type = Conformance.SearchParamType.Uri, Path = new string[] { "ValueSet.define.system", } }, 
                 new SearchParamDefinition() { Resource = "ValueSet", Name = "expansion", Description = @"Uniquely identifies this expansion", Type = Conformance.SearchParamType.Uri, Path = new string[] { "ValueSet.expansion.identifier", } }, 
                 new SearchParamDefinition() { Resource = "ValueSet", Name = "status", Description = @"The status of the value set", Type = Conformance.SearchParamType.Token, Path = new string[] { "ValueSet.status", } }, 

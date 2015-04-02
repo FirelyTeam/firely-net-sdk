@@ -141,7 +141,6 @@
     <Compile Include="Model\Generated\Slot.cs" />
     <Compile Include="Model\Generated\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Subscription.cs" />
-    <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
     <Compile Include="Model\Generated\UnsignedInt.cs" />

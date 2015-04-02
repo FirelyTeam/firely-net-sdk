@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
             Directory.CreateDirectory(testPath);
 
             copy(zipPath, "extension-definitions.xml", testPath);
-            copy(zipPath, "alert.xsd", testPath);
+            copy(zipPath, "flag.xsd", testPath);
             copy(zipPath, "patient.sch", testPath);
             copy(@"TestData", "TestPatient.xml", testPath);
             copy(@"TestData", "TestValueSet.xml", testPath);
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(4, names.Count());
             Assert.IsTrue(names.Contains("extension-definitions.xml"));
-            Assert.IsTrue(names.Contains("alert.xsd"));
+            Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
 
             using (var stream = fa.ReadContentArtifact("TestPatient.xml"))
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
 
-            var artifact = resolver.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/alert");
+            var artifact = resolver.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);

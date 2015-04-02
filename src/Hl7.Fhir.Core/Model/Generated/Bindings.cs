@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Mar 31, 2015 13:45+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -633,11 +633,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Supply")]
         Supply,
-        /// <summary>
-        /// The SupportingDocumentation resource
-        /// </summary>
-        [EnumLiteral("SupportingDocumentation")]
-        SupportingDocumentation,
         /// <summary>
         /// The ValueSet resource
         /// </summary>

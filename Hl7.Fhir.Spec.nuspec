@@ -7,7 +7,7 @@
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
     <description>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU1 (0.0.83).</description>
-    <releaseNotes>DSTU2 (0.4.0) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+    <releaseNotes>DSTU2 (0.5.0) release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
 	<summary>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir).
 	It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation 
 	and publication</summary>
