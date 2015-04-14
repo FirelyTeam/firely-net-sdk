@@ -16,7 +16,7 @@ using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Rest
 {
-    public class TransactionBuilder : IReadEntryBuilder, IUpdateEntryBuilder, IHistoryEntryBuilder, IInteractionBuilder
+    public class TransactionBuilder
     {
         public const string HISTORY = "_history";
         public const string METADATA = "metadata";
@@ -24,15 +24,10 @@ namespace Hl7.Fhir.Rest
 
         private Bundle _result;
 
-        private Bundle.BundleEntryComponent _newEntry;
-        private RestUrl _path;
-
         public TransactionBuilder(string baseUrl)
         {
             _result = new Bundle();
-            _result.Base = baseUrl;
-
-            addEntry();            
+            _result.Base = baseUrl;           
         }
 
         public TransactionBuilder(Uri baseUri)
@@ -40,240 +35,246 @@ namespace Hl7.Fhir.Rest
         {
         }
 
-        private void addEntry()
-        {
-            if (_newEntry != null)
-            {
-                _newEntry.Transaction.Url = _path.Uri.ToString();
-                _result.Entry.Add(_newEntry);
-            }
 
-            _newEntry = new Bundle.BundleEntryComponent();
-            _newEntry.Transaction = new Bundle.BundleEntryTransactionComponent();
-            _path = new RestUrl(_result.Base);
+        private Bundle.BundleEntryComponent newEntry(Bundle.HTTPVerb method)
+        {
+            var newEntry = new Bundle.BundleEntryComponent();
+            newEntry.Transaction = new Bundle.BundleEntryTransactionComponent();
+            newEntry.Transaction.Method = method;
+
+            return newEntry;
         }
 
-        Bundle IEntryBuilder.Build()
+        private void addEntry(Bundle.BundleEntryComponent newEntry, RestUrl path)
         {
-            addEntry();
+            newEntry.Transaction.Url = path.Uri.ToString();
+            _result.Entry.Add(newEntry);
+        }
+
+        private RestUrl newRestUrl()
+        {
+            return new RestUrl(_result.Base);
+        }
+
+        public Bundle ToBundle()
+        {
             return _result;
         }
 
-        IInteractionBuilder IEntryBuilder.Add()
+        public TransactionBuilder Get(string url)
         {
-            addEntry();
-            return this;
-        }
-
-        public IEntryBuilder Get(string url)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-
+            var entry = newEntry(Bundle.HTTPVerb.GET);
             var uri = new Uri(url,UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
-                _path = new RestUrl(url);
+                addEntry(entry, new RestUrl(url));
             else
-                _path = new RestUrl(_path.ToString() + url);
+                addEntry(entry, newRestUrl().AddPath(url));
 
             return this;
         }
 
-        public IEntryBuilder Get(Uri uri)
+        public TransactionBuilder Get(Uri uri)
         {
             return Get(uri.OriginalString);
         }
 
-        public IReadEntryBuilder Read(string resourceType, string id)
+        public TransactionBuilder Read(string resourceType, string id, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null)
         {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(resourceType, id); 
+            var entry = newEntry(Bundle.HTTPVerb.GET);
+            entry.Transaction.IfNoneMatch = ifNoneMatch;
+            entry.Transaction.IfModifiedSince = ifModifiedSince;
+            var path = newRestUrl().AddPath(resourceType, id);
+            addEntry(entry, path);
+
             return this;
         }
 
-        IEntryBuilder IReadEntryBuilder.IfNoneMatch(string eTag)
+        public TransactionBuilder VRead(string resourceType, string id, string vid)
         {
-            _newEntry.Transaction.IfNoneMatch = eTag;
-            return this;
-        }
-
-        IEntryBuilder IReadEntryBuilder.IfModifiedSince(DateTimeOffset since)
-        {
-            _newEntry.Transaction.IfModifiedSince = since;
-            return this;
-        }
-
-        public IEntryBuilder VRead(string resourceType, string id, string vid)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(resourceType, id, HISTORY, vid);
-            return this;
-        }
-
-
-        public IUpdateEntryBuilder Update(string id, Resource body)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.PUT;
-            _newEntry.Resource = body;
-            _path = _path.AddPath(body.TypeName, id);
-            return this;
-        }
-
-        public IUpdateEntryBuilder Update(SearchParams condition, Resource body)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.PUT;
-            _newEntry.Resource = body;
-            _path = _path.AddPath(body.TypeName);
-            _path.AddParams(condition.ToUriParamList());
+            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
+            addEntry(entry, path);
 
             return this;
         }
 
 
-        IEntryBuilder IUpdateEntryBuilder.IfMatch(string eTag)
+        public TransactionBuilder Update(string id, Resource body, string ifMatch=null)
         {
-            _newEntry.Transaction.IfMatch = eTag;
-            return this;
-        }
-
-        public IEntryBuilder Delete(string resourceType, string id)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.DELETE;
-            _path = _path.AddPath(resourceType, id);
-            return this;
-        }
-
-        public IEntryBuilder Delete(string resourceType, SearchParams condition)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.DELETE;
-            _path = _path.AddPath(resourceType);
-            _path.AddParams(condition.ToUriParamList());
+            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            entry.Resource = body;
+            entry.Transaction.IfMatch = ifMatch;
+            var path = newRestUrl().AddPath(body.TypeName, id);
+            addEntry(entry, path);
 
             return this;
         }
 
-        public IEntryBuilder Create(Resource body)
+        public TransactionBuilder Update(SearchParams condition, Resource body, string ifMatch=null)
         {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = body;
-            _path = _path.AddPath(body.TypeName);
+            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            entry.Resource = body;
+            var path = newRestUrl().AddPath(body.TypeName);
+            path.AddParams(condition.ToUriParamList());
+            addEntry(entry, path);
+
             return this;
         }
 
-        public IEntryBuilder Create(Resource body, SearchParams condition)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = body;
-            _path = _path.AddPath(body.TypeName);
 
-            var nonExist = new RestUrl(_path);
+        public TransactionBuilder Delete(string resourceType, string id)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var path = newRestUrl().AddPath(resourceType, id);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder Delete(string resourceType, SearchParams condition)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var path = newRestUrl().AddPath(resourceType);
+            path.AddParams(condition.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder Create(Resource body)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = body;
+            var path = newRestUrl().AddPath(body.TypeName);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder Create(Resource body, SearchParams condition)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = body;
+            var path = newRestUrl().AddPath(body.TypeName);
+
+            var nonExist = new RestUrl(path);
             nonExist.AddParams(condition.ToUriParamList());
-            _newEntry.Transaction.IfNoneExist = nonExist.ToString();
+            entry.Transaction.IfNoneExist = nonExist.ToString();
+            addEntry(entry, path);
 
             return this;
         }
 
         
-        public IEntryBuilder Conformance()
+        public TransactionBuilder Conformance()
         {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(METADATA);
-            return this;
-        }
-
-
-        public IHistoryEntryBuilder ResourceHistory(string resourceType, string id)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(resourceType, id, HISTORY);
-            return this;
-        }
-
-
-        public IHistoryEntryBuilder CollectionHistory(string resourceType)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(resourceType, HISTORY);
-            return this;
-        }
-
-
-        public IHistoryEntryBuilder ServerHistory()
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            _path = _path.AddPath(HISTORY);
-            return this;
-        }
-
-        IHistoryEntryBuilder IHistoryEntryBuilder.SummaryOnly()
-        {
-            _path = _path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, PrimitiveTypeConverter.ConvertTo<string>(true));
-            return this;
-        }
-
-        IHistoryEntryBuilder IHistoryEntryBuilder.PageSize(int size)
-        {
-            _path = _path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, size.ToString());
-            return this;
-        }
-
-        IHistoryEntryBuilder IHistoryEntryBuilder.Since(DateTimeOffset since)
-        {
-            _path = _path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since));
-            return this;
-        }
-
-        public IEntryBuilder ServerOperation(string name, Parameters parameters)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = parameters;
-            _path = _path.AddPath(OPERATIONPREFIX + name);
-            return this;
-        }
-
-        public IEntryBuilder TypeOperation(string resourceType, string name, Parameters parameters)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = parameters;
-            _path = _path.AddPath(resourceType,OPERATIONPREFIX + name);
-            return this;
-        }
-
-        public IEntryBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = parameters;
-            _path = _path.AddPath(resourceType, id);
-            if(vid != null) _path = _path.AddPath(resourceType, vid);
-            _path = _path.AddPath(OPERATIONPREFIX + name);
-            return this;
-        }
-
-
-        public IEntryBuilder Search(SearchParams q, string resourceType = null)
-        {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            if (resourceType != null) _path = _path.AddPath(resourceType);
-
-            _path.AddParams(q.ToUriParamList());
+            var entry =  newEntry(Bundle.HTTPVerb.GET);
+            var path = newRestUrl().AddPath(METADATA);
+            addEntry(entry, path);
 
             return this;
         }
 
 
-        public IEntryBuilder Search(string resourceType = null)
+        private void addHistoryEntry(RestUrl path, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.GET;
-            if (resourceType != null) _path = _path.AddPath(resourceType);
+            var entry = newEntry(Bundle.HTTPVerb.GET);
+
+            if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, PrimitiveTypeConverter.ConvertTo<string>(summaryOnly.Value));
+            if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
+            if(since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
+
+            addEntry(entry, path);
+        }
+
+        public TransactionBuilder ResourceHistory(string resourceType, string id, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        {
+            var path = newRestUrl().AddPath(resourceType, id, HISTORY);
+            addHistoryEntry(path, summaryOnly, pageSize, since);
+            
+            return this;
+        }
+
+
+        public TransactionBuilder CollectionHistory(string resourceType, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        {            
+            var path = newRestUrl().AddPath(resourceType, HISTORY);
+            addHistoryEntry(path,summaryOnly, pageSize, since);
+            
+            return this;
+        }
+
+
+        public TransactionBuilder ServerHistory(bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        {
+            var path = newRestUrl().AddPath(HISTORY);
+            addHistoryEntry(path, summaryOnly, pageSize, since);
+
+            return this;
+        }
+
+        public TransactionBuilder ServerOperation(string name, Parameters parameters)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = parameters;
+            var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = parameters;
+            var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = parameters;
+            var path = newRestUrl().AddPath(resourceType, id);
+            if(vid != null) path.AddPath(resourceType, vid);
+            path.AddPath(OPERATIONPREFIX + name);
+            addEntry(entry, path);
 
             return this;
         }
 
 
-        public IEntryBuilder Transaction(Bundle transaction)
+        public TransactionBuilder Search(SearchParams q, string resourceType = null)
         {
-            _newEntry.Transaction.Method = Bundle.HTTPVerb.POST;
-            _newEntry.Resource = transaction;
+            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            path.AddParams(q.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
+        }
+
+
+        public TransactionBuilder Search(string resourceType = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+
+        public TransactionBuilder Transaction(Bundle transaction)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST);
+            entry.Resource = transaction;
+            addEntry(entry, newRestUrl());
 
             return this;
         }

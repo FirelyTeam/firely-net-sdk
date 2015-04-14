@@ -27,10 +27,10 @@ namespace Hl7.Fhir.Test
             var p = new Patient();
             var b = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p)
-                        .Add().ResourceHistory("Patient","7")
-                        .Add().Delete("Patient","8")
-                        .Add().Read("Patient","9").IfNoneMatch("W/bla")
-                        .Build();
+                        .ResourceHistory("Patient","7")
+                        .Delete("Patient","8")
+                        .Read("Patient","9", ifNoneMatch: "W/bla")
+                        .ToBundle();
 
             Assert.AreEqual(4, b.Entry.Count);
             
