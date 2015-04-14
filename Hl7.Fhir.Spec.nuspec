@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Hl7.Fhir.Specification.DSTU2</id>
-    <version>0.50.0</version>
+    <version>0.50.1</version>
 	<title>HL7 FHIR Additional functionality support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
@@ -18,13 +18,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</tags>
     <dependencies>
-	  <dependency id="Hl7.Fhir.DSTU2" version="0.50.0" />
+	  <dependency id="Hl7.Fhir.DSTU2" version="0.50.1" />
       <dependency id="Newtonsoft.Json" version="6.0.7" />
     </dependencies>
   </metadata>
     <files>
 		<file src="install.ps1" target="tools\" />
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\validation-min.zip" target="content" />
+		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\validation.zip" target="content" />
 		
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\Hl7.Fhir.Specification.dll" target="lib\net45\" />
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Net45\Hl7.Fhir.Specification.xml" target="lib\net45\" />

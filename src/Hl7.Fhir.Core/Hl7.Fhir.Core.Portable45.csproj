@@ -242,7 +242,6 @@
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
     <Compile Include="Rest\HttpToEntryExtensions.cs" />
-    <Compile Include="Rest\IInteractionBuilder.cs" />
     <Compile Include="Rest\Requester.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
