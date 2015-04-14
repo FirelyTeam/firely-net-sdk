@@ -98,5 +98,27 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<photo"));
         }
 
+        [TestMethod]
+        public void TestBundleSummary()
+        {
+            var p = new Patient();
+
+            p.BirthDate = "1972-11-30";     // present in both summary and full
+            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+
+            var b = new Bundle();
+            b.AddResourceEntry(p);
+
+            var full = FhirSerializer.SerializeResourceToXml(b);
+            Assert.IsTrue(full.Contains("<entry"));
+            Assert.IsTrue(full.Contains("<birthDate"));
+            Assert.IsTrue(full.Contains("<photo"));
+
+            var summ = FhirSerializer.SerializeResourceToXml(b, summary: true);
+            Assert.IsTrue(summ.Contains("<entry"));
+            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.IsFalse(summ.Contains("<photo"));
+        }
+
     }
 }
