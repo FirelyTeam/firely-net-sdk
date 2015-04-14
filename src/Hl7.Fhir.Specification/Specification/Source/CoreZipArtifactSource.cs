@@ -64,10 +64,10 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (_prepared) return;
 
-            var zipPath = Path.Combine(_contentDirectory, "validation-min.zip");
-            if (!File.Exists(zipPath)) zipPath = Path.Combine(_contentDirectory, "validation.zip");
+            var zipPath = Path.Combine(_contentDirectory, "validation.zip");
+            if (!File.Exists(zipPath)) zipPath = Path.Combine(_contentDirectory, "validation-min.zip");
 
-            if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation-min.zip nor validation.zip");
+            if (!File.Exists(zipPath)) throw new FileNotFoundException("CoreZipArtifactSource cannot locate file validation.zip nor validation-min.zip");
            
             var zc = new ZipCacher(zipPath, CACHE_KEY);
 
