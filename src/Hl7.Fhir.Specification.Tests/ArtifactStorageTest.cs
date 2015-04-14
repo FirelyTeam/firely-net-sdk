@@ -291,5 +291,16 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
 
         }
+
+        [TestMethod]
+        public void GetConceptMaps()
+        {
+            var source = ArtifactResolver.CreateDefault();
+            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
+            var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.ReadConformanceResource(url));
+
+            Assert.IsTrue(conceptMaps.Count() > 0);
+            Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
+        }
     }
 }

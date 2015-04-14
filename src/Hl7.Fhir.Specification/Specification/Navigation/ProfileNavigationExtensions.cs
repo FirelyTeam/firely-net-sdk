@@ -119,11 +119,6 @@ namespace Hl7.Fhir.Specification.Navigation
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
         }
 
-        public static string CardinalityAsString(this ElementDefinition defn)
-        {
-            return defn.Min + ".." + defn.Max;
-        }
-
         public static string GetNameFromPath(this ElementDefinition element)
         {
  	        var pos = element.Path.LastIndexOf(".");

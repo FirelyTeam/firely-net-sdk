@@ -79,6 +79,7 @@
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
     <Compile Include="Model\Coding.cs" />
+    <Compile Include="Model\ConceptMap.cs" />
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\Element.cs" />
