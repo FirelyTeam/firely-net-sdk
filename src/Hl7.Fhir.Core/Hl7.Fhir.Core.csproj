@@ -148,6 +148,7 @@
     <Compile Include="Model\Generated\UnsignedInt.cs" />
     <Compile Include="Model\Generated\VisionPrescription.cs" />
     <Compile Include="Model\HumanName.cs" />
+    <Compile Include="Model\IConformanceResource.cs" />
     <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
