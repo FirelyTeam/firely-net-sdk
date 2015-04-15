@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 
@@ -14,6 +15,11 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public object ObjectValue { get; internal set; }
+
+        public override string ToString()
+        {
+            return PrimitiveTypeConverter.ConvertTo<string>(this.ObjectValue);
+        }
     }
 
     [InvokeIValidatableObject]

@@ -100,31 +100,38 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        //[TestMethod]
-        //public void ExtensionManagement()
-        //{
-        //    Patient p = new Patient();
-        //    var u1 = "http://fhir.org/ext/ext-test";
-        //    Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
+        [TestMethod]
+        public void ExtensionManagement()
+        {
+            Patient p = new Patient();
+            var u1 = "http://fhir.org/ext/ext-test";
+            Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
-        //    Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
-        //    Assert.AreSame(newEx, p.GetExtension(u1));
+            Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
+            Assert.AreSame(newEx, p.GetExtension(u1));
 
-        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
-        //    Assert.AreSame(newEx, p.GetExtension(u1));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
+            Assert.AreSame(newEx, p.GetExtension(u1));
 
-        //    p.RemoveExtension(u1);
-        //    Assert.IsNull(p.GetExtension(u1));
+            p.RemoveExtension(u1);
+            Assert.IsNull(p.GetExtension(u1));
 
-        //    p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
-        //    var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        //    Assert.AreEqual(1, ew.Count());
+            p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
+            var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+            Assert.AreEqual(1, ew.Count());
 
-        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
-        //    ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        //    Assert.AreEqual(2, ew.Count());
-        //}
+            ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+            Assert.AreEqual(2, ew.Count());
+
+            Assert.AreEqual(0, p.ModifierExtension.Count());
+            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier:true);
+            Assert.AreEqual(1, p.ModifierExtension.Count());
+            Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
+            Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
+            Assert.AreEqual(3, p.AllExtensions().Count());
+        }
 
 
         [TestMethod]
@@ -179,30 +186,6 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
-        }
-
-        //[TestMethod]
-        //public void TypedResourceEntry()
-        //{
-        //    var pe = new ResourceEntry<Patient>();
-
-        //    pe.Resource = new Patient();
-
-        //    ResourceEntry e = pe;
-
-        //    Assert.AreEqual(pe.Resource, e.Resource);
-
-        //    e.Resource = new CarePlan();
-
-        //    try
-        //    {
-        //        var c = pe.Resource;
-        //        Assert.Fail("Should have bombed");
-        //    }
-        //    catch (InvalidCastException)
-        //    {
-        //        // pass
-        //    }
-        //}    
+        }      
     }
 }

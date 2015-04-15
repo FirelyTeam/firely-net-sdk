@@ -1,5 +1,12 @@
-﻿/*
-  Copyright (c) 2011-2012, HL7, Inc
+﻿using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Linq;
+using System.Runtime.Serialization;
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -25,38 +32,13 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
   
-*/
 
-using Hl7.Fhir.Validation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
+*/
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
-    [InvokeIValidatableObject]
-    public abstract partial class DomainResource : IModifierExtendable
+    public abstract partial class BackboneElement : IModifierExtendable
     {
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>(base.Validate(validationContext));
-
-            if (this.Contained != null)
-            {
-                if (!Contained.OfType<DomainResource>().All(dr => dr.Text == null))
-                    result.Add(new ValidationResult("Resource has contained resources with narrative"));
-
-                if(!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
-                    result.Add(new ValidationResult("Resource has contained resources with nested contained resources"));
-            }
-
-            return result;
-        }
     }
+    
 }
-
-
