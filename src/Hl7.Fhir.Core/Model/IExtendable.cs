@@ -112,12 +112,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        /// <summary>
-        /// Return the first extension with the given uri as a string, or null if none was found
-        /// </summary>
-        /// <param name="extendable"></param>
-        /// <param name="uri"></param>
-        /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
         public static bool? GetBoolExtension(this IExtendable extendable, string uri)
         {
             var ext = extendable.GetExtension(uri);
@@ -128,6 +122,16 @@ namespace Hl7.Fhir.Model
             return null;
         }
 
+
+        public static T GetExtensionValue<T>(this IExtendable extendable, string uri) where T : Element
+        {
+            var ext = extendable.GetExtension(uri);
+
+            if (ext != null && ext.Value != null && ext.Value is T)
+                return (T)ext.Value;
+
+            return null;
+        }
 
         public static bool HasExtensions(this IExtendable extendable)
         {
