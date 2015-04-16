@@ -70,8 +70,8 @@
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
-    <Compile Include="Specification\Source\CoreZipArtifactSource.cs" />
-    <Compile Include="Specification\Source\FileArtifactSource.cs" />
+    <Compile Include="Specification\Source\ZipArtifactSource.cs" />
+    <Compile Include="Specification\Source\FileDirectoryArtifactSource.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />
     <Compile Include="Specification\Source\SchemaCollection.cs" />
     <Compile Include="Specification\Source\WebArtifactSource.cs">

@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <param name="value"></param>
+        /// <param name="isModifier"></param>
         /// <returns>The newly added Extension</returns>
         public static Extension AddExtension(this IExtendable extendable, string uri, Element value, bool isModifier=false)
         {
@@ -190,6 +191,7 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <param name="value"></param>
+        /// <param name="isModifier"></param>
         /// <returns>The newly added extension</returns>
         public static Extension SetExtension(this IExtendable extendable, string uri, Element value, bool isModifier=false)
         {

@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static IArtifactSource CreateDefault()
         {
-            return new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource(), new WebArtifactSource());            
+            return new ArtifactResolver(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource(), new WebArtifactSource());            
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
         public static IArtifactSource CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            IArtifactSource resolver = new ArtifactResolver(new FileArtifactSource(true), new CoreZipArtifactSource());
+            IArtifactSource resolver = new ArtifactResolver(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource());
             return new CachedArtifactSource(resolver);
             
         }
@@ -96,13 +96,13 @@ namespace Hl7.Fhir.Specification.Source
         }
 
    
-        public Stream ReadContentArtifact(string name)
+        public Stream LoadArtifactByName(string name)
         {
             foreach (var source in Sources)
             {
                 try
                 {
-                    var result = source.ReadContentArtifact(name);
+                    var result = source.LoadArtifactByName(name);
 
                     if (result != null) return result;
                 }
@@ -135,13 +135,13 @@ namespace Hl7.Fhir.Specification.Source
             return result;
         }
 
-        public Resource ReadConformanceResource(string identifier)
+        public Resource LoadConformanceResourceByUrl(string identifier)
         {
             foreach (var source in Sources)
             {
                 try
                 {
-                    var result = source.ReadConformanceResource(identifier);
+                    var result = source.LoadConformanceResourceByUrl(identifier);
 
                     if (result != null) return result;
                 }

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
-        public System.IO.Stream ReadContentArtifact(string name)
+        public System.IO.Stream LoadArtifactByName(string name)
         {
             throw new NotImplementedException();        // support only url-based artifacts
         }
@@ -34,11 +34,11 @@ namespace Hl7.Fhir.Specification.Source
             throw new NotImplementedException();
         }
 
-        public Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier)
+        public Hl7.Fhir.Model.Resource LoadConformanceResourceByUrl(string url)
         {
-            if (identifier == null) throw Error.ArgumentNull("identifier");
+            if (url == null) throw Error.ArgumentNull("identifier");
 
-            var id = new ResourceIdentity(identifier);
+            var id = new ResourceIdentity(url);
 
             var client = new FhirClient(id.BaseUri);
             client.Timeout = 5000;  //ms

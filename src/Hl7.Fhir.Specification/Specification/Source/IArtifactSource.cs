@@ -15,19 +15,19 @@ namespace Hl7.Fhir.Specification.Source
 {
     public interface IArtifactSource
     {
-        Stream ReadContentArtifact(string name);
+        Stream LoadArtifactByName(string artifactName);
         IEnumerable<string> ListArtifactNames();
 
-        Hl7.Fhir.Model.Resource ReadConformanceResource(string identifier);
         IEnumerable<ConformanceInformation> ListConformanceResources();
+        Hl7.Fhir.Model.Resource LoadConformanceResourceByUrl(string url);
     }
 
 
     public class ConformanceInformation
     {
-        public string Url { get; set; }
-
         public ResourceType Type { get; set; }
+
+        public string Url { get; set; }
                 
         public string Name { get; set; }
 

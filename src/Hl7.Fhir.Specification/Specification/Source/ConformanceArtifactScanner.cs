@@ -41,18 +41,18 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Scan a supplied (bundle or single resource) file with the core artifacts for an entry with an id equal to the given uri 
+        /// Scan a supplied (bundle or single resource) file with the core artifacts for a conformance resource with a canonical Url equal to the given url 
         /// </summary>
-        /// <param name="identifier">identifying uri of the conformance resource to find</param>
+        /// <param name="url">identifying canonical url of the conformance resource to find</param>
         /// <returns></returns>
-        public XElement FindConformanceResourceById(string identifier)
+        public XElement FindConformanceResourceByUrl(string url)
         {
-            if (identifier == null) throw Error.ArgumentNull("identifier");
+            if (url == null) throw Error.ArgumentNull("identifier");
 
             var resources = StreamResources();
 
             return resources.Where(res => IsConformanceResource(res.Name.LocalName) &&
-                getPrimitiveValueElement(res,"url") == identifier).SingleOrDefault();
+                getPrimitiveValueElement(res,"url") == url).SingleOrDefault();
         }
 
         private string getPrimitiveValueElement(XElement element, string name)

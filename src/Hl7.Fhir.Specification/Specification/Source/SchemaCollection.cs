@@ -32,13 +32,13 @@ namespace Hl7.Fhir.Specification.Source
         
         private static XmlSchemaSet compileValidationSchemas()
         {
-            var resolver = new CoreZipArtifactSource();
+            var resolver = ZipArtifactSource.CreateValidationSource();
 
             XmlSchemaSet schemas = new XmlSchemaSet();
 
             foreach(var schemaName in minimalSchemas)
             {
-                using (var schema = resolver.ReadContentArtifact(schemaName))
+                using (var schema = resolver.LoadArtifactByName(schemaName))
                 {
                     if(schema == null)
                         throw new FileNotFoundException("Cannot find manifest resources that represent the minimal set of schemas required for validation");

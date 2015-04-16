@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation-min.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.zip");
 
             var fa = new ZipCacher(zipFile,cacheKey);
 
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private string prepareExampleDirectory()
         {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation-min.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
             var zip = new ZipCacher(zipFile);
             var zipPath = zip.GetContentDirectory();
 
@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Specification.Tests
             copy(zipPath, "patient.sch", testPath);
             copy(@"TestData", "TestPatient.xml", testPath);
             copy(@"TestData", "TestValueSet.xml", testPath);
+            File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
 
             Directory.CreateDirectory(Path.Combine(testPath, "sub"));
             copy(@"TestData", "TestPatient.json", testPath);
@@ -108,11 +109,18 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+        private string _testPath;
+
+        [TestInitialize]
+        public void SetupExampleDir()
+        {
+           _testPath = prepareExampleDirectory();
+        }
+
         [TestMethod]
         public void UseFileArtifactSource()
         {
-            var testPath = prepareExampleDirectory();
-            var fa = new FileArtifactSource(testPath);
+            var fa = new FileDirectoryArtifactSource(_testPath);
             fa.Mask = "*.xml|*.xsd";
             var names = fa.ListArtifactNames();
 
@@ -121,13 +129,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
 
-            using (var stream = fa.ReadContentArtifact("TestPatient.xml"))
+            using (var stream = fa.LoadArtifactByName("TestPatient.xml"))
             {
                 var pat = FhirParser.ParseResource(FhirParser.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
             }
 
-            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase") as StructureDefinition;
+            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase") as StructureDefinition;
            
             Assert.IsNotNull(vs);
 
@@ -136,31 +144,39 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void FileSourceSkipsExecutables()
+        {
+            var fa = new FileDirectoryArtifactSource(_testPath);
+            Assert.IsFalse(fa.ListArtifactNames().Any(name => name.EndsWith(".dll")));
+            Assert.IsFalse(fa.ListArtifactNames().Any(name => name.EndsWith(".exe")));
+        }
+
+        [TestMethod]
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory();
-            var fa = new FileArtifactSource(testPath, includeSubdirectories:true);
+            var fa = new FileDirectoryArtifactSource(testPath, includeSubdirectories:true);
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(6,names.Count());
+            Assert.AreEqual(7,names.Count());
         }
 
         [TestMethod]
         public void GetSomeBundledArtifacts()
         {
-            var za = new CoreZipArtifactSource();
+            var za = ZipArtifactSource.CreateValidationSource();
 
-            using (var a = za.ReadContentArtifact("patient.sch"))
+            using (var a = za.LoadArtifactByName("patient.sch"))
             {
                 Assert.IsNotNull(a);
             }
 
-            using (var a = za.ReadContentArtifact("v3-codesystems.xml"))
+            using (var a = za.LoadArtifactByName("v3-codesystems.xml"))
             {
                 Assert.IsNotNull(a);
             }
 
-            using (var a = za.ReadContentArtifact("patient.xsd"))
+            using (var a = za.LoadArtifactByName("patient.xsd"))
             {
                 Assert.IsNotNull(a);
             }
@@ -170,35 +186,39 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = new CoreZipArtifactSource();
+            var fa = ZipArtifactSource.CreateValidationSource();
 
-            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.ReadConformanceResource("http://hl7.org/fhir/vs/location-status");
+            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/vs/administrative-gender");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var rs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/Condition");
+            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/vs/location-status");
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            var rs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
 
-            rs = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/ValueSet");
+            rs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
 
-            var dt = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/Money");
+            var dt = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/Money");
             Assert.IsNotNull(dt);
             Assert.IsTrue(dt is StructureDefinition);
 
             // Try to find a core extension
-            var ext = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason");
+            var ext = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason");
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
             // Try to find an additional US profile (they are distributed with the spec for now)
-            var us = fa.ReadConformanceResource("http://hl7.org/fhir/StructureDefinition/cond-uslab-uslabcond");
+            var us = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/cond-uslab-uslabcond");
             Assert.IsNotNull(us);
             Assert.IsTrue(us is StructureDefinition);           
         }
@@ -207,16 +227,16 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSetupIsOnce()
         {
-            var fa = new CoreZipArtifactSource();
+            var fa = ZipArtifactSource.CreateValidationSource();
 
             var sw = new Stopwatch();
             sw.Start();
-            var vs = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             sw.Stop();
 
             var sw2 = new Stopwatch();
             sw2.Start();
-            var vs2 = fa.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            var vs2 = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);
@@ -229,11 +249,11 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebArtifactSource();
 
-            var artifact = wa.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Alert");
+            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Alert", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
         }
 
         [TestMethod]
@@ -241,21 +261,21 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var resolver = ArtifactResolver.CreateDefault();
 
-            var vs = resolver.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            var vs = resolver.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            using (var a = resolver.ReadContentArtifact("patient.sch"))
+            using (var a = resolver.LoadArtifactByName("patient.sch"))
             {
 
                 Assert.IsNotNull(a);
             }
 
-            var artifact = resolver.ReadConformanceResource("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/flag");
+            var artifact = resolver.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Alert", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
         }
 
         [TestMethod]
@@ -267,13 +287,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Ensure looking up a failed endpoint repeatedly does not cost much time
             sw1.Start();
-            src.ReadConformanceResource("http://some.none.existant.address.nl");
+            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl");
             sw1.Stop();
 
             var sw2 = new Stopwatch();
 
             sw2.Start();
-            src.ReadConformanceResource("http://some.none.existant.address.nl");
+            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl");
             sw2.Stop();
 
             Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
@@ -281,11 +301,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now try an existing artifact
             sw1.Restart();
-            src.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             sw1.Stop();
 
             sw2.Restart();
-            src.ReadConformanceResource("http://hl7.org/fhir/v2/vs/0292");
+            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
@@ -297,7 +317,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var source = ArtifactResolver.CreateDefault();
             var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
-            var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.ReadConformanceResource(url));
+            var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.LoadConformanceResourceByUrl(url));
 
             Assert.IsTrue(conceptMaps.Count() > 0);
             Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
