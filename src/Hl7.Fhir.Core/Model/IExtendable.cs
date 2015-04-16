@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
         {
             var ext = extendable.GetExtension(uri);
 
-            if (ext.Value != null && ext.Value is FhirString)
+            if (ext != null && ext.Value != null && ext.Value is FhirString)
                     return ((FhirString)ext.Value).Value;
 
             return null;
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         {
             var ext = extendable.GetExtension(uri);
 
-            if (ext.Value != null && ext.Value is FhirBoolean)
+            if (ext != null && ext.Value != null && ext.Value is FhirBoolean)
                 return ((FhirBoolean)ext.Value).Value;
 
             return null;
