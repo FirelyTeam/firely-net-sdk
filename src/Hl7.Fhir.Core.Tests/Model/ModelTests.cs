@@ -132,6 +132,19 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
             Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
             Assert.AreEqual(3, p.AllExtensions().Count());
+
+            var code = new Code("test");
+            p.AddExtension("http://fhir.org/ext/code", code);            
+            Assert.AreEqual(code, p.GetExtensionValue<Code>("http://fhir.org/ext/code"));
+
+            var text = new FhirString("test");
+            p.AddExtension("http://fhir.org/ext/string", text);
+            Assert.AreEqual(text, p.GetExtensionValue<FhirString>("http://fhir.org/ext/string"));
+
+            var fhirbool = new FhirBoolean(true);
+            p.AddExtension("http://fhir.org/ext/bool", fhirbool);
+            Assert.AreEqual(fhirbool, p.GetExtensionValue<FhirBoolean>("http://fhir.org/ext/bool"));
+            
         }
 
 
