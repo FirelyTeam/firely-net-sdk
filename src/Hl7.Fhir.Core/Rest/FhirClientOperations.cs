@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Rest
             else
             {
                 var location = new ResourceIdentity(patient);
-                result = client.Operation(location.WithoutVersion().MakeRelative(), FETCH_PATIENT_RECORD, par);
+                result = client.InstanceOperation(location.WithoutVersion().MakeRelative(), FETCH_PATIENT_RECORD, par);
             }
 
             return expect<Bundle>(result);
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Rest
 
             ResourceIdentity id = new ResourceIdentity(valueset);
 
-            return expect<ValueSet>(client.Operation(id.WithoutVersion().MakeRelative(), EXPAND_VALUESET, par));
+            return expect<ValueSet>(client.InstanceOperation(id.WithoutVersion().MakeRelative(), EXPAND_VALUESET, par));
         }
 
 
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Rest
         public static Parameters Meta(this FhirClient client, Uri location)
         {
             Resource result;
-            result = client.Operation(location, META);
+            result = client.InstanceOperation(location, META);
 
             return expect<Parameters>(result);
         }
@@ -171,14 +171,14 @@ namespace Hl7.Fhir.Rest
         public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.Operation(location, META_ADD, par));
+            return expect<Parameters>(client.InstanceOperation(location, META_ADD, par));
         }
 
 
         public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.Operation(location, META_DELETE, par));
+            return expect<Parameters>(client.InstanceOperation(location, META_DELETE, par));
         }
 
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Rest
             if (profile != null) par.Add("profile", profile);
 
             var loc = ResourceIdentity.Build("Resource",id);
-            return expect<OperationOutcome>(client.Operation(loc, VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(client.InstanceOperation(loc, VALIDATE_RESOURCE, par));
         }
 
         public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Rest
 
             var par = new Parameters().Add("mode", new FhirString("delete"));
 
-            return expect<OperationOutcome>(client.Operation(location.WithoutVersion().MakeRelative(), VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), VALIDATE_RESOURCE, par));
         }
 
         public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource, string id=null, FhirUri profile=null)
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Rest
             else
             {
                 var loc = ResourceIdentity.Build("Resource", id);
-                return expect<OperationOutcome>(client.Operation(loc, VALIDATE_RESOURCE, par));
+                return expect<OperationOutcome>(client.InstanceOperation(loc, VALIDATE_RESOURCE, par));
             }
         }
 

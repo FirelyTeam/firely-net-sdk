@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Rest
             return internalOperation(operationName, typeName, parameters: parameters);
         }
 
-        public Resource Operation(Uri location, string operationName, Parameters parameters = null)
+        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (operationName == null) throw Error.ArgumentNull("operationName");
@@ -420,7 +420,11 @@ namespace Hl7.Fhir.Rest
             return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters);
         }
 
-
+        [Obsolete("Use InstanceOperation() instead")]
+        public Resource Operation(Uri location, string operationName, Parameters parameters = null)
+        {
+            return InstanceOperation(location, operationName, parameters);
+        }
 
         private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)
         {

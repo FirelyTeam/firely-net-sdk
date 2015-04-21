@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Rest
             var start = new FhirDateTime(2014,11,1);
             var end = new FhirDateTime(2015,1,1);
             var par = new Parameters().Add("start", start).Add("end", end);
-            var bundle = (Bundle)client.Operation(ResourceIdentity.Build("Patient", "1"), "everything", par);
+            var bundle = (Bundle)client.InstanceOperation(ResourceIdentity.Build("Patient", "1"), "everything", par);
             Assert.IsTrue(bundle.Entry.Any());
 
             var bundle2 = client.FetchPatientRecord(ResourceIdentity.Build("Patient","1"), start, end);
