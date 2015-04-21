@@ -174,5 +174,10 @@ namespace Hl7.Fhir.Specification.Source
             return result;
         }
 
+
+        public bool IsResource(string typename)
+        {
+            return ModelInfo.IsKnownResource(typename);
+        }
     }
 }

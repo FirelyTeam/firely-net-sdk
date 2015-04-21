@@ -111,6 +111,37 @@ namespace Hl7.Fhir.Model
             else
                 return null;
         }
+
+        public static bool IsPrimitive(string name)
+        {
+            return FhirTypeToCsType.ContainsKey(name) && Char.IsLower(name[0]);
+        }
+
+        public static bool IsPrimitive(Type type)
+        {
+            return IsPrimitive(type.Name);
+        }
+
+        public static bool IsDataType(string name)
+        {
+            return FhirTypeToCsType.ContainsKey(name) && !IsKnownResource(name) && !IsPrimitive(name);
+        }
+
+
+        public static bool IsDataType(Type type)
+        {
+            return IsDataType(type.Name);
+        }
+
+        public static bool IsReference(string name)
+        {
+            return name == "Reference";
+        }
+
+        public static bool IsReference(Type type)
+        {
+            return IsReference(type.Name);
+        }
     }
 
     public static class ModelInfoExtensions

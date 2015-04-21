@@ -200,6 +200,27 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
-        }      
+        }  
+    
+
+        [TestMethod]
+        public void TestModelInfoTypeSelectors()
+        {
+            Assert.IsTrue(ModelInfo.IsKnownResource("Patient"));
+            Assert.IsFalse(ModelInfo.IsKnownResource("Identifier"));
+            Assert.IsFalse(ModelInfo.IsKnownResource("code"));
+
+            Assert.IsFalse(ModelInfo.IsDataType("Patient"));
+            Assert.IsTrue(ModelInfo.IsDataType("Identifier"));
+            Assert.IsFalse(ModelInfo.IsDataType("code"));
+
+            Assert.IsFalse(ModelInfo.IsPrimitive("Patient"));
+            Assert.IsFalse(ModelInfo.IsPrimitive("Identifier"));
+            Assert.IsTrue(ModelInfo.IsPrimitive("code"));
+
+            Assert.IsTrue(ModelInfo.IsReference("Reference"));
+            Assert.IsFalse(ModelInfo.IsReference("Patient"));
+        }
+
     }
 }
