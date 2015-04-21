@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Model
     public partial class DataElement : IConformanceResource
     {
         // I think DataElement should have Description too
+        [NotMapped]
         public string Description
         {
             get { return null; }
@@ -95,12 +97,14 @@ namespace Hl7.Fhir.Model
     public partial class NamingSystem : IConformanceResource
     {
         // I think NamingSystem should have Experimental too
+        [NotMapped]
         public bool? Experimental
         {
             get { return null; }
             set { ; }
         }
 
+        [NotMapped]
         public string Url
         {
             get { return null; }
