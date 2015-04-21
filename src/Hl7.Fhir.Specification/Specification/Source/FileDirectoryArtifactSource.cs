@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Source
                 allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
             }
 
-            allFiles.RemoveAll(name => Path.GetExtension(name) == "exe" && Path.GetExtension(name) == "dll");
+            allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
             _artifactFilePaths = new List<string>(allFiles);
             _filesPrepared = true;

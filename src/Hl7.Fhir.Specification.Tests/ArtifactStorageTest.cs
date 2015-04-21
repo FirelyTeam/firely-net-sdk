@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void RetrieveArtifactMulti()
         {
-            var resolver = ArtifactResolver.CreateDefault();
+            var resolver = new MultiArtifactSource(ZipArtifactSource.CreateValidationSource(), new WebArtifactSource());
 
             var vs = resolver.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
             Assert.IsNotNull(vs);
@@ -267,7 +267,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             using (var a = resolver.LoadArtifactByName("patient.sch"))
             {
-
                 Assert.IsNotNull(a);
             }
 
@@ -281,7 +280,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceCaching()
         {
-            var src = new CachedArtifactSource(ArtifactResolver.CreateDefault());
+            var src = new CachedArtifactSource(new MultiArtifactSource(ZipArtifactSource.CreateValidationSource(), new WebArtifactSource()));
 
             Stopwatch sw1 = new Stopwatch();
 
@@ -322,5 +321,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(conceptMaps.Count() > 0);
             Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
         }
+
+        [TestMethod,Ignore]
+        public void ResolveExtensions()
+        {
+            // TODO: call the new ArtifactResolver GetExtensionDefinition functions
+        }
+
+        [TestMethod,Ignore]
+        public void ResolveStructures()
+        {
+            // TODO: call the new ArtifactResolver GetStructureDefinition functions
+        }
+
     }
 }

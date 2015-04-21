@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -19,165 +20,127 @@ namespace Hl7.Fhir.Specification.Source
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources
     /// </summary>
     public class ArtifactResolver : IArtifactSource
-    {
-        private readonly List<IArtifactSource> _sources = new List<IArtifactSource>();
-
-        public ArtifactResolver()
-        {            
+    {        
+        public ArtifactResolver(IArtifactSource source)
+        {
+            Source = source;
         }
+
+
+        public IArtifactSource Source
+        {
+            get;
+            private set;
+        }
+
 
         /// <summary>
         /// Creates a default non-cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// This non-cached resolver is primary for testing purposes.
         /// </summary>
-        public static IArtifactSource CreateDefault()
+        public static ArtifactResolver CreateDefault()
         {
-            return new ArtifactResolver(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource(), new WebArtifactSource());            
+            return new ArtifactResolver(new MultiArtifactSource(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource(), new WebArtifactSource()));            
         }
 
         /// <summary>
         /// Creates a default offline cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
-        public static IArtifactSource CreateOffline()
+        public static ArtifactResolver CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            IArtifactSource resolver = new ArtifactResolver(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource());
-            return new CachedArtifactSource(resolver);
-            
+            IArtifactSource multi = new MultiArtifactSource(new FileDirectoryArtifactSource(true), ZipArtifactSource.CreateValidationSource());
+            return new ArtifactResolver(new CachedArtifactSource(multi));
         }
 
         /// <summary>
         /// Creates a default cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
-        public static IArtifactSource CreateCachedDefault()
+        public static ArtifactResolver CreateCachedDefault()
         {
-            IArtifactSource resolver = ArtifactResolver.CreateDefault();
-            return new CachedArtifactSource(resolver);
-        }
+            var resolver = ArtifactResolver.CreateDefault();
 
-        /// <summary>
-        /// Custom implementation of the artifact resolver
-        /// </summary>
-        /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
-        public ArtifactResolver(IEnumerable<IArtifactSource> sources)
-        {
-            if (sources == null) throw Error.ArgumentNull("sources");
+            // Wrap a cache around the default source
+            resolver.Source = new CachedArtifactSource(resolver.Source);
 
-            _sources.AddRange(sources);
-        }
-
-        /// <summary>
-        /// Custom implementation of the artifact resolver
-        /// </summary>
-        /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
-        public ArtifactResolver(params IArtifactSource[] sources)
-        {
-            if (sources == null) throw Error.ArgumentNull("sources");
-
-            _sources.AddRange(sources);
-        }
-
-        public void AddSource(IArtifactSource source)
-        {
-            _sources.Add(source);
-        }
-
-        public void RemoveSource(IArtifactSource source)
-        {
-            _sources.Remove(source);
-        }
-
-        public IList<IArtifactSource> Sources
-        { 
-            get { return _sources; } 
+            return resolver;
         }
 
    
         public Stream LoadArtifactByName(string name)
         {
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    var result = source.LoadArtifactByName(name);
-
-                    if (result != null) return result;
-                }
-                catch(NotImplementedException)
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            // None of the IArtifactSources succeeded in returning a result
-            return null;
+            return Source.LoadArtifactByName(name);
         }
 
         public IEnumerable<string> ListArtifactNames()
         {
-            var result = new List<string>();
-
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    result.AddRange(source.ListArtifactNames());
-                }
-                catch (NotImplementedException)
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            return result;
+            return Source.ListArtifactNames();
         }
 
         public Resource LoadConformanceResourceByUrl(string identifier)
         {
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    var result = source.LoadConformanceResourceByUrl(identifier);
-
-                    if (result != null) return result;
-                }
-                catch
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            // None of the IArtifactSources succeeded in returning a result
-            return null;
+            return Source.LoadConformanceResourceByUrl(identifier);
         }
 
         public IEnumerable<ConformanceInformation> ListConformanceResources()
         {
-            var result = new List<ConformanceInformation>();
-
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    result.AddRange(source.ListConformanceResources());
-                }
-                catch (NotImplementedException)
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            return result;
+            return Source.ListConformanceResources();
         }
 
 
-        public bool IsResource(string typename)
+        public StructureDefinition GetExtensionDefinition(string url, bool requireSnapshot=true)
         {
-            return ModelInfo.IsKnownResource(typename);
+            var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
+            if (cr != null && cr.Type != StructureDefinition.StructureDefinitionType.Extension)
+                throw Error.Argument("url", "Given url exists as a StructureDefinition, but is not an extension");
+
+            if (cr.Snapshot == null && requireSnapshot)
+                return null;
+
+            return cr;
         }
+
+        public StructureDefinition GetStructureDefinition(string url, bool requireSnapshot=true)
+        {
+            var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
+
+            if (cr.Snapshot == null && requireSnapshot)
+                return null;
+
+            return cr;
+        }
+
+        public IEnumerable<ConceptMap> GetConceptMaps()
+        {
+            //Note: we assume this ArtifactSource caches the conceptmaps. Otherwise this is expensive.
+
+            var conceptMapUrls = ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
+
+            return conceptMapUrls.Select(url => (ConceptMap)LoadConformanceResourceByUrl(url));
+        }
+
+        public IEnumerable<ConceptMap> GetConceptMapsForSource(string uri)
+        {
+            return GetConceptMaps().Where(cm => cm.SourceAsString() == uri);
+        }
+
+        public IEnumerable<ConceptMap> GetConceptMapsForSource(ValueSet source)
+        {
+            return GetConceptMapsForSource(source.Url);
+        }
+
+        public IEnumerable<ConceptMap> GetConceptMapsForSource(StructureDefinition source)
+        {
+            return GetConceptMapsForSource(source.Url);
+        }
+
+        public ValueSet GetValueSet(string url)
+        {
+            return LoadConformanceResourceByUrl(url) as ValueSet;
+        }
+
     }
 }
