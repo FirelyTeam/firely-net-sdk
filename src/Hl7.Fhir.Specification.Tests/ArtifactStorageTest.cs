@@ -322,16 +322,38 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ResolveExtensions()
         {
-            // TODO: call the new ArtifactResolver GetExtensionDefinition functions
+            var source = ArtifactResolver.CreateOffline();
+
+            var extDefn = source.GetExtensionDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            Assert.IsNotNull(extDefn);
+            Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
+
+            try
+            {
+                extDefn = source.GetExtensionDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+                Assert.Fail();
+            }
+            catch
+            {
+                ;
+            }
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ResolveStructures()
         {
-            // TODO: call the new ArtifactResolver GetStructureDefinition functions
+            var source = ArtifactResolver.CreateOffline();
+
+            var extDefn = source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            Assert.IsNotNull(extDefn);
+            Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
+
+            extDefn = source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(extDefn);
+            Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
         }
 
     }
