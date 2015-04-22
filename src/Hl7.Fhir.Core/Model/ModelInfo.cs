@@ -152,6 +152,14 @@ namespace Hl7.Fhir.Model
         {
             return Resource.IsConformanceResource(type.Name);
         }
+
+        /// <summary>
+        /// Is the given type a core Resource, Datatype or primitive
+        /// </summary>
+        public static bool IsCoreModelType(string name)
+        {
+            return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+        }
     }
 
     public static class ModelInfoExtensions

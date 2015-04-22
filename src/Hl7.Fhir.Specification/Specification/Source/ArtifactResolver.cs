@@ -13,6 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Linq;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -94,7 +95,9 @@ namespace Hl7.Fhir.Specification.Source
         public StructureDefinition GetExtensionDefinition(string url, bool requireSnapshot=true)
         {
             var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
-            if (cr != null && cr.Type != StructureDefinition.StructureDefinitionType.Extension)
+            if (cr == null) return null;
+
+            if (cr.Type != StructureDefinition.StructureDefinitionType.Extension)
                 throw Error.Argument("url", "Given url exists as a StructureDefinition, but is not an extension");
 
             if (cr.Snapshot == null && requireSnapshot)
@@ -106,12 +109,30 @@ namespace Hl7.Fhir.Specification.Source
         public StructureDefinition GetStructureDefinition(string url, bool requireSnapshot=true)
         {
             var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
+            if (cr == null) return null;
 
             if (cr.Snapshot == null && requireSnapshot)
                 return null;
 
             return cr;
         }
+
+        public StructureDefinition GetStructureDefinitionForCoreType(string typename, bool requireSnapshot=true)
+        {
+            var url = ResourceIdentity.Build(new Uri(XmlNs.FHIR), "StructureDefinition", typename).ToString();
+            return GetStructureDefinition(url, requireSnapshot);
+        }
+
+        /// <summary>
+        /// Return canonical urls of all the core Resource/datatype/primitive StructureDefinitions available in the IArtifactSource
+        /// </summary>
+        public IEnumerable<string> GetCoreModelUrls()
+        {                 
+            return ListConformanceResources()
+                .Select(ci => ci.Url)
+                .Where(uri => uri != null && uri.StartsWith(XmlNs.FHIR) && ModelInfo.IsCoreModelType(new ResourceIdentity(uri).Id));
+        }
+
 
         public IEnumerable<ConceptMap> GetConceptMaps()
         {
