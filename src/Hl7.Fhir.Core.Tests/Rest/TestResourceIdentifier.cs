@@ -226,5 +226,18 @@ namespace Hl7.Fhir.Test
             id = new ResourceIdentity("#myid");
             Assert.IsTrue(id.IsTargetOf("#myid"));
         }
+
+        [TestMethod]
+        public void TestIsResourceId()
+        {
+            Assert.IsTrue(ResourceIdentity.IsRestResourceIdentity("Patient/4"));
+            Assert.IsTrue(ResourceIdentity.IsRestResourceIdentity("Patient/4/_history/5"));
+            Assert.IsTrue(ResourceIdentity.IsRestResourceIdentity("http://nu.nl/fhir/Patient/4"));
+            Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("http://nu.nl/fhir/crap"));
+            Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("x/y/z/4"));
+            Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("urn:oid:1.2.3.4.5"));
+
+        }
+
     }
 }
