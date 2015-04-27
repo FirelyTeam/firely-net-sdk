@@ -39,7 +39,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>EwoutFhirNetApi.snk</AssemblyOriginatorKeyFile>
@@ -75,10 +75,11 @@
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
-    <Compile Include="Specification\Source\CoreZipArtifactSource.cs" />
-    <Compile Include="Specification\Source\FileArtifactSource.cs" />
+    <Compile Include="Specification\Source\ZipArtifactSource.cs" />
+    <Compile Include="Specification\Source\FileDirectoryArtifactSource.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />
     <Compile Include="Specification\Source\SchemaCollection.cs" />
     <Compile Include="Specification\Source\WebArtifactSource.cs">
@@ -96,9 +97,6 @@
   <ItemGroup>
     <None Include="EwoutFhirNetApi.snk" />
     <None Include="packages.config" />
-    <Content Include="validation-min.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net40.csproj">

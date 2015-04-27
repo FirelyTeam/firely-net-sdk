@@ -45,10 +45,11 @@
     <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>EwoutFhirNetApi.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -79,7 +80,6 @@
     <Compile Include="Introspection\NotMappedAttribute.cs" />
     <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Introspection\XmlSerializationHint.cs" />
-    <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="Model\ConceptMap.cs" />
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
+    <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
@@ -251,7 +252,6 @@
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
     <Compile Include="Rest\HttpToEntryExtensions.cs" />
-    <Compile Include="Rest\IInteractionBuilder.cs" />
     <Compile Include="Rest\Requester.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />

@@ -45,10 +45,7 @@
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>EwoutFhirNetApi.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -81,8 +78,10 @@
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
     <Compile Include="Model\Coding.cs" />
+    <Compile Include="Model\ConceptMap.cs" />
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
+    <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
@@ -131,6 +130,7 @@
     <Compile Include="Model\Generated\PaymentNotice.cs" />
     <Compile Include="Model\Generated\PaymentReconciliation.cs" />
     <Compile Include="Model\Generated\Person.cs" />
+    <Compile Include="Model\Generated\PositiveInt.cs" />
     <Compile Include="Model\Generated\ProcedureRequest.cs" />
     <Compile Include="Model\Generated\ProcessRequest.cs" />
     <Compile Include="Model\Generated\ProcessResponse.cs" />
@@ -143,11 +143,12 @@
     <Compile Include="Model\Generated\Slot.cs" />
     <Compile Include="Model\Generated\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Subscription.cs" />
-    <Compile Include="Model\Generated\SupportingDocumentation.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
+    <Compile Include="Model\Generated\UnsignedInt.cs" />
     <Compile Include="Model\Generated\VisionPrescription.cs" />
     <Compile Include="Model\HumanName.cs" />
+    <Compile Include="Model\IConformanceResource.cs" />
     <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
@@ -228,7 +229,6 @@
     <Compile Include="Model\Generated\Supply.cs" />
     <Compile Include="Model\Generated\Uuid.cs" />
     <Compile Include="Model\Generated\ValueSet.cs" />
-    <Compile Include="Model\Generated\XHtml.cs" />
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
     <Compile Include="Model\FhirDecimal.cs" />
@@ -244,7 +244,6 @@
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
     <Compile Include="Rest\HttpToEntryExtensions.cs" />
-    <Compile Include="Rest\IInteractionBuilder.cs" />
     <Compile Include="Rest\Requester.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
@@ -306,6 +305,7 @@
     <Compile Include="Introspection\PropertyMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Support\NullExtensions.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
@@ -345,7 +345,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EwoutFhirNetApi.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
