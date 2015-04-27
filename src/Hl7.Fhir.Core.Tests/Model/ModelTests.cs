@@ -48,6 +48,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
             Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
 
+
             FhirDateTime dtNoMs = new FhirDateTime("2014-12-11T00:00:00+11:00");
             Assert.AreEqual("2014-12-11T00:00:00+11:00", dtNoMs.Value);
 
@@ -100,31 +101,51 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        //[TestMethod]
-        //public void ExtensionManagement()
-        //{
-        //    Patient p = new Patient();
-        //    var u1 = "http://fhir.org/ext/ext-test";
-        //    Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
+        [TestMethod]
+        public void ExtensionManagement()
+        {
+            Patient p = new Patient();
+            var u1 = "http://fhir.org/ext/ext-test";
+            Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
-        //    Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
-        //    Assert.AreSame(newEx, p.GetExtension(u1));
+            Extension newEx = p.SetExtension(u1, new FhirBoolean(true));
+            Assert.AreSame(newEx, p.GetExtension(u1));
 
-        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
-        //    Assert.AreSame(newEx, p.GetExtension(u1));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout"));
+            Assert.AreSame(newEx, p.GetExtension(u1));
 
-        //    p.RemoveExtension(u1);
-        //    Assert.IsNull(p.GetExtension(u1));
+            p.RemoveExtension(u1);
+            Assert.IsNull(p.GetExtension(u1));
 
-        //    p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
-        //    var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        //    Assert.AreEqual(1, ew.Count());
+            p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
+            var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+            Assert.AreEqual(1, ew.Count());
 
-        //    p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
+            p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
-        //    ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        //    Assert.AreEqual(2, ew.Count());
-        //}
+            ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
+            Assert.AreEqual(2, ew.Count());
+
+            Assert.AreEqual(0, p.ModifierExtension.Count());
+            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier:true);
+            Assert.AreEqual(1, p.ModifierExtension.Count());
+            Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
+            Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
+            Assert.AreEqual(3, p.AllExtensions().Count());
+
+            var code = new Code("test");
+            p.AddExtension("http://fhir.org/ext/code", code);            
+            Assert.AreEqual(code, p.GetExtensionValue<Code>("http://fhir.org/ext/code"));
+
+            var text = new FhirString("test");
+            p.AddExtension("http://fhir.org/ext/string", text);
+            Assert.AreEqual(text, p.GetExtensionValue<FhirString>("http://fhir.org/ext/string"));
+
+            var fhirbool = new FhirBoolean(true);
+            p.AddExtension("http://fhir.org/ext/bool", fhirbool);
+            Assert.AreEqual(fhirbool, p.GetExtensionValue<FhirBoolean>("http://fhir.org/ext/bool"));
+            
+        }
 
 
         [TestMethod]
@@ -179,30 +200,27 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
+        }  
+    
+
+        [TestMethod]
+        public void TestModelInfoTypeSelectors()
+        {
+            Assert.IsTrue(ModelInfo.IsKnownResource("Patient"));
+            Assert.IsFalse(ModelInfo.IsKnownResource("Identifier"));
+            Assert.IsFalse(ModelInfo.IsKnownResource("code"));
+
+            Assert.IsFalse(ModelInfo.IsDataType("Patient"));
+            Assert.IsTrue(ModelInfo.IsDataType("Identifier"));
+            Assert.IsFalse(ModelInfo.IsDataType("code"));
+
+            Assert.IsFalse(ModelInfo.IsPrimitive("Patient"));
+            Assert.IsFalse(ModelInfo.IsPrimitive("Identifier"));
+            Assert.IsTrue(ModelInfo.IsPrimitive("code"));
+
+            Assert.IsTrue(ModelInfo.IsReference("Reference"));
+            Assert.IsFalse(ModelInfo.IsReference("Patient"));
         }
 
-        //[TestMethod]
-        //public void TypedResourceEntry()
-        //{
-        //    var pe = new ResourceEntry<Patient>();
-
-        //    pe.Resource = new Patient();
-
-        //    ResourceEntry e = pe;
-
-        //    Assert.AreEqual(pe.Resource, e.Resource);
-
-        //    e.Resource = new CarePlan();
-
-        //    try
-        //    {
-        //        var c = pe.Resource;
-        //        Assert.Fail("Should have bombed");
-        //    }
-        //    catch (InvalidCastException)
-        //    {
-        //        // pass
-        //    }
-        //}    
     }
 }

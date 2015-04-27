@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var basic = (DomainResource)FhirParser.ParseFromXml(xml);
 
-            Assert.IsTrue(((FhirString)basic.GetExtensionValue("http://blabla.nl")).Value.Contains("\n"));
+            Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
             var outp = FhirSerializer.SerializeResourceToXml(basic);
             Assert.IsTrue(outp.Contains("&#xA;"));

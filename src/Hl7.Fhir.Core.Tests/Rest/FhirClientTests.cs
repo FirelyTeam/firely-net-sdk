@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-        // Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+       //  Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");

@@ -22,7 +22,6 @@
 				</div>
       </text>-->
       <identifier>
-        <label value="SSN"/>
         <system value="http://hl7.org/fhir/sid/us-ssn"/>
         <value value="444222222"/>
       </identifier>
@@ -60,7 +59,6 @@
   </text>
   <identifier>
     <use value="usual"/>
-    <label value="MRN"/>
     <system value="urn:oid:0.1.2.3.4.5.6.7"/>
     <value value="654321"/>
   </identifier>

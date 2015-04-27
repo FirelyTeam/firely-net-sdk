@@ -502,6 +502,19 @@ namespace Hl7.Fhir.Rest
         {
             return IsTargetOf(new ResourceIdentity(reference.OriginalString));
         }
+
+        public static bool IsRestResourceIdentity(string url)
+        {
+            var ri = new ResourceIdentity(url);
+
+            if (ri.Form != ResourceIdentityForm.AbsoluteRestUrl && ri.Form != ResourceIdentityForm.RelativeRestUrl)
+                return false;
+
+            if (ri.ResourceType == null || ri.Id == null)
+                return false;
+
+            return ModelInfo.IsKnownResource(ri.ResourceType);
+        }
     }
 
     public enum ResourceIdentityForm

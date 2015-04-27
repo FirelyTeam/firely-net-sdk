@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from individual files
     /// </summary>
-    public class FileArtifactSource : IArtifactSource
+    public class FileDirectoryArtifactSource : IArtifactSource
     {
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Source
             set { _mask = value; _filesPrepared = false; _resourcesPrepared = false; }
         }
 
-        public FileArtifactSource(string contentDirectory, bool includeSubdirectories = false)
+        public FileDirectoryArtifactSource(string contentDirectory, bool includeSubdirectories = false)
         {
             if (contentDirectory == null) throw Error.ArgumentNull("contentDirectory");
 
@@ -46,30 +46,32 @@ namespace Hl7.Fhir.Specification.Source
             _includeSubs = includeSubdirectories;
         }
 
+
+        public FileDirectoryArtifactSource(bool includeSubdirectories = false) : this(SpecificationDirectory,includeSubdirectories)
+        {
+        }
+
+
+        /// <summary>
+        /// The default directory this artifact source will access for its files.
+        /// </summary>
         public static string SpecificationDirectory
         {
             get
             {
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-                return codebase;
+
+                if (Directory.Exists(codebase))
+                    return codebase;
+                else
+                    return Directory.GetCurrentDirectory();
             }
         }
 
-        public FileArtifactSource(bool includeSubdirectories = false)
-        {
-            // Add the current directory to the list of directories with artifact content, unless there's
-            // a special specification subdirectory available (next to the current DLL)
-            if (Directory.Exists(SpecificationDirectory))
-                _contentDirectory = SpecificationDirectory;
-            else
-                _contentDirectory = Directory.GetCurrentDirectory();
-
-            _includeSubs = includeSubdirectories;
-        }
 
 
         private bool _filesPrepared = false;
-        private List<string> _artifactFiles;
+        private List<string> _artifactFilePaths;
 
         /// <summary>
         /// Prepares the source by reading all files present in the directory (matching the mask, if given)
@@ -77,8 +79,6 @@ namespace Hl7.Fhir.Specification.Source
         private void prepareFiles()
         {
             if (_filesPrepared) return;
-
-            _artifactFiles = new List<string>();
 
             IEnumerable<string> masks;
             if (Mask == null)
@@ -94,9 +94,9 @@ namespace Hl7.Fhir.Specification.Source
                 allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
             }
 
-            var files = allFiles.Where(name => Path.GetExtension(name) != "exe" && Path.GetExtension(name) != "dll");
-            
-            _artifactFiles.AddRange(files);
+            allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
+
+            _artifactFilePaths = new List<string>(allFiles);
             _filesPrepared = true;
         }
 
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Specification.Source
 
 
         /// <summary>
-        /// Scan all files found by prepareFiles and find conformance resources + their id
+        /// Scan all xml files found by prepareFiles and find conformance resources + their id
         /// </summary>
         private void prepareResources()
         {
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Source
 
             _resourceInformation = new List<ConformanceInformation>();
 
-            foreach (var file in _artifactFiles)
+            foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
             {
                 try
                 {
@@ -150,19 +150,19 @@ namespace Hl7.Fhir.Specification.Source
         {
             prepareFiles();
 
-            return _artifactFiles.Select(path => Path.GetFileName(path));
+            return _artifactFilePaths.Select(path => Path.GetFileName(path));
         }
 
-        public Stream ReadContentArtifact(string name)
+        public Stream LoadArtifactByName(string name)
         {
-            prepareFiles();
-
             if (name == null) throw Error.ArgumentNull("name");
+
+            prepareFiles();
 
             var searchString = (Path.DirectorySeparatorChar + name).ToLower();
 
             // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
-            var fullFileName = _artifactFiles.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
@@ -171,15 +171,15 @@ namespace Hl7.Fhir.Specification.Source
         /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)
         /// and reads an artifact with the given id from it.
         /// </summary>
-        /// <param name="identifier">identifying uri of the conformance resource to find</param>
+        /// <param name="url">identifying uri of the conformance resource to find</param>
         /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located. If both an
         /// xml and a json version is available, the xml version is returned</returns>
-        public Resource ReadConformanceResource(string identifier)
+        public Resource LoadConformanceResourceByUrl(string url)
         {
-            if (identifier == null) throw Error.ArgumentNull("identifier");
+            if (url == null) throw Error.ArgumentNull("identifier");
             prepareResources();
 
-            var info = _resourceInformation.SingleOrDefault(ci => ci.Url == identifier);
+            var info = _resourceInformation.SingleOrDefault(ci => ci.Url == url);
             
             if(info == null) return null;
 
@@ -193,11 +193,10 @@ namespace Hl7.Fhir.Specification.Source
                 if (content == null) throw new FileNotFoundException("Cannot find file " + path);
 
                 var scanner = new ConformanceArtifactScanner(content, path);
-                var entry = scanner.FindConformanceResourceById(identifier);
+                var entry = scanner.FindConformanceResourceByUrl(url);
 
                 artifactXml = entry != null ? entry.ToString() : null;
             }
-
 
             if (artifactXml != null)
                 return FhirParser.ParseResourceFromXml(artifactXml);

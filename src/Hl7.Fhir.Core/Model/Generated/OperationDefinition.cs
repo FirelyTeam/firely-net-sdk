@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -234,13 +234,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("min", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer MinElement
+            public Hl7.Fhir.Model.UnsignedInt MinElement
             {
                 get { return _MinElement; }
                 set { _MinElement = value; OnPropertyChanged("MinElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _MinElement;
+            private Hl7.Fhir.Model.UnsignedInt _MinElement;
             
             /// <summary>
             /// Minimum Cardinality
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       MinElement = null; 
                     else
-                      MinElement = new Hl7.Fhir.Model.Integer(value);
+                      MinElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Min");
                 }
             }
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Code)NameElement.DeepCopy();
-                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
+                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
@@ -1066,9 +1066,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Whether operation causes changes to content
+        /// </summary>
+        [FhirElement("idempotent", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean IdempotentElement
+        {
+            get { return _IdempotentElement; }
+            set { _IdempotentElement = value; OnPropertyChanged("IdempotentElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _IdempotentElement;
+        
+        /// <summary>
+        /// Whether operation causes changes to content
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Idempotent
+        {
+            get { return IdempotentElement != null ? IdempotentElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  IdempotentElement = null; 
+                else
+                  IdempotentElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Idempotent");
+            }
+        }
+        
+        /// <summary>
         /// Name used to invoke the operation
         /// </summary>
-        [FhirElement("code", Order=200)]
+        [FhirElement("code", Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code CodeElement
@@ -1101,7 +1133,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about use
         /// </summary>
-        [FhirElement("notes", Order=210)]
+        [FhirElement("notes", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {
@@ -1133,7 +1165,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marks this as a profile of the base
         /// </summary>
-        [FhirElement("base", Order=220)]
+        [FhirElement("base", Order=230)]
         [References("OperationDefinition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Base
@@ -1147,7 +1179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Invoke at the system level?
         /// </summary>
-        [FhirElement("system", Order=230)]
+        [FhirElement("system", Order=240)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean SystemElement
@@ -1180,7 +1212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Invoke at resource level for these type
         /// </summary>
-        [FhirElement("type", Order=240)]
+        [FhirElement("type", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> TypeElement
@@ -1213,7 +1245,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Invoke on an instance?
         /// </summary>
-        [FhirElement("instance", Order=250)]
+        [FhirElement("instance", Order=260)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean InstanceElement
@@ -1246,7 +1278,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parameters for the operation/query
         /// </summary>
-        [FhirElement("parameter", Order=260)]
+        [FhirElement("parameter", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> Parameter
@@ -1275,6 +1307,7 @@ namespace Hl7.Fhir.Model
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.OperationDefinition.OperationKind>)KindElement.DeepCopy();
+                if(IdempotentElement != null) dest.IdempotentElement = (Hl7.Fhir.Model.FhirBoolean)IdempotentElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
                 if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
@@ -1310,6 +1343,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
+            if( !DeepComparable.Matches(IdempotentElement, otherT.IdempotentElement)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.Matches(Base, otherT.Base)) return false;
@@ -1338,6 +1372,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
+            if( !DeepComparable.IsExactly(IdempotentElement, otherT.IdempotentElement)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
             if( !DeepComparable.IsExactly(Base, otherT.Base)) return false;

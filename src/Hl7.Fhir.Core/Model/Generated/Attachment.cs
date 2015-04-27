@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -183,13 +183,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("size", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer SizeElement
+        public Hl7.Fhir.Model.UnsignedInt SizeElement
         {
             get { return _SizeElement; }
             set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _SizeElement;
+        private Hl7.Fhir.Model.UnsignedInt _SizeElement;
         
         /// <summary>
         /// Number of bytes of content (if url provided)
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   SizeElement = null; 
                 else
-                  SizeElement = new Hl7.Fhir.Model.Integer(value);
+                  SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Size");
             }
         }
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
                 if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.Integer)SizeElement.DeepCopy();
+                if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.UnsignedInt)SizeElement.DeepCopy();
                 if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopy();

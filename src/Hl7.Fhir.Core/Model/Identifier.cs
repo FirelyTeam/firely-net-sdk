@@ -37,7 +37,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{ Label={Label} Value={_ValueElement._Value} System={System}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{ Value={ValueElement.Value} System={System}}")]
     public partial class Identifier
     {
         public const string SYSTMEM_URI = "urn:ietf:rfc:3986";

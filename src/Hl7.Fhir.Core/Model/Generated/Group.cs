@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -338,13 +338,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer QuantityElement
+        public Hl7.Fhir.Model.UnsignedInt QuantityElement
         {
             get { return _QuantityElement; }
             set { _QuantityElement = value; OnPropertyChanged("QuantityElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _QuantityElement;
+        private Hl7.Fhir.Model.UnsignedInt _QuantityElement;
         
         /// <summary>
         /// Number of members
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   QuantityElement = null; 
                 else
-                  QuantityElement = new Hl7.Fhir.Model.Integer(value);
+                  QuantityElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Quantity");
             }
         }
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
                 if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
+                if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(Characteristic.DeepCopy());
                 if(Member != null) dest.Member = new List<Hl7.Fhir.Model.ResourceReference>(Member.DeepCopy());
                 return dest;

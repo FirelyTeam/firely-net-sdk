@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -233,13 +233,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("dependent", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer DependentElement
+        public Hl7.Fhir.Model.PositiveInt DependentElement
         {
             get { return _DependentElement; }
             set { _DependentElement = value; OnPropertyChanged("DependentElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _DependentElement;
+        private Hl7.Fhir.Model.PositiveInt _DependentElement;
         
         /// <summary>
         /// The dependent number
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   DependentElement = null; 
                 else
-                  DependentElement = new Hl7.Fhir.Model.Integer(value);
+                  DependentElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Dependent");
             }
         }
@@ -265,13 +265,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("sequence", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer SequenceElement
+        public Hl7.Fhir.Model.PositiveInt SequenceElement
         {
             get { return _SequenceElement; }
             set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _SequenceElement;
+        private Hl7.Fhir.Model.PositiveInt _SequenceElement;
         
         /// <summary>
         /// The plan instance or sequence counter
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   SequenceElement = null; 
                 else
-                  SequenceElement = new Hl7.Fhir.Model.Integer(value);
+                  SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Sequence");
             }
         }
@@ -350,8 +350,8 @@ namespace Hl7.Fhir.Model
                 if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
                 if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
                 if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
-                if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.Integer)DependentElement.DeepCopy();
-                if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
+                if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.PositiveInt)DependentElement.DeepCopy();
+                if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                 if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopy();
                 if(Network != null) dest.Network = (Hl7.Fhir.Model.Identifier)Network.DeepCopy();
                 if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());

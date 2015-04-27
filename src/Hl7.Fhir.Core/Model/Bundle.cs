@@ -56,60 +56,60 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public Uri SelfLink
         {
-            get { return getEntry(ATOM_LINKREL_SELF); }
-            set { setEntry(ATOM_LINKREL_SELF, value); }
+            get { return getLink(ATOM_LINKREL_SELF); }
+            set { setLink(ATOM_LINKREL_SELF, value); }
         }
 
         [NotMapped]
         public Uri FirstLink
         {
-            get { return getEntry(ATOM_LINKREL_FIRST); }
-            set { setEntry(ATOM_LINKREL_FIRST, value); }
+            get { return getLink(ATOM_LINKREL_FIRST); }
+            set { setLink(ATOM_LINKREL_FIRST, value); }
         }
 
         [NotMapped]
         public Uri PreviousLink
         {
-            get { return getEntry(ATOM_LINKREL_PREVIOUS); }
-            set { setEntry(ATOM_LINKREL_PREVIOUS, value); }
+            get { return getLink(ATOM_LINKREL_PREVIOUS); }
+            set { setLink(ATOM_LINKREL_PREVIOUS, value); }
         }
 
         [NotMapped]
         public Uri NextLink
         {
-            get { return getEntry(ATOM_LINKREL_NEXT); }
-            set { setEntry(ATOM_LINKREL_NEXT, value); }
+            get { return getLink(ATOM_LINKREL_NEXT); }
+            set { setLink(ATOM_LINKREL_NEXT, value); }
         }
 
         [NotMapped]
         public Uri LastLink
         {
-            get { return getEntry(ATOM_LINKREL_LAST); }
-            set { setEntry(ATOM_LINKREL_LAST, value); }
+            get { return getLink(ATOM_LINKREL_LAST); }
+            set { setLink(ATOM_LINKREL_LAST, value); }
         }
 
         [NotMapped]
         public Uri SearchLink
         {
-            get { return getEntry(ATOM_LINKREL_SEARCH); }
-            set { setEntry(ATOM_LINKREL_SEARCH, value); }
+            get { return getLink(ATOM_LINKREL_SEARCH); }
+            set { setLink(ATOM_LINKREL_SEARCH, value); }
         }
 
         [NotMapped]
         public Uri PredecessorVersionLink
         {
-            get { return getEntry(ATOM_LINKREL_PREDVERSION); }
-            set { setEntry(ATOM_LINKREL_PREDVERSION, value); }
+            get { return getLink(ATOM_LINKREL_PREDVERSION); }
+            set { setLink(ATOM_LINKREL_PREDVERSION, value); }
         }
 
         [NotMapped]
         public Uri Alternate
         {
-            get { return getEntry(ATOM_LINKREL_ALTERNATE); }
-            set { setEntry(ATOM_LINKREL_ALTERNATE, value); }
+            get { return getLink(ATOM_LINKREL_ALTERNATE); }
+            set { setLink(ATOM_LINKREL_ALTERNATE, value); }
         }
 
-        private Uri getEntry(string rel)
+        private Uri getLink(string rel)
         {
             if (Link == null) return null;
 
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
-        private void setEntry(string rel, Uri uri)
+        private void setLink(string rel, Uri uri)
         {
             if (Link == null) Link = new List<BundleLinkComponent>();
 
@@ -141,6 +141,13 @@ namespace Hl7.Fhir.Model
         internal static bool UriHasValue(Uri u)
         {
             return u != null && !String.IsNullOrEmpty(u.ToString());
+        }
+
+        public Bundle AddResourceEntry(Resource r)
+        {
+            Entry.Add(new BundleEntryComponent() { Resource = r });
+
+            return this;
         }
     }  
 }

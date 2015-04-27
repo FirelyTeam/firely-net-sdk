@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Bundle Search(SearchParams q, string resourceType = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Search(q,resourceType).Build();
+            var tx = new TransactionBuilder(Endpoint).Search(q,resourceType).ToBundle();
             return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
         }
 
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Rest
 
             if (continueAt != null)
             {
-                var tx = new TransactionBuilder(Endpoint).Get(continueAt).Build();
+                var tx = new TransactionBuilder(Endpoint).Get(continueAt).ToBundle();
                 return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);                
             }
             else

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,13 +199,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("dimensions", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer DimensionsElement
+        public Hl7.Fhir.Model.PositiveInt DimensionsElement
         {
             get { return _DimensionsElement; }
             set { _DimensionsElement = value; OnPropertyChanged("DimensionsElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _DimensionsElement;
+        private Hl7.Fhir.Model.PositiveInt _DimensionsElement;
         
         /// <summary>
         /// Number of sample points at each time point
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   DimensionsElement = null; 
                 else
-                  DimensionsElement = new Hl7.Fhir.Model.Integer(value);
+                  DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Dimensions");
             }
         }
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
                 if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                 if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();
                 if(UpperLimitElement != null) dest.UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal)UpperLimitElement.DeepCopy();
-                if(DimensionsElement != null) dest.DimensionsElement = (Hl7.Fhir.Model.Integer)DimensionsElement.DeepCopy();
+                if(DimensionsElement != null) dest.DimensionsElement = (Hl7.Fhir.Model.PositiveInt)DimensionsElement.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.FhirString)DataElement.DeepCopy();
                 return dest;
             }

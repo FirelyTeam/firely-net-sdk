@@ -33,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -40,9 +41,22 @@ namespace Hl7.Fhir.Model
     {
         List<Extension> Extension { get; set; }
     }
-   
+
+    public interface IModifierExtendable : IExtendable
+    {
+        List<Extension> ModifierExtension { get; set; }
+    }
+
     public static class ExtensionExtensions
     {
+        public static IEnumerable<Extension> AllExtensions(this IExtendable extendable)
+        {
+            if (extendable is IModifierExtendable)
+                return ((IModifierExtendable)extendable).ModifierExtension.Concat(extendable.Extension);
+            else
+                return extendable.Extension;
+        }
+
         /// <summary>
         /// Return the first extension with the given uri, or null if none was found
         /// </summary>
@@ -51,31 +65,9 @@ namespace Hl7.Fhir.Model
         /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
         public static Extension GetExtension(this IExtendable extendable, string uri)
         {
-            if (extendable.Extension != null)
-            {
-                return GetExtensions(extendable, uri).FirstOrDefault();
-            }
-
-            return null;
+            return extendable.AllExtensions().FirstOrDefault(ext => ext.Url == uri);
         }
 
-        /// <summary>
-        /// Return the first extension with the given uri, or null if none was found
-        /// </summary>
-        /// <param name="extendable"></param>
-        /// <param name="uri"></param>
-        /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
-        public static Element GetExtensionValue(this IExtendable extendable, string uri)
-        {
-            if (extendable.Extension != null)
-            {
-                var ext = GetExtensions(extendable, uri).FirstOrDefault();
-                if (ext != null)
-                    return ext.Value;
-            }
-
-            return null;
-        }
 
         /// <summary>
         /// Find all extensions with the given uri.
@@ -85,12 +77,70 @@ namespace Hl7.Fhir.Model
         /// <returns>The list of extensions with a matching uri, or empty list if none were found.</returns>
         public static IEnumerable<Extension> GetExtensions(this IExtendable extendable, string uri)
         {
-            if (extendable.Extension != null)
-            {
-                return extendable.Extension.Where(ext => ext.Url == uri);
-            }
+            return extendable.AllExtensions().Where(ext => ext.Url == uri);
+        }
+
+
+        /// <summary>
+        /// Find all extensions with the given uri.
+        /// </summary>
+        /// <param name="extendable"></param>
+        /// <param name="uri"></param>
+        /// <returns>The list of extensions with a matching uri, or empty list if none were found.</returns>
+        /// <remarks>If multiple extensions with the same uri are found, this function returns the first modifier extensions,
+        /// otherwise the first normal extension.</remarks>        
+        public static IEnumerable<Extension> GetExtensions(this IModifierExtendable extendable, string uri)
+        {
+            return extendable.AllExtensions().Where(ext => ext.Url == uri);
+        }
+
+       
+        /// <summary>
+        /// Return the first extension with the given uri as a string, or null if none was found
+        /// </summary>
+        /// <param name="extendable"></param>
+        /// <param name="uri"></param>
+        /// <returns>The first uri, or null if no extension with the given uri was found.</returns>
+        public static string GetStringExtension(this IExtendable extendable, string uri)
+        {
+            var ext = extendable.GetExtension(uri);
+
+            if (ext != null && ext.Value != null && ext.Value is FhirString)
+                    return ((FhirString)ext.Value).Value;
 
             return null;
+        }
+
+
+        public static bool? GetBoolExtension(this IExtendable extendable, string uri)
+        {
+            var ext = extendable.GetExtension(uri);
+
+            if (ext != null && ext.Value != null && ext.Value is FhirBoolean)
+                return ((FhirBoolean)ext.Value).Value;
+
+            return null;
+        }
+
+
+        public static T GetExtensionValue<T>(this IExtendable extendable, string uri) where T : Element
+        {
+            var ext = extendable.GetExtension(uri);
+
+            if (ext != null && ext.Value != null && ext.Value is T)
+                return (T)ext.Value;
+
+            return null;
+        }
+
+        public static bool HasExtensions(this IExtendable extendable)
+        {
+            return !extendable.Extension.IsNullOrEmpty();
+        }
+
+        public static bool HasExtensions(this IModifierExtendable extendable)
+        {
+            return !extendable.Extension.IsNullOrEmpty() && !extendable.ModifierExtension.IsNullOrEmpty();
         }
 
 
@@ -100,14 +150,16 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <param name="value"></param>
+        /// <param name="isModifier"></param>
         /// <returns>The newly added Extension</returns>
-        public static Extension AddExtension(this IExtendable extendable, string uri, Element value)
+        public static Extension AddExtension(this IExtendable extendable, string uri, Element value, bool isModifier=false)
         {
-            if (extendable.Extension == null)
-                extendable.Extension = new List<Extension>();
-
             var newExtension = new Extension() { Url = uri, Value = value };
-            extendable.Extension.Add(newExtension);
+
+            if (isModifier == true && extendable is IModifierExtendable)
+                ((IModifierExtendable)extendable).ModifierExtension.Add(newExtension);
+            else
+                extendable.Extension.Add(newExtension);
 
             return newExtension;
         }
@@ -120,13 +172,21 @@ namespace Hl7.Fhir.Model
         /// <param name="uri"></param>
         public static void RemoveExtension(this IExtendable extendable, string uri)
         {
-            if (extendable.Extension == null) return;
-
             var remove = extendable.Extension.Where(ext => ext.Url == uri).ToList();
            
-            foreach(var ext in remove )
+            foreach(var ext in remove)
                 extendable.Extension.Remove(ext);
+
+            if (extendable is IModifierExtendable)
+            {
+                var me = (IModifierExtendable)extendable;
+                remove = me.ModifierExtension.Where(ext => ext.Url == uri).ToList();
+
+                foreach (var ext in remove)
+                    me.ModifierExtension.Remove(ext);
+            }
         }
+
 
         /// <summary>
         /// Add an extension with the given uri and value, removing any pre-existsing extensions
@@ -135,15 +195,16 @@ namespace Hl7.Fhir.Model
         /// <param name="extendable"></param>
         /// <param name="uri"></param>
         /// <param name="value"></param>
+        /// <param name="isModifier"></param>
         /// <returns>The newly added extension</returns>
-        public static Extension SetExtension(this IExtendable extendable, string uri, Element value)
+        public static Extension SetExtension(this IExtendable extendable, string uri, Element value, bool isModifier=false)
         {
             if (extendable.Extension == null)
                 extendable.Extension = new List<Extension>();
 
             RemoveExtension(extendable, uri);
 
-            return AddExtension(extendable, uri, value);
+            return AddExtension(extendable, uri, value, isModifier);
         }
     }
 }

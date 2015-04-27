@@ -36,42 +36,44 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Typed element containing the primitive xhtml
+    /// Typed element containing the primitive positiveInt
     /// </summary>
-    [FhirType("xhtml")]
+    [FhirType("positiveInt")]
     [DataContract]
-    public partial class XHtml : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
+    public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "xhtml"; } }
+        public override string TypeName { get { return "positiveInt"; } }
         
-        public XHtml(string value)
+        // Must conform to the pattern "[1-9][0-9]+"
+        public const string PATTERN = @"[1-9][0-9]+";
+        
+        public PositiveInt(int? value)
         {
             Value = value; 
         }
         
-        public XHtml(): this((string)null) {}
+        public PositiveInt(): this((int?)null) {}
         
         /// <summary>
         /// Primitive value of the element
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
-        [NarrativeXhtmlPattern]
         [DataMember]
-        public string Value
+        public int? Value
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { return (int?)ObjectValue; }
+            set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as XHtml;
+            var dest = other as PositiveInt;
             
             if (dest != null)
             {
@@ -85,12 +87,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new XHtml());
+            return CopyTo(new PositiveInt());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as XHtml;
+            var otherT = other as PositiveInt;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -101,7 +103,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as XHtml;
+            var otherT = other as PositiveInt;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

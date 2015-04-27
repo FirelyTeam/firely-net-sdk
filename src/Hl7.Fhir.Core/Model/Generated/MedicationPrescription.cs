@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -445,13 +445,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("numberOfRepeatsAllowed", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer NumberOfRepeatsAllowedElement
+            public Hl7.Fhir.Model.PositiveInt NumberOfRepeatsAllowedElement
             {
                 get { return _NumberOfRepeatsAllowedElement; }
                 set { _NumberOfRepeatsAllowedElement = value; OnPropertyChanged("NumberOfRepeatsAllowedElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _NumberOfRepeatsAllowedElement;
+            private Hl7.Fhir.Model.PositiveInt _NumberOfRepeatsAllowedElement;
             
             /// <summary>
             /// # of refills authorized
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       NumberOfRepeatsAllowedElement = null; 
                     else
-                      NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.Integer(value);
+                      NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("NumberOfRepeatsAllowed");
                 }
             }
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
                     if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
-                    if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.Integer)NumberOfRepeatsAllowedElement.DeepCopy();
+                    if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.Duration)ExpectedSupplyDuration.DeepCopy();
                     return dest;

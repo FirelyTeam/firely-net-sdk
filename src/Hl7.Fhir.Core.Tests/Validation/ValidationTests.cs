@@ -117,6 +117,9 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(oo,true);
 
             issue.Severity = OperationOutcome.IssueSeverity.Information;
+            validateErrorOrFail(oo, true);
+
+            issue.Code = new CodeableConcept("http://somesystem.org/some", "bla");
             DotNetAttributeValidation.Validate(oo, true);
         }
 
@@ -170,11 +173,10 @@ namespace Hl7.Fhir.Tests.Validation
         {
             // First create an incomplete encounter (class not supplied)
             var enc = new Encounter();
-            enc.Status = Encounter.EncounterState.Planned;
-            validateErrorOrFail(enc, membername: "ClassElement");
+            validateErrorOrFail(enc, membername: "StatusElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
-            enc.Class = Encounter.EncounterClass.Ambulatory;
+            enc.Status = Encounter.EncounterState.Planned;
 
             // Now, it should work
             DotNetAttributeValidation.Validate(enc);

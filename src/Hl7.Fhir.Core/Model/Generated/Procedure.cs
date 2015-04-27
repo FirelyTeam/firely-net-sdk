@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An action that is performed on a patient
+    /// An action that was or is currently being performed on a patient
     /// </summary>
     [FhirType("Procedure", IsResource=true)]
     [DataContract]

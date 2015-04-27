@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, Mar 30, 2015 18:46+0200 for FHIR v0.4.0
+// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -169,6 +169,39 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("PCV")]
             PCV,
+        }
+        
+        /// <summary>
+        /// Code for a known / defined timing pattern
+        /// </summary>
+        [FhirEnumeration("TimingAbbreviation")]
+        public enum TimingAbbreviation
+        {
+            /// <summary>
+            /// Two times a day at institution specified time.
+            /// </summary>
+            [EnumLiteral("BID")]
+            BID,
+            /// <summary>
+            /// Three times a day at institution specified time.
+            /// </summary>
+            [EnumLiteral("TID")]
+            TID,
+            /// <summary>
+            /// Four times a day at institution specified time.
+            /// </summary>
+            [EnumLiteral("QID")]
+            QID,
+            /// <summary>
+            /// Every morning at institution specified times.
+            /// </summary>
+            [EnumLiteral("AM")]
+            AM,
+            /// <summary>
+            /// Every afternoon at institution specified times.
+            /// </summary>
+            [EnumLiteral("PM")]
+            PM,
         }
         
         [FhirType("TimingRepeatComponent")]
@@ -596,6 +629,19 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Timing.TimingRepeatComponent _Repeat;
         
+        /// <summary>
+        /// BID | TID | QID | AM | PM +
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=50)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Code;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Timing;
@@ -605,6 +651,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(EventElement != null) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopy());
                 if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.TimingRepeatComponent)Repeat.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 return dest;
             }
             else
@@ -624,6 +671,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(EventElement, otherT.EventElement)) return false;
             if( !DeepComparable.Matches(Repeat, otherT.Repeat)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             
             return true;
         }
@@ -636,6 +684,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(EventElement, otherT.EventElement)) return false;
             if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             
             return true;
         }

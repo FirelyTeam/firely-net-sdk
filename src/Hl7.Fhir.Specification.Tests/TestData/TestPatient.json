@@ -1,7 +1,6 @@
 {
     "resourceType": "Patient",
     "identifier": [{
-        "label": "MRN",
         "period": {"start": "2001-05-06"},
         "assigner": {"display": "Acme\u202fHealthcare"},
         "use": "usual",

@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Source
             CacheDuration = cacheDuration;
 
             _artifactNames = new Cache<IEnumerable<string>>(id=>Source.ListArtifactNames(), CacheDuration);
-            _conformanceResources = new Cache<Resource>(id => Source.ReadConformanceResource(id), CacheDuration);
+            _conformanceResources = new Cache<Resource>(id => Source.LoadConformanceResourceByUrl(id), CacheDuration);
             _resourceInformation = new Cache<IEnumerable<ConformanceInformation>>(id=>Source.ListConformanceResources(), CacheDuration);
         }
 
@@ -47,10 +47,10 @@ namespace Hl7.Fhir.Specification.Source
 
         public int CacheDuration { get; set; }
 
-        public Stream ReadContentArtifact(string name)
+        public Stream LoadArtifactByName(string name)
         {                    
             // We don't cache a stream (yet?)
-            return Source.ReadContentArtifact(name);
+            return Source.LoadArtifactByName(name);
         }
 
         private Cache<IEnumerable<string>> _artifactNames;
@@ -62,9 +62,9 @@ namespace Hl7.Fhir.Specification.Source
 
         private Cache<Resource> _conformanceResources;
 
-        public Resource ReadConformanceResource(string identifier)
+        public Resource LoadConformanceResourceByUrl(string url)
         {
-            return _conformanceResources.Get(identifier);
+            return _conformanceResources.Get(url);
         }
 
 
