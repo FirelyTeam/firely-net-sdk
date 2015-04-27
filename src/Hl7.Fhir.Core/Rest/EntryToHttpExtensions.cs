@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.Reflection;
 
 namespace Hl7.Fhir.Rest
 {
@@ -50,7 +51,11 @@ namespace Hl7.Fhir.Rest
 
             if (interaction.IfMatch != null) request.Headers["If-Match"] = interaction.IfMatch;
             if (interaction.IfNoneMatch != null) request.Headers["If-None-Match"] = interaction.IfNoneMatch;
+#if PORTABLE45
+            if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
+#else
             if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
+#endif
             if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
 
             if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)

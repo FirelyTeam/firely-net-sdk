@@ -33,7 +33,11 @@ namespace Hl7.Fhir.Model
             return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || !be.IsDeleted()));
         }
 
-
+        /// <summary>
+        /// Identifies if this entry is a deleted transaction (entry.Transaction.Method == DELETE)
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
         public static bool IsDeleted(this Bundle.BundleEntryComponent entry)
         {
             if (entry.Transaction != null)
