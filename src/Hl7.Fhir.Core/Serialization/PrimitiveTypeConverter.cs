@@ -184,12 +184,7 @@ namespace Hl7.Fhir.Serialization
      
         public static string GetValueAsString(this Primitive p)
         {
-            var value = ReflectionHelper.FindPublicProperty(p.GetType(), "Value").GetValue(p, null);
-
-            if (value == null)
-                return null;
-            else
-                return ConvertTo<string>(value);
+            return ConvertTo<string>(p.ObjectValue);
         }
 
     }
