@@ -236,7 +236,6 @@ namespace Hl7.Fhir.Test
             Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("http://nu.nl/fhir/crap"));
             Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("x/y/z/4"));
             Assert.IsFalse(ResourceIdentity.IsRestResourceIdentity("urn:oid:1.2.3.4.5"));
-
         }
 
     }
