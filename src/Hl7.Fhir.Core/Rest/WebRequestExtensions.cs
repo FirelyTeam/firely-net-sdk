@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
+    using System.Diagnostics;
+
     public static class WebRequestExtensions
     {
         public static void WriteBody(this WebRequest request, byte[] data)
@@ -120,9 +122,11 @@ namespace Hl7.Fhir.Rest
                 });
 
             var async = req.BeginGetResponse(callback, null);
-
+            
             if (!async.IsCompleted)
             {
+                ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
+
                 //async.AsyncWaitHandle.WaitOne();
                 // Not having thread affinity seems to work better with ManualResetEvent
                 // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
@@ -135,6 +139,18 @@ namespace Hl7.Fhir.Rest
             if (caught != null) throw caught;
 
             return result;
+        }
+
+        private static void TimeoutCallback(object state, bool timedOut)
+        {
+            if (timedOut)
+            {
+                HttpWebRequest request = state as HttpWebRequest;
+                if (request != null)
+                {
+                    request.Abort();
+                }
+            }
         }
     }
 }
