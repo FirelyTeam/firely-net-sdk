@@ -162,6 +162,10 @@ namespace Hl7.Fhir.Rest
 
             if (!async.IsCompleted)
             {
+#if !PORTABLE45
+                ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
+#endif
+
                 //async.AsyncWaitHandle.WaitOne();
                 // Not having thread affinity seems to work better with ManualResetEvent
                 // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
@@ -175,5 +179,23 @@ namespace Hl7.Fhir.Rest
 
             return result;
         }
+
+
+        private static void TimeoutCallback(object state, bool timedOut)
+        {
+            if (timedOut)
+            {
+                HttpWebRequest request = state as HttpWebRequest;
+                if (request != null)
+                {
+                    request.Abort();
+                }
+            }
+        }
+
     }
 }
+
+
+
+
