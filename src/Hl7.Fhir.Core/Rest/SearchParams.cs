@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Rest
         {
             Include = new List<string>();
             Sort = new List<Tuple<string, SortOrder>>();
-            _parameters = new List<Tuple<string, string>>();
+            Parameters = new List<Tuple<string, string>>();
         }
 
         /// <summary>
@@ -114,13 +114,15 @@ namespace Hl7.Fhir.Rest
             }
             else if (name == SEARCH_PARAM_FILTER) Filter = value;
             else
-                _parameters.Add(Tuple.Create(name, value));
+                Parameters.Add(Tuple.Create(name, value));
 
             return this;
         }
 
-
-        public IList<Tuple<string,string>> _parameters { get; private set; }
+        /// <summary>
+        /// The 'regular' parameters. The parameters that have no special meaning.
+        /// </summary>
+        public IList<Tuple<string,string>> Parameters { get; private set; }
 
 
         public const string SEARCH_PARAM_QUERY = "_query";
@@ -246,7 +248,7 @@ namespace Hl7.Fhir.Rest
             if (Summary != null) result.Add(Tuple.Create(SEARCH_PARAM_SUMMARY, Summary.Value ? "true" : "false"));
             if (!String.IsNullOrEmpty(Filter)) result.Add(Tuple.Create(SEARCH_PARAM_FILTER, Filter));
 
-            result.AddRange(_parameters);
+            result.AddRange(Parameters);
             return result;
         }
 
