@@ -145,7 +145,8 @@ namespace Hl7.Fhir.Rest
             // by the server.
             if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
             {
-                return OperationOutcome.ForMessage("Encountered non xml/json in body: " + bodyText);
+                //return OperationOutcome.ForMessage("Encountered non xml/json in body: " + bodyText);
+                throw new FormatException("Encountered non xml/json in body: " + bodyText);
             }
 
             try
@@ -159,7 +160,8 @@ namespace Hl7.Fhir.Rest
             }
             catch(FormatException exc)
             {
-                return OperationOutcome.ForException(new FhirOperationException("Body returned by server cannot be parsed", exc));
+                //return OperationOutcome.ForException(new FhirOperationException("Body returned by server cannot be parsed", exc));
+                throw exc;
             }
         }
 
@@ -249,42 +251,5 @@ namespace Hl7.Fhir.Rest
         {
             return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
         }
-
-        //public T BodyAsResource<T>() where T : Resource
-        //{
-        //    var result = BodyAsResource();
-
-        //    if (!(result is T))
-        //    {
-        //        throw new FhirOperationException(
-        //            String.Format("Received a resource of type {0} (FHIR: {1}), expected a {2} resource",
-        //                            result.GetType().Name, result.TypeName, typeof(T).Name));
-        //    }
-
-        //    return (T)result;
-        //}
-
-
-      
-
-        //public ResourceIdentity GetIdentityFromHeaders()
-        //{
-        //    var location = Location ?? ContentLocation;
-
-        //    if (!String.IsNullOrEmpty(location))
-        //    {
-        //        ResourceIdentity reqId = new ResourceIdentity(location);
-
-        //        if (reqId.VersionId == null && !String.IsNullOrEmpty(ETag))
-        //        {
-        //            Debug.WriteLine("Result did not have version nor location, using ETag instead");
-        //            reqId = reqId.WithVersion(ETag);
-        //        }
-
-        //        return reqId;
-        //    }
-
-        //    return null;
-        //}
     }
 }

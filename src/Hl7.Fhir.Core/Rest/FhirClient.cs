@@ -49,37 +49,58 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
         public FhirClient(string endpoint)
             : this(new Uri(endpoint))
         {
         }
 
+        #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
+        /// <summary>
+        /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
+        /// </summary>
         public ResourceFormat PreferredFormat
         {
             get     { return _requester.PreferredFormat; }
             set     { _requester.PreferredFormat = value; }
         }
         
+        /// <summary>
+        /// When passing the content preference, use the _format parameter instead of the request header
+        /// </summary>
         public bool UseFormatParam 
         {
             get     { return _requester.UseFormatParameter; }
             set     { _requester.UseFormatParameter = value; }
         }
 
+        /// <summary>
+        /// The timeout (in milliseconds) to be used when making calls to the FHIR server
+        /// </summary>
         public int Timeout
         {
             get { return _requester.Timeout; }
             set { _requester.Timeout = value; }
         }
 
-
+        /// <summary>
+        /// Should calls to Create, Update and transaction operations return the whole content,
+        /// or expect nobody, or an OperationOutcome
+        /// </summary>
+        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
         public bool ReturnFullResource
         {
             get { return _requester.Prefer == Prefer.ReturnRepresentation; }
             set { _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; }
         }
+        #endregion
 
-
+        /// <summary>
+        /// The last transaction result that was executed on this connection to the FHIR server
+        /// </summary>
         public Bundle.BundleEntryTransactionResponseComponent LastResult        
         {
             get { return _requester.LastResult; }
@@ -87,7 +108,7 @@ namespace Hl7.Fhir.Rest
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
-        /// instead of explicit uri endpoints.
+        /// instead of explicit uri endpoints. This will always have a trailing "/"
         /// </summary>
         public Uri Endpoint
         {
@@ -102,12 +123,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">The url of the Resource to fetch. This can be a Resource id url or a version-specific
         /// Resource url.</param>
         /// <param name="ifNoneMatch">The (weak) ETag to use in a conditional read. Optional.</param>
-        /// <param name="ifModifiedSince">Last modified since date in a conditional read. Optional.</param>
+        /// <param name="ifModifiedSince">Last modified since date in a conditional read. Optional. (refer to spec 2.1.0.5) If this is used, the client will throw an exception you need</param>
         /// <typeparam name="TResource">The type of resource to read. Resource or DomainResource is allowed if exact type is unknown</typeparam>
-        /// <returns>The requested resource as a ResourceEntry&lt;T&gt;. This operation will throw an exception
-        /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
-        /// url, it must reference an address within the endpoint.</returns>
+        /// <returns>
+        /// The requested resource. This operation will throw an exception
+        /// if the resource has been deleted or does not exist. 
+        /// The specified may be relative or absolute, if it is an absolute
+        /// url, it must reference an address within the endpoint.
+        /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
+        /// <exception cref="FHIROperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
         public TResource Read<TResource>(Uri location, string ifNoneMatch=null, DateTimeOffset? ifModifiedSince=null) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull("location");
@@ -141,7 +166,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of resource to read. Resource or DomainResource is allowed if exact type is unknown</typeparam>
         /// <returns>The requested resource</returns>
         /// <remarks>This operation will throw an exception
-        /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an abolute
+        /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an absolute
         /// url, it must reference an address within the endpoint.</remarks>
         public TResource Read<TResource>(string location, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
@@ -322,6 +347,21 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
+        /// Retrieve the version history for a specific resource type
+        /// </summary>
+        /// <param name="since">Optional. Returns only changes after the given date</param>
+        /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
+        /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
+        /// <returns>A bundle with the history for the indicated instance, may contain both 
+        /// ResourceEntries and DeletedEntries.</returns>
+        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, bool summary = false) where TResource : Resource, new()
+        {
+            string collection = typeof(TResource).GetCollectionName();
+            return internalHistory(collection, null, since, pageSize, summary);
+        }
+
+        /// <summary>
         /// Retrieve the version history for a resource at a given location
         /// </summary>
         /// <param name="location">The address of the resource to get the history for</param>
@@ -376,7 +416,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
-        /// <param name="bundle">The bundled creates, updates and delted</param>
+        /// <param name="bundle">The bundled creates, updates and deleted</param>
         /// <returns>A bundle as returned by the server after it has processed the transaction, or null
         /// if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
@@ -450,7 +490,7 @@ namespace Hl7.Fhir.Rest
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
         /// </summary>
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
-        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
+        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(Uri url)
         {
@@ -464,7 +504,7 @@ namespace Hl7.Fhir.Rest
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
         /// </summary>
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
-        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the givel url</returns>
+        /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(string url)
         {

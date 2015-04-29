@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Internal class which gives access to files within a zip whilst avoiding unpacking that zip on every access.
     /// The ZipCacher will unpack the zip once and store the contents in a cache directory, serving files from this cache.
-    /// When the ZipCacher detects the zip is more recents than its cache, it will update the cache directory automatically.
+    /// When the ZipCacher detects the zip is more recent than its cache, it will update the cache directory automatically.
     /// 
     /// The ZipCacher will either use a different cache for each instance, or -given a persistent "cache key"- reuse the
     /// cache from a previous instantiation of ZipCacher. When using a shared cache over multiple ZipCachers with the/
@@ -83,7 +83,12 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
+#if NET40
+            ICSharpCode.SharpZipLib.Zip.FastZip  zf = new ICSharpCode.SharpZipLib.Zip.FastZip();
+            zf.ExtractZip(_zipPath, dir.FullName, "*.*");
+#else
             ZipFile.ExtractToDirectory(_zipPath, dir.FullName);
+#endif
 
             // Set the last write time to be equal to the write time of the zip file,
             // this way, we can compare this time to the write times of newer zips and
