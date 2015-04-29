@@ -17,8 +17,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    using System.Diagnostics;
-
     public static class WebRequestExtensions
     {
         public static void WriteBody(this WebRequest request, byte[] data)
@@ -122,10 +120,12 @@ namespace Hl7.Fhir.Rest
                 });
 
             var async = req.BeginGetResponse(callback, null);
-            
+
             if (!async.IsCompleted)
             {
+#if !PORTABLE45
                 ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
+#endif
 
                 //async.AsyncWaitHandle.WaitOne();
                 // Not having thread affinity seems to work better with ManualResetEvent
