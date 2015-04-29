@@ -53,6 +53,7 @@ namespace Hl7.Fhir.Rest
         public SearchParams()
         {
             Include = new List<string>();
+            RevInclude = new List<string>();
             Sort = new List<Tuple<string, SortOrder>>();
             Parameters = new List<Tuple<string, string>>();
         }
@@ -60,18 +61,22 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// List of all the search parameter that have some special meaning.
         /// Primarily used to filter to the non-special parameters.
-        /// Notice that _id, _text, _content, _tag, _profile and _security are predefined in the standard,
-        /// but not can still be parsed as regular criteria. So they are not in the RESERVED_PARAMETERS.
+        /// Notice that _query, _text, _filter and _content are predefined searches in the standard,
+        /// but cannot be parsed as regular criteria. So they are included in the RESERVED_PARAMETERS 
+        /// and thus not included in the Parameters property
         /// </summary>
         public static readonly string[] RESERVED_PARAMETERS = new string[] {
             SEARCH_PARAM_QUERY,
             SEARCH_PARAM_TEXT,
             SEARCH_PARAM_CONTENT,
             SEARCH_PARAM_COUNT,
-            SEARCH_PARAM_INCLUDE,
             SEARCH_PARAM_SORT,
+            SEARCH_PARAM_FILTER,
+            SEARCH_PARAM_INCLUDE,
+            SEARCH_PARAM_REVINCLUDE,
             SEARCH_PARAM_SUMMARY,
-            SEARCH_PARAM_FILTER
+            SEARCH_PARAM_CONTAINED,
+            SEARCH_PARAM_CONTAINEDTYPE
             };
      
      
@@ -81,6 +86,12 @@ namespace Hl7.Fhir.Rest
         public const char SEARCH_CHAINSEPARATOR = '.';
         public const char SEARCH_MODIFIERSEPARATOR = ':';
 
+        public const string SEARCH_CONTAINED_TRUE = "true";
+        public const string SEARCH_CONTAINED_FALSE = "false";
+        public const string SEARCH_CONTAINED_BOTH = "both";
+
+        public const string SEARCH_CONTAINED_TYPE_CONTAINER = "container";
+        public const string SEARCH_CONTAINED_TYPE_CONTAINED = "contained";
 
         /// <summary>
         /// Add a parameter with a given name and value.
@@ -98,6 +109,7 @@ namespace Hl7.Fhir.Rest
             else if (name == SEARCH_PARAM_CONTENT) Content = value;
             else if (name == SEARCH_PARAM_COUNT) Count = Int32.Parse(value);
             else if (name == SEARCH_PARAM_INCLUDE) Include.Add(value);
+            else if (name == SEARCH_PARAM_REVINCLUDE) RevInclude.Add(value);
             else if (name.StartsWith(SEARCH_PARAM_SORT + SEARCH_MODIFIERSEPARATOR))
             {
                 var order = name.Substring(SEARCH_PARAM_SORT.Length + 1).ToLower();
@@ -113,6 +125,19 @@ namespace Hl7.Fhir.Rest
                 else throw Error.Format("Cannot parse summary value '{0}'", null, value);
             }
             else if (name == SEARCH_PARAM_FILTER) Filter = value;
+            else if (name == SEARCH_PARAM_CONTAINED)
+            {
+                if (SEARCH_CONTAINED_TRUE.Equals(value)) Contained = ContainedSearch.True;
+                else if (SEARCH_CONTAINED_FALSE.Equals(value)) Contained = ContainedSearch.False;
+                else if (SEARCH_CONTAINED_BOTH.Equals(value)) Contained = ContainedSearch.Both;
+                else throw Error.Format("Cannot parse contained value '{0}'", null, value);
+            }
+            else if (name == SEARCH_PARAM_CONTAINEDTYPE)
+            {
+                if (SEARCH_CONTAINED_TYPE_CONTAINED.Equals(value)) ContainedType = ContainedResult.Contained;
+                else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
+                else throw Error.Format("Cannot parse containedType value '{0}'", null, value);
+            }
             else
                 Parameters.Add(Tuple.Create(name, value));
 
@@ -133,8 +158,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Query  { get; set; }
-
+        public string Query { get; set; }
 
         public const string SEARCH_PARAM_TEXT = "_text";
 
@@ -215,7 +239,27 @@ namespace Hl7.Fhir.Rest
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IList<string> Include { get; private set; }
-      
+
+
+        public const string SEARCH_PARAM_REVINCLUDE = "_revinclude";
+
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IList<string> RevInclude { get; private set; }
+
+
+        public const string SEARCH_PARAM_CONTAINED = "_contained";
+
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public ContainedSearch? Contained { get; private set; }
+
+
+        public const string SEARCH_PARAM_CONTAINEDTYPE = "_containedType";
+
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public ContainedResult? ContainedType { get; private set; }
 
         public static SearchParams FromUriParamList(IEnumerable<Tuple<string,string>> parameters)
         {
@@ -244,9 +288,12 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(Content)) result.Add(Tuple.Create(SEARCH_PARAM_CONTENT, Content));
             if (Count != null) result.Add(Tuple.Create(SEARCH_PARAM_COUNT, Count.Value.ToString()));
             if (Include.Any()) result.AddRange(Include.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE, i)));
+            if (RevInclude.Any()) result.AddRange(RevInclude.Select(i => Tuple.Create(SEARCH_PARAM_REVINCLUDE, i)));
             if (Sort.Any()) result.AddRange(Sort.Select(s => Tuple.Create(createSortParamName(s.Item2), s.Item1)));
             if (Summary != null) result.Add(Tuple.Create(SEARCH_PARAM_SUMMARY, Summary.Value ? "true" : "false"));
             if (!String.IsNullOrEmpty(Filter)) result.Add(Tuple.Create(SEARCH_PARAM_FILTER, Filter));
+            if (Contained != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINED, Contained.Value.ToString().ToLower()));
+            if (ContainedType != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINEDTYPE, ContainedType.Value.ToString().ToLower()));
 
             result.AddRange(Parameters);
             return result;
@@ -290,5 +337,18 @@ namespace Hl7.Fhir.Rest
     {
         Ascending,
         Descending
-    }  
+    }
+
+    public enum ContainedSearch
+    {
+        True,
+        False,
+        Both
+    }
+
+    public enum ContainedResult
+    {
+        Container,
+        Contained
+    }
 }
