@@ -113,10 +113,10 @@ namespace Hl7.Fhir.Rest
             else if (name.StartsWith(SEARCH_PARAM_SORT + SEARCH_MODIFIERSEPARATOR))
             {
                 var order = name.Substring(SEARCH_PARAM_SORT.Length + 1).ToLower();
-
-                if (order.StartsWith("asc")) Sort.Add(Tuple.Create(name, SortOrder.Ascending));
-                else if (order.StartsWith("desc")) Sort.Add(Tuple.Create(name, SortOrder.Descending));
-                else throw Error.Format("Cannot parse sort order '{0}'", null, value);
+                
+                if (order.StartsWith("asc")) Sort.Add(Tuple.Create(value, SortOrder.Ascending));
+                else if (order.StartsWith("desc")) Sort.Add(Tuple.Create(value, SortOrder.Descending));
+                else throw Error.Format("Cannot parse sort order '{0}'", null, order);
             }
             else if (name == SEARCH_PARAM_SUMMARY)
             {

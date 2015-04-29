@@ -137,5 +137,37 @@ namespace Hl7.Fhir.Test.Rest
 
             Assert.IsFalse(q.Summary.Value);
         }
+
+        [TestMethod]
+        public void SerializeParams()
+        {
+            var q = new SearchParams();
+            q.Query = "special";
+            q.Count = 31;
+            q.Summary = true;
+            q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
+            q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
+            q.Include.Add("Patient.name");
+            q.Include.Add("Observation.subject");
+
+            var output = q.ToUriParamList().ToQueryString();
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true", output);
+        }
+
+        [TestMethod]
+        public void ParseAndSerializeParams()
+        {
+            var q = new SearchParams();
+            q.Add("_query", "special");
+            q.Add("_count", "31");
+            q.Add("_summary", "true");
+            q.Add("_sort:desc", "sorted");
+            q.Add("_sort:asc", "sorted2");
+            q.Add("_include", "Patient.name");
+            q.Add("_include", "Observation.subject");
+
+            var output = q.ToUriParamList().ToQueryString();
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true", output);
+        }
     }
 }
