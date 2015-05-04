@@ -48,11 +48,11 @@ namespace Hl7.Fhir.Serialization
 
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
-                if(!summary || prop.InSummary || instance is Bundle || prop.Name == "Id") write(mapping, instance, summary, prop, mode);
+                if(!summary || prop.InSummary || instance is Bundle || prop.Name == "id") write(mapping, instance, summary, prop, mode);
 
             // Then emit the rest
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
-                if (!summary || prop.InSummary || instance is Bundle || prop.Name == "Id") write(mapping, instance, summary, prop, mode);
+                if (!summary || prop.InSummary || instance is Bundle || prop.Name == "id") write(mapping, instance, summary, prop, mode);
 
             _writer.WriteEndComplexContent();
         }

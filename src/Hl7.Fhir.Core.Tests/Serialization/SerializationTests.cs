@@ -120,5 +120,25 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<photo"));
         }
 
+        [TestMethod]
+        public void TestIdInSummary()
+        {
+            var p = new Patient();
+
+            p.Id = "test-id-1";
+            p.BirthDate = "1972-11-30";     // present in both summary and full
+            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+
+            var full = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsTrue(full.Contains("<id value="));
+            Assert.IsTrue(full.Contains("<birthDate"));
+            Assert.IsTrue(full.Contains("<photo"));
+
+            var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
+            Assert.IsTrue(summ.Contains("<id value="));
+            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.IsFalse(summ.Contains("<photo"));
+        }
+
     }
 }
