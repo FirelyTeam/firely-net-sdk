@@ -103,6 +103,9 @@ namespace Hl7.Fhir.Test
 
             identity = new ResourceIdentity("#myid");
             Assert.IsNull(identity.ResourceType);
+
+            identity = new ResourceIdentity("http://localhost/fhir/Patient/45?param=x");
+            Assert.AreEqual("Patient", identity.ResourceType);
         }
 
         [TestMethod]

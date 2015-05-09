@@ -278,6 +278,7 @@ namespace Hl7.Fhir.Rest
         {
             if (isRelativeRestUrl(url) || isAbsoluteRestUrl(url))
             {
+
                 var uri = new Uri(url, UriKind.RelativeOrAbsolute);
                 string localPath = uri.IsAbsoluteUri ? uri.LocalPath : url;
 
@@ -294,11 +295,17 @@ namespace Hl7.Fhir.Rest
                 int resourceTypePos = (history > -1) ? history - 2 : count - 2;
 
                 ResourceType = components[resourceTypePos];
+                if (!ModelInfo.IsKnownResource(ResourceType))
+                {
+                    ResourceType = null;
+                    return;
+                }
+
                 Id = components[resourceTypePos + 1];
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf(ResourceType + "/" + Id));
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/"));
                     if (!baseUri.EndsWith("/")) baseUri += "/";
                     BaseUri = new Uri(baseUri,UriKind.Absolute);
                 }
