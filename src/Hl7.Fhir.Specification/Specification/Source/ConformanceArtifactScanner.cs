@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Source
 
             var resources = StreamResources();
 
-            return resources.Where(res => Resource.IsConformanceResource(res.Name.LocalName) &&
+            return resources.Where(res => ModelInfo.IsConformanceResource(res.Name.LocalName) &&
                 getPrimitiveValueElement(res,"url") == url).SingleOrDefault();
         }
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             var resources = StreamResources();
 
-            return resources.Where(res => Resource.IsConformanceResource(res.Name.LocalName))
+            return resources.Where(res => ModelInfo.IsConformanceResource(res.Name.LocalName))
                 .Select(res =>
                         new ConformanceInformation()
                         {

@@ -120,19 +120,6 @@ namespace Hl7.Fhir.Model
         {
             get { return Meta != null && Meta.VersionId != null; }
         }
-
-
-        public bool IsConformanceResource()
-        {
-            return IsConformanceResource(this.GetType().Name);
-        }
-
-        public static bool IsConformanceResource(string name)
-        {
-            return name == "Conformance" || name == "StructureDefinition" || name == "ValueSet" || name == "ConceptMap" ||
-                name == "DataElement" || name == "OperationDefinition" || name == "SearchParameter" || name == "NamingSystem";
-        }
-
     }
 }
 

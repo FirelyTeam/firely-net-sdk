@@ -143,15 +143,18 @@ namespace Hl7.Fhir.Model
             return IsReference(type.Name);
         }
 
-        public static bool IsConformanceResource(string name)
-        {
-            return Resource.IsConformanceResource(name);
-        }
-
         public static bool IsConformanceResource(Type type)
         {
-            return Resource.IsConformanceResource(type.Name);
+            return IsConformanceResource(type.Name);
         }
+
+        public static bool IsConformanceResource(string name)
+        {
+            return ConformanceResources.Contains(name);
+        }
+
+        public static readonly string[] ConformanceResources = { "Conformance", "StructureDefinition", "ValueSet", "ConceptMap",
+                "DataElement", "OperationDefinition", "SearchParameter", "NamingSystem" };
 
         /// <summary>
         /// Is the given type a core Resource, Datatype or primitive
