@@ -585,24 +585,23 @@ namespace Hl7.Fhir.Tests.Rest
 
             bool calledBefore=false;
             HttpStatusCode? status=null;
-            Resource res = null;
-            Bundle.BundleEntryTransactionResponseComponent interaction = null;
+            byte[] body = null;
 
             client.OnBeforeRequest += (sender, e) => calledBefore = true;
             client.OnAfterResponse += (sender, e) =>
                 {
-                    res = e.Resource;
+                    body = e.Body;
                     status = e.RawResponse.StatusCode;
-                    interaction = e.Interaction;
                 };
 
             client.Read<Patient>("Patient/1");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
-            Assert.IsNotNull(res);
-            Assert.IsTrue(res is Patient);
-            Assert.IsTrue(interaction.GetBodyAsText().Contains("<Patient"));
-            Assert.AreEqual("application/xml+fhir; charset=UTF-8", interaction.GetHeaders().Single(t => t.Item1 == "Content-Type").Item2);
+            Assert.IsNotNull(body);
+
+            var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+
+            Assert.IsTrue(bodyText.Contains("<Patient"));            
         }
 
         [TestMethod]

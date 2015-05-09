@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response)
+        internal static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body)
         {
             var result = new Bundle.BundleEntryComponent();
 
@@ -49,9 +49,7 @@ namespace Hl7.Fhir.Rest
 #else
             result.TransactionResponse.LastModified = response.LastModified;
 #endif
-            result.TransactionResponse.Etag = getETag(response);
-            
-            var body = readBody(response);
+            result.TransactionResponse.Etag = getETag(response);                     
 
             if (body != null)
             {
@@ -61,7 +59,7 @@ namespace Hl7.Fhir.Rest
                     result.Resource = makeBinaryResource(body, contentType);
                 else
                 {
-                    var bodyText = decodeBody(body, charEncoding);
+                    var bodyText = DecodeBody(body, charEncoding);
                     var resource = parseResource(bodyText, contentType);
 
                     result.Resource = resource;
@@ -117,23 +115,7 @@ namespace Hl7.Fhir.Rest
                     result = Encoding.GetEncoding(charset);
             }
             return result;
-        }
-
-        private static byte[] readBody(HttpWebResponse response)
-        {
-            if (response.ContentLength != 0)
-            {
-                var body = HttpUtil.ReadAllFromStream(response.GetResponseStream());
-
-                if (body.Length > 0) 
-                    return body; 
-                else 
-                    return null;
-            }
-            else
-                return null;
-        }
-
+        }      
 
         private static Resource parseResource(string bodyText, string contentType)
         {           
@@ -145,24 +127,15 @@ namespace Hl7.Fhir.Rest
             // by the server.
             if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
             {
-                //return OperationOutcome.ForMessage("Encountered non xml/json in body: " + bodyText);
                 throw new FormatException("Encountered non xml/json in body: " + bodyText);
             }
 
-            try
-            {
-                if(fhirType == ResourceFormat.Json)
-                    result = (Resource)FhirParser.ParseFromJson(bodyText);
-                else
-                    result = (Resource)FhirParser.ParseFromXml(bodyText);
+            if (fhirType == ResourceFormat.Json)
+                result = (Resource)FhirParser.ParseFromJson(bodyText);
+            else
+                result = (Resource)FhirParser.ParseFromXml(bodyText);
 
-                return result;
-            }
-            catch(FormatException exc)
-            {
-                //return OperationOutcome.ForException(new FhirOperationException("Body returned by server cannot be parsed", exc));
-                throw exc;
-            }
+            return result;
         }
 
 
@@ -182,8 +155,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-
-        private static string decodeBody(byte[] body, Encoding enc)
+        internal static string DecodeBody(byte[] body, Encoding enc)
         {
             if (body == null) return null;
             if (enc == null) enc = Encoding.UTF8;
@@ -207,7 +179,7 @@ namespace Hl7.Fhir.Rest
             var body = interaction.GetBody();
 
             if (body != null)
-                return decodeBody(body, Encoding.UTF8);
+                return DecodeBody(body, Encoding.UTF8);
             else
                 return null;
         }

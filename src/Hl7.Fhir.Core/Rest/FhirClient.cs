@@ -700,8 +700,14 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        /// <summary>
+        /// Called just before the Http call is done
+        /// </summary>
         public event BeforeRequestEventHandler OnBeforeRequest;
 
+        /// <summary>
+        /// Called just after the response was received
+        /// </summary>
         public event AfterResponseEventHandler OnAfterResponse;
 
         /// <summary>
@@ -715,12 +721,14 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Inspect the HttpWebResponse as it came back from the server 
+        /// Inspect the HttpWebResponse as it came back from the server
         /// </summary>
-        protected virtual void AfterResponse(HttpWebResponse webResponse, Bundle.BundleEntryTransactionResponseComponent interaction, Resource resource)
+        /// <remarks>You cannot read the body from the HttpWebResponse, since it has
+        /// already been read by the framework. Use the body parameter instead.</remarks>
+        protected virtual void AfterResponse(HttpWebResponse webResponse, byte[] body)
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, interaction, resource));
+            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, body));
         }
 
      
@@ -1236,15 +1244,13 @@ namespace Hl7.Fhir.Rest
 
     public class AfterResponseEventArgs : EventArgs
     {
-        public AfterResponseEventArgs(HttpWebResponse webResponse, Bundle.BundleEntryTransactionResponseComponent interaction, Resource resource)
+        public AfterResponseEventArgs(HttpWebResponse webResponse, byte[] body)
         {
             this.RawResponse = webResponse;
-            this.Interaction = interaction;
-            this.Resource = resource;
+            this.Body = body;
         }
 
         public HttpWebResponse RawResponse { get; internal set; }
-        public Bundle.BundleEntryTransactionResponseComponent Interaction { get; internal set; }
-        public Resource Resource { get; internal set; }
+        public byte[] Body { get; internal set; }
     }
 }
