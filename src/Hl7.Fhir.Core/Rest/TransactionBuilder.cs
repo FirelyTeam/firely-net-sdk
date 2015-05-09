@@ -69,7 +69,12 @@ namespace Hl7.Fhir.Rest
             if (uri.IsAbsoluteUri)
                 addEntry(entry, new RestUrl(url));
             else
-                addEntry(entry, newRestUrl().AddPath(url));
+            {
+                var absoluteUrl = _result.Base;
+                if(!absoluteUrl.EndsWith("/")) absoluteUrl += "/";
+                absoluteUrl += url;
+                addEntry(entry, new RestUrl(absoluteUrl));
+            }
 
             return this;
         }

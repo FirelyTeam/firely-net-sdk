@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        [TestMethod, TestCategory("FhirClient"),Ignore]
+        [TestMethod, TestCategory("FhirClient")]
         public void CreateEditDelete()
         {
             var pat = (Patient)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Tests.Rest
 		}
 #endif
 
-        [TestMethod, TestCategory("FhirClient"),Ignore]
+        [TestMethod, TestCategory("FhirClient"), Ignore]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
