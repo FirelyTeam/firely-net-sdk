@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Rest
             // by the server.
             if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
             {
-                throw new FormatException("Encountered non xml/json in body: " + bodyText);
+                throw new FormatException("Encountered non xml/json in body: \"" + bodyText + "\"");
             }
 
             if (fhirType == ResourceFormat.Json)

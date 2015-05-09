@@ -87,13 +87,13 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                var message = String.Format("Operation returned unexpected status {0}", response.TransactionResponse.Status);
+                var message = String.Format("Operation returned unexpected status {0}.", response.TransactionResponse.Status);
 
                 if (response.Resource is OperationOutcome)
                 {
                     var outcome = response.Resource as OperationOutcome;
-                    reportOutcome(outcome);
-                    throw new FhirOperationException(message + ", an OperationOutcome was included in the body", outcome);
+                    var text = reportOutcome(outcome);
+                    throw new FhirOperationException(message + " OperationOutcome: " +  text);
                 }
 
                 throw new FhirOperationException(message);
@@ -158,25 +158,24 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        private static void reportOutcome(OperationOutcome outcome)
+        private static string reportOutcome(OperationOutcome outcome)
         {
-            System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-
             if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
             {
-                System.Diagnostics.Debug.WriteLine(outcome.Text.Div);
-                System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+                return outcome.Text.Div;
             }
 
+            var text = String.Empty;
             if (outcome.Issue != null)
             {
                 foreach (var issue in outcome.Issue)
                 {
-                    System.Diagnostics.Debug.WriteLine("	" + issue.Details);
+                    if(!String.IsNullOrEmpty(text))
+                        text += " ------------- ";
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
+            return text;
         }
     }
 }
