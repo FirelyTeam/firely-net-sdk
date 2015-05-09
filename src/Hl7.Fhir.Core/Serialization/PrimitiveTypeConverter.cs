@@ -184,7 +184,12 @@ namespace Hl7.Fhir.Serialization
      
         public static string GetValueAsString(this Primitive p)
         {
-            return ConvertTo<string>(p.ObjectValue);
+            if (p == null) return null;
+
+            if (p.ObjectValue != null)
+                return ConvertTo<string>(p.ObjectValue);
+            else
+                return null;
         }
 
     }

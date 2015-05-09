@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Rest
         /// url, it must reference an address within the endpoint.
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
-        /// <exception cref="FHIROperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
+        /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
         public TResource Read<TResource>(Uri location, string ifNoneMatch=null, DateTimeOffset? ifModifiedSince=null) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull("location");
