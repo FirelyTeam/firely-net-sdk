@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Rest
         public int Timeout { get; set; }           // In miliseconds
         public Prefer Prefer { get; set; }
 
-        public Action<HttpWebRequest> BeforeRequest { get; set; }
+        public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
         public Bundle.BundleEntryTransactionResponseComponent LastResult { get; private set; }
@@ -109,13 +109,14 @@ namespace Hl7.Fhir.Rest
 
         private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction)
         {
-            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter);
+            byte[] outBody;
+            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, out outBody);
 
 #if !PORTABLE45
             request.Timeout = Timeout;
 #endif
 
-            if (BeforeRequest != null) BeforeRequest(request);
+            if (BeforeRequest != null) BeforeRequest(request, outBody);
 
             // Make sure the HttpResponse gets disposed!
             // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
@@ -124,10 +125,10 @@ namespace Hl7.Fhir.Rest
                 try
                 {
                     //Read body before we call the hook, so the hook cannot read the body before we do
-                    var body = readBody(webResponse);
+                    var inBody = readBody(webResponse);
 
-                    if (AfterResponse != null) AfterResponse(webResponse,body);
-                    var response = webResponse.ToBundleEntry(body);
+                    if (AfterResponse != null) AfterResponse(webResponse,inBody);
+                    var response = webResponse.ToBundleEntry(inBody);
 
                     return response;
                 }

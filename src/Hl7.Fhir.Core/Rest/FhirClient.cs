@@ -714,10 +714,10 @@ namespace Hl7.Fhir.Rest
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
         /// <param name="rawRequest">The request as it is about to be sent to the server</param>
-        protected virtual void BeforeRequest(HttpWebRequest rawRequest) 
+        protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body) 
         {
             // Default implementation: call event
-            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(rawRequest));
+            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(rawRequest, body));
         }
 
         /// <summary>
@@ -1232,12 +1232,14 @@ namespace Hl7.Fhir.Rest
 
     public class BeforeRequestEventArgs : EventArgs
     {
-        public BeforeRequestEventArgs(HttpWebRequest rawRequest)
+        public BeforeRequestEventArgs(HttpWebRequest rawRequest, byte[] body)
         {
             this.RawRequest = rawRequest;
+            this.Body = body;
         }
 
-        public HttpWebRequest RawRequest { get; internal set; }       
+        public HttpWebRequest RawRequest { get; internal set; }
+        public byte[] Body { get; internal set; }
     }
 
     public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);

@@ -28,12 +28,13 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.BundleEntryComponent entry, Prefer bodyPreference, ResourceFormat format, bool useFormatParameter)
+        public static HttpWebRequest ToHttpRequest(this Bundle.BundleEntryComponent entry, Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Transaction.Method, entry.Transaction.Url);
 
             var interaction = entry.Transaction;
-            
+            body = null;
+
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
@@ -64,7 +65,7 @@ namespace Hl7.Fhir.Rest
                     request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
             }
 
-            if (entry.Resource != null) setBodyAndContentType(request, entry.Resource, format);
+            if (entry.Resource != null) setBodyAndContentType(request, entry.Resource, format, out body);
 
             return request;
         }
@@ -114,19 +115,20 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format)
+        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, out byte[] body)
         {
             if (data == null) throw Error.ArgumentNull("data");
 
             if (data is Binary)
             {
                 var bin = (Binary)data;
+                body = bin.Content;
                 request.WriteBody(bin.Content);
                 request.ContentType = bin.ContentType;
             }
             else
             {
-                var body = format == ResourceFormat.Xml ?
+                body = format == ResourceFormat.Xml ?
                     FhirSerializer.SerializeToXmlBytes(data, summary: false) :
                     FhirSerializer.SerializeToJsonBytes(data, summary: false);
 

@@ -586,22 +586,37 @@ namespace Hl7.Fhir.Tests.Rest
             bool calledBefore=false;
             HttpStatusCode? status=null;
             byte[] body = null;
+            byte[] bodyOut = null;
 
-            client.OnBeforeRequest += (sender, e) => calledBefore = true;
+            client.OnBeforeRequest += (sender, e) =>
+                {
+                    calledBefore = true;
+                    bodyOut = e.Body;
+                };
+
             client.OnAfterResponse += (sender, e) =>
                 {
                     body = e.Body;
                     status = e.RawResponse.StatusCode;
                 };
 
-            client.Read<Patient>("Patient/1");
+            var pat = client.Read<Patient>("Patient/1");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
 
             var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
 
-            Assert.IsTrue(bodyText.Contains("<Patient"));            
+            Assert.IsTrue(bodyText.Contains("<Patient"));
+
+            calledBefore = false;
+            client.Create(pat);
+            Assert.IsTrue(calledBefore);
+            Assert.IsNotNull(bodyOut);
+
+            bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+            Assert.IsTrue(bodyText.Contains("<Patient"));
+
         }
 
         [TestMethod]
