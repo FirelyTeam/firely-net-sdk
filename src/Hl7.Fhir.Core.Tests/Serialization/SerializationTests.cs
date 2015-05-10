@@ -120,6 +120,22 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<photo"));
         }
 
+
+        [TestMethod]
+        public void BundleLinksUnaltered()
+        {
+            var b = new Bundle();
+
+            b.NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative);
+
+            var xml = FhirSerializer.SerializeToXml(b);
+
+            b = (Bundle)FhirParser.ParseFromXml(xml);
+
+            Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
+        }
+
+
         [TestMethod]
         public void TestIdInSummary()
         {
