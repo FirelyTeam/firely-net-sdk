@@ -460,10 +460,23 @@ namespace Hl7.Fhir.Rest
             return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters);
         }
 
-        [Obsolete("Use InstanceOperation() instead")]
         public Resource Operation(Uri location, string operationName, Parameters parameters = null)
         {
-            return InstanceOperation(location, operationName, parameters);
+            if (location == null) throw Error.ArgumentNull("location");
+            if (operationName == null) throw Error.ArgumentNull("operationName");
+
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters).ToBundle();
+
+            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
+        }
+
+        public Resource Operation(Uri operation, Parameters parameters = null)
+        {
+            if (operation == null) throw Error.ArgumentNull("operation");
+
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters).ToBundle();
+
+            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
         }
 
         private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)

@@ -219,36 +219,42 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder ServerOperation(string name, Parameters parameters)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters)
         {
             var entry = newEntry(Bundle.HTTPVerb.POST);
             entry.Resource = parameters;
-            var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
+            var path = new RestUrl(endpoint);
             addEntry(entry, path);
 
             return this;
+        }
+
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters)
+        {          
+            var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
+
+            return EndpointOperation(path, parameters);
+        }
+
+        public TransactionBuilder ServerOperation(string name, Parameters parameters)
+        {
+            var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
+            return EndpointOperation(path, parameters);
         }
 
         public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
-            entry.Resource = parameters;
             var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
-            addEntry(entry, path);
-
-            return this;
+            return EndpointOperation(path,parameters);
         }
 
         public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
-            entry.Resource = parameters;
             var path = newRestUrl().AddPath(resourceType, id);
             if(vid != null) path.AddPath(resourceType, vid);
             path.AddPath(OPERATIONPREFIX + name);
-            addEntry(entry, path);
 
-            return this;
+            return EndpointOperation(path, parameters);
         }
 
 
