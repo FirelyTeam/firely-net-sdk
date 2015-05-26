@@ -30,19 +30,18 @@ namespace Hl7.Fhir.Rest
     {
         public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
-            { JSON_CONTENT_HEADER, "application/fhir+json", "application/json" };
+            { JSON_CONTENT_HEADER,
+                "application/fhir+json", "application/json", "text/json"};
 
         public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
-        public static readonly string[] XML_CONTENT_HEADERS = new string[] 
-            { XML_CONTENT_HEADER, "application/fhir+xml", "text/xml", "application/xml",
-                "text/xml+fhir", ATOM_CONTENT_HEADER};
-        
-        public const string ATOM_CONTENT_HEADER = "application/atom+xml";
+        public static readonly string[] XML_CONTENT_HEADERS = new string[]
+            { XML_CONTENT_HEADER, "text/xml", "application/xml",
+                "application/fhir+xml", "text/xml+fhir" };
 
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";
 
-        
+
         /// <summary>
         /// Converts a format string to a ResourceFormat
         /// </summary>
@@ -52,11 +51,11 @@ namespace Hl7.Fhir.Rest
         {
             if (String.IsNullOrEmpty(format)) return ResourceFormat.Unknown;
 
-            var f = format.ToLowerInvariant();
+            var f = format.ToLowerInvariant().Replace(" ", "+"); // spaces on the are decoded from the +, so convert them back
 
-            if(f == FORMAT_PARAM_JSON || JSON_CONTENT_HEADERS.Contains(f))
+            if (f == FORMAT_PARAM_JSON || JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;
-            else if(f == FORMAT_PARAM_XML || XML_CONTENT_HEADERS.Contains(f))
+            else if (f == FORMAT_PARAM_XML || XML_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Xml;
             else
                 return ResourceFormat.Unknown;
@@ -89,9 +88,7 @@ namespace Hl7.Fhir.Rest
 
             if (format == ResourceFormat.Json)
                 contentType = JSON_CONTENT_HEADER;
-            else if (format == ResourceFormat.Xml && forBundle)
-                contentType = ATOM_CONTENT_HEADER;
-            else if (format == ResourceFormat.Xml && !forBundle)
+            else if (format == ResourceFormat.Xml)
                 contentType = XML_CONTENT_HEADER;
             else
                 throw new ArgumentException("Cannot determine content type for data format " + format);
@@ -132,7 +129,7 @@ namespace Hl7.Fhir.Rest
         {
             var f = contentType.ToLowerInvariant();
 
-            return (JSON_CONTENT_HEADERS.Contains(f) || f == ATOM_CONTENT_HEADER);
+            return (JSON_CONTENT_HEADERS.Contains(f));
         }
 
 
