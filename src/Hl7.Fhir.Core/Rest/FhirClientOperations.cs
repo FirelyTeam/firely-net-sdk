@@ -52,7 +52,10 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public static string META_DELETE= "meta-delete";
 
-
+        /// <summary>
+        /// "validate-code" operation
+        /// </summary>
+        public static string VALIDATE_CODE = "validate-code";
 
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
@@ -230,6 +233,43 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        
+        public static Parameters Validate(this FhirClient client, String valueSetId, FhirUri system, Code code, FhirString display = null)
+        {
+            if (code == null) throw new ArgumentNullException("code");
+            if (system == null) throw new ArgumentNullException("system");
+
+            var par = new Parameters().Add("code", code).Add("system", system);
+            if (display != null)
+            {
+                par.Add("display", display);
+            }
+
+            return validateCodeForValueSetId(client, valueSetId, par);
+        }
+
+        public static Parameters ValidateCode(this FhirClient client, String valueSetId, Coding coding)
+        {
+            if (coding == null) throw new ArgumentNullException("coding");
+
+            var par = new Parameters().Add("coding", coding);
+
+            return validateCodeForValueSetId(client, valueSetId, par);
+        }
+
+        public static Parameters ValidateCode(this FhirClient client, String valueSetId, CodeableConcept codeableConcept)
+        {
+            if (codeableConcept == null) throw new ArgumentNullException("codeableConcept");
+
+            var par = new Parameters().Add("codeableConcept", codeableConcept);
+
+            return validateCodeForValueSetId(client, valueSetId, par);
+        }
+
+        private static Parameters validateCodeForValueSetId(FhirClient client, string valueSetId, Parameters par)
+        {
+            ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
+
+            return expect<Parameters>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), VALIDATE_CODE, par));
+        }        
     }
 }
