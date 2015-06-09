@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var struc = createTestStructure();
 
-            struc.Rebase("Parent.child1");
+            struc.Snapshot.Rebase("Parent.child1");
 
             Assert.AreEqual("Parent.child1", struc.Snapshot.Element[0].Path);
             Assert.AreEqual("Parent.child1.B", struc.Snapshot.Element[1].Path);
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "X.Y2" });
             e.Add(new ElementDefinition() { Path = "X.Y2.Z1" });
             e.Add(new ElementDefinition() { Path = "X.Y2.Z2" });
-            var source = new ElementNavigator(struc);
+            var source = new ElementNavigator(e);
 
             Assert.IsTrue(dest.JumpToFirst("A.D"));
             var dstPos = dest.OrdinalPosition;
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static ElementNavigator createTestNav()
         {
             var struc = createTestStructure();
-            return new ElementNavigator(struc);
+            return new ElementNavigator(struc.Snapshot.Element);
         }
 
         private static StructureDefinition createTestStructure()

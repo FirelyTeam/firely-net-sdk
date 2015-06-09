@@ -63,6 +63,8 @@
       <Link>Support\ReflectionHelper.cs</Link>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Specification\Expansion\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\Expansion\SnapshotGenerator.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
