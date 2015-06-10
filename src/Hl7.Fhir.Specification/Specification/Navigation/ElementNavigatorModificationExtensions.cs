@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
 
         /// <summary>
-        /// Insert the children of the current source node under the node pointed to by the destination.
+        /// Insert the children of the source navigator under the node pointed to by this Navigator.
         /// </summary>
         /// <param name="dest"></param>
         /// <param name="source"></param>
@@ -106,57 +106,43 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        //public static bool ExpandElement(this ElementNavigator nav, StructureLoader source)
-        //{
-        //    if(source == null) throw Error.ArgumentNull("source");
-        //    if(nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
+        public static bool ExpandElement(this ElementNavigator nav, ArtifactResolver source)
+        {
+            if (source == null) throw Error.ArgumentNull("source");
+            if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
 
-        //    if (nav.Current.Definition == null) throw Error.Argument("Cannot move down into element {0} since it has no element definition information", nav.Path);
+            if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
 
-        //    if(nav.HasChildren) return true;     // already has children, we're not doing anything extra
+            var defn = nav.Current;
 
-        //    if (nav.Current.Definition != null)
-        //    {
-        //        var defn = nav.Current.Definition;
-        //        if (!String.IsNullOrEmpty(defn.NameReference))
-        //        {
-        //            var sourceNav = resolveNameReference(nav.Structure, defn.NameReference);
-        //            nav.CopyChildren(sourceNav);
-        //        }
-        //        else if (defn.Type != null && defn.Type.Count > 0)
-        //        {
-        //            if (defn.Type.Count > 1)
-        //                throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
-        //            else
-        //            {
-        //                var sourceNav = resolveStructureReference(source, defn.Type[0].CodeElement);
+            if (!String.IsNullOrEmpty(defn.NameReference))
+            {
+                var sourceNav = new ElementNavigator(nav);
+                var success = sourceNav.JumpToNameReference(defn.NameReference);
 
-        //                if (sourceNav != null)
-        //                {
-        //                    sourceNav.MoveToFirstChild();
-        //                    nav.CopyChildren(sourceNav);
-        //                }
-        //                else
-        //                    throw new FileNotFoundException("Cannot locate base-structure for datatype " + defn.Type[0].Code);
-        //            }
-        //        }
+                if(!success)
+                    throw Error.InvalidOperation("Trying to navigate down a node that has a nameReference of '{0}', which cannot be found in the StructureDefinition".FormatWith(defn.NameReference));
 
-        //        return true;
-        //    }
+                nav.CopyChildren(sourceNav);
+            }
+            else if (defn.Type != null && defn.Type.Count > 0)
+            {
+                //TODO: Implement "type" slicing
+                if (defn.Type.Count > 1)
+                    throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
+                else
+                {
+                    var coreType = source.GetStructureDefinitionForCoreType(defn.Type[0].Code);
+                    if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
+                    if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));
 
-        //    return false;
-        //}
+                    var sourceNav = new ElementNavigator(coreType.Snapshot.Element);
+                    sourceNav.MoveToFirstChild();
+                    nav.CopyChildren(sourceNav);
+                }
+            }
 
-        //private static ElementNavigator resolveStructureReference(StructureLoader loader, Code code)
-        //{
-        //    var result = loader.LocateBaseStructure(code);
-        //    return result != null ? new ElementNavigator(result.Snapshot) : null;
-        //}
-
-
-        //private static ElementNavigator resolveNameReference(Profile.ConstraintComponent elements, string nameReference)
-        //{
-        //    return elements.JumpToNameReference(nameReference);
-        //}
+            return true;
+        }
     }
 }

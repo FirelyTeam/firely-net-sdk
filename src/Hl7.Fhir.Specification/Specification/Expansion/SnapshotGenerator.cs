@@ -55,15 +55,66 @@ namespace Hl7.Fhir.Specification.Expansion
             diffNav.MoveToFirstChild();
 
             merge(snapNav, diffNav);
-
-            //TODO: Merge search params?
-            
+           
             structure.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent() { Element = snapNav.ToListOfElements() };
         }
 
-        private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
+
+        private void merge(ElementNavigator snap, ElementNavigator diff)
         {
-            throw new NotImplementedException();
+            (new ElementDefnMerger()).Merge(snap.Current, diff.Current);
+
+            // If there are children, move into them, and recursively merge them
+            if (diff.MoveToFirstChild())
+            {
+                if (!snap.HasChildren)
+                {
+                    // The differential moves into an element that has no children in the base.
+                    // This is allowable if the base's element has a nameReference or a TypeRef,
+                    // in which case needs to be expanded before we can move to the path indicated
+                    // by the differential
+                    expandBaseElement(snap, diff);
+                }
+
+                // Due to how MoveToFirstChild() works, we have to move to the first matching *child*
+                // when entering the loop for the first time, after that we can look for the next
+                // matching *sibling*.
+                bool firstEntry = true;
+
+                do
+                {
+                    if ((firstEntry && !snap.MoveToChild(diff.PathName)) ||
+                        (!firstEntry && !snap.MoveToNext(diff.PathName)))
+                        throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base", diff.PathName);
+                    firstEntry = false;
+
+                    // Child found in both, merge them
+                    if (countChildNameRepeats(diff) > 1 || diff.Current.IsExtension())
+                    {
+                        // The child in the diff repeats or we recognize it as an extension slice -> we're on the first element of a slice!
+                        mergeSlice(snap, diff);
+                    }
+                    else
+                        merge(snap, diff);
+                }
+                while (diff.MoveToNext());
+
+                // After the merge, return the diff and snapho back to their original position
+                diff.MoveToParent();
+                snap.MoveToParent();
+            }
+        }
+
+
+        private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
+        {
+            snap.ExpandElement(_resolver);
+
+            if (!snap.HasChildren)
+            {
+                // Snapshot's element turns out not to be expandable, so we can't move to the desired path
+                throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
+            }
         }
     }
 }

@@ -64,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Specification\Expansion\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\Expansion\ElementDefnMerger.cs" />
     <Compile Include="Specification\Expansion\SnapshotGenerator.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />

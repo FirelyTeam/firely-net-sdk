@@ -32,7 +32,6 @@ namespace Hl7.Fhir.Support
             if (element.ObjectValue == null) return true;
 
             return true;
-        }
-                
+        }                
     }
 }

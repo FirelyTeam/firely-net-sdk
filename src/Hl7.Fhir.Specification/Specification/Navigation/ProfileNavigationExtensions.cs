@@ -17,33 +17,7 @@ using System.Text;
 namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
-    {
-        public static ElementNavigator JumpToNameReference(this IElementList elements, string nameReference)
-        {
-            var nav = new ElementNavigator(elements.Element);
-
-            //TODO: In the current DSTU1 base profiles, nameReference is actually a path, not a name (to Element.Name)
-            //this is a problem, since when doing slicing, the path may no longer point to a single set of constraints
-            //so, we need to (temporarily) watch out for this
-            if (nameReference.Contains("."))
-            {
-                // An incorrectly used nameReference, containing a Path, not a name
-                if (nav.JumpToFirst(nameReference))
-                    return nav;
-                else
-                    return null;
-            }
-            else
-            {
-                if (nav.JumpToNameReference(nameReference))
-                    return nav;
-                else
-                    return null;
-            }                
-
-        }
-
-
+    {      
         /// <summary>
         /// Rewrites the Path's of the elements in a structure so they are based on the given path: the root
         /// of the given structure will become the given path, it's children will be relocated below that path
