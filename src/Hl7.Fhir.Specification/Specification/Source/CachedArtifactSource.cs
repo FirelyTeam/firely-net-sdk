@@ -109,14 +109,7 @@ namespace Hl7.Fhir.Specification.Source
                     // Otherwise, fetch it and cache it.
                     T newData = default(T);
 
-                    try
-                    {
-                        newData = _onCacheMiss(identifier);
-                    }
-                    catch (Exception)
-                    {
-                    }
-
+                    newData = _onCacheMiss(identifier);
                     _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
 
                     return newData;

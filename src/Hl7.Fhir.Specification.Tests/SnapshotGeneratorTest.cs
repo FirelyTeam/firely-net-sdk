@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _source = ArtifactResolver.CreateCachedDefault();
+            _source = ArtifactResolver.CreateOffline();
         }
 
 
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var generator = new SnapshotGenerator(_source);
 
-            foreach (var original in findConstraintStrucDefs())
+            foreach (var original in findConstraintStrucDefs().Where(sd=>sd.Snapshot != null))
             {
                 var expanded = (StructureDefinition)original.DeepCopy();
                 Assert.IsTrue(original.IsExactly(expanded));
@@ -69,7 +69,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var sdInfo in sdsInSpec)
             {
-                var sd = _source.GetStructureDefinition(sdInfo.Url);
+                var sd = _source.GetStructureDefinition(sdInfo.Url, requireSnapshot: false);
+
+                if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
+                    "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
 
                 if (sd.Type == StructureDefinition.StructureDefinitionType.Constraint)
                     yield return sd;
