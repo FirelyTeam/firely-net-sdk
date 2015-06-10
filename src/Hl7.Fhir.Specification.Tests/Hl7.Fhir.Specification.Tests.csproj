@@ -67,6 +67,7 @@
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnapshotGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\message_false_SlicingExtensionTestProfile.xml">
@@ -176,6 +177,9 @@
       <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>
       <Name>Hl7.Fhir.Specification</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SnapshotGeneratorTestData\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

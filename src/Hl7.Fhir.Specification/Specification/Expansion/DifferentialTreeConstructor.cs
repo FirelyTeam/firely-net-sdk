@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Expansion
         /// <remarks>This operation will not touch the source differential, but instead will return a new structure.</remarks>
         public List<ElementDefinition> MakeTree()
         {
-            var diff = (List<ElementDefinition>)_source.DeepCopy();   // We're going to modify the differential
+            var diff = new List<ElementDefinition>(_source.DeepCopy());   // We're going to modify the differential
 
             if (diff.Count == 0 ) return diff;        // nothing to do
 

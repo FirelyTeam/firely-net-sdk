@@ -22,11 +22,6 @@ namespace Hl7.Fhir.Specification.Expansion
     {
         private ArtifactResolver _resolver;
 
-        public SnapshotGenerator()
-        {
-            _resolver = ArtifactResolver.CreateCachedDefault();
-        }
-
         public SnapshotGenerator(ArtifactResolver resolver)
         {
             _resolver = resolver;
