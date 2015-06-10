@@ -116,5 +116,117 @@ namespace Hl7.Fhir.Specification.Expansion
                 throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
             }
         }
+
+
+        private static int countChildNameRepeats(ElementNavigator diff)
+        {
+            //TODO: We use this function to determine whether an element is sliced...doing this by counting repeats of elements
+            //in the diff. However, when reslicing, the diff doesn't need to have repeating elements, and you have to derive from the
+            //base (snapshot) that the element is sliced.
+
+            var repeats = 1;
+
+            var currentPath = diff.PathName;
+            var bm = diff.Bookmark();
+            while (diff.MoveToNext())
+            {
+                // check whether the next sibling in the differential has the same name,
+                // that means we're looking at a slice
+                if (diff.PathName == currentPath)
+                    repeats++;
+                else
+                    break;
+            }
+
+            diff.ReturnToBookmark(bm);
+            return repeats;
+        }
+
+        private void mergeSlice(ElementNavigator snap, ElementNavigator diff)
+        {
+            // diff is now located at the first repeat of a slice, which is (possibly) the slice entry
+            // snap is located at the base definition of the element that will become sliced. But snap is not yet sliced.
+
+            // Before we start, is the base element sliceable?
+            if (!snap.Current.IsRepeating() && !isSlicedToOne(diff.Current))
+                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an unbounded slice, but the base element is not a repeating element",
+                   diff.Current.Path);
+
+            ElementDefinition slicingEntry;
+
+            // Yes, so, first, add the slicing entry to the snapshot. 
+            if (diff.Current.Slicing != null)
+            {
+                slicingEntry = createSliceEntry(snap.Current, diff.Current);
+                snap.InsertBefore(slicingEntry);
+
+                if (!diff.MoveToNext(diff.PathName))
+                    throw Error.InvalidOperation("Slicing has no elements beyond the slicing entry");  // currently impossible to happen
+            }
+            else
+            {
+                // Mmmm....no slicing entry in the differential. This is only alloweable for extension slices, as a shorthand notation.                 
+                if (!snap.Current.IsExtension())
+                    throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
+
+                // In this case we insert a "prefab" extension slice.
+                slicingEntry = createExtensionSlicingEntry(snap.Path, snap.Current);
+                snap.InsertBefore(slicingEntry);
+            }
+
+            snap.MoveToNext();
+
+            // The differential and the snapshot are now both positioned on the first "real" slicing content element
+            // Start by duplicating the current unsliced base definition as many times as we have slices, so we can
+            // update these copies for each slice.
+            var numSlices = countChildNameRepeats(diff);
+            for (var count = 0; count < numSlices - 1; count++) snap.Duplicate();
+
+            var slicingName = snap.PathName;
+
+            do
+            {
+                merge(snap, diff);
+            }
+            while (diff.MoveToNext(slicingName) && snap.MoveToNext(slicingName));
+
+            //if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
+            //{
+            //    // Slices that are open in some form need to repeat the original "base" definition,
+            //    // so that the open slices have a place to "fit in"
+            //    snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
+            //}
+
+            //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
+        }
+
+        private static bool isSlicedToOne(ElementDefinition element)
+        {
+            return element.Slicing != null && element.Max == "1";
+        }
+
+
+        private ElementDefinition createSliceEntry(ElementDefinition baseDefn, ElementDefinition diff)
+        {
+            var slicingEntry = (ElementDefinition)baseDefn.DeepCopy();
+
+            (new ElementDefnMerger()).Merge(slicingEntry, diff);
+
+            return slicingEntry;
+        }
+
+        private ElementDefinition createExtensionSlicingEntry(string path, ElementDefinition template)
+        {
+            // Create a pre-fab extension slice, filled with sensible defaults
+            // Extensions will repeat their definitions in their slicing entry
+            var result = createSliceEntry(template, new ElementDefinition());
+
+            result.Slicing = new ElementDefinition.ElementDefinitionSlicingComponent();
+            result.Slicing.Discriminator = new[] { "url" };
+            result.Slicing.Ordered = false;
+            result.Slicing.Rules = ElementDefinition.SlicingRules.Open;
+
+            return result;
+        }
     }
 }

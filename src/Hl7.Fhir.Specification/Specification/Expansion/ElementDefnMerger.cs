@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
 
             // Aliases are cumulative based on the string value
-            diff.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
+            snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
 
             snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
             snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
