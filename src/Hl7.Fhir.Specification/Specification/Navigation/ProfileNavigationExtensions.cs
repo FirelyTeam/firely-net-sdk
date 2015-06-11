@@ -91,6 +91,11 @@ namespace Hl7.Fhir.Specification.Navigation
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
         }
 
+        public static bool IsChoice(this ElementDefinition defn)
+        {
+            return defn.Path.EndsWith("[x]");
+        }
+
         public static string GetNameFromPath(this ElementDefinition element)
         {
  	        var pos = element.Path.LastIndexOf(".");

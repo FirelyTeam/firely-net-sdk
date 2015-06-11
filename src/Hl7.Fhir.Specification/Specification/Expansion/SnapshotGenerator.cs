@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Specification.Expansion
         public SnapshotGenerator(ArtifactResolver resolver, bool markChanges=false)
         {
             _resolver = resolver;
+            _markChanges = markChanges;
         }
         
         public void Generate(StructureDefinition structure)
@@ -71,6 +72,10 @@ namespace Hl7.Fhir.Specification.Expansion
                     // This is allowable if the base's element has a nameReference or a TypeRef,
                     // in which case needs to be expanded before we can move to the path indicated
                     // by the differential
+
+                    if (snap.Current.Type.Count > 1)
+                        throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
+
                     expandBaseElement(snap, diff);
                 }
 
@@ -148,8 +153,8 @@ namespace Hl7.Fhir.Specification.Expansion
             // snap is located at the base definition of the element that will become sliced. But snap is not yet sliced.
 
             // Before we start, is the base element sliceable?
-            if (!snap.Current.IsRepeating() && !isSlicedToOne(diff.Current))
-                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an unbounded slice, but the base element is not a repeating element",
+            if(!snap.Current.IsRepeating() && !snap.Current.IsChoice())
+                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an slice, but the base element is not a repeating or choice element",
                    diff.Current.Path);
 
             ElementDefinition slicingEntry;

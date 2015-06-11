@@ -127,9 +127,8 @@ namespace Hl7.Fhir.Specification.Navigation
             }
             else if (defn.Type != null && defn.Type.Count > 0)
             {
-                //TODO: Implement "type" slicing
                 if (defn.Type.Count > 1)
-                    throw new NotImplementedException("Don't know how to implement navigation into choice types yet at node " + nav.Path);
+                    throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
                 else
                 {
                     var coreType = source.GetStructureDefinitionForCoreType(defn.Type[0].Code);

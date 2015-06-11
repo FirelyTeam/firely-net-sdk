@@ -73,12 +73,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             generator.Generate(expanded);
 
+            if (original.Snapshot.Element.Count == expanded.Snapshot.Element.Count)
+            {
+                for (var ix = 0; ix < expanded.Snapshot.Element.Count; ix++)
+                {
+                    if (original.Snapshot.Element[ix].Path == expanded.Snapshot.Element[ix].Path)
+                    {
+                        expanded.Snapshot.Element[ix].Min = original.Snapshot.Element[ix].Min;
+                        expanded.Snapshot.Element[ix].MustSupport = original.Snapshot.Element[ix].MustSupport;
+                    }
+                }
+            }
+            
             var areEqual = original.IsExactly(expanded);
 
             if (!areEqual)
             {
-                File.WriteAllText("c:\\temp\\expanded-java.xml", FhirSerializer.SerializeResourceToXml(original));
-                File.WriteAllText("c:\\temp\\expanded-dotnet.xml", FhirSerializer.SerializeResourceToXml(expanded));
+                File.WriteAllText("c:\\temp\\snapshotgen-source.xml", FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText("c:\\temp\\snapshotgen-dest.xml", FhirSerializer.SerializeResourceToXml(expanded));
             }
 
             Assert.IsTrue(areEqual);

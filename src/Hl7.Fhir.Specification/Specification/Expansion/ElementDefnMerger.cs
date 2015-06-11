@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Expansion
 
         public void Merge(ElementDefinition snap, ElementDefinition diff)
         {
-            bool isExtensionConstraint = snap.Path == "Extension" || snap.Path.EndsWith(".extension") || snap.Path.EndsWith(".modifierExtension");
+            bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
             // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
             // In case the diff doesn't have these, give some generic defaults.
