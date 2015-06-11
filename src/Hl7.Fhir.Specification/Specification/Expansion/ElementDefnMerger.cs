@@ -95,8 +95,8 @@ namespace Hl7.Fhir.Specification.Expansion
                 foreach (var element in snap.Type) markChange(snap);
             }
 
-            // Mappings are cumulative based on Mapping.identity
-            snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.Identity == b.Identity);
+            // Mappings are cumulative, but keep unique on full contents
+            snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
             // Constraints are cumulative bassed on Constraint.id
             snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification.Expansion
                 // Add new elements to the result, but replace existing ones
                 foreach (var element in diff)
                 {
-                    result.Remove(diff.FirstOrDefault(e => elemComparer(element, e)));
+                    result.RemoveAll(e => elemComparer(element, e));
                     var newElement = (T)element.DeepCopy();
                     markChange(newElement);
                     result.Add(newElement);

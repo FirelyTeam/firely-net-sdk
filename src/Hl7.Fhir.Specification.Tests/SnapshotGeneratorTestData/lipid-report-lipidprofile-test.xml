@@ -970,6 +970,17 @@
       </type>
     </element>
     <element>
+      <path value="DiagnosticReport.conclusion.value"/>
+      <representation value="xmlAttr"/>
+      <short value="Primitive value for string"/>
+      <definition value="The actual value"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="xs:string"/>
+      </type>
+    </element>
+    <element>
       <path value="DiagnosticReport.codedDiagnosis"/>
       <short value="No codes for a lipid panel"/>
       <definition value="No codes for a lipid panel."/>

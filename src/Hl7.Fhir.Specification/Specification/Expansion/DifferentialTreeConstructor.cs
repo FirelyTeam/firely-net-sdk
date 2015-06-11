@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Expansion
                 if (thisPath.IndexOf('.') == -1)
                 {
                     // I am a root node, just one segment of path, I need to be the first element
-                    if (index != 0) throw Error.InvalidOperation("Differential has multiple roots");
+                    if (index != 0) throw Error.InvalidOperation("Differential has multiple roots at " + thisPath);
 
                     // Else, I am fine, proceed
                     index++;
