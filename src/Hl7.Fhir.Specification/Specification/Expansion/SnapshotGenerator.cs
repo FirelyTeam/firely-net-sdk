@@ -21,8 +21,9 @@ namespace Hl7.Fhir.Specification.Expansion
     public class SnapshotGenerator
     {
         private ArtifactResolver _resolver;
+        private bool _markChanges;
 
-        public SnapshotGenerator(ArtifactResolver resolver)
+        public SnapshotGenerator(ArtifactResolver resolver, bool markChanges=false)
         {
             _resolver = resolver;
         }
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Specification.Expansion
 
         private void merge(ElementNavigator snap, ElementNavigator diff)
         {
-            (new ElementDefnMerger()).Merge(snap.Current, diff.Current);
+            (new ElementDefnMerger(_markChanges)).Merge(snap.Current, diff.Current);
 
             // If there are children, move into them, and recursively merge them
             if (diff.MoveToFirstChild())
@@ -79,8 +80,10 @@ namespace Hl7.Fhir.Specification.Expansion
                 do
                 {
                     if ((firstEntry && !snap.MoveToChild(diff.PathName)) ||
-                        (!firstEntry && !snap.MoveToNext(diff.PathName)))
-                        throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base", diff.PathName);
+                        (!firstEntry && !snap.MoveTo(diff.PathName)) ) // HACK: I don't think it should be allowed for a diff to list constraints in the wrong order...
+                    {
+                        throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base", diff.Path);
+                    }
                     firstEntry = false;
 
                     // Child found in both, merge them
@@ -205,7 +208,7 @@ namespace Hl7.Fhir.Specification.Expansion
         {
             var slicingEntry = (ElementDefinition)baseDefn.DeepCopy();
 
-            (new ElementDefnMerger()).Merge(slicingEntry, diff);
+            (new ElementDefnMerger(_markChanges)).Merge(slicingEntry, diff);
 
             return slicingEntry;
         }

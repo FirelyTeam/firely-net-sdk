@@ -60,6 +60,12 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
+        public static bool MoveTo(this BaseElementNavigator nav, string name)
+        {
+            return MoveToNext(nav, name) || MoveToPrevious(nav,name);
+        }
+
+
         public static bool JumpToFirst(this BaseElementNavigator nav, string path)
         {
             var matches = Find(nav, path);

@@ -41,10 +41,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GenerateSnapshot()
         {
-            var generator = new SnapshotGenerator(_source);
+            var generator = new SnapshotGenerator(_source, markChanges:false);
 
             foreach (var original in findConstraintStrucDefs().Where(sd=>sd.Snapshot != null))
             {
+                Debug.WriteLine("Generating Snapshot for " + original.Url);
                 var expanded = (StructureDefinition)original.DeepCopy();
                 Assert.IsTrue(original.IsExactly(expanded));
 

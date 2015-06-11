@@ -22,6 +22,13 @@ namespace Hl7.Fhir.Specification.Expansion
 {
     internal class ElementDefnMerger
     {
+        private bool _markChanges;
+
+        public ElementDefnMerger(bool markChanges)
+        {
+            _markChanges = markChanges;
+        }
+
         public void Merge(ElementDefinition snap, ElementDefinition diff)
         {
             bool isExtensionConstraint = snap.Path == "Extension" || snap.Path.EndsWith(".extension") || snap.Path.EndsWith(".modifierExtension");
@@ -39,7 +46,8 @@ namespace Hl7.Fhir.Specification.Expansion
             }
 
             // representation cannot be overridden
-            // name cannot be overridden
+
+            snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
             snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
             // Codes are cumulative based on the code value
@@ -81,10 +89,10 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
 
             // Type is just overridden
-            if (diff.Type != null && diff.Type.IsNullOrEmpty())
+            if (!diff.Type.IsNullOrEmpty())
             {
                 snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                foreach (var element in snap.Type) snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                foreach (var element in snap.Type) markChange(snap);
             }
 
             // Mappings are cumulative based on Mapping.identity
@@ -94,6 +102,12 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
 
             // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
+        }
+
+        private void markChange(Element snap)
+        {
+            if(_markChanges)
+                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
         }
 
 
@@ -115,7 +129,7 @@ namespace Hl7.Fhir.Specification.Expansion
                     (result as FhirString).Value = diffText;
                 }
 
-                result.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                markChange(result);
                 return result;
             }
             else
@@ -129,7 +143,7 @@ namespace Hl7.Fhir.Specification.Expansion
             if (diff != null && !diff.IsExactly(snap))
             {
                 var result = (T)diff.DeepCopy();
-                result.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                markChange(result);
                 return result;
             }
             else
@@ -149,7 +163,7 @@ namespace Hl7.Fhir.Specification.Expansion
                 {
                     result.Remove(diff.FirstOrDefault(e => elemComparer(element, e)));
                     var newElement = (T)element.DeepCopy();
-                    newElement.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                    markChange(newElement);
                     result.Add(newElement);
                 }
 
