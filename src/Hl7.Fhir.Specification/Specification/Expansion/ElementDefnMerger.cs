@@ -37,9 +37,9 @@ namespace Hl7.Fhir.Specification.Expansion
             // In case the diff doesn't have these, give some generic defaults.
             if (isExtensionConstraint)
             {
-                snap.Definition = "An Extension";
-                snap.Short = "Extension";
-                snap.Comments = null;
+                snap.Definition = "An Extension"; markChange(snap.DefinitionElement);
+                snap.Short = "Extension"; markChange(snap.ShortElement);
+                snap.Comments = null; markChange(snap.CommentsElement);
                 snap.Requirements = null;
                 snap.AliasElement = new List<FhirString>();
                 snap.Mapping = new List<ElementDefinition.ElementDefinitionMappingComponent>();
@@ -101,17 +101,17 @@ namespace Hl7.Fhir.Specification.Expansion
             // Constraints are cumulative bassed on Constraint.id
             snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
 
+            snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
+
             // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
         }
 
         private void markChange(Element snap)
         {
             if(_markChanges)
-                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                snap.SetExtension(SnapshotGenerator.CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
         }
-
-
-        const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
+        
 
         private T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
         {

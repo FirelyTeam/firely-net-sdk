@@ -38,29 +38,50 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+
+
+        [TestMethod]
+        public void GenerateLipidSnapshot()
+        {
+            var generator = new SnapshotGenerator(_source, markChanges: false);
+
+            var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipid-report-lipidprofile-test");
+            Assert.IsNotNull(sd);
+
+            generateSnapshotAndCompare(sd);
+        }
+
+
         [TestMethod]
         public void GenerateSnapshot()
-        {
-            var generator = new SnapshotGenerator(_source, markChanges:false);
-
-            foreach (var original in findConstraintStrucDefs().Where(sd=>sd.Snapshot != null))
+        {           
+            foreach (var original in findConstraintStrucDefs())
             {
+                if (original.Snapshot == null) continue;        // nothing to test, original does not have a snapshot
+
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
-                var expanded = (StructureDefinition)original.DeepCopy();
-                Assert.IsTrue(original.IsExactly(expanded));
-
-                generator.Generate(expanded);
-
-                var areEqual = original.IsExactly(expanded);
-
-                if (!areEqual)
-                {
-                    File.WriteAllText("c:\\temp\\expanded-java.xml", FhirSerializer.SerializeResourceToXml(original));
-                    File.WriteAllText("c:\\temp\\expanded-dotnet.xml", FhirSerializer.SerializeResourceToXml(expanded));
-                }
-
-                Assert.IsTrue(areEqual);
+                generateSnapshotAndCompare(original);
             }
+        }
+
+        private void generateSnapshotAndCompare(StructureDefinition original)
+        {
+            var generator = new SnapshotGenerator(_source, markChanges: false);
+
+            var expanded = (StructureDefinition)original.DeepCopy();
+            Assert.IsTrue(original.IsExactly(expanded));
+
+            generator.Generate(expanded);
+
+            var areEqual = original.IsExactly(expanded);
+
+            if (!areEqual)
+            {
+                File.WriteAllText("c:\\temp\\expanded-java.xml", FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText("c:\\temp\\expanded-dotnet.xml", FhirSerializer.SerializeResourceToXml(expanded));
+            }
+
+            Assert.IsTrue(areEqual);
         }
 
 

@@ -20,6 +20,8 @@ namespace Hl7.Fhir.Specification.Expansion
 {
     public class SnapshotGenerator
     {
+        public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
+        
         private ArtifactResolver _resolver;
         private bool _markChanges;
 
@@ -156,6 +158,7 @@ namespace Hl7.Fhir.Specification.Expansion
             if (diff.Current.Slicing != null)
             {
                 slicingEntry = createSliceEntry(snap.Current, diff.Current);
+                markChange(slicingEntry);
                 snap.InsertBefore(slicingEntry);
 
                 if (!diff.MoveToNext(diff.PathName))
@@ -169,6 +172,7 @@ namespace Hl7.Fhir.Specification.Expansion
 
                 // In this case we insert a "prefab" extension slice.
                 slicingEntry = createExtensionSlicingEntry(snap.Path, snap.Current);
+                markChange(slicingEntry);
                 snap.InsertBefore(slicingEntry);
             }
 
@@ -198,6 +202,13 @@ namespace Hl7.Fhir.Specification.Expansion
             //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
         }
 
+        private void markChange(Element snap)
+        {
+            if (_markChanges)
+                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+        }
+
+
         private static bool isSlicedToOne(ElementDefinition element)
         {
             return element.Slicing != null && element.Max == "1";
@@ -216,13 +227,13 @@ namespace Hl7.Fhir.Specification.Expansion
         private ElementDefinition createExtensionSlicingEntry(string path, ElementDefinition template)
         {
             // Create a pre-fab extension slice, filled with sensible defaults
-            // Extensions will repeat their definitions in their slicing entry
-            var result = createSliceEntry(template, new ElementDefinition());
+            var slicingDiff = new ElementDefinition();
+            slicingDiff.Slicing = new ElementDefinition.ElementDefinitionSlicingComponent();
+            slicingDiff.Slicing.Discriminator = new[] { "url" };
+            slicingDiff.Slicing.Ordered = false;
+            slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
 
-            result.Slicing = new ElementDefinition.ElementDefinitionSlicingComponent();
-            result.Slicing.Discriminator = new[] { "url" };
-            result.Slicing.Ordered = false;
-            result.Slicing.Rules = ElementDefinition.SlicingRules.Open;
+            var result = createSliceEntry(template, slicingDiff);
 
             return result;
         }
