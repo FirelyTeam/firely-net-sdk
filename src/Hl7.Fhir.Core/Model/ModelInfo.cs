@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
             public string Resource { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
-            public Conformance.SearchParamType Type { get; set; }
+            public SearchParamType Type { get; set; }
 
             /// <summary>
             /// If this search parameter is a Composite, this array contains 

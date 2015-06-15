@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,17 +100,17 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceSeverity
         {
             /// <summary>
-            /// Causes mild physiological effects.
+            /// Causes mild physiological effects
             /// </summary>
             [EnumLiteral("mild")]
             Mild,
             /// <summary>
-            /// Causes moderate physiological effects.
+            /// Causes moderate physiological effects
             /// </summary>
             [EnumLiteral("moderate")]
             Moderate,
             /// <summary>
-            /// Causes severe physiological effects.
+            /// Causes severe physiological effects
             /// </summary>
             [EnumLiteral("severe")]
             Severe,
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("high")]
             High,
             /// <summary>
-            /// Unable to assess the potential clinical impact with the information available.
+            /// Unable to assess the potential clinical impact with the information available
             /// </summary>
             [EnumLiteral("unassessible")]
             Unassessible,
@@ -146,17 +146,17 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceCategory
         {
             /// <summary>
-            /// Any substance consumed to provide nutritional support for the body.
+            /// Any substance consumed to provide nutritional support for the body
             /// </summary>
             [EnumLiteral("food")]
             Food,
             /// <summary>
-            /// Substances administered to achieve a physiological effect.
+            /// Substances administered to achieve a physiological effect
             /// </summary>
             [EnumLiteral("medication")]
             Medication,
             /// <summary>
-            /// Substances that are encountered in the environment.
+            /// Substances that are encountered in the environment
             /// </summary>
             [EnumLiteral("environment")]
             Environment,
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and Is not valid.
+            /// The statement was entered in error and Is not valid
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,

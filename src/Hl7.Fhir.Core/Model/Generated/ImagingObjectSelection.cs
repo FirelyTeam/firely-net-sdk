@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,129 +58,54 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("KOStitle")]
         public enum KOStitle
         {
-            /// <summary>
-            /// Of Interest.
-            /// </summary>
             [EnumLiteral("113000")]
             N113000,
-            /// <summary>
-            /// Rejected for Quality Reasons.
-            /// </summary>
             [EnumLiteral("113001")]
             N113001,
-            /// <summary>
-            /// For Referring Provider.
-            /// </summary>
             [EnumLiteral("113002")]
             N113002,
-            /// <summary>
-            /// For Surgery.
-            /// </summary>
             [EnumLiteral("113003")]
             N113003,
-            /// <summary>
-            /// For Teaching.
-            /// </summary>
             [EnumLiteral("113004")]
             N113004,
-            /// <summary>
-            /// For Conference.
-            /// </summary>
             [EnumLiteral("113005")]
             N113005,
-            /// <summary>
-            /// For Therapy.
-            /// </summary>
             [EnumLiteral("113006")]
             N113006,
-            /// <summary>
-            /// For Patient.
-            /// </summary>
             [EnumLiteral("113007")]
             N113007,
-            /// <summary>
-            /// For Peer Review.
-            /// </summary>
             [EnumLiteral("113008")]
             N113008,
-            /// <summary>
-            /// For Research.
-            /// </summary>
             [EnumLiteral("113009")]
             N113009,
-            /// <summary>
-            /// Quality Issue.
-            /// </summary>
             [EnumLiteral("113010")]
             N113010,
-            /// <summary>
-            /// Best In Set.
-            /// </summary>
             [EnumLiteral("113013")]
             N113013,
-            /// <summary>
-            /// For Printing.
-            /// </summary>
             [EnumLiteral("113018")]
             N113018,
-            /// <summary>
-            /// For Report Attachment.
-            /// </summary>
             [EnumLiteral("113020")]
             N113020,
-            /// <summary>
-            /// For Litigation.
-            /// </summary>
             [EnumLiteral("113021")]
             N113021,
-            /// <summary>
-            /// Manifest.
-            /// </summary>
             [EnumLiteral("113030")]
             N113030,
-            /// <summary>
-            /// Signed Manifest.
-            /// </summary>
             [EnumLiteral("113031")]
             N113031,
-            /// <summary>
-            /// Complete Study Content.
-            /// </summary>
             [EnumLiteral("113032")]
             N113032,
-            /// <summary>
-            /// Signed Complete Study Content.
-            /// </summary>
             [EnumLiteral("113033")]
             N113033,
-            /// <summary>
-            /// Complete Acquisition Content.
-            /// </summary>
             [EnumLiteral("113034")]
             N113034,
-            /// <summary>
-            /// Signed Complete Acquisition Content.
-            /// </summary>
             [EnumLiteral("113035")]
             N113035,
-            /// <summary>
-            /// Group of Frames for Display.
-            /// </summary>
             [EnumLiteral("113036")]
             N113036,
-            /// <summary>
-            /// Rejected for Patient Safety Reasons.
-            /// </summary>
             [EnumLiteral("113037")]
             N113037,
-            /// <summary>
-            /// Incorrect Modality Worklist Entry.
-            /// </summary>
             [EnumLiteral("113038")]
             N113038,
-            /// <summary>
-            /// Data Retention Policy Expired.
-            /// </summary>
             [EnumLiteral("113039")]
             N113039,
         }

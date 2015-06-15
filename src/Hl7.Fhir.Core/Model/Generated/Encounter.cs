@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,47 +59,47 @@ namespace Hl7.Fhir.Model
         public enum EncounterClass
         {
             /// <summary>
-            /// An encounter during which the patient is hospitalized and stays overnight.
+            /// An encounter during which the patient is hospitalized and stays overnight
             /// </summary>
             [EnumLiteral("inpatient")]
             Inpatient,
             /// <summary>
-            /// An encounter during which the patient is not hospitalized overnight.
+            /// An encounter during which the patient is not hospitalized overnight
             /// </summary>
             [EnumLiteral("outpatient")]
             Outpatient,
             /// <summary>
-            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
+            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit
             /// </summary>
             [EnumLiteral("ambulatory")]
             Ambulatory,
             /// <summary>
-            /// An encounter where the patient needs urgent care.
+            /// An encounter where the patient needs urgent care
             /// </summary>
             [EnumLiteral("emergency")]
             Emergency,
             /// <summary>
-            /// An encounter where the practitioner visits the patient at his/her home.
+            /// An encounter where the practitioner visits the patient at his/her home
             /// </summary>
             [EnumLiteral("home")]
             Home,
             /// <summary>
-            /// An encounter taking place outside the regular environment for giving care.
+            /// An encounter taking place outside the regular environment for giving care
             /// </summary>
             [EnumLiteral("field")]
             Field,
             /// <summary>
-            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
+            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight
             /// </summary>
             [EnumLiteral("daytime")]
             Daytime,
             /// <summary>
-            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
+            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact
             /// </summary>
             [EnumLiteral("virtual")]
             Virtual,
             /// <summary>
-            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
+            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is
             /// </summary>
             [EnumLiteral("other")]
             Other,
@@ -112,17 +112,17 @@ namespace Hl7.Fhir.Model
         public enum EncounterLocationStatus
         {
             /// <summary>
-            /// The patient is planned to be moved to this location at some point in the future.
+            /// The patient is planned to be moved to this location at some point in the future
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The patient is currently at this location, or was between the period specified.
+            /// The patient is currently at this location, or was between the period specified
             /// </summary>
             [EnumLiteral("present")]
             Present,
             /// <summary>
-            /// This location is held empty for this patient.
+            /// This location is held empty for this patient
             /// </summary>
             [EnumLiteral("reserved")]
             Reserved,
@@ -135,32 +135,32 @@ namespace Hl7.Fhir.Model
         public enum EncounterState
         {
             /// <summary>
-            /// The Encounter has not yet started.
+            /// The Encounter has not yet started
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
+            /// The Patient is present for the encounter, however is not currently meeting with a practitioner
             /// </summary>
             [EnumLiteral("arrived")]
             Arrived,
             /// <summary>
-            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
+            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The Encounter has begun, but the patient is temporarily on leave.
+            /// The Encounter has begun, but the patient is temporarily on leave
             /// </summary>
             [EnumLiteral("onleave")]
             Onleave,
             /// <summary>
-            /// The Encounter has ended.
+            /// The Encounter has ended
             /// </summary>
             [EnumLiteral("finished")]
             Finished,
             /// <summary>
-            /// The Encounter has ended before it has begun.
+            /// The Encounter has ended before it has begun
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,

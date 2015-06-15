@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The plan is intended to be followed and used as part of patient care.
+            /// The plan is intended to be followed and used as part of patient care
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The plan is no longer in use and is not expected to be followed or used in patient care.
+            /// The plan is no longer in use and is not expected to be followed or used in patient care
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
@@ -82,37 +82,37 @@ namespace Hl7.Fhir.Model
         public enum CarePlanActivityCategory
         {
             /// <summary>
-            /// Plan for the patient to consume food of a specified nature.
+            /// Plan for the patient to consume food of a specified nature
             /// </summary>
             [EnumLiteral("diet")]
             Diet,
             /// <summary>
-            /// Plan for the patient to consume/receive a drug, vaccine or other product.
+            /// Plan for the patient to consume/receive a drug, vaccine or other product
             /// </summary>
             [EnumLiteral("drug")]
             Drug,
             /// <summary>
-            /// Plan to meet or communicate with the patient (in-patient, out-patient, phone call, etc.).
+            /// Plan to meet or communicate with the patient (in-patient, out-patient, phone call, etc.)
             /// </summary>
             [EnumLiteral("encounter")]
             Encounter,
             /// <summary>
-            /// Plan to capture information about a patient (vitals, labs, diagnostic images, etc.).
+            /// Plan to capture information about a patient (vitals, labs, diagnostic images, etc.)
             /// </summary>
             [EnumLiteral("observation")]
             Observation,
             /// <summary>
-            /// Plan to modify the patient in some way (surgery, physiotherapy, education, counseling, etc.).
+            /// Plan to modify the patient in some way (surgery, physiotherapy, education, counseling, etc.)
             /// </summary>
             [EnumLiteral("procedure")]
             Procedure,
             /// <summary>
-            /// Plan to provide something to the patient (medication, medical supply, etc.).
+            /// Plan to provide something to the patient (medication, medical supply, etc.)
             /// </summary>
             [EnumLiteral("supply")]
             Supply,
             /// <summary>
-            /// Some other form of action.
+            /// Some other form of action
             /// </summary>
             [EnumLiteral("other")]
             Other,
@@ -125,22 +125,22 @@ namespace Hl7.Fhir.Model
         public enum CarePlanGoalStatus
         {
             /// <summary>
-            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
+            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The goal has been met and no further action is needed.
+            /// The goal has been met and no further action is needed
             /// </summary>
             [EnumLiteral("achieved")]
             Achieved,
             /// <summary>
-            /// The goal has been met, but ongoing activity is needed to sustain the goal objective.
+            /// The goal has been met, but ongoing activity is needed to sustain the goal objective
             /// </summary>
             [EnumLiteral("sustaining")]
             Sustaining,
             /// <summary>
-            /// The goal is no longer being sought.
+            /// The goal is no longer being sought
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
@@ -153,17 +153,17 @@ namespace Hl7.Fhir.Model
         public enum CarePlanActivityStatus
         {
             /// <summary>
-            /// Activity is planned but no action has yet been taken.
+            /// Activity is planned but no action has yet been taken
             /// </summary>
             [EnumLiteral("not-started")]
             NotStarted,
             /// <summary>
-            /// Appointment or other booking has occurred but activity has not yet begun.
+            /// Appointment or other booking has occurred but activity has not yet begun
             /// </summary>
             [EnumLiteral("scheduled")]
             Scheduled,
             /// <summary>
-            /// Activity has been started but is not yet complete.
+            /// Activity has been started but is not yet complete
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
@@ -173,12 +173,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
-            /// The activities have been completed (more or less) as planned.
+            /// The activities have been completed (more or less) as planned
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The activities have been ended prior to completion (perhaps even before they were started).
+            /// The activities have been ended prior to completion (perhaps even before they were started)
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -431,13 +431,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("type", Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code TypeElement
+        public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
         {
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _TypeElement;
+        private Code<Hl7.Fhir.Model.SearchParamType> _TypeElement;
         
         /// <summary>
         /// number | date | string | token | reference | composite | quantity | uri
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Type
+        public Hl7.Fhir.Model.SearchParamType? Type
         {
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   TypeElement = null; 
                 else
-                  TypeElement = new Hl7.Fhir.Model.Code(value);
+                  TypeElement = new Code<Hl7.Fhir.Model.SearchParamType>(value);
                 OnPropertyChanged("Type");
             }
         }
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.Code)BaseElement.DeepCopy();
-                if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Hl7.Fhir.Model.Code>(TargetElement.DeepCopy());

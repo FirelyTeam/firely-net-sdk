@@ -82,6 +82,9 @@
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\BackboneElement.cs" />
+    <Compile Include="Model\Generated\SupplyDelivery.cs" />
+    <Compile Include="Model\Generated\SupplyRequest.cs" />
+    <Compile Include="Model\Generated\TestScript.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Extension.cs" />

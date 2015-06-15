@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
         public enum ProvenanceEntityRole
         {
             /// <summary>
-            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
+            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity
             /// </summary>
             [EnumLiteral("derivation")]
             Derivation,
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("revision")]
             Revision,
             /// <summary>
-            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
+            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author
             /// </summary>
             [EnumLiteral("quotation")]
             Quotation,

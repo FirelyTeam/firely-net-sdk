@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("cancel")]
             Cancel,
             /// <summary>
-            /// Check for previously un-read/ not-retrieved resources.
+            /// Check for previously un-read/ not-retrieved resources
             /// </summary>
             [EnumLiteral("poll")]
             Poll,

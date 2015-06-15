@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,42 +59,42 @@ namespace Hl7.Fhir.Model
         public enum GoalStatus
         {
             /// <summary>
-            /// A goal is proposed for this patient.
+            /// A goal is proposed for this patient
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// A goal is planned for this patient.
+            /// A goal is planned for this patient
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again).
+            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The goal has been met and no further action is needed.
+            /// The goal has been met and no further action is needed
             /// </summary>
             [EnumLiteral("achieved")]
             Achieved,
             /// <summary>
-            /// The goal has been met, but ongoing activity is needed to sustain the goal objective.
+            /// The goal has been met, but ongoing activity is needed to sustain the goal objective
             /// </summary>
             [EnumLiteral("sustaining")]
             Sustaining,
             /// <summary>
-            /// The goal is no longer being sought.
+            /// The goal is no longer being sought
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// A proposed goal was accepted.
+            /// A proposed goal was accepted
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// A proposed goal was rejected.
+            /// A proposed goal was rejected
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,

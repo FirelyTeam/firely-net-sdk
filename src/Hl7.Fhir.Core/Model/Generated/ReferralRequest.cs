@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,37 +59,37 @@ namespace Hl7.Fhir.Model
         public enum ReferralStatus
         {
             /// <summary>
-            /// A draft referral that has yet to be send.
+            /// A draft referral that has yet to be send
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The referral has been transmitted, but not yet acknowledged by the recipient.
+            /// The referral has been transmitted, but not yet acknowledged by the recipient
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The referral has been acknowledged by the recipient, and is in the process of being actioned.
+            /// The referral has been acknowledged by the recipient, and is in the process of being actioned
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The referral has been cancelled without being completed. For example it is no longer needed.
+            /// The referral has been cancelled without being completed. For example it is no longer needed
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The recipient has agreed to deliver the care requested by the referral.
+            /// The recipient has agreed to deliver the care requested by the referral
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The recipient has declined to accept the referral.
+            /// The recipient has declined to accept the referral
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The referral has been completely actioned.
+            /// The referral has been completely actioned
             /// </summary>
             [EnumLiteral("completed")]
             Completed,

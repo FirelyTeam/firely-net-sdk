@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,22 +57,22 @@ namespace Hl7.Fhir.Model
         public enum AddressUse
         {
             /// <summary>
-            /// A communication address at a home.
+            /// A communication address at a home
             /// </summary>
             [EnumLiteral("home")]
             Home,
             /// <summary>
-            /// An office address. First choice for business related contacts during business hours.
+            /// An office address. First choice for business related contacts during business hours
             /// </summary>
             [EnumLiteral("work")]
             Work,
             /// <summary>
-            /// A temporary address. The period can provide more detailed information.
+            /// A temporary address. The period can provide more detailed information
             /// </summary>
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// This address is no longer in use (or was never correct, but retained for records).
+            /// This address is no longer in use (or was never correct, but retained for records)
             /// </summary>
             [EnumLiteral("old")]
             Old,

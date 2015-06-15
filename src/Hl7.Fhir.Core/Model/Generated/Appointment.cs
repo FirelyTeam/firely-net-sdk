@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum AppointmentStatus
         {
             /// <summary>
-            /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
+            /// Some or all of the participant(s) have not finalized their acceptance of the appointment request
             /// </summary>
             [EnumLiteral("pending")]
             Pending,
             /// <summary>
-            /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
+            /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified
             /// </summary>
             [EnumLiteral("booked")]
             Booked,
             /// <summary>
-            /// Some of the patients have arrived.
+            /// Some of the patients have arrived
             /// </summary>
             [EnumLiteral("arrived")]
             Arrived,
             /// <summary>
-            /// This appointment has completed and may have resulted in an encounter.
+            /// This appointment has completed and may have resulted in an encounter
             /// </summary>
             [EnumLiteral("fulfilled")]
             Fulfilled,
             /// <summary>
-            /// The appointment has been cancelled.
+            /// The appointment has been cancelled
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
+            /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient)
             /// </summary>
             [EnumLiteral("noshow")]
             Noshow,
@@ -97,17 +97,17 @@ namespace Hl7.Fhir.Model
         public enum ParticipantRequired
         {
             /// <summary>
-            /// The participant is required to attend the appointment.
+            /// The participant is required to attend the appointment
             /// </summary>
             [EnumLiteral("required")]
             Required,
             /// <summary>
-            /// The participant may optionally attend the appointment.
+            /// The participant may optionally attend the appointment
             /// </summary>
             [EnumLiteral("optional")]
             Optional,
             /// <summary>
-            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
+            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test)
             /// </summary>
             [EnumLiteral("information-only")]
             InformationOnly,
@@ -120,22 +120,22 @@ namespace Hl7.Fhir.Model
         public enum ParticipationStatus
         {
             /// <summary>
-            /// The participant has accepted the appointment.
+            /// The participant has accepted the appointment
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The participant has declined the appointment and will not participate in the appointment.
+            /// The participant has declined the appointment and will not participate in the appointment
             /// </summary>
             [EnumLiteral("declined")]
             Declined,
             /// <summary>
-            /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
+            /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur
             /// </summary>
             [EnumLiteral("tentative")]
             Tentative,
             /// <summary>
-            /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
+            /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses
             /// </summary>
             [EnumLiteral("needs-action")]
             NeedsAction,

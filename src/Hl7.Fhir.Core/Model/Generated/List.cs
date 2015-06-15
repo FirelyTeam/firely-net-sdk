@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,17 +82,17 @@ namespace Hl7.Fhir.Model
         public enum ListMode
         {
             /// <summary>
-            /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes.
+            /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes
             /// </summary>
             [EnumLiteral("working")]
             Working,
             /// <summary>
-            /// This list was prepared as a snapshot. It should not be assumed to be current.
+            /// This list was prepared as a snapshot. It should not be assumed to be current
             /// </summary>
             [EnumLiteral("snapshot")]
             Snapshot,
             /// <summary>
-            /// The list is prepared as a statement of changes that have been made or recommended.
+            /// The list is prepared as a statement of changes that have been made or recommended
             /// </summary>
             [EnumLiteral("changes")]
             Changes,
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Comments about the note
+        /// Comments about the list
         /// </summary>
         [FhirElement("note", Order=180)]
         [DataMember]
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>
-        /// Comments about the note
+        /// Comments about the list
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

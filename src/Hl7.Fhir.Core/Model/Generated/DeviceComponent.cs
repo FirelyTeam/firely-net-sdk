@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,57 +59,57 @@ namespace Hl7.Fhir.Model
         public enum MeasmntPrinciple
         {
             /// <summary>
-            /// Measurement principle isn't in the list.
+            /// Measurement principle isn't in the list
             /// </summary>
             [EnumLiteral("other")]
             Other,
             /// <summary>
-            /// Measurement is done using chemical.
+            /// Measurement is done using chemical
             /// </summary>
             [EnumLiteral("chemical")]
             Chemical,
             /// <summary>
-            /// Measurement is done using electrical.
+            /// Measurement is done using electrical
             /// </summary>
             [EnumLiteral("electrical")]
             Electrical,
             /// <summary>
-            /// Measurement is done using impedance.
+            /// Measurement is done using impedance
             /// </summary>
             [EnumLiteral("impedance")]
             Impedance,
             /// <summary>
-            /// Measurement is done using nuclear.
+            /// Measurement is done using nuclear
             /// </summary>
             [EnumLiteral("nuclear")]
             Nuclear,
             /// <summary>
-            /// Measurement is done using optical.
+            /// Measurement is done using optical
             /// </summary>
             [EnumLiteral("optical")]
             Optical,
             /// <summary>
-            /// Measurement is done using thermal.
+            /// Measurement is done using thermal
             /// </summary>
             [EnumLiteral("thermal")]
             Thermal,
             /// <summary>
-            /// Measurement is done using biological.
+            /// Measurement is done using biological
             /// </summary>
             [EnumLiteral("biological")]
             Biological,
             /// <summary>
-            /// Measurement is done using mechanical.
+            /// Measurement is done using mechanical
             /// </summary>
             [EnumLiteral("mechanical")]
             Mechanical,
             /// <summary>
-            /// Measurement is done using acoustical.
+            /// Measurement is done using acoustical
             /// </summary>
             [EnumLiteral("acoustical")]
             Acoustical,
             /// <summary>
-            /// Measurement is done using manual.
+            /// Measurement is done using manual
             /// </summary>
             [EnumLiteral("manual")]
             Manual,

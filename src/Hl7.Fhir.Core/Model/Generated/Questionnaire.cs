@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,62 +82,62 @@ namespace Hl7.Fhir.Model
         public enum AnswerFormat
         {
             /// <summary>
-            /// Answer is a yes/no answer.
+            /// Answer is a yes/no answer
             /// </summary>
             [EnumLiteral("boolean")]
             Boolean,
             /// <summary>
-            /// Answer is a floating point number.
+            /// Answer is a floating point number
             /// </summary>
             [EnumLiteral("decimal")]
             Decimal,
             /// <summary>
-            /// Answer is an integer.
+            /// Answer is an integer
             /// </summary>
             [EnumLiteral("integer")]
             Integer,
             /// <summary>
-            /// Answer is a date.
+            /// Answer is a date
             /// </summary>
             [EnumLiteral("date")]
             Date,
             /// <summary>
-            /// Answer is a date and time.
+            /// Answer is a date and time
             /// </summary>
             [EnumLiteral("dateTime")]
             DateTime,
             /// <summary>
-            /// Answer is a system timestamp.
+            /// Answer is a system timestamp
             /// </summary>
             [EnumLiteral("instant")]
             Instant,
             /// <summary>
-            /// Answer is a time independent of date.
+            /// Answer is a time independent of date
             /// </summary>
             [EnumLiteral("time")]
             Time,
             /// <summary>
-            /// Answer is a short (few words to short sentence) free-text entry.
+            /// Answer is a short (few words to short sentence) free-text entry
             /// </summary>
             [EnumLiteral("string")]
             String,
             /// <summary>
-            /// Answer is a long (potentially multi-paragram) free-text entry.
+            /// Answer is a long (potentially multi-paragram) free-text entry
             /// </summary>
             [EnumLiteral("text")]
             Text,
             /// <summary>
-            /// Answer is a url (website, FTP site, etc.).
+            /// Answer is a url (website, FTP site, etc.)
             /// </summary>
             [EnumLiteral("url")]
             Url,
             /// <summary>
-            /// Answer is a choice from a list of options.
+            /// Answer is a choice from a list of options
             /// </summary>
             [EnumLiteral("choice")]
             Choice,
             /// <summary>
-            /// Answer is a choice from a list of options or a free-text entry.
+            /// Answer is a choice from a list of options or a free-text entry
             /// </summary>
             [EnumLiteral("open-choice")]
             OpenChoice,
@@ -147,12 +147,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("attachment")]
             Attachment,
             /// <summary>
-            /// Answer is a reference to another resource (practitioner, organization, etc.).
+            /// Answer is a reference to another resource (practitioner, organization, etc.)
             /// </summary>
             [EnumLiteral("reference")]
             Reference,
             /// <summary>
-            /// Answer is a combination of a numeric value and unit.
+            /// Answer is a combination of a numeric value and unit
             /// </summary>
             [EnumLiteral("quantity")]
             Quantity,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum HTTPVerb
         {
             /// <summary>
-            /// HTTP GET.
+            /// HTTP GET
             /// </summary>
             [EnumLiteral("GET")]
             GET,
             /// <summary>
-            /// HTTP POST.
+            /// HTTP POST
             /// </summary>
             [EnumLiteral("POST")]
             POST,
             /// <summary>
-            /// HTTP PUT.
+            /// HTTP PUT
             /// </summary>
             [EnumLiteral("PUT")]
             PUT,
             /// <summary>
-            /// HTTP DELETE.
+            /// HTTP DELETE
             /// </summary>
             [EnumLiteral("DELETE")]
             DELETE,
@@ -87,17 +87,17 @@ namespace Hl7.Fhir.Model
         public enum TransactionProcessingMode
         {
             /// <summary>
-            /// If a matching resource is found, then ignore the resource and do not process it as part of the transaction (and return the matching resource information in the transaction response).
+            /// If a matching resource is found, then ignore the resource and do not process it as part of the transaction (and return the matching resource information in the transaction response)
             /// </summary>
             [EnumLiteral("ignore")]
             Ignore,
             /// <summary>
-            /// If a matching resource is found, then update it with this resource, otherwise create a new one.
+            /// If a matching resource is found, then update it with this resource, otherwise create a new one
             /// </summary>
             [EnumLiteral("update")]
             Update,
             /// <summary>
-            /// If a resource matching the information provided is found, delete it. If no matching resource is found, the transaction fails.
+            /// If a resource matching the information provided is found, delete it. If no matching resource is found, the transaction fails
             /// </summary>
             [EnumLiteral("delete")]
             Delete,
@@ -110,12 +110,12 @@ namespace Hl7.Fhir.Model
         public enum SearchEntryMode
         {
             /// <summary>
-            /// This resource matched the search specification.
+            /// This resource matched the search specification
             /// </summary>
             [EnumLiteral("match")]
             Match,
             /// <summary>
-            /// This resource is returned because it is referred to from another resource in the search set.
+            /// This resource is returned because it is referred to from another resource in the search set
             /// </summary>
             [EnumLiteral("include")]
             Include,
@@ -128,37 +128,37 @@ namespace Hl7.Fhir.Model
         public enum BundleType
         {
             /// <summary>
-            /// The bundle is a document. The first resource is a Composition.
+            /// The bundle is a document. The first resource is a Composition
             /// </summary>
             [EnumLiteral("document")]
             Document,
             /// <summary>
-            /// The bundle is a message. The first resource is a MessageHeader.
+            /// The bundle is a message. The first resource is a MessageHeader
             /// </summary>
             [EnumLiteral("message")]
             Message,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as an atomic commit.
+            /// The bundle is a transaction - intended to be processed by a server as an atomic commit
             /// </summary>
             [EnumLiteral("transaction")]
             Transaction,
             /// <summary>
-            /// The bundle is a transaction response.
+            /// The bundle is a transaction response
             /// </summary>
             [EnumLiteral("transaction-response")]
             TransactionResponse,
             /// <summary>
-            /// The bundle is a list of resources from a _history interaction on a server.
+            /// The bundle is a list of resources from a _history interaction on a server
             /// </summary>
             [EnumLiteral("history")]
             History,
             /// <summary>
-            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message.
+            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message
             /// </summary>
             [EnumLiteral("searchset")]
             Searchset,
             /// <summary>
-            /// The bundle is a set of resources collected into a single document for ease of distribution.
+            /// The bundle is a set of resources collected into a single document for ease of distribution
             /// </summary>
             [EnumLiteral("collection")]
             Collection,
@@ -170,17 +170,17 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("TransactionOperation")]
         public enum TransactionOperation
         {
+            /// <summary>
+            /// No Operation occurred - only valid in a transaction response
+            /// </summary>
+            [EnumLiteral("noop")]
+            Noop,
             [EnumLiteral("create")]
             Create,
             [EnumLiteral("update")]
             Update,
             [EnumLiteral("delete")]
             Delete,
-            /// <summary>
-            /// No Operation occurred - only valid in a transaction response.
-            /// </summary>
-            [EnumLiteral("noop")]
-            Noop,
         }
         
         [FhirType("BundleEntryTransactionComponent")]
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
             
             /// <summary>
-            /// Resources in this bundle
+            /// A resource in the bundle
             /// </summary>
             [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]

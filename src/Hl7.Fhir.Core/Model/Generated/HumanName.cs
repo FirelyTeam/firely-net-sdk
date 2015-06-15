@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         public enum NameUse
         {
             /// <summary>
-            /// Known as/conventional/the one you normally use.
+            /// Known as/conventional/the one you normally use
             /// </summary>
             [EnumLiteral("usual")]
             Usual,
@@ -72,17 +72,17 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// A name that is used to address the person in an informal manner, but is not part of their formal or usual name.
+            /// A name that is used to address the person in an informal manner, but is not part of their formal or usual name
             /// </summary>
             [EnumLiteral("nickname")]
             Nickname,
             /// <summary>
-            /// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons).
+            /// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons)
             /// </summary>
             [EnumLiteral("anonymous")]
             Anonymous,
             /// <summary>
-            /// This name is no longer in use (or was never correct, but retained for records).
+            /// This name is no longer in use (or was never correct, but retained for records)
             /// </summary>
             [EnumLiteral("old")]
             Old,

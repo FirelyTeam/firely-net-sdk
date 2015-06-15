@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,42 +59,42 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricColor
         {
             /// <summary>
-            /// Color for representation - black.
+            /// Color for representation - black
             /// </summary>
             [EnumLiteral("black")]
             Black,
             /// <summary>
-            /// Color for representation - red.
+            /// Color for representation - red
             /// </summary>
             [EnumLiteral("red")]
             Red,
             /// <summary>
-            /// Color for representation - green.
+            /// Color for representation - green
             /// </summary>
             [EnumLiteral("green")]
             Green,
             /// <summary>
-            /// Color for representation - yellow.
+            /// Color for representation - yellow
             /// </summary>
             [EnumLiteral("yellow")]
             Yellow,
             /// <summary>
-            /// Color for representation - blue.
+            /// Color for representation - blue
             /// </summary>
             [EnumLiteral("blue")]
             Blue,
             /// <summary>
-            /// Color for representation - magenta.
+            /// Color for representation - magenta
             /// </summary>
             [EnumLiteral("magenta")]
             Magenta,
             /// <summary>
-            /// Color for representation - cyan.
+            /// Color for representation - cyan
             /// </summary>
             [EnumLiteral("cyan")]
             Cyan,
             /// <summary>
-            /// Color for representation - white.
+            /// Color for representation - white
             /// </summary>
             [EnumLiteral("white")]
             White,
@@ -135,22 +135,22 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCalibrationType
         {
             /// <summary>
-            /// TODO.
+            /// TODO
             /// </summary>
             [EnumLiteral("unspecified")]
             Unspecified,
             /// <summary>
-            /// TODO.
+            /// TODO
             /// </summary>
             [EnumLiteral("offset")]
             Offset,
             /// <summary>
-            /// TODO.
+            /// TODO
             /// </summary>
             [EnumLiteral("gain")]
             Gain,
             /// <summary>
-            /// TODO.
+            /// TODO
             /// </summary>
             [EnumLiteral("two-point")]
             TwoPoint,
@@ -191,17 +191,17 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricOperationalStatus
         {
             /// <summary>
-            /// The DeviceMetric is operating and will generate DeviceObservations.
+            /// The DeviceMetric is operating and will generate DeviceObservations
             /// </summary>
             [EnumLiteral("on")]
             On,
             /// <summary>
-            /// The DeviceMetric is not operating.
+            /// The DeviceMetric is not operating
             /// </summary>
             [EnumLiteral("off")]
             Off,
             /// <summary>
-            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
+            /// The DeviceMetric is operating, but will not generate any DeviceObservations
             /// </summary>
             [EnumLiteral("standby")]
             Standby,

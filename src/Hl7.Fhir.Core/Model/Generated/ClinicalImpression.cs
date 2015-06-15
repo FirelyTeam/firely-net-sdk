@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The assessment is done and the results are final.
+            /// The assessment is done and the results are final
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
+            /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient)
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// The patient being asssesed
+        /// The patient being assessed
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
         [References("Patient")]

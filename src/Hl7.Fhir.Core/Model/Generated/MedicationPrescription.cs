@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -86,8 +86,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The prescription was replaced by a newer one, which encompasses all the information in the previous one.
             /// </summary>
-            [EnumLiteral("superceded")]
-            Superceded,
+            [EnumLiteral("superseded")]
+            Superseded,
             /// <summary>
             /// The prescription is not yet 'actionable', i.e. it is a work in progress, required sign-off, need to be run through decision support.
             /// </summary>
@@ -416,16 +416,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product to be supplied
             /// </summary>
-            [FhirElement("medication", InSummary=true, Order=40)]
-            [References("Medication")]
+            [FhirElement("medication", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Medication
+            public Hl7.Fhir.Model.Element Medication
             {
                 get { return _Medication; }
                 set { _Medication = value; OnPropertyChanged("Medication"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Medication;
+            private Hl7.Fhir.Model.Element _Medication;
             
             /// <summary>
             /// Time period supply is authorized for
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
+                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                     if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
                     if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// active | on-hold | completed | entered-in-error | stopped | superceded | draft
+        /// active | on-hold | completed | entered-in-error | stopped | superseded | draft
         /// </summary>
         [FhirElement("status", Order=110)]
         [DataMember]
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionStatus> _StatusElement;
         
         /// <summary>
-        /// active | on-hold | completed | entered-in-error | stopped | superceded | draft
+        /// active | on-hold | completed | entered-in-error | stopped | superseded | draft
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -723,16 +723,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication to be taken
         /// </summary>
-        [FhirElement("medication", Order=170)]
-        [References("Medication")]
+        [FhirElement("medication", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Medication
+        public Hl7.Fhir.Model.Element Medication
         {
             get { return _Medication; }
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Medication;
+        private Hl7.Fhir.Model.Element _Medication;
         
         /// <summary>
         /// How medication should be taken
@@ -789,7 +790,7 @@ namespace Hl7.Fhir.Model
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.ResourceReference)Medication.DeepCopy();
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                 if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDosageInstructionComponent>(DosageInstruction.DeepCopy());
                 if(Dispense != null) dest.Dispense = (Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionDispenseComponent)Dispense.DeepCopy();
                 if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionSubstitutionComponent)Substitution.DeepCopy();

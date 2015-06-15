@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum EpisodeOfCareStatus
         {
             /// <summary>
-            /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services.
+            /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
+            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled)
             /// </summary>
             [EnumLiteral("waitlist")]
             Waitlist,
             /// <summary>
-            /// This episode of care is current.
+            /// This episode of care is current
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
+            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite)
             /// </summary>
             [EnumLiteral("onhold")]
             Onhold,
             /// <summary>
-            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
+            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms
             /// </summary>
             [EnumLiteral("finished")]
             Finished,
             /// <summary>
-            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
+            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,

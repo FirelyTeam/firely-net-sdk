@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("codesystem")]
             Codesystem,
             /// <summary>
-            /// The namingsystem is used to manage identifiers (e.g. license numbers, order numbers, etc.).
+            /// The namingsystem is used to manage identifiers (e.g. license numbers, order numbers, etc.)
             /// </summary>
             [EnumLiteral("identifier")]
             Identifier,
             /// <summary>
-            /// The namingsystem is used as the root for other identifiers and namingsystems.
+            /// The namingsystem is used as the root for other identifiers and namingsystems
             /// </summary>
             [EnumLiteral("root")]
             Root,
@@ -82,22 +82,22 @@ namespace Hl7.Fhir.Model
         public enum NamingSystemIdentifierType
         {
             /// <summary>
-            /// An ISO object identifier.  E.g. 1.2.3.4.5.
+            /// An ISO object identifier.  E.g. 1.2.3.4.5
             /// </summary>
             [EnumLiteral("oid")]
             Oid,
             /// <summary>
-            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
+            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11
             /// </summary>
             [EnumLiteral("uuid")]
             Uuid,
             /// <summary>
-            /// A uniform resource identifier (ideally a URL - uniform resource locator).  E.g. http://unitsofmeasure.org.
+            /// A uniform resource identifier (ideally a URL - uniform resource locator).  E.g. http://unitsofmeasure.org
             /// </summary>
             [EnumLiteral("uri")]
             Uri,
             /// <summary>
-            /// Some other type of unique identifier.  E.g HL7-assigned reserved string such as LN for LOINC.
+            /// Some other type of unique identifier.  E.g HL7-assigned reserved string such as LN for LOINC
             /// </summary>
             [EnumLiteral("other")]
             Other,
