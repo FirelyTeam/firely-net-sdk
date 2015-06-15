@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var source in sources)
             {
-                var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source, requireSnapshot:false);
+                var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source);
                 Assert.IsNotNull(sd, "Cannot find SD " + sd.Url);
 
                 generator.Generate(sd);
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var sdInfo in sdsInSpec)
             {
-                var sd = _source.GetStructureDefinition(sdInfo.Url, requireSnapshot: false);
+                var sd = _source.GetStructureDefinition(sdInfo.Url);
 
                 if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
                     "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
         {            
             var qStructDef = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             Assert.IsNotNull(qStructDef);
+            Assert.IsNotNull(qStructDef.Snapshot);
 
             var nav = new ElementNavigator(qStructDef.Snapshot.Element);
             

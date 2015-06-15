@@ -106,15 +106,12 @@ namespace Hl7.Fhir.Specification.Source
             return cr;
         }
 
-        public StructureDefinition GetStructureDefinition(string url, bool requireSnapshot=false)
+        public StructureDefinition GetStructureDefinition(string url)
         {
             var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
             if (cr == null) return null;
 
-            if (cr.Snapshot == null && requireSnapshot)
-                return null;
-
-            ///HACK! Grahame's primitive types don't have a correct path for the "value"
+             ///HACK! Grahame's primitive types don't have a correct path for the "value"
             if (cr.Id != null && ModelInfo.IsPrimitive(cr.Id))
             {
                 foreach (var elem in cr.Snapshot.Element)
@@ -126,10 +123,10 @@ namespace Hl7.Fhir.Specification.Source
             return cr;
         }
 
-        public StructureDefinition GetStructureDefinitionForCoreType(string typename, bool requireSnapshot=true)
+        public StructureDefinition GetStructureDefinitionForCoreType(string typename)
         {
             var url = ResourceIdentity.Build(new Uri(XmlNs.FHIR), "StructureDefinition", typename).ToString();
-            return GetStructureDefinition(url, requireSnapshot);
+            return GetStructureDefinition(url);
         }
 
         /// <summary>
