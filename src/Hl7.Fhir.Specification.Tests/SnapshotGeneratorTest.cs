@@ -38,17 +38,35 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-
-
         [TestMethod]
         public void GenerateLipidSnapshot()
         {
-            var generator = new SnapshotGenerator(_source, markChanges: false);
-
             var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipid-report-lipidprofile-test");
             Assert.IsNotNull(sd);
 
-            generateSnapshotAndCompare(sd);
+            generateSnapshotAndCompare(sd, _source);
+        }
+
+
+        [TestMethod]
+        public void GenerateNorwegianSnapshots()
+        {
+            var mySource = new FileDirectoryArtifactSource(@"C:\Git\helsenord.ig\Source\Chapter.3.Package", includeSubdirectories: false);
+            var stdSource = ZipArtifactSource.CreateValidationSource();
+            var resolver = new ArtifactResolver(new MultiArtifactSource(mySource, stdSource));
+
+            var sources = new[] { "noHealthcareService", "noHealthcareServiceLocation", "noOrganization", "noPractitioner", "acronym" };
+
+            var generator = new SnapshotGenerator(resolver, markChanges: false);        
+
+            foreach (var source in sources)
+            {
+                var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source, requireSnapshot:false);
+                Assert.IsNotNull(sd, "Cannot find SD " + sd.Url);
+
+                generator.Generate(sd);
+                File.WriteAllText(@"C:\Git\helsenord.ig\Source\Chapter.3.Package\structure." + source + ".xml", FhirSerializer.SerializeResourceToXml(sd));
+            }           
         }
 
 
@@ -73,13 +91,13 @@ namespace Hl7.Fhir.Specification.Tests
                     Debug.WriteLine("skipped");
                 }
                 else
-                    generateSnapshotAndCompare(original);
+                    generateSnapshotAndCompare(original, _source);
             }
         }
 
-        private void generateSnapshotAndCompare(StructureDefinition original)
+        private static void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
         {
-            var generator = new SnapshotGenerator(_source, markChanges: false);        
+            var generator = new SnapshotGenerator(source, markChanges: true);        
 
             var expanded = (StructureDefinition)original.DeepCopy();
             Assert.IsTrue(original.IsExactly(expanded));

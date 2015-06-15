@@ -33,33 +33,39 @@ namespace Hl7.Fhir.Specification.Expansion
         {
             bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
+            // representation cannot be overridden
+
+            snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
+            
+            // Codes are cumulative based on the code value
+            snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+
             // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
             // In case the diff doesn't have these, give some generic defaults.
             if (isExtensionConstraint)
             {
-                snap.Definition = "An Extension"; markChange(snap.DefinitionElement);
                 snap.Short = "Extension"; markChange(snap.ShortElement);
-                snap.Comments = null; markChange(snap.CommentsElement);
+                snap.Definition = "An Extension"; markChange(snap.DefinitionElement);
+                snap.Comments = null;
                 snap.Requirements = null;
+                snap.Label = "Extension"; markChange(snap.LabelElement);
                 snap.AliasElement = new List<FhirString>();
                 snap.Mapping = new List<ElementDefinition.ElementDefinitionMappingComponent>();
             }
+            else
+            {
+                snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
+                snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
+                snap.CommentsElement = mergePrimitiveAttribute(snap.CommentsElement, diff.CommentsElement, allowAppend: true);
+                snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
+                snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
-            // representation cannot be overridden
+                // Aliases are cumulative based on the string value
+                snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
 
-            snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
-            snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
-
-            // Codes are cumulative based on the code value
-            snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
-
-            snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
-            snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
-            snap.CommentsElement = mergePrimitiveAttribute(snap.CommentsElement, diff.CommentsElement, allowAppend: true);
-            snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
-
-            // Aliases are cumulative based on the string value
-            snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
+                // Mappings are cumulative, but keep unique on full contents
+                snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
+            }
 
             snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
             snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
@@ -89,14 +95,12 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
 
             // Type is just overridden
-            if (!diff.Type.IsNullOrEmpty())
+            if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
             {
                 snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                 foreach (var element in snap.Type) markChange(snap);
             }
 
-            // Mappings are cumulative, but keep unique on full contents
-            snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
             // Constraints are cumulative bassed on Constraint.id
             snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
