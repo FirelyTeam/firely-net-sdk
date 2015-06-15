@@ -121,7 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="validation.zip" />
+    <None Include="validation.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Specification\Source\core-conformances-base.xml" />
