@@ -108,19 +108,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public StructureDefinition GetStructureDefinition(string url)
         {
-            var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
-            if (cr == null) return null;
-
-             ///HACK! Grahame's primitive types don't have a correct path for the "value"
-            if (cr.Id != null && ModelInfo.IsPrimitive(cr.Id))
-            {
-                foreach (var elem in cr.Snapshot.Element)
-                    if (elem.Path == "value") elem.Path = cr.Id + ".value";
-
-                foreach (var elem in cr.Differential.Element)
-                    if (elem.Path == "value") elem.Path = cr.Id + ".value";
-            }
-            return cr;
+            return LoadConformanceResourceByUrl(url) as StructureDefinition;
         }
 
         public StructureDefinition GetStructureDefinitionForCoreType(string typename)

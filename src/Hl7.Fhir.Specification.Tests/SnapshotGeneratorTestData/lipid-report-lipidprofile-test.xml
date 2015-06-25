@@ -47,7 +47,7 @@
     </element>
     <element>
       <path value="DiagnosticReport.id"/>
-      <short value="Logical id of this artefact"/>
+      <short value="Logical id of this artifact"/>
       <definition
           value="The logical id of the resource, as used in the url for the resoure. Once assigned, this value never changes."/>
       <comments
@@ -95,7 +95,6 @@
         <code value="code"/>
       </type>
       <binding>
-        <name value="Language"/>
         <strength value="required"/>
         <description value="A human language"/>
         <valueSetUri value="http://tools.ietf.org/html/bcp47"/>
@@ -183,7 +182,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.name"/>
+      <path value="DiagnosticReport.code"/>
       <short value="LOINC Code for Lipid Panel with LDL"/>
       <definition value="LOINC Code for Lipid Panel with LDL."/>
       <min value="1"/>
@@ -200,11 +199,10 @@
       </fixedCodeableConcept>
       <isSummary value="true"/>
       <binding>
-        <name value="DiagnosticReportNames"/>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <description value="Codes that describe Diagnostic Reports"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/vs/report-names"/>
+          <reference value="http://hl7.org/fhir/vs/report-codes"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -235,7 +233,6 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <name value="DiagnosticReportStatus"/>
         <strength value="required"/>
         <description value="The status of the diagnostic report as a whole"/>
         <valueSetReference>
@@ -255,9 +252,9 @@
     </element>
     <element>
       <path value="DiagnosticReport.issued"/>
-      <short value="Date this version was released"/>
+      <short value="DateTime this version was released"/>
       <definition
-          value="The date and/or time that this version of the report was released from the source diagnostic service."/>
+          value="The date and time that this version of the report was released from the source diagnostic service."/>
       <comments
           value="May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report ."/>
       <requirements
@@ -268,7 +265,7 @@
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="dateTime"/>
+        <code value="instant"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -429,7 +426,6 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <name value="DiagnosticServiceSection"/>
         <strength value="example"/>
         <description value="Codes for diagnostic service sections"/>
         <valueSetReference>
@@ -448,15 +444,15 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <slicing>
         <discriminator value="@type"/>
         <ordered value="false"/>
         <rules value="closed"/>
       </slicing>
-      <short value="Physiologically Relevant time/time-period for report"/>
+      <short value="Clinically Relevant time/time-period for report"/>
       <definition
-          value="The time or time-period the observed values are related to. This is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself."/>
+          value="The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself."/>
       <comments
           value="If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic."/>
       <requirements
@@ -482,7 +478,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <short value="Physiologically Relevant time for report"/>
       <definition value="The time the observed values are related to."/>
       <comments
@@ -507,7 +503,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <short value="Physiologically Relevant time-period for report"/>
       <definition value="The time-period the observed values are related to."/>
       <comments
@@ -532,7 +528,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x].id"/>
+      <path value="DiagnosticReport.effective[x].id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition
@@ -548,7 +544,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x].extension"/>
+      <path value="DiagnosticReport.effective[x].extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition
           value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -567,7 +563,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x].start"/>
+      <path value="DiagnosticReport.effective[x].start"/>
       <short value="Starting time with inclusive boundary"/>
       <definition value="The start of the period. The boundary is inclusive."/>
       <comments
@@ -588,7 +584,7 @@
       </mapping>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x].end"/>
+      <path value="DiagnosticReport.effective[x].end"/>
       <short value="Physiologically Relevant time-period for report"/>
       <definition value="The time-period the observed values are related to."/>
       <comments
@@ -598,6 +594,8 @@
       <type>
         <code value="dateTime"/>
       </type>
+      <meaningWhenMissing
+          value="If the end of the period is missing, it means that the period is ongoing"/>
       <condition value="per-1"/>
       <mapping>
         <identity value="v2"/>
@@ -785,12 +783,16 @@
       <definition
           value="One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images."/>
       <comments
-          value="ImagingStudy and image are somewhat overlapping - typically, an image in the image list will also be found in the imaging study resource. However the imaging study and image lists cater to different types of displays for different types of purposes. Neither, either, or both may be provided."/>
+          value="dImagingStudy and ImageObjectStudy and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Reference"/>
         <profile value="http://hl7.org/fhir/StructureDefinition/ImagingStudy"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/ImagingObjectSelection"/>
       </type>
       <mapping>
         <identity value="rim"/>
@@ -941,7 +943,20 @@
       </mapping>
     </element>
     <element>
+      <path value="DiagnosticReport.conclusion.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition
+          value="unique id for the element within a resource (for internal references)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="id"/>
+      </type>
+    </element>
+    <element>
       <path value="DiagnosticReport.conclusion.extension"/>
+      <label value="Extension"/>
       <slicing>
         <discriminator value="url"/>
         <ordered value="false"/>
@@ -958,8 +973,9 @@
     <element>
       <path value="DiagnosticReport.conclusion.extension"/>
       <name value="conclusionUncertainty"/>
-      <short value="How uncertain the conclusion is."/>
-      <definition value="How uncertain the conclusion is."/>
+      <label value="Extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -990,7 +1006,6 @@
         <code value="CodeableConcept"/>
       </type>
       <binding>
-        <name value="AdjunctDiagnosis"/>
         <strength value="example"/>
         <description value="Diagnoses codes provided as adjuncts to the report"/>
         <valueSetReference>
@@ -1045,7 +1060,7 @@
       </type>
     </element>
     <element>
-      <path value="DiagnosticReport.name"/>
+      <path value="DiagnosticReport.code"/>
       <short value="LOINC Code for Lipid Panel with LDL"/>
       <definition value="LOINC Code for Lipid Panel with LDL."/>
       <min value="1"/>
@@ -1062,7 +1077,7 @@
       </fixedCodeableConcept>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <slicing>
         <discriminator value="@type"/>
         <ordered value="false"/>
@@ -1070,7 +1085,7 @@
       </slicing>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <short value="Physiologically Relevant time for report"/>
       <definition value="The time the observed values are related to."/>
       <min value="1"/>
@@ -1080,7 +1095,7 @@
       </type>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x]"/>
+      <path value="DiagnosticReport.effective[x]"/>
       <short value="Physiologically Relevant time-period for report"/>
       <definition value="The time-period the observed values are related to."/>
       <min value="1"/>
@@ -1090,7 +1105,7 @@
       </type>
     </element>
     <element>
-      <path value="DiagnosticReport.diagnostic[x].end"/>
+      <path value="DiagnosticReport.effective[x].end"/>
       <short value="Physiologically Relevant time-period for report"/>
       <definition value="The time-period the observed values are related to."/>
       <min value="1"/>

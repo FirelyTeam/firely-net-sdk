@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
         {
-            var generator = new SnapshotGenerator(source, markChanges: true);        
+            var generator = new SnapshotGenerator(source, markChanges: false);        
 
             var expanded = (StructureDefinition)original.DeepCopy();
             Assert.IsTrue(original.IsExactly(expanded));
