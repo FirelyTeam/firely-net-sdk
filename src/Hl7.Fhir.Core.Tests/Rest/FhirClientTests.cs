@@ -29,10 +29,10 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-       //  Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+         Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
+        //Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
         //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
 
@@ -631,6 +631,27 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/ValueSet/extensional-case-1/$expand?filter=f"));
             Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/ValueSet/extensional-case-1/$expand%3Ffilter=f"));                
+        }
+
+        [TestMethod]
+        public void TestReceiveHtmlIsHandled()
+        {
+            var client = new FhirClient("http://spark.furore.com/");
+
+            try
+            {
+                var pat = client.Read<Patient>("Patient/1");
+                Assert.Fail("Failed to throw an Exception on illegal body");
+            }
+            catch (FormatException fe)
+            {
+                if (!fe.Message.Contains("a valid FHIR xml/json body type was expected") && !fe.Message.Contains("not recognized as either xml or json"))
+                    Assert.Fail("Failed to recognize invalid body contents");
+            }
+            catch (Exception)
+            {
+                Assert.Fail("Failed to throw FormatException on illegal body");
+            }
         }
     }
 }
