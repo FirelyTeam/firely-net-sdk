@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Rest
         public Bundle Search(SearchParams q, string resourceType = null)
         {
             var tx = new TransactionBuilder(Endpoint).Search(q,resourceType).ToBundle();
-            return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
+            return execute<Bundle>(tx, HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Rest
             if (continueAt != null)
             {
                 var tx = new TransactionBuilder(Endpoint).Get(continueAt).ToBundle();
-                return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);                
+                return execute<Bundle>(tx, HttpStatusCode.OK);                
             }
             else
                 return null;

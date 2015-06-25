@@ -87,14 +87,23 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Should calls to Create, Update and transaction operations return the whole content,
-        /// or expect nobody, or an OperationOutcome
+        /// Should calls to Create, Update and transaction operations return the whole content?
         /// </summary>
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
+
+        private bool _returnFullResource = false;
+
         public bool ReturnFullResource
         {
-            get { return _requester.Prefer == Prefer.ReturnRepresentation; }
-            set { _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; }
+            get 
+            {
+                return _returnFullResource;
+            }
+            set 
+            {
+                _returnFullResource = value;
+                _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
+            }
         }
         #endregion
 
@@ -103,8 +112,24 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public Bundle.BundleEntryTransactionResponseComponent LastResult        
         {
-            get { return _requester.LastResult; }
+            get { return _requester.LastResult != null ? _requester.LastResult.TransactionResponse : null; }
         }
+
+        public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
+        public string LastBodyAsText { get { return LastResult != null ? LastResult.GetBodyAsText() : null; } }
+        public Resource LastBodyAsResource { get { return _requester.LastResult != null ? _requester.LastResult.Resource : null; } }
+
+        /// <summary>
+        /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
+        /// </summary>
+        public HttpWebRequest LastRequest { get { return _requester.LastRequest; } }
+
+        /// <summary>
+        /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
+        /// </summary>
+        /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
+        /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
+        public HttpWebResponse LastResponse { get { return _requester.LastResponse; } }
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
@@ -150,9 +175,28 @@ namespace Hl7.Fhir.Rest
                 tx = new TransactionBuilder(Endpoint).VRead(id.ResourceType, id.Id, id.VersionId).ToBundle();
             }
 
-            return _requester.Execute<TResource>(tx, HttpStatusCode.OK);
+            return execute<TResource>(tx, HttpStatusCode.OK);
         }
 
+
+        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource
+        {
+            return execute<TResource>(tx, new[] { expect });
+        }
+
+        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
+        {
+            var response = _requester.Execute(tx, typeof(TResource));
+
+            if (!expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
+            {
+                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.TransactionResponse.Status));
+            }
+
+            return (TResource)response.Resource;
+        }
+    
+    
 
      
 
@@ -231,7 +275,7 @@ namespace Hl7.Fhir.Rest
             resource.ResourceBase = Endpoint;
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
-            return _requester.Execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
 
 
@@ -249,7 +293,7 @@ namespace Hl7.Fhir.Rest
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
-            _requester.Execute<Resource>(tx, HttpStatusCode.NoContent);
+            execute<Resource>(tx, HttpStatusCode.NoContent);
 
             return;
         }
@@ -283,7 +327,7 @@ namespace Hl7.Fhir.Rest
             if (condition == null) throw Error.ArgumentNull("condition");
 
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
-            _requester.Execute<Resource>(tx, HttpStatusCode.NoContent);
+            execute<Resource>(tx, HttpStatusCode.NoContent);
 
             return;
         }
@@ -300,7 +344,7 @@ namespace Hl7.Fhir.Rest
             
             var tx = new TransactionBuilder(Endpoint).Create(resource).ToBundle();
 
-            return _requester.Execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
 
 
@@ -318,7 +362,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).Create(resource,condition).ToBundle();
 
-            return _requester.Execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
 
         /// <summary>
@@ -328,7 +372,7 @@ namespace Hl7.Fhir.Rest
         public Conformance Conformance()
         {
             var tx = new TransactionBuilder(Endpoint).Conformance().ToBundle();          
-            return _requester.Execute<Conformance>(tx, HttpStatusCode.OK);
+            return execute<Conformance>(tx, HttpStatusCode.OK);
         }
 
        
@@ -409,7 +453,7 @@ namespace Hl7.Fhir.Rest
             else
                 history = new TransactionBuilder(Endpoint).ResourceHistory(resourceType,id, summary,pageSize,since);
 
-            return _requester.Execute<Bundle>(history.ToBundle(), HttpStatusCode.OK);
+            return execute<Bundle>(history.ToBundle(), HttpStatusCode.OK);
         }
 
         
@@ -424,7 +468,7 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw new ArgumentNullException("bundle");
 
             var tx = new TransactionBuilder(Endpoint).Transaction(bundle).ToBundle();
-            return _requester.Execute<Bundle>(tx, HttpStatusCode.OK);
+            return execute<Bundle>(tx, HttpStatusCode.OK);
         }
 
 
@@ -467,7 +511,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters).ToBundle();
 
-            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
+            return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
         public Resource Operation(Uri operation, Parameters parameters = null)
@@ -476,7 +520,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters).ToBundle();
 
-            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
+            return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
         private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)
@@ -492,7 +536,7 @@ namespace Hl7.Fhir.Rest
             else
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters).ToBundle();
 
-            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
+            return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
 
@@ -510,7 +554,7 @@ namespace Hl7.Fhir.Rest
             if (url == null) throw Error.ArgumentNull("url");
 
             var tx = new TransactionBuilder(Endpoint).Get(url).ToBundle();
-            return _requester.Execute<Resource>(tx, HttpStatusCode.OK);
+            return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
         /// <summary>

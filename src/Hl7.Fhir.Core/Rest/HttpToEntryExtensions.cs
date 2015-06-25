@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Rest
                 {
                     var bodyText = DecodeBody(body, charEncoding);
                     var resource = parseResource(bodyText, contentType);
-
                     result.Resource = resource;
+
                     if (result.TransactionResponse.Location != null)
                         result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
                 }
