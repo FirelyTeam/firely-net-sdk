@@ -85,8 +85,8 @@ namespace Hl7.Fhir.Serialization
                 // First, any attributes
                 foreach(var attr in rootElem.Attributes()) //.Where(xattr => xattr.Name.LocalName != "xmlns"))
                 {
-                    if (attr.Name == XName.Get("xmlns", "")) continue;      // skip xmlns declarations
-                    if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
+                    if (attr.IsNamespaceDeclaration) continue;      // skip xmlns declarations
+                    if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;   // skip xmlns:xsi declaration
                     if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;     // skip schemaLocation
 
                     if (attr.Name.NamespaceName == "")

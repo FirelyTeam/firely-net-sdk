@@ -46,7 +46,9 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
 
-            FhirParser.ParseResourceFromXml(xml);
+            SerializationConfig.EnforceNoXsiAttributesOnRoot = false;
+            var result = FhirParser.ParseResourceFromXml(xml);
+            Assert.IsNotNull(result);
 
             SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
 
@@ -58,6 +60,16 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (FormatException)
             {
             }
+        }
+
+
+        [TestMethod]
+        public void AcceptNsReassignments()
+        {
+            var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\" value=\"...\"/></ns4:ValueSet>";
+
+            FhirParser.ParseResourceFromXml(xml);
+            Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
         }
 
 
