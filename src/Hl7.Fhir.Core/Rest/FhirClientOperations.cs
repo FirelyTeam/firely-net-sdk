@@ -170,6 +170,11 @@ namespace Hl7.Fhir.Rest
             return expect<Parameters>(result);
         }
 
+        public static Parameters Meta(this FhirClient client, string location)
+        {
+            return Meta(client, new Uri(location, UriKind.RelativeOrAbsolute));
+        }
+
 
         public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
         {
@@ -177,11 +182,20 @@ namespace Hl7.Fhir.Rest
             return expect<Parameters>(client.InstanceOperation(location, META_ADD, par));
         }
 
+        public static Parameters AddMeta(this FhirClient client, string location, Meta meta)
+        {
+            return AddMeta(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
+        }
 
         public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
             return expect<Parameters>(client.InstanceOperation(location, META_DELETE, par));
+        }
+
+        public static Parameters DeleteMeta(this FhirClient client, string location, Meta meta)
+        {
+            return DeleteMeta(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }
 
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
