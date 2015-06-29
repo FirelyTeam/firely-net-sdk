@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Rest
             var result = new Bundle.BundleEntryComponent();
 
             result.TransactionResponse = new Bundle.BundleEntryTransactionResponseComponent();
-            result.TransactionResponse.Status = response.StatusCode.ToString();
+            result.TransactionResponse.Status = ((int)response.StatusCode).ToString();
             result.TransactionResponse.SetHeaders(response.Headers);
 
             var contentType = getContentType(response);

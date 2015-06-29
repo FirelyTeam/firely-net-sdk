@@ -29,12 +29,12 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-         Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
+        // Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
 
         [TestInitialize]
         public void TestInitialize()
@@ -634,9 +634,41 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        public void RequestFullResource()
+        {
+            var client = new FhirClient(testEndpoint);
+            var minimal = false;
+            client.OnBeforeRequest += (object s, BeforeRequestEventArgs e) => e.RawRequest.Headers["Prefer"] = minimal ? "return=minimal" : "return=representation";
+
+            var result = client.Read<Patient>("Patient/example");
+            Assert.IsNotNull(result);
+            result.Id = null;
+            result.Meta = null;
+
+            client.ReturnFullResource = true;
+            minimal = false;
+            var posted = client.Create(result);
+            Assert.IsNotNull(posted, "Patient example not found");
+
+            minimal = true;     // simulate a server that does not return a body, even if ReturnFullResource = true
+            posted = client.Create(result);
+            Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
+
+            client.ReturnFullResource = false;
+            minimal = true;
+            posted = client.Create(result);
+            Assert.IsNull(posted);
+        }
+
+        void client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
         public void TestReceiveHtmlIsHandled()
         {
-            var client = new FhirClient("http://spark.furore.com/");
+            var client = new FhirClient("http://spark.furore.com/");        // an address that returns html
 
             try
             {

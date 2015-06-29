@@ -51,12 +51,9 @@ namespace Hl7.Fhir.Rest
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
 
-        public Bundle.BundleEntryComponent Execute(Bundle transaction, Type expected)
+        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction, Type expected)
         {
-            if (transaction == null) throw Error.ArgumentNull("transaction");
-            if (expected == null) throw Error.ArgumentNull("expected");
-
-            var interaction = transaction.Entry.First();
+            if (interaction == null) throw Error.ArgumentNull("interaction");
 
             LastResult = doRequest(interaction);
             var status = LastResult.TransactionResponse.Status;
@@ -69,29 +66,30 @@ namespace Hl7.Fhir.Rest
                     var outcome = LastResult.Resource as OperationOutcome;
 
                     if (outcome != null)
-                        throw new FhirOperationException("Operation succeeded, but returned an OperationOutcome: " + outcomeToString(outcome));
+                        throw new FhirOperationException("Operation succeeded, but returned an OperationOutcome: " + outcome.ToString(), outcome);
 
-                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
-                        interaction.Transaction.Url, expected.Name, LastResult.Resource.GetType().Name);
+                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Transaction.Method,
+                        LastResult.Transaction.Url, expected.Name, LastResult.Resource.GetType().Name);
                     throw new FhirOperationException(message);
                 }
 
-                // The correct resource type was found (or no body at all)
                 return LastResult;
             }
-            else if (status.StartsWith("3") || status.StartsWith("1"))
+            else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
             {
                 throw Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
             }
-            else if (status.StartsWith("4") || status.StartsWith("5"))
+            else if (status.StartsWith("4") || status.StartsWith("5"))      // 4xx/5xx codes - client or server error.
             {
                 var message = String.Format("Operation was unsuccessful, and returned status {0}.", status);
 
                 var outcome = LastResult.Resource as OperationOutcome;
                 if (outcome != null)
-                   message += " OperationOutcome: " + outcomeToString(outcome);
-
-                throw new FhirOperationException(message);
+                {
+                    throw new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), outcome);
+                }
+                else
+                    throw new FhirOperationException(message);                
             }
             else
             {
@@ -151,26 +149,6 @@ namespace Hl7.Fhir.Rest
             }
             else
                 return null;
-        }
-
-        private static string outcomeToString(OperationOutcome outcome)
-        {
-            if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
-            {
-                return outcome.Text.Div;
-            }
-
-            var text = String.Empty;
-            if (outcome.Issue != null)
-            {
-                foreach (var issue in outcome.Issue)
-                {
-                    if(!String.IsNullOrEmpty(text))
-                        text += " ------------- ";
-                }
-            }
-
-            return text;
-        }
+        }      
     }
 }

@@ -29,5 +29,25 @@ namespace Hl7.Fhir.Model
 
             return result;
         }
+
+        public override string ToString()
+        {
+            if (Text != null && !string.IsNullOrEmpty(Text.Div))
+            {
+                return Text.Div;
+            }
+
+            var text = String.Empty;
+            if (Issue != null)
+            {
+                foreach (var issue in Issue)
+                {
+                    if (!String.IsNullOrEmpty(text))
+                        text += " ------------- ";
+                }
+            }
+
+            return text;
+        }
     }
 }

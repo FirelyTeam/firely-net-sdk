@@ -86,13 +86,13 @@ namespace Hl7.Fhir.Rest
             set { _requester.Timeout = value; }
         }
 
-        /// <summary>
-        /// Should calls to Create, Update and transaction operations return the whole content?
-        /// </summary>
-        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
 
         private bool _returnFullResource = false;
 
+        /// <summary>
+        /// Should calls to Create, Update and transaction operations return the whole updated content?
+        /// </summary>
+        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
         public bool ReturnFullResource
         {
             get 
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Rest
                 _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
             }
         }
-        #endregion
+
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Rest
             private set;
         }
 
+        #endregion
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
@@ -186,16 +187,32 @@ namespace Hl7.Fhir.Rest
 
         private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
         {
-            var response = _requester.Execute(tx, typeof(TResource));
+            var request = tx.Entry[0];
+            var response = _requester.Execute(request, typeof(TResource));
 
-            if (!expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.TransactionResponse.Status))
             {
                 throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.TransactionResponse.Status));
             }
 
-            return (TResource)response.Resource;
+            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
+            // explicitly go out to the server to get the resource and return it. This behaviour is only valid for PUT and POST requests,
+            // where the server may device whether or not to return the full body of the alterend resource.
+            if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)            
+            {
+                if (response.TransactionResponse.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
+                return (TResource)Get(response.TransactionResponse.Location);
+            }
+            else
+                return (TResource)response.Resource;
         }
-    
+
+        private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
+        {
+            var method = interaction.Transaction.Method;
+            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
+        }
+
     
 
      
