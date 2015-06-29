@@ -60,14 +60,14 @@ namespace Hl7.Fhir.Rest
 
             if (status.StartsWith("2"))      // 2xx codes - success
             {
+                // We have a successful call, but the body is not of the type we expect.
                 if (LastResult.Resource != null && !LastResult.Resource.GetType().CanBeTreatedAsType(expected))
-                {
-                    // We have a successful call, but the body is not of the type we expect. As a courtesy, log an OperationOutcome if that has been received
-                    var outcome = LastResult.Resource as OperationOutcome;
-
-                    if (outcome != null)
-                        throw new FhirOperationException("Operation succeeded, but returned an OperationOutcome: " + outcome.ToString(), outcome);
-
+                {                                     
+                    // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
+                    // the LastResult, and return null as the result.
+                    if (LastResult.Resource is OperationOutcome)
+                        return null;
+                    
                     var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Transaction.Method,
                         LastResult.Transaction.Url, expected.Name, LastResult.Resource.GetType().Name);
                     throw new FhirOperationException(message);
