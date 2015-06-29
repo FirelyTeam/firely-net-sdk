@@ -258,23 +258,12 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder Search(SearchParams q, string resourceType = null)
+        public TransactionBuilder Search(SearchParams q = null, string resourceType = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
-            path.AddParams(q.ToUriParamList());
-            addEntry(entry, path);
-
-            return this;
-        }
-
-
-        public TransactionBuilder Search(string resourceType = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
-            var path = newRestUrl();
-            if (resourceType != null) path.AddPath(resourceType);
+            if(q != null) path.AddParams(q.ToUriParamList());
             addEntry(entry, path);
 
             return this;
