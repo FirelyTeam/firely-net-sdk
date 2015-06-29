@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
-        public FhirClient(Uri endpoint)
+        public FhirClient(Uri endpoint, bool verifyFhirVersion = true)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -46,6 +46,8 @@ namespace Hl7.Fhir.Rest
             _requester = new Requester(Endpoint);
             _requester.BeforeRequest = this.BeforeRequest;
             _requester.AfterResponse = this.AfterResponse;
+
+            VerifyFhirVersion = verifyFhirVersion;
         }
 
 
@@ -59,6 +61,12 @@ namespace Hl7.Fhir.Rest
         }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
+        public bool VerifyFhirVersion
+        {
+            get;
+            set;
+        }
+        
         /// <summary>
         /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
         /// </summary>
@@ -179,43 +187,6 @@ namespace Hl7.Fhir.Rest
             return execute<TResource>(tx, HttpStatusCode.OK);
         }
 
-
-        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource
-        {
-            return execute<TResource>(tx, new[] { expect });
-        }
-
-        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            var request = tx.Entry[0];
-            var response = _requester.Execute(request, typeof(TResource));
-
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.TransactionResponse.Status))
-            {
-                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.TransactionResponse.Status));
-            }
-
-            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
-            // explicitly go out to the server to get the resource and return it. This behaviour is only valid for PUT and POST requests,
-            // where the server may device whether or not to return the full body of the alterend resource.
-            if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)            
-            {
-                if (response.TransactionResponse.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
-                return (TResource)Get(response.TransactionResponse.Location);
-            }
-            else
-                return (TResource)response.Resource;
-        }
-
-        private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
-        {
-            var method = interaction.Transaction.Method;
-            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
-        }
-
-    
-
-     
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
@@ -358,7 +329,7 @@ namespace Hl7.Fhir.Rest
         public TResource Create<TResource>(TResource resource) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull("resource");
-            
+
             var tx = new TransactionBuilder(Endpoint).Create(resource).ToBundle();
 
             return execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
@@ -805,7 +776,69 @@ namespace Hl7.Fhir.Rest
             if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, body));
         }
 
-     
+
+        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource
+        {
+            return execute<TResource>(tx, new[] { expect });
+        }
+
+        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
+        {
+            verifyServerVersion();
+
+            var request = tx.Entry[0];
+            var response = _requester.Execute(request, typeof(TResource));
+
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.TransactionResponse.Status))
+            {
+                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.TransactionResponse.Status));
+            }
+
+            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
+            // explicitly go out to the server to get the resource and return it. This behaviour is only valid for PUT and POST requests,
+            // where the server may device whether or not to return the full body of the alterend resource.
+            if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)
+            {
+                if (response.TransactionResponse.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
+                return (TResource)Get(response.TransactionResponse.Location);
+            }
+            else
+                return (TResource)response.Resource;
+        }
+
+        private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
+        {
+            var method = interaction.Transaction.Method;
+            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
+        }
+
+
+        private bool versionChecked = false;
+
+        private void verifyServerVersion()
+        {
+            if (!VerifyFhirVersion) return;
+
+            if (versionChecked) return;
+            versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
+
+            Conformance conf = null;
+            try
+            {
+                conf = Conformance();
+            }
+            catch (FormatException)
+            {
+                // Mmmm...cannot even read the body. Probably not so good.
+                throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
+            }
+
+            if (!conf.FhirVersion.StartsWith(ModelInfo.Version))
+            {
+                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
+            }
+        }
+
 
 #if (PORTABLE45 || NET45) && BRIAN
 #region << Async operations >>
