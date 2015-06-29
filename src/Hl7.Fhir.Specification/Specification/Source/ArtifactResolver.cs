@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Source
             var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
             if (cr == null) return null;
 
-             ///HACK! Grahame's primitive types don't have a correct path for the "value"
+            //HACK! Grahame's primitive types don't have a correct path for the "value"
             if (cr.Id != null && ModelInfo.IsPrimitive(cr.Id))
             {
                 foreach (var elem in cr.Snapshot.Element)
