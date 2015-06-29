@@ -106,6 +106,41 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
+        [TestMethod]
+        public void ContainedBaseIsNotAddedToId()
+        {
+            var p = new Patient() { Id = "jaap" };
+            var o = new Observation() { Subject = new ResourceReference() { Reference = "#"+p.Id } };
+            o.Contained.Add(p);
+            o.ResourceBase = new Uri("http://nu.nl/fhir");
+
+            var xml = FhirSerializer.SerializeResourceToXml(o);
+            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+
+            Bundle b = new Bundle();
+            b.Entry.Add(new Bundle.BundleEntryComponent() { Base = "http://nu.nl/fhir", Resource = o });
+            
+            xml = FhirSerializer.SerializeResourceToXml(b);
+            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+
+            b = FhirParser.ParseFromXml(xml) as Bundle;
+            b.ResourceBase = new Uri("http://nu.nl/fhir");
+            xml = FhirSerializer.SerializeResourceToXml(b);
+            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+        }
+
+        [TestMethod]
+        public void SerializeSummaryWithQuotes()
+        {
+            var p = new Patient();
+            p.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nasty, a text with both \"double\" quotes and 'single' quotes</div>" };
+
+            var xml = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
+            var json = FhirSerializer.SerializeResourceToJson(p);
+            Assert.IsNotNull(FhirParser.ParseResourceFromJson(json));
+        }
+
         // TODO: Unfortunately, this is currently too much work to validate. See comments on the bottom of
         // https://github.com/ewoutkramer/fhir-net-api/issues/20
         [TestMethod, Ignore]

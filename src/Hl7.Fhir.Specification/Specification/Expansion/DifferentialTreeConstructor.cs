@@ -36,7 +36,6 @@ namespace Hl7.Fhir.Specification.Expansion
         /// <summary>
         /// Creates a differential structure with all "skipped" parents filled in.
         /// </summary>
-        /// <param name="differential"></param>
         /// <returns>The full tree structure representing the differential</returns>
         /// <remarks>This operation will not touch the source differential, but instead will return a new structure.</remarks>
         public List<ElementDefinition> MakeTree()
