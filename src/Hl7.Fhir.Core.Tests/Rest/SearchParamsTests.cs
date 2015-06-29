@@ -165,9 +165,20 @@ namespace Hl7.Fhir.Test.Rest
             q.Add("_sort:asc", "sorted2");
             q.Add("_include", "Patient.name");
             q.Add("_include", "Observation.subject");
+            q.Add("image:missing", "true");
 
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true&image%3Amissing=true", output);
+
+            var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
+
+            Assert.AreEqual(q.Query, q2.Query);
+            Assert.AreEqual(q.Count, q2.Count);
+            Assert.AreEqual(q.Summary, q2.Summary);
+            
+            CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
+            CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
+            CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
         }
     }
 }
