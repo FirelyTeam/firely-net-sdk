@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void AcceptNsStuffOnElements()
         {
-            var xml = "<ValueSet xmlns=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\" value=\"...\"/></ValueSet>";
+            var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\" value=\"...\"/></ns4:ValueSet>";
 
             FhirParser.ParseResourceFromXml(xml);
 
