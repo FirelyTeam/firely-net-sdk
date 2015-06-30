@@ -2,6 +2,18 @@
 layout: default
 title: What's new?
 ---
+
+### In 0.50.2
+* Many bug and stability fixes
+* ReturnFullResource will not only set the Prefer header, but will do a subsequent read if the server ignores the Prefer header.
+* Client will accept 4xx and 5xx responses when the server does not return an OperationOutcome
+* Client gives clearer errors when the server returns HTML instead of xml/json 
+* Call signatures for `OnBeforeRequest` and `OnAfterResponse` have been changed to give low-level access to body and native .NET objects. OnAfterResponse will now be called even if request failed or if response has parsing errors.
+* The FhirClient has a full set of new LastXXX properties which return the last received status/resource/body.
+* Serializers now correctly serialize the contents of a Bundle, even if summary=true
+
+
+
 ### In 0.20.2
 * FhirClient updated to handle conditional create/read/update, Preference header
 * Introduction of TransactionBuilder class to easily compose Bundles containing transactions
