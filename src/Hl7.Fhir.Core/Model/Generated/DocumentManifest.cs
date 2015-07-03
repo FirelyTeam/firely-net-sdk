@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -348,26 +348,26 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// current | superceded | entered-in-error
+        /// current | superseded | entered-in-error
         /// </summary>
         [FhirElement("status", Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code StatusElement
+        public Code<Hl7.Fhir.Model.DocumentReferenceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _StatusElement;
+        private Code<Hl7.Fhir.Model.DocumentReferenceStatus> _StatusElement;
         
         /// <summary>
-        /// current | superceded | entered-in-error
+        /// current | superseded | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Status
+        public Hl7.Fhir.Model.DocumentReferenceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Hl7.Fhir.Model.Code(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DocumentReferenceStatus>)StatusElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Content != null) dest.Content = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestContentComponent>(Content.DeepCopy());
                 if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentManifest.DocumentManifestRelatedComponent>(Related.DeepCopy());

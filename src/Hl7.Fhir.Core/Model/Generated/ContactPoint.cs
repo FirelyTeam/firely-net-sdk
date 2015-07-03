@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -67,12 +67,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("fax")]
             Fax,
             /// <summary>
-            /// The value is an email address.
+            /// The value is an email address
             /// </summary>
             [EnumLiteral("email")]
             Email,
             /// <summary>
-            /// The value is a url. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses.
+            /// The value is a url. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses
             /// </summary>
             [EnumLiteral("url")]
             Url,
@@ -100,12 +100,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// This contact point is no longer in use (or was never correct, but retained for records).
+            /// This contact point is no longer in use (or was never correct, but retained for records)
             /// </summary>
             [EnumLiteral("old")]
             Old,
             /// <summary>
-            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
+            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business
             /// </summary>
             [EnumLiteral("mobile")]
             Mobile,

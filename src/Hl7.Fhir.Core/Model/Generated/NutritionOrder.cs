@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum NutritionOrderStatus
         {
             /// <summary>
-            /// The request has been proposed.
+            /// The request has been proposed
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// The request is in preliminary form prior to being sent.
+            /// The request is in preliminary form prior to being sent
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The request has been planned.
+            /// The request has been planned
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The request has been placed.
+            /// The request has been placed
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
@@ -100,6 +100,103 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
         
+        [FhirType("NutritionOrderEnteralFormulaAdministrationComponent")]
+        [DataContract]
+        public partial class NutritionOrderEnteralFormulaAdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "NutritionOrderEnteralFormulaAdministrationComponent"; } }
+            
+            /// <summary>
+            /// Scheduled frequency of enteral feeding
+            /// </summary>
+            [FhirElement("schedule", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Schedule
+            {
+                get { return _Schedule; }
+                set { _Schedule = value; OnPropertyChanged("Schedule"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Schedule;
+            
+            /// <summary>
+            /// The volume of formula to provide
+            /// </summary>
+            [FhirElement("quantity", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Quantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.Quantity _Quantity;
+            
+            /// <summary>
+            /// Speed with which the formula is provided per period of time
+            /// </summary>
+            [FhirElement("rate", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Rate
+            {
+                get { return _Rate; }
+                set { _Rate = value; OnPropertyChanged("Rate"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Rate;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new NutritionOrderEnteralFormulaAdministrationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("NutritionOrderOralDietComponent")]
         [DataContract]
         public partial class NutritionOrderOralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -124,15 +221,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Scheduled frequency of diet
             /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=50)]
+            [FhirElement("schedule", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Timing Scheduled
+            public List<Hl7.Fhir.Model.Timing> Schedule
             {
-                get { return _Scheduled; }
-                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
+                get { if(_Schedule==null) _Schedule = new List<Hl7.Fhir.Model.Timing>(); return _Schedule; }
+                set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
             
-            private Hl7.Fhir.Model.Timing _Scheduled;
+            private List<Hl7.Fhir.Model.Timing> _Schedule;
             
             /// <summary>
             /// Required  nutrient modifications
@@ -216,7 +314,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
+                    if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
                     if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientComponent>(Nutrient.DeepCopy());
                     if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent>(Texture.DeepCopy());
                     if(FluidConsistencyType != null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopy());
@@ -239,7 +337,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.Matches(Nutrient, otherT.Nutrient)) return false;
                 if( !DeepComparable.Matches(Texture, otherT.Texture)) return false;
                 if( !DeepComparable.Matches(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
@@ -255,7 +353,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.IsExactly(Nutrient, otherT.Nutrient)) return false;
                 if( !DeepComparable.IsExactly(Texture, otherT.Texture)) return false;
                 if( !DeepComparable.IsExactly(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
@@ -322,15 +420,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Scheduled frequency of supplement
             /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=60)]
+            [FhirElement("schedule", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Timing Scheduled
+            public List<Hl7.Fhir.Model.Timing> Schedule
             {
-                get { return _Scheduled; }
-                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
+                get { if(_Schedule==null) _Schedule = new List<Hl7.Fhir.Model.Timing>(); return _Schedule; }
+                set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
             
-            private Hl7.Fhir.Model.Timing _Scheduled;
+            private List<Hl7.Fhir.Model.Timing> _Schedule;
             
             /// <summary>
             /// Amount of the nutritional supplement
@@ -386,7 +485,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopy();
-                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
+                    if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
@@ -408,7 +507,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(ProductNameElement, otherT.ProductNameElement)) return false;
-                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.Matches(InstructionElement, otherT.InstructionElement)) return false;
                 
@@ -423,7 +522,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(ProductNameElement, otherT.ProductNameElement)) return false;
-                if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
+                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
                 
@@ -441,41 +540,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "NutritionOrderEnteralFormulaComponent"; } }
             
             /// <summary>
-            /// Formula feeding instructions expressed as text
-            /// </summary>
-            [FhirElement("administrationInstructions", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString AdministrationInstructionsElement
-            {
-                get { return _AdministrationInstructionsElement; }
-                set { _AdministrationInstructionsElement = value; OnPropertyChanged("AdministrationInstructionsElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _AdministrationInstructionsElement;
-            
-            /// <summary>
-            /// Formula feeding instructions expressed as text
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string AdministrationInstructions
-            {
-                get { return AdministrationInstructionsElement != null ? AdministrationInstructionsElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      AdministrationInstructionsElement = null; 
-                    else
-                      AdministrationInstructionsElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("AdministrationInstructions");
-                }
-            }
-            
-            /// <summary>
             /// Type of enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaType", InSummary=true, Order=50)]
+            [FhirElement("baseFormulaType", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
             {
@@ -488,7 +555,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaProductName", InSummary=true, Order=60)]
+            [FhirElement("baseFormulaProductName", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BaseFormulaProductNameElement
             {
@@ -518,22 +585,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Scheduled frequency of enteral feeding
-            /// </summary>
-            [FhirElement("scheduled", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.Timing Scheduled
-            {
-                get { return _Scheduled; }
-                set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
-            }
-            
-            private Hl7.Fhir.Model.Timing _Scheduled;
-            
-            /// <summary>
             /// Type of modular component to add to the feeding
             /// </summary>
-            [FhirElement("additiveType", InSummary=true, Order=80)]
+            [FhirElement("additiveType", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AdditiveType
             {
@@ -546,7 +600,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Product or brand name of the modular additive
             /// </summary>
-            [FhirElement("additiveProductName", InSummary=true, Order=90)]
+            [FhirElement("additiveProductName", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AdditiveProductNameElement
             {
@@ -578,7 +632,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of energy per specified volume that is required
             /// </summary>
-            [FhirElement("caloricDensity", InSummary=true, Order=100)]
+            [FhirElement("caloricDensity", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity CaloricDensity
             {
@@ -591,7 +645,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How the formula should enter the patient's gastrointestinal tract
             /// </summary>
-            [FhirElement("routeofAdministration", InSummary=true, Order=110)]
+            [FhirElement("routeofAdministration", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RouteofAdministration
             {
@@ -602,48 +656,23 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _RouteofAdministration;
             
             /// <summary>
-            /// The volume of formula to provide
+            /// Formula feeding instruction as structured data
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=120)]
+            [FhirElement("administration", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent> Administration
             {
-                get { return _Quantity; }
-                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+                get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent>(); return _Administration; }
+                set { _Administration = value; OnPropertyChanged("Administration"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
-            
-            /// <summary>
-            /// Speed with which the formula is provided per period of time
-            /// </summary>
-            [FhirElement("rate", InSummary=true, Order=130)]
-            [DataMember]
-            public Hl7.Fhir.Model.Ratio Rate
-            {
-                get { return _Rate; }
-                set { _Rate = value; OnPropertyChanged("Rate"); }
-            }
-            
-            private Hl7.Fhir.Model.Ratio _Rate;
-            
-            /// <summary>
-            /// Change in the rate of administration over a given time
-            /// </summary>
-            [FhirElement("rateAdjustment", InSummary=true, Order=140)]
-            [DataMember]
-            public Hl7.Fhir.Model.Quantity RateAdjustment
-            {
-                get { return _RateAdjustment; }
-                set { _RateAdjustment = value; OnPropertyChanged("RateAdjustment"); }
-            }
-            
-            private Hl7.Fhir.Model.Quantity _RateAdjustment;
+            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent> _Administration;
             
             /// <summary>
             /// Upper limit on formula volume per unit of time
             /// </summary>
-            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=150)]
+            [FhirElement("maxVolumeToDeliver", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
             {
@@ -653,6 +682,38 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Quantity _MaxVolumeToDeliver;
             
+            /// <summary>
+            /// Formula feeding instructions expressed as text
+            /// </summary>
+            [FhirElement("administrationInstruction", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString AdministrationInstructionElement
+            {
+                get { return _AdministrationInstructionElement; }
+                set { _AdministrationInstructionElement = value; OnPropertyChanged("AdministrationInstructionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _AdministrationInstructionElement;
+            
+            /// <summary>
+            /// Formula feeding instructions expressed as text
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string AdministrationInstruction
+            {
+                get { return AdministrationInstructionElement != null ? AdministrationInstructionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      AdministrationInstructionElement = null; 
+                    else
+                      AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("AdministrationInstruction");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NutritionOrderEnteralFormulaComponent;
@@ -660,18 +721,15 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(AdministrationInstructionsElement != null) dest.AdministrationInstructionsElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionsElement.DeepCopy();
                     if(BaseFormulaType != null) dest.BaseFormulaType = (Hl7.Fhir.Model.CodeableConcept)BaseFormulaType.DeepCopy();
                     if(BaseFormulaProductNameElement != null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaProductNameElement.DeepCopy();
-                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Timing)Scheduled.DeepCopy();
                     if(AdditiveType != null) dest.AdditiveType = (Hl7.Fhir.Model.CodeableConcept)AdditiveType.DeepCopy();
                     if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
                     if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Ratio)Rate.DeepCopy();
-                    if(RateAdjustment != null) dest.RateAdjustment = (Hl7.Fhir.Model.Quantity)RateAdjustment.DeepCopy();
+                    if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent>(Administration.DeepCopy());
                     if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)MaxVolumeToDeliver.DeepCopy();
+                    if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -689,18 +747,15 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(AdministrationInstructionsElement, otherT.AdministrationInstructionsElement)) return false;
                 if( !DeepComparable.Matches(BaseFormulaType, otherT.BaseFormulaType)) return false;
                 if( !DeepComparable.Matches(BaseFormulaProductNameElement, otherT.BaseFormulaProductNameElement)) return false;
-                if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.Matches(AdditiveType, otherT.AdditiveType)) return false;
                 if( !DeepComparable.Matches(AdditiveProductNameElement, otherT.AdditiveProductNameElement)) return false;
                 if( !DeepComparable.Matches(CaloricDensity, otherT.CaloricDensity)) return false;
                 if( !DeepComparable.Matches(RouteofAdministration, otherT.RouteofAdministration)) return false;
-                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
-                if( !DeepComparable.Matches(RateAdjustment, otherT.RateAdjustment)) return false;
+                if( !DeepComparable.Matches(Administration, otherT.Administration)) return false;
                 if( !DeepComparable.Matches(MaxVolumeToDeliver, otherT.MaxVolumeToDeliver)) return false;
+                if( !DeepComparable.Matches(AdministrationInstructionElement, otherT.AdministrationInstructionElement)) return false;
                 
                 return true;
             }
@@ -711,18 +766,15 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(AdministrationInstructionsElement, otherT.AdministrationInstructionsElement)) return false;
                 if( !DeepComparable.IsExactly(BaseFormulaType, otherT.BaseFormulaType)) return false;
                 if( !DeepComparable.IsExactly(BaseFormulaProductNameElement, otherT.BaseFormulaProductNameElement)) return false;
-                if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.IsExactly(AdditiveType, otherT.AdditiveType)) return false;
                 if( !DeepComparable.IsExactly(AdditiveProductNameElement, otherT.AdditiveProductNameElement)) return false;
                 if( !DeepComparable.IsExactly(CaloricDensity, otherT.CaloricDensity)) return false;
                 if( !DeepComparable.IsExactly(RouteofAdministration, otherT.RouteofAdministration)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
-                if( !DeepComparable.IsExactly(RateAdjustment, otherT.RateAdjustment)) return false;
+                if( !DeepComparable.IsExactly(Administration, otherT.Administration)) return false;
                 if( !DeepComparable.IsExactly(MaxVolumeToDeliver, otherT.MaxVolumeToDeliver)) return false;
+                if( !DeepComparable.IsExactly(AdministrationInstructionElement, otherT.AdministrationInstructionElement)) return false;
                 
                 return true;
             }

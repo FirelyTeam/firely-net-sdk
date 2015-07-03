@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,22 +57,22 @@ namespace Hl7.Fhir.Model
         public enum QuantityComparator
         {
             /// <summary>
-            /// The actual value is less than the given value.
+            /// The actual value is less than the given value
             /// </summary>
             [EnumLiteral("<")]
             LessThan,
             /// <summary>
-            /// The actual value is less than or equal to the given value.
+            /// The actual value is less than or equal to the given value
             /// </summary>
             [EnumLiteral("<=")]
             LessOrEqual,
             /// <summary>
-            /// The actual value is greater than or equal to the given value.
+            /// The actual value is greater than or equal to the given value
             /// </summary>
             [EnumLiteral(">=")]
             GreaterOrEqual,
             /// <summary>
-            /// The actual value is greater than the given value.
+            /// The actual value is greater than the given value
             /// </summary>
             [EnumLiteral(">")]
             GreaterThan,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Model
         public enum OperationParameterUse
         {
             /// <summary>
-            /// This is an input parameter.
+            /// This is an input parameter
             /// </summary>
             [EnumLiteral("in")]
             In,
             /// <summary>
-            /// This is an output parameter.
+            /// This is an output parameter
             /// </summary>
             [EnumLiteral("out")]
             Out,
@@ -77,12 +77,12 @@ namespace Hl7.Fhir.Model
         public enum OperationKind
         {
             /// <summary>
-            /// This operation is invoked as an operation.
+            /// This operation is invoked as an operation
             /// </summary>
             [EnumLiteral("operation")]
             Operation,
             /// <summary>
-            /// This operation is a named query, invoked using the search mechanism.
+            /// This operation is a named query, invoked using the search mechanism
             /// </summary>
             [EnumLiteral("query")]
             Query,

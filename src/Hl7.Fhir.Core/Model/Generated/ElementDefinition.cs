@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,17 +57,17 @@ namespace Hl7.Fhir.Model
         public enum BindingConformance
         {
             /// <summary>
-            /// Only codes in the specified set are allowed.  If the binding is extensible, other codes may be used for concepts not covered by the bound set of codes.
+            /// Only codes in the specified set are allowed.  If the binding is extensible, other codes may be used for concepts not covered by the bound set of codes
             /// </summary>
             [EnumLiteral("required")]
             Required,
             /// <summary>
-            /// For greater interoperability, implementers are strongly encouraged to use the bound set of codes, however alternate codes may be used in derived profiles and implementations if necessary without being considered non-conformant.
+            /// For greater interoperability, implementers are strongly encouraged to use the bound set of codes, however alternate codes may be used in derived profiles and implementations if necessary without being considered non-conformant
             /// </summary>
             [EnumLiteral("preferred")]
             Preferred,
             /// <summary>
-            /// The codes in the set are an example to illustrate the meaning of the field. There is no particular preference for its use nor any assertion that the provided values are sufficient to meet implementation needs.
+            /// The codes in the set are an example to illustrate the meaning of the field. There is no particular preference for its use nor any assertion that the provided values are sufficient to meet implementation needs
             /// </summary>
             [EnumLiteral("example")]
             Example,
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
         public enum ConstraintSeverity
         {
             /// <summary>
-            /// If the constraint is violated, the resource is not conformant.
+            /// If the constraint is violated, the resource is not conformant
             /// </summary>
             [EnumLiteral("error")]
             Error,
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         public enum PropertyRepresentation
         {
             /// <summary>
-            /// In XML, this property is represented as an attribute not an element.
+            /// In XML, this property is represented as an attribute not an element
             /// </summary>
             [EnumLiteral("xmlAttr")]
             XmlAttr,
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
         public enum BindingStrength
         {
             /// <summary>
-            /// To be conformant, instances of this element SHALL include a code from the specified value set.
+            /// To be conformant, instances of this element SHALL include a code from the specified value set
             /// </summary>
             [EnumLiteral("required")]
             Required,
@@ -121,12 +121,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("extensible")]
             Extensible,
             /// <summary>
-            /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
+            /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant
             /// </summary>
             [EnumLiteral("preferred")]
             Preferred,
             /// <summary>
-            /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.
+            /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included
             /// </summary>
             [EnumLiteral("example")]
             Example,
@@ -139,17 +139,17 @@ namespace Hl7.Fhir.Model
         public enum AggregationMode
         {
             /// <summary>
-            /// The reference is a local reference to a contained resource.
+            /// The reference is a local reference to a contained resource
             /// </summary>
             [EnumLiteral("contained")]
             Contained,
             /// <summary>
-            /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
+            /// The reference to a resource that has to be resolved externally to the resource that includes the reference
             /// </summary>
             [EnumLiteral("referenced")]
             Referenced,
             /// <summary>
-            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
+            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference
             /// </summary>
             [EnumLiteral("bundled")]
             Bundled,
@@ -162,17 +162,17 @@ namespace Hl7.Fhir.Model
         public enum SlicingRules
         {
             /// <summary>
-            /// No additional content is allowed other than that described by the slices in this profile.
+            /// No additional content is allowed other than that described by the slices in this profile
             /// </summary>
             [EnumLiteral("closed")]
             Closed,
             /// <summary>
-            /// Additional content is allowed anywhere in the list.
+            /// Additional content is allowed anywhere in the list
             /// </summary>
             [EnumLiteral("open")]
             Open,
             /// <summary>
-            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
+            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required
             /// </summary>
             [EnumLiteral("openAtEnd")]
             OpenAtEnd,
@@ -412,14 +412,15 @@ namespace Hl7.Fhir.Model
             /// Profile.structure to apply
             /// </summary>
             [FhirElement("profile", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri ProfileElement
+            public List<Hl7.Fhir.Model.FhirUri> ProfileElement
             {
-                get { return _ProfileElement; }
+                get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
                 set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _ProfileElement;
+            private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
             
             /// <summary>
             /// Profile.structure to apply
@@ -427,15 +428,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Profile
+            public IEnumerable<string> Profile
             {
-                get { return ProfileElement != null ? ProfileElement.Value : null; }
+                get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
                 set
                 {
                     if(value == null)
                       ProfileElement = null; 
                     else
-                      ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
+                      ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                     OnPropertyChanged("Profile");
                 }
             }
@@ -481,7 +482,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                    if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.FhirUri)ProfileElement.DeepCopy();
+                    if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
                     if(AggregationElement != null) dest.AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(AggregationElement.DeepCopy());
                     return dest;
                 }
@@ -689,7 +690,6 @@ namespace Hl7.Fhir.Model
             /// Descriptive Name
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {

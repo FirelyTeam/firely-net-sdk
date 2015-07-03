@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,17 +59,17 @@ namespace Hl7.Fhir.Model
         public enum SupplyDispenseStatus
         {
             /// <summary>
-            /// Supply has been requested, but not dispensed.
+            /// Supply has been requested, but not dispensed
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// Supply is part of a pharmacy order and has been dispensed.
+            /// Supply is part of a pharmacy order and has been dispensed
             /// </summary>
             [EnumLiteral("dispensed")]
             Dispensed,
             /// <summary>
-            /// Dispensing was not completed.
+            /// Dispensing was not completed
             /// </summary>
             [EnumLiteral("abandoned")]
             Abandoned,
@@ -82,27 +82,27 @@ namespace Hl7.Fhir.Model
         public enum SupplyStatus
         {
             /// <summary>
-            /// Supply has been requested, but not dispensed.
+            /// Supply has been requested, but not dispensed
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// Supply is part of a pharmacy order and has been dispensed.
+            /// Supply is part of a pharmacy order and has been dispensed
             /// </summary>
             [EnumLiteral("dispensed")]
             Dispensed,
             /// <summary>
-            /// Supply has been received by the requestor.
+            /// Supply has been received by the requestor
             /// </summary>
             [EnumLiteral("received")]
             Received,
             /// <summary>
-            /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
+            /// The supply will not be completed because the supplier was unable or unwilling to supply the item
             /// </summary>
             [EnumLiteral("failed")]
             Failed,
             /// <summary>
-            /// The orderer of the supply cancelled the request.
+            /// The orderer of the supply cancelled the request
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,

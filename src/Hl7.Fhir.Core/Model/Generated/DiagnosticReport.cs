@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,37 +59,37 @@ namespace Hl7.Fhir.Model
         public enum DiagnosticReportStatus
         {
             /// <summary>
-            /// The existence of the report is registered, but there is nothing yet available.
+            /// The existence of the report is registered, but there is nothing yet available
             /// </summary>
             [EnumLiteral("registered")]
             Registered,
             /// <summary>
-            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified
             /// </summary>
             [EnumLiteral("partial")]
             Partial,
             /// <summary>
-            /// The report is complete and verified by an authorized person.
+            /// The report is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("corrected")]
             Corrected,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
             /// </summary>
             [EnumLiteral("appended")]
             Appended,
             /// <summary>
-            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The report has been withdrawn following previous Final release.
+            /// The report has been withdrawn following previous Final release
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -199,16 +199,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
+        [FhirElement("code", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Name
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
-            get { return _Name; }
-            set { _Name = value; OnPropertyChanged("Name"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Name;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
@@ -244,26 +244,26 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this version was released
+        /// DateTime this version was released
         /// </summary>
         [FhirElement("issued", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime IssuedElement
+        public Hl7.Fhir.Model.Instant IssuedElement
         {
             get { return _IssuedElement; }
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
+        private Hl7.Fhir.Model.Instant _IssuedElement;
         
         /// <summary>
-        /// Date this version was released
+        /// DateTime this version was released
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Issued
+        public DateTimeOffset? Issued
         {
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   IssuedElement = null; 
                 else
-                  IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                  IssuedElement = new Hl7.Fhir.Model.Instant(value);
                 OnPropertyChanged("Issued");
             }
         }
@@ -363,19 +363,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
         
         /// <summary>
-        /// Physiologically Relevant time/time-period for report
+        /// Clinically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("diagnostic", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Diagnostic
+        public Hl7.Fhir.Model.Element Effective
         {
-            get { return _Diagnostic; }
-            set { _Diagnostic = value; OnPropertyChanged("Diagnostic"); }
+            get { return _Effective; }
+            set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _Diagnostic;
+        private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
         /// Specimens this report is based on
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
         [FhirElement("imagingStudy", Order=210)]
-        [References("ImagingStudy")]
+        [References("ImagingStudy","ImagingObjectSelection")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
@@ -503,16 +503,16 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)StatusElement.DeepCopy();
-                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
+                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(RequestDetail != null) dest.RequestDetail = new List<Hl7.Fhir.Model.ResourceReference>(RequestDetail.DeepCopy());
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
-                if(Diagnostic != null) dest.Diagnostic = (Hl7.Fhir.Model.Element)Diagnostic.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
                 if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Name, otherT.Name)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(RequestDetail, otherT.RequestDetail)) return false;
             if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
-            if( !DeepComparable.Matches(Diagnostic, otherT.Diagnostic)) return false;
+            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.Matches(Result, otherT.Result)) return false;
             if( !DeepComparable.Matches(ImagingStudy, otherT.ImagingStudy)) return false;
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
             if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
-            if( !DeepComparable.IsExactly(Diagnostic, otherT.Diagnostic)) return false;
+            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
             if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("comparable")]
             Comparable,
             /// <summary>
-            /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully compareable.
+            /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully compareable
             /// </summary>
             [EnumLiteral("fully-specified")]
             FullySpecified,
@@ -74,12 +74,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("equivalent")]
             Equivalent,
             /// <summary>
-            /// The data element allows multiple units of measure that are convertable between each other (e.g. Inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
+            /// The data element allows multiple units of measure that are convertable between each other (e.g. Inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning
             /// </summary>
             [EnumLiteral("convertable")]
             Convertable,
             /// <summary>
-            /// A convertable data element where unit conversions are different only by a power of 10.  E.g. g, mg, kg.
+            /// A convertable data element where unit conversions are different only by a power of 10.  E.g. g, mg, kg
             /// </summary>
             [EnumLiteral("scaleable")]
             Scaleable,

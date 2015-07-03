@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
         public enum CompositionStatus
         {
             /// <summary>
-            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
+            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified
             /// </summary>
             [EnumLiteral("preliminary")]
             Preliminary,
@@ -69,17 +69,17 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person. The modifications added new information to the composition or document, but did not revise existing content.
+            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person. The modifications added new information to the composition or document, but did not revise existing content
             /// </summary>
             [EnumLiteral("appended")]
             Appended,
             /// <summary>
-            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person.
+            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("amended")]
             Amended,
             /// <summary>
-            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
+            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -92,22 +92,22 @@ namespace Hl7.Fhir.Model
         public enum CompositionAttestationMode
         {
             /// <summary>
-            /// The person authenticated the content in their personal capacity.
+            /// The person authenticated the content in their personal capacity
             /// </summary>
             [EnumLiteral("personal")]
             Personal,
             /// <summary>
-            /// The person authenticated the content in their professional capacity.
+            /// The person authenticated the content in their professional capacity
             /// </summary>
             [EnumLiteral("professional")]
             Professional,
             /// <summary>
-            /// The person authenticated the content and accepted legal responsibility for its content.
+            /// The person authenticated the content and accepted legal responsibility for its content
             /// </summary>
             [EnumLiteral("legal")]
             Legal,
             /// <summary>
-            /// The organization authenticated the content as consistent with their policies and procedures.
+            /// The organization authenticated the content as consistent with their policies and procedures
             /// </summary>
             [EnumLiteral("official")]
             Official,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,17 +59,17 @@ namespace Hl7.Fhir.Model
         public enum FlagStatus
         {
             /// <summary>
-            /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
+            /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The flag does not need to be displayed any more.
+            /// The flag does not need to be displayed any more
             /// </summary>
             [EnumLiteral("inactive")]
             Inactive,
             /// <summary>
-            /// The flag was added in error, and should no longer be displayed.
+            /// The flag was added in error, and should no longer be displayed
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -138,24 +138,12 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("InstanceAvailability")]
         public enum InstanceAvailability
         {
-            /// <summary>
-            /// Resources are immediately available,.
-            /// </summary>
             [EnumLiteral("ONLINE")]
             ONLINE,
-            /// <summary>
-            /// Resources need to be retrieved by manual intervention.
-            /// </summary>
             [EnumLiteral("OFFLINE")]
             OFFLINE,
-            /// <summary>
-            /// Resources need to be retrieved from relatively slow media.
-            /// </summary>
             [EnumLiteral("NEARLINE")]
             NEARLINE,
-            /// <summary>
-            /// Resources cannot be retrieved.
-            /// </summary>
             [EnumLiteral("UNAVAILABLE")]
             UNAVAILABLE,
         }

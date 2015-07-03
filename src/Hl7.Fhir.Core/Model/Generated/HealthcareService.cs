@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,17 +59,17 @@ namespace Hl7.Fhir.Model
         public enum ServiceProvisionConditions
         {
             /// <summary>
-            /// This service is available for no patient cost.
+            /// This service is available for no patient cost
             /// </summary>
             [EnumLiteral("free")]
             Free,
             /// <summary>
-            /// There are discounts available on this service for qualifying patients.
+            /// There are discounts available on this service for qualifying patients
             /// </summary>
             [EnumLiteral("disc")]
             Disc,
             /// <summary>
-            /// Fees apply for this service.
+            /// Fees apply for this service
             /// </summary>
             [EnumLiteral("cost")]
             Cost,
@@ -82,12 +82,12 @@ namespace Hl7.Fhir.Model
         public enum ReferralMethod
         {
             /// <summary>
-            /// Referrals may be accepted by fax.
+            /// Referrals may be accepted by fax
             /// </summary>
             [EnumLiteral("fax")]
             Fax,
             /// <summary>
-            /// Referrals may be accepted over the phone from a Practitioner.
+            /// Referrals may be accepted over the phone from a Practitioner
             /// </summary>
             [EnumLiteral("phone")]
             Phone,
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("semail")]
             Semail,
             /// <summary>
-            /// Referrals may be accepted via regular postage (or hand delivered).
+            /// Referrals may be accepted via regular postage (or hand delivered)
             /// </summary>
             [EnumLiteral("mail")]
             Mail,
@@ -115,37 +115,37 @@ namespace Hl7.Fhir.Model
         public enum DaysOfWeek
         {
             /// <summary>
-            /// Monday.
+            /// Monday
             /// </summary>
             [EnumLiteral("mon")]
             Mon,
             /// <summary>
-            /// Tuesday.
+            /// Tuesday
             /// </summary>
             [EnumLiteral("tue")]
             Tue,
             /// <summary>
-            /// Wednesday.
+            /// Wednesday
             /// </summary>
             [EnumLiteral("wed")]
             Wed,
             /// <summary>
-            /// Thursday.
+            /// Thursday
             /// </summary>
             [EnumLiteral("thu")]
             Thu,
             /// <summary>
-            /// Friday.
+            /// Friday
             /// </summary>
             [EnumLiteral("fri")]
             Fri,
             /// <summary>
-            /// Saturday.
+            /// Saturday
             /// </summary>
             [EnumLiteral("sat")]
             Sat,
             /// <summary>
-            /// Sunday.
+            /// Sunday
             /// </summary>
             [EnumLiteral("sun")]
             Sun,

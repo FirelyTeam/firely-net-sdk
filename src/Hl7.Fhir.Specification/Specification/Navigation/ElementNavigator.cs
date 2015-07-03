@@ -17,47 +17,35 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public class ElementNavigator : BaseElementNavigator
     {
-        public ElementNavigator(StructureDefinition structure)
+        public ElementNavigator(IList<ElementDefinition> elements)
         {
-            if (structure == null) throw Error.ArgumentNull("structure");
-            if (structure.Snapshot == null) throw Error.Argument("structure", "structure must have a 'snapshot' representation included");
-            if (structure.Snapshot.Element == null) throw Error.Argument("structure", "snapshot in structure does not have elements");
+            if (elements == null) throw Error.ArgumentNull("elements");
 
-            setupElems(structure.Snapshot.Element);
-            Structure = structure;
+            Elements = elements.ToList();      // make a *shallow* copy of the list of elements
+            OrdinalPosition = null;
         }
 
         public ElementNavigator(ElementNavigator other)
         {
             if (other == null) throw Error.ArgumentNull("other");
 
-            setupElems(other._elements);
+            Elements = other.Elements.ToList();
             OrdinalPosition = other.OrdinalPosition;
-            Structure = other.Structure;
         }
 
-        private void setupElems(IList<ElementDefinition> elements)
-        {
-            if (elements == null) throw Error.ArgumentNull("elements");
-
-            _elements = elements.ToList();      // make a *shallow* copy of the list of elements
-            OrdinalPosition = null;
-        }
 
         internal int? OrdinalPosition { get; private set; }
 
-        public StructureDefinition Structure { get; private set; }
-
-        private IList<ElementDefinition> _elements;
+        public IList<ElementDefinition> Elements { get; private set; }
 
         public override ElementDefinition Current
         {
-            get { return OrdinalPosition != null ? _elements[OrdinalPosition.Value] : null; }
+            get { return OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null; }
         }
 
         public override int Count
         {
-            get { return _elements.Count; }
+            get { return Elements.Count; }
         }
 
 
@@ -77,7 +65,7 @@ namespace Hl7.Fhir.Specification.Navigation
             // (which is then our sibling)
             if (searchPos < Count)
             {
-                var searchPath = _elements[searchPos].Path;
+                var searchPath = Elements[searchPos].Path;
 
                 if (IsDirectChildPath(ParentPath,searchPath))
                 {
@@ -94,7 +82,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var searchPos = OrdinalPosition.Value + 1;
 
             // Skip children of the element
-            while (searchPos < Count && isDeeperPath(Path, _elements[searchPos].Path))
+            while (searchPos < Count && isDeeperPath(Path, Elements[searchPos].Path))
                 searchPos++;
             return searchPos;
         }
@@ -111,7 +99,7 @@ namespace Hl7.Fhir.Specification.Navigation
             // (which is then our sibling)
             if (searchPos >= 0)
             {
-                var searchPath = _elements[searchPos].Path;
+                var searchPath = Elements[searchPos].Path;
 
                 if (IsDirectChildPath(ParentPath, searchPath))
                 {
@@ -128,7 +116,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var searchPos = OrdinalPosition.Value - 1;
 
             // Skip children of the previous sibling (if any)
-            while (searchPos >= 0 && isDeeperPath(Path, _elements[searchPos].Path))
+            while (searchPos >= 0 && isDeeperPath(Path, Elements[searchPos].Path))
                 searchPos--;
             return searchPos;
         }
@@ -144,7 +132,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 var childPos = OrdinalPosition.Value + 1;
 
-                return childPos < Count && IsDirectChildPath(Path, _elements[childPos].Path);
+                return childPos < Count && IsDirectChildPath(Path, Elements[childPos].Path);
             }
         }
 
@@ -173,7 +161,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var searchPos = OrdinalPosition.Value - 1;
 
                 // Skip back until we find a node with a one step shorter path that is our prefix
-                while (searchPos >= 0 && !IsDirectChildPath(_elements[searchPos].Path, Path))
+                while (searchPos >= 0 && !IsDirectChildPath(Elements[searchPos].Path, Path))
                     searchPos--;
 
                 if (searchPos == -1)
@@ -197,7 +185,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             for (int pos = 0; pos < Count; pos++)
             {
-                if (_elements[pos].Name == nameReference)
+                if (Elements[pos].Name == nameReference)
                 {
                     OrdinalPosition = pos;
                     return true;
@@ -244,7 +232,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 if (elem == null) return false;
 
-                var index = _elements.IndexOf(elem);
+                var index = Elements.IndexOf(elem);
 
                 if (index != -1)
                 {
@@ -277,7 +265,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             var newSiblingPath = ParentPath + "." + sibling.GetNameFromPath();
 
-            _elements.Insert(OrdinalPosition.Value, sibling);
+            Elements.Insert(OrdinalPosition.Value, sibling);
 
             // Adjust the sibling's path so it's parent is the same as the current node
             sibling.Path = newSiblingPath;
@@ -313,9 +301,9 @@ namespace Hl7.Fhir.Specification.Navigation
             var newSiblingPath = ParentPath + "." + sibling.GetNameFromPath();
 
             if (insertPosition == Count) // At last position
-                _elements.Add(sibling);
+                Elements.Add(sibling);
             else
-                _elements.Insert(insertPosition, sibling);
+                Elements.Insert(insertPosition, sibling);
 
             // Adjust the sibling's path so it's parent is the same as the current node
             sibling.Path = newSiblingPath;
@@ -339,7 +327,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if(Count == 0)
             {
                 // Special case, insert a new root
-                _elements.Add(child);
+                Elements.Add(child);
                 child.Path = child.GetNameFromPath();
                 OrdinalPosition = 0;
                 return true;
@@ -351,9 +339,9 @@ namespace Hl7.Fhir.Specification.Navigation
                 var newSiblingPath = Path + "." + child.GetNameFromPath();
                 
                 if (OrdinalPosition == Count - 1) // At last position
-                    _elements.Add(child);
+                    Elements.Add(child);
                 else
-                    _elements.Insert(OrdinalPosition.Value + 1, child);
+                    Elements.Insert(OrdinalPosition.Value + 1, child);
 
                 // Set the name to be a true child -> this actually creates a child
                 child.Path = newSiblingPath;
@@ -373,10 +361,10 @@ namespace Hl7.Fhir.Specification.Navigation
             var start = OrdinalPosition.Value;
             var end = positionAfter();
 
-            var source = _elements.Skip(start).Take(end-start).ToList();
+            var source = Elements.Skip(start).Take(end-start).ToList();
 
             foreach (var elem in source.Reverse<ElementDefinition>())
-                _elements.Insert(start, (ElementDefinition)elem.DeepCopy());
+                Elements.Insert(start, (ElementDefinition)elem.DeepCopy());
 
             return true;
         }
@@ -389,38 +377,42 @@ namespace Hl7.Fhir.Specification.Navigation
             if (HasChildren) return false;
 
             // Special case, just the root is left
-            if (_elements.Count == 1)
+            if (Elements.Count == 1)
             {
-                _elements.Clear();
+                Elements.Clear();
                 OrdinalPosition = null;
             }
             else if (MoveToNext())
             {
                 // I have a next sibling, delete me and let my next sibling take my place as "current"
                 MoveToPrevious();
-                _elements.RemoveAt(OrdinalPosition.Value);
+                Elements.RemoveAt(OrdinalPosition.Value);
             }
             else if (MoveToPrevious())
             {
                 // I am the last of the children, but I have preceding siblings, let the prevous take my place as "current"
                 MoveToNext();
-                _elements.RemoveAt(OrdinalPosition.Value);
+                Elements.RemoveAt(OrdinalPosition.Value);
                 OrdinalPosition--;
             }
             else
             {
                 // I am the last child of a parent, after I disappear, my parent will be "current"
-                _elements.RemoveAt(OrdinalPosition.Value);
+                Elements.RemoveAt(OrdinalPosition.Value);
                 OrdinalPosition--;
             }
 
             return true;
         }
 
-        public void CommitChanges()
+        /// <summary>
+        /// Returns the list of elements passed to the constructor, including any changes made to the list using
+        /// the modification functions of the navigator.
+        /// </summary>
+        /// <returns></returns>
+        public List<ElementDefinition> ToListOfElements()
         {
-            Structure.Snapshot.Element = new List<ElementDefinition>(_elements);
-            Structure.Differential = null;
+            return new List<ElementDefinition>(Elements);
         }
 
         private static bool isDeeperPath(string me, string that)
@@ -461,7 +453,7 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             var output = new StringBuilder();
 
-            foreach (var elem in _elements)
+            foreach (var elem in Elements)
             {
                 output.AppendFormat("{0}{1}" + Environment.NewLine, elem == Current ? "*" : "", elem.Path);
             }

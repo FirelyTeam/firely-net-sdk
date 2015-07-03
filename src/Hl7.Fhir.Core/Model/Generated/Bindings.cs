@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -69,6 +69,79 @@ namespace Hl7.Fhir.Model
     }
     
     /// <summary>
+    /// A valueSet of UCUM codes for representing age value units
+    /// </summary>
+    [FhirEnumeration("AgeUnits")]
+    public enum AgeUnits
+    {
+        [EnumLiteral("min")]
+        Min,
+        [EnumLiteral("h")]
+        H,
+        [EnumLiteral("d")]
+        D,
+        [EnumLiteral("wk")]
+        Wk,
+        [EnumLiteral("mo")]
+        Mo,
+        [EnumLiteral("a")]
+        A,
+    }
+    
+    /// <summary>
+    /// The degree of equivalence between concepts
+    /// </summary>
+    [FhirEnumeration("ConceptMapEquivalence")]
+    public enum ConceptMapEquivalence
+    {
+        /// <summary>
+        /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical)
+        /// </summary>
+        [EnumLiteral("equivalent")]
+        Equivalent,
+        /// <summary>
+        /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical)
+        /// </summary>
+        [EnumLiteral("equal")]
+        Equal,
+        /// <summary>
+        /// The target mapping is wider in meaning than the source concept
+        /// </summary>
+        [EnumLiteral("wider")]
+        Wider,
+        /// <summary>
+        /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target)
+        /// </summary>
+        [EnumLiteral("subsumes")]
+        Subsumes,
+        /// <summary>
+        /// The target mapping is narrower in meaning that the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally
+        /// </summary>
+        [EnumLiteral("narrower")]
+        Narrower,
+        /// <summary>
+        /// The target mapping specialises the meaning of the source concept (e.g. the target is-a source)
+        /// </summary>
+        [EnumLiteral("specialises")]
+        Specialises,
+        /// <summary>
+        /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally
+        /// </summary>
+        [EnumLiteral("inexact")]
+        Inexact,
+        /// <summary>
+        /// There is no match for this concept in the destination concept system
+        /// </summary>
+        [EnumLiteral("unmatched")]
+        Unmatched,
+        /// <summary>
+        /// This is an explicit assertion that there is no mapping between the source and target concept
+        /// </summary>
+        [EnumLiteral("disjoint")]
+        Disjoint,
+    }
+    
+    /// <summary>
     /// The lifecycle status of a Value Set or Concept Map
     /// </summary>
     [FhirEnumeration("ConformanceResourceStatus")]
@@ -85,7 +158,7 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("active")]
         Active,
         /// <summary>
-        /// This resource has been withdrawn or superceded and should no longer be used
+        /// This resource has been withdrawn or superseded and should no longer be used
         /// </summary>
         [EnumLiteral("retired")]
         Retired,
@@ -137,6 +210,118 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("error")]
         Error,
+    }
+    
+    /// <summary>
+    /// The status of the document reference
+    /// </summary>
+    [FhirEnumeration("DocumentReferenceStatus")]
+    public enum DocumentReferenceStatus
+    {
+        /// <summary>
+        /// This is the current reference for this document
+        /// </summary>
+        [EnumLiteral("current")]
+        Current,
+        /// <summary>
+        /// This reference has been superseded by another reference
+        /// </summary>
+        [EnumLiteral("superseded")]
+        Superseded,
+        /// <summary>
+        /// This reference was created in error
+        /// </summary>
+        [EnumLiteral("entered-in-error")]
+        EnteredInError,
+    }
+    
+    /// <summary>
+    /// The presentation types of notes
+    /// </summary>
+    [FhirEnumeration("NoteType")]
+    public enum NoteType
+    {
+        /// <summary>
+        /// Display the note.
+        /// </summary>
+        [EnumLiteral("display")]
+        Display,
+        /// <summary>
+        /// Print the note on the form.
+        /// </summary>
+        [EnumLiteral("print")]
+        Print,
+        /// <summary>
+        /// Print the note for the operator.
+        /// </summary>
+        [EnumLiteral("printoper")]
+        Printoper,
+    }
+    
+    /// <summary>
+    /// The outcome of the processing.
+    /// </summary>
+    [FhirEnumeration("RemittanceOutcome")]
+    public enum RemittanceOutcome
+    {
+        /// <summary>
+        /// The processing completed without errors.
+        /// </summary>
+        [EnumLiteral("complete")]
+        Complete,
+        /// <summary>
+        /// The processing identified with errors.
+        /// </summary>
+        [EnumLiteral("error")]
+        Error,
+    }
+    
+    /// <summary>
+    /// Data types allowed to be used for search parameters
+    /// </summary>
+    [FhirEnumeration("SearchParamType")]
+    public enum SearchParamType
+    {
+        /// <summary>
+        /// Search parameter SHALL be a number (a whole number, or a decimal)
+        /// </summary>
+        [EnumLiteral("number")]
+        Number,
+        /// <summary>
+        /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported
+        /// </summary>
+        [EnumLiteral("date")]
+        Date,
+        /// <summary>
+        /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces
+        /// </summary>
+        [EnumLiteral("string")]
+        String,
+        /// <summary>
+        /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used
+        /// </summary>
+        [EnumLiteral("token")]
+        Token,
+        /// <summary>
+        /// A reference to another resource
+        /// </summary>
+        [EnumLiteral("reference")]
+        Reference,
+        /// <summary>
+        /// A composite search parameter that combines a search on two values together
+        /// </summary>
+        [EnumLiteral("composite")]
+        Composite,
+        /// <summary>
+        /// A search parameter that searches on a quantity
+        /// </summary>
+        [EnumLiteral("quantity")]
+        Quantity,
+        /// <summary>
+        /// A search parameter that searches on a URI (RFC 3986)
+        /// </summary>
+        [EnumLiteral("uri")]
+        Uri,
     }
     
     /// <summary>
@@ -633,6 +818,21 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Supply")]
         Supply,
+        /// <summary>
+        /// The SupplyDelivery resource
+        /// </summary>
+        [EnumLiteral("SupplyDelivery")]
+        SupplyDelivery,
+        /// <summary>
+        /// The SupplyRequest resource
+        /// </summary>
+        [EnumLiteral("SupplyRequest")]
+        SupplyRequest,
+        /// <summary>
+        /// The TestScript resource
+        /// </summary>
+        [EnumLiteral("TestScript")]
+        TestScript,
         /// <summary>
         /// The ValueSet resource
         /// </summary>

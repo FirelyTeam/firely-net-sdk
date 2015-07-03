@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
         public enum AuditEventObjectRole
         {
             /// <summary>
-            /// This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal.
+            /// This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal
             /// </summary>
             [EnumLiteral("1")]
             N1,
@@ -84,12 +84,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("5")]
             N5,
             /// <summary>
-            /// A human participant not otherwise identified by some other category.
+            /// A human participant not otherwise identified by some other category
             /// </summary>
             [EnumLiteral("6")]
             N6,
             /// <summary>
-            /// (deprecated).
+            /// (deprecated)
             /// </summary>
             [EnumLiteral("7")]
             N7,
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("21")]
             N21,
             /// <summary>
-            /// (Deprecated).
+            /// (Deprecated)
             /// </summary>
             [EnumLiteral("22")]
             N22,
@@ -187,77 +187,77 @@ namespace Hl7.Fhir.Model
         public enum AuditEventObjectLifecycle
         {
             /// <summary>
-            /// Origination / Creation.
+            /// Origination / Creation
             /// </summary>
             [EnumLiteral("1")]
             N1,
             /// <summary>
-            /// Import / Copy from original.
+            /// Import / Copy from original
             /// </summary>
             [EnumLiteral("2")]
             N2,
             /// <summary>
-            /// Amendment.
+            /// Amendment
             /// </summary>
             [EnumLiteral("3")]
             N3,
             /// <summary>
-            /// Verification.
+            /// Verification
             /// </summary>
             [EnumLiteral("4")]
             N4,
             /// <summary>
-            /// Translation.
+            /// Translation
             /// </summary>
             [EnumLiteral("5")]
             N5,
             /// <summary>
-            /// Access / Use.
+            /// Access / Use
             /// </summary>
             [EnumLiteral("6")]
             N6,
             /// <summary>
-            /// De-identification.
+            /// De-identification
             /// </summary>
             [EnumLiteral("7")]
             N7,
             /// <summary>
-            /// Aggregation, summarization, derivation.
+            /// Aggregation, summarization, derivation
             /// </summary>
             [EnumLiteral("8")]
             N8,
             /// <summary>
-            /// Report.
+            /// Report
             /// </summary>
             [EnumLiteral("9")]
             N9,
             /// <summary>
-            /// Export / Copy to target.
+            /// Export / Copy to target
             /// </summary>
             [EnumLiteral("10")]
             N10,
             /// <summary>
-            /// Disclosure.
+            /// Disclosure
             /// </summary>
             [EnumLiteral("11")]
             N11,
             /// <summary>
-            /// Receipt of disclosure.
+            /// Receipt of disclosure
             /// </summary>
             [EnumLiteral("12")]
             N12,
             /// <summary>
-            /// Archiving.
+            /// Archiving
             /// </summary>
             [EnumLiteral("13")]
             N13,
             /// <summary>
-            /// Logical deletion.
+            /// Logical deletion
             /// </summary>
             [EnumLiteral("14")]
             N14,
             /// <summary>
-            /// Permanent erasure / Physical destruction.
+            /// Permanent erasure / Physical destruction
             /// </summary>
             [EnumLiteral("15")]
             N15,
@@ -275,22 +275,22 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("C")]
             C,
             /// <summary>
-            /// Display or print data, such as a Doctor Census.
+            /// Display or print data, such as a Doctor Census
             /// </summary>
             [EnumLiteral("R")]
             R,
             /// <summary>
-            /// Update data, such as Revise Patient Information.
+            /// Update data, such as Revise Patient Information
             /// </summary>
             [EnumLiteral("U")]
             U,
             /// <summary>
-            /// Delete items, such as a doctor master file record.
+            /// Delete items, such as a doctor master file record
             /// </summary>
             [EnumLiteral("D")]
             D,
             /// <summary>
-            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
+            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation
             /// </summary>
             [EnumLiteral("E")]
             E,
@@ -303,22 +303,22 @@ namespace Hl7.Fhir.Model
         public enum AuditEventObjectType
         {
             /// <summary>
-            /// Person.
+            /// Person
             /// </summary>
             [EnumLiteral("1")]
             N1,
             /// <summary>
-            /// System Object.
+            /// System Object
             /// </summary>
             [EnumLiteral("2")]
             N2,
             /// <summary>
-            /// Organization.
+            /// Organization
             /// </summary>
             [EnumLiteral("3")]
             N3,
             /// <summary>
-            /// Other.
+            /// Other
             /// </summary>
             [EnumLiteral("4")]
             N4,
@@ -331,22 +331,22 @@ namespace Hl7.Fhir.Model
         public enum AuditEventOutcome
         {
             /// <summary>
-            /// The operation completed successfully (whether with warnings or not).
+            /// The operation completed successfully (whether with warnings or not)
             /// </summary>
             [EnumLiteral("0")]
             N0,
             /// <summary>
-            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
+            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response)
             /// </summary>
             [EnumLiteral("4")]
             N4,
             /// <summary>
-            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
+            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response)
             /// </summary>
             [EnumLiteral("8")]
             N8,
             /// <summary>
-            /// An error of such magnitude occurred that the system is not longer available for use (i.e. the system died).
+            /// An error of such magnitude occurred that the system is not longer available for use (i.e. the system died)
             /// </summary>
             [EnumLiteral("12")]
             N12,
@@ -359,27 +359,27 @@ namespace Hl7.Fhir.Model
         public enum AuditEventParticipantNetworkType
         {
             /// <summary>
-            /// Machine Name, including DNS name.
+            /// Machine Name, including DNS name
             /// </summary>
             [EnumLiteral("1")]
             N1,
             /// <summary>
-            /// IP Address.
+            /// IP Address
             /// </summary>
             [EnumLiteral("2")]
             N2,
             /// <summary>
-            /// Telephone Number.
+            /// Telephone Number
             /// </summary>
             [EnumLiteral("3")]
             N3,
             /// <summary>
-            /// Email address.
+            /// Email address
             /// </summary>
             [EnumLiteral("4")]
             N4,
             /// <summary>
-            /// URI (User directory, HTTP-PUT, ftp, etc.).
+            /// URI (User directory, HTTP-PUT, ftp, etc.)
             /// </summary>
             [EnumLiteral("5")]
             N5,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum FilterOperator
         {
             /// <summary>
-            /// The specified property of the code equals the provided value.
+            /// The specified property of the code equals the provided value
             /// </summary>
             [EnumLiteral("=")]
             Equal,
             /// <summary>
-            /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself.
+            /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself
             /// </summary>
             [EnumLiteral("is-a")]
             IsA,
             /// <summary>
-            /// The specified property of the code does not have an is-a relationship with the provided value.
+            /// The specified property of the code does not have an is-a relationship with the provided value
             /// </summary>
             [EnumLiteral("is-not-a")]
             IsNotA,
             /// <summary>
-            /// The specified property of the code  matches the regex specified in the provided value.
+            /// The specified property of the code  matches the regex specified in the provided value
             /// </summary>
             [EnumLiteral("regex")]
             Regex,
             /// <summary>
-            /// The specified property of the code is in the set of codes or concepts specified in the provided value (comma separated list).
+            /// The specified property of the code is in the set of codes or concepts specified in the provided value (comma separated list)
             /// </summary>
             [EnumLiteral("in")]
             In,
             /// <summary>
-            /// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma separated list).
+            /// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma separated list)
             /// </summary>
             [EnumLiteral("not-in")]
             NotIn,
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ConceptDefinitionDesignationComponent"; } }
             
             /// <summary>
-            /// Language of the designation
+            /// Human language of the designation
             /// </summary>
             [FhirElement("language", InSummary=true, Order=40)]
             [DataMember]
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _LanguageElement;
             
             /// <summary>
-            /// Language of the designation
+            /// Human language of the designation
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1445,7 +1445,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Value of the parameter
+            /// Value of the named parameter
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Code))]

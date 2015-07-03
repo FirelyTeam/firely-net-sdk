@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum ConditionClinicalStatus
         {
             /// <summary>
-            /// This is a tentative diagnosis - still a candidate that is under consideration.
+            /// This is a tentative diagnosis - still a candidate that is under consideration
             /// </summary>
             [EnumLiteral("provisional")]
             Provisional,
             /// <summary>
-            /// The patient is being treated on the basis that this is the condition, but it is still not confirmed.
+            /// The patient is being treated on the basis that this is the condition, but it is still not confirmed
             /// </summary>
             [EnumLiteral("working")]
             Working,
             /// <summary>
-            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition
             /// </summary>
             [EnumLiteral("confirmed")]
             Confirmed,
             /// <summary>
-            /// This condition has been ruled out by diagnostic and clinical evidence.
+            /// This condition has been ruled out by diagnostic and clinical evidence
             /// </summary>
             [EnumLiteral("refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and Is not valid.
+            /// The statement was entered in error and Is not valid
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown"
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,

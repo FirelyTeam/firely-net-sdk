@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Model
         public enum ResponseType
         {
             /// <summary>
-            /// The message was accepted and processed without error.
+            /// The message was accepted and processed without error
             /// </summary>
             [EnumLiteral("ok")]
             Ok,
             /// <summary>
-            /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
+            /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required
             /// </summary>
             [EnumLiteral("transient-error")]
             TransientError,

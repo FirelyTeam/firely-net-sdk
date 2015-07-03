@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Model
         public enum ProcedureRelationshipType
         {
             /// <summary>
-            /// This procedure had to be performed because of the related one.
+            /// This procedure had to be performed because of the related one
             /// </summary>
             [EnumLiteral("caused-by")]
             CausedBy,
             /// <summary>
-            /// This procedure caused the related one to be performed.
+            /// This procedure caused the related one to be performed
             /// </summary>
             [EnumLiteral("because-of")]
             BecauseOf,
@@ -77,22 +77,22 @@ namespace Hl7.Fhir.Model
         public enum ProcedureStatus
         {
             /// <summary>
-            /// The procedure is still occurring.
+            /// The procedure is still occurring
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The procedure was terminated without completing successfully.
+            /// The procedure was terminated without completing successfully
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,
             /// <summary>
-            /// All actions involved in the procedure have taken place.
+            /// All actions involved in the procedure have taken place
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The statement was entered in error and Is not valid.
+            /// The statement was entered in error and Is not valid
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,

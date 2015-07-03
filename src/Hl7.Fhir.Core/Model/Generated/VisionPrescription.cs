@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum VisionBase
         {
             /// <summary>
-            /// top.
+            /// top
             /// </summary>
             [EnumLiteral("up")]
             Up,
             /// <summary>
-            /// bottom.
+            /// bottom
             /// </summary>
             [EnumLiteral("down")]
             Down,
             /// <summary>
-            /// inner edge.
+            /// inner edge
             /// </summary>
             [EnumLiteral("in")]
             In,
             /// <summary>
-            /// outer edge.
+            /// outer edge
             /// </summary>
             [EnumLiteral("out")]
             Out,
@@ -87,12 +87,12 @@ namespace Hl7.Fhir.Model
         public enum VisionEyes
         {
             /// <summary>
-            /// right eye.
+            /// right eye
             /// </summary>
             [EnumLiteral("right")]
             Right,
             /// <summary>
-            /// left eye.
+            /// left eye
             /// </summary>
             [EnumLiteral("left")]
             Left,

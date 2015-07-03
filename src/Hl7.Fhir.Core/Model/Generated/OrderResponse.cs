@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,47 +59,47 @@ namespace Hl7.Fhir.Model
         public enum OrderStatus
         {
             /// <summary>
-            /// The order is known, but no processing has occurred at this time.
+            /// The order is known, but no processing has occurred at this time
             /// </summary>
             [EnumLiteral("pending")]
             Pending,
             /// <summary>
-            /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review).
+            /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review)
             /// </summary>
             [EnumLiteral("review")]
             Review,
             /// <summary>
-            /// The order was rejected because of a workflow/business logic reason.
+            /// The order was rejected because of a workflow/business logic reason
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The order was unable to be processed because of a technical error (i.e. unexpected error).
+            /// The order was unable to be processed because of a technical error (i.e. unexpected error)
             /// </summary>
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// The order has been accepted, and work is in progress.
+            /// The order has been accepted, and work is in progress
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// Processing the order was halted at the initiators request.
+            /// Processing the order was halted at the initiators request
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The order has been cancelled and replaced by another.
+            /// The order has been cancelled and replaced by another
             /// </summary>
             [EnumLiteral("replaced")]
             Replaced,
             /// <summary>
-            /// Processing the order was stopped because of some workflow/business logic reason.
+            /// Processing the order was stopped because of some workflow/business logic reason
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,
             /// <summary>
-            /// The order has been completed.
+            /// The order has been completed
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
@@ -181,23 +181,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
-        /// If required by policy
-        /// </summary>
-        [FhirElement("authority", Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Authority
-        {
-            get { return _Authority; }
-            set { _Authority = value; OnPropertyChanged("Authority"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Authority;
-        
-        /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
         /// </summary>
-        [FhirElement("orderStatus", Order=140)]
+        [FhirElement("orderStatus", Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.OrderResponse.OrderStatus> OrderStatus_Element
@@ -230,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional description of the response
         /// </summary>
-        [FhirElement("description", Order=150)]
+        [FhirElement("description", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -262,7 +248,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of the outcome of performing the order
         /// </summary>
-        [FhirElement("fulfillment", Order=160)]
+        [FhirElement("fulfillment", Order=150)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -285,7 +271,6 @@ namespace Hl7.Fhir.Model
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
-                if(Authority != null) dest.Authority = (Hl7.Fhir.Model.Element)Authority.DeepCopy();
                 if(OrderStatus_Element != null) dest.OrderStatus_Element = (Code<Hl7.Fhir.Model.OrderResponse.OrderStatus>)OrderStatus_Element.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(Fulfillment.DeepCopy());
@@ -310,7 +295,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
-            if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
             if( !DeepComparable.Matches(OrderStatus_Element, otherT.OrderStatus_Element)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Fulfillment, otherT.Fulfillment)) return false;
@@ -328,7 +312,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
-            if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
             if( !DeepComparable.IsExactly(OrderStatus_Element, otherT.OrderStatus_Element)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Fulfillment, otherT.Fulfillment)) return false;

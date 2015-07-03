@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -368,13 +368,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.Code OutcomeElement
+        public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
         {
             get { return _OutcomeElement; }
             set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _OutcomeElement;
+        private Code<Hl7.Fhir.Model.RemittanceOutcome> _OutcomeElement;
         
         /// <summary>
         /// complete | error
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Outcome
+        public Hl7.Fhir.Model.RemittanceOutcome? Outcome
         {
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   OutcomeElement = null; 
                 else
-                  OutcomeElement = new Hl7.Fhir.Model.Code(value);
+                  OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
                 OnPropertyChanged("Outcome");
             }
         }
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(OutcomeElement != null) dest.OutcomeElement = (Hl7.Fhir.Model.Code)OutcomeElement.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();

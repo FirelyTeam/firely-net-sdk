@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,37 +59,37 @@ namespace Hl7.Fhir.Model
         public enum ObservationReliability
         {
             /// <summary>
-            /// The result has no reliability concerns.
+            /// The result has no reliability concerns
             /// </summary>
             [EnumLiteral("ok")]
             Ok,
             /// <summary>
-            /// An early estimate of value; measurement is still occurring.
+            /// An early estimate of value; measurement is still occurring
             /// </summary>
             [EnumLiteral("ongoing")]
             Ongoing,
             /// <summary>
-            /// An early estimate of value; processing is still occurring.
+            /// An early estimate of value; processing is still occurring
             /// </summary>
             [EnumLiteral("early")]
             Early,
             /// <summary>
-            /// The observation value should be treated with care.
+            /// The observation value should be treated with care
             /// </summary>
             [EnumLiteral("questionable")]
             Questionable,
             /// <summary>
-            /// The result has been generated while calibration is occurring.
+            /// The result has been generated while calibration is occurring
             /// </summary>
             [EnumLiteral("calibrating")]
             Calibrating,
             /// <summary>
-            /// The observation could not be completed because of an error.
+            /// The observation could not be completed because of an error
             /// </summary>
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// No observation  reliability value was available.
+            /// No observation  reliability value was available
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,
@@ -102,37 +102,37 @@ namespace Hl7.Fhir.Model
         public enum ObservationStatus
         {
             /// <summary>
-            /// The existence of the observation is registered, but there is no result yet available.
+            /// The existence of the observation is registered, but there is no result yet available
             /// </summary>
             [EnumLiteral("registered")]
             Registered,
             /// <summary>
-            /// This is an initial or interim observation: data may be incomplete or unverified.
+            /// This is an initial or interim observation: data may be incomplete or unverified
             /// </summary>
             [EnumLiteral("preliminary")]
             Preliminary,
             /// <summary>
-            /// The observation is complete and verified by an authorized person.
+            /// The observation is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("amended")]
             Amended,
             /// <summary>
-            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The observation has been withdrawn following previous Final release.
+            /// The observation has been withdrawn following previous Final release
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown"
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,
@@ -145,41 +145,146 @@ namespace Hl7.Fhir.Model
         public enum ObservationRelationshipType
         {
             /// <summary>
-            /// The target observation is a component of this observation (e.g. Systolic and Diastolic Blood Pressure).
-            /// </summary>
-            [EnumLiteral("has-component")]
-            HasComponent,
-            /// <summary>
-            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group
             /// </summary>
             [EnumLiteral("has-member")]
             HasMember,
             /// <summary>
-            /// The target observation is part of the information from which this observation value is derived (e.g. calculated anion gap, Apgar score).
-            /// </summary>
-            [EnumLiteral("derived-from")]
-            DerivedFrom,
-            /// <summary>
-            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test)
             /// </summary>
             [EnumLiteral("sequel-to")]
             SequelTo,
             /// <summary>
-            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete
             /// </summary>
             [EnumLiteral("replaces")]
             Replaces,
             /// <summary>
-            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure).
+            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure)
             /// </summary>
             [EnumLiteral("qualified-by")]
             QualifiedBy,
             /// <summary>
-            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value)
             /// </summary>
             [EnumLiteral("interfered-by")]
             InterferedBy,
         }
+        
+        [FhirType("ObservationComponentComponent")]
+        [DataContract]
+        public partial class ObservationComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ObservationComponentComponent"; } }
+            
+            /// <summary>
+            /// Type of component observation (code / type)
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Actual component result
+            /// </summary>
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Value;
+            
+            /// <summary>
+            /// Why the component result is missing
+            /// </summary>
+            [FhirElement("dataAbsentReason", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
+            {
+                get { return _DataAbsentReason; }
+                set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
+            
+            /// <summary>
+            /// Provides guide for interpretation ofcomponent result
+            /// </summary>
+            [FhirElement("referenceRange", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
+            {
+                get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
+                set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ObservationComponentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
+                    if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ObservationComponentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ObservationComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ObservationComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ObservationReferenceRangeComponent")]
         [DataContract]
@@ -336,7 +441,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ObservationRelatedComponent"; } }
             
             /// <summary>
-            /// has-component | has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// has-member | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
@@ -349,7 +454,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
             
             /// <summary>
-            /// has-component | has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// has-member | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -444,9 +549,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
+        /// Classification of  type of observation
+        /// </summary>
+        [FhirElement("category", Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
         /// Actual result
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
@@ -460,7 +578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the result is missing
         /// </summary>
-        [FhirElement("dataAbsentReason", Order=110)]
+        [FhirElement("dataAbsentReason", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
         {
@@ -473,7 +591,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// High, low, normal, etc.
         /// </summary>
-        [FhirElement("interpretation", Order=120)]
+        [FhirElement("interpretation", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Interpretation
         {
@@ -486,7 +604,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about result
         /// </summary>
-        [FhirElement("comments", Order=130)]
+        [FhirElement("comments", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentsElement
         {
@@ -516,23 +634,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Physiologically Relevant time/time-period for observation
+        /// Clinically Relevant time/time-period for observation
         /// </summary>
-        [FhirElement("applies", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Applies
+        public Hl7.Fhir.Model.Element Effective
         {
-            get { return _Applies; }
-            set { _Applies = value; OnPropertyChanged("Applies"); }
+            get { return _Effective; }
+            set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _Applies;
+        private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
         /// Date/Time this was made available
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=150)]
+        [FhirElement("issued", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
         {
@@ -564,7 +682,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// registered | preliminary | final | amended +
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
@@ -597,7 +715,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// ok | ongoing | early | questionable | calibrating | error +
         /// </summary>
-        [FhirElement("reliability", Order=170)]
+        [FhirElement("reliability", Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Observation.ObservationReliability> ReliabilityElement
         {
@@ -629,7 +747,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observed body part
         /// </summary>
-        [FhirElement("bodySite", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("bodySite", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element BodySite
@@ -643,7 +761,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How it was done
         /// </summary>
-        [FhirElement("method", Order=190)]
+        [FhirElement("method", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -656,7 +774,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique Id for this particular observation
         /// </summary>
-        [FhirElement("identifier", Order=200)]
+        [FhirElement("identifier", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -670,7 +788,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what this is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=210)]
+        [FhirElement("subject", InSummary=true, Order=220)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -684,7 +802,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specimen used for this observation
         /// </summary>
-        [FhirElement("specimen", Order=220)]
+        [FhirElement("specimen", Order=230)]
         [References("Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Specimen
@@ -696,9 +814,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
-        /// Who did the observation
+        /// Who is responsible for the observation
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=230)]
+        [FhirElement("performer", InSummary=true, Order=240)]
         [References("Practitioner","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -713,7 +831,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (Measurement) Device
         /// </summary>
-        [FhirElement("device", Order=240)]
+        [FhirElement("device", Order=250)]
         [References("Device","DeviceMetric")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
@@ -727,7 +845,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Healthcare event during which this observation is made
         /// </summary>
-        [FhirElement("encounter", Order=250)]
+        [FhirElement("encounter", Order=260)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -741,7 +859,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Provides guide for interpretation
         /// </summary>
-        [FhirElement("referenceRange", Order=260)]
+        [FhirElement("referenceRange", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
@@ -753,9 +871,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
+        /// The resource from which an observation is derived
+        /// </summary>
+        [FhirElement("derivedFrom", InSummary=true, Order=280)]
+        [References("AllergyIntolerance","Condition","FamilyMemberHistory","ImagingStudy","Immunization","MedicationStatement","Procedure","QuestionnaireAnswers","Observation")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
+        {
+            get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
+            set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
+        
+        /// <summary>
         /// Observations related to this observation
         /// </summary>
-        [FhirElement("related", InSummary=true, Order=270)]
+        [FhirElement("related", InSummary=true, Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related
@@ -766,6 +899,20 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> _Related;
         
+        /// <summary>
+        /// Component results
+        /// </summary>
+        [FhirElement("component", InSummary=true, Order=300)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Observation.ObservationComponentComponent> Component
+        {
+            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.Observation.ObservationComponentComponent>(); return _Component; }
+            set { _Component = value; OnPropertyChanged("Component"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Observation.ObservationComponentComponent> _Component;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;
@@ -774,11 +921,12 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
-                if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Element)Applies.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
                 if(ReliabilityElement != null) dest.ReliabilityElement = (Code<Hl7.Fhir.Model.Observation.ObservationReliability>)ReliabilityElement.DeepCopy();
@@ -791,7 +939,9 @@ namespace Hl7.Fhir.Model
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
+                if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
                 if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(Related.DeepCopy());
+                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Observation.ObservationComponentComponent>(Component.DeepCopy());
                 return dest;
             }
             else
@@ -810,11 +960,12 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
             if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
-            if( !DeepComparable.Matches(Applies, otherT.Applies)) return false;
+            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ReliabilityElement, otherT.ReliabilityElement)) return false;
@@ -827,7 +978,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+            if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.Matches(Related, otherT.Related)) return false;
+            if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
             return true;
         }
@@ -839,11 +992,12 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
             if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
-            if( !DeepComparable.IsExactly(Applies, otherT.Applies)) return false;
+            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ReliabilityElement, otherT.ReliabilityElement)) return false;
@@ -856,7 +1010,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
+            if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
+            if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             
             return true;
         }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// Who initiated the order
         /// </summary>
         [FhirElement("source", Order=120)]
-        [References("Practitioner")]
+        [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -235,23 +235,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
-        /// If required by policy
-        /// </summary>
-        [FhirElement("authority", Order=150)]
-        [References()]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Authority
-        {
-            get { return _Authority; }
-            set { _Authority = value; OnPropertyChanged("Authority"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Authority;
-        
-        /// <summary>
         /// When order should be fulfilled
         /// </summary>
-        [FhirElement("when", Order=160)]
+        [FhirElement("when", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Order.OrderWhenComponent When
         {
@@ -264,7 +250,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What action is being ordered
         /// </summary>
-        [FhirElement("detail", Order=170)]
+        [FhirElement("detail", Order=160)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -289,7 +275,6 @@ namespace Hl7.Fhir.Model
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                 if(When != null) dest.When = (Hl7.Fhir.Model.Order.OrderWhenComponent)When.DeepCopy();
                 if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                 return dest;
@@ -315,7 +300,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
             if( !DeepComparable.Matches(When, otherT.When)) return false;
             if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
             
@@ -334,7 +318,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
             if( !DeepComparable.IsExactly(When, otherT.When)) return false;
             if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
             

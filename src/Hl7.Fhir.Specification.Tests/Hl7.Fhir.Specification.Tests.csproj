@@ -67,6 +67,7 @@
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnapshotGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\message_false_SlicingExtensionTestProfile.xml">
@@ -93,7 +94,7 @@
     <Content Include="TestData\Patient.UnknownAttribute.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\ProfileProcedureNO.xml">
+    <Content Include="SnapshotGeneratorTestData\lipid-report-lipidprofile-test.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\SlicingExtensionTestProfile.xml">
@@ -177,6 +178,7 @@
       <Name>Hl7.Fhir.Specification</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

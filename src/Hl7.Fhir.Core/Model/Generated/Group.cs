@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum GroupType
         {
             /// <summary>
-            /// Group contains "person" Patient resources.
+            /// Group contains "person" Patient resources
             /// </summary>
             [EnumLiteral("person")]
             Person,
             /// <summary>
-            /// Group contains "animal" Patient resources.
+            /// Group contains "animal" Patient resources
             /// </summary>
             [EnumLiteral("animal")]
             Animal,
             /// <summary>
-            /// Group contains healthcare practitioner resources.
+            /// Group contains healthcare practitioner resources
             /// </summary>
             [EnumLiteral("practitioner")]
             Practitioner,
             /// <summary>
-            /// Group contains Device resources.
+            /// Group contains Device resources
             /// </summary>
             [EnumLiteral("device")]
             Device,
             /// <summary>
-            /// Group contains Medication resources.
+            /// Group contains Medication resources
             /// </summary>
             [EnumLiteral("medication")]
             Medication,
             /// <summary>
-            /// Group contains Substance resources.
+            /// Group contains Substance resources
             /// </summary>
             [EnumLiteral("substance")]
             Substance,

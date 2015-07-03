@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,17 +59,17 @@ namespace Hl7.Fhir.Model
         public enum LocationStatus
         {
             /// <summary>
-            /// The location is operational.
+            /// The location is operational
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The location is temporarily closed.
+            /// The location is temporarily closed
             /// </summary>
             [EnumLiteral("suspended")]
             Suspended,
             /// <summary>
-            /// The location is no longer used.
+            /// The location is no longer used
             /// </summary>
             [EnumLiteral("inactive")]
             Inactive,
@@ -82,12 +82,12 @@ namespace Hl7.Fhir.Model
         public enum LocationMode
         {
             /// <summary>
-            /// The Location resource represents a specific instance of a Location (e.g. Operating Theatre 1A).
+            /// The Location resource represents a specific instance of a Location (e.g. Operating Theatre 1A)
             /// </summary>
             [EnumLiteral("instance")]
             Instance,
             /// <summary>
-            /// The Location represents a class of Locations (e.g. Any Operating Theatre). Although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc).
+            /// The Location represents a class of Locations (e.g. Any Operating Theatre). Although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc)
             /// </summary>
             [EnumLiteral("kind")]
             Kind,

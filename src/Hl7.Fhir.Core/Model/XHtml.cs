@@ -41,7 +41,7 @@ using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class XHtml
+    public static class XHtml
     {
         public static bool IsValidValue(string value)
         {

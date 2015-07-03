@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionStatus
         {
             /// <summary>
-            /// The client has requested the subscription, and the server has not yet set it up.
+            /// The client has requested the subscription, and the server has not yet set it up
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The subscription is active.
+            /// The subscription is active
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The server has an error executing the notification.
+            /// The server has an error executing the notification
             /// </summary>
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// Too many errors have occurred or the subscription has expired.
+            /// Too many errors have occurred or the subscription has expired
             /// </summary>
             [EnumLiteral("off")]
             Off,
@@ -87,30 +87,48 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionChannelType
         {
             /// <summary>
-            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
+            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made
             /// </summary>
             [EnumLiteral("rest-hook")]
             RestHook,
             /// <summary>
-            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
+            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL
             /// </summary>
             [EnumLiteral("websocket")]
             Websocket,
             /// <summary>
-            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
+            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:)
             /// </summary>
             [EnumLiteral("email")]
             Email,
             /// <summary>
-            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
+            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:)
             /// </summary>
             [EnumLiteral("sms")]
             Sms,
             /// <summary>
-            /// The channel Is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc) to the application identified in the URI.
+            /// The channel Is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc) to the application identified in the URI
             /// </summary>
             [EnumLiteral("message")]
             Message,
+        }
+        
+        /// <summary>
+        /// Tags to put on a resource after subscriptions sent
+        /// </summary>
+        [FhirEnumeration("SubscriptionTag")]
+        public enum SubscriptionTag
+        {
+            /// <summary>
+            /// The message has been queued for processing on a destination systems
+            /// </summary>
+            [EnumLiteral("queued")]
+            Queued,
+            /// <summary>
+            /// The message has been delivered to it's intended recipient
+            /// </summary>
+            [EnumLiteral("delivered")]
+            Delivered,
         }
         
         [FhirType("SubscriptionChannelComponent")]

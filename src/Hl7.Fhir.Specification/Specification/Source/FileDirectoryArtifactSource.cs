@@ -127,6 +127,15 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
 
+            // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
+            // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
+            var doubles = _resourceInformation.Where(ci=>ci.Url != null).GroupBy(ci => ci.Url).Where(group => group.Count() > 1);
+            if (doubles.Any())
+            {
+                throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
+                        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));                        
+            }
+
             _resourcesPrepared = true;
         }
 

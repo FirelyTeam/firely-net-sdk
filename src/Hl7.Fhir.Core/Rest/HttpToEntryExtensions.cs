@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Rest
             var result = new Bundle.BundleEntryComponent();
 
             result.TransactionResponse = new Bundle.BundleEntryTransactionResponseComponent();
-            result.TransactionResponse.Status = response.StatusCode.ToString();
+            result.TransactionResponse.Status = ((int)response.StatusCode).ToString();
             result.TransactionResponse.SetHeaders(response.Headers);
 
             var contentType = getContentType(response);
@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Rest
                 {
                     var bodyText = DecodeBody(body, charEncoding);
                     var resource = parseResource(bodyText, contentType);
-
                     result.Resource = resource;
+
                     if (result.TransactionResponse.Location != null)
                         result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
                 }
@@ -123,12 +123,11 @@ namespace Hl7.Fhir.Rest
 
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
-            // Special case...this isn't even xml or json...probably some diagnostic text or html sent
-            // by the server.
+            if (fhirType == ResourceFormat.Unknown)
+                throw new FormatException("Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint? Body reads: {1}".FormatWith(contentType, bodyText));
+
             if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
-            {
-                throw new FormatException("Encountered non xml/json in body: \"" + bodyText + "\"");
-            }
+                throw new FormatException("Endpoint said it returned '{0}', but the body is not recognized as either xml or json: \"" + bodyText + "\"");
 
             if (fhirType == ResourceFormat.Json)
                 result = (Resource)FhirParser.ParseFromJson(bodyText);

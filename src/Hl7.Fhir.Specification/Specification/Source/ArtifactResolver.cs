@@ -106,21 +106,15 @@ namespace Hl7.Fhir.Specification.Source
             return cr;
         }
 
-        public StructureDefinition GetStructureDefinition(string url, bool requireSnapshot=true)
+        public StructureDefinition GetStructureDefinition(string url)
         {
-            var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
-            if (cr == null) return null;
-
-            if (cr.Snapshot == null && requireSnapshot)
-                return null;
-
-            return cr;
+            return LoadConformanceResourceByUrl(url) as StructureDefinition;
         }
 
-        public StructureDefinition GetStructureDefinitionForCoreType(string typename, bool requireSnapshot=true)
+        public StructureDefinition GetStructureDefinitionForCoreType(string typename)
         {
             var url = ResourceIdentity.Build(new Uri(XmlNs.FHIR), "StructureDefinition", typename).ToString();
-            return GetStructureDefinition(url, requireSnapshot);
+            return GetStructureDefinition(url);
         }
 
         /// <summary>

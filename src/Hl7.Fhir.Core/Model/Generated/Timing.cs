@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,39 +56,18 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("UnitsOfTime")]
         public enum UnitsOfTime
         {
-            /// <summary>
-            /// second.
-            /// </summary>
             [EnumLiteral("s")]
             S,
-            /// <summary>
-            /// minute.
-            /// </summary>
             [EnumLiteral("min")]
             Min,
-            /// <summary>
-            /// hour.
-            /// </summary>
             [EnumLiteral("h")]
             H,
-            /// <summary>
-            /// day.
-            /// </summary>
             [EnumLiteral("d")]
             D,
-            /// <summary>
-            /// week.
-            /// </summary>
             [EnumLiteral("wk")]
             Wk,
-            /// <summary>
-            /// month.
-            /// </summary>
             [EnumLiteral("mo")]
             Mo,
-            /// <summary>
-            /// year.
-            /// </summary>
             [EnumLiteral("a")]
             A,
         }
@@ -99,74 +78,32 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("EventTiming")]
         public enum EventTiming
         {
-            /// <summary>
-            /// event occurs [duration] before the hour of sleep (or trying to).
-            /// </summary>
             [EnumLiteral("HS")]
             HS,
-            /// <summary>
-            /// event occurs [duration] after waking.
-            /// </summary>
             [EnumLiteral("WAKE")]
             WAKE,
-            /// <summary>
-            /// event occurs at a meal (from the Latin cibus).
-            /// </summary>
             [EnumLiteral("C")]
             C,
-            /// <summary>
-            /// event occurs at breakfast (from the Latin cibus matutinus).
-            /// </summary>
             [EnumLiteral("CM")]
             CM,
-            /// <summary>
-            /// event occurs at lunch (from the Latin cibus diurnus).
-            /// </summary>
             [EnumLiteral("CD")]
             CD,
-            /// <summary>
-            /// event occurs at dinner (from the Latin ante cibus vespertinus).
-            /// </summary>
             [EnumLiteral("CV")]
             CV,
-            /// <summary>
-            /// event occurs [duration] before a meal (from the Latin ante cibus).
-            /// </summary>
             [EnumLiteral("AC")]
             AC,
-            /// <summary>
-            /// event occurs [duration] before breakfast (from the Latin ante cibus matutinus).
-            /// </summary>
             [EnumLiteral("ACM")]
             ACM,
-            /// <summary>
-            /// event occurs [duration] before lunch (from the Latin ante cibus diurnus).
-            /// </summary>
             [EnumLiteral("ACD")]
             ACD,
-            /// <summary>
-            /// event occurs [duration] before dinner (from the Latin ante cibus vespertinus).
-            /// </summary>
             [EnumLiteral("ACV")]
             ACV,
-            /// <summary>
-            /// event occurs [duration] after a meal (from the Latin post cibus).
-            /// </summary>
             [EnumLiteral("PC")]
             PC,
-            /// <summary>
-            /// event occurs [duration] after breakfast (from the Latin post cibus matutinus).
-            /// </summary>
             [EnumLiteral("PCM")]
             PCM,
-            /// <summary>
-            /// event occurs [duration] after lunch (from the Latin post cibus diurnus).
-            /// </summary>
             [EnumLiteral("PCD")]
             PCD,
-            /// <summary>
-            /// event occurs [duration] after dinner (from the Latin post cibus vespertinus).
-            /// </summary>
             [EnumLiteral("PCV")]
             PCV,
         }
@@ -177,29 +114,14 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("TimingAbbreviation")]
         public enum TimingAbbreviation
         {
-            /// <summary>
-            /// Two times a day at institution specified time.
-            /// </summary>
             [EnumLiteral("BID")]
             BID,
-            /// <summary>
-            /// Three times a day at institution specified time.
-            /// </summary>
             [EnumLiteral("TID")]
             TID,
-            /// <summary>
-            /// Four times a day at institution specified time.
-            /// </summary>
             [EnumLiteral("QID")]
             QID,
-            /// <summary>
-            /// Every morning at institution specified times.
-            /// </summary>
             [EnumLiteral("AM")]
             AM,
-            /// <summary>
-            /// Every afternoon at institution specified times.
-            /// </summary>
             [EnumLiteral("PM")]
             PM,
         }

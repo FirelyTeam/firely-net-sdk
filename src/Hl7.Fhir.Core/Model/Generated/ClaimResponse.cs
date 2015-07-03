@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,47 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.ClaimResponse; } }
         [NotMapped]
         public override string TypeName { get { return "ClaimResponse"; } }
-        
-        /// <summary>
-        /// The outcome of the processing.
-        /// </summary>
-        [FhirEnumeration("RemittanceOutcome")]
-        public enum RemittanceOutcome
-        {
-            /// <summary>
-            /// The processing completed without errors.
-            /// </summary>
-            [EnumLiteral("complete")]
-            Complete,
-            /// <summary>
-            /// The processing identified with errors.
-            /// </summary>
-            [EnumLiteral("error")]
-            Error,
-        }
-        
-        /// <summary>
-        /// The presentation types of notes
-        /// </summary>
-        [FhirEnumeration("NoteType")]
-        public enum NoteType
-        {
-            /// <summary>
-            /// Display the note.
-            /// </summary>
-            [EnumLiteral("display")]
-            Display,
-            /// <summary>
-            /// Print the note on the form.
-            /// </summary>
-            [EnumLiteral("print")]
-            Print,
-            /// <summary>
-            /// Print the note for the operator.
-            /// </summary>
-            [EnumLiteral("printoper")]
-            Printoper,
-        }
         
         [FhirType("NotesComponent")]
         [DataContract]
@@ -662,7 +621,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
-            /// Monitary amount
+            /// Monetary amount
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -778,7 +737,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
-            /// Monitary amount
+            /// Monetary amount
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -995,7 +954,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
-            /// Monitary amount
+            /// Monetary amount
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -1468,7 +1427,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
-            /// Monitary amount
+            /// Monetary amount
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -1682,7 +1641,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Code;
             
             /// <summary>
-            /// Monitary amount
+            /// Monetary amount
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -2027,13 +1986,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", Order=170)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ClaimResponse.RemittanceOutcome> OutcomeElement
+        public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
         {
             get { return _OutcomeElement; }
             set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ClaimResponse.RemittanceOutcome> _OutcomeElement;
+        private Code<Hl7.Fhir.Model.RemittanceOutcome> _OutcomeElement;
         
         /// <summary>
         /// complete | error
@@ -2041,7 +2000,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ClaimResponse.RemittanceOutcome? Outcome
+        public Hl7.Fhir.Model.RemittanceOutcome? Outcome
         {
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
@@ -2049,7 +2008,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   OutcomeElement = null; 
                 else
-                  OutcomeElement = new Code<Hl7.Fhir.Model.ClaimResponse.RemittanceOutcome>(value);
+                  OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
                 OnPropertyChanged("Outcome");
             }
         }
@@ -2333,7 +2292,7 @@ namespace Hl7.Fhir.Model
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
-                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimResponse.RemittanceOutcome>)OutcomeElement.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(PayeeType != null) dest.PayeeType = (Hl7.Fhir.Model.Coding)PayeeType.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ClaimResponse.ItemsComponent>(Item.DeepCopy());

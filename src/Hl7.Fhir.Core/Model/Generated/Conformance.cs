@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -73,12 +73,12 @@ namespace Hl7.Fhir.Model
         public enum DocumentMode
         {
             /// <summary>
-            /// The application produces documents of the specified type.
+            /// The application produces documents of the specified type
             /// </summary>
             [EnumLiteral("producer")]
             Producer,
             /// <summary>
-            /// The application consumes documents of the specified type.
+            /// The application consumes documents of the specified type
             /// </summary>
             [EnumLiteral("consumer")]
             Consumer,
@@ -91,17 +91,17 @@ namespace Hl7.Fhir.Model
         public enum ResourceVersionPolicy
         {
             /// <summary>
-            /// VersionId meta-property is not suppoerted (server) or used (client).
+            /// VersionId meta-property is not suppoerted (server) or used (client)
             /// </summary>
             [EnumLiteral("no-version")]
             NoVersion,
             /// <summary>
-            /// VersionId meta-property is suppoerted (server) or used (client).
+            /// VersionId meta-property is suppoerted (server) or used (client)
             /// </summary>
             [EnumLiteral("versioned")]
             Versioned,
             /// <summary>
-            /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client).
+            /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client)
             /// </summary>
             [EnumLiteral("versioned-update")]
             VersionedUpdate,
@@ -114,12 +114,12 @@ namespace Hl7.Fhir.Model
         public enum RestfulConformanceMode
         {
             /// <summary>
-            /// The application acts as a client for this resource.
+            /// The application acts as a client for this resource
             /// </summary>
             [EnumLiteral("client")]
             Client,
             /// <summary>
-            /// The application acts as a server for this resource.
+            /// The application acts as a server for this resource
             /// </summary>
             [EnumLiteral("server")]
             Server,
@@ -132,17 +132,17 @@ namespace Hl7.Fhir.Model
         public enum MessageTransport
         {
             /// <summary>
-            /// The application sends or receives messages using HTTP POST (may be over http or https).
+            /// The application sends or receives messages using HTTP POST (may be over http or https)
             /// </summary>
             [EnumLiteral("http")]
             Http,
             /// <summary>
-            /// The application sends or receives messages using File Transfer Protocol.
+            /// The application sends or receives messages using File Transfer Protocol
             /// </summary>
             [EnumLiteral("ftp")]
             Ftp,
             /// <summary>
-            /// The application sends or receivers messages using HL7's Minimal Lower Level Protocol.
+            /// The application sends or receivers messages using HL7's Minimal Lower Level Protocol
             /// </summary>
             [EnumLiteral("mllp")]
             Mllp,
@@ -181,12 +181,12 @@ namespace Hl7.Fhir.Model
         public enum ConformanceEventMode
         {
             /// <summary>
-            /// The application sends requests and receives responses.
+            /// The application sends requests and receives responses
             /// </summary>
             [EnumLiteral("sender")]
             Sender,
             /// <summary>
-            /// The application receives requests and sends responses.
+            /// The application receives requests and sends responses
             /// </summary>
             [EnumLiteral("receiver")]
             Receiver,
@@ -199,68 +199,20 @@ namespace Hl7.Fhir.Model
         public enum MessageSignificanceCategory
         {
             /// <summary>
-            /// The message represents/requests a change that should not be processed more than once. E.g. Making a booking for an appointment.
+            /// The message represents/requests a change that should not be processed more than once. E.g. Making a booking for an appointment
             /// </summary>
             [EnumLiteral("Consequence")]
             Consequence,
             /// <summary>
-            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful
             /// </summary>
             [EnumLiteral("Currency")]
             Currency,
             /// <summary>
-            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications
             /// </summary>
             [EnumLiteral("Notification")]
             Notification,
-        }
-        
-        /// <summary>
-        /// Data types allowed to be used for search parameters
-        /// </summary>
-        [FhirEnumeration("SearchParamType")]
-        public enum SearchParamType
-        {
-            /// <summary>
-            /// Search parameter SHALL be a number (a whole number, or a decimal).
-            /// </summary>
-            [EnumLiteral("number")]
-            Number,
-            /// <summary>
-            /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
-            /// </summary>
-            [EnumLiteral("date")]
-            Date,
-            /// <summary>
-            /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
-            /// </summary>
-            [EnumLiteral("string")]
-            String,
-            /// <summary>
-            /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
-            /// </summary>
-            [EnumLiteral("token")]
-            Token,
-            /// <summary>
-            /// A reference to another resource.
-            /// </summary>
-            [EnumLiteral("reference")]
-            Reference,
-            /// <summary>
-            /// A composite search parameter that combines a search on two values together.
-            /// </summary>
-            [EnumLiteral("composite")]
-            Composite,
-            /// <summary>
-            /// A search parameter that searches on a quantity.
-            /// </summary>
-            [EnumLiteral("quantity")]
-            Quantity,
-            /// <summary>
-            /// A search parameter that searches on a URI (RFC 3986).
-            /// </summary>
-            [EnumLiteral("uri")]
-            Uri,
         }
         
         /// <summary>
@@ -270,27 +222,27 @@ namespace Hl7.Fhir.Model
         public enum RestfulSecurityService
         {
             /// <summary>
-            /// OAuth (see oauth.net).
+            /// OAuth (see oauth.net)
             /// </summary>
             [EnumLiteral("OAuth")]
             OAuth,
             /// <summary>
-            /// OAuth version 2 (see oauth.net).
+            /// OAuth version 2 (see oauth.net)
             /// </summary>
             [EnumLiteral("OAuth2")]
             OAuth2,
             /// <summary>
-            /// Microsoft NTLM Authentication.
+            /// Microsoft NTLM Authentication
             /// </summary>
             [EnumLiteral("NTLM")]
             NTLM,
             /// <summary>
-            /// Basic authentication defined in HTTP specification.
+            /// Basic authentication defined in HTTP specification
             /// </summary>
             [EnumLiteral("Basic")]
             Basic,
             /// <summary>
-            /// see http://www.ietf.org/rfc/rfc4120.txt.
+            /// see http://www.ietf.org/rfc/rfc4120.txt
             /// </summary>
             [EnumLiteral("Kerberos")]
             Kerberos,
@@ -2563,13 +2515,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("type", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.SearchParamType> TypeElement
+            public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Conformance.SearchParamType> _TypeElement;
+            private Code<Hl7.Fhir.Model.SearchParamType> _TypeElement;
             
             /// <summary>
             /// number | date | string | token | reference | composite | quantity | uri
@@ -2577,7 +2529,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Conformance.SearchParamType? Type
+            public Hl7.Fhir.Model.SearchParamType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -2585,7 +2537,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Conformance.SearchParamType>(value);
+                      TypeElement = new Code<Hl7.Fhir.Model.SearchParamType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -2697,7 +2649,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Conformance.SearchParamType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(TargetElement != null) dest.TargetElement = new List<Hl7.Fhir.Model.Code>(TargetElement.DeepCopy());
                     if(ChainElement != null) dest.ChainElement = new List<Hl7.Fhir.Model.FhirString>(ChainElement.DeepCopy());

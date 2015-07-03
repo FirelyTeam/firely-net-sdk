@@ -26,36 +26,35 @@ namespace Hl7.Fhir.Specification.Expansion
     /// </summary>
     internal class DifferentialTreeConstructor
     {
-        private Profile.ConstraintComponent _source;
+        private List<ElementDefinition> _source;
 
-        public DifferentialTreeConstructor(Profile.ConstraintComponent source)
+        public DifferentialTreeConstructor(List<ElementDefinition> elements)
         {
-            _source = source;
+            _source = elements;
         }
 
         /// <summary>
         /// Creates a differential structure with all "skipped" parents filled in.
         /// </summary>
-        /// <param name="differential"></param>
         /// <returns>The full tree structure representing the differential</returns>
         /// <remarks>This operation will not touch the source differential, but instead will return a new structure.</remarks>
-        public Profile.ConstraintComponent MakeTree()
+        public List<ElementDefinition> MakeTree()
         {
-            var diff = (Profile.ConstraintComponent)_source.DeepCopy();   // We're going to modify the differential
+            var diff = new List<ElementDefinition>(_source.DeepCopy());   // We're going to modify the differential
 
-            if (diff.Element == null || diff.Element.Count == 0) return diff;        // nothing to do
+            if (diff.Count == 0 ) return diff;        // nothing to do
 
             var index = 0;
-            var elements = diff.Element;
-            while (index < elements.Count)
+
+            while (index < diff.Count)
             {
-                var thisPath = elements[index].Path;
-                var prevPath = index > 0 ? elements[index - 1].Path : String.Empty;
+                var thisPath = diff[index].Path;
+                var prevPath = index > 0 ? diff[index - 1].Path : String.Empty;
 
                 if (thisPath.IndexOf('.') == -1)
                 {
                     // I am a root node, just one segment of path, I need to be the first element
-                    if (index != 0) throw Error.InvalidOperation("Differential has multiple roots");
+                    if (index != 0) throw Error.InvalidOperation("Differential has multiple roots at " + thisPath);
 
                     // Else, I am fine, proceed
                     index++;
@@ -72,8 +71,8 @@ namespace Hl7.Fhir.Specification.Expansion
                     if (prevPath == String.Empty || !prevPath.StartsWith(parentPath + "."))
                     {
                         // We're missing a path part, insert an empty parent                    
-                        var parentElement = new Profile.ElementComponent() { Path = parentPath };
-                        elements.Insert(index, parentElement);
+                        var parentElement = new ElementDefinition() { Path = parentPath };
+                        diff.Insert(index, parentElement);
 
                         // Now, we're not sure this parent has parents, so proceed by checking the parent we have just inserted
                         // so -> index is untouched

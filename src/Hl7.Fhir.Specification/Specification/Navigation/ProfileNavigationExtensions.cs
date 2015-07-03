@@ -17,42 +17,16 @@ using System.Text;
 namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
-    {
-        public static ElementNavigator JumpToNameReference(this StructureDefinition elements, string nameReference)
-        {
-            var nav = new ElementNavigator(elements);
-
-            //TODO: In the current DSTU1 base profiles, nameReference is actually a path, not a name (to Element.Name)
-            //this is a problem, since when doing slicing, the path may no longer point to a single set of constraints
-            //so, we need to (temporarily) watch out for this
-            if (nameReference.Contains("."))
-            {
-                // An incorrectly used nameReference, containing a Path, not a name
-                if (nav.JumpToFirst(nameReference))
-                    return nav;
-                else
-                    return null;
-            }
-            else
-            {
-                if (nav.JumpToNameReference(nameReference))
-                    return nav;
-                else
-                    return null;
-            }                
-
-        }
-
-
+    {      
         /// <summary>
         /// Rewrites the Path's of the elements in a structure so they are based on the given path: the root
         /// of the given structure will become the given path, it's children will be relocated below that path
         /// </summary>
         /// <param name="root">The structure that will be rebased on the path</param>
         /// <param name="path">The path to rebase the structure on</param>
-        public static void Rebase(this StructureDefinition root, string path)
+        public static void Rebase(this IElementList root, string path)
         {
-            var nav = new ElementNavigator(root);
+            var nav = new ElementNavigator(root.Element);
 
             if (nav.MoveToFirstChild())
             {
@@ -60,14 +34,12 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 rebaseChildren(nav, path, newPaths);
 
-                var snapshot = root.Snapshot.Element;
+                var snapshot = root.Element;
 
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
-                for (var i = 0; i < root.Snapshot.Element.Count; i++)
-                    root.Snapshot.Element[i].Path = newPaths[i];
-
-                root.Differential = null;       // this is now invalid, because the snapshot has changed
+                for (var i = 0; i < root.Element.Count; i++)
+                    root.Element[i].Path = newPaths[i];
             }
         }
 
@@ -117,6 +89,11 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool IsExtension(this ElementDefinition elem)
         {
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
+        }
+
+        public static bool IsChoice(this ElementDefinition defn)
+        {
+            return defn.Path.EndsWith("[x]");
         }
 
         public static string GetNameFromPath(this ElementDefinition element)

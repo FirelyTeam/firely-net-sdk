@@ -34,11 +34,6 @@ namespace Hl7.Fhir.Rest
         public int Timeout { get; set; }           // In miliseconds
         public Prefer Prefer { get; set; }
 
-        public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
-        public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
-
-        public Bundle.BundleEntryTransactionResponseComponent LastResult { get; private set; }
-
         public Requester(Uri baseUrl)
         {
             BaseUrl = baseUrl;
@@ -49,63 +44,58 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TResource Execute<TResource>(Bundle transaction, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            //TODO: Handle 304 Not Modified
-            var interaction = transaction.Entry.First();
+        public Bundle.BundleEntryComponent LastResult { get; private set; }
+        public HttpWebResponse LastResponse { get; private set; }
+        public HttpWebRequest LastRequest { get; private set; }
+        public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
+        public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
-            var response = doRequest(interaction);
-            LastResult = response.TransactionResponse;
-            
-            if (expect.Select(sc => sc.ToString()).Contains(response.TransactionResponse.Status))
-            {                
-                bool noBody = response.TransactionResponse.Status == HttpStatusCode.NoContent.ToString();
-                if (!noBody && Prefer == Rest.Prefer.ReturnRepresentation && response.Resource == null)
-                {
-                    var message = String.Format("Operation {0} on {1} expected a body but none was returned", interaction.Transaction.Method,
-                                interaction.Transaction.Url);
+
+        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction, Type expected)
+        {
+            if (interaction == null) throw Error.ArgumentNull("interaction");
+
+            LastResult = doRequest(interaction);
+            var status = LastResult.TransactionResponse.Status;
+
+            if (status.StartsWith("2"))      // 2xx codes - success
+            {
+                // We have a successful call, but the body is not of the type we expect.
+                if (LastResult.Resource != null && !LastResult.Resource.GetType().CanBeTreatedAsType(expected))
+                {                                     
+                    // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
+                    // the LastResult, and return null as the result.
+                    if (LastResult.Resource is OperationOutcome)
+                        return null;
+                    
+                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Transaction.Method,
+                        LastResult.Transaction.Url, expected.Name, LastResult.Resource.GetType().Name);
                     throw new FhirOperationException(message);
                 }
 
-                if (response.Resource != null && !response.Resource.GetType().CanBeTreatedAsType(typeof(TResource)))
-                {
-                    if (response.Resource is OperationOutcome)
-                    {
-                        var outcome = response.Resource as OperationOutcome;
-                        reportOutcome(outcome);
-                        throw new FhirOperationException("Operation succeeded, but returned an OperationOutcome", outcome); 
-                    }
-                    else
-                    {
-                        var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", interaction.Transaction.Method,
-                            interaction.Transaction.Url, typeof(TResource).Name, response.Resource.GetType().Name);
-                        throw new FhirOperationException(message);
-                    }
-                }
+                return LastResult;
+            }
+            else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
+            {
+                throw Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
+            }
+            else if (status.StartsWith("4") || status.StartsWith("5"))      // 4xx/5xx codes - client or server error.
+            {
+                var message = String.Format("Operation was unsuccessful, and returned status {0}.", status);
 
-                return (TResource)response.Resource;
+                var outcome = LastResult.Resource as OperationOutcome;
+                if (outcome != null)
+                {
+                    throw new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), outcome);
+                }
+                else
+                    throw new FhirOperationException(message);                
             }
             else
             {
-                var message = String.Format("Operation returned unexpected status {0}.", response.TransactionResponse.Status);
-
-                if (response.Resource is OperationOutcome)
-                {
-                    var outcome = response.Resource as OperationOutcome;
-                    var text = reportOutcome(outcome);
-                    throw new FhirOperationException(message + " OperationOutcome: " +  text);
-                }
-
-                throw new FhirOperationException(message);
+                throw Error.NotSupported("Server returned an illegal http status code '{0}', which is not defined by the Http standard".FormatWith(status));
             }
         }
-
-
-        public TResource Execute<TResource>(Bundle transaction, HttpStatusCode expect) where TResource: Resource
-        {
-            return Execute<TResource>(transaction, new[] { expect });
-        }
-
 
         private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction)
         {
@@ -116,6 +106,7 @@ namespace Hl7.Fhir.Rest
             request.Timeout = Timeout;
 #endif
 
+            LastRequest = request;
             if (BeforeRequest != null) BeforeRequest(request, outBody);
 
             // Make sure the HttpResponse gets disposed!
@@ -127,10 +118,11 @@ namespace Hl7.Fhir.Rest
                     //Read body before we call the hook, so the hook cannot read the body before we do
                     var inBody = readBody(webResponse);
 
+                    LastResponse = webResponse;
                     if (AfterResponse != null) AfterResponse(webResponse,inBody);
-                    var response = webResponse.ToBundleEntry(inBody);
 
-                    return response;
+                    // Do this call after AfterResponse, so this will be called, even if exceptions are thrown by ToBundleEntry()
+                    return webResponse.ToBundleEntry(inBody);
                 }
                 catch (AggregateException ae)
                 {
@@ -157,26 +149,6 @@ namespace Hl7.Fhir.Rest
             }
             else
                 return null;
-        }
-
-        private static string reportOutcome(OperationOutcome outcome)
-        {
-            if (outcome.Text != null && !string.IsNullOrEmpty(outcome.Text.Div))
-            {
-                return outcome.Text.Div;
-            }
-
-            var text = String.Empty;
-            if (outcome.Issue != null)
-            {
-                foreach (var issue in outcome.Issue)
-                {
-                    if(!String.IsNullOrEmpty(text))
-                        text += " ------------- ";
-                }
-            }
-
-            return text;
-        }
+        }      
     }
 }

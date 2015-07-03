@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,17 +62,17 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("generated")]
             Generated,
             /// <summary>
-            /// The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions.
+            /// The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions
             /// </summary>
             [EnumLiteral("extensions")]
             Extensions,
             /// <summary>
-            /// The contents of the narrative contain additional information not found in the structured data.
+            /// The contents of the narrative contain additional information not found in the structured data
             /// </summary>
             [EnumLiteral("additional")]
             Additional,
             /// <summary>
-            /// the contents of the narrative are some equivalent of "No human-readable text provided for this resource".
+            /// the contents of the narrative are some equivalent of "No human-readable text provided for this resource"
             /// </summary>
             [EnumLiteral("empty")]
             Empty,

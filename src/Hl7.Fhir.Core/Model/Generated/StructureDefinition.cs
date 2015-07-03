@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum StructureDefinitionType
         {
             /// <summary>
-            /// A data type - either a primitive or complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions.
+            /// A data type - either a primitive or complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions
             /// </summary>
             [EnumLiteral("type")]
             Type,
             /// <summary>
-            /// A resource defined by the FHIR specification.
+            /// A resource defined by the FHIR specification
             /// </summary>
             [EnumLiteral("resource")]
             Resource,
             /// <summary>
-            /// A set of constraints on a resource or data type that describe how it is used for a particular use.
+            /// A set of constraints on a resource or data type that describe how it is used for a particular use
             /// </summary>
             [EnumLiteral("constraint")]
             Constraint,
             /// <summary>
-            /// A definition of an extension that can be used in a FHIR resource (or a set of constraints on an exsting extension).
+            /// A definition of an extension that can be used in a FHIR resource (or a set of constraints on an exsting extension)
             /// </summary>
             [EnumLiteral("extension")]
             Extension,
@@ -87,22 +87,22 @@ namespace Hl7.Fhir.Model
         public enum ExtensionContext
         {
             /// <summary>
-            /// The context is all elements matching a particular resource element path.
+            /// The context is all elements matching a particular resource element path
             /// </summary>
             [EnumLiteral("resource")]
             Resource,
             /// <summary>
-            /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
+            /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name)
             /// </summary>
             [EnumLiteral("datatype")]
             Datatype,
             /// <summary>
-            /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used.
+            /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used
             /// </summary>
             [EnumLiteral("mapping")]
             Mapping,
             /// <summary>
-            /// The context is a particular extension from a particular profile.  Expressed as uri#name, where uri identifies the profile and #name identifies the extension code.
+            /// The context is a particular extension from a particular profile.  Expressed as uri#name, where uri identifies the profile and #name identifies the extension code
             /// </summary>
             [EnumLiteral("extension")]
             Extension,

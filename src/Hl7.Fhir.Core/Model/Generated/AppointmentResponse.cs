@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Thu, Apr 2, 2015 14:21+0200 for FHIR v0.5.0
+// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum ParticipantStatus
         {
             /// <summary>
-            /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse.
+            /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The appointment participant has declined the appointment.
+            /// The appointment participant has declined the appointment
             /// </summary>
             [EnumLiteral("declined")]
             Declined,
             /// <summary>
-            /// The appointment participant has tentatively accepted the appointment.
+            /// The appointment participant has tentatively accepted the appointment
             /// </summary>
             [EnumLiteral("tentative")]
             Tentative,
             /// <summary>
-            /// The participant has in-process the appointment.
+            /// The participant has in-process the appointment
             /// </summary>
             [EnumLiteral("in-process")]
             InProcess,
             /// <summary>
-            /// The participant has completed the appointment.
+            /// The participant has completed the appointment
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment.
+            /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment
             /// </summary>
             [EnumLiteral("needs-action")]
             NeedsAction,
