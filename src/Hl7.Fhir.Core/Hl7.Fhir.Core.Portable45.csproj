@@ -151,6 +151,9 @@
     <Compile Include="Model\Generated\Slot.cs" />
     <Compile Include="Model\Generated\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Subscription.cs" />
+    <Compile Include="Model\Generated\SupplyDelivery.cs" />
+    <Compile Include="Model\Generated\SupplyRequest.cs" />
+    <Compile Include="Model\Generated\TestScript.cs" />
     <Compile Include="Model\Generated\Time.cs" />
     <Compile Include="Model\Generated\Timing.cs" />
     <Compile Include="Model\Generated\UnsignedInt.cs" />
@@ -248,6 +251,7 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />

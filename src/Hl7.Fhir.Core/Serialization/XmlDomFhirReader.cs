@@ -28,7 +28,11 @@ namespace Hl7.Fhir.Serialization
             settings.IgnoreComments = true;
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
-            
+#if PORTABLE45
+            settings.DtdProcessing = DtdProcessing.Ignore;
+#else
+            settings.DtdProcessing = DtdProcessing.Parse; 
+#endif
 
             var internalReader = XmlReader.Create(reader, settings);
             XDocument doc;
