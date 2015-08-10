@@ -16,6 +16,7 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using System.Net;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -250,6 +251,44 @@ namespace Hl7.Fhir.Specification.Tests
             var wa = new WebArtifactSource();
 
             var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
+
+            Assert.IsNotNull(artifact);
+            Assert.IsTrue(artifact is StructureDefinition);
+            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+        }
+
+        private class TestFhirClient : Rest.FhirClient
+        {
+            public int Status { get; private set; } = 0;
+
+            public TestFhirClient(Uri endpoint) : base(endpoint) { Status = 1; }
+
+            protected override void BeforeRequest(HttpWebRequest rawRequest, byte[] body)
+            {
+                Status = 2;
+                base.BeforeRequest(rawRequest, body);
+            }
+
+            protected override void AfterResponse(HttpWebResponse webResponse, byte[] body)
+            {
+                Status = 3;
+                base.AfterResponse(webResponse, body);
+            }
+        }
+
+        [TestMethod]
+        public void RetrieveWebArtifactCustomFhirClient()
+        {
+            TestFhirClient client = null;
+
+            var wa = new WebArtifactSource(id => client = new TestFhirClient(id));
+
+            Assert.IsNull(client);
+
+            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
+
+            Assert.IsNotNull(client);
+            Assert.AreEqual(client.Status, 3);
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
