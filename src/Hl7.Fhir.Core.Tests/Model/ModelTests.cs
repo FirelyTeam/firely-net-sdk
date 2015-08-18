@@ -76,11 +76,11 @@ namespace Hl7.Fhir.Tests.Model
         {
             Conformance c = new Conformance();
 
-            Assert.IsNull(c.AcceptUnknown);
-            c.AcceptUnknown = true;
-            Assert.IsTrue(c.AcceptUnknown.GetValueOrDefault());
-            Assert.IsNotNull(c.AcceptUnknownElement);
-            Assert.IsTrue(c.AcceptUnknownElement.Value.GetValueOrDefault());
+            Assert.IsNull(c.Experimental);
+            c.Experimental = true;
+            Assert.IsTrue(c.Experimental.GetValueOrDefault());
+            Assert.IsNotNull(c.Experimental);
+            Assert.IsTrue(c.ExperimentalElement.Value.GetValueOrDefault());
 
             c.PublisherElement = new FhirString("Furore");
             Assert.AreEqual("Furore", c.Publisher);

@@ -47,6 +47,19 @@ namespace Hl7.Fhir.Model
         public partial class StructureDefinitionSnapshotComponent : IElementList {}
 
         public partial class StructureDefinitionDifferentialComponent : IElementList { }
+
+        [Obsolete]
+        public StructureDefinitionType Type { get; set; }
+
+        [Obsolete]
+        public enum StructureDefinitionType
+        {
+            Constraint,
+            Extension,
+            Type,
+            Resource
+        }
+
     }
 }
 

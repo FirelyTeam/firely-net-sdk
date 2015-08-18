@@ -34,18 +34,18 @@ namespace Hl7.Fhir.Test
 
             Assert.AreEqual(4, b.Entry.Count);
             
-            Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Transaction.Method);
+            Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Request.Method);
             Assert.AreEqual(p, b.Entry[0].Resource);
 
-            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[1].Transaction.Method);
-            Assert.AreEqual("http://myserver.org/fhir/Patient/7/_history", b.Entry[1].Transaction.Url);
+            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[1].Request.Method);
+            Assert.AreEqual("http://myserver.org/fhir/Patient/7/_history", b.Entry[1].Request.Url);
 
-            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[2].Transaction.Method);
-            Assert.AreEqual("http://myserver.org/fhir/Patient/8", b.Entry[2].Transaction.Url);
+            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[2].Request.Method);
+            Assert.AreEqual("http://myserver.org/fhir/Patient/8", b.Entry[2].Request.Url);
 
-            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[3].Transaction.Method);
-            Assert.AreEqual("http://myserver.org/fhir/Patient/9", b.Entry[3].Transaction.Url);
-            Assert.AreEqual("W/bla", b.Entry[3].Transaction.IfNoneMatch);
+            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[3].Request.Method);
+            Assert.AreEqual("http://myserver.org/fhir/Patient/9", b.Entry[3].Request.Url);
+            Assert.AreEqual("W/bla", b.Entry[3].Request.IfNoneMatch);
         }
     }
 }

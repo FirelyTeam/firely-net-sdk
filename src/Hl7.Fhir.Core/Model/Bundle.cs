@@ -44,6 +44,16 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
+        public partial class BundleEntryComponent
+        {
+            [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element.")]
+            public string Base { get; set; }
+        }
+
+
+        [Obsolete("Base no longer exists in Bundle. You need to replace any code using this element.")]
+        public string Base { get; set; }
+
         public const string ATOM_LINKREL_SELF = "self";
         public const string ATOM_LINKREL_PREVIOUS = "previous";
         public const string ATOM_LINKREL_NEXT = "next";
