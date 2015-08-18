@@ -8,17 +8,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-//using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public class WebArtifactSource : IArtifactSource
     {
+        /// <summary>Default constructor.</summary>
+        public WebArtifactSource()  { }
+
+        Func<Uri, FhirClient> _clientFactory;
+
+        /// <summary>Create a new <see cref="WebArtifactSource"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
+        /// <param name="fhirClientFactory">
+        /// Factory function that should create a new <see cref="FhirClient"/> instance for the specified <see cref="Uri"/>.
+        /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="FhirClient"/> instance.
+        /// </param>
+        public WebArtifactSource(Func<Uri, FhirClient> fhirClientFactory) { _clientFactory = fhirClientFactory; }
+
         public System.IO.Stream LoadArtifactByName(string name)
         {
             throw new NotImplementedException();        // support only url-based artifacts
@@ -40,17 +49,17 @@ namespace Hl7.Fhir.Specification.Source
 
             var id = new ResourceIdentity(url);
 
-            var client = new FhirClient(id.BaseUri);
-            client.Timeout = 5000;  //ms
+            // [WMR 20150810] Use custom FhirClient factory if specified
+            var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirClient(id.BaseUri) { Timeout = 5000 };
 
             try
             {
                 return client.Read<Resource>(id);
             }
-            catch(FhirOperationException)
+            catch (FhirOperationException)
             {
                 return null;
-            }            
+            }
         }
     }
 }
