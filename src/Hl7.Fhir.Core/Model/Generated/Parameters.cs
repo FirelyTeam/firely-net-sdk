@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("part", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> Part
+            public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Part
             {
-                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent>(); return _Part; }
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
             
-            private List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent> _Part;
+            private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterPartComponent>(Part.DeepCopy());
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else
@@ -180,124 +180,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Part, otherT.Part)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ParametersParameterPartComponent")]
-        [DataContract]
-        public partial class ParametersParameterPartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ParametersParameterPartComponent"; } }
-            
-            /// <summary>
-            /// Name from the definition
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name from the definition
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Value of the part
-            /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Value;
-            
-            /// <summary>
-            /// If part is a whole resource
-            /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
-            [DataMember]
-            public Hl7.Fhir.Model.Resource Resource
-            {
-                get { return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private Hl7.Fhir.Model.Resource _Resource;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ParametersParameterPartComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ParametersParameterPartComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ParametersParameterPartComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ParametersParameterPartComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 
                 return true;
             }

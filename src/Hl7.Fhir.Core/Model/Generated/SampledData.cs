@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,13 +56,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("origin", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Origin
+        public Hl7.Fhir.Model.SimpleQuantity Origin
         {
             get { return _Origin; }
             set { _Origin = value; OnPropertyChanged("Origin"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Origin;
+        private Hl7.Fhir.Model.SimpleQuantity _Origin;
         
         /// <summary>
         /// Number of milliseconds between samples
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Origin != null) dest.Origin = (Hl7.Fhir.Model.Quantity)Origin.DeepCopy();
+                if(Origin != null) dest.Origin = (Hl7.Fhir.Model.SimpleQuantity)Origin.DeepCopy();
                 if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                 if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                 if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();

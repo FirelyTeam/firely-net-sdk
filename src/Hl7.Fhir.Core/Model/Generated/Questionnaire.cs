@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("instant")]
             Instant,
             /// <summary>
-            /// Answer is a time independent of date
+            /// Answer is a time (hour/minute/second) independent of date
             /// </summary>
             [EnumLiteral("time")]
             Time,
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("string")]
             String,
             /// <summary>
-            /// Answer is a long (potentially multi-paragram) free-text entry
+            /// Answer is a long (potentially multi-paragram) free-text entry (still captured as a string)
             /// </summary>
             [EnumLiteral("text")]
             Text,
@@ -132,12 +132,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("url")]
             Url,
             /// <summary>
-            /// Answer is a choice from a list of options
+            /// Answer is a Coding drawn from a list of options
             /// </summary>
             [EnumLiteral("choice")]
             Choice,
             /// <summary>
-            /// Answer is a choice from a list of options or a free-text entry
+            /// Answer is a Coding drawn from a list of options or a free-text entry.
             /// </summary>
             [EnumLiteral("open-choice")]
             OpenChoice,
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("reference")]
             Reference,
             /// <summary>
-            /// Answer is a combination of a numeric value and unit
+            /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc)
             /// </summary>
             [EnumLiteral("quantity")]
             Quantity,
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "QuestionComponent"; } }
             
             /// <summary>
-            /// To link questionnaire with questionnaire answers
+            /// To link questionnaire with questionnaire response
             /// </summary>
             [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
-            /// To link questionnaire with questionnaire answers
+            /// To link questionnaire with questionnaire response
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Valueset containing the possible options
+            /// Valueset containing permitted answers
             /// </summary>
             [FhirElement("options", InSummary=true, Order=100)]
             [References("ValueSet")]
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// To link questionnaire with questionnaire answers
+            /// To link questionnaire with questionnaire response
             /// </summary>
             [FhirElement("linkId", InSummary=true, Order=40)]
             [DataMember]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
-            /// To link questionnaire with questionnaire answers
+            /// To link questionnaire with questionnaire response
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -864,9 +864,42 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
+        /// Resource that can be subject of QuestionnaireResponse
+        /// </summary>
+        [FhirElement("subjectType", InSummary=true, Order=150)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Code> SubjectTypeElement
+        {
+            get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(); return _SubjectTypeElement; }
+            set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Code> _SubjectTypeElement;
+        
+        /// <summary>
+        /// Resource that can be subject of QuestionnaireResponse
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> SubjectType
+        {
+            get { return SubjectTypeElement != null ? SubjectTypeElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if(value == null)
+                  SubjectTypeElement = null; 
+                else
+                  SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                OnPropertyChanged("SubjectType");
+            }
+        }
+        
+        /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=150)]
+        [FhirElement("group", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Questionnaire.GroupComponent Group
@@ -890,6 +923,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                if(SubjectTypeElement != null) dest.SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(SubjectTypeElement.DeepCopy());
                 if(Group != null) dest.Group = (Hl7.Fhir.Model.Questionnaire.GroupComponent)Group.DeepCopy();
                 return dest;
             }
@@ -914,6 +948,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(SubjectTypeElement, otherT.SubjectTypeElement)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
             
             return true;
@@ -931,6 +966,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(SubjectTypeElement, otherT.SubjectTypeElement)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
             
             return true;

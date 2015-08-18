@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,29 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Contraindication; } }
         [NotMapped]
         public override string TypeName { get { return "Contraindication"; } }
+        
+        /// <summary>
+        /// Indicates the potential degree of impact of the identified issue on the patient
+        /// </summary>
+        [FhirEnumeration("ContraindicationSeverity")]
+        public enum ContraindicationSeverity
+        {
+            /// <summary>
+            /// Indicates the condition may be life-threatening or has the potential to cause permanent injury
+            /// </summary>
+            [EnumLiteral("high")]
+            High,
+            /// <summary>
+            /// Indicates the condition may result in noticable adverse adverse consequences but is unlikely to be life-threatening or cause permanent injury
+            /// </summary>
+            [EnumLiteral("moderate")]
+            Moderate,
+            /// <summary>
+            /// Indicates the condition may result in some adverse consequences but is unlikely to substantially affect the situation of the subjec
+            /// </summary>
+            [EnumLiteral("low")]
+            Low,
+        }
         
         [FhirType("ContraindicationMitigationComponent")]
         [DataContract]
@@ -197,25 +220,25 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
-        /// high | medium | low
+        /// high | moderate | low
         /// </summary>
         [FhirElement("severity", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.Code SeverityElement
+        public Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity> SeverityElement
         {
             get { return _SeverityElement; }
             set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _SeverityElement;
+        private Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity> _SeverityElement;
         
         /// <summary>
-        /// high | medium | low
+        /// high | moderate | low
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Severity
+        public Hl7.Fhir.Model.Contraindication.ContraindicationSeverity? Severity
         {
             get { return SeverityElement != null ? SeverityElement.Value : null; }
             set
@@ -223,7 +246,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   SeverityElement = null; 
                 else
-                  SeverityElement = new Hl7.Fhir.Model.Code(value);
+                  SeverityElement = new Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity>(value);
                 OnPropertyChanged("Severity");
             }
         }
@@ -389,7 +412,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(SeverityElement != null) dest.SeverityElement = (Hl7.Fhir.Model.Code)SeverityElement.DeepCopy();
+                if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity>)SeverityElement.DeepCopy();
                 if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
                 if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();

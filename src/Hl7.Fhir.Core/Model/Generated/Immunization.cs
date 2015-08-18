@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -832,13 +832,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("doseQuantity", Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity DoseQuantity
+        public Hl7.Fhir.Model.SimpleQuantity DoseQuantity
         {
             get { return _DoseQuantity; }
             set { _DoseQuantity = value; OnPropertyChanged("DoseQuantity"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _DoseQuantity;
+        private Hl7.Fhir.Model.SimpleQuantity _DoseQuantity;
         
         /// <summary>
         /// Administration / non-administration reasons
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Model
                 if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.Date)ExpirationDateElement.DeepCopy();
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
-                if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.Quantity)DoseQuantity.DeepCopy();
+                if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
                 if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent)Explanation.DeepCopy();
                 if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent>(Reaction.DeepCopy());
                 if(VaccinationProtocol != null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent>(VaccinationProtocol.DeepCopy());

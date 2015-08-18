@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,26 +55,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("low", InSummary=true, Order=30)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Low
+        public Hl7.Fhir.Model.SimpleQuantity Low
         {
             get { return _Low; }
             set { _Low = value; OnPropertyChanged("Low"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Low;
+        private Hl7.Fhir.Model.SimpleQuantity _Low;
         
         /// <summary>
         /// High limit
         /// </summary>
         [FhirElement("high", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity High
+        public Hl7.Fhir.Model.SimpleQuantity High
         {
             get { return _High; }
             set { _High = value; OnPropertyChanged("High"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _High;
+        private Hl7.Fhir.Model.SimpleQuantity _High;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -83,8 +83,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
-                if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
+                if(Low != null) dest.Low = (Hl7.Fhir.Model.SimpleQuantity)Low.DeepCopy();
+                if(High != null) dest.High = (Hl7.Fhir.Model.SimpleQuantity)High.DeepCopy();
                 return dest;
             }
             else

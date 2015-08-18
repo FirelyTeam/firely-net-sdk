@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Rest
             if (interaction == null) throw Error.ArgumentNull("interaction");
 
             LastResult = doRequest(interaction);
-            var status = LastResult.TransactionResponse.Status;
+            var status = LastResult.Response.Status;
 
             if (status.StartsWith("2"))      // 2xx codes - success
             {
@@ -68,8 +68,8 @@ namespace Hl7.Fhir.Rest
                     if (LastResult.Resource is OperationOutcome)
                         return null;
                     
-                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Transaction.Method,
-                        LastResult.Transaction.Url, expected.Name, LastResult.Resource.GetType().Name);
+                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Request.Method,
+                        LastResult.Request.Url, expected.Name, LastResult.Resource.GetType().Name);
                     throw new FhirOperationException(message);
                 }
 

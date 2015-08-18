@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -149,24 +149,38 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
-        /// Who is flag about?
+        /// Who/What is flag about?
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
-        [References("Patient")]
+        [FhirElement("subject", InSummary=true, Order=130)]
+        [References("Patient","Location","Group","Organization","Practitioner")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Alert relevant during encounter
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Flag creator
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=140)]
+        [FhirElement("author", InSummary=true, Order=150)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -180,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Partially deaf, Requires easy open caps, No permanent address, etc.
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=150)]
+        [FhirElement("code", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -202,7 +216,8 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Flag.FlagStatus>)StatusElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 return dest;
@@ -226,7 +241,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             
@@ -243,7 +259,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             

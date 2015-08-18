@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=110)]
-        [References()]
+        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor

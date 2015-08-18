@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,12 +87,12 @@ namespace Hl7.Fhir.Model
         public enum VisionEyes
         {
             /// <summary>
-            /// right eye
+            /// Right Eye
             /// </summary>
             [EnumLiteral("right")]
             Right,
             /// <summary>
-            /// left eye
+            /// Left Eye
             /// </summary>
             [EnumLiteral("left")]
             Left,
@@ -444,13 +444,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("duration", InSummary=true, Order=150)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Duration
+            public Hl7.Fhir.Model.SimpleQuantity Duration
             {
                 get { return _Duration; }
                 set { _Duration = value; OnPropertyChanged("Duration"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Duration;
+            private Hl7.Fhir.Model.SimpleQuantity _Duration;
             
             /// <summary>
             /// Lens add
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
                     if(PowerElement != null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)PowerElement.DeepCopy();
                     if(BackCurveElement != null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)BackCurveElement.DeepCopy();
                     if(DiameterElement != null) dest.DiameterElement = (Hl7.Fhir.Model.FhirDecimal)DiameterElement.DeepCopy();
-                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
+                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.SimpleQuantity)Duration.DeepCopy();
                     if(ColorElement != null) dest.ColorElement = (Hl7.Fhir.Model.FhirString)ColorElement.DeepCopy();
                     if(BrandElement != null) dest.BrandElement = (Hl7.Fhir.Model.FhirString)BrandElement.DeepCopy();
                     if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();

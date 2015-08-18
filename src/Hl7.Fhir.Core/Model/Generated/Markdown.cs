@@ -41,39 +41,39 @@ using System.Runtime.Serialization;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Typed element containing the primitive positiveInt
+    /// Typed element containing the primitive markdown
     /// </summary>
-    [FhirType("positiveInt")]
+    [FhirType("markdown")]
     [DataContract]
-    public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
+    public partial class Markdown : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "positiveInt"; } }
+        public override string TypeName { get { return "markdown"; } }
         
-        // Must conform to the pattern "[1-9][0-9]*"
-        public const string PATTERN = @"[1-9][0-9]*";
+        // Must conform to the pattern ""
+        public const string PATTERN = @"";
         
-        public PositiveInt(int? value)
+        public Markdown(string value)
         {
             Value = value; 
         }
         
-        public PositiveInt(): this((int?)null) {}
+        public Markdown(): this((string)null) {}
         
         /// <summary>
         /// Primitive value of the element
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
         [DataMember]
-        public int? Value
+        public string Value
         {
-            get { return (int?)ObjectValue; }
+            get { return (string)ObjectValue; }
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as PositiveInt;
+            var dest = other as Markdown;
             
             if (dest != null)
             {
@@ -87,12 +87,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new PositiveInt());
+            return CopyTo(new Markdown());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as PositiveInt;
+            var otherT = other as Markdown;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as PositiveInt;
+            var otherT = other as Markdown;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

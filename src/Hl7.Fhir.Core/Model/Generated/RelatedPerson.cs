@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -154,22 +154,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// The date on which the related person was born
+        /// </summary>
+        [FhirElement("birthDate", InSummary=true, Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.Date BirthDateElement
+        {
+            get { return _BirthDateElement; }
+            set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Date _BirthDateElement;
+        
+        /// <summary>
+        /// The date on which the related person was born
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string BirthDate
+        {
+            get { return BirthDateElement != null ? BirthDateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  BirthDateElement = null; 
+                else
+                  BirthDateElement = new Hl7.Fhir.Model.Date(value);
+                OnPropertyChanged("BirthDate");
+            }
+        }
+        
+        /// <summary>
         /// Address where the related person can be contacted or visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=150)]
+        [FhirElement("address", InSummary=true, Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Address Address
+        public List<Hl7.Fhir.Model.Address> Address
         {
-            get { return _Address; }
+            get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         
-        private Hl7.Fhir.Model.Address _Address;
+        private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=160)]
+        [FhirElement("photo", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -183,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period of time that this relationship is considered valid
         /// </summary>
-        [FhirElement("period", Order=170)]
+        [FhirElement("period", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -206,7 +239,8 @@ namespace Hl7.Fhir.Model
                 if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
+                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
+                if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 return dest;
@@ -232,6 +266,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Name, otherT.Name)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
+            if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -251,6 +286,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
+            if( !DeepComparable.IsExactly(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;

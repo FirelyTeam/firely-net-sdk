@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -145,15 +145,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unit representation
         /// </summary>
-        [FhirElement("units", InSummary=true, Order=50)]
+        [FhirElement("unit", InSummary=true, Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString UnitsElement
+        public Hl7.Fhir.Model.FhirString UnitElement
         {
-            get { return _UnitsElement; }
-            set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
+            get { return _UnitElement; }
+            set { _UnitElement = value; OnPropertyChanged("UnitElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _UnitsElement;
+        private Hl7.Fhir.Model.FhirString _UnitElement;
         
         /// <summary>
         /// Unit representation
@@ -161,16 +161,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Units
+        public string Unit
         {
-            get { return UnitsElement != null ? UnitsElement.Value : null; }
+            get { return UnitElement != null ? UnitElement.Value : null; }
             set
             {
                 if(value == null)
-                  UnitsElement = null; 
+                  UnitElement = null; 
                 else
-                  UnitsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Units");
+                  UnitElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Unit");
             }
         }
         
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
                 if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)ComparatorElement.DeepCopy();
-                if(UnitsElement != null) dest.UnitsElement = (Hl7.Fhir.Model.FhirString)UnitsElement.DeepCopy();
+                if(UnitElement != null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)UnitElement.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 return dest;
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
-            if( !DeepComparable.Matches(UnitsElement, otherT.UnitsElement)) return false;
+            if( !DeepComparable.Matches(UnitElement, otherT.UnitElement)) return false;
             if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
-            if( !DeepComparable.IsExactly(UnitsElement, otherT.UnitsElement)) return false;
+            if( !DeepComparable.IsExactly(UnitElement, otherT.UnitElement)) return false;
             if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             

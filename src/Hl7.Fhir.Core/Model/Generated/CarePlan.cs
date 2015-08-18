@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
             /// Activity details defined in specific resource
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=60)]
-            [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationPrescription","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","Supply","VisionPrescription")]
+            [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -622,26 +622,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dailyAmount", InSummary=true, Order=150)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity DailyAmount
+            public Hl7.Fhir.Model.SimpleQuantity DailyAmount
             {
                 get { return _DailyAmount; }
                 set { _DailyAmount = value; OnPropertyChanged("DailyAmount"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _DailyAmount;
+            private Hl7.Fhir.Model.SimpleQuantity _DailyAmount;
             
             /// <summary>
             /// How much to administer/supply/consume
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=160)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Extra info on activity occurrence
@@ -693,8 +693,8 @@ namespace Hl7.Fhir.Model
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.ResourceReference)Product.DeepCopy();
-                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.Quantity)DailyAmount.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.SimpleQuantity)DailyAmount.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                     return dest;
                 }

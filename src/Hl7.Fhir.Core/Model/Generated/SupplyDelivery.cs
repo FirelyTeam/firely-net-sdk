@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Quantity
+        public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Quantity;
+        private Hl7.Fhir.Model.SimpleQuantity _Quantity;
         
         /// <summary>
         /// Medication, Substance, or Device supplied
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>)StatusElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
                 if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                 if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();

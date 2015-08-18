@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StudyComponent"; } }
             
             /// <summary>
-            /// Study instance uid
+            /// Study instance UID
             /// </summary>
             [FhirElement("uid", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
-            /// Study instance uid
+            /// Study instance UID
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve study URL
             /// </summary>
             [FhirElement("url", InSummary=true, Order=50)]
             [DataMember]
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve study URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -183,9 +183,23 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Reference to ImagingStudy
+            /// </summary>
+            [FhirElement("imagingStudy", InSummary=true, Order=60)]
+            [References("ImagingStudy")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference ImagingStudy
+            {
+                get { return _ImagingStudy; }
+                set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _ImagingStudy;
+            
+            /// <summary>
             /// Series identity of the selected instances
             /// </summary>
-            [FhirElement("series", InSummary=true, Order=60)]
+            [FhirElement("series", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent> Series
@@ -205,6 +219,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)ImagingStudy.DeepCopy();
                     if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingObjectSelection.SeriesComponent>(Series.DeepCopy());
                     return dest;
                 }
@@ -225,6 +240,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(ImagingStudy, otherT.ImagingStudy)) return false;
                 if( !DeepComparable.Matches(Series, otherT.Series)) return false;
                 
                 return true;
@@ -238,6 +254,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;
                 if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
                 
                 return true;
@@ -254,7 +271,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "InstanceComponent"; } }
             
             /// <summary>
-            /// SOP class uid of instance
+            /// SOP class UID of instance
             /// </summary>
             [FhirElement("sopClass", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -268,7 +285,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Oid _SopClassElement;
             
             /// <summary>
-            /// SOP class uid of instance
+            /// SOP class UID of instance
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -287,7 +304,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Uid of the selected instance
+            /// Selected instance UID
             /// </summary>
             [FhirElement("uid", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -301,7 +318,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
-            /// Uid of the selected instance
+            /// Selected instance UID
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -320,7 +337,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve instance URL
             /// </summary>
             [FhirElement("url", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -334,7 +351,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve instance URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -427,7 +444,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SeriesComponent"; } }
             
             /// <summary>
-            /// Series instance uid
+            /// Series instance UID
             /// </summary>
             [FhirElement("uid", InSummary=true, Order=40)]
             [DataMember]
@@ -440,7 +457,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Oid _UidElement;
             
             /// <summary>
-            /// Series instance uid
+            /// Series instance UID
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -459,7 +476,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve series URL
             /// </summary>
             [FhirElement("url", InSummary=true, Order=50)]
             [DataMember]
@@ -472,7 +489,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve series URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -595,7 +612,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve frame URL
             /// </summary>
             [FhirElement("url", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -609,7 +626,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Retrieve URL
+            /// Retrieve frame URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

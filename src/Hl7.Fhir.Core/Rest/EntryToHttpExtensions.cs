@@ -28,11 +28,12 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.BundleEntryComponent entry, Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
+        public static HttpWebRequest ToHttpRequest(this Bundle.BundleEntryComponent entry, 
+            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
         {
-            System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Transaction.Method, entry.Transaction.Url);
+            System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
-            var interaction = entry.Transaction;
+            var interaction = entry.Request;
             body = null;
 
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))

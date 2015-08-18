@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -159,6 +159,19 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Period over which characteristic is tested
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as GroupCharacteristicComponent;
@@ -169,6 +182,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
                 else
@@ -189,6 +203,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 
                 return true;
             }
@@ -202,6 +217,124 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("GroupMemberComponent")]
+        [DataContract]
+        public partial class GroupMemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "GroupMemberComponent"; } }
+            
+            /// <summary>
+            /// Reference to the group member
+            /// </summary>
+            [FhirElement("entity", InSummary=true, Order=40)]
+            [References("Patient","Practitioner","Device","Medication","Substance")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Entity
+            {
+                get { return _Entity; }
+                set { _Entity = value; OnPropertyChanged("Entity"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Entity;
+            
+            /// <summary>
+            /// Period member belonged to the group
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// If member is no longer in group
+            /// </summary>
+            [FhirElement("inactive", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean InactiveElement
+            {
+                get { return _InactiveElement; }
+                set { _InactiveElement = value; OnPropertyChanged("InactiveElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _InactiveElement;
+            
+            /// <summary>
+            /// If member is no longer in group
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Inactive
+            {
+                get { return InactiveElement != null ? InactiveElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      InactiveElement = null; 
+                    else
+                      InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Inactive");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as GroupMemberComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.ResourceReference)Entity.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(InactiveElement != null) dest.InactiveElement = (Hl7.Fhir.Model.FhirBoolean)InactiveElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new GroupMemberComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as GroupMemberComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(InactiveElement, otherT.InactiveElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as GroupMemberComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(InactiveElement, otherT.InactiveElement)) return false;
                 
                 return true;
             }
@@ -213,14 +346,15 @@ namespace Hl7.Fhir.Model
         /// Unique id
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// person | animal | practitioner | device | medication | substance
@@ -383,16 +517,15 @@ namespace Hl7.Fhir.Model
         /// Who or what is in group
         /// </summary>
         [FhirElement("member", Order=160)]
-        [References("Patient","Practitioner","Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Member
+        public List<Hl7.Fhir.Model.Group.GroupMemberComponent> Member
         {
-            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.ResourceReference>(); return _Member; }
+            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(); return _Member; }
             set { _Member = value; OnPropertyChanged("Member"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Member;
+        private List<Hl7.Fhir.Model.Group.GroupMemberComponent> _Member;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -401,14 +534,14 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)TypeElement.DeepCopy();
                 if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(Characteristic.DeepCopy());
-                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.ResourceReference>(Member.DeepCopy());
+                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(Member.DeepCopy());
                 return dest;
             }
             else

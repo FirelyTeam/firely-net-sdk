@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
             /// Contract Actor Type
             /// </summary>
             [FhirElement("entity", InSummary=true, Order=40)]
-            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance","Supply")]
+            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity
@@ -272,13 +272,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Contract Term Valued Item fee, charge, or cost
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
                     if(Entity != null) dest.Entity = (Hl7.Fhir.Model.Element)Entity.DeepCopy();
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
@@ -572,13 +572,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Contract Valued Item fee, charge, or cost
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
                     if(Entity != null) dest.Entity = (Hl7.Fhir.Model.Element)Entity.DeepCopy();
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
             /// Contract Term Actor
             /// </summary>
             [FhirElement("entity", InSummary=true, Order=40)]
-            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance","Supply")]
+            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity

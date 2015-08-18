@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,23 +61,23 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
             /// </summary>
-            [EnumLiteral("BUSY")]
-            BUSY,
+            [EnumLiteral("busy")]
+            Busy,
             /// <summary>
             /// Indicates that the time interval is free for scheduling.
             /// </summary>
-            [EnumLiteral("FREE")]
-            FREE,
+            [EnumLiteral("free")]
+            Free,
             /// <summary>
             /// Indicates that the time interval is busy and that the interval can not be scheduled.
             /// </summary>
-            [EnumLiteral("BUSY-UNAVAILABLE")]
-            BUSYUNAVAILABLE,
+            [EnumLiteral("busy-unavailable")]
+            BusyUnavailable,
             /// <summary>
             /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval
             /// </summary>
-            [EnumLiteral("BUSY-TENTATIVE")]
-            BUSYTENTATIVE,
+            [EnumLiteral("busy-tentative")]
+            BusyTentative,
         }
         
         /// <summary>
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
-        /// BUSY | FREE | BUSY-UNAVAILABLE | BUSY-TENTATIVE
+        /// busy | free | busy-unavailable | busy-tentative
         /// </summary>
         [FhirElement("freeBusyType", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Slot.SlotStatus> _FreeBusyTypeElement;
         
         /// <summary>
-        /// BUSY | FREE | BUSY-UNAVAILABLE | BUSY-TENTATIVE
+        /// busy | free | busy-unavailable | busy-tentative
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

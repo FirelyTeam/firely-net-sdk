@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,49 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Observation; } }
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
-        
-        /// <summary>
-        /// Codes that provide an estimate of the degree to which quality issues have impacted on the value of an observation
-        /// </summary>
-        [FhirEnumeration("ObservationReliability")]
-        public enum ObservationReliability
-        {
-            /// <summary>
-            /// The result has no reliability concerns
-            /// </summary>
-            [EnumLiteral("ok")]
-            Ok,
-            /// <summary>
-            /// An early estimate of value; measurement is still occurring
-            /// </summary>
-            [EnumLiteral("ongoing")]
-            Ongoing,
-            /// <summary>
-            /// An early estimate of value; processing is still occurring
-            /// </summary>
-            [EnumLiteral("early")]
-            Early,
-            /// <summary>
-            /// The observation value should be treated with care
-            /// </summary>
-            [EnumLiteral("questionable")]
-            Questionable,
-            /// <summary>
-            /// The result has been generated while calibration is occurring
-            /// </summary>
-            [EnumLiteral("calibrating")]
-            Calibrating,
-            /// <summary>
-            /// The observation could not be completed because of an error
-            /// </summary>
-            [EnumLiteral("error")]
-            Error,
-            /// <summary>
-            /// No observation  reliability value was available
-            /// </summary>
-            [EnumLiteral("unknown")]
-            Unknown,
-        }
         
         /// <summary>
         /// Codes providing the status of an observation
@@ -149,6 +106,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("has-member")]
             HasMember,
+            /// <summary>
+            /// The target resource (Observation or QuestionnaireAnswer) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireAnswer
+            /// </summary>
+            [EnumLiteral("derived-from")]
+            DerivedFrom,
             /// <summary>
             /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test)
             /// </summary>
@@ -298,26 +260,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("low", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Low
+            public Hl7.Fhir.Model.SimpleQuantity Low
             {
                 get { return _Low; }
                 set { _Low = value; OnPropertyChanged("Low"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Low;
+            private Hl7.Fhir.Model.SimpleQuantity _Low;
             
             /// <summary>
             /// High Range, if relevant
             /// </summary>
             [FhirElement("high", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity High
+            public Hl7.Fhir.Model.SimpleQuantity High
             {
                 get { return _High; }
                 set { _High = value; OnPropertyChanged("High"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _High;
+            private Hl7.Fhir.Model.SimpleQuantity _High;
             
             /// <summary>
             /// Indicates the meaning/use of this range of this range
@@ -384,8 +346,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
-                    if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
+                    if(Low != null) dest.Low = (Hl7.Fhir.Model.SimpleQuantity)Low.DeepCopy();
+                    if(High != null) dest.High = (Hl7.Fhir.Model.SimpleQuantity)High.DeepCopy();
                     if(Meaning != null) dest.Meaning = (Hl7.Fhir.Model.CodeableConcept)Meaning.DeepCopy();
                     if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
@@ -441,7 +403,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ObservationRelatedComponent"; } }
             
             /// <summary>
-            /// has-member | sequel-to | replaces | qualified-by | interfered-by
+            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
@@ -454,7 +416,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
             
             /// <summary>
-            /// has-member | sequel-to | replaces | qualified-by | interfered-by
+            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -473,10 +435,10 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Observation that is related to this one
+            /// Resource that is related to this one
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("Observation")]
+            [References("Observation","QuestionnaireResponse")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -535,9 +497,69 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Unique Id for this particular observation
+        /// </summary>
+        [FhirElement("identifier", Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// registered | preliminary | final | amended +
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
+        
+        /// <summary>
+        /// registered | preliminary | final | amended +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Observation.ObservationStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.Observation.ObservationStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
+        /// Classification of  type of observation
+        /// </summary>
+        [FhirElement("category", Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=90)]
+        [FhirElement("code", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -549,89 +571,32 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
-        /// Classification of  type of observation
+        /// Who and/or what this is about
         /// </summary>
-        [FhirElement("category", Order=100)]
+        [FhirElement("subject", InSummary=true, Order=130)]
+        [References("Patient","Group","Device","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Category;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Actual result
+        /// Healthcare event during which this observation is made
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [FhirElement("encounter", Order=140)]
+        [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.Element Value
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.Element _Value;
-        
-        /// <summary>
-        /// Why the result is missing
-        /// </summary>
-        [FhirElement("dataAbsentReason", Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
-        {
-            get { return _DataAbsentReason; }
-            set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
-        
-        /// <summary>
-        /// High, low, normal, etc.
-        /// </summary>
-        [FhirElement("interpretation", Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Interpretation
-        {
-            get { return _Interpretation; }
-            set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Interpretation;
-        
-        /// <summary>
-        /// Comments about result
-        /// </summary>
-        [FhirElement("comments", Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString CommentsElement
-        {
-            get { return _CommentsElement; }
-            set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _CommentsElement;
-        
-        /// <summary>
-        /// Comments about result
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Comments
-        {
-            get { return CommentsElement != null ? CommentsElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  CommentsElement = null; 
-                else
-                  CommentsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Comments");
-            }
-        }
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Clinically Relevant time/time-period for observation
@@ -680,143 +645,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// registered | preliminary | final | amended +
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=170)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
-        
-        /// <summary>
-        /// registered | preliminary | final | amended +
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Observation.ObservationStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.Observation.ObservationStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
-        /// ok | ongoing | early | questionable | calibrating | error +
-        /// </summary>
-        [FhirElement("reliability", Order=180)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Observation.ObservationReliability> ReliabilityElement
-        {
-            get { return _ReliabilityElement; }
-            set { _ReliabilityElement = value; OnPropertyChanged("ReliabilityElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.Observation.ObservationReliability> _ReliabilityElement;
-        
-        /// <summary>
-        /// ok | ongoing | early | questionable | calibrating | error +
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Observation.ObservationReliability? Reliability
-        {
-            get { return ReliabilityElement != null ? ReliabilityElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ReliabilityElement = null; 
-                else
-                  ReliabilityElement = new Code<Hl7.Fhir.Model.Observation.ObservationReliability>(value);
-                OnPropertyChanged("Reliability");
-            }
-        }
-        
-        /// <summary>
-        /// Observed body part
-        /// </summary>
-        [FhirElement("bodySite", Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element BodySite
-        {
-            get { return _BodySite; }
-            set { _BodySite = value; OnPropertyChanged("BodySite"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _BodySite;
-        
-        /// <summary>
-        /// How it was done
-        /// </summary>
-        [FhirElement("method", Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Method
-        {
-            get { return _Method; }
-            set { _Method = value; OnPropertyChanged("Method"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Method;
-        
-        /// <summary>
-        /// Unique Id for this particular observation
-        /// </summary>
-        [FhirElement("identifier", Order=210)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier
-        {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Identifier> _Identifier;
-        
-        /// <summary>
-        /// Who and/or what this is about
-        /// </summary>
-        [FhirElement("subject", InSummary=true, Order=220)]
-        [References("Patient","Group","Device","Location")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
-        
-        /// <summary>
-        /// Specimen used for this observation
-        /// </summary>
-        [FhirElement("specimen", Order=230)]
-        [References("Specimen")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Specimen
-        {
-            get { return _Specimen; }
-            set { _Specimen = value; OnPropertyChanged("Specimen"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Specimen;
-        
-        /// <summary>
         /// Who is responsible for the observation
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=240)]
+        [FhirElement("performer", InSummary=true, Order=170)]
         [References("Practitioner","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -827,6 +658,118 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.ResourceReference> _Performer;
+        
+        /// <summary>
+        /// Actual result
+        /// </summary>
+        [FhirElement("value", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Value
+        {
+            get { return _Value; }
+            set { _Value = value; OnPropertyChanged("Value"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Value;
+        
+        /// <summary>
+        /// Why the result is missing
+        /// </summary>
+        [FhirElement("dataAbsentReason", Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
+        {
+            get { return _DataAbsentReason; }
+            set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
+        
+        /// <summary>
+        /// High, low, normal, etc.
+        /// </summary>
+        [FhirElement("interpretation", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Interpretation
+        {
+            get { return _Interpretation; }
+            set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Interpretation;
+        
+        /// <summary>
+        /// Comments about result
+        /// </summary>
+        [FhirElement("comments", Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString CommentsElement
+        {
+            get { return _CommentsElement; }
+            set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _CommentsElement;
+        
+        /// <summary>
+        /// Comments about result
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Comments
+        {
+            get { return CommentsElement != null ? CommentsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CommentsElement = null; 
+                else
+                  CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Comments");
+            }
+        }
+        
+        /// <summary>
+        /// Observed body part
+        /// </summary>
+        [FhirElement("bodySite", Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept BodySite
+        {
+            get { return _BodySite; }
+            set { _BodySite = value; OnPropertyChanged("BodySite"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _BodySite;
+        
+        /// <summary>
+        /// How it was done
+        /// </summary>
+        [FhirElement("method", Order=230)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Method
+        {
+            get { return _Method; }
+            set { _Method = value; OnPropertyChanged("Method"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Method;
+        
+        /// <summary>
+        /// Specimen used for this observation
+        /// </summary>
+        [FhirElement("specimen", Order=240)]
+        [References("Specimen")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Specimen
+        {
+            get { return _Specimen; }
+            set { _Specimen = value; OnPropertyChanged("Specimen"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
         /// (Measurement) Device
@@ -843,23 +786,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
-        /// Healthcare event during which this observation is made
-        /// </summary>
-        [FhirElement("encounter", Order=260)]
-        [References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
         /// Provides guide for interpretation
         /// </summary>
-        [FhirElement("referenceRange", Order=270)]
+        [FhirElement("referenceRange", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
@@ -871,24 +800,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
-        /// The resource from which an observation is derived
+        /// Resource related to this observation
         /// </summary>
-        [FhirElement("derivedFrom", InSummary=true, Order=280)]
-        [References("AllergyIntolerance","Condition","FamilyMemberHistory","ImagingStudy","Immunization","MedicationStatement","Procedure","QuestionnaireAnswers","Observation")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
-        {
-            get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
-            set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
-        
-        /// <summary>
-        /// Observations related to this observation
-        /// </summary>
-        [FhirElement("related", InSummary=true, Order=290)]
+        [FhirElement("related", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related
@@ -902,7 +816,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Component results
         /// </summary>
-        [FhirElement("component", InSummary=true, Order=300)]
+        [FhirElement("component", InSummary=true, Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ObservationComponentComponent> Component
@@ -920,26 +834,24 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
                 if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
-                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
-                if(ReliabilityElement != null) dest.ReliabilityElement = (Code<Hl7.Fhir.Model.Observation.ObservationReliability>)ReliabilityElement.DeepCopy();
-                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
-                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
-                if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
                 if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(Related.DeepCopy());
                 if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Observation.ObservationComponentComponent>(Component.DeepCopy());
                 return dest;
@@ -959,26 +871,24 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
             if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
-            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-            if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ReliabilityElement, otherT.ReliabilityElement)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
-            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
-            if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.Matches(Related, otherT.Related)) return false;
             if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
@@ -991,26 +901,24 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
             if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
             if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
-            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-            if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ReliabilityElement, otherT.ReliabilityElement)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
-            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
-            if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
             if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             

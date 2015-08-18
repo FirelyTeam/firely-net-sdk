@@ -58,6 +58,7 @@ namespace Hl7.Fhir.Rest
         /// given string is a combined key/value pair (separated by '=')</param>
         /// <param name="includes">Optional. A list of include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <typeparam name="TResource">The type of resource to list</typeparam>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Rest
         /// given string is a combined key/value pair (separated by '=')</param>
         /// <param name="includes">Optional. A list of include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
@@ -93,6 +95,7 @@ namespace Hl7.Fhir.Rest
         /// given string is a combined key/value pair (separated by '=')</param>
         /// <param name="includes">Optional. A list of include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
+        /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>

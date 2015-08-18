@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -89,177 +89,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("not-in")]
             NotIn,
         }
-        
-        [FhirType("ValueSetDefineComponent")]
-        [DataContract]
-        public partial class ValueSetDefineComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ValueSetDefineComponent"; } }
-            
-            /// <summary>
-            /// URI to identify the code system
-            /// </summary>
-            [FhirElement("system", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement
-            {
-                get { return _SystemElement; }
-                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _SystemElement;
-            
-            /// <summary>
-            /// URI to identify the code system
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string System
-            {
-                get { return SystemElement != null ? SystemElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SystemElement = null; 
-                    else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("System");
-                }
-            }
-            
-            /// <summary>
-            /// Version of this system
-            /// </summary>
-            [FhirElement("version", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString VersionElement
-            {
-                get { return _VersionElement; }
-                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _VersionElement;
-            
-            /// <summary>
-            /// Version of this system
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Version
-            {
-                get { return VersionElement != null ? VersionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      VersionElement = null; 
-                    else
-                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Version");
-                }
-            }
-            
-            /// <summary>
-            /// If code comparison is case sensitive
-            /// </summary>
-            [FhirElement("caseSensitive", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement
-            {
-                get { return _CaseSensitiveElement; }
-                set { _CaseSensitiveElement = value; OnPropertyChanged("CaseSensitiveElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _CaseSensitiveElement;
-            
-            /// <summary>
-            /// If code comparison is case sensitive
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? CaseSensitive
-            {
-                get { return CaseSensitiveElement != null ? CaseSensitiveElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      CaseSensitiveElement = null; 
-                    else
-                      CaseSensitiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("CaseSensitive");
-                }
-            }
-            
-            /// <summary>
-            /// Concepts in the code system
-            /// </summary>
-            [FhirElement("concept", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> Concept
-            {
-                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(); return _Concept; }
-                set { _Concept = value; OnPropertyChanged("Concept"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> _Concept;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ValueSetDefineComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-                    if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
-                    if(CaseSensitiveElement != null) dest.CaseSensitiveElement = (Hl7.Fhir.Model.FhirBoolean)CaseSensitiveElement.DeepCopy();
-                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(Concept.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ValueSetDefineComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ValueSetDefineComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
-                if( !DeepComparable.Matches(CaseSensitiveElement, otherT.CaseSensitiveElement)) return false;
-                if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ValueSetDefineComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
-                if( !DeepComparable.IsExactly(CaseSensitiveElement, otherT.CaseSensitiveElement)) return false;
-                if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         [FhirType("ValueSetExpansionContainsComponent")]
         [DataContract]
@@ -429,7 +258,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Codes contained in this concept
+            /// Codes contained under this entry
             /// </summary>
             [FhirElement("contains", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -787,7 +616,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionDesignationComponent> _Designation;
             
             /// <summary>
-            /// Child Concepts (is-a / contains)
+            /// Child Concepts (is-a / contains / categorises)
             /// </summary>
             [FhirElement("concept", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -1505,6 +1334,177 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ValueSetCodeSystemComponent")]
+        [DataContract]
+        public partial class ValueSetCodeSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ValueSetCodeSystemComponent"; } }
+            
+            /// <summary>
+            /// URI to identify the code system (e.g. in Coding.system)
+            /// </summary>
+            [FhirElement("system", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri SystemElement
+            {
+                get { return _SystemElement; }
+                set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _SystemElement;
+            
+            /// <summary>
+            /// URI to identify the code system (e.g. in Coding.system)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string System
+            {
+                get { return SystemElement != null ? SystemElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      SystemElement = null; 
+                    else
+                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("System");
+                }
+            }
+            
+            /// <summary>
+            /// Version (for use in Coding.version)
+            /// </summary>
+            [FhirElement("version", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString VersionElement
+            {
+                get { return _VersionElement; }
+                set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _VersionElement;
+            
+            /// <summary>
+            /// Version (for use in Coding.version)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Version
+            {
+                get { return VersionElement != null ? VersionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      VersionElement = null; 
+                    else
+                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Version");
+                }
+            }
+            
+            /// <summary>
+            /// If code comparison is case sensitive
+            /// </summary>
+            [FhirElement("caseSensitive", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement
+            {
+                get { return _CaseSensitiveElement; }
+                set { _CaseSensitiveElement = value; OnPropertyChanged("CaseSensitiveElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _CaseSensitiveElement;
+            
+            /// <summary>
+            /// If code comparison is case sensitive
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? CaseSensitive
+            {
+                get { return CaseSensitiveElement != null ? CaseSensitiveElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CaseSensitiveElement = null; 
+                    else
+                      CaseSensitiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("CaseSensitive");
+                }
+            }
+            
+            /// <summary>
+            /// Concepts in the code system
+            /// </summary>
+            [FhirElement("concept", InSummary=true, Order=70)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> Concept
+            {
+                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(); return _Concept; }
+                set { _Concept = value; OnPropertyChanged("Concept"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> _Concept;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ValueSetCodeSystemComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
+                    if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
+                    if(CaseSensitiveElement != null) dest.CaseSensitiveElement = (Hl7.Fhir.Model.FhirBoolean)CaseSensitiveElement.DeepCopy();
+                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(Concept.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ValueSetCodeSystemComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ValueSetCodeSystemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+                if( !DeepComparable.Matches(CaseSensitiveElement, otherT.CaseSensitiveElement)) return false;
+                if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ValueSetCodeSystemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+                if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
+                if( !DeepComparable.IsExactly(CaseSensitiveElement, otherT.CaseSensitiveElement)) return false;
+                if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("ValueSetComposeComponent")]
         [DataContract]
         public partial class ValueSetComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1697,9 +1697,73 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Total number of codes in the expansion
+            /// </summary>
+            [FhirElement("total", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer TotalElement
+            {
+                get { return _TotalElement; }
+                set { _TotalElement = value; OnPropertyChanged("TotalElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _TotalElement;
+            
+            /// <summary>
+            /// Total number of codes in the expansion
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Total
+            {
+                get { return TotalElement != null ? TotalElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TotalElement = null; 
+                    else
+                      TotalElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Total");
+                }
+            }
+            
+            /// <summary>
+            /// Offset at which this resource starts
+            /// </summary>
+            [FhirElement("offset", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer OffsetElement
+            {
+                get { return _OffsetElement; }
+                set { _OffsetElement = value; OnPropertyChanged("OffsetElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _OffsetElement;
+            
+            /// <summary>
+            /// Offset at which this resource starts
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Offset
+            {
+                get { return OffsetElement != null ? OffsetElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      OffsetElement = null; 
+                    else
+                      OffsetElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Offset");
+                }
+            }
+            
+            /// <summary>
             /// Parameter that controlled the expansion process
             /// </summary>
-            [FhirElement("parameter", InSummary=true, Order=60)]
+            [FhirElement("parameter", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent> Parameter
@@ -1713,7 +1777,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Codes in the value set
             /// </summary>
-            [FhirElement("contains", InSummary=true, Order=70)]
+            [FhirElement("contains", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains
@@ -1733,6 +1797,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.FhirUri)IdentifierElement.DeepCopy();
                     if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.FhirDateTime)TimestampElement.DeepCopy();
+                    if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.Integer)TotalElement.DeepCopy();
+                    if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.Integer)OffsetElement.DeepCopy();
                     if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent>(Parameter.DeepCopy());
                     if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(Contains.DeepCopy());
                     return dest;
@@ -1754,6 +1820,8 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
                 if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
+                if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
+                if( !DeepComparable.Matches(OffsetElement, otherT.OffsetElement)) return false;
                 if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
                 if( !DeepComparable.Matches(Contains, otherT.Contains)) return false;
                 
@@ -1768,6 +1836,8 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
                 if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
+                if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
+                if( !DeepComparable.IsExactly(OffsetElement, otherT.OffsetElement)) return false;
                 if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
                 if( !DeepComparable.IsExactly(Contains, otherT.Contains)) return false;
                 
@@ -1887,48 +1957,67 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// draft | active | retired
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=130)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("status", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
+        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
-            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
-            set { _UseContext = value; OnPropertyChanged("UseContext"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
+        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
-        /// Indicates whether or not any change to the content logical definition may occur
-        /// </summary>
-        [FhirElement("immutable", InSummary=true, Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ImmutableElement
-        {
-            get { return _ImmutableElement; }
-            set { _ImmutableElement = value; OnPropertyChanged("ImmutableElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ImmutableElement;
-        
-        /// <summary>
-        /// Indicates whether or not any change to the content logical definition may occur
+        /// draft | active | retired
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? Immutable
+        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
         {
-            get { return ImmutableElement != null ? ImmutableElement.Value : null; }
+            get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
                 if(value == null)
-                  ImmutableElement = null; 
+                  StatusElement = null; 
                 else
-                  ImmutableElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Immutable");
+                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        [FhirElement("experimental", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
+        {
+            get { return _ExperimentalElement; }
+            set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
+        
+        /// <summary>
+        /// If for testing purposes, not real usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Experimental
+        {
+            get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ExperimentalElement = null; 
+                else
+                  ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Experimental");
             }
         }
         
@@ -1979,202 +2068,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent> _Contact;
         
         /// <summary>
-        /// Human language description of the value set
-        /// </summary>
-        [FhirElement("description", InSummary=true, Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement
-        {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _DescriptionElement;
-        
-        /// <summary>
-        /// Human language description of the value set
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Description");
-            }
-        }
-        
-        /// <summary>
-        /// Why is this needed?
-        /// </summary>
-        [FhirElement("requirements", Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString RequirementsElement
-        {
-            get { return _RequirementsElement; }
-            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _RequirementsElement;
-        
-        /// <summary>
-        /// Why is this needed?
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Requirements
-        {
-            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  RequirementsElement = null; 
-                else
-                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Requirements");
-            }
-        }
-        
-        /// <summary>
-        /// Use and/or Publishing restrictions
-        /// </summary>
-        [FhirElement("copyright", Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString CopyrightElement
-        {
-            get { return _CopyrightElement; }
-            set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _CopyrightElement;
-        
-        /// <summary>
-        /// Use and/or Publishing restrictions
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Copyright
-        {
-            get { return CopyrightElement != null ? CopyrightElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  CopyrightElement = null; 
-                else
-                  CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Copyright");
-            }
-        }
-        
-        /// <summary>
-        /// draft | active | retired
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=200)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
-        
-        /// <summary>
-        /// draft | active | retired
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
-        /// If for testing purposes, not real usage
-        /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=210)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
-        {
-            get { return _ExperimentalElement; }
-            set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
-        
-        /// <summary>
-        /// If for testing purposes, not real usage
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Experimental
-        {
-            get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ExperimentalElement = null; 
-                else
-                  ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Experimental");
-            }
-        }
-        
-        /// <summary>
-        /// Whether this is intended to be used with an extensible binding
-        /// </summary>
-        [FhirElement("extensible", InSummary=true, Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
-        {
-            get { return _ExtensibleElement; }
-            set { _ExtensibleElement = value; OnPropertyChanged("ExtensibleElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
-        
-        /// <summary>
-        /// Whether this is intended to be used with an extensible binding
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Extensible
-        {
-            get { return ExtensibleElement != null ? ExtensibleElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ExtensibleElement = null; 
-                else
-                  ExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Extensible");
-            }
-        }
-        
-        /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=230)]
+        [FhirElement("date", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -2206,7 +2102,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Fixed date for all referenced code systems and value sets
         /// </summary>
-        [FhirElement("lockedDate", InSummary=true, Order=240)]
+        [FhirElement("lockedDate", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Date LockedDateElement
         {
@@ -2236,17 +2132,191 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When value set defines its own codes
+        /// Human language description of the value set
         /// </summary>
-        [FhirElement("define", InSummary=true, Order=250)]
+        [FhirElement("description", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent Define
+        public Hl7.Fhir.Model.FhirString DescriptionElement
         {
-            get { return _Define; }
-            set { _Define = value; OnPropertyChanged("Define"); }
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
-        private Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent _Define;
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
+        
+        /// <summary>
+        /// Human language description of the value set
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Description
+        {
+            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DescriptionElement = null; 
+                else
+                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
+            }
+        }
+        
+        /// <summary>
+        /// Content intends to support these contexts
+        /// </summary>
+        [FhirElement("useContext", InSummary=true, Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
+        {
+            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
+            set { _UseContext = value; OnPropertyChanged("UseContext"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
+        
+        /// <summary>
+        /// Indicates whether or not any change to the content logical definition may occur
+        /// </summary>
+        [FhirElement("immutable", InSummary=true, Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ImmutableElement
+        {
+            get { return _ImmutableElement; }
+            set { _ImmutableElement = value; OnPropertyChanged("ImmutableElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ImmutableElement;
+        
+        /// <summary>
+        /// Indicates whether or not any change to the content logical definition may occur
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Immutable
+        {
+            get { return ImmutableElement != null ? ImmutableElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ImmutableElement = null; 
+                else
+                  ImmutableElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Immutable");
+            }
+        }
+        
+        /// <summary>
+        /// Why is this needed?
+        /// </summary>
+        [FhirElement("requirements", Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString RequirementsElement
+        {
+            get { return _RequirementsElement; }
+            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _RequirementsElement;
+        
+        /// <summary>
+        /// Why is this needed?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Requirements
+        {
+            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RequirementsElement = null; 
+                else
+                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Requirements");
+            }
+        }
+        
+        /// <summary>
+        /// Use and/or Publishing restrictions
+        /// </summary>
+        [FhirElement("copyright", Order=230)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString CopyrightElement
+        {
+            get { return _CopyrightElement; }
+            set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _CopyrightElement;
+        
+        /// <summary>
+        /// Use and/or Publishing restrictions
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Copyright
+        {
+            get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CopyrightElement = null; 
+                else
+                  CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Copyright");
+            }
+        }
+        
+        /// <summary>
+        /// Whether this is intended to be used with an extensible binding
+        /// </summary>
+        [FhirElement("extensible", InSummary=true, Order=240)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
+        {
+            get { return _ExtensibleElement; }
+            set { _ExtensibleElement = value; OnPropertyChanged("ExtensibleElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
+        
+        /// <summary>
+        /// Whether this is intended to be used with an extensible binding
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Extensible
+        {
+            get { return ExtensibleElement != null ? ExtensibleElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ExtensibleElement = null; 
+                else
+                  ExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Extensible");
+            }
+        }
+        
+        /// <summary>
+        /// An inline code system - part of this value set
+        /// </summary>
+        [FhirElement("codeSystem", InSummary=true, Order=250)]
+        [DataMember]
+        public Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent CodeSystem
+        {
+            get { return _CodeSystem; }
+            set { _CodeSystem = value; OnPropertyChanged("CodeSystem"); }
+        }
+        
+        private Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent _CodeSystem;
         
         /// <summary>
         /// When value set includes codes from elsewhere
@@ -2285,19 +2355,19 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
-                if(ImmutableElement != null) dest.ImmutableElement = (Hl7.Fhir.Model.FhirBoolean)ImmutableElement.DeepCopy();
-                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(Contact.DeepCopy());
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
-                if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
-                if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
+                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(LockedDateElement != null) dest.LockedDateElement = (Hl7.Fhir.Model.Date)LockedDateElement.DeepCopy();
-                if(Define != null) dest.Define = (Hl7.Fhir.Model.ValueSet.ValueSetDefineComponent)Define.DeepCopy();
+                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
+                if(ImmutableElement != null) dest.ImmutableElement = (Hl7.Fhir.Model.FhirBoolean)ImmutableElement.DeepCopy();
+                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
+                if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
+                if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
+                if(CodeSystem != null) dest.CodeSystem = (Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent)CodeSystem.DeepCopy();
                 if(Compose != null) dest.Compose = (Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent)Compose.DeepCopy();
                 if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent)Expansion.DeepCopy();
                 return dest;
@@ -2321,19 +2391,19 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.Matches(ImmutableElement, otherT.ImmutableElement)) return false;
-            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
-            if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
-            if( !DeepComparable.Matches(ExtensibleElement, otherT.ExtensibleElement)) return false;
+            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(LockedDateElement, otherT.LockedDateElement)) return false;
-            if( !DeepComparable.Matches(Define, otherT.Define)) return false;
+            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
+            if( !DeepComparable.Matches(ImmutableElement, otherT.ImmutableElement)) return false;
+            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
+            if( !DeepComparable.Matches(ExtensibleElement, otherT.ExtensibleElement)) return false;
+            if( !DeepComparable.Matches(CodeSystem, otherT.CodeSystem)) return false;
             if( !DeepComparable.Matches(Compose, otherT.Compose)) return false;
             if( !DeepComparable.Matches(Expansion, otherT.Expansion)) return false;
             
@@ -2350,19 +2420,19 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.IsExactly(ImmutableElement, otherT.ImmutableElement)) return false;
-            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
-            if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
-            if( !DeepComparable.IsExactly(ExtensibleElement, otherT.ExtensibleElement)) return false;
+            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(LockedDateElement, otherT.LockedDateElement)) return false;
-            if( !DeepComparable.IsExactly(Define, otherT.Define)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
+            if( !DeepComparable.IsExactly(ImmutableElement, otherT.ImmutableElement)) return false;
+            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
+            if( !DeepComparable.IsExactly(ExtensibleElement, otherT.ExtensibleElement)) return false;
+            if( !DeepComparable.IsExactly(CodeSystem, otherT.CodeSystem)) return false;
             if( !DeepComparable.IsExactly(Compose, otherT.Compose)) return false;
             if( !DeepComparable.IsExactly(Expansion, otherT.Expansion)) return false;
             

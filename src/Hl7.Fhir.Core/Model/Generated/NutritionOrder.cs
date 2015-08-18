@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,19 +125,19 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Speed with which the formula is provided per period of time
             /// </summary>
             [FhirElement("rate", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     return dest;
                 }
@@ -436,13 +436,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Instructions or additional information about the oral supplement
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopy();
                     if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
                 }
@@ -634,13 +634,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("caloricDensity", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity CaloricDensity
+            public Hl7.Fhir.Model.SimpleQuantity CaloricDensity
             {
                 get { return _CaloricDensity; }
                 set { _CaloricDensity = value; OnPropertyChanged("CaloricDensity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _CaloricDensity;
+            private Hl7.Fhir.Model.SimpleQuantity _CaloricDensity;
             
             /// <summary>
             /// How the formula should enter the patient's gastrointestinal tract
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("maxVolumeToDeliver", InSummary=true, Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
+            public Hl7.Fhir.Model.SimpleQuantity MaxVolumeToDeliver
             {
                 get { return _MaxVolumeToDeliver; }
                 set { _MaxVolumeToDeliver = value; OnPropertyChanged("MaxVolumeToDeliver"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _MaxVolumeToDeliver;
+            private Hl7.Fhir.Model.SimpleQuantity _MaxVolumeToDeliver;
             
             /// <summary>
             /// Formula feeding instructions expressed as text
@@ -725,10 +725,10 @@ namespace Hl7.Fhir.Model
                     if(BaseFormulaProductNameElement != null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaProductNameElement.DeepCopy();
                     if(AdditiveType != null) dest.AdditiveType = (Hl7.Fhir.Model.CodeableConcept)AdditiveType.DeepCopy();
                     if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
-                    if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopy();
+                    if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.SimpleQuantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
                     if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent>(Administration.DeepCopy());
-                    if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)MaxVolumeToDeliver.DeepCopy();
+                    if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.SimpleQuantity)MaxVolumeToDeliver.DeepCopy();
                     if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionElement.DeepCopy();
                     return dest;
                 }
@@ -807,13 +807,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Amount
+            public Hl7.Fhir.Model.SimpleQuantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Amount;
+            private Hl7.Fhir.Model.SimpleQuantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
                     return dest;
                 }
                 else

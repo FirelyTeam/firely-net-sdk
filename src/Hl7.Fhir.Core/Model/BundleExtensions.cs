@@ -40,9 +40,9 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static bool IsDeleted(this Bundle.BundleEntryComponent entry)
         {
-            if (entry.Transaction != null)
+            if (entry.Request != null)
             {
-                return entry.Transaction.Method == Bundle.HTTPVerb.DELETE;
+                return entry.Request.Method == Bundle.HTTPVerb.DELETE;
             }
 
             return false;

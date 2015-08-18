@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -191,13 +191,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(ExpiryElement != null) dest.ExpiryElement = (Hl7.Fhir.Model.FhirDateTime)ExpiryElement.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     return dest;
                 }
                 else
@@ -250,23 +250,51 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// What kind of substance this is
+        /// Unique identifier
         /// </summary>
-        [FhirElement("type", Order=90)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// What class/type of substance this is
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
+        {
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+        
+        /// <summary>
+        /// What substance this is
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
-        [FhirElement("description", Order=100)]
+        [FhirElement("description", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -298,20 +326,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific package/container of the substance
         /// </summary>
-        [FhirElement("instance", Order=110)]
+        [FhirElement("instance", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
+        public List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent> Instance
         {
-            get { return _Instance; }
+            get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent>(); return _Instance; }
             set { _Instance = value; OnPropertyChanged("Instance"); }
         }
         
-        private Hl7.Fhir.Model.Substance.SubstanceInstanceComponent _Instance;
+        private List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent> _Instance;
         
         /// <summary>
         /// Composition information about the substance
         /// </summary>
-        [FhirElement("ingredient", Order=120)]
+        [FhirElement("ingredient", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
@@ -329,9 +358,11 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Instance != null) dest.Instance = (Hl7.Fhir.Model.Substance.SubstanceInstanceComponent)Instance.DeepCopy();
+                if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent>(Instance.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent>(Ingredient.DeepCopy());
                 return dest;
             }
@@ -350,7 +381,9 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
@@ -364,7 +397,9 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;

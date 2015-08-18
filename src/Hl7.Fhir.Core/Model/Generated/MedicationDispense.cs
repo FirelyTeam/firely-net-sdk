@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -240,16 +240,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When medication should be administered
             /// </summary>
-            [FhirElement("schedule", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+            [FhirElement("timing", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Schedule
+            public Hl7.Fhir.Model.Timing Timing
             {
-                get { return _Schedule; }
-                set { _Schedule = value; OnPropertyChanged("Schedule"); }
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
-            private Hl7.Fhir.Model.Element _Schedule;
+            private Hl7.Fhir.Model.Timing _Timing;
             
             /// <summary>
             /// Take "as needed" f(or x)
@@ -308,7 +307,7 @@ namespace Hl7.Fhir.Model
             /// Amount of medication per dose
             /// </summary>
             [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Dose
             {
@@ -321,15 +320,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount of medication per unit of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=120)]
+            [FhirElement("rate", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Rate
+            public Hl7.Fhir.Model.Element Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _Rate;
+            private Hl7.Fhir.Model.Element _Rate;
             
             /// <summary>
             /// Upper limit on medication per unit of time
@@ -353,13 +353,13 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     if(AdditionalInstructions != null) dest.AdditionalInstructions = (Hl7.Fhir.Model.CodeableConcept)AdditionalInstructions.DeepCopy();
-                    if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Element)Schedule.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
                     if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Ratio)Rate.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                     return dest;
                 }
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
                 if( !DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.Matches(Site, otherT.Site)) return false;
                 if( !DeepComparable.Matches(Route, otherT.Route)) return false;
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
                 if( !DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
                 if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
                 if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
         /// Medication order that authorizes the dispense
         /// </summary>
         [FhirElement("authorizingPrescription", Order=130)]
-        [References("MedicationPrescription")]
+        [References("MedicationOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> AuthorizingPrescription
@@ -521,26 +521,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Quantity
+        public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Quantity;
+        private Hl7.Fhir.Model.SimpleQuantity _Quantity;
         
         /// <summary>
         /// Days Supply
         /// </summary>
         [FhirElement("daysSupply", Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity DaysSupply
+        public Hl7.Fhir.Model.SimpleQuantity DaysSupply
         {
             get { return _DaysSupply; }
             set { _DaysSupply = value; OnPropertyChanged("DaysSupply"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _DaysSupply;
+        private Hl7.Fhir.Model.SimpleQuantity _DaysSupply;
         
         /// <summary>
         /// What medication was supplied
@@ -722,8 +722,8 @@ namespace Hl7.Fhir.Model
                 if(Dispenser != null) dest.Dispenser = (Hl7.Fhir.Model.ResourceReference)Dispenser.DeepCopy();
                 if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.Quantity)DaysSupply.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.SimpleQuantity)DaysSupply.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                 if(WhenPreparedElement != null) dest.WhenPreparedElement = (Hl7.Fhir.Model.FhirDateTime)WhenPreparedElement.DeepCopy();
                 if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();

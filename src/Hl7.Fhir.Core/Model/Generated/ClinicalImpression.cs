@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             /// Record of a specific investigation
             /// </summary>
             [FhirElement("item", InSummary=true, Order=50)]
-            [References("Observation","QuestionnaireAnswers","FamilyMemberHistory","DiagnosticReport")]
+            [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Item
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
         /// Plan of action after assessment
         /// </summary>
         [FhirElement("plan", Order=240)]
-        [References("CarePlan","Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationPrescription","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","Supply","VisionPrescription")]
+        [References("CarePlan","Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Plan
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
         /// Actions taken during assessment
         /// </summary>
         [FhirElement("action", Order=250)]
-        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationPrescription","DiagnosticOrder","NutritionOrder","Supply","Appointment")]
+        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationOrder","DiagnosticOrder","NutritionOrder","SupplyRequest","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Action

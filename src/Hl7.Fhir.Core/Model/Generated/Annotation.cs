@@ -41,92 +41,104 @@ using System.Runtime.Serialization;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Pure binary content defined by sime other format than FHIR
+    /// Text node with attribution
     /// </summary>
-    [FhirType("Binary", IsResource=true)]
+    [FhirType("Annotation")]
     [DataContract]
-    public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Annotation : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Binary; } }
-        [NotMapped]
-        public override string TypeName { get { return "Binary"; } }
+        public override string TypeName { get { return "Annotation"; } }
         
         /// <summary>
-        /// MimeType of the binary content
+        /// Individual responsible for the annotation
         /// </summary>
-        [FhirElement("contentType", Order=50)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Code ContentTypeElement
+        public Hl7.Fhir.Model.Element Author
         {
-            get { return _ContentTypeElement; }
-            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.Code _ContentTypeElement;
+        private Hl7.Fhir.Model.Element _Author;
         
         /// <summary>
-        /// MimeType of the binary content
+        /// When the annotation was made
+        /// </summary>
+        [FhirElement("time", InSummary=true, Order=40)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime TimeElement
+        {
+            get { return _TimeElement; }
+            set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _TimeElement;
+        
+        /// <summary>
+        /// When the annotation was made
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string ContentType
+        public string Time
         {
-            get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+            get { return TimeElement != null ? TimeElement.Value : null; }
             set
             {
                 if(value == null)
-                  ContentTypeElement = null; 
+                  TimeElement = null; 
                 else
-                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
-                OnPropertyChanged("ContentType");
+                  TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Time");
             }
         }
         
         /// <summary>
-        /// The actual content
+        /// The annotation  - text content
         /// </summary>
-        [FhirElement("content", Order=60)]
+        [FhirElement("text", InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Base64Binary ContentElement
+        public Hl7.Fhir.Model.FhirString TextElement
         {
-            get { return _ContentElement; }
-            set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
+            get { return _TextElement; }
+            set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
         
-        private Hl7.Fhir.Model.Base64Binary _ContentElement;
+        private Hl7.Fhir.Model.FhirString _TextElement;
         
         /// <summary>
-        /// The actual content
+        /// The annotation  - text content
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public byte[] Content
+        public string Text
         {
-            get { return ContentElement != null ? ContentElement.Value : null; }
+            get { return TextElement != null ? TextElement.Value : null; }
             set
             {
                 if(value == null)
-                  ContentElement = null; 
+                  TextElement = null; 
                 else
-                  ContentElement = new Hl7.Fhir.Model.Base64Binary(value);
-                OnPropertyChanged("Content");
+                  TextElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Text");
             }
         }
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Binary;
+            var dest = other as Annotation;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
-                if(ContentElement != null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)ContentElement.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.Element)Author.DeepCopy();
+                if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
+                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 return dest;
             }
             else
@@ -135,29 +147,31 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Binary());
+            return CopyTo(new Annotation());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Binary;
+            var otherT = other as Annotation;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
-            if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
+            if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
             
             return true;
         }
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Binary;
+            var otherT = other as Annotation;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
-            if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
+            if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
             
             return true;
         }

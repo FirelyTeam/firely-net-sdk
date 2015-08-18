@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Technique used to perform collection
@@ -149,16 +149,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Anatomical collection site
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("bodySite", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.Element BodySite
+            public Hl7.Fhir.Model.CodeableConcept BodySite
             {
                 get { return _BodySite; }
                 set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
             
-            private Hl7.Fhir.Model.Element _BodySite;
+            private Hl7.Fhir.Model.CodeableConcept _BodySite;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -170,9 +169,9 @@ namespace Hl7.Fhir.Model
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
                     if(CommentElement != null) dest.CommentElement = new List<Hl7.Fhir.Model.FhirString>(CommentElement.DeepCopy());
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
+                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     return dest;
                 }
                 else
@@ -407,26 +406,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("capacity", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Capacity
+            public Hl7.Fhir.Model.SimpleQuantity Capacity
             {
                 get { return _Capacity; }
                 set { _Capacity = value; OnPropertyChanged("Capacity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Capacity;
+            private Hl7.Fhir.Model.SimpleQuantity _Capacity;
             
             /// <summary>
             /// Quantity of specimen within container
             /// </summary>
             [FhirElement("specimenQuantity", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity SpecimenQuantity
+            public Hl7.Fhir.Model.SimpleQuantity SpecimenQuantity
             {
                 get { return _SpecimenQuantity; }
                 set { _SpecimenQuantity = value; OnPropertyChanged("SpecimenQuantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _SpecimenQuantity;
+            private Hl7.Fhir.Model.SimpleQuantity _SpecimenQuantity;
             
             /// <summary>
             /// Additive associated with container
@@ -452,8 +451,8 @@ namespace Hl7.Fhir.Model
                     if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.Quantity)Capacity.DeepCopy();
-                    if(SpecimenQuantity != null) dest.SpecimenQuantity = (Hl7.Fhir.Model.Quantity)SpecimenQuantity.DeepCopy();
+                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.SimpleQuantity)Capacity.DeepCopy();
+                    if(SpecimenQuantity != null) dest.SpecimenQuantity = (Hl7.Fhir.Model.SimpleQuantity)SpecimenQuantity.DeepCopy();
                     if(Additive != null) dest.Additive = (Hl7.Fhir.Model.Element)Additive.DeepCopy();
                     return dest;
                 }

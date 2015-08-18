@@ -7,23 +7,34 @@ namespace Hl7.Fhir.Model
 {
     public partial class OperationOutcome
     {
+        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
         public static OperationOutcome ForMessage(string message, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
+        {
+            return ForMessage(message, IssueType.Processing, severity);
+        }
+
+        public static OperationOutcome ForMessage(string message, OperationOutcome.IssueType code, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
             return new OperationOutcome() {
                       Issue = new List<OperationOutcome.OperationOutcomeIssueComponent>()
                             { new OperationOutcome.OperationOutcomeIssueComponent() 
-                                    { Severity = severity, Details = message } 
+                                    { Severity = severity, Diagnostics = message } 
                             } };
         }
 
+        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
         public static OperationOutcome ForException(Exception e, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
-            var result = OperationOutcome.ForMessage(e.Message);
+            return ForException(e, IssueType.Processing, severity);
+        }
+        public static OperationOutcome ForException(Exception e, OperationOutcome.IssueType type, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
+        {
+            var result = OperationOutcome.ForMessage(e.Message, type, severity);
             var ie = e.InnerException;
 
             while(ie != null)
             {
-                result.Issue.Add(new OperationOutcomeIssueComponent { Details = ie.Message, Severity = IssueSeverity.Information });
+                result.Issue.Add(new OperationOutcomeIssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
                 ie = ie.InnerException;
             }
 

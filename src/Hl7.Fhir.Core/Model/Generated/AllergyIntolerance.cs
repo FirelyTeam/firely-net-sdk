@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -160,6 +160,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("environment")]
             Environment,
+            /// <summary>
+            /// Other substances that are not covered by any other category
+            /// </summary>
+            [EnumLiteral("other")]
+            Other,
         }
         
         /// <summary>
@@ -189,7 +194,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and Is not valid
+            /// The statement was entered in error and is not valid
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -683,7 +688,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// food | medication | environment - Category of Substance
+        /// food | medication | environment | other - Category of Substance
         /// </summary>
         [FhirElement("category", InSummary=true, Order=180)]
         [DataMember]
@@ -696,7 +701,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory> _CategoryElement;
         
         /// <summary>
-        /// food | medication | environment - Category of Substance
+        /// food | medication | environment | other - Category of Substance
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

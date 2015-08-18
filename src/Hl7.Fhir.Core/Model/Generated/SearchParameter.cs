@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,39 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.SearchParameter; } }
         [NotMapped]
         public override string TypeName { get { return "SearchParameter"; } }
+        
+        /// <summary>
+        /// How a search parameter relates to the set of elements returned by evaluating the it's xpath query
+        /// </summary>
+        [FhirEnumeration("XPathUsageType")]
+        public enum XPathUsageType
+        {
+            /// <summary>
+            /// The search parameter is derived directly from the selected nodes based on the type definitions
+            /// </summary>
+            [EnumLiteral("normal")]
+            Normal,
+            /// <summary>
+            /// The search parameter is derived by a phonetic transform from the selected nodes
+            /// </summary>
+            [EnumLiteral("phonetic")]
+            Phonetic,
+            /// <summary>
+            /// The search parameter is based on a spatial transform of the selected nodes
+            /// </summary>
+            [EnumLiteral("nearby")]
+            Nearby,
+            /// <summary>
+            /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle
+            /// </summary>
+            [EnumLiteral("distance")]
+            Distance,
+            /// <summary>
+            /// The interpretation of the xpath statement is unknown (and can't be automated)
+            /// </summary>
+            [EnumLiteral("other")]
+            Other,
+        }
         
         [FhirType("SearchParameterContactComponent")]
         [DataContract]
@@ -155,7 +188,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Literal URL used to reference this search parameter
         /// </summary>
-        [FhirElement("url", Order=90)]
+        [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -186,7 +219,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of search parameter
+        /// Informal name for this search parameter
         /// </summary>
         [FhirElement("name", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -200,7 +233,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// Name of search parameter
+        /// Informal name for this search parameter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -219,87 +252,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of the publisher (Organization or individual)
-        /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PublisherElement
-        {
-            get { return _PublisherElement; }
-            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PublisherElement;
-        
-        /// <summary>
-        /// Name of the publisher (Organization or individual)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Publisher
-        {
-            get { return PublisherElement != null ? PublisherElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  PublisherElement = null; 
-                else
-                  PublisherElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Publisher");
-            }
-        }
-        
-        /// <summary>
-        /// Contact details of the publisher
-        /// </summary>
-        [FhirElement("contact", InSummary=true, Order=120)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent> Contact
-        {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent>(); return _Contact; }
-            set { _Contact = value; OnPropertyChanged("Contact"); }
-        }
-        
-        private List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent> _Contact;
-        
-        /// <summary>
-        /// Why this search parameter is defined
-        /// </summary>
-        [FhirElement("requirements", Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString RequirementsElement
-        {
-            get { return _RequirementsElement; }
-            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _RequirementsElement;
-        
-        /// <summary>
-        /// Why this search parameter is defined
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Requirements
-        {
-            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  RequirementsElement = null; 
-                else
-                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Requirements");
-            }
-        }
-        
-        /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
@@ -331,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=150)]
+        [FhirElement("experimental", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -361,9 +316,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        [FhirElement("publisher", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString PublisherElement
+        {
+            get { return _PublisherElement; }
+            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _PublisherElement;
+        
+        /// <summary>
+        /// Name of the publisher (Organization or individual)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Publisher
+        {
+            get { return PublisherElement != null ? PublisherElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  PublisherElement = null; 
+                else
+                  PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Publisher");
+            }
+        }
+        
+        /// <summary>
+        /// Contact details of the publisher
+        /// </summary>
+        [FhirElement("contact", InSummary=true, Order=140)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent> Contact
+        {
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent>(); return _Contact; }
+            set { _Contact = value; OnPropertyChanged("Contact"); }
+        }
+        
+        private List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent> _Contact;
+        
+        /// <summary>
         /// Publication Date(/time)
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -393,9 +394,74 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Why this search parameter is defined
+        /// </summary>
+        [FhirElement("requirements", Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString RequirementsElement
+        {
+            get { return _RequirementsElement; }
+            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _RequirementsElement;
+        
+        /// <summary>
+        /// Why this search parameter is defined
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Requirements
+        {
+            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RequirementsElement = null; 
+                else
+                  RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Requirements");
+            }
+        }
+        
+        /// <summary>
+        /// Code used in URL
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=170)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code CodeElement
+        {
+            get { return _CodeElement; }
+            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _CodeElement;
+        
+        /// <summary>
+        /// Code used in URL
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Code
+        {
+            get { return CodeElement != null ? CodeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CodeElement = null; 
+                else
+                  CodeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Code");
+            }
+        }
+        
+        /// <summary>
         /// The resource type this search parameter applies to
         /// </summary>
-        [FhirElement("base", Order=170)]
+        [FhirElement("base", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code BaseElement
@@ -428,7 +494,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// number | date | string | token | reference | composite | quantity | uri
         /// </summary>
-        [FhirElement("type", Order=180)]
+        [FhirElement("type", InSummary=true, Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -461,7 +527,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Documentation for  search parameter
         /// </summary>
-        [FhirElement("description", Order=190)]
+        [FhirElement("description", InSummary=true, Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -494,7 +560,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// XPath that extracts the values
         /// </summary>
-        [FhirElement("xpath", Order=200)]
+        [FhirElement("xpath", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString XpathElement
         {
@@ -524,9 +590,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// normal | phonetic | nearby | distance | other
+        /// </summary>
+        [FhirElement("xpathUsage", Order=220)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
+        {
+            get { return _XpathUsageElement; }
+            set { _XpathUsageElement = value; OnPropertyChanged("XpathUsageElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> _XpathUsageElement;
+        
+        /// <summary>
+        /// normal | phonetic | nearby | distance | other
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.SearchParameter.XPathUsageType? XpathUsage
+        {
+            get { return XpathUsageElement != null ? XpathUsageElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  XpathUsageElement = null; 
+                else
+                  XpathUsageElement = new Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>(value);
+                OnPropertyChanged("XpathUsage");
+            }
+        }
+        
+        /// <summary>
         /// Types of resource (if a resource reference)
         /// </summary>
-        [FhirElement("target", Order=210)]
+        [FhirElement("target", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> TargetElement
@@ -565,16 +663,18 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent>(Contact.DeepCopy());
-                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
+                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.SearchParameter.SearchParameterContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
+                if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.Code)BaseElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
+                if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>)XpathUsageElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Hl7.Fhir.Model.Code>(TargetElement.DeepCopy());
                 return dest;
             }
@@ -595,16 +695,18 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
+            if( !DeepComparable.Matches(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
             
             return true;
@@ -618,16 +720,18 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
+            if( !DeepComparable.IsExactly(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
             
             return true;

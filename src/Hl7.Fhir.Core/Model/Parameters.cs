@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
             
             foreach (var tuple in tuples)
             {
-                var newPart = new ParametersParameterPartComponent() { Name = tuple.Item1 };
+                var newPart = new ParametersParameterComponent() { Name = tuple.Item1 };
                 newParam.Part.Add(newPart);
 
                 if (tuple.Item2 is Element)

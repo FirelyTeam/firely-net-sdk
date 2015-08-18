@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -180,9 +180,54 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Whether the organization's record is still in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether the organization's record is still in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
+        /// Kind of organization
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Type;
+        
+        /// <summary>
         /// Name used for the organization
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -212,22 +257,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Kind of organization
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
-        {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Type;
-        
-        /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=120)]
+        [FhirElement("telecom", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -241,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=130)]
+        [FhirElement("address", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -255,7 +287,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=140)]
+        [FhirElement("partOf", InSummary=true, Order=150)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -269,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=150)]
+        [FhirElement("contact", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> Contact
@@ -280,38 +312,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> _Contact;
         
-        /// <summary>
-        /// Whether the organization's record is still in active use
-        /// </summary>
-        [FhirElement("active", InSummary=true, Order=160)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ActiveElement
-        {
-            get { return _ActiveElement; }
-            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
-        
-        /// <summary>
-        /// Whether the organization's record is still in active use
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Active
-        {
-            get { return ActiveElement != null ? ActiveElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ActiveElement = null; 
-                else
-                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Active");
-            }
-        }
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Organization;
@@ -320,13 +320,13 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(Contact.DeepCopy());
-                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 return dest;
             }
             else
@@ -345,13 +345,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             
             return true;
         }
@@ -363,13 +363,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             
             return true;
         }

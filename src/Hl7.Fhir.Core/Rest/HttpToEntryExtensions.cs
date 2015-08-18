@@ -34,26 +34,26 @@ namespace Hl7.Fhir.Rest
         {
             var result = new Bundle.BundleEntryComponent();
 
-            result.TransactionResponse = new Bundle.BundleEntryTransactionResponseComponent();
-            result.TransactionResponse.Status = ((int)response.StatusCode).ToString();
-            result.TransactionResponse.SetHeaders(response.Headers);
+            result.Response = new Bundle.BundleEntryResponseComponent();
+            result.Response.Status = ((int)response.StatusCode).ToString();
+            result.Response.SetHeaders(response.Headers);
 
             var contentType = getContentType(response);
             var charEncoding = getCharacterEncoding(response);
 
-            result.TransactionResponse.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
+            result.Response.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
 #if PORTABLE45
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
                     result.TransactionResponse.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else
-            result.TransactionResponse.LastModified = response.LastModified;
+            result.Response.LastModified = response.LastModified;
 #endif
-            result.TransactionResponse.Etag = getETag(response);                     
+            result.Response.Etag = getETag(response);                     
 
             if (body != null)
             {
-                result.TransactionResponse.SetBody(body);
+                result.Response.SetBody(body);
 
                 if (IsBinaryResponse(response.ResponseUri.OriginalString))
                     result.Resource = makeBinaryResource(body, contentType);
@@ -63,8 +63,8 @@ namespace Hl7.Fhir.Rest
                     var resource = parseResource(bodyText, contentType);
                     result.Resource = resource;
 
-                    if (result.TransactionResponse.Location != null)
-                        result.Resource.ResourceBase = new ResourceIdentity(result.TransactionResponse.Location).BaseUri;
+                    if (result.Response.Location != null)
+                        result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
                 }
             }
 
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static string GetBodyAsText(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        public static string GetBodyAsText(this Bundle.BundleEntryResponseComponent interaction)
         {
             var body = interaction.GetBody();
 
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        public static byte[] GetBody(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        public static byte[] GetBody(this Bundle.BundleEntryResponseComponent interaction)
         {
             if (interaction.UserData.ContainsKey(USERDATA_BODY))
                 return (byte[])interaction.UserData[USERDATA_BODY];
@@ -191,12 +191,12 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        internal static void SetBody(this Bundle.BundleEntryTransactionResponseComponent interaction, byte[] data)
+        internal static void SetBody(this Bundle.BundleEntryResponseComponent interaction, byte[] data)
         {
             interaction.UserData[USERDATA_BODY] = data;
         }
 
-        internal static void SetHeaders(this Bundle.BundleEntryTransactionResponseComponent interaction, WebHeaderCollection headers)
+        internal static void SetHeaders(this Bundle.BundleEntryResponseComponent interaction, WebHeaderCollection headers)
         {
             foreach (var key in headers.AllKeys)
             {
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.BundleEntryTransactionResponseComponent interaction)
+        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.BundleEntryResponseComponent interaction)
         {
             foreach (var headerExt in interaction.GetExtensions(EXTENSION_RESPONSE_HEADER))
             {
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static IEnumerable<string> GetHeader(this Bundle.BundleEntryTransactionResponseComponent interaction, string header)
+        public static IEnumerable<string> GetHeader(this Bundle.BundleEntryResponseComponent interaction, string header)
         {
             return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
         }

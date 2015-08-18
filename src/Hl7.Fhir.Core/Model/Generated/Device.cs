@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -109,32 +109,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("note", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> NoteElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { if(_NoteElement==null) _NoteElement = new List<Hl7.Fhir.Model.FhirString>(); return _NoteElement; }
-            set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _NoteElement;
-        
-        /// <summary>
-        /// Device notes and comments
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Note
-        {
-            get { return NoteElement != null ? NoteElement.Select(elem => elem.Value) : null; }
-            set
-            {
-                if(value == null)
-                  NoteElement = null; 
-                else
-                  NoteElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("Note");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
         /// available | not-available | entered-in-error
@@ -489,7 +470,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(NoteElement != null) dest.NoteElement = new List<Hl7.Fhir.Model.FhirString>(NoteElement.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.DeviceStatus>)StatusElement.DeepCopy();
                 if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopy();
                 if(ModelElement != null) dest.ModelElement = (Hl7.Fhir.Model.FhirString)ModelElement.DeepCopy();
@@ -522,7 +503,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ManufacturerElement, otherT.ManufacturerElement)) return false;
             if( !DeepComparable.Matches(ModelElement, otherT.ModelElement)) return false;
@@ -548,7 +529,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ManufacturerElement, otherT.ManufacturerElement)) return false;
             if( !DeepComparable.IsExactly(ModelElement, otherT.ModelElement)) return false;

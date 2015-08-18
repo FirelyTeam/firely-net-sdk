@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -192,16 +192,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location of requested test (if applicable)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("bodySite", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Element BodySite
+            public Hl7.Fhir.Model.CodeableConcept BodySite
             {
                 get { return _BodySite; }
                 set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
             
-            private Hl7.Fhir.Model.Element _BodySite;
+            private Hl7.Fhir.Model.CodeableConcept _BodySite;
             
             /// <summary>
             /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
@@ -258,7 +257,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
+                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
                     return dest;
@@ -518,34 +517,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation/Justification for test
         /// </summary>
-        [FhirElement("clinicalNotes", Order=130)]
+        [FhirElement("reason", Order=130)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString ClinicalNotesElement
+        public List<Hl7.Fhir.Model.CodeableConcept> Reason
         {
-            get { return _ClinicalNotesElement; }
-            set { _ClinicalNotesElement = value; OnPropertyChanged("ClinicalNotesElement"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _ClinicalNotesElement;
-        
-        /// <summary>
-        /// Explanation/Justification for test
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ClinicalNotes
-        {
-            get { return ClinicalNotesElement != null ? ClinicalNotesElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ClinicalNotesElement = null; 
-                else
-                  ClinicalNotesElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("ClinicalNotes");
-            }
-        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
         /// Additional clinical information
@@ -669,6 +650,20 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> _Item;
         
+        /// <summary>
+        /// Other notes and comments
+        /// </summary>
+        [FhirElement("note", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DiagnosticOrder;
@@ -680,13 +675,14 @@ namespace Hl7.Fhir.Model
                 if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(ClinicalNotesElement != null) dest.ClinicalNotesElement = (Hl7.Fhir.Model.FhirString)ClinicalNotesElement.DeepCopy();
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>)PriorityElement.DeepCopy();
                 if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent>(Item.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -708,13 +704,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.Matches(ClinicalNotesElement, otherT.ClinicalNotesElement)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -729,13 +726,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.IsExactly(ClinicalNotesElement, otherT.ClinicalNotesElement)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }

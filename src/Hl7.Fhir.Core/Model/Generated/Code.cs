@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,8 +50,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "code"; } }
         
-        // Must conform to the pattern "[^\s]+([\s]+[^\s]+)*"
-        public const string PATTERN = @"[^\s]+([\s]+[^\s]+)*";
+        // Must conform to the pattern "[^\s]+([\s][^\s]+)*"
+        public const string PATTERN = @"[^\s]+([\s][^\s]+)*";
         
         public Code(string value)
         {

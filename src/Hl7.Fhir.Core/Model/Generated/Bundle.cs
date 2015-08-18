@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -81,29 +81,6 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Defines how a match URL should be used when processing a transaction
-        /// </summary>
-        [FhirEnumeration("TransactionProcessingMode")]
-        public enum TransactionProcessingMode
-        {
-            /// <summary>
-            /// If a matching resource is found, then ignore the resource and do not process it as part of the transaction (and return the matching resource information in the transaction response)
-            /// </summary>
-            [EnumLiteral("ignore")]
-            Ignore,
-            /// <summary>
-            /// If a matching resource is found, then update it with this resource, otherwise create a new one
-            /// </summary>
-            [EnumLiteral("update")]
-            Update,
-            /// <summary>
-            /// If a resource matching the information provided is found, delete it. If no matching resource is found, the transaction fails
-            /// </summary>
-            [EnumLiteral("delete")]
-            Delete,
-        }
-        
-        /// <summary>
         /// Why an entry is in the result set - whether it's included as a match or because of an _include requirement
         /// </summary>
         [FhirEnumeration("SearchEntryMode")]
@@ -119,6 +96,11 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("include")]
             Include,
+            /// <summary>
+            /// An OperationOutcome that provides additional information about the processing of a search
+            /// </summary>
+            [EnumLiteral("outcome")]
+            Outcome,
         }
         
         /// <summary>
@@ -143,10 +125,20 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("transaction")]
             Transaction,
             /// <summary>
-            /// The bundle is a transaction response
+            /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free
             /// </summary>
             [EnumLiteral("transaction-response")]
             TransactionResponse,
+            /// <summary>
+            /// The bundle is a transaction - intended to be processed by a server as a group of actions
+            /// </summary>
+            [EnumLiteral("batch")]
+            Batch,
+            /// <summary>
+            /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success
+            /// </summary>
+            [EnumLiteral("batch-response")]
+            BatchResponse,
             /// <summary>
             /// The bundle is a list of resources from a _history interaction on a server
             /// </summary>
@@ -164,31 +156,12 @@ namespace Hl7.Fhir.Model
             Collection,
         }
         
-        /// <summary>
-        /// The operation associated with an entry in either a update history, or a transaction/ transaction response
-        /// </summary>
-        [FhirEnumeration("TransactionOperation")]
-        public enum TransactionOperation
-        {
-            /// <summary>
-            /// No Operation occurred - only valid in a transaction response
-            /// </summary>
-            [EnumLiteral("noop")]
-            Noop,
-            [EnumLiteral("create")]
-            Create,
-            [EnumLiteral("update")]
-            Update,
-            [EnumLiteral("delete")]
-            Delete,
-        }
-        
-        [FhirType("BundleEntryTransactionComponent")]
+        [FhirType("BundleEntryRequestComponent")]
         [DataContract]
-        public partial class BundleEntryTransactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BundleEntryRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryTransactionComponent"; } }
+            public override string TypeName { get { return "BundleEntryRequestComponent"; } }
             
             /// <summary>
             /// GET | POST | PUT | DELETE
@@ -224,7 +197,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The URL for the transaction
+            /// URL for HTTP equivalent of this entry
             /// </summary>
             [FhirElement("url", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -238,7 +211,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// The URL for the transaction
+            /// URL for HTTP equivalent of this entry
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -386,7 +359,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryTransactionComponent;
+                var dest = other as BundleEntryRequestComponent;
                 
                 if (dest != null)
                 {
@@ -405,12 +378,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryTransactionComponent());
+                return CopyTo(new BundleEntryRequestComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryTransactionComponent;
+                var otherT = other as BundleEntryRequestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -426,7 +399,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryTransactionComponent;
+                var otherT = other as BundleEntryRequestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -443,12 +416,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BundleEntryTransactionResponseComponent")]
+        [FhirType("BundleEntryResponseComponent")]
         [DataContract]
-        public partial class BundleEntryTransactionResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BundleEntryResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryTransactionResponseComponent"; } }
+            public override string TypeName { get { return "BundleEntryResponseComponent"; } }
             
             /// <summary>
             /// Status return code for entry
@@ -581,7 +554,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryTransactionResponseComponent;
+                var dest = other as BundleEntryResponseComponent;
                 
                 if (dest != null)
                 {
@@ -598,12 +571,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryTransactionResponseComponent());
+                return CopyTo(new BundleEntryResponseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryTransactionResponseComponent;
+                var otherT = other as BundleEntryResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -617,7 +590,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryTransactionResponseComponent;
+                var otherT = other as BundleEntryResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -640,7 +613,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "BundleEntrySearchComponent"; } }
             
             /// <summary>
-            /// match | include - why this is in the result set
+            /// match | include | outcome - why this is in the result set
             /// </summary>
             [FhirElement("mode", InSummary=true, Order=40)]
             [DataMember]
@@ -653,7 +626,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> _ModeElement;
             
             /// <summary>
-            /// match | include - why this is in the result set
+            /// match | include | outcome - why this is in the result set
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -758,41 +731,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "BundleEntryComponent"; } }
             
             /// <summary>
-            /// Base URL, if different to bundle base
-            /// </summary>
-            [FhirElement("base", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri BaseElement
-            {
-                get { return _BaseElement; }
-                set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _BaseElement;
-            
-            /// <summary>
-            /// Base URL, if different to bundle base
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Base
-            {
-                get { return BaseElement != null ? BaseElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      BaseElement = null; 
-                    else
-                      BaseElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Base");
-                }
-            }
-            
-            /// <summary>
             /// Links related to this entry
             /// </summary>
-            [FhirElement("link", InSummary=true, Order=50)]
+            [FhirElement("link", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> Link
@@ -802,6 +743,38 @@ namespace Hl7.Fhir.Model
             }
             
             private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
+            
+            /// <summary>
+            /// Absolute URL for resource (server address, or UUID/OID)
+            /// </summary>
+            [FhirElement("fullUrl", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri FullUrlElement
+            {
+                get { return _FullUrlElement; }
+                set { _FullUrlElement = value; OnPropertyChanged("FullUrlElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _FullUrlElement;
+            
+            /// <summary>
+            /// Absolute URL for resource (server address, or UUID/OID)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string FullUrl
+            {
+                get { return FullUrlElement != null ? FullUrlElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      FullUrlElement = null; 
+                    else
+                      FullUrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("FullUrl");
+                }
+            }
             
             /// <summary>
             /// A resource in the bundle
@@ -833,28 +806,28 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("transaction", InSummary=true, Order=80)]
+            [FhirElement("request", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent Transaction
+            public Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent Request
             {
-                get { return _Transaction; }
-                set { _Transaction = value; OnPropertyChanged("Transaction"); }
+                get { return _Request; }
+                set { _Request = value; OnPropertyChanged("Request"); }
             }
             
-            private Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent _Transaction;
+            private Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent _Request;
             
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("transactionResponse", InSummary=true, Order=90)]
+            [FhirElement("response", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent TransactionResponse
+            public Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent Response
             {
-                get { return _TransactionResponse; }
-                set { _TransactionResponse = value; OnPropertyChanged("TransactionResponse"); }
+                get { return _Response; }
+                set { _Response = value; OnPropertyChanged("Response"); }
             }
             
-            private Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent _TransactionResponse;
+            private Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent _Response;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -863,12 +836,12 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
                     if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
+                    if(FullUrlElement != null) dest.FullUrlElement = (Hl7.Fhir.Model.FhirUri)FullUrlElement.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
                     if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent)Search.DeepCopy();
-                    if(Transaction != null) dest.Transaction = (Hl7.Fhir.Model.Bundle.BundleEntryTransactionComponent)Transaction.DeepCopy();
-                    if(TransactionResponse != null) dest.TransactionResponse = (Hl7.Fhir.Model.Bundle.BundleEntryTransactionResponseComponent)TransactionResponse.DeepCopy();
+                    if(Request != null) dest.Request = (Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent)Request.DeepCopy();
+                    if(Response != null) dest.Response = (Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent)Response.DeepCopy();
                     return dest;
                 }
                 else
@@ -886,12 +859,12 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
                 if( !DeepComparable.Matches(Link, otherT.Link)) return false;
+                if( !DeepComparable.Matches(FullUrlElement, otherT.FullUrlElement)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Search, otherT.Search)) return false;
-                if( !DeepComparable.Matches(Transaction, otherT.Transaction)) return false;
-                if( !DeepComparable.Matches(TransactionResponse, otherT.TransactionResponse)) return false;
+                if( !DeepComparable.Matches(Request, otherT.Request)) return false;
+                if( !DeepComparable.Matches(Response, otherT.Response)) return false;
                 
                 return true;
             }
@@ -902,12 +875,12 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
                 if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
+                if( !DeepComparable.IsExactly(FullUrlElement, otherT.FullUrlElement)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Search, otherT.Search)) return false;
-                if( !DeepComparable.IsExactly(Transaction, otherT.Transaction)) return false;
-                if( !DeepComparable.IsExactly(TransactionResponse, otherT.TransactionResponse)) return false;
+                if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
+                if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
                 
                 return true;
             }
@@ -1036,7 +1009,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// document | message | transaction | transaction-response | history | searchset | collection
+        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
         [FhirElement("type", Order=50)]
         [Cardinality(Min=1,Max=1)]
@@ -1050,7 +1023,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Bundle.BundleType> _TypeElement;
         
         /// <summary>
-        /// document | message | transaction | transaction-response | history | searchset | collection
+        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1069,41 +1042,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Stated Base URL
-        /// </summary>
-        [FhirElement("base", Order=60)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri BaseElement
-        {
-            get { return _BaseElement; }
-            set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirUri _BaseElement;
-        
-        /// <summary>
-        /// Stated Base URL
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Base
-        {
-            get { return BaseElement != null ? BaseElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  BaseElement = null; 
-                else
-                  BaseElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("Base");
-            }
-        }
-        
-        /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", Order=70)]
+        [FhirElement("total", Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
         {
@@ -1135,7 +1076,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", Order=80)]
+        [FhirElement("link", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> Link
@@ -1149,7 +1090,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", Order=90)]
+        [FhirElement("entry", Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.BundleEntryComponent> Entry
@@ -1161,36 +1102,17 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Bundle.BundleEntryComponent> _Entry;
         
         /// <summary>
-        /// XML Digital Signature (base64 encoded)
+        /// Digital Signature
         /// </summary>
-        [FhirElement("signature", Order=100)]
+        [FhirElement("signature", Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.Base64Binary SignatureElement
+        public Hl7.Fhir.Model.Signature Signature
         {
-            get { return _SignatureElement; }
-            set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
+            get { return _Signature; }
+            set { _Signature = value; OnPropertyChanged("Signature"); }
         }
         
-        private Hl7.Fhir.Model.Base64Binary _SignatureElement;
-        
-        /// <summary>
-        /// XML Digital Signature (base64 encoded)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public byte[] Signature
-        {
-            get { return SignatureElement != null ? SignatureElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  SignatureElement = null; 
-                else
-                  SignatureElement = new Hl7.Fhir.Model.Base64Binary(value);
-                OnPropertyChanged("Signature");
-            }
-        }
+        private Hl7.Fhir.Model.Signature _Signature;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1200,11 +1122,10 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
-                if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.BundleEntryComponent>(Entry.DeepCopy());
-                if(SignatureElement != null) dest.SignatureElement = (Hl7.Fhir.Model.Base64Binary)SignatureElement.DeepCopy();
+                if(Signature != null) dest.Signature = (Hl7.Fhir.Model.Signature)Signature.DeepCopy();
                 return dest;
             }
             else
@@ -1223,11 +1144,10 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
-            if( !DeepComparable.Matches(SignatureElement, otherT.SignatureElement)) return false;
+            if( !DeepComparable.Matches(Signature, otherT.Signature)) return false;
             
             return true;
         }
@@ -1239,11 +1159,10 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
-            if( !DeepComparable.IsExactly(SignatureElement, otherT.SignatureElement)) return false;
+            if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
             
             return true;
         }

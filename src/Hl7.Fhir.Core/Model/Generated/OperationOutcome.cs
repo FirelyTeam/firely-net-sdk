@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "OperationOutcome"; } }
         
         /// <summary>
-        /// A coded expression of the type of issue
+        /// A code that describes the type of issue
         /// </summary>
         [FhirEnumeration("IssueType")]
         public enum IssueType
@@ -279,26 +279,58 @@ namespace Hl7.Fhir.Model
             [FhirElement("code", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Code<Hl7.Fhir.Model.OperationOutcome.IssueType> CodeElement
             {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Code<Hl7.Fhir.Model.OperationOutcome.IssueType> _CodeElement;
+            
+            /// <summary>
+            /// Error or warning code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.OperationOutcome.IssueType? Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CodeElement = null; 
+                    else
+                      CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Additional details about the error
+            /// </summary>
+            [FhirElement("details", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Details
+            {
+                get { return _Details; }
+                set { _Details = value; OnPropertyChanged("Details"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Details;
             
             /// <summary>
             /// Additional diagnostic information about the issue
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=60)]
+            [FhirElement("diagnostics", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString DetailsElement
+            public Hl7.Fhir.Model.FhirString DiagnosticsElement
             {
-                get { return _DetailsElement; }
-                set { _DetailsElement = value; OnPropertyChanged("DetailsElement"); }
+                get { return _DiagnosticsElement; }
+                set { _DiagnosticsElement = value; OnPropertyChanged("DiagnosticsElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _DetailsElement;
+            private Hl7.Fhir.Model.FhirString _DiagnosticsElement;
             
             /// <summary>
             /// Additional diagnostic information about the issue
@@ -306,23 +338,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Details
+            public string Diagnostics
             {
-                get { return DetailsElement != null ? DetailsElement.Value : null; }
+                get { return DiagnosticsElement != null ? DiagnosticsElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      DetailsElement = null; 
+                      DiagnosticsElement = null; 
                     else
-                      DetailsElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Details");
+                      DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Diagnostics");
                 }
             }
             
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", InSummary=true, Order=70)]
+            [FhirElement("location", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> LocationElement
@@ -360,8 +392,9 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>)SeverityElement.DeepCopy();
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(DetailsElement != null) dest.DetailsElement = (Hl7.Fhir.Model.FhirString)DetailsElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>)CodeElement.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.CodeableConcept)Details.DeepCopy();
+                    if(DiagnosticsElement != null) dest.DiagnosticsElement = (Hl7.Fhir.Model.FhirString)DiagnosticsElement.DeepCopy();
                     if(LocationElement != null) dest.LocationElement = new List<Hl7.Fhir.Model.FhirString>(LocationElement.DeepCopy());
                     return dest;
                 }
@@ -381,8 +414,9 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(DetailsElement, otherT.DetailsElement)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Details, otherT.Details)) return false;
+                if( !DeepComparable.Matches(DiagnosticsElement, otherT.DiagnosticsElement)) return false;
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
                 
                 return true;
@@ -395,8 +429,9 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(DetailsElement, otherT.DetailsElement)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Details, otherT.Details)) return false;
+                if( !DeepComparable.IsExactly(DiagnosticsElement, otherT.DiagnosticsElement)) return false;
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
                 
                 return true;

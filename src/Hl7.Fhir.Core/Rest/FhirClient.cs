@@ -118,9 +118,9 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.BundleEntryTransactionResponseComponent LastResult        
+        public Bundle.BundleEntryResponseComponent LastResult
         {
-            get { return _requester.LastResult != null ? _requester.LastResult.TransactionResponse : null; }
+            get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
 
         public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
@@ -759,6 +759,7 @@ namespace Hl7.Fhir.Rest
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
         /// <param name="rawRequest">The request as it is about to be sent to the server</param>
+        /// <param name="body">The data in the body of the request as it is about to be sent to the server</param>
         protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body) 
         {
             // Default implementation: call event
@@ -789,9 +790,9 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             var response = _requester.Execute(request, typeof(TResource));
 
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.TransactionResponse.Status))
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
-                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.TransactionResponse.Status));
+                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.Response.Status));
             }
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
@@ -799,8 +800,8 @@ namespace Hl7.Fhir.Rest
             // where the server may device whether or not to return the full body of the alterend resource.
             if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)
             {
-                if (response.TransactionResponse.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
-                return (TResource)Get(response.TransactionResponse.Location);
+                if (response.Response.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
+                return (TResource)Get(response.Response.Location);
             }
             else
                 return (TResource)response.Resource;
@@ -808,7 +809,7 @@ namespace Hl7.Fhir.Rest
 
         private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
         {
-            var method = interaction.Transaction.Method;
+            var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
         }
 

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         /// Intended to get notified about this set of documents
         /// </summary>
         [FhirElement("recipient", Order=120)]
-        [References("Patient","Practitioner","Organization")]
+        [References("Patient","Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Who and/or what authored the document
+        /// Who and/or what authored the manifest
         /// </summary>
         [FhirElement("author", Order=140)]
         [References("Practitioner","Organization","Device","Patient","RelatedPerson")]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -179,34 +179,34 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If this code was chosen directly by the user
+        /// If this coding was chosen directly by the user
         /// </summary>
-        [FhirElement("primary", InSummary=true, Order=70)]
+        [FhirElement("userSelected", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean PrimaryElement
+        public Hl7.Fhir.Model.FhirBoolean UserSelectedElement
         {
-            get { return _PrimaryElement; }
-            set { _PrimaryElement = value; OnPropertyChanged("PrimaryElement"); }
+            get { return _UserSelectedElement; }
+            set { _UserSelectedElement = value; OnPropertyChanged("UserSelectedElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirBoolean _PrimaryElement;
+        private Hl7.Fhir.Model.FhirBoolean _UserSelectedElement;
         
         /// <summary>
-        /// If this code was chosen directly by the user
+        /// If this coding was chosen directly by the user
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? Primary
+        public bool? UserSelected
         {
-            get { return PrimaryElement != null ? PrimaryElement.Value : null; }
+            get { return UserSelectedElement != null ? UserSelectedElement.Value : null; }
             set
             {
                 if(value == null)
-                  PrimaryElement = null; 
+                  UserSelectedElement = null; 
                 else
-                  PrimaryElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Primary");
+                  UserSelectedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("UserSelected");
             }
         }
         
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                if(PrimaryElement != null) dest.PrimaryElement = (Hl7.Fhir.Model.FhirBoolean)PrimaryElement.DeepCopy();
+                if(UserSelectedElement != null) dest.UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean)UserSelectedElement.DeepCopy();
                 return dest;
             }
             else
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-            if( !DeepComparable.Matches(PrimaryElement, otherT.PrimaryElement)) return false;
+            if( !DeepComparable.Matches(UserSelectedElement, otherT.UserSelectedElement)) return false;
             
             return true;
         }
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-            if( !DeepComparable.IsExactly(PrimaryElement, otherT.PrimaryElement)) return false;
+            if( !DeepComparable.IsExactly(UserSelectedElement, otherT.UserSelectedElement)) return false;
             
             return true;
         }

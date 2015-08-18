@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -79,6 +79,29 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// The type of an address (physical / postal)
+        /// </summary>
+        [FhirEnumeration("AddressType")]
+        public enum AddressType
+        {
+            /// <summary>
+            /// Mailing addresses - PO Boxes and care-of addresses
+            /// </summary>
+            [EnumLiteral("postal")]
+            Postal,
+            /// <summary>
+            /// A physical address that can be visited
+            /// </summary>
+            [EnumLiteral("physical")]
+            Physical,
+            /// <summary>
+            /// An address that is both physical and postal
+            /// </summary>
+            [EnumLiteral("both")]
+            Both,
+        }
+        
+        /// <summary>
         /// home | work | temp | old - purpose of this address
         /// </summary>
         [FhirElement("use", InSummary=true, Order=30)]
@@ -111,9 +134,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// postal | physical | both
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=40)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
+        {
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Address.AddressType> _TypeElement;
+        
+        /// <summary>
+        /// postal | physical | both
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Address.AddressType? Type
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  TypeElement = null; 
+                else
+                  TypeElement = new Code<Hl7.Fhir.Model.Address.AddressType>(value);
+                OnPropertyChanged("Type");
+            }
+        }
+        
+        /// <summary>
         /// Text representation of the address
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=40)]
+        [FhirElement("text", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {
@@ -145,7 +200,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Street name, number, direction &amp; P.O. Box etc
         /// </summary>
-        [FhirElement("line", InSummary=true, Order=50)]
+        [FhirElement("line", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> LineElement
@@ -178,7 +233,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of city, town etc.
         /// </summary>
-        [FhirElement("city", InSummary=true, Order=60)]
+        [FhirElement("city", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CityElement
         {
@@ -208,9 +263,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// District name (aka county)
+        /// </summary>
+        [FhirElement("district", InSummary=true, Order=80)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString DistrictElement
+        {
+            get { return _DistrictElement; }
+            set { _DistrictElement = value; OnPropertyChanged("DistrictElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _DistrictElement;
+        
+        /// <summary>
+        /// District name (aka county)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string District
+        {
+            get { return DistrictElement != null ? DistrictElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DistrictElement = null; 
+                else
+                  DistrictElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("District");
+            }
+        }
+        
+        /// <summary>
         /// Sub-unit of country (abreviations ok)
         /// </summary>
-        [FhirElement("state", InSummary=true, Order=70)]
+        [FhirElement("state", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString StateElement
         {
@@ -242,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Postal code for area
         /// </summary>
-        [FhirElement("postalCode", InSummary=true, Order=80)]
+        [FhirElement("postalCode", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PostalCodeElement
         {
@@ -274,7 +361,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Country (can be ISO 3166 3 letter code)
         /// </summary>
-        [FhirElement("country", InSummary=true, Order=90)]
+        [FhirElement("country", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CountryElement
         {
@@ -306,7 +393,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when address was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=100)]
+        [FhirElement("period", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -324,9 +411,11 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>)UseElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>)TypeElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 if(LineElement != null) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(LineElement.DeepCopy());
                 if(CityElement != null) dest.CityElement = (Hl7.Fhir.Model.FhirString)CityElement.DeepCopy();
+                if(DistrictElement != null) dest.DistrictElement = (Hl7.Fhir.Model.FhirString)DistrictElement.DeepCopy();
                 if(StateElement != null) dest.StateElement = (Hl7.Fhir.Model.FhirString)StateElement.DeepCopy();
                 if(PostalCodeElement != null) dest.PostalCodeElement = (Hl7.Fhir.Model.FhirString)PostalCodeElement.DeepCopy();
                 if(CountryElement != null) dest.CountryElement = (Hl7.Fhir.Model.FhirString)CountryElement.DeepCopy();
@@ -349,9 +438,11 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
             if( !DeepComparable.Matches(LineElement, otherT.LineElement)) return false;
             if( !DeepComparable.Matches(CityElement, otherT.CityElement)) return false;
+            if( !DeepComparable.Matches(DistrictElement, otherT.DistrictElement)) return false;
             if( !DeepComparable.Matches(StateElement, otherT.StateElement)) return false;
             if( !DeepComparable.Matches(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
@@ -367,9 +458,11 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
             if( !DeepComparable.IsExactly(LineElement, otherT.LineElement)) return false;
             if( !DeepComparable.IsExactly(CityElement, otherT.CityElement)) return false;
+            if( !DeepComparable.IsExactly(DistrictElement, otherT.DistrictElement)) return false;
             if( !DeepComparable.IsExactly(StateElement, otherT.StateElement)) return false;
             if( !DeepComparable.IsExactly(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.IsExactly(CountryElement, otherT.CountryElement)) return false;

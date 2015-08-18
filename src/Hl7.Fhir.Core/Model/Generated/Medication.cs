@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Amount
+            public Hl7.Fhir.Model.SimpleQuantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Amount;
+            private Hl7.Fhir.Model.SimpleQuantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -515,41 +515,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Common / Commercial name
-        /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement
-        {
-            get { return _NameElement; }
-            set { _NameElement = value; OnPropertyChanged("NameElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _NameElement;
-        
-        /// <summary>
-        /// Common / Commercial name
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Name
-        {
-            get { return NameElement != null ? NameElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  NameElement = null; 
-                else
-                  NameElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Name");
-            }
-        }
-        
-        /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=100)]
+        [FhirElement("code", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -562,7 +530,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", InSummary=true, Order=110)]
+        [FhirElement("isBrand", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsBrandElement
         {
@@ -594,7 +562,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=120)]
+        [FhirElement("manufacturer", InSummary=true, Order=110)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
@@ -608,7 +576,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// product | package
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=130)]
+        [FhirElement("kind", InSummary=true, Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
         {
@@ -640,7 +608,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Administrable medication details
         /// </summary>
-        [FhirElement("product", Order=140)]
+        [FhirElement("product", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
         {
@@ -653,7 +621,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("package", Order=150)]
+        [FhirElement("package", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
         {
@@ -670,7 +638,6 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(IsBrandElement != null) dest.IsBrandElement = (Hl7.Fhir.Model.FhirBoolean)IsBrandElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
@@ -694,7 +661,6 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(IsBrandElement, otherT.IsBrandElement)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
@@ -711,7 +677,6 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(IsBrandElement, otherT.IsBrandElement)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;

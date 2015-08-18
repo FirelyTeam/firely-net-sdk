@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         }
 
         public static readonly string[] ConformanceResources = { "Conformance", "StructureDefinition", "ValueSet", "ConceptMap",
-                "DataElement", "OperationDefinition", "SearchParameter", "NamingSystem" };
+                "DataElement", "OperationDefinition", "SearchParameter", "NamingSystem", "ImplementationGuide", "TestScript" };
 
         /// <summary>
         /// Is the given type a core Resource, Datatype or primitive

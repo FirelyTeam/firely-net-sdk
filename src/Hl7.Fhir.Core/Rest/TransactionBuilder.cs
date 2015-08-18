@@ -39,15 +39,15 @@ namespace Hl7.Fhir.Rest
         private Bundle.BundleEntryComponent newEntry(Bundle.HTTPVerb method)
         {
             var newEntry = new Bundle.BundleEntryComponent();
-            newEntry.Transaction = new Bundle.BundleEntryTransactionComponent();
-            newEntry.Transaction.Method = method;
+            newEntry.Request = new Bundle.BundleEntryRequestComponent();
+            newEntry.Request.Method = method;
 
             return newEntry;
         }
 
         private void addEntry(Bundle.BundleEntryComponent newEntry, RestUrl path)
         {
-            newEntry.Transaction.Url = path.Uri.ToString();
+            newEntry.Request.Url = path.Uri.ToString();
             _result.Entry.Add(newEntry);
         }
 
@@ -87,8 +87,8 @@ namespace Hl7.Fhir.Rest
         public TransactionBuilder Read(string resourceType, string id, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET);
-            entry.Transaction.IfNoneMatch = ifNoneMatch;
-            entry.Transaction.IfModifiedSince = ifModifiedSince;
+            entry.Request.IfNoneMatch = ifNoneMatch;
+            entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT);
             entry.Resource = body;
-            entry.Transaction.IfMatch = ifMatch;
+            entry.Request.IfMatch = ifMatch;
             var path = newRestUrl().AddPath(body.TypeName, id);
             addEntry(entry, path);
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Rest
 
             var nonExist = new RestUrl(path);
             nonExist.AddParams(condition.ToUriParamList());
-            entry.Transaction.IfNoneExist = nonExist.ToString();
+            entry.Request.IfNoneExist = nonExist.ToString();
             addEntry(entry, path);
 
             return this;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -168,26 +168,27 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Quantity Quantity
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.Quantity _Quantity;
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
             /// Dose quantity per unit of time
             /// </summary>
-            [FhirElement("rate", InSummary=true, Order=90)]
+            [FhirElement("rate", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Rate
+            public Hl7.Fhir.Model.Element Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _Rate;
+            private Hl7.Fhir.Model.Element _Rate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -200,8 +201,8 @@ namespace Hl7.Fhir.Model
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Ratio)Rate.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     return dest;
                 }
                 else
@@ -342,7 +343,7 @@ namespace Hl7.Fhir.Model
         /// Order administration performed against
         /// </summary>
         [FhirElement("prescription", Order=140)]
-        [References("MedicationPrescription")]
+        [References("MedicationOrder")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescription
         {

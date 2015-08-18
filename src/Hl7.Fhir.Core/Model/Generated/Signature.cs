@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An XML digital Signature
+    /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
@@ -113,9 +113,42 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Who;
         
         /// <summary>
-        /// The actual XML Dig-Sig
+        /// The technical format of the signature
         /// </summary>
-        [FhirElement("blob", InSummary=true, Order=60)]
+        [FhirElement("contentType", InSummary=true, Order=60)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code ContentTypeElement
+        {
+            get { return _ContentTypeElement; }
+            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _ContentTypeElement;
+        
+        /// <summary>
+        /// The technical format of the signature
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string ContentType
+        {
+            get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ContentTypeElement = null; 
+                else
+                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("ContentType");
+            }
+        }
+        
+        /// <summary>
+        /// The actual signature content (XML DigSig. JWT, picture, etc)
+        /// </summary>
+        [FhirElement("blob", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement
@@ -127,7 +160,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Base64Binary _BlobElement;
         
         /// <summary>
-        /// The actual XML Dig-Sig
+        /// The actual signature content (XML DigSig. JWT, picture, etc)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -155,6 +188,7 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
+                if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                 if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
                 return dest;
             }
@@ -176,6 +210,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
+            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
             
             return true;
@@ -190,6 +225,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
+            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.IsExactly(BlobElement, otherT.BlobElement)) return false;
             
             return true;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -72,10 +72,15 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("email")]
             Email,
             /// <summary>
-            /// The value is a url. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses
+            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system
             /// </summary>
-            [EnumLiteral("url")]
-            Url,
+            [EnumLiteral("pager")]
+            Pager,
+            /// <summary>
+            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation
+            /// </summary>
+            [EnumLiteral("other")]
+            Other,
         }
         
         /// <summary>
@@ -112,7 +117,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// phone | fax | email | url
+        /// phone | fax | email | pager | other
         /// </summary>
         [FhirElement("system", InSummary=true, Order=30)]
         [DataMember]
@@ -125,7 +130,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> _SystemElement;
         
         /// <summary>
-        /// phone | fax | email | url
+        /// phone | fax | email | pager | other
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -208,9 +213,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Specify preferred order of use (1 = highest)
+        /// </summary>
+        [FhirElement("rank", InSummary=true, Order=60)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt RankElement
+        {
+            get { return _RankElement; }
+            set { _RankElement = value; OnPropertyChanged("RankElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _RankElement;
+        
+        /// <summary>
+        /// Specify preferred order of use (1 = highest)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Rank
+        {
+            get { return RankElement != null ? RankElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RankElement = null; 
+                else
+                  RankElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Rank");
+            }
+        }
+        
+        /// <summary>
         /// Time period when the contact point was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=60)]
+        [FhirElement("period", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -230,6 +267,7 @@ namespace Hl7.Fhir.Model
                 if(SystemElement != null) dest.SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                 if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>)UseElement.DeepCopy();
+                if(RankElement != null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)RankElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 return dest;
             }
@@ -251,6 +289,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.Matches(RankElement, otherT.RankElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             
             return true;
@@ -265,6 +304,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
+            if( !DeepComparable.IsExactly(RankElement, otherT.RankElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             
             return true;

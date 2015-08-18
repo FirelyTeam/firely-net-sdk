@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// The related item - e.g. a procedure
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("AllergyIntolerance","CarePlan","Condition","DiagnosticReport","FamilyMemberHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationPrescription","MedicationStatement","Observation","Procedure")]
+            [References("AllergyIntolerance","CarePlan","Condition","DiagnosticReport","FamilyMemberHistory","ImagingStudy","Immunization","ImmunizationRecommendation","MedicationAdministration","MedicationDispense","MedicationOrder","MedicationStatement","Observation","Procedure")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
             {

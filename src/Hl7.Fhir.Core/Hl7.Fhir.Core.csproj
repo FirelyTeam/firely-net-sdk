@@ -82,6 +82,13 @@
     <Compile Include="Model\ContactPoint.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\BackboneElement.cs" />
+    <Compile Include="Model\Generated\Account.cs" />
+    <Compile Include="Model\Generated\Annotation.cs" />
+    <Compile Include="Model\Generated\ImplementationGuide.cs" />
+    <Compile Include="Model\Generated\Markdown.cs" />
+    <Compile Include="Model\Generated\MedicationOrder.cs" />
+    <Compile Include="Model\Generated\QuestionnaireResponse.cs" />
+    <Compile Include="Model\Generated\SimpleQuantity.cs" />
     <Compile Include="Model\Generated\SupplyDelivery.cs" />
     <Compile Include="Model\Generated\SupplyRequest.cs" />
     <Compile Include="Model\Generated\TestScript.cs" />
@@ -138,7 +145,6 @@
     <Compile Include="Model\Generated\ProcedureRequest.cs" />
     <Compile Include="Model\Generated\ProcessRequest.cs" />
     <Compile Include="Model\Generated\ProcessResponse.cs" />
-    <Compile Include="Model\Generated\QuestionnaireAnswers.cs" />
     <Compile Include="Model\Generated\ReferralRequest.cs" />
     <Compile Include="Model\Generated\RiskAssessment.cs" />
     <Compile Include="Model\Generated\Schedule.cs" />
@@ -203,7 +209,6 @@
     <Compile Include="Model\Generated\Medication.cs" />
     <Compile Include="Model\Generated\MedicationAdministration.cs" />
     <Compile Include="Model\Generated\MedicationDispense.cs" />
-    <Compile Include="Model\Generated\MedicationPrescription.cs" />
     <Compile Include="Model\Generated\MedicationStatement.cs" />
     <Compile Include="Model\Generated\MessageHeader.cs" />
     <Compile Include="Model\Generated\ModelInfo.cs" />
@@ -230,7 +235,6 @@
     <Compile Include="Model\Generated\SampledData.cs" />
     <Compile Include="Model\Generated\Specimen.cs" />
     <Compile Include="Model\Generated\Substance.cs" />
-    <Compile Include="Model\Generated\Supply.cs" />
     <Compile Include="Model\Generated\Uuid.cs" />
     <Compile Include="Model\Generated\ValueSet.cs" />
     <Compile Include="Model\Id.cs" />

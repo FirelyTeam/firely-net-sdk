@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -89,6 +89,34 @@ namespace Hl7.Fhir.Model
     }
     
     /// <summary>
+    /// Indication of the degree of conformance expectations associated with a binding
+    /// </summary>
+    [FhirEnumeration("BindingStrength")]
+    public enum BindingStrength
+    {
+        /// <summary>
+        /// To be conformant, instances of this element SHALL include a code from the specified value set
+        /// </summary>
+        [EnumLiteral("required")]
+        Required,
+        /// <summary>
+        /// To be conformant, instances of this element SHALL include a code from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the valueset does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.
+        /// </summary>
+        [EnumLiteral("extensible")]
+        Extensible,
+        /// <summary>
+        /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant
+        /// </summary>
+        [EnumLiteral("preferred")]
+        Preferred,
+        /// <summary>
+        /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included
+        /// </summary>
+        [EnumLiteral("example")]
+        Example,
+    }
+    
+    /// <summary>
     /// The degree of equivalence between concepts
     /// </summary>
     [FhirEnumeration("ConceptMapEquivalence")]
@@ -120,10 +148,10 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("narrower")]
         Narrower,
         /// <summary>
-        /// The target mapping specialises the meaning of the source concept (e.g. the target is-a source)
+        /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source)
         /// </summary>
-        [EnumLiteral("specialises")]
-        Specialises,
+        [EnumLiteral("specializes")]
+        Specializes,
         /// <summary>
         /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally
         /// </summary>
@@ -188,8 +216,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The workflow didn't lead to this value being known
         /// </summary>
-        [EnumLiteral("notasked")]
-        Notasked,
+        [EnumLiteral("not-asked")]
+        NotAsked,
         /// <summary>
         /// The information is not available due to security, privacy or related reasons
         /// </summary>
@@ -210,6 +238,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("error")]
         Error,
+        /// <summary>
+        /// NaN, standing for not a number, is a numeric data type value representing an undefined or unrepresentable value
+        /// </summary>
+        [EnumLiteral("NaN")]
+        NaN,
     }
     
     /// <summary>
@@ -383,6 +416,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Resource")]
         Resource,
+        /// <summary>
+        /// The Account resource
+        /// </summary>
+        [EnumLiteral("Account")]
+        Account,
         /// <summary>
         /// The AllergyIntolerance resource
         /// </summary>
@@ -619,6 +657,11 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("ImmunizationRecommendation")]
         ImmunizationRecommendation,
         /// <summary>
+        /// The ImplementationGuide resource
+        /// </summary>
+        [EnumLiteral("ImplementationGuide")]
+        ImplementationGuide,
+        /// <summary>
         /// The List resource
         /// </summary>
         [EnumLiteral("List")]
@@ -649,10 +692,10 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("MedicationDispense")]
         MedicationDispense,
         /// <summary>
-        /// The MedicationPrescription resource
+        /// The MedicationOrder resource
         /// </summary>
-        [EnumLiteral("MedicationPrescription")]
-        MedicationPrescription,
+        [EnumLiteral("MedicationOrder")]
+        MedicationOrder,
         /// <summary>
         /// The MedicationStatement resource
         /// </summary>
@@ -759,10 +802,10 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Questionnaire")]
         Questionnaire,
         /// <summary>
-        /// The QuestionnaireAnswers resource
+        /// The QuestionnaireResponse resource
         /// </summary>
-        [EnumLiteral("QuestionnaireAnswers")]
-        QuestionnaireAnswers,
+        [EnumLiteral("QuestionnaireResponse")]
+        QuestionnaireResponse,
         /// <summary>
         /// The ReferralRequest resource
         /// </summary>
@@ -813,11 +856,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Substance")]
         Substance,
-        /// <summary>
-        /// The Supply resource
-        /// </summary>
-        [EnumLiteral("Supply")]
-        Supply,
         /// <summary>
         /// The SupplyDelivery resource
         /// </summary>

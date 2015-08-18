@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("snapshot")]
             Snapshot,
             /// <summary>
-            /// The list is prepared as a statement of changes that have been made or recommended
+            /// A list that indicates where changes have been made or recommended
             /// </summary>
             [EnumLiteral("changes")]
             Changes,
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Who and/or what defined the list contents
+        /// Who and/or what defined the list contents (aka Author)
         /// </summary>
         [FhirElement("source", InSummary=true, Order=130)]
         [References("Practitioner","Patient","Device")]
@@ -339,9 +339,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
+        /// Context in which list created
+        /// </summary>
+        [FhirElement("encounter", Order=140)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
         /// current | retired | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
@@ -374,7 +388,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the list was prepared
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -406,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What order the list has
         /// </summary>
-        [FhirElement("orderedBy", Order=160)]
+        [FhirElement("orderedBy", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept OrderedBy
         {
@@ -419,7 +433,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// working | snapshot | changes
         /// </summary>
-        [FhirElement("mode", InSummary=true, Order=170)]
+        [FhirElement("mode", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.List.ListMode> ModeElement
@@ -452,7 +466,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the list
         /// </summary>
-        [FhirElement("note", Order=180)]
+        [FhirElement("note", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
         {
@@ -484,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entries in the list
         /// </summary>
-        [FhirElement("entry", Order=190)]
+        [FhirElement("entry", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
@@ -498,7 +512,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why list is empty
         /// </summary>
-        [FhirElement("emptyReason", Order=200)]
+        [FhirElement("emptyReason", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept EmptyReason
         {
@@ -520,6 +534,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.List.ListStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
@@ -549,6 +564,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
@@ -571,6 +587,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;

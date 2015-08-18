@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -260,13 +260,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("birthDate", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime BirthDateElement
+        public Hl7.Fhir.Model.Date BirthDateElement
         {
             get { return _BirthDateElement; }
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
+        private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
         /// The date on which the person was born
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   BirthDateElement = null; 
                 else
-                  BirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                  BirthDateElement = new Hl7.Fhir.Model.Date(value);
                 OnPropertyChanged("BirthDate");
             }
         }
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.FhirDateTime)BirthDateElement.DeepCopy();
+                if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -197,18 +197,18 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Name/Code for this diagnostic report
+        /// Id for external references to this report
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Code
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Code; }
-            set { _Code = value; OnPropertyChanged("Code"); }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Code;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
@@ -244,9 +244,80 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Service category
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
+        /// Name/Code for this diagnostic report
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Code;
+        
+        /// <summary>
+        /// The subject of the report, usually, but not always, the patient
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=130)]
+        [References("Patient","Group","Device","Location")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Health care event when test ordered
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
+        /// Clinically Relevant time/time-period for report
+        /// </summary>
+        [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Effective
+        {
+            get { return _Effective; }
+            set { _Effective = value; OnPropertyChanged("Effective"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Effective;
+        
+        /// <summary>
         /// DateTime this version was released
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=110)]
+        [FhirElement("issued", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
@@ -277,24 +348,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The subject of the report, usually, but not always, the patient
-        /// </summary>
-        [FhirElement("subject", InSummary=true, Order=120)]
-        [References("Patient","Group","Device","Location")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
-        
-        /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=130)]
+        [FhirElement("performer", InSummary=true, Order=170)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -307,75 +363,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// Health care event when test ordered
-        /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=140)]
-        [References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
-        /// Id for external references to this report
-        /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=150)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier
-        {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Identifier> _Identifier;
-        
-        /// <summary>
         /// What was requested
         /// </summary>
-        [FhirElement("requestDetail", Order=160)]
-        [References("DiagnosticOrder")]
+        [FhirElement("request", Order=180)]
+        [References("DiagnosticOrder","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> RequestDetail
+        public List<Hl7.Fhir.Model.ResourceReference> Request
         {
-            get { if(_RequestDetail==null) _RequestDetail = new List<Hl7.Fhir.Model.ResourceReference>(); return _RequestDetail; }
-            set { _RequestDetail = value; OnPropertyChanged("RequestDetail"); }
+            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.ResourceReference>(); return _Request; }
+            set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _RequestDetail;
-        
-        /// <summary>
-        /// Biochemistry, Hematology etc.
-        /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept ServiceCategory
-        {
-            get { return _ServiceCategory; }
-            set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
-        
-        /// <summary>
-        /// Clinically Relevant time/time-period for report
-        /// </summary>
-        [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Effective
-        {
-            get { return _Effective; }
-            set { _Effective = value; OnPropertyChanged("Effective"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Effective;
+        private List<Hl7.Fhir.Model.ResourceReference> _Request;
         
         /// <summary>
         /// Specimens this report is based on
@@ -503,16 +503,16 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)StatusElement.DeepCopy();
-                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(RequestDetail != null) dest.RequestDetail = new List<Hl7.Fhir.Model.ResourceReference>(RequestDetail.DeepCopy());
-                if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)StatusElement.DeepCopy();
+                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
                 if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
@@ -537,16 +537,16 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(RequestDetail, otherT.RequestDetail)) return false;
-            if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.Matches(Result, otherT.Result)) return false;
             if( !DeepComparable.Matches(ImagingStudy, otherT.ImagingStudy)) return false;
@@ -564,16 +564,16 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
-            if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
             if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;

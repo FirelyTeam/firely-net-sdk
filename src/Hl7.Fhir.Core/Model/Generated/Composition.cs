@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -69,12 +69,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person. The modifications added new information to the composition or document, but did not revise existing content
-            /// </summary>
-            [EnumLiteral("appended")]
-            Appended,
-            /// <summary>
-            /// The composition or document has been modified subsequent to being released as "final", and is complete and verified by an authorized person
+            /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person
             /// </summary>
             [EnumLiteral("amended")]
             Amended,
@@ -166,23 +161,95 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// The Content of the section (narrative + data entries)
+            /// Text summary of the section, for human interpretation
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=60)]
-            [References("List")]
+            [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Content
+            public Hl7.Fhir.Model.Narrative Text
             {
-                get { return _Content; }
-                set { _Content = value; OnPropertyChanged("Content"); }
+                get { return _Text; }
+                set { _Text = value; OnPropertyChanged("Text"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Content;
+            private Hl7.Fhir.Model.Narrative _Text;
+            
+            /// <summary>
+            /// working | snapshot | changes
+            /// </summary>
+            [FhirElement("mode", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Code _ModeElement;
+            
+            /// <summary>
+            /// working | snapshot | changes
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Mode
+            {
+                get { return ModeElement != null ? ModeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ModeElement = null; 
+                    else
+                      ModeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Mode");
+                }
+            }
+            
+            /// <summary>
+            /// What order the section entries are in
+            /// </summary>
+            [FhirElement("orderedBy", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept OrderedBy
+            {
+                get { return _OrderedBy; }
+                set { _OrderedBy = value; OnPropertyChanged("OrderedBy"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _OrderedBy;
+            
+            /// <summary>
+            /// A reference to data that supports this section
+            /// </summary>
+            [FhirElement("entry", InSummary=true, Order=90)]
+            [References()]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Entry
+            {
+                get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.ResourceReference>(); return _Entry; }
+                set { _Entry = value; OnPropertyChanged("Entry"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Entry;
+            
+            /// <summary>
+            /// Why the section is empty
+            /// </summary>
+            [FhirElement("emptyReason", InSummary=true, Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept EmptyReason
+            {
+                get { return _EmptyReason; }
+                set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
             
             /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", InSummary=true, Order=70)]
+            [FhirElement("section", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -202,7 +269,11 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.ResourceReference)Content.DeepCopy();
+                    if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Hl7.Fhir.Model.Code)ModeElement.DeepCopy();
+                    if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
+                    if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.ResourceReference>(Entry.DeepCopy());
+                    if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
                     if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                     return dest;
                 }
@@ -223,7 +294,11 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+                if( !DeepComparable.Matches(Text, otherT.Text)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
+                if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
+                if( !DeepComparable.Matches(EmptyReason, otherT.EmptyReason)) return false;
                 if( !DeepComparable.Matches(Section, otherT.Section)) return false;
                 
                 return true;
@@ -237,7 +312,11 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
+                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
+                if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
+                if( !DeepComparable.IsExactly(EmptyReason, otherT.EmptyReason)) return false;
                 if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
                 
                 return true;
@@ -281,7 +360,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Period _Period;
             
             /// <summary>
-            /// Full details for the event(s) the composition consents
+            /// The event(s) being documented
             /// </summary>
             [FhirElement("detail", InSummary=true, Order=60)]
             [References()]
@@ -558,6 +637,7 @@ namespace Hl7.Fhir.Model
         /// Human Readable name/title
         /// </summary>
         [FhirElement("title", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -587,7 +667,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered-in-error
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
@@ -601,7 +681,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Composition.CompositionStatus> _StatusElement;
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered-in-error
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -40,13 +40,13 @@ using System.Runtime.Serialization;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Distance")]
-    public partial class Distance : Quantity
+    [FhirType("SimpleQuantity")]
+    public partial class SimpleQuantity : Quantity
     {
         [NotMapped]
-        public override string TypeName { get { return "Distance"; } }
+        public override string TypeName { get { return "SimpleQuantity"; } }
         
         // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.
+        // * The comparator is not used on a SimpleQuantity
     }
 }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Jun 16, 2015 00:04+0200 for FHIR v0.5.0
+// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -214,22 +214,51 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
             
             /// <summary>
+            /// The admitting Diagnosis as reported by admitting practitioner
+            /// </summary>
+            [FhirElement("admittingDiagnosis", InSummary=true, Order=70)]
+            [References("Condition")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> AdmittingDiagnosis
+            {
+                get { if(_AdmittingDiagnosis==null) _AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _AdmittingDiagnosis; }
+                set { _AdmittingDiagnosis = value; OnPropertyChanged("AdmittingDiagnosis"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _AdmittingDiagnosis;
+            
+            /// <summary>
+            /// The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
+            /// </summary>
+            [FhirElement("reAdmission", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept ReAdmission
+            {
+                get { return _ReAdmission; }
+                set { _ReAdmission = value; OnPropertyChanged("ReAdmission"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _ReAdmission;
+            
+            /// <summary>
             /// Diet preferences reported by the patient
             /// </summary>
-            [FhirElement("dietPreference", InSummary=true, Order=70)]
+            [FhirElement("dietPreference", InSummary=true, Order=90)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept DietPreference
+            public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
             {
-                get { return _DietPreference; }
+                get { if(_DietPreference==null) _DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(); return _DietPreference; }
                 set { _DietPreference = value; OnPropertyChanged("DietPreference"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _DietPreference;
+            private List<Hl7.Fhir.Model.CodeableConcept> _DietPreference;
             
             /// <summary>
             /// Special courtesies (VIP, board member)
             /// </summary>
-            [FhirElement("specialCourtesy", InSummary=true, Order=80)]
+            [FhirElement("specialCourtesy", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
@@ -243,7 +272,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Wheelchair, translator, stretcher, etc
             /// </summary>
-            [FhirElement("specialArrangement", InSummary=true, Order=90)]
+            [FhirElement("specialArrangement", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
@@ -257,7 +286,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location to which the patient is discharged
             /// </summary>
-            [FhirElement("destination", InSummary=true, Order=100)]
+            [FhirElement("destination", InSummary=true, Order=120)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Destination
@@ -271,7 +300,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Category or kind of location after discharge
             /// </summary>
-            [FhirElement("dischargeDisposition", InSummary=true, Order=110)]
+            [FhirElement("dischargeDisposition", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
             {
@@ -284,48 +313,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
             /// </summary>
-            [FhirElement("dischargeDiagnosis", InSummary=true, Order=120)]
-            [References()]
+            [FhirElement("dischargeDiagnosis", InSummary=true, Order=140)]
+            [References("Condition")]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference DischargeDiagnosis
+            public List<Hl7.Fhir.Model.ResourceReference> DischargeDiagnosis
             {
-                get { return _DischargeDiagnosis; }
+                get { if(_DischargeDiagnosis==null) _DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _DischargeDiagnosis; }
                 set { _DischargeDiagnosis = value; OnPropertyChanged("DischargeDiagnosis"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _DischargeDiagnosis;
-            
-            /// <summary>
-            /// Is this hospitalization a readmission?
-            /// </summary>
-            [FhirElement("reAdmission", InSummary=true, Order=130)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean ReAdmissionElement
-            {
-                get { return _ReAdmissionElement; }
-                set { _ReAdmissionElement = value; OnPropertyChanged("ReAdmissionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _ReAdmissionElement;
-            
-            /// <summary>
-            /// Is this hospitalization a readmission?
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? ReAdmission
-            {
-                get { return ReAdmissionElement != null ? ReAdmissionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ReAdmissionElement = null; 
-                    else
-                      ReAdmissionElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("ReAdmission");
-                }
-            }
+            private List<Hl7.Fhir.Model.ResourceReference> _DischargeDiagnosis;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -337,13 +335,14 @@ namespace Hl7.Fhir.Model
                     if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
                     if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
                     if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-                    if(DietPreference != null) dest.DietPreference = (Hl7.Fhir.Model.CodeableConcept)DietPreference.DeepCopy();
+                    if(AdmittingDiagnosis != null) dest.AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(AdmittingDiagnosis.DeepCopy());
+                    if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopy();
+                    if(DietPreference != null) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
                     if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
                     if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
                     if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                     if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopy();
-                    if(DischargeDiagnosis != null) dest.DischargeDiagnosis = (Hl7.Fhir.Model.ResourceReference)DischargeDiagnosis.DeepCopy();
-                    if(ReAdmissionElement != null) dest.ReAdmissionElement = (Hl7.Fhir.Model.FhirBoolean)ReAdmissionElement.DeepCopy();
+                    if(DischargeDiagnosis != null) dest.DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(DischargeDiagnosis.DeepCopy());
                     return dest;
                 }
                 else
@@ -364,13 +363,14 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
+                if( !DeepComparable.Matches(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
+                if( !DeepComparable.Matches(ReAdmission, otherT.ReAdmission)) return false;
                 if( !DeepComparable.Matches(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.Matches(DischargeDisposition, otherT.DischargeDisposition)) return false;
                 if( !DeepComparable.Matches(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
-                if( !DeepComparable.Matches(ReAdmissionElement, otherT.ReAdmissionElement)) return false;
                 
                 return true;
             }
@@ -384,13 +384,14 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
+                if( !DeepComparable.IsExactly(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
+                if( !DeepComparable.IsExactly(ReAdmission, otherT.ReAdmission)) return false;
                 if( !DeepComparable.IsExactly(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.IsExactly(DischargeDisposition, otherT.DischargeDisposition)) return false;
                 if( !DeepComparable.IsExactly(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
-                if( !DeepComparable.IsExactly(ReAdmissionElement, otherT.ReAdmissionElement)) return false;
                 
                 return true;
             }
@@ -836,18 +837,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// An episode of care that this encounter should be recorded against
+        /// Episode(s) of care that this encounter should be recorded against
         /// </summary>
         [FhirElement("episodeOfCare", InSummary=true, Order=150)]
         [References("EpisodeOfCare")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference EpisodeOfCare
+        public List<Hl7.Fhir.Model.ResourceReference> EpisodeOfCare
         {
-            get { return _EpisodeOfCare; }
+            get { if(_EpisodeOfCare==null) _EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(); return _EpisodeOfCare; }
             set { _EpisodeOfCare = value; OnPropertyChanged("EpisodeOfCare"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _EpisodeOfCare;
+        private List<Hl7.Fhir.Model.ResourceReference> _EpisodeOfCare;
         
         /// <summary>
         /// Incoming Referral Request
@@ -1028,7 +1030,7 @@ namespace Hl7.Fhir.Model
                 if(ClassElement != null) dest.ClassElement = (Code<Hl7.Fhir.Model.Encounter.EncounterClass>)ClassElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(EpisodeOfCare != null) dest.EpisodeOfCare = (Hl7.Fhir.Model.ResourceReference)EpisodeOfCare.DeepCopy();
+                if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
                 if(IncomingReferralRequest != null) dest.IncomingReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferralRequest.DeepCopy());
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(Participant.DeepCopy());
                 if(Fulfills != null) dest.Fulfills = (Hl7.Fhir.Model.ResourceReference)Fulfills.DeepCopy();
