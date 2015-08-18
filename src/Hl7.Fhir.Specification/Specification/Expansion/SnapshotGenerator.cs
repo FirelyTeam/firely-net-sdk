@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Expansion
         public void Generate(StructureDefinition structure)
         {
             if (structure.Differential == null) throw Error.Argument("structure", "structure does not contain a differential specification");
-            if (structure.Type != StructureDefinition.StructureDefinitionType.Constraint && structure.Type != StructureDefinition.StructureDefinitionType.Extension) throw Error.Argument("structure", "structure is not a constraint or extension but an " + structure.Type.ToString());
+            if (structure.ConstrainedType != null) throw Error.Argument("structure", "structure is not a constraint or extension");
             if(structure.Base == null) throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
 
             var differential = structure.Differential;

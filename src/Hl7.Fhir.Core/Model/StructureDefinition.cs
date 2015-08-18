@@ -34,6 +34,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -48,18 +49,11 @@ namespace Hl7.Fhir.Model
 
         public partial class StructureDefinitionDifferentialComponent : IElementList { }
 
-        [Obsolete]
-        public StructureDefinitionType Type { get; set; }
+        [NotMapped]
+        public bool IsConstraint {  get { return ConstrainedType != null && !IsExtension; } }
 
-        [Obsolete]
-        public enum StructureDefinitionType
-        {
-            Constraint,
-            Extension,
-            Type,
-            Resource
-        }
-
+        [NotMapped]
+        public bool IsExtension {  get { return ConstrainedType == "Extension"; } }
     }
 }
 

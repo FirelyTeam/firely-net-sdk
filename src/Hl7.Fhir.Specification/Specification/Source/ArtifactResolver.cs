@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Source
             var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
             if (cr == null) return null;
 
-            if (cr.Type != StructureDefinition.StructureDefinitionType.Extension)
+            if (!cr.IsExtension)
                 throw Error.Argument("url", "Given url exists as a StructureDefinition, but is not an extension");
 
             if (cr.Snapshot == null && requireSnapshot)
