@@ -47,10 +47,11 @@ namespace Hl7.Fhir.Model
         //string Requirements { get; set; }
         //Hl7.Fhir.Model.FhirString CopyrightElement { get; set; }
         //List<Hl7.Fhir.Model.Coding> Code { get; set; }
-        Hl7.Fhir.Model.ConformanceResourceStatus? Status { get; set; }
+        ConformanceResourceStatus? Status { get; set; }
         bool? Experimental { get; set; }
         string Date { get; set; }
-        //List<Hl7.Fhir.Model.ContactPoint> Telecom { get; set; }
+        List<CodeableConcept> UseContext { get; set; }
+        //List<ContactPoint> Contact { get; set; }
     }
 
     public interface IVersionableConformanceResource : IConformanceResource
@@ -68,10 +69,22 @@ namespace Hl7.Fhir.Model
 
     public partial class OperationDefinition : IVersionableConformanceResource
     {
+        [NotMapped]
+        public List<CodeableConcept> UseContext
+        {
+            get { return null; }
+            set {; }
+        }
     }
 
     public partial class SearchParameter : IConformanceResource
     {
+        [NotMapped]
+        public List<CodeableConcept> UseContext
+        {
+            get { return null; }
+            set {; }
+        }
     }
 
     public partial class DataElement : IConformanceResource
@@ -92,6 +105,12 @@ namespace Hl7.Fhir.Model
 
     public partial class Conformance : IVersionableConformanceResource
     {
+        [NotMapped]
+        public List<CodeableConcept> UseContext
+        {
+            get { return null; }
+            set {; }
+        }
     }
 
     public partial class NamingSystem : IConformanceResource
@@ -110,5 +129,13 @@ namespace Hl7.Fhir.Model
             get { return null; }
             set { ; }
         }
+    }
+
+    public partial class ImplementationGuide : IVersionableConformanceResource
+    {
+    }
+
+    public partial class TestScript : IVersionableConformanceResource
+    {
     }
 }
