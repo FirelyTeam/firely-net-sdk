@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
-            string json = File.ReadAllText(@"TestData\edgecases.json");
+            string json = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var poco = FhirParser.ParseResourceFromJson(json);
             Assert.IsNotNull(poco);

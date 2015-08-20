@@ -99,13 +99,13 @@
     <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\edgecases.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="TestData\examples-json.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\examples.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\json-edge-cases.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\TestPatient.json">
