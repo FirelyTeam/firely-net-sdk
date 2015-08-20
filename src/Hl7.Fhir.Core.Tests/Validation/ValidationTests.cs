@@ -119,7 +119,8 @@ namespace Hl7.Fhir.Tests.Validation
             issue.Severity = OperationOutcome.IssueSeverity.Information;
             validateErrorOrFail(oo, true);
 
-            issue.Details = new CodeableConcept("http://somesystem.org/some", "bla");
+            issue.Code = OperationOutcome.IssueType.Forbidden;
+
             DotNetAttributeValidation.Validate(oo, true);
         }
 
