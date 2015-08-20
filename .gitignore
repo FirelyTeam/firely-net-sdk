@@ -164,3 +164,4 @@ src/Hl7.Fhir.Api/EwoutFhirNetApi.snk
 src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
 *.snk
 sonar-project.properties
+src/.vs/
