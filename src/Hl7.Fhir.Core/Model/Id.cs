@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
     {
         public static bool IsValidValue(string value)
         {
-            return Regex.IsMatch(value as string, "^" + Hl7.Fhir.Model.Id.PATTERN + "$", RegexOptions.Singleline);
+            return Regex.IsMatch(value, "^" + Hl7.Fhir.Model.Id.PATTERN + "$", RegexOptions.Singleline);
         }
     }
 }
