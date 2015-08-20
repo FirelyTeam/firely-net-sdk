@@ -29,12 +29,12 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-        // Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
+        //Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-        Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
 
         [TestInitialize]
         public void TestInitialize()
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod]
+        [TestMethod][TestCategory("FhirClient")]
         public void TestWithParam()
         {
             var client = new FhirClient(testEndpoint);
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod]
+        [TestMethod][TestCategory("FhirClient")]
         public void TestSearchByPersonaCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod]
+        [TestMethod][TestCategory("FhirClient")]
         public void CreateDynamic()
         {
             Resource furore = new Organization
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe);
         }
 
-        [TestMethod]
+        [TestMethod][TestCategory("FhirClient")]
         public void CallsCallbacks()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/ValueSet/extensional-case-1/$expand%3Ffilter=f"));                
         }
 
-        [TestMethod]
+        [TestMethod][TestCategory("FhirClient")]
         public void RequestFullResource()
         {
             var client = new FhirClient(testEndpoint);
@@ -684,6 +684,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("FhirClient")]
         public void TestReceiveHtmlIsHandled()
         {
             var client = new FhirClient("http://spark.furore.com/");        // an address that returns html
@@ -705,6 +706,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("FhirClient")]
         public void FhirVersionIsChecked()
         {
             var testEndpointDSTU2 = new Uri("http://spark-dstu2.furore.com/fhir");
@@ -729,17 +731,17 @@ namespace Hl7.Fhir.Tests.Rest
             //p = client.Read<Patient>("Patient/example");
             //p = client.Read<Patient>("Patient/example");
 
-            client = new FhirClient(testEndpointDSTU22);
+            client = new FhirClient(testEndpointDSTU22, verifyFhirVersion:true);
             p = client.Read<Patient>("Patient/example");
+            p = client.Read<Patient>("Patient/example");
+
+            client = new FhirClient(testEndpointDSTU23, verifyFhirVersion:true);
             p = client.Read<Patient>("Patient/example");
 
             client = new FhirClient(testEndpointDSTU23);
             p = client.Read<Patient>("Patient/example");
 
-            client = new FhirClient(testEndpointDSTU23,verifyFhirVersion:false);
-            p = client.Read<Patient>("Patient/example");
-
-            client = new FhirClient(testEndpointDSTU1, verifyFhirVersion: false);
+            client = new FhirClient(testEndpointDSTU1);
 
             try
             {

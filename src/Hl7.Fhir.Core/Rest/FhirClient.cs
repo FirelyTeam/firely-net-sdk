@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
-        public FhirClient(Uri endpoint, bool verifyFhirVersion = true)
+        public FhirClient(Uri endpoint, bool verifyFhirVersion = false)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
