@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.xml.zip");
 
             var fa = new ZipCacher(zipFile,cacheKey);
 
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private string prepareExampleDirectory()
         {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.xml.zip");
             var zip = new ZipCacher(zipFile);
             var zipPath = zip.GetContentDirectory();
 

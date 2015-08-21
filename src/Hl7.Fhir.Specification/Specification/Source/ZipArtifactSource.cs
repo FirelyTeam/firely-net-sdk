@@ -30,13 +30,13 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static ZipArtifactSource CreateValidationSource()
         {
-            var path = Path.Combine(FileDirectoryArtifactSource.SpecificationDirectory, "validation.zip");
+            var path = Path.Combine(FileDirectoryArtifactSource.SpecificationDirectory, "validation.xml.zip");
             if(File.Exists(path)) return new ZipArtifactSource(path);
 
             path = Path.Combine(FileDirectoryArtifactSource.SpecificationDirectory, "validation-min.zip");
             if (File.Exists(path)) return new ZipArtifactSource(path);
 
-            throw new FileNotFoundException("Cannot create a ZipArtifactSource for validation.zip: neither validation.zip nor validation-min.zip was found");
+            throw new FileNotFoundException("Cannot create a ZipArtifactSource for validation.xml.zip: neither validation.xml.zip nor validation-min.zip was found");
         }
 
         private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipArtifactSource).Assembly.GetName().Version.ToString();
