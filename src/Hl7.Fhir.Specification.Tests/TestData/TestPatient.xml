@@ -1,6 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-
-<Patient xmlns="http://hl7.org/fhir">
+﻿<Patient xmlns="http://hl7.org/fhir">
   <id value="pat1"/>
   <text>
     <status value="generated"/>
@@ -15,6 +13,7 @@
     <system value="urn:oid:0.1.2.3.4.5.6.7"/>
     <value value="654321"/>
   </identifier>
+  <active value ="true"/>
   <name>
     <use value="official"/>
     <family value="Donald"/>
@@ -48,5 +47,4 @@
     </other>
     <type value="seealso"/>
   </link>
-  <active value="true"/>
 </Patient>

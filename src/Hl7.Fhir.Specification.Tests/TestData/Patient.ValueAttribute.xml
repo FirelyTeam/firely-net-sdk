@@ -38,5 +38,4 @@
   <managingOrganization>
     <reference value="Organization/hl7"/>
   </managingOrganization>
-  <active value="true"/>
 </Patient>

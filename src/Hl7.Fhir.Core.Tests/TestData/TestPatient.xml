@@ -1,10 +1,16 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-
-<Patient xmlns="http://hl7.org/fhir">
+﻿<Patient xmlns="http://hl7.org/fhir">  
   <id value="pat1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+      
+    </div>
+  </text>
   <contained>
-    <Patient>
-      <id value="1"/>
+    <Patient>      
+      <id value="1"/>     
       <meta>
         <lastUpdated value="2012-05-29T23:45:32Z"/>
       </meta>
@@ -25,7 +31,7 @@
         <system value="http://hl7.org/fhir/sid/us-ssn"/>
         <value value="444222222"/>
       </identifier>
-
+      <active value ="true"/>
       <name>
         <use value="official"/>
         <family value="Everywoman"/>
@@ -42,26 +48,17 @@
         <use value="home"/>
         <line value="2222 Home Street"/>
       </address>
-
       <managingOrganization>
         <reference value="Organization/hl7"/>
       </managingOrganization>
-      <active value="true"/>
     </Patient>
-  </contained>
-  <text>
-    <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml">
-
-      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
-
-    </div>
-  </text>
+  </contained> 
   <identifier>
     <use value="usual"/>
     <system value="urn:oid:0.1.2.3.4.5.6.7"/>
     <value value="654321"/>
   </identifier>
+  <active value ="true"/>
   <name>
     <use value="official"/>
     <family value="Donald"/>
@@ -95,5 +92,4 @@
     </other>
     <type value="seealso"/>
   </link>
-  <active value="true"/>
 </Patient>
