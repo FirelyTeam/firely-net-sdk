@@ -110,7 +110,9 @@ namespace Hl7.Fhir.Specification.Source
                         && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
                     {
                         var entryNode = (XElement)XElement.ReadFrom(reader);
-                        yield return entryNode.Elements().First().Elements().First();
+                        var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
+                        var resource = resourceNode.Elements().First();
+                        yield return resource;
                     }
                     else
                         reader.Read();

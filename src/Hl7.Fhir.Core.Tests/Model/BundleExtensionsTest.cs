@@ -25,6 +25,26 @@ namespace Hl7.Fhir.Tests.Model
 #endif
     {
         [TestMethod]
+        public void TestFindEntry()
+        {
+            Bundle b = new Bundle();
+            b.AddResourceEntry(new Patient { Id = "4" }, "http://some.org/fhir/Patient/4");
+            b.AddResourceEntry(new Patient { Id = "5", Meta = new Meta { VersionId = "5" } }, "http://some.org/fhir/Patient/5");
+            b.AddResourceEntry(new Patient { Id = "6" }, "http://some.org/fhir/Patient/8");
+
+            Assert.AreEqual(1, b.FindEntry("http://some.org/fhir/Patient/4").Count());
+            Assert.AreEqual(1, b.FindEntry("http://some.org/fhir/Patient/5").Count());
+            Assert.AreEqual(0, b.FindEntry("http://some.org/fhir/Patient/6").Count());
+            Assert.AreEqual(1, b.FindEntry("http://some.org/fhir/Patient/8").Count());
+
+            Assert.AreEqual(1, b.FindEntry("http://some.org/fhir/Patient/5/_history/5").Count());
+            Assert.AreEqual(0, b.FindEntry("http://some.org/fhir/Patient/5/_history/6").Count());
+
+            Assert.AreEqual(1, b.FindEntry("https://some.org/fhir/Patient/4").Count());
+        }
+
+
+        [TestMethod]
         public void ResourceListFiltering()
         {
             var testBundle = new Bundle();

@@ -38,17 +38,17 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateLipidSnapshot()
-        {
-            var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipid-report-lipidprofile-test");
+        {            
+            var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
             Assert.IsNotNull(sd);
 
             generateSnapshotAndCompare(sd, _source);
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateNorwegianSnapshots()
         {
             var mySource = new FileDirectoryArtifactSource(@"C:\Git\helsenord.ig\Source\Chapter.3.Package", includeSubdirectories: false);
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void GenerateSnapshot()
         {           
             foreach (var original in findConstraintStrucDefs())

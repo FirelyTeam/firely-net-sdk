@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Return canonical urls of all the core Resource/datatype/primitive StructureDefinitions available in the IArtifactSource
         /// </summary>
         public IEnumerable<string> GetCoreModelUrls()
-        {                 
+        {
             return ListConformanceResources()
                 .Select(ci => ci.Url)
                 .Where(uri => uri != null && uri.StartsWith(XmlNs.FHIR) && ModelInfo.IsCoreModelType(new ResourceIdentity(uri).Id));

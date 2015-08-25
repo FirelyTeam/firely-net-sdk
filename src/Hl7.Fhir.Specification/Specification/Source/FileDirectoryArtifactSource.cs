@@ -18,6 +18,7 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -118,9 +119,14 @@ namespace Hl7.Fhir.Specification.Source
 
             foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
             {
+                if (file.EndsWith("dataelements.xml")) continue;       // buggy file
+
                 try
                 {
-                    _resourceInformation.AddRange(readInformationFromFile(file));
+                    var conformanceResources = readInformationFromFile(file).Where(ci =>
+                           ResourceIdentity.IsRestResourceIdentity(ci.Url) &&
+                           ModelInfo.IsConformanceResource((new ResourceIdentity(ci.Url)).ResourceType));
+                    _resourceInformation.AddRange(conformanceResources);
                 }
                 catch(XmlException)
                 {
