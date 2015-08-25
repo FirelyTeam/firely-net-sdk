@@ -34,9 +34,8 @@ namespace Hl7.Fhir.Tests.Model
             testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v4"} }, 
                             Request = new Bundle.BundleEntryRequestComponent {Method = Bundle.HTTPVerb.DELETE}  });
 
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "5678" }, Base = "http://server1.com/fhir" });
-
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1.2.3.4.5" }, Base = "urn:oid:" });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "5678" }, FullUrl = "http://server1.com/fhir/Patient/5678" });
+            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1.2.3.4.5" }, FullUrl = "urn:oid:1.2.3.4.5" });
 
             var result = testBundle.FindEntry("Patient", "1234");
             Assert.AreEqual(2, result.Count());

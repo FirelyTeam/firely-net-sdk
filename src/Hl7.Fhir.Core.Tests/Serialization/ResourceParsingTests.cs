@@ -117,13 +117,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirSerializer.SerializeResourceToXml(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
-            Bundle b = new Bundle();
-            b.Entry.Add(new Bundle.BundleEntryComponent() { Base = "http://nu.nl/fhir", Resource = o });
-            
-            xml = FhirSerializer.SerializeResourceToXml(b);
-            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
-
-            b = FhirParser.ParseFromXml(xml) as Bundle;
+            var b = FhirParser.ParseFromXml(xml) as Bundle;
             b.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirSerializer.SerializeResourceToXml(b);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));

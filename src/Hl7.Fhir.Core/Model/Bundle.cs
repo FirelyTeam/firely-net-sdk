@@ -46,12 +46,12 @@ namespace Hl7.Fhir.Model
     {
         public partial class BundleEntryComponent
         {
-            [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element.")]
+            [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element."), NotMapped]
             public string Base { get; set; }
         }
 
 
-        [Obsolete("Base no longer exists in Bundle. You need to replace any code using this element.")]
+        [Obsolete("Base no longer exists in Bundle. You need to replace any code using this element."), NotMapped]
         public string Base { get; set; }
 
         public const string ATOM_LINKREL_SELF = "self";
@@ -146,18 +146,6 @@ namespace Hl7.Fhir.Model
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             return base.Validate(validationContext);
-        }
-
-        internal static bool UriHasValue(Uri u)
-        {
-            return u != null && !String.IsNullOrEmpty(u.ToString());
-        }
-
-        public Bundle AddResourceEntry(Resource r)
-        {
-            Entry.Add(new BundleEntryComponent() { Resource = r });
-
-            return this;
         }
     }  
 }

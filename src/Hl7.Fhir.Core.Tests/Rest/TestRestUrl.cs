@@ -20,19 +20,19 @@ namespace Hl7.Fhir.Test
     public class TestRestUrl
 #endif
     {
-        [TestMethod, Ignore]
+        [TestMethod]
         public void Query()
         {
-            //RestUrl endpoint = new RestUrl("http://localhost/fhir");
-            //RestUrl resturi;
+            RestUrl endpoint = new RestUrl("http://localhost/fhir");
+            RestUrl resturi;
 
-            //resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
-            //Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
+            resturi = endpoint.AddPath("Organization").AddPath("_search").AddParam("family", "Johnson").AddParam("given", "William");
+            Assert.AreEqual("http://localhost/fhir/Organization/_search?family=Johnson&given=William", resturi.AsString);
 
-            //var rl2 = new RestUrl(resturi.Uri);
+            var rl2 = new RestUrl(resturi.Uri);
 
-            //rl2.AddParam("given", "Piet");
-            //Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
+            rl2.AddParam("given", "Piet");
+            Assert.AreEqual("http://localhost/fhir/Organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
         }
 
 
@@ -71,41 +71,47 @@ namespace Hl7.Fhir.Test
             Assert.IsFalse(u.IsEndpointFor("http://www.hl7.org/"));
         }
 
-        //[TestMethod]
-        //public void ParamManipulation()
-        //{
-        //    var rl = new ResourceLocation("patient/search?name=Kramer&name=Moreau&oauth=XXX");
+        [TestMethod]
+        public void ParamManipulation()
+        {
+            var rl = new RestUrl("http://someserver.org/fhir/Patient/search?name=Kramer&name=Moreau&oauth=XXX");
 
-        //    rl.SetParam("newParamA", "1");
-        //    rl.SetParam("newParamB", "2");
-        //    Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=1&newParamB=2"));
+            rl.AddParam("newParamA", "1");
+            rl.SetParam("newParamB", "2");
+            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=1&newParamB=2"));
 
-        //    rl.SetParam("newParamA", "3");
-        //    rl.ClearParam("newParamB");
-        //    Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3"));
+            rl.SetParam("newParamA", "3");
+            rl.ClearParam("newParamB");
+            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3"));
 
-        //    rl.AddParam("newParamA", "4");
-        //    Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4"));
+            rl.AddParam("newParamA", "4");
+            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4"));
 
-        //    rl.AddParam("newParamB", "5");
-        //    Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4&newParamB=5"));
+            rl.AddParam("newParamB", "5");
+            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4&newParamB=5"));
 
-        //    Assert.AreEqual("patient/search?name=Kramer&name=Moreau&oauth=XXX&newParamA=3&newParamA=4&newParamB=5",
-        //            rl.OperationPath.ToString());
+            rl.SetParam("newParamA", "6");
+            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=6&newParamB=5"));
 
-        //    rl = new ResourceLocation("patient/search");
-        //    rl.SetParam("firstParam", "1");
-        //    rl.SetParam("sndParam", "2");
-        //    rl.ClearParam("sndParam");
-        //    Assert.AreEqual("patient/search?firstParam=1", rl.OperationPath.ToString());
+            rl.ClearParams();
+            Assert.IsTrue(rl.ToString().EndsWith("search"));
+        }
 
-        //    rl.ClearParam("firstParam");
-        //    Assert.AreEqual("patient/search", rl.OperationPath.ToString());
+        [TestMethod]
+        public void AreSame()
+        {
+            var rl = new RestUrl("http://someserver.org/Patient/4?oauth=xxxx");
+            var rl2 = new RestUrl("https://someserver.org/Patient/4");
+            Assert.IsTrue(rl.IsSameUrl(rl2));
+            Assert.IsTrue(rl2.IsSameUrl(rl));
 
-        //    rl.SetParam("firstParam", "1");
-        //    rl.SetParam("sndParam", "2");
-        //    rl.ClearParams();
-        //    Assert.AreEqual("patient/search", rl.OperationPath.ToString());
-        //}
+            rl2 = new RestUrl("http://someserver.org/Patient/4");
+            Assert.IsTrue(rl.IsSameUrl(rl2));
+            Assert.IsTrue(rl2.IsSameUrl(rl));
+
+            rl2 = new RestUrl("https://someserver.org:81/Patient/4");
+            Assert.IsFalse(rl.IsSameUrl(rl2));
+            Assert.IsFalse(rl2.IsSameUrl(rl));
+        }
     }
 }

@@ -47,7 +47,23 @@ namespace Hl7.Fhir.Model
         /// This is the base URL of the FHIR server that this resource is hosted on
         /// </summary>
         [NotMapped]
-        public Uri ResourceBase;
+        public Uri ResourceBase
+        {
+            get {
+                object data;
+                var result = UserData.TryGetValue("@@@RESOURCEBASE@@@", out data);
+                if (result)
+                    return data as Uri;
+                else
+                    return null;
+            }
+
+            set
+            {
+                UserData["@@@RESOURCEBASE@@@"] = value;
+            }
+        }        
+
 
         /// <summary>
         /// Returns the entire URI of the location that this resource was retrieved from

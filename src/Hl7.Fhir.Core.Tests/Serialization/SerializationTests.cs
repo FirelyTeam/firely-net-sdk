@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Tests.Serialization
             p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
 
             var b = new Bundle();
-            b.AddResourceEntry(p);
+            b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
 
             var full = FhirSerializer.SerializeResourceToXml(b);
             Assert.IsTrue(full.Contains("<entry"));

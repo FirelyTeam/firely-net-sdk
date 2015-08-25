@@ -23,11 +23,12 @@ namespace Hl7.Fhir.Rest
         public const string OPERATIONPREFIX = "$";
 
         private Bundle _result;
+        private string _baseUrl;
 
         public TransactionBuilder(string baseUrl)
         {
             _result = new Bundle();
-            _result.Base = baseUrl;           
+            _baseUrl = baseUrl;           
         }
 
         public TransactionBuilder(Uri baseUri)
@@ -53,7 +54,7 @@ namespace Hl7.Fhir.Rest
 
         private RestUrl newRestUrl()
         {
-            return new RestUrl(_result.Base);
+            return new RestUrl(_baseUrl);
         }
 
         public Bundle ToBundle()
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Rest
                 addEntry(entry, new RestUrl(url));
             else
             {
-                var absoluteUrl = _result.Base;
+                var absoluteUrl = _baseUrl;
                 if(!absoluteUrl.EndsWith("/")) absoluteUrl += "/";
                 absoluteUrl += url;
                 addEntry(entry, new RestUrl(absoluteUrl));

@@ -108,6 +108,7 @@ namespace Hl7.Fhir.Rest
             return location;
         }
 
+
         public static bool IsWithin(this Uri me, Uri other)
         {
             if (!other.IsAbsoluteUri)
@@ -136,6 +137,30 @@ namespace Hl7.Fhir.Rest
             return true;
         }
 
+
+        static readonly string RESTURI_PATTERN;
+
+        // Static constructor is called at most one time, before any 
+        // instance constructor is invoked or member is accessed. 
+        static HttpUtil()
+        {
+            RESTURI_PATTERN = @"((http | https)://([A-Za-z0-9\\\/\.\:\%\$])*)?(";
+            RESTURI_PATTERN += String.Join("|", ModelInfo.SupportedResources);
+            RESTURI_PATTERN += @")\/[A-Za-z0-9\-\.]{1,64}(\/_history\/[A-Za-z0-9\-\.]{1,64})?";
+        }
+
+
+        public static bool IsRestResourceIdentity(this Uri uri)
+        {
+            return IsRestResourceIdentity(uri.OriginalString);
+        }
+
+        public static bool IsRestResourceIdentity(string uri)
+        {
+            if (uri == null) return false;
+
+            return Regex.IsMatch(uri, RESTURI_PATTERN);
+        }
     }
 
 

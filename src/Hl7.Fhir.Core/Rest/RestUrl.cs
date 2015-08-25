@@ -29,8 +29,8 @@ namespace Hl7.Fhir.Rest
         {
             if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
 
-            if (url.Scheme != "http")
-                Error.Argument("uri", "RestUrl must be a http url");
+            if (url.Scheme != "http" && url.Scheme != "https")
+                Error.Argument("uri", "RestUrl must be a http(s) url");
 
             _builder = new UriBuilder(url);
 
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
                 _parameters = UriParamList.FromQueryString(_builder.Query); 
         }
 
-        public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.RelativeOrAbsolute))
+        public RestUrl(string endpoint) : this(new Uri(endpoint,UriKind.Absolute))
         {
         }
 
@@ -67,7 +67,8 @@ namespace Hl7.Fhir.Rest
         {
             return path.StartsWith(@"/") ? path : @"/"+path;
         }
-        
+              
+
         /// <summary>
         /// Add additional components to the end of the RestUrl
         /// </summary>
@@ -81,6 +82,36 @@ namespace Hl7.Fhir.Rest
             _builder.Path = delimit(_builder.Path)+ _components;
             return this;
         }
+
+
+        public RestUrl ClearParams()
+        {
+            _parameters.Clear();
+            return this;
+        }
+
+
+        public RestUrl SetParam(string name, string value)
+        {
+            var ix = _parameters.FindIndex(p => p.Item1 == name);
+            var tp = Tuple.Create(name, value);
+            if (ix == -1)
+                _parameters.Add(tp);
+            else
+            {
+                _parameters.RemoveAll(p => p.Item1 == name);
+                _parameters.Insert(ix, tp);
+            }
+
+            return this;
+        }
+
+        public RestUrl ClearParam(string name)
+        {
+            _parameters.RemoveAll(p => p.Item1 == name);
+            return this;
+        }
+
 
         /// <summary>
         /// Add a query parameter to the RestUrl
@@ -141,6 +172,21 @@ namespace Hl7.Fhir.Rest
 
             return new Uri(other, UriKind.RelativeOrAbsolute).IsWithin(new Uri(baseAddress, UriKind.Absolute));
         }
+
+        /// <summary>
+        /// Implements comparison of two RestUrls based on the FHIR rules set out in http.html#2.1.0.1
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool IsSameUrl(RestUrl other)
+        {
+            var meUri = new RestUrl(this).ClearParams().ToString().RemovePrefix("http://").RemovePrefix("https://");
+            var otherUri = new RestUrl(other).ClearParams().ToString().RemovePrefix("http://").RemovePrefix("https://");
+
+            return meUri == otherUri;
+        }
+
+
 
         /// <summary>
         /// Returs a new RestUrl that represents a location after navigating to the specified path

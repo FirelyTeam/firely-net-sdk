@@ -220,13 +220,13 @@ namespace Hl7.Fhir.Rest
 
         private static bool isRelativeRestUrl(string url)
         {
-
             return !isAbsoluteUrl(url) && !isLocal(url) && !isUrn(url);
         }
 
         private static bool isUrn(string uri)
         {
-            return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
+            //   return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
+            return uri.StartsWith("urn:uuid:");   // Only UUID as per bundle.html#6.7.4
         }
 
         private static bool isLocal(string url)
@@ -278,6 +278,7 @@ namespace Hl7.Fhir.Rest
         {
             if (isRelativeRestUrl(url) || isAbsoluteRestUrl(url))
             {
+                Form = ResourceIdentityForm.Undetermined;
 
                 var uri = new Uri(url, UriKind.RelativeOrAbsolute);
                 string localPath = uri.IsAbsoluteUri ? uri.LocalPath : url;
@@ -477,19 +478,26 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public bool IsTargetOf(ResourceIdentity identity)
+        /// <summary>
+        /// Find out whether one ResourceIdentity references another ResourceIdentity
+        /// </summary>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public bool IsTargetOf(ResourceIdentity reference)
         {
-            if (identity.BaseUri != null)
+            if (reference.BaseUri != null)
             {
-                if (BaseUri != identity.BaseUri) return false;
+                //TODO: According to the spec, this comparison should ignore http/https
+                //(see http.html#2.1.0.1, under the header 'identity')
+                if (BaseUri != reference.BaseUri) return false;
             }
 
-            if (ResourceType != identity.ResourceType) return false;
-            if (Id != identity.Id) return false;
+            if (ResourceType != reference.ResourceType) return false;
+            if (Id != reference.Id) return false;
 
-            if (identity.VersionId != null)
+            if (reference.VersionId != null)
             {
-                if (VersionId != identity.VersionId) return false;
+                if (VersionId != reference.VersionId) return false;
             }
 
             return true;
@@ -512,16 +520,16 @@ namespace Hl7.Fhir.Rest
 
         public static bool IsRestResourceIdentity(string url)
         {
-            var ri = new ResourceIdentity(url);
-
-            if (ri.Form != ResourceIdentityForm.AbsoluteRestUrl && ri.Form != ResourceIdentityForm.RelativeRestUrl)
-                return false;
-
-            if (ri.ResourceType == null || ri.Id == null)
-                return false;
-
-            return ModelInfo.IsKnownResource(ri.ResourceType);
+            return HttpUtil.IsRestResourceIdentity(url);
         }
+
+        public static bool IsRestResourceIdentity(Uri uri)
+        {
+            if (uri == null) return false;
+
+            return HttpUtil.IsRestResourceIdentity(uri.OriginalString);
+        }
+
     }
 
     public enum ResourceIdentityForm
@@ -529,7 +537,8 @@ namespace Hl7.Fhir.Rest
         AbsoluteRestUrl,
         RelativeRestUrl,
         Urn,
-        Local
+        Local,
+        Undetermined
     }
 
     public enum UrnType
@@ -537,4 +546,6 @@ namespace Hl7.Fhir.Rest
         UUID,
         OID
     }
+
+   
 }

@@ -737,10 +737,7 @@ namespace Hl7.Fhir.Rest
             {
                 var bundle = resource as Bundle;
                 foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
-                {
-                    var entryBaseUri = entry.Base ?? baseUri;
-                    entry.Resource.ResourceBase = new Uri(entryBaseUri);
-                }
+                    entry.Resource.ResourceBase = new Uri(baseUri, UriKind.RelativeOrAbsolute);
             }
         }
 

@@ -18,20 +18,13 @@ namespace Hl7.Fhir.Model
 {
     public static class BundleExtensions
     {
-        /// <summary>
-        /// Find all entries in a Bundle with the given ResourceIdentity.
-        /// </summary>
-        /// <param name="bundle">Bundle to search in</param>
-        /// <param name="identity">The identity to find</param>
-        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
-        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceIdentity identity, bool includeDeleted = false)
+        public static Bundle AddResourceEntry(this Bundle b, Resource r, string fullUrl)
         {
-            if (identity == null) throw Error.ArgumentNull("reference");
-            if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
-            
-            return bundle.Entry.Where(be => be.GetResourceLocation(bundle.Base).IsTargetOf(identity) && (includeDeleted == true || !be.IsDeleted()));
+            b.Entry.Add(new Bundle.BundleEntryComponent() { Resource = r, FullUrl = fullUrl });
+
+            return b;
         }
+
 
         /// <summary>
         /// Identifies if this entry is a deleted transaction (entry.Transaction.Method == DELETE)
@@ -48,6 +41,83 @@ namespace Hl7.Fhir.Model
             return false;
         }
 
+
+        public static bool HasResource(this Bundle.BundleEntryComponent entry)
+        {
+            return entry.Resource != null;
+        }        
+
+        public static IEnumerable<Resource> GetResources(this Bundle bundle)
+        {
+            return bundle.Entry.Where(e => e.HasResource()).Select(e => e.Resource);
+        }
+        
+
+        /// <summary>
+        /// Find all entries in a Bundle that match the given reference.
+        /// </summary>
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="reference">An absolute reference to match against the fullUrl of the entries in the bundle</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceReference reference, bool includeDeleted = false)
+        {
+            return FindEntry(bundle, reference.Reference, includeDeleted);
+        }
+
+
+        public static bool IsTargetOf(this Bundle.BundleEntryComponent entry, string reference)
+        {
+            // From the spec: If the reference is version specific (either relative or absolute), then remove the version from the URL 
+            // before matching fullUrl, and then match the version based on Resource.meta.versionId.
+
+            if (reference == null) throw Error.ArgumentNull("reference");
+            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument("reference", "uri should be absolute");
+
+            string referencedVersion = ResourceIdentity.IsRestResourceIdentity(reference) ? (new ResourceIdentity(reference).VersionId) : null;
+            reference = referencedVersion != null ? (new ResourceIdentity(reference).WithoutVersion().ToString()) : reference;
+            var refRestUrl = new RestUrl(reference);
+
+            return refRestUrl.IsSameUrl(new RestUrl(entry.FullUrl)) &&
+                (referencedVersion == null || (entry.HasResource() && entry.Resource.VersionId == referencedVersion));
+        }
+
+        /// <summary>
+        /// Find all entries in a Bundle that match the given reference.
+        /// </summary>
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="reference">An absolute reference to match against the fullUrl of the entries in the bundle</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, string reference, bool includeDeleted = false)
+        {
+            if (reference == null) throw Error.ArgumentNull("reference");
+            if (bundle.Entry == null) return Enumerable.Empty<Bundle.BundleEntryComponent>();
+            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument("reference", "uri should be absolute");
+
+            string referencedVersion = ResourceIdentity.IsRestResourceIdentity(reference) ? (new ResourceIdentity(reference).VersionId) : null;
+            reference = referencedVersion != null ? (new ResourceIdentity(reference).WithoutVersion().ToString()) : reference;
+            var refRestUrl = new RestUrl(reference);
+            var result = bundle.Entry.Where(be => new RestUrl(be.FullUrl).IsSameUrl(refRestUrl) && (includeDeleted == true || !be.IsDeleted()));
+
+            if (referencedVersion != null)
+                result = result.Where(be => be.HasResource() && be.Resource.Meta.VersionId == referencedVersion);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Find all entries in a Bundle that match the given reference.
+        /// </summary>
+        /// <param name="bundle">Bundle to search in</param>
+        /// <param name="reference">The identity to find</param>
+        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
+        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, Uri reference, bool includeDeleted = false)
+        {
+            return FindEntry(bundle, reference.OriginalString, includeDeleted);
+        }
+
         /// <summary>
         /// Find all entries in a Bundle with the given type/id/version
         /// </summary>
@@ -62,38 +132,6 @@ namespace Hl7.Fhir.Model
             if (type == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
             var identity = ResourceIdentity.Build(type,id,version);
-
-            return FindEntry(bundle, identity, includeDeleted);
-        }
-
-
-        /// <summary>
-        /// Find all entries in a Bundle with the given uri
-        /// </summary>
-        /// <param name="bundle">Bundle to search in</param>
-        /// <param name="reference">The uri to find</param>
-        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
-        /// <returns>A list of Resources with the given uri, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, Uri reference, bool includeDeleted = false)
-        {
-            if (reference == null) throw Error.ArgumentNull("reference");
-            var identity = new ResourceIdentity(reference);
-
-            return FindEntry(bundle, identity, includeDeleted);
-        }
-
-
-        /// <summary>
-        /// Find all Resources in a Bundle referred to by the given ResourceReference.
-        /// </summary>
-        /// <param name="bundle">Bundle to search in</param>
-        /// <param name="reference">Reference to the entries you want to find</param>
-        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
-        /// <returns>A list of Resources with the given reference, or an empty list if none were found.</returns>
-        public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, ResourceReference reference, bool includeDeleted = false)
-        {
-            if (reference == null) throw Error.ArgumentNull("reference");
-            var identity = new ResourceIdentity(reference.Reference);
 
             return FindEntry(bundle, identity, includeDeleted);
         }
@@ -136,13 +174,9 @@ namespace Hl7.Fhir.Model
             return t.Cast<T>();
         }
 
-
         public static ResourceIdentity GetResourceLocation(this Bundle.BundleEntryComponent entry, string baseUrl = null)
         {
-            if (entry.Resource == null) return null;
-
-            var url = entry.Base ?? baseUrl;
-            return entry.Resource.ResourceIdentity(url);
+            return entry.FullUrl != null ?  new ResourceIdentity(entry.FullUrl) : null;
         }
     }
 

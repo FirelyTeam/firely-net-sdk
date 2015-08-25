@@ -22,42 +22,21 @@ namespace Hl7.Fhir.Rest
         {
             if (bundle == null) throw Error.ArgumentNull("bundle");
 
-            // Clone old bundle, without the entries (so, just the header)
-            var oldEntries = bundle.Entry;
-            Bundle result;
+            if (bundle.Type != Bundle.BundleType.Searchset) throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 
-            try
-            {
-                bundle.Entry = new List<Bundle.BundleEntryComponent>();
-                var xml = FhirSerializer.SerializeResourceToXml(bundle, summary:false);
-                result = (Bundle)FhirParser.ParseResourceFromXml(xml);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                bundle.Entry = oldEntries;
-            }
+            // Clone old bundle, without the entries (so, just the header)
+            Bundle result = (Bundle)bundle.DeepCopy();
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
             result.Meta = new Meta();
             result.Meta.LastUpdated = DateTimeOffset.Now;
-            result.Entry = new List<Bundle.BundleEntryComponent>();
 
-            foreach (var entry in bundle.Entry)
+            foreach (var entry in result.Entry)
             {
                 if (entry.Resource != null)
                 {
-                    if (!entry.IsDeleted())
-                    {
-                        Resource newEntry = client.Read<Resource>(entry.GetResourceLocation());
-                        result.Entry.Add(new Bundle.BundleEntryComponent() { Resource = newEntry, Base = bundle.Base, ElementId = entry.ElementId });
-                    }
+                    entry.Resource = client.Read<Resource>(entry.FullUrl);
                 }
-                else
-                    throw Error.NotSupported("Cannot refresh an entry of type {0}", messageArgs: entry.GetType().Name);
             }
 
             return result;

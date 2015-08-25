@@ -16,6 +16,17 @@ namespace Hl7.Fhir.Support
 {
     internal static class StringExtensions
     {
+        public static string RemovePrefix(this string instance, string prefix)
+        {
+            if (instance == null) return null;
+            if (prefix == null) return instance;
+
+            if (instance.StartsWith(prefix))
+                return instance.Remove(0, prefix.Length);
+            else
+                return instance;
+        }
+
         public static string FormatWith(this string format, params object[] args)
         {
             if (format == null)
