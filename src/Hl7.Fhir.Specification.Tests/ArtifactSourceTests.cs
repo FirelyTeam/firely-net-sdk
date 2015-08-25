@@ -189,15 +189,15 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var fa = ZipArtifactSource.CreateValidationSource();
 
-            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
+            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/vs/administrative-gender");
+            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/vs/location-status");
+            vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/location-status");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(ext is StructureDefinition);
 
             // Try to find an additional US profile (they are distributed with the spec for now)
-            var us = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/cond-uslab-uslabcond");
+            var us = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/uslab-dr");
             Assert.IsNotNull(us);
             Assert.IsTrue(us is StructureDefinition);           
         }
