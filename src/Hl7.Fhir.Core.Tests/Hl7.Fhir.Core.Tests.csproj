@@ -84,6 +84,7 @@
     <Compile Include="Rest\OperationsTests.cs" />
     <Compile Include="Rest\SearchParamsTests.cs" />
     <Compile Include="Rest\TestResourceIdentifier.cs" />
+    <Compile Include="Rest\ReferenceExtensionsTest.cs" />
     <Compile Include="Rest\TransactionBuilderTests.cs" />
     <Compile Include="Rest\TestRestUrl.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
