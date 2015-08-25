@@ -49,25 +49,23 @@ namespace Hl7.Fhir.Tests.Model
         {
             var testBundle = new Bundle();
 
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v2" } } });
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v3" } } });
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1234", Meta = new Meta { VersionId = "v4"} }, 
-                            Request = new Bundle.BundleEntryRequestComponent {Method = Bundle.HTTPVerb.DELETE}  });
+            testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v2" } }, "http://nu.nl/fhir/Patient/1234");
+            testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v3" } }, "http://nu.nl/fhir/Patient/1234");
+            testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v4" } }, "http://nu.nl/fhir/Patient/1234")
+                        .Request = new Bundle.BundleEntryRequestComponent { Method = Bundle.HTTPVerb.DELETE } ;
 
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "5678" }, FullUrl = "http://server1.com/fhir/Patient/5678" });
-            testBundle.Entry.Add(new Bundle.BundleEntryComponent { Resource = new Patient { Id = "1.2.3.4.5" }, FullUrl = "urn:oid:1.2.3.4.5" });
+            testBundle.AddResourceEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678");
+            testBundle.AddResourceEntry(new Patient { Id = "1.2.3.4.5" }, "urn:oid:1.2.3.4.5");
 
-            var result = testBundle.FindEntry("Patient", "1234");
+            var result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234");
             Assert.AreEqual(2, result.Count());
-            result = testBundle.FindEntry("Patient", "1234", includeDeleted: true);
+            result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234", includeDeleted: true);
             Assert.AreEqual(3, result.Count());
-            result = testBundle.FindEntry("Patient", "1234", "v3", includeDeleted: true);
+            result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234/_history/v3", includeDeleted: true);
             Assert.AreEqual(1, result.Count());
             result = testBundle.FindEntry(new Uri("http://server3.org/fhir/Patient/1234"));
             Assert.AreEqual(0, result.Count());
 
-            result = testBundle.FindEntry("Patient", "5678");
-            Assert.AreEqual(1, result.Count());
             result = testBundle.FindEntry(new Uri("http://server1.com/fhir/Patient/5678"));
             Assert.AreEqual(1, result.Count());
             result = testBundle.FindEntry(new Uri("http://server2.com/fhir/Patient/5678"));

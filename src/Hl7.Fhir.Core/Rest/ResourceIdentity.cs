@@ -225,8 +225,8 @@ namespace Hl7.Fhir.Rest
 
         private static bool isUrn(string uri)
         {
-            //   return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
-            return uri.StartsWith("urn:uuid:");   // Only UUID as per bundle.html#6.7.4
+            return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
+            //return uri.StartsWith("urn:uuid:");   // Only UUID as per bundle.html#6.7.4
         }
 
         private static bool isLocal(string url)

@@ -100,7 +100,6 @@ namespace Hl7.Fhir.Specification.Tests
             copy(zipPath, "flag.xsd", testPath);
             copy(zipPath, "patient.sch", testPath);
             copy(@"TestData", "TestPatient.xml", testPath);
-            copy(@"TestData", "TestValueSet.xml", testPath);
             File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
 
             Directory.CreateDirectory(Path.Combine(testPath, "sub"));
@@ -159,7 +158,8 @@ namespace Hl7.Fhir.Specification.Tests
             var fa = new FileDirectoryArtifactSource(testPath, includeSubdirectories:true);
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(7,names.Count());
+            Assert.AreEqual(5,names.Count());
+            Assert.IsTrue(names.Contains("TestPatient.json"));
         }
 
         [TestMethod]
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var resolver = new MultiArtifactSource(ZipArtifactSource.CreateValidationSource(), new WebArtifactSource());
 
-            var vs = resolver.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
+            var vs = resolver.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
@@ -325,13 +325,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Ensure looking up a failed endpoint repeatedly does not cost much time
             sw1.Start();
-            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl");
+            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
             sw1.Stop();
 
             var sw2 = new Stopwatch();
 
             sw2.Start();
-            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl");
+            src.LoadConformanceResourceByUrl("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
             sw2.Stop();
 
             Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
@@ -339,11 +339,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now try an existing artifact
             sw1.Restart();
-            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
+            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             sw1.Stop();
 
             sw2.Restart();
-            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/v2/vs/0292");
+            src.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);

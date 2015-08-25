@@ -106,9 +106,6 @@
     <Content Include="TestData\TestPatient.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TestValueSet.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <Content Include="TestData\ldlcholesterol-correct.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -18,11 +18,12 @@ namespace Hl7.Fhir.Model
 {
     public static class BundleExtensions
     {
-        public static Bundle AddResourceEntry(this Bundle b, Resource r, string fullUrl)
+        public static Bundle.BundleEntryComponent AddResourceEntry(this Bundle b, Resource r, string fullUrl)
         {
-            b.Entry.Add(new Bundle.BundleEntryComponent() { Resource = r, FullUrl = fullUrl });
+            var newEntry = new Bundle.BundleEntryComponent() { Resource = r, FullUrl = fullUrl };
+            b.Entry.Add(newEntry);
 
-            return b;
+            return newEntry;
         }
 
 
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
         /// <param name="version">Version of the entry to find. Optional.</param>
         /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
         /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
+        [Obsolete("Bundle Entries are now identified by their fullUrl, so cannot be referenced anymore by just the type and id. Use the other overloads instead")]
         public static IEnumerable<Bundle.BundleEntryComponent> FindEntry(this Bundle bundle, string type, string id, string version = null, bool includeDeleted = false)
         {
             if (type == null) throw Error.ArgumentNull("resource");

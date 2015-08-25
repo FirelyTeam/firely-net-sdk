@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using System.Net;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -46,6 +47,7 @@ namespace Hl7.Fhir.Specification.Source
         public Hl7.Fhir.Model.Resource LoadConformanceResourceByUrl(string url)
         {
             if (url == null) throw Error.ArgumentNull("identifier");
+            if (!ResourceIdentity.IsRestResourceIdentity(url)) throw Error.Argument("url", "Canonical url must be a FHIR REST identity");
 
             var id = new ResourceIdentity(url);
 
@@ -60,6 +62,11 @@ namespace Hl7.Fhir.Specification.Source
             {
                 return null;
             }
+            catch (WebException)
+            {
+                return null;
+            }
+
         }
     }
 }
