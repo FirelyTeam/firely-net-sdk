@@ -251,16 +251,20 @@
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
+    <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
+    <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
     <Compile Include="Rest\HttpToEntryExtensions.cs" />
     <Compile Include="Rest\Requester.cs" />
+    <Compile Include="Rest\ResourceReferenceExtensions.cs" />
     <Compile Include="Rest\UriParamList.cs" />
     <Compile Include="Rest\SearchParamsExtensions.cs" />
     <Compile Include="Rest\SearchParams.cs" />
@@ -344,7 +348,6 @@
     <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EwoutFhirNetApi.snk" />
     <None Include="packages.config" />
     <None Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
