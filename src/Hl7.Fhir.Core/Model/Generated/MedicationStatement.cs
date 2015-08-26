@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,18 +61,23 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The medication is still being taken.
             /// </summary>
-            [EnumLiteral("in-progress")]
-            InProgress,
+            [EnumLiteral("active")]
+            Active,
             /// <summary>
-            /// All actions that are implied by the statement have occurred.
+            /// The medication is no longer being taken.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The statement was entered in error and therefore nullified.
+            /// The statement was entered in error.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
+            /// <summary>
+            /// The medication may be taken at some time in the future.
+            /// </summary>
+            [EnumLiteral("intended")]
+            Intended,
         }
         
         [FhirType("MedicationStatementDosageComponent")]
@@ -144,15 +149,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where on body was medication administered?
             /// </summary>
-            [FhirElement("site", InSummary=true, Order=70)]
+            [FhirElement("site", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Site
+            public Hl7.Fhir.Model.Element Site
             {
                 get { return _Site; }
                 set { _Site = value; OnPropertyChanged("Site"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Site;
+            private Hl7.Fhir.Model.Element _Site;
             
             /// <summary>
             /// How did the medication enter the body?
@@ -183,15 +189,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Amount administered in one dose
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=100)]
+            [FhirElement("quantity", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Element Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Element _Quantity;
             
             /// <summary>
             /// Dose quantity per unit of time
@@ -230,10 +237,10 @@ namespace Hl7.Fhir.Model
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
                     if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
-                    if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Element)Quantity.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                     return dest;
@@ -361,7 +368,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// in-progress | completed | entered-in-error
+        /// active | completed | entered-in-error | intended
         /// </summary>
         [FhirElement("status", Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -375,7 +382,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus> _StatusElement;
         
         /// <summary>
-        /// in-progress | completed | entered-in-error
+        /// active | completed | entered-in-error | intended
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

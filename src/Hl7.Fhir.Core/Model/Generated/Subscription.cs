@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("queued")]
             Queued,
             /// <summary>
-            /// The message has been delivered to it's intended recipient
+            /// The message has been delivered to its intended recipient
             /// </summary>
             [EnumLiteral("delivered")]
             Delivered,

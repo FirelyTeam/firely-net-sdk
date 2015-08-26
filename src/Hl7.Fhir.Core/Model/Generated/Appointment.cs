@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,6 +58,11 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("AppointmentStatus")]
         public enum AppointmentStatus
         {
+            /// <summary>
+            /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet
+            /// </summary>
+            [EnumLiteral("proposed")]
+            Proposed,
             /// <summary>
             /// Some or all of the participant(s) have not finalized their acceptance of the appointment request
             /// </summary>
@@ -309,7 +314,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// pending | booked | arrived | fulfilled | cancelled | noshow
+        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -323,7 +328,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> _StatusElement;
         
         /// <summary>
-        /// pending | booked | arrived | fulfilled | cancelled | noshow
+        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -435,7 +440,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time that the appointment is to take place
         /// </summary>
         [FhirElement("start", InSummary=true, Order=150)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
         {
@@ -468,7 +472,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time that the appointment is to conclude
         /// </summary>
         [FhirElement("end", InSummary=true, Order=160)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -498,9 +501,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Number of minutes that the appointment is to take. This can be less than the duration between the start and end times (where actual time of appointment is only an estimate or is a planned appointment request)
+        /// </summary>
+        [FhirElement("minutesDuration", Order=170)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt MinutesDurationElement
+        {
+            get { return _MinutesDurationElement; }
+            set { _MinutesDurationElement = value; OnPropertyChanged("MinutesDurationElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _MinutesDurationElement;
+        
+        /// <summary>
+        /// Number of minutes that the appointment is to take. This can be less than the duration between the start and end times (where actual time of appointment is only an estimate or is a planned appointment request)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? MinutesDuration
+        {
+            get { return MinutesDurationElement != null ? MinutesDurationElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  MinutesDurationElement = null; 
+                else
+                  MinutesDurationElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("MinutesDuration");
+            }
+        }
+        
+        /// <summary>
         /// The slot that this appointment is filling. If provided then the schedule will not be provided as slots are not recursive, and the start/end values MUST be the same as from the slot
         /// </summary>
-        [FhirElement("slot", Order=170)]
+        [FhirElement("slot", Order=180)]
         [References("Slot")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -515,7 +550,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments about the appointment
         /// </summary>
-        [FhirElement("comment", Order=180)]
+        [FhirElement("comment", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -547,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An Order that lead to the creation of this appointment
         /// </summary>
-        [FhirElement("order", Order=190)]
+        [FhirElement("order", Order=200)]
         [References("Order")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Order
@@ -561,7 +596,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of participants involved in the appointment
         /// </summary>
-        [FhirElement("participant", Order=200)]
+        [FhirElement("participant", Order=210)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> Participant
@@ -587,6 +622,7 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
+                if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
                 if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(Order != null) dest.Order = (Hl7.Fhir.Model.ResourceReference)Order.DeepCopy();
@@ -616,6 +652,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+            if( !DeepComparable.Matches(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
             if( !DeepComparable.Matches(Slot, otherT.Slot)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(Order, otherT.Order)) return false;
@@ -638,6 +675,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+            if( !DeepComparable.IsExactly(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
             if( !DeepComparable.IsExactly(Slot, otherT.Slot)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(Order, otherT.Order)) return false;

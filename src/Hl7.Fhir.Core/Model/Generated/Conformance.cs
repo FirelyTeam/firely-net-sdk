@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -559,9 +559,23 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Search params for searching all resources
+            /// </summary>
+            [FhirElement("searchParam", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam
+            {
+                get { if(_SearchParam==null) _SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(); return _SearchParam; }
+                set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> _SearchParam;
+            
+            /// <summary>
             /// Definition of an operation or a custom query
             /// </summary>
-            [FhirElement("operation", InSummary=true, Order=100)]
+            [FhirElement("operation", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> Operation
@@ -571,39 +585,6 @@ namespace Hl7.Fhir.Model
             }
             
             private List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> _Operation;
-            
-            /// <summary>
-            /// How documents are accepted in /Mailbox
-            /// </summary>
-            [FhirElement("documentMailbox", InSummary=true, Order=110)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> DocumentMailboxElement
-            {
-                get { if(_DocumentMailboxElement==null) _DocumentMailboxElement = new List<Hl7.Fhir.Model.FhirUri>(); return _DocumentMailboxElement; }
-                set { _DocumentMailboxElement = value; OnPropertyChanged("DocumentMailboxElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.FhirUri> _DocumentMailboxElement;
-            
-            /// <summary>
-            /// How documents are accepted in /Mailbox
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> DocumentMailbox
-            {
-                get { return DocumentMailboxElement != null ? DocumentMailboxElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if(value == null)
-                      DocumentMailboxElement = null; 
-                    else
-                      DocumentMailboxElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
-                    OnPropertyChanged("DocumentMailbox");
-                }
-            }
             
             /// <summary>
             /// Compartments served/used by system
@@ -651,8 +632,8 @@ namespace Hl7.Fhir.Model
                     if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent>(Resource.DeepCopy());
                     if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.Conformance.SystemInteractionComponent>(Interaction.DeepCopy());
                     if(TransactionModeElement != null) dest.TransactionModeElement = (Code<Hl7.Fhir.Model.Conformance.TransactionMode>)TransactionModeElement.DeepCopy();
+                    if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(SearchParam.DeepCopy());
                     if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent>(Operation.DeepCopy());
-                    if(DocumentMailboxElement != null) dest.DocumentMailboxElement = new List<Hl7.Fhir.Model.FhirUri>(DocumentMailboxElement.DeepCopy());
                     if(CompartmentElement != null) dest.CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(CompartmentElement.DeepCopy());
                     return dest;
                 }
@@ -677,8 +658,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.Matches(TransactionModeElement, otherT.TransactionModeElement)) return false;
+                if( !DeepComparable.Matches(SearchParam, otherT.SearchParam)) return false;
                 if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
-                if( !DeepComparable.Matches(DocumentMailboxElement, otherT.DocumentMailboxElement)) return false;
                 if( !DeepComparable.Matches(CompartmentElement, otherT.CompartmentElement)) return false;
                 
                 return true;
@@ -696,8 +677,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.IsExactly(TransactionModeElement, otherT.TransactionModeElement)) return false;
+                if( !DeepComparable.IsExactly(SearchParam, otherT.SearchParam)) return false;
                 if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
-                if( !DeepComparable.IsExactly(DocumentMailboxElement, otherT.DocumentMailboxElement)) return false;
                 if( !DeepComparable.IsExactly(CompartmentElement, otherT.CompartmentElement)) return false;
                 
                 return true;

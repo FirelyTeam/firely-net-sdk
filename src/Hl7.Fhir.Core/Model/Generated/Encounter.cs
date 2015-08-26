@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -852,19 +852,19 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EpisodeOfCare;
         
         /// <summary>
-        /// Incoming Referral Request
+        /// The Referral that initiated this encounter
         /// </summary>
-        [FhirElement("incomingReferralRequest", Order=160)]
+        [FhirElement("incomingReferral", Order=160)]
         [References("ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> IncomingReferralRequest
+        public List<Hl7.Fhir.Model.ResourceReference> IncomingReferral
         {
-            get { if(_IncomingReferralRequest==null) _IncomingReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(); return _IncomingReferralRequest; }
-            set { _IncomingReferralRequest = value; OnPropertyChanged("IncomingReferralRequest"); }
+            get { if(_IncomingReferral==null) _IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(); return _IncomingReferral; }
+            set { _IncomingReferral = value; OnPropertyChanged("IncomingReferral"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _IncomingReferralRequest;
+        private List<Hl7.Fhir.Model.ResourceReference> _IncomingReferral;
         
         /// <summary>
         /// List of participants involved in the encounter
@@ -883,16 +883,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The appointment that scheduled this encounter
         /// </summary>
-        [FhirElement("fulfills", InSummary=true, Order=180)]
+        [FhirElement("appointment", InSummary=true, Order=180)]
         [References("Appointment")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Fulfills
+        public Hl7.Fhir.Model.ResourceReference Appointment
         {
-            get { return _Fulfills; }
-            set { _Fulfills = value; OnPropertyChanged("Fulfills"); }
+            get { return _Appointment; }
+            set { _Appointment = value; OnPropertyChanged("Appointment"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Fulfills;
+        private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
         /// The start and end time of the encounter
@@ -1031,9 +1031,9 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
-                if(IncomingReferralRequest != null) dest.IncomingReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferralRequest.DeepCopy());
+                if(IncomingReferral != null) dest.IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferral.DeepCopy());
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(Participant.DeepCopy());
-                if(Fulfills != null) dest.Fulfills = (Hl7.Fhir.Model.ResourceReference)Fulfills.DeepCopy();
+                if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
@@ -1067,9 +1067,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
-            if( !DeepComparable.Matches(IncomingReferralRequest, otherT.IncomingReferralRequest)) return false;
+            if( !DeepComparable.Matches(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
-            if( !DeepComparable.Matches(Fulfills, otherT.Fulfills)) return false;
+            if( !DeepComparable.Matches(Appointment, otherT.Appointment)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Length, otherT.Length)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
@@ -1096,9 +1096,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
-            if( !DeepComparable.IsExactly(IncomingReferralRequest, otherT.IncomingReferralRequest)) return false;
+            if( !DeepComparable.IsExactly(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
-            if( !DeepComparable.IsExactly(Fulfills, otherT.Fulfills)) return false;
+            if( !DeepComparable.IsExactly(Appointment, otherT.Appointment)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Length, otherT.Length)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,6 +78,16 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("source")]
             Source,
+            /// <summary>
+            /// A device that operates independently of an author on custodian's algorithms for data extraction of existing information for purpose of generating a new artifact.
+            /// </summary>
+            [EnumLiteral("assembler")]
+            Assembler,
+            /// <summary>
+            /// A device used by an author to record new information, which may also be used by the author to select existing information for aggregation with newly recorded information for the purpose of generating a new artifact.
+            /// </summary>
+            [EnumLiteral("composer")]
+            Composer,
         }
         
         [FhirType("ProvenanceAgentComponent")]
@@ -88,7 +98,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProvenanceAgentComponent"; } }
             
             /// <summary>
-            /// Agents Role
+            /// What the agents involvement was
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -186,7 +196,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProvenanceEntityComponent"; } }
             
             /// <summary>
-            /// derivation | revision | quotation | source
+            /// derivation | revision | quotation | source | assembler | composer
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -200,7 +210,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> _RoleElement;
             
             /// <summary>
-            /// derivation | revision | quotation | source
+            /// derivation | revision | quotation | source | assembler | composer
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -219,7 +229,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Entity Type
+            /// The type of resource in this entity
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]

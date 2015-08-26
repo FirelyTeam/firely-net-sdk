@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> _Communication;
         
         /// <summary>
-        /// Patient's nominated care provider
+        /// Patient's nominated primary care provider
         /// </summary>
         [FhirElement("careProvider", Order=230)]
         [References("Organization","Practitioner")]

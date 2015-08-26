@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -332,9 +332,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Whether this practitioner's record is in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this practitioner's record is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.HumanName Name
         {
@@ -347,7 +379,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A contact detail for the practitioner
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=110)]
+        [FhirElement("telecom", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -361,7 +393,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where practitioner can be found/visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=120)]
+        [FhirElement("address", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -375,7 +407,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=130)]
+        [FhirElement("gender", InSummary=true, Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -407,7 +439,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date  on which the practitioner was born
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=140)]
+        [FhirElement("birthDate", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {
@@ -439,7 +471,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=150)]
+        [FhirElement("photo", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -453,7 +485,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The list of Roles/Organizations that the Practitioner is associated with
         /// </summary>
-        [FhirElement("practitionerRole", Order=160)]
+        [FhirElement("practitionerRole", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent> PractitionerRole
@@ -467,7 +499,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Qualifications obtained by training and certification
         /// </summary>
-        [FhirElement("qualification", Order=170)]
+        [FhirElement("qualification", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
@@ -481,7 +513,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A language the practitioner is able to use in patient communication
         /// </summary>
-        [FhirElement("communication", Order=180)]
+        [FhirElement("communication", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -500,6 +532,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
@@ -527,6 +560,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Name, otherT.Name)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
@@ -547,6 +581,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;

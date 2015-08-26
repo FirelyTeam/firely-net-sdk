@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Definition of an elements in a resource or extension
+    /// Definition of an element in a resource or extension
     /// </summary>
     [FhirType("ElementDefinition")]
     [DataContract]

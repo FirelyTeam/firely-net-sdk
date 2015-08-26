@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("mapping")]
             Mapping,
             /// <summary>
-            /// The context is a particular extension from a particular profile.  Expressed as uri#name, where uri identifies the profile and #name identifies the extension code
+            /// The context is a particular extension from a particular profile, a uri that identifies the extension definition
             /// </summary>
             [EnumLiteral("extension")]
             Extension,

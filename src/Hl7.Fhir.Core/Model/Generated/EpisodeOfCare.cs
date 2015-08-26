@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,23 +199,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EpisodeOfCareCareTeamComponent"; } }
             
             /// <summary>
-            /// The practitioner (or Organization) within the team
-            /// </summary>
-            [FhirElement("member", InSummary=true, Order=40)]
-            [References("Practitioner","Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Member
-            {
-                get { return _Member; }
-                set { _Member = value; OnPropertyChanged("Member"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Member;
-            
-            /// <summary>
             /// The role that this team member is taking within this episode of care
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=50)]
+            [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -229,7 +215,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The period of time that this practitioner is performing some role within the episode of care
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=60)]
+            [FhirElement("period", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -239,6 +225,20 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Period _Period;
             
+            /// <summary>
+            /// The practitioner (or Organization) within the team
+            /// </summary>
+            [FhirElement("member", InSummary=true, Order=60)]
+            [References("Practitioner","Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Member
+            {
+                get { return _Member; }
+                set { _Member = value; OnPropertyChanged("Member"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Member;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as EpisodeOfCareCareTeamComponent;
@@ -246,9 +246,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
                     return dest;
                 }
                 else
@@ -266,9 +266,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Member, otherT.Member)) return false;
                 if( !DeepComparable.Matches(Role, otherT.Role)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(Member, otherT.Member)) return false;
                 
                 return true;
             }
@@ -279,9 +279,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
                 
                 return true;
             }

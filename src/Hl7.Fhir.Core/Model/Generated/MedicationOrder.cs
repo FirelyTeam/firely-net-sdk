@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Aug 18, 2015 10:39+0200 for FHIR v0.5.0
+// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,32 +64,27 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// Actions implied by the prescription have been temporarily halted, but are expected to continue later.  May also be called "suspended".
+            /// Actions implied by the prescription are to be temporarily halted, but are expected to continue later.  May also be called "suspended".
             /// </summary>
             [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
-            /// All actions that are implied by the prescription have occurred (this will rarely be made explicit).
+            /// All actions that are implied by the prescription have occurred.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The prescription was entered in error and therefore nullified.
+            /// The prescription was entered in error.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// Actions implied by the prescription have been permanently halted, before all of them occurred.
+            /// Actions implied by the prescription are to be permanently halted, before all of them occurred.
             /// </summary>
             [EnumLiteral("stopped")]
             Stopped,
             /// <summary>
-            /// The prescription was replaced by a newer one, which encompasses all the information in the previous one.
-            /// </summary>
-            [EnumLiteral("superseded")]
-            Superseded,
-            /// <summary>
-            /// The prescription is not yet 'actionable', i.e. it is a work in progress, required sign-off, need to be run through decision support.
+            /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, needs to be run through decision support process.
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
@@ -601,7 +596,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// active | on-hold | completed | entered-in-error | stopped | superseded | draft
+        /// active | on-hold | completed | entered-in-error | stopped | draft
         /// </summary>
         [FhirElement("status", Order=110)]
         [DataMember]
@@ -614,7 +609,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationOrder.MedicationOrderStatus> _StatusElement;
         
         /// <summary>
-        /// active | on-hold | completed | entered-in-error | stopped | superseded | draft
+        /// active | on-hold | completed | entered-in-error | stopped | draft
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
