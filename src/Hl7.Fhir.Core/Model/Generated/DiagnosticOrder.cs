@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -152,157 +152,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("asap")]
             Asap,
         }
-        
-        [FhirType("DiagnosticOrderItemComponent")]
-        [DataContract]
-        public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "DiagnosticOrderItemComponent"; } }
-            
-            /// <summary>
-            /// Code to indicate the item (test or panel) being ordered
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// If this item relates to specific specimens
-            /// </summary>
-            [FhirElement("specimen", InSummary=true, Order=50)]
-            [References("Specimen")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Specimen
-            {
-                get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
-                set { _Specimen = value; OnPropertyChanged("Specimen"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
-            
-            /// <summary>
-            /// Location of requested test (if applicable)
-            /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept BodySite
-            {
-                get { return _BodySite; }
-                set { _BodySite = value; OnPropertyChanged("BodySite"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _BodySite;
-            
-            /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
-            /// </summary>
-            [FhirElement("status", InSummary=true, Order=70)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
-            {
-                get { return _StatusElement; }
-                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
-            
-            /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
-            {
-                get { return StatusElement != null ? StatusElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StatusElement = null; 
-                    else
-                      StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
-                    OnPropertyChanged("Status");
-                }
-            }
-            
-            /// <summary>
-            /// Events specific to this item
-            /// </summary>
-            [FhirElement("event", InSummary=true, Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
-            {
-                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
-                set { _Event = value; OnPropertyChanged("Event"); }
-            }
-            
-            private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as DiagnosticOrderItemComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
-                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new DiagnosticOrderItemComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as DiagnosticOrderItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
-                if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.Matches(Event, otherT.Event)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as DiagnosticOrderItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
-                if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         [FhirType("DiagnosticOrderEventComponent")]
         [DataContract]
@@ -450,6 +299,157 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
                 if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
                 if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("DiagnosticOrderItemComponent")]
+        [DataContract]
+        public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DiagnosticOrderItemComponent"; } }
+            
+            /// <summary>
+            /// Code to indicate the item (test or panel) being ordered
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// If this item relates to specific specimens
+            /// </summary>
+            [FhirElement("specimen", InSummary=true, Order=50)]
+            [References("Specimen")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Specimen
+            {
+                get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
+                set { _Specimen = value; OnPropertyChanged("Specimen"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
+            
+            /// <summary>
+            /// Location of requested test (if applicable)
+            /// </summary>
+            [FhirElement("bodySite", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept BodySite
+            {
+                get { return _BodySite; }
+                set { _BodySite = value; OnPropertyChanged("BodySite"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _BodySite;
+            
+            /// <summary>
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// </summary>
+            [FhirElement("status", InSummary=true, Order=70)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
+            {
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
+            
+            /// <summary>
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
+            /// Events specific to this item
+            /// </summary>
+            [FhirElement("event", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
+            {
+                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
+                set { _Event = value; OnPropertyChanged("Event"); }
+            }
+            
+            private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DiagnosticOrderItemComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
+                    if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
+                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DiagnosticOrderItemComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosticOrderItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
+                if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosticOrderItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
+                if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
                 
                 return true;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -325,105 +325,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CompositionEventComponent")]
-        [DataContract]
-        public partial class CompositionEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "CompositionEventComponent"; } }
-            
-            /// <summary>
-            /// Code(s) that apply to the event being documented
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Code
-            {
-                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
-            
-            /// <summary>
-            /// The period covered by the documentation
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// The event(s) being documented
-            /// </summary>
-            [FhirElement("detail", InSummary=true, Order=60)]
-            [References()]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Detail
-            {
-                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
-                set { _Detail = value; OnPropertyChanged("Detail"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as CompositionEventComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new CompositionEventComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as CompositionEventComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as CompositionEventComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("CompositionAttesterComponent")]
         [DataContract]
         public partial class CompositionAttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -553,6 +454,105 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
                 if( !DeepComparable.IsExactly(Party, otherT.Party)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("CompositionEventComponent")]
+        [DataContract]
+        public partial class CompositionEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CompositionEventComponent"; } }
+            
+            /// <summary>
+            /// Code(s) that apply to the event being documented
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
+            {
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+            
+            /// <summary>
+            /// The period covered by the documentation
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// The event(s) being documented
+            /// </summary>
+            [FhirElement("detail", InSummary=true, Order=60)]
+            [References()]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Detail
+            {
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
+                set { _Detail = value; OnPropertyChanged("Detail"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CompositionEventComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CompositionEventComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CompositionEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CompositionEventComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
                 return true;
             }

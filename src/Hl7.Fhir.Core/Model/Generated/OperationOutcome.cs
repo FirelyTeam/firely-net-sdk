@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,34 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.OperationOutcome; } }
         [NotMapped]
         public override string TypeName { get { return "OperationOutcome"; } }
+        
+        /// <summary>
+        /// How the issue affects the success of the action
+        /// </summary>
+        [FhirEnumeration("IssueSeverity")]
+        public enum IssueSeverity
+        {
+            /// <summary>
+            /// The issue caused the action to fail, and no further checking could be performed
+            /// </summary>
+            [EnumLiteral("fatal")]
+            Fatal,
+            /// <summary>
+            /// The issue is sufficiently important to cause the action to fail
+            /// </summary>
+            [EnumLiteral("error")]
+            Error,
+            /// <summary>
+            /// The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired
+            /// </summary>
+            [EnumLiteral("warning")]
+            Warning,
+            /// <summary>
+            /// The issue has no relation to the degree of success of the action
+            /// </summary>
+            [EnumLiteral("information")]
+            Information,
+        }
         
         /// <summary>
         /// A code that describes the type of issue
@@ -203,34 +231,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("informational")]
             Informational,
-        }
-        
-        /// <summary>
-        /// How the issue affects the success of the action
-        /// </summary>
-        [FhirEnumeration("IssueSeverity")]
-        public enum IssueSeverity
-        {
-            /// <summary>
-            /// The issue caused the action to fail, and no further checking could be performed
-            /// </summary>
-            [EnumLiteral("fatal")]
-            Fatal,
-            /// <summary>
-            /// The issue is sufficiently important to cause the action to fail
-            /// </summary>
-            [EnumLiteral("error")]
-            Error,
-            /// <summary>
-            /// The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired
-            /// </summary>
-            [EnumLiteral("warning")]
-            Warning,
-            /// <summary>
-            /// The issue has no relation to the degree of success of the action
-            /// </summary>
-            [EnumLiteral("information")]
-            Information,
         }
         
         [FhirType("OperationOutcomeIssueComponent")]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,6 +84,237 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("stopped")]
             Stopped,
         }
+        
+        [FhirType("MedicationDispenseDosageInstructionComponent")]
+        [DataContract]
+        public partial class MedicationDispenseDosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "MedicationDispenseDosageInstructionComponent"; } }
+            
+            /// <summary>
+            /// Dosage Instructions
+            /// </summary>
+            [FhirElement("text", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString TextElement
+            {
+                get { return _TextElement; }
+                set { _TextElement = value; OnPropertyChanged("TextElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _TextElement;
+            
+            /// <summary>
+            /// Dosage Instructions
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Text
+            {
+                get { return TextElement != null ? TextElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TextElement = null; 
+                    else
+                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Text");
+                }
+            }
+            
+            /// <summary>
+            /// E.g. "Take with food"
+            /// </summary>
+            [FhirElement("additionalInstructions", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept AdditionalInstructions
+            {
+                get { return _AdditionalInstructions; }
+                set { _AdditionalInstructions = value; OnPropertyChanged("AdditionalInstructions"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _AdditionalInstructions;
+            
+            /// <summary>
+            /// When medication should be administered
+            /// </summary>
+            [FhirElement("timing", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Timing
+            {
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Timing;
+            
+            /// <summary>
+            /// Take "as needed" f(or x)
+            /// </summary>
+            [FhirElement("asNeeded", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element AsNeeded
+            {
+                get { return _AsNeeded; }
+                set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _AsNeeded;
+            
+            /// <summary>
+            /// Body site to administer to
+            /// </summary>
+            [FhirElement("site", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Site
+            {
+                get { return _Site; }
+                set { _Site = value; OnPropertyChanged("Site"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Site;
+            
+            /// <summary>
+            /// How drug should enter body
+            /// </summary>
+            [FhirElement("route", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Route
+            {
+                get { return _Route; }
+                set { _Route = value; OnPropertyChanged("Route"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Route;
+            
+            /// <summary>
+            /// Technique for administering medication
+            /// </summary>
+            [FhirElement("method", InSummary=true, Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Method
+            {
+                get { return _Method; }
+                set { _Method = value; OnPropertyChanged("Method"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Method;
+            
+            /// <summary>
+            /// Amount of medication per dose
+            /// </summary>
+            [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Dose
+            {
+                get { return _Dose; }
+                set { _Dose = value; OnPropertyChanged("Dose"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Dose;
+            
+            /// <summary>
+            /// Amount of medication per unit of time
+            /// </summary>
+            [FhirElement("rate", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Rate
+            {
+                get { return _Rate; }
+                set { _Rate = value; OnPropertyChanged("Rate"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Rate;
+            
+            /// <summary>
+            /// Upper limit on medication per unit of time
+            /// </summary>
+            [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
+            [DataMember]
+            public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
+            {
+                get { return _MaxDosePerPeriod; }
+                set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
+            }
+            
+            private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as MedicationDispenseDosageInstructionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                    if(AdditionalInstructions != null) dest.AdditionalInstructions = (Hl7.Fhir.Model.CodeableConcept)AdditionalInstructions.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
+                    if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                    if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
+                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new MedicationDispenseDosageInstructionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationDispenseDosageInstructionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+                if( !DeepComparable.Matches(Route, otherT.Route)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+                if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationDispenseDosageInstructionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
+                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
+                if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
+                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
+                if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("MedicationDispenseSubstitutionComponent")]
         [DataContract]
@@ -178,236 +409,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.IsExactly(ResponsibleParty, otherT.ResponsibleParty)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("MedicationDispenseDosageInstructionComponent")]
-        [DataContract]
-        public partial class MedicationDispenseDosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "MedicationDispenseDosageInstructionComponent"; } }
-            
-            /// <summary>
-            /// Dosage Instructions
-            /// </summary>
-            [FhirElement("text", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TextElement
-            {
-                get { return _TextElement; }
-                set { _TextElement = value; OnPropertyChanged("TextElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TextElement;
-            
-            /// <summary>
-            /// Dosage Instructions
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Text
-            {
-                get { return TextElement != null ? TextElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TextElement = null; 
-                    else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Text");
-                }
-            }
-            
-            /// <summary>
-            /// E.g. "Take with food"
-            /// </summary>
-            [FhirElement("additionalInstructions", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept AdditionalInstructions
-            {
-                get { return _AdditionalInstructions; }
-                set { _AdditionalInstructions = value; OnPropertyChanged("AdditionalInstructions"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _AdditionalInstructions;
-            
-            /// <summary>
-            /// When medication should be administered
-            /// </summary>
-            [FhirElement("timing", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Timing Timing
-            {
-                get { return _Timing; }
-                set { _Timing = value; OnPropertyChanged("Timing"); }
-            }
-            
-            private Hl7.Fhir.Model.Timing _Timing;
-            
-            /// <summary>
-            /// Take "as needed" f(or x)
-            /// </summary>
-            [FhirElement("asNeeded", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element AsNeeded
-            {
-                get { return _AsNeeded; }
-                set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _AsNeeded;
-            
-            /// <summary>
-            /// Body site to administer to
-            /// </summary>
-            [FhirElement("site", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Site
-            {
-                get { return _Site; }
-                set { _Site = value; OnPropertyChanged("Site"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Site;
-            
-            /// <summary>
-            /// How drug should enter body
-            /// </summary>
-            [FhirElement("route", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Route
-            {
-                get { return _Route; }
-                set { _Route = value; OnPropertyChanged("Route"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Route;
-            
-            /// <summary>
-            /// Technique for administering medication
-            /// </summary>
-            [FhirElement("method", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Method
-            {
-                get { return _Method; }
-                set { _Method = value; OnPropertyChanged("Method"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Method;
-            
-            /// <summary>
-            /// Amount of medication per dose
-            /// </summary>
-            [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Dose
-            {
-                get { return _Dose; }
-                set { _Dose = value; OnPropertyChanged("Dose"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Dose;
-            
-            /// <summary>
-            /// Amount of medication per unit of time
-            /// </summary>
-            [FhirElement("rate", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Rate
-            {
-                get { return _Rate; }
-                set { _Rate = value; OnPropertyChanged("Rate"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Rate;
-            
-            /// <summary>
-            /// Upper limit on medication per unit of time
-            /// </summary>
-            [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
-            [DataMember]
-            public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
-            {
-                get { return _MaxDosePerPeriod; }
-                set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
-            }
-            
-            private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as MedicationDispenseDosageInstructionComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(AdditionalInstructions != null) dest.AdditionalInstructions = (Hl7.Fhir.Model.CodeableConcept)AdditionalInstructions.DeepCopy();
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
-                    if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
-                    if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
-                    if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
-                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
-                    if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new MedicationDispenseDosageInstructionComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as MedicationDispenseDosageInstructionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
-                if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
-                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
-                if( !DeepComparable.Matches(Route, otherT.Route)) return false;
-                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-                if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
-                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
-                if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as MedicationDispenseDosageInstructionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
-                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
-                if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
-                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
-                if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
-                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-                if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
-                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
-                if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
                 return true;
             }

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// Message recipient
         /// </summary>
         [FhirElement("recipient", Order=120)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> _Payload;
         
         /// <summary>
-        /// Communication medium
+        /// A channel of communication
         /// </summary>
         [FhirElement("medium", Order=140)]
         [Cardinality(Min=0,Max=-1)]
@@ -373,6 +373,20 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
+        /// <summary>
+        /// CommunicationRequest producing this message
+        /// </summary>
+        [FhirElement("requestDetail", Order=210)]
+        [References("CommunicationRequest")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference RequestDetail
+        {
+            get { return _RequestDetail; }
+            set { _RequestDetail = value; OnPropertyChanged("RequestDetail"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _RequestDetail;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Communication;
@@ -392,6 +406,7 @@ namespace Hl7.Fhir.Model
                 if(ReceivedElement != null) dest.ReceivedElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedElement.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(RequestDetail != null) dest.RequestDetail = (Hl7.Fhir.Model.ResourceReference)RequestDetail.DeepCopy();
                 return dest;
             }
             else
@@ -421,6 +436,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReceivedElement, otherT.ReceivedElement)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(RequestDetail, otherT.RequestDetail)) return false;
             
             return true;
         }
@@ -443,6 +459,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReceivedElement, otherT.ReceivedElement)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
             
             return true;
         }

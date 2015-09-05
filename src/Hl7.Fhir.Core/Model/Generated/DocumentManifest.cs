@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,6 +52,72 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "DocumentManifest"; } }
         
+        [FhirType("DocumentManifestContentComponent")]
+        [DataContract]
+        public partial class DocumentManifestContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DocumentManifestContentComponent"; } }
+            
+            /// <summary>
+            /// Contents of this set of documents
+            /// </summary>
+            [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element P
+            {
+                get { return _P; }
+                set { _P = value; OnPropertyChanged("P"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _P;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DocumentManifestContentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(P != null) dest.P = (Hl7.Fhir.Model.Element)P.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DocumentManifestContentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(P, otherT.P)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DocumentManifestContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(P, otherT.P)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("DocumentManifestRelatedComponent")]
         [DataContract]
         public partial class DocumentManifestRelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -60,7 +126,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DocumentManifestRelatedComponent"; } }
             
             /// <summary>
-            /// Related Identifier
+            /// Identifiers of things that are related
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
@@ -126,72 +192,6 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("DocumentManifestContentComponent")]
-        [DataContract]
-        public partial class DocumentManifestContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "DocumentManifestContentComponent"; } }
-            
-            /// <summary>
-            /// Contents of this set of documents
-            /// </summary>
-            [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element P
-            {
-                get { return _P; }
-                set { _P = value; OnPropertyChanged("P"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _P;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as DocumentManifestContentComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(P != null) dest.P = (Hl7.Fhir.Model.Element)P.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new DocumentManifestContentComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as DocumentManifestContentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(P, otherT.P)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as DocumentManifestContentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(P, otherT.P)) return false;
                 
                 return true;
             }
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Contents of the manifest
+        /// The items included
         /// </summary>
         [FhirElement("content", Order=190)]
         [Cardinality(Min=1,Max=-1)]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -366,16 +366,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Vaccine recommendation applies to
             /// </summary>
-            [FhirElement("vaccineType", InSummary=true, Order=50)]
+            [FhirElement("vaccineCode", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept VaccineType
+            public Hl7.Fhir.Model.CodeableConcept VaccineCode
             {
-                get { return _VaccineType; }
-                set { _VaccineType = value; OnPropertyChanged("VaccineType"); }
+                get { return _VaccineCode; }
+                set { _VaccineCode = value; OnPropertyChanged("VaccineCode"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _VaccineType;
+            private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
             
             /// <summary>
             /// Recommended dose number
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                    if(VaccineType != null) dest.VaccineType = (Hl7.Fhir.Model.CodeableConcept)VaccineType.DeepCopy();
+                    if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                     if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.PositiveInt)DoseNumberElement.DeepCopy();
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(DateCriterion.DeepCopy());
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-                if( !DeepComparable.Matches(VaccineType, otherT.VaccineType)) return false;
+                if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
                 if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
                 if( !DeepComparable.Matches(ForecastStatus, otherT.ForecastStatus)) return false;
                 if( !DeepComparable.Matches(DateCriterion, otherT.DateCriterion)) return false;
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-                if( !DeepComparable.IsExactly(VaccineType, otherT.VaccineType)) return false;
+                if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
                 if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
                 if( !DeepComparable.IsExactly(ForecastStatus, otherT.ForecastStatus)) return false;
                 if( !DeepComparable.IsExactly(DateCriterion, otherT.DateCriterion)) return false;
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("patient", Order=100)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", Order=110)]
+        [FhirElement("recommendation", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> Recommendation

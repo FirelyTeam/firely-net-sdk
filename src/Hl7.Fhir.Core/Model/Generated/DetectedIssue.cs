@@ -36,51 +36,51 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Clinical issue with action
     /// </summary>
-    [FhirType("Contraindication", IsResource=true)]
+    [FhirType("DetectedIssue", IsResource=true)]
     [DataContract]
-    public partial class Contraindication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Contraindication; } }
+        public override ResourceType ResourceType { get { return ResourceType.DetectedIssue; } }
         [NotMapped]
-        public override string TypeName { get { return "Contraindication"; } }
+        public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>
         /// Indicates the potential degree of impact of the identified issue on the patient
         /// </summary>
-        [FhirEnumeration("ContraindicationSeverity")]
-        public enum ContraindicationSeverity
+        [FhirEnumeration("DetectedIssueSeverity")]
+        public enum DetectedIssueSeverity
         {
             /// <summary>
-            /// Indicates the condition may be life-threatening or has the potential to cause permanent injury
+            /// Indicates the issue may be life-threatening or has the potential to cause permanent injury
             /// </summary>
             [EnumLiteral("high")]
             High,
             /// <summary>
-            /// Indicates the condition may result in noticable adverse adverse consequences but is unlikely to be life-threatening or cause permanent injury
+            /// Indicates the issue may result in noticable adverse adverse consequences but is unlikely to be life-threatening or cause permanent injury
             /// </summary>
             [EnumLiteral("moderate")]
             Moderate,
             /// <summary>
-            /// Indicates the condition may result in some adverse consequences but is unlikely to substantially affect the situation of the subjec
+            /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subjec
             /// </summary>
             [EnumLiteral("low")]
             Low,
         }
         
-        [FhirType("ContraindicationMitigationComponent")]
+        [FhirType("DetectedIssueMitigationComponent")]
         [DataContract]
-        public partial class ContraindicationMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DetectedIssueMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ContraindicationMitigationComponent"; } }
+            public override string TypeName { get { return "DetectedIssueMitigationComponent"; } }
             
             /// <summary>
             /// What mitigation?
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ContraindicationMitigationComponent;
+                var dest = other as DetectedIssueMitigationComponent;
                 
                 if (dest != null)
                 {
@@ -160,12 +160,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ContraindicationMitigationComponent());
+                return CopyTo(new DetectedIssueMitigationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ContraindicationMitigationComponent;
+                var otherT = other as DetectedIssueMitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ContraindicationMitigationComponent;
+                var otherT = other as DetectedIssueMitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -224,13 +224,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("severity", InSummary=true, Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity> SeverityElement
+        public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
         {
             get { return _SeverityElement; }
             set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity> _SeverityElement;
+        private Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> _SeverityElement;
         
         /// <summary>
         /// high | moderate | low
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Contraindication.ContraindicationSeverity? Severity
+        public Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity? Severity
         {
             get { return SeverityElement != null ? SeverityElement.Value : null; }
             set
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   SeverityElement = null; 
                 else
-                  SeverityElement = new Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity>(value);
+                  SeverityElement = new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
                 OnPropertyChanged("Severity");
             }
         }
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who found issue?
+        /// The provider or device that identified the issue
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
         [References("Practitioner","Device")]
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Unique id for the contraindication
+        /// Unique id for the detected issue
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=160)]
         [DataMember]
@@ -395,31 +395,31 @@ namespace Hl7.Fhir.Model
         [FhirElement("mitigation", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> Mitigation
+        public List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> Mitigation
         {
-            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(); return _Mitigation; }
+            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
         
-        private List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent> _Mitigation;
+        private List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> _Mitigation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Contraindication;
+            var dest = other as DetectedIssue;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.Contraindication.ContraindicationSeverity>)SeverityElement.DeepCopy();
+                if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>)SeverityElement.DeepCopy();
                 if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
                 if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
-                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.Contraindication.ContraindicationMitigationComponent>(Mitigation.DeepCopy());
+                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(Mitigation.DeepCopy());
                 return dest;
             }
             else
@@ -428,12 +428,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Contraindication());
+            return CopyTo(new DetectedIssue());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Contraindication;
+            var otherT = other as DetectedIssue;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Contraindication;
+            var otherT = other as DetectedIssue;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

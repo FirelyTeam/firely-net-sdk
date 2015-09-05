@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,34 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.DeviceUseRequest; } }
         [NotMapped]
         public override string TypeName { get { return "DeviceUseRequest"; } }
+        
+        /// <summary>
+        /// Codes representing the priority of the request
+        /// </summary>
+        [FhirEnumeration("DeviceUseRequestPriority")]
+        public enum DeviceUseRequestPriority
+        {
+            /// <summary>
+            /// The request has a normal priority.
+            /// </summary>
+            [EnumLiteral("routine")]
+            Routine,
+            /// <summary>
+            /// The request should be done urgently.
+            /// </summary>
+            [EnumLiteral("urgent")]
+            Urgent,
+            /// <summary>
+            /// The request is time-critical.
+            /// </summary>
+            [EnumLiteral("stat")]
+            Stat,
+            /// <summary>
+            /// The request should be acted on as soon as possible.
+            /// </summary>
+            [EnumLiteral("asap")]
+            Asap,
+        }
         
         /// <summary>
         /// Codes representing the status of the request
@@ -108,34 +136,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,
-        }
-        
-        /// <summary>
-        /// Codes representing the priority of the request
-        /// </summary>
-        [FhirEnumeration("DeviceUseRequestPriority")]
-        public enum DeviceUseRequestPriority
-        {
-            /// <summary>
-            /// The request has a normal priority.
-            /// </summary>
-            [EnumLiteral("routine")]
-            Routine,
-            /// <summary>
-            /// The request should be done urgently.
-            /// </summary>
-            [EnumLiteral("urgent")]
-            Urgent,
-            /// <summary>
-            /// The request is time-critical.
-            /// </summary>
-            [EnumLiteral("stat")]
-            Stat,
-            /// <summary>
-            /// The request should be acted on as soon as possible.
-            /// </summary>
-            [EnumLiteral("asap")]
-            Asap,
         }
         
         /// <summary>

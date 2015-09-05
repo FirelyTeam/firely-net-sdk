@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,29 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
         [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
-        
-        /// <summary>
-        /// Lifecycle status of the questionnaire
-        /// </summary>
-        [FhirEnumeration("QuestionnaireStatus")]
-        public enum QuestionnaireStatus
-        {
-            /// <summary>
-            /// This Questionnaire is not ready for official use.
-            /// </summary>
-            [EnumLiteral("draft")]
-            Draft,
-            /// <summary>
-            /// This Questionnaire is ready for use.
-            /// </summary>
-            [EnumLiteral("published")]
-            Published,
-            /// <summary>
-            /// This Questionnaire should no longer be used to gather data.
-            /// </summary>
-            [EnumLiteral("retired")]
-            Retired,
-        }
         
         /// <summary>
         /// The expected format of an answer
@@ -158,279 +135,28 @@ namespace Hl7.Fhir.Model
             Quantity,
         }
         
-        [FhirType("QuestionComponent")]
-        [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        /// <summary>
+        /// Lifecycle status of the questionnaire
+        /// </summary>
+        [FhirEnumeration("QuestionnaireStatus")]
+        public enum QuestionnaireStatus
         {
-            [NotMapped]
-            public override string TypeName { get { return "QuestionComponent"; } }
-            
             /// <summary>
-            /// To link questionnaire with questionnaire response
+            /// This Questionnaire is not ready for official use.
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString LinkIdElement
-            {
-                get { return _LinkIdElement; }
-                set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _LinkIdElement;
-            
+            [EnumLiteral("draft")]
+            Draft,
             /// <summary>
-            /// To link questionnaire with questionnaire response
+            /// This Questionnaire is ready for use.
             /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string LinkId
-            {
-                get { return LinkIdElement != null ? LinkIdElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      LinkIdElement = null; 
-                    else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("LinkId");
-                }
-            }
-            
+            [EnumLiteral("published")]
+            Published,
             /// <summary>
-            /// Concept that represents this question on a questionnaire
+            /// This Questionnaire should no longer be used to gather data.
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Concept
-            {
-                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
-                set { _Concept = value; OnPropertyChanged("Concept"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _Concept;
-            
-            /// <summary>
-            /// Text of the question as it is shown to the user
-            /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TextElement
-            {
-                get { return _TextElement; }
-                set { _TextElement = value; OnPropertyChanged("TextElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TextElement;
-            
-            /// <summary>
-            /// Text of the question as it is shown to the user
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Text
-            {
-                get { return TextElement != null ? TextElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TextElement = null; 
-                    else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Text");
-                }
-            }
-            
-            /// <summary>
-            /// boolean | decimal | integer | date | dateTime +
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> _TypeElement;
-            
-            /// <summary>
-            /// boolean | decimal | integer | date | dateTime +
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Questionnaire.AnswerFormat? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TypeElement = null; 
-                    else
-                      TypeElement = new Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
-            /// Must question be answered in data results?
-            /// </summary>
-            [FhirElement("required", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean RequiredElement
-            {
-                get { return _RequiredElement; }
-                set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
-            
-            /// <summary>
-            /// Must question be answered in data results?
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Required
-            {
-                get { return RequiredElement != null ? RequiredElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RequiredElement = null; 
-                    else
-                      RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Required");
-                }
-            }
-            
-            /// <summary>
-            /// Can question  have multiple answers?
-            /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean RepeatsElement
-            {
-                get { return _RepeatsElement; }
-                set { _RepeatsElement = value; OnPropertyChanged("RepeatsElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
-            
-            /// <summary>
-            /// Can question  have multiple answers?
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Repeats
-            {
-                get { return RepeatsElement != null ? RepeatsElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      RepeatsElement = null; 
-                    else
-                      RepeatsElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Repeats");
-                }
-            }
-            
-            /// <summary>
-            /// Valueset containing permitted answers
-            /// </summary>
-            [FhirElement("options", InSummary=true, Order=100)]
-            [References("ValueSet")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Options
-            {
-                get { return _Options; }
-                set { _Options = value; OnPropertyChanged("Options"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Options;
-            
-            /// <summary>
-            /// Nested questionnaire group
-            /// </summary>
-            [FhirElement("group", InSummary=true, Order=110)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
-            {
-                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
-                set { _Group = value; OnPropertyChanged("Group"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as QuestionComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
-                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.Coding>(Concept.DeepCopy());
-                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat>)TypeElement.DeepCopy();
-                    if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
-                    if(RepeatsElement != null) dest.RepeatsElement = (Hl7.Fhir.Model.FhirBoolean)RepeatsElement.DeepCopy();
-                    if(Options != null) dest.Options = (Hl7.Fhir.Model.ResourceReference)Options.DeepCopy();
-                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(Group.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new QuestionComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as QuestionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
-                if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
-                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(RequiredElement, otherT.RequiredElement)) return false;
-                if( !DeepComparable.Matches(RepeatsElement, otherT.RepeatsElement)) return false;
-                if( !DeepComparable.Matches(Options, otherT.Options)) return false;
-                if( !DeepComparable.Matches(Group, otherT.Group)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as QuestionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
-                if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
-                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(RequiredElement, otherT.RequiredElement)) return false;
-                if( !DeepComparable.IsExactly(RepeatsElement, otherT.RepeatsElement)) return false;
-                if( !DeepComparable.IsExactly(Options, otherT.Options)) return false;
-                if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
-                
-                return true;
-            }
-            
+            [EnumLiteral("retired")]
+            Retired,
         }
-        
         
         [FhirType("GroupComponent")]
         [DataContract]
@@ -706,6 +432,297 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("QuestionComponent")]
+        [DataContract]
+        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "QuestionComponent"; } }
+            
+            /// <summary>
+            /// To link questionnaire with questionnaire response
+            /// </summary>
+            [FhirElement("linkId", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LinkIdElement
+            {
+                get { return _LinkIdElement; }
+                set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LinkIdElement;
+            
+            /// <summary>
+            /// To link questionnaire with questionnaire response
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string LinkId
+            {
+                get { return LinkIdElement != null ? LinkIdElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LinkIdElement = null; 
+                    else
+                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("LinkId");
+                }
+            }
+            
+            /// <summary>
+            /// Concept that represents this question on a questionnaire
+            /// </summary>
+            [FhirElement("concept", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Coding> Concept
+            {
+                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.Coding>(); return _Concept; }
+                set { _Concept = value; OnPropertyChanged("Concept"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Coding> _Concept;
+            
+            /// <summary>
+            /// Text of the question as it is shown to the user
+            /// </summary>
+            [FhirElement("text", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString TextElement
+            {
+                get { return _TextElement; }
+                set { _TextElement = value; OnPropertyChanged("TextElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _TextElement;
+            
+            /// <summary>
+            /// Text of the question as it is shown to the user
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Text
+            {
+                get { return TextElement != null ? TextElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TextElement = null; 
+                    else
+                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Text");
+                }
+            }
+            
+            /// <summary>
+            /// boolean | decimal | integer | date | dateTime +
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=70)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> _TypeElement;
+            
+            /// <summary>
+            /// boolean | decimal | integer | date | dateTime +
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Questionnaire.AnswerFormat? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat>(value);
+                    OnPropertyChanged("Type");
+                }
+            }
+            
+            /// <summary>
+            /// Must question be answered in data results?
+            /// </summary>
+            [FhirElement("required", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean RequiredElement
+            {
+                get { return _RequiredElement; }
+                set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
+            
+            /// <summary>
+            /// Must question be answered in data results?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Required
+            {
+                get { return RequiredElement != null ? RequiredElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      RequiredElement = null; 
+                    else
+                      RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Required");
+                }
+            }
+            
+            /// <summary>
+            /// Can question  have multiple answers?
+            /// </summary>
+            [FhirElement("repeats", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean RepeatsElement
+            {
+                get { return _RepeatsElement; }
+                set { _RepeatsElement = value; OnPropertyChanged("RepeatsElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
+            
+            /// <summary>
+            /// Can question  have multiple answers?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Repeats
+            {
+                get { return RepeatsElement != null ? RepeatsElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      RepeatsElement = null; 
+                    else
+                      RepeatsElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Repeats");
+                }
+            }
+            
+            /// <summary>
+            /// Valueset containing permitted answers
+            /// </summary>
+            [FhirElement("options", InSummary=true, Order=100)]
+            [References("ValueSet")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Options
+            {
+                get { return _Options; }
+                set { _Options = value; OnPropertyChanged("Options"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Options;
+            
+            /// <summary>
+            /// Permitted answer
+            /// </summary>
+            [FhirElement("option", InSummary=true, Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Coding> Option
+            {
+                get { if(_Option==null) _Option = new List<Hl7.Fhir.Model.Coding>(); return _Option; }
+                set { _Option = value; OnPropertyChanged("Option"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Coding> _Option;
+            
+            /// <summary>
+            /// Nested questionnaire group
+            /// </summary>
+            [FhirElement("group", InSummary=true, Order=120)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
+            {
+                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(); return _Group; }
+                set { _Group = value; OnPropertyChanged("Group"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Questionnaire.GroupComponent> _Group;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as QuestionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
+                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.Coding>(Concept.DeepCopy());
+                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat>)TypeElement.DeepCopy();
+                    if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
+                    if(RepeatsElement != null) dest.RepeatsElement = (Hl7.Fhir.Model.FhirBoolean)RepeatsElement.DeepCopy();
+                    if(Options != null) dest.Options = (Hl7.Fhir.Model.ResourceReference)Options.DeepCopy();
+                    if(Option != null) dest.Option = new List<Hl7.Fhir.Model.Coding>(Option.DeepCopy());
+                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Questionnaire.GroupComponent>(Group.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new QuestionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as QuestionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
+                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(RequiredElement, otherT.RequiredElement)) return false;
+                if( !DeepComparable.Matches(RepeatsElement, otherT.RepeatsElement)) return false;
+                if( !DeepComparable.Matches(Options, otherT.Options)) return false;
+                if( !DeepComparable.Matches(Option, otherT.Option)) return false;
+                if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as QuestionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
+                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(RequiredElement, otherT.RequiredElement)) return false;
+                if( !DeepComparable.IsExactly(RepeatsElement, otherT.RepeatsElement)) return false;
+                if( !DeepComparable.IsExactly(Options, otherT.Options)) return false;
+                if( !DeepComparable.IsExactly(Option, otherT.Option)) return false;
+                if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         /// <summary>
         /// External Ids for this questionnaire
         /// </summary>
@@ -899,7 +916,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", Order=160)]
+        [FhirElement("group", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Questionnaire.GroupComponent Group

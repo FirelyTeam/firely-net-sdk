@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -517,11 +517,6 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("Contract")]
         Contract,
         /// <summary>
-        /// The Contraindication resource
-        /// </summary>
-        [EnumLiteral("Contraindication")]
-        Contraindication,
-        /// <summary>
         /// The Coverage resource
         /// </summary>
         [EnumLiteral("Coverage")]
@@ -531,6 +526,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("DataElement")]
         DataElement,
+        /// <summary>
+        /// The DetectedIssue resource
+        /// </summary>
+        [EnumLiteral("DetectedIssue")]
+        DetectedIssue,
         /// <summary>
         /// The Device resource
         /// </summary>

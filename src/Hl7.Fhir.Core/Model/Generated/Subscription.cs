@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,34 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Subscription; } }
         [NotMapped]
         public override string TypeName { get { return "Subscription"; } }
-        
-        /// <summary>
-        /// The status of a subscription
-        /// </summary>
-        [FhirEnumeration("SubscriptionStatus")]
-        public enum SubscriptionStatus
-        {
-            /// <summary>
-            /// The client has requested the subscription, and the server has not yet set it up
-            /// </summary>
-            [EnumLiteral("requested")]
-            Requested,
-            /// <summary>
-            /// The subscription is active
-            /// </summary>
-            [EnumLiteral("active")]
-            Active,
-            /// <summary>
-            /// The server has an error executing the notification
-            /// </summary>
-            [EnumLiteral("error")]
-            Error,
-            /// <summary>
-            /// Too many errors have occurred or the subscription has expired
-            /// </summary>
-            [EnumLiteral("off")]
-            Off,
-        }
         
         /// <summary>
         /// The type of method used to execute a subscription
@@ -111,6 +83,34 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("message")]
             Message,
+        }
+        
+        /// <summary>
+        /// The status of a subscription
+        /// </summary>
+        [FhirEnumeration("SubscriptionStatus")]
+        public enum SubscriptionStatus
+        {
+            /// <summary>
+            /// The client has requested the subscription, and the server has not yet set it up
+            /// </summary>
+            [EnumLiteral("requested")]
+            Requested,
+            /// <summary>
+            /// The subscription is active
+            /// </summary>
+            [EnumLiteral("active")]
+            Active,
+            /// <summary>
+            /// The server has an error executing the notification
+            /// </summary>
+            [EnumLiteral("error")]
+            Error,
+            /// <summary>
+            /// Too many errors have occurred or the subscription has expired
+            /// </summary>
+            [EnumLiteral("off")]
+            Off,
         }
         
         /// <summary>

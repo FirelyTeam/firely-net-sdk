@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,34 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.DeviceMetric; } }
         [NotMapped]
         public override string TypeName { get { return "DeviceMetric"; } }
+        
+        /// <summary>
+        /// Describes the type of a metric calibration
+        /// </summary>
+        [FhirEnumeration("DeviceMetricCalibrationType")]
+        public enum DeviceMetricCalibrationType
+        {
+            /// <summary>
+            /// TODO
+            /// </summary>
+            [EnumLiteral("unspecified")]
+            Unspecified,
+            /// <summary>
+            /// TODO
+            /// </summary>
+            [EnumLiteral("offset")]
+            Offset,
+            /// <summary>
+            /// TODO
+            /// </summary>
+            [EnumLiteral("gain")]
+            Gain,
+            /// <summary>
+            /// TODO
+            /// </summary>
+            [EnumLiteral("two-point")]
+            TwoPoint,
+        }
         
         /// <summary>
         /// Describes the typical color of representation
@@ -129,31 +157,26 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the type of a metric calibration
+        /// Describes the operational status of the DeviceMetric
         /// </summary>
-        [FhirEnumeration("DeviceMetricCalibrationType")]
-        public enum DeviceMetricCalibrationType
+        [FhirEnumeration("DeviceMetricOperationalStatus")]
+        public enum DeviceMetricOperationalStatus
         {
             /// <summary>
-            /// TODO
+            /// The DeviceMetric is operating and will generate DeviceObservations
             /// </summary>
-            [EnumLiteral("unspecified")]
-            Unspecified,
+            [EnumLiteral("on")]
+            On,
             /// <summary>
-            /// TODO
+            /// The DeviceMetric is not operating
             /// </summary>
-            [EnumLiteral("offset")]
-            Offset,
+            [EnumLiteral("off")]
+            Off,
             /// <summary>
-            /// TODO
+            /// The DeviceMetric is operating, but will not generate any DeviceObservations
             /// </summary>
-            [EnumLiteral("gain")]
-            Gain,
-            /// <summary>
-            /// TODO
-            /// </summary>
-            [EnumLiteral("two-point")]
-            TwoPoint,
+            [EnumLiteral("standby")]
+            Standby,
         }
         
         /// <summary>
@@ -182,29 +205,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("unspecified")]
             Unspecified,
-        }
-        
-        /// <summary>
-        /// Describes the operational status of the DeviceMetric
-        /// </summary>
-        [FhirEnumeration("DeviceMetricOperationalStatus")]
-        public enum DeviceMetricOperationalStatus
-        {
-            /// <summary>
-            /// The DeviceMetric is operating and will generate DeviceObservations
-            /// </summary>
-            [EnumLiteral("on")]
-            On,
-            /// <summary>
-            /// The DeviceMetric is not operating
-            /// </summary>
-            [EnumLiteral("off")]
-            Off,
-            /// <summary>
-            /// The DeviceMetric is operating, but will not generate any DeviceObservations
-            /// </summary>
-            [EnumLiteral("standby")]
-            Standby,
         }
         
         [FhirType("DeviceMetricCalibrationComponent")]

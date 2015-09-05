@@ -112,9 +112,9 @@
     <Compile Include="Model\Generated\CommunicationRequest.cs" />
     <Compile Include="Model\Generated\ContactPoint.cs" />
     <Compile Include="Model\Generated\Contract.cs" />
-    <Compile Include="Model\Generated\Contraindication.cs" />
     <Compile Include="Model\Generated\Coverage.cs" />
     <Compile Include="Model\Generated\DataElement.cs" />
+    <Compile Include="Model\Generated\DetectedIssue.cs" />
     <Compile Include="Model\Generated\DeviceComponent.cs" />
     <Compile Include="Model\Generated\DeviceMetric.cs" />
     <Compile Include="Model\Generated\DeviceUseRequest.cs" />

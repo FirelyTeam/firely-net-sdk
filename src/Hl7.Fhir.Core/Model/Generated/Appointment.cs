@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,29 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Appointment; } }
         [NotMapped]
         public override string TypeName { get { return "Appointment"; } }
+        
+        /// <summary>
+        /// Is the Participant required to attend the appointment
+        /// </summary>
+        [FhirEnumeration("ParticipantRequired")]
+        public enum ParticipantRequired
+        {
+            /// <summary>
+            /// The participant is required to attend the appointment
+            /// </summary>
+            [EnumLiteral("required")]
+            Required,
+            /// <summary>
+            /// The participant may optionally attend the appointment
+            /// </summary>
+            [EnumLiteral("optional")]
+            Optional,
+            /// <summary>
+            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test)
+            /// </summary>
+            [EnumLiteral("information-only")]
+            InformationOnly,
+        }
         
         /// <summary>
         /// The free/busy status of an appointment
@@ -93,29 +116,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("noshow")]
             Noshow,
-        }
-        
-        /// <summary>
-        /// Is the Participant required to attend the appointment
-        /// </summary>
-        [FhirEnumeration("ParticipantRequired")]
-        public enum ParticipantRequired
-        {
-            /// <summary>
-            /// The participant is required to attend the appointment
-            /// </summary>
-            [EnumLiteral("required")]
-            Required,
-            /// <summary>
-            /// The participant may optionally attend the appointment
-            /// </summary>
-            [EnumLiteral("optional")]
-            Optional,
-            /// <summary>
-            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test)
-            /// </summary>
-            [EnumLiteral("information-only")]
-            InformationOnly,
         }
         
         /// <summary>
@@ -580,23 +580,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// An Order that lead to the creation of this appointment
-        /// </summary>
-        [FhirElement("order", Order=200)]
-        [References("Order")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Order
-        {
-            get { return _Order; }
-            set { _Order = value; OnPropertyChanged("Order"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Order;
-        
-        /// <summary>
         /// List of participants involved in the appointment
         /// </summary>
-        [FhirElement("participant", Order=210)]
+        [FhirElement("participant", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> Participant
@@ -625,7 +611,6 @@ namespace Hl7.Fhir.Model
                 if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
                 if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(Order != null) dest.Order = (Hl7.Fhir.Model.ResourceReference)Order.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(Participant.DeepCopy());
                 return dest;
             }
@@ -655,7 +640,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
             if( !DeepComparable.Matches(Slot, otherT.Slot)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.Matches(Order, otherT.Order)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             
             return true;
@@ -678,7 +662,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
             if( !DeepComparable.IsExactly(Slot, otherT.Slot)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.IsExactly(Order, otherT.Order)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             
             return true;

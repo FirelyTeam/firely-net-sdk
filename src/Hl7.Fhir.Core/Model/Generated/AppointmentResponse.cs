@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -120,9 +120,73 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
+        /// Date/Time that the appointment is to take place, or requested new start time
+        /// </summary>
+        [FhirElement("start", Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.Instant StartElement
+        {
+            get { return _StartElement; }
+            set { _StartElement = value; OnPropertyChanged("StartElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Instant _StartElement;
+        
+        /// <summary>
+        /// Date/Time that the appointment is to take place, or requested new start time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public DateTimeOffset? Start
+        {
+            get { return StartElement != null ? StartElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StartElement = null; 
+                else
+                  StartElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Start");
+            }
+        }
+        
+        /// <summary>
+        /// Date/Time that the appointment is to conclude, or requested new end time
+        /// </summary>
+        [FhirElement("end", Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.Instant EndElement
+        {
+            get { return _EndElement; }
+            set { _EndElement = value; OnPropertyChanged("EndElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Instant _EndElement;
+        
+        /// <summary>
+        /// Date/Time that the appointment is to conclude, or requested new end time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public DateTimeOffset? End
+        {
+            get { return EndElement != null ? EndElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  EndElement = null; 
+                else
+                  EndElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("End");
+            }
+        }
+        
+        /// <summary>
         /// Role of participant in the appointment
         /// </summary>
-        [FhirElement("participantType", InSummary=true, Order=110)]
+        [FhirElement("participantType", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -136,7 +200,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A Person, Location/HealthcareService or Device that is participating in the appointment
         /// </summary>
-        [FhirElement("actor", InSummary=true, Order=120)]
+        [FhirElement("actor", InSummary=true, Order=140)]
         [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor
@@ -150,7 +214,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
         /// </summary>
-        [FhirElement("participantStatus", InSummary=true, Order=130)]
+        [FhirElement("participantStatus", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> ParticipantStatus_Element
@@ -183,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments about the appointment
         /// </summary>
-        [FhirElement("comment", Order=140)]
+        [FhirElement("comment", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -212,70 +276,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        /// <summary>
-        /// Date/Time that the appointment is to take place, or requested new start time
-        /// </summary>
-        [FhirElement("start", Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.Instant StartElement
-        {
-            get { return _StartElement; }
-            set { _StartElement = value; OnPropertyChanged("StartElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Instant _StartElement;
-        
-        /// <summary>
-        /// Date/Time that the appointment is to take place, or requested new start time
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public DateTimeOffset? Start
-        {
-            get { return StartElement != null ? StartElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  StartElement = null; 
-                else
-                  StartElement = new Hl7.Fhir.Model.Instant(value);
-                OnPropertyChanged("Start");
-            }
-        }
-        
-        /// <summary>
-        /// Date/Time that the appointment is to conclude, or requested new end time
-        /// </summary>
-        [FhirElement("end", Order=160)]
-        [DataMember]
-        public Hl7.Fhir.Model.Instant EndElement
-        {
-            get { return _EndElement; }
-            set { _EndElement = value; OnPropertyChanged("EndElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Instant _EndElement;
-        
-        /// <summary>
-        /// Date/Time that the appointment is to conclude, or requested new end time
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public DateTimeOffset? End
-        {
-            get { return EndElement != null ? EndElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  EndElement = null; 
-                else
-                  EndElement = new Hl7.Fhir.Model.Instant(value);
-                OnPropertyChanged("End");
-            }
-        }
-        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;
@@ -285,12 +285,12 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
+                if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
+                if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(ParticipantType != null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopy());
                 if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                 if(ParticipantStatus_Element != null) dest.ParticipantStatus_Element = (Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>)ParticipantStatus_Element.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
-                if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 return dest;
             }
             else
@@ -310,12 +310,12 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Appointment, otherT.Appointment)) return false;
+            if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+            if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.Matches(ParticipantType, otherT.ParticipantType)) return false;
             if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
             if( !DeepComparable.Matches(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
-            if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             
             return true;
         }
@@ -328,12 +328,12 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Appointment, otherT.Appointment)) return false;
+            if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+            if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.IsExactly(ParticipantType, otherT.ParticipantType)) return false;
             if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
             if( !DeepComparable.IsExactly(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
-            if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             
             return true;
         }

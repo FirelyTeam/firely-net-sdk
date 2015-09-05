@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -49,6 +49,52 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "ElementDefinition"; } }
+        
+        /// <summary>
+        /// How slices are interpreted when evaluating an instance
+        /// </summary>
+        [FhirEnumeration("SlicingRules")]
+        public enum SlicingRules
+        {
+            /// <summary>
+            /// No additional content is allowed other than that described by the slices in this profile
+            /// </summary>
+            [EnumLiteral("closed")]
+            Closed,
+            /// <summary>
+            /// Additional content is allowed anywhere in the list
+            /// </summary>
+            [EnumLiteral("open")]
+            Open,
+            /// <summary>
+            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required
+            /// </summary>
+            [EnumLiteral("openAtEnd")]
+            OpenAtEnd,
+        }
+        
+        /// <summary>
+        /// How resource references can be aggregated
+        /// </summary>
+        [FhirEnumeration("AggregationMode")]
+        public enum AggregationMode
+        {
+            /// <summary>
+            /// The reference is a local reference to a contained resource
+            /// </summary>
+            [EnumLiteral("contained")]
+            Contained,
+            /// <summary>
+            /// The reference to a resource that has to be resolved externally to the resource that includes the reference
+            /// </summary>
+            [EnumLiteral("referenced")]
+            Referenced,
+            /// <summary>
+            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference
+            /// </summary>
+            [EnumLiteral("bundled")]
+            Bundled,
+        }
         
         /// <summary>
         /// SHALL applications comply with this constraint?
@@ -80,208 +126,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("xmlAttr")]
             XmlAttr,
         }
-        
-        /// <summary>
-        /// How resource references can be aggregated
-        /// </summary>
-        [FhirEnumeration("AggregationMode")]
-        public enum AggregationMode
-        {
-            /// <summary>
-            /// The reference is a local reference to a contained resource
-            /// </summary>
-            [EnumLiteral("contained")]
-            Contained,
-            /// <summary>
-            /// The reference to a resource that has to be resolved externally to the resource that includes the reference
-            /// </summary>
-            [EnumLiteral("referenced")]
-            Referenced,
-            /// <summary>
-            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference
-            /// </summary>
-            [EnumLiteral("bundled")]
-            Bundled,
-        }
-        
-        /// <summary>
-        /// How slices are interpreted when evaluating an instance
-        /// </summary>
-        [FhirEnumeration("SlicingRules")]
-        public enum SlicingRules
-        {
-            /// <summary>
-            /// No additional content is allowed other than that described by the slices in this profile
-            /// </summary>
-            [EnumLiteral("closed")]
-            Closed,
-            /// <summary>
-            /// Additional content is allowed anywhere in the list
-            /// </summary>
-            [EnumLiteral("open")]
-            Open,
-            /// <summary>
-            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required
-            /// </summary>
-            [EnumLiteral("openAtEnd")]
-            OpenAtEnd,
-        }
-        
-        [FhirType("ElementDefinitionBaseComponent")]
-        [DataContract]
-        public partial class ElementDefinitionBaseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ElementDefinitionBaseComponent"; } }
-            
-            /// <summary>
-            /// Path that identifies the base element
-            /// </summary>
-            [FhirElement("path", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString PathElement
-            {
-                get { return _PathElement; }
-                set { _PathElement = value; OnPropertyChanged("PathElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _PathElement;
-            
-            /// <summary>
-            /// Path that identifies the base element
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Path
-            {
-                get { return PathElement != null ? PathElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      PathElement = null; 
-                    else
-                      PathElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Path");
-                }
-            }
-            
-            /// <summary>
-            /// Min cardinality of the base element
-            /// </summary>
-            [FhirElement("min", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer MinElement
-            {
-                get { return _MinElement; }
-                set { _MinElement = value; OnPropertyChanged("MinElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _MinElement;
-            
-            /// <summary>
-            /// Min cardinality of the base element
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? Min
-            {
-                get { return MinElement != null ? MinElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      MinElement = null; 
-                    else
-                      MinElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("Min");
-                }
-            }
-            
-            /// <summary>
-            /// Max cardinality of the base element
-            /// </summary>
-            [FhirElement("max", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString MaxElement
-            {
-                get { return _MaxElement; }
-                set { _MaxElement = value; OnPropertyChanged("MaxElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _MaxElement;
-            
-            /// <summary>
-            /// Max cardinality of the base element
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Max
-            {
-                get { return MaxElement != null ? MaxElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      MaxElement = null; 
-                    else
-                      MaxElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Max");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ElementDefinitionBaseComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
-                    if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ElementDefinitionBaseComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ElementDefinitionBaseComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
-                if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ElementDefinitionBaseComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
-                if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         [FhirType("ElementDefinitionSlicingComponent")]
         [DataContract]
@@ -473,6 +317,162 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ElementDefinitionBaseComponent")]
+        [DataContract]
+        public partial class ElementDefinitionBaseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ElementDefinitionBaseComponent"; } }
+            
+            /// <summary>
+            /// Path that identifies the base element
+            /// </summary>
+            [FhirElement("path", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PathElement
+            {
+                get { return _PathElement; }
+                set { _PathElement = value; OnPropertyChanged("PathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PathElement;
+            
+            /// <summary>
+            /// Path that identifies the base element
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Path
+            {
+                get { return PathElement != null ? PathElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PathElement = null; 
+                    else
+                      PathElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Path");
+                }
+            }
+            
+            /// <summary>
+            /// Min cardinality of the base element
+            /// </summary>
+            [FhirElement("min", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer MinElement
+            {
+                get { return _MinElement; }
+                set { _MinElement = value; OnPropertyChanged("MinElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _MinElement;
+            
+            /// <summary>
+            /// Min cardinality of the base element
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Min
+            {
+                get { return MinElement != null ? MinElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      MinElement = null; 
+                    else
+                      MinElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Min");
+                }
+            }
+            
+            /// <summary>
+            /// Max cardinality of the base element
+            /// </summary>
+            [FhirElement("max", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString MaxElement
+            {
+                get { return _MaxElement; }
+                set { _MaxElement = value; OnPropertyChanged("MaxElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _MaxElement;
+            
+            /// <summary>
+            /// Max cardinality of the base element
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Max
+            {
+                get { return MaxElement != null ? MaxElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      MaxElement = null; 
+                    else
+                      MaxElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Max");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ElementDefinitionBaseComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
+                    if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ElementDefinitionBaseComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionBaseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
+                if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionBaseComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
+                if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("TypeRefComponent")]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -622,161 +622,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.IsExactly(AggregationElement, otherT.AggregationElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ElementDefinitionMappingComponent")]
-        [DataContract]
-        public partial class ElementDefinitionMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ElementDefinitionMappingComponent"; } }
-            
-            /// <summary>
-            /// Reference to mapping declaration
-            /// </summary>
-            [FhirElement("identity", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id IdentityElement
-            {
-                get { return _IdentityElement; }
-                set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _IdentityElement;
-            
-            /// <summary>
-            /// Reference to mapping declaration
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Identity
-            {
-                get { return IdentityElement != null ? IdentityElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      IdentityElement = null; 
-                    else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("Identity");
-                }
-            }
-            
-            /// <summary>
-            /// Computable language of mapping
-            /// </summary>
-            [FhirElement("language", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Code LanguageElement
-            {
-                get { return _LanguageElement; }
-                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Code _LanguageElement;
-            
-            /// <summary>
-            /// Computable language of mapping
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Language
-            {
-                get { return LanguageElement != null ? LanguageElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      LanguageElement = null; 
-                    else
-                      LanguageElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("Language");
-                }
-            }
-            
-            /// <summary>
-            /// Details of the mapping
-            /// </summary>
-            [FhirElement("map", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString MapElement
-            {
-                get { return _MapElement; }
-                set { _MapElement = value; OnPropertyChanged("MapElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _MapElement;
-            
-            /// <summary>
-            /// Details of the mapping
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Map
-            {
-                get { return MapElement != null ? MapElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      MapElement = null; 
-                    else
-                      MapElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Map");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ElementDefinitionMappingComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
-                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
-                    if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ElementDefinitionMappingComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ElementDefinitionMappingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
-                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ElementDefinitionMappingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
-                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
                 
                 return true;
             }
@@ -1140,6 +985,161 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
                 if( !DeepComparable.IsExactly(HumanElement, otherT.HumanElement)) return false;
                 if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ElementDefinitionMappingComponent")]
+        [DataContract]
+        public partial class ElementDefinitionMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ElementDefinitionMappingComponent"; } }
+            
+            /// <summary>
+            /// Reference to mapping declaration
+            /// </summary>
+            [FhirElement("identity", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Id IdentityElement
+            {
+                get { return _IdentityElement; }
+                set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Id _IdentityElement;
+            
+            /// <summary>
+            /// Reference to mapping declaration
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Identity
+            {
+                get { return IdentityElement != null ? IdentityElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IdentityElement = null; 
+                    else
+                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("Identity");
+                }
+            }
+            
+            /// <summary>
+            /// Computable language of mapping
+            /// </summary>
+            [FhirElement("language", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code LanguageElement
+            {
+                get { return _LanguageElement; }
+                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Code _LanguageElement;
+            
+            /// <summary>
+            /// Computable language of mapping
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Language
+            {
+                get { return LanguageElement != null ? LanguageElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LanguageElement = null; 
+                    else
+                      LanguageElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Language");
+                }
+            }
+            
+            /// <summary>
+            /// Details of the mapping
+            /// </summary>
+            [FhirElement("map", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString MapElement
+            {
+                get { return _MapElement; }
+                set { _MapElement = value; OnPropertyChanged("MapElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _MapElement;
+            
+            /// <summary>
+            /// Details of the mapping
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Map
+            {
+                get { return MapElement != null ? MapElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      MapElement = null; 
+                    else
+                      MapElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Map");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ElementDefinitionMappingComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
+                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
+                    if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ElementDefinitionMappingComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
+                if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ElementDefinitionMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
+                if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
                 
                 return true;
             }

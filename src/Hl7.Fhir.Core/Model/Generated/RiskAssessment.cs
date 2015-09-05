@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -282,9 +282,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Condition;
         
         /// <summary>
+        /// Where was assessment performed?
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=120)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
         /// Who did assessment?
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=120)]
+        [FhirElement("performer", InSummary=true, Order=130)]
         [References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
@@ -298,7 +312,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier for the assessment
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=130)]
+        [FhirElement("identifier", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -311,7 +325,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Evaluation mechanism
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=140)]
+        [FhirElement("method", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -324,7 +338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information used in assessment
         /// </summary>
-        [FhirElement("basis", Order=150)]
+        [FhirElement("basis", Order=160)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -339,7 +353,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Outcome predicted
         /// </summary>
-        [FhirElement("prediction", Order=160)]
+        [FhirElement("prediction", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> Prediction
@@ -353,7 +367,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How to reduce risk
         /// </summary>
-        [FhirElement("mitigation", Order=170)]
+        [FhirElement("mitigation", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MitigationElement
         {
@@ -392,6 +406,7 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
@@ -418,6 +433,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
@@ -437,6 +453,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;

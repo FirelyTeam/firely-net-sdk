@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -106,18 +106,17 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ListEntryComponent"; } }
             
             /// <summary>
-            /// Workflow information about this item
+            /// Status/Workflow information about this item
             /// </summary>
             [FhirElement("flag", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Flag
+            public Hl7.Fhir.Model.CodeableConcept Flag
             {
-                get { if(_Flag==null) _Flag = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Flag; }
+                get { return _Flag; }
                 set { _Flag = value; OnPropertyChanged("Flag"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeableConcept> _Flag;
+            private Hl7.Fhir.Model.CodeableConcept _Flag;
             
             /// <summary>
             /// If this item is actually marked as deleted
@@ -205,7 +204,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Flag != null) dest.Flag = new List<Hl7.Fhir.Model.CodeableConcept>(Flag.DeepCopy());
+                    if(Flag != null) dest.Flag = (Hl7.Fhir.Model.CodeableConcept)Flag.DeepCopy();
                     if(DeletedElement != null) dest.DeletedElement = (Hl7.Fhir.Model.FhirBoolean)DeletedElement.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -554,42 +554,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Id of this message
-        /// </summary>
-        [FhirElement("identifier", Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Id IdentifierElement
-        {
-            get { return _IdentifierElement; }
-            set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Id _IdentifierElement;
-        
-        /// <summary>
-        /// Id of this message
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Identifier
-        {
-            get { return IdentifierElement != null ? IdentifierElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  IdentifierElement = null; 
-                else
-                  IdentifierElement = new Hl7.Fhir.Model.Id(value);
-                OnPropertyChanged("Identifier");
-            }
-        }
-        
-        /// <summary>
         /// Time that the message was sent
         /// </summary>
-        [FhirElement("timestamp", Order=100)]
+        [FhirElement("timestamp", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant TimestampElement
@@ -622,7 +589,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Code for the event this message represents
         /// </summary>
-        [FhirElement("event", Order=110)]
+        [FhirElement("event", Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Event
@@ -636,7 +603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", Order=120)]
+        [FhirElement("response", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response
         {
@@ -649,7 +616,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Source Application
         /// </summary>
-        [FhirElement("source", Order=130)]
+        [FhirElement("source", Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -663,7 +630,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message Destination Application(s)
         /// </summary>
-        [FhirElement("destination", Order=140)]
+        [FhirElement("destination", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
@@ -677,7 +644,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", Order=150)]
+        [FhirElement("enterer", Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
@@ -691,7 +658,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", Order=160)]
+        [FhirElement("author", Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -705,7 +672,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended "real-world" recipient for the data
         /// </summary>
-        [FhirElement("receiver", Order=170)]
+        [FhirElement("receiver", Order=160)]
         [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Receiver
@@ -719,7 +686,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", Order=180)]
+        [FhirElement("responsible", Order=170)]
         [References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Responsible
@@ -733,7 +700,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", Order=190)]
+        [FhirElement("reason", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -746,7 +713,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("data", Order=200)]
+        [FhirElement("data", Order=190)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -765,7 +732,6 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
                 if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent)Response.DeepCopy();
@@ -794,7 +760,6 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
             if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Response, otherT.Response)) return false;
@@ -816,7 +781,6 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
             if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;

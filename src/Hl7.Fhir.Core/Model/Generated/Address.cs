@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -49,6 +49,29 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Address"; } }
+        
+        /// <summary>
+        /// The type of an address (physical / postal)
+        /// </summary>
+        [FhirEnumeration("AddressType")]
+        public enum AddressType
+        {
+            /// <summary>
+            /// Mailing addresses - PO Boxes and care-of addresses
+            /// </summary>
+            [EnumLiteral("postal")]
+            Postal,
+            /// <summary>
+            /// A physical address that can be visited
+            /// </summary>
+            [EnumLiteral("physical")]
+            Physical,
+            /// <summary>
+            /// An address that is both physical and postal
+            /// </summary>
+            [EnumLiteral("both")]
+            Both,
+        }
         
         /// <summary>
         /// The use of an address
@@ -76,29 +99,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("old")]
             Old,
-        }
-        
-        /// <summary>
-        /// The type of an address (physical / postal)
-        /// </summary>
-        [FhirEnumeration("AddressType")]
-        public enum AddressType
-        {
-            /// <summary>
-            /// Mailing addresses - PO Boxes and care-of addresses
-            /// </summary>
-            [EnumLiteral("postal")]
-            Postal,
-            /// <summary>
-            /// A physical address that can be visited
-            /// </summary>
-            [EnumLiteral("physical")]
-            Physical,
-            /// <summary>
-            /// An address that is both physical and postal
-            /// </summary>
-            [EnumLiteral("both")]
-            Both,
         }
         
         /// <summary>

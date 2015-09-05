@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,29 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
         [NotMapped]
         public override string TypeName { get { return "NamingSystem"; } }
-        
-        /// <summary>
-        /// Identifies the purpose of the namingsystem
-        /// </summary>
-        [FhirEnumeration("NamingSystemType")]
-        public enum NamingSystemType
-        {
-            /// <summary>
-            /// The namingsystem is used to define concepts and symbols to represent those concepts.  E.g. UCUM, LOINC, NDC code, local lab codes, etc.
-            /// </summary>
-            [EnumLiteral("codesystem")]
-            Codesystem,
-            /// <summary>
-            /// The namingsystem is used to manage identifiers (e.g. license numbers, order numbers, etc.)
-            /// </summary>
-            [EnumLiteral("identifier")]
-            Identifier,
-            /// <summary>
-            /// The namingsystem is used as the root for other identifiers and namingsystems
-            /// </summary>
-            [EnumLiteral("root")]
-            Root,
-        }
         
         /// <summary>
         /// Identifies the style of unique identifier used to identify a namepace
@@ -101,6 +78,29 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("other")]
             Other,
+        }
+        
+        /// <summary>
+        /// Identifies the purpose of the namingsystem
+        /// </summary>
+        [FhirEnumeration("NamingSystemType")]
+        public enum NamingSystemType
+        {
+            /// <summary>
+            /// The namingsystem is used to define concepts and symbols to represent those concepts.  E.g. UCUM, LOINC, NDC code, local lab codes, etc.
+            /// </summary>
+            [EnumLiteral("codesystem")]
+            Codesystem,
+            /// <summary>
+            /// The namingsystem is used to manage identifiers (e.g. license numbers, order numbers, etc.)
+            /// </summary>
+            [EnumLiteral("identifier")]
+            Identifier,
+            /// <summary>
+            /// The namingsystem is used as the root for other identifiers and namingsystems
+            /// </summary>
+            [EnumLiteral("root")]
+            Root,
         }
         
         [FhirType("NamingSystemContactComponent")]

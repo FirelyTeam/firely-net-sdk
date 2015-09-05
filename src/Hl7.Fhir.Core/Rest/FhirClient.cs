@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
-        public FhirClient(string endpoint)
-            : this(new Uri(endpoint))
+        public FhirClient(string endpoint, bool verifyFhirVersion = false)
+            : this(new Uri(endpoint), verifyFhirVersion)
         {
         }
 

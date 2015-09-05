@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,208 +88,6 @@ namespace Hl7.Fhir.Model
             Query,
         }
         
-        [FhirType("OperationDefinitionContactComponent")]
-        [DataContract]
-        public partial class OperationDefinitionContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "OperationDefinitionContactComponent"; } }
-            
-            /// <summary>
-            /// Name of a individual to contact
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of a individual to contact
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details for individual or publisher
-            /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as OperationDefinitionContactComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new OperationDefinitionContactComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as OperationDefinitionContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as OperationDefinitionContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("OperationDefinitionParameterBindingComponent")]
-        [DataContract]
-        public partial class OperationDefinitionParameterBindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "OperationDefinitionParameterBindingComponent"; } }
-            
-            /// <summary>
-            /// required | extensible | preferred | example
-            /// </summary>
-            [FhirElement("strength", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
-            {
-                get { return _StrengthElement; }
-                set { _StrengthElement = value; OnPropertyChanged("StrengthElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.BindingStrength> _StrengthElement;
-            
-            /// <summary>
-            /// required | extensible | preferred | example
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.BindingStrength? Strength
-            {
-                get { return StrengthElement != null ? StrengthElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StrengthElement = null; 
-                    else
-                      StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
-                    OnPropertyChanged("Strength");
-                }
-            }
-            
-            /// <summary>
-            /// Source of value set
-            /// </summary>
-            [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element ValueSet
-            {
-                get { return _ValueSet; }
-                set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _ValueSet;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as OperationDefinitionParameterBindingComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)StrengthElement.DeepCopy();
-                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new OperationDefinitionParameterBindingComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as OperationDefinitionParameterBindingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(StrengthElement, otherT.StrengthElement)) return false;
-                if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as OperationDefinitionParameterBindingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(StrengthElement, otherT.StrengthElement)) return false;
-                if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("OperationDefinitionParameterComponent")]
         [DataContract]
         public partial class OperationDefinitionParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -298,7 +96,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "OperationDefinitionParameterComponent"; } }
             
             /// <summary>
-            /// Name of the parameter
+            /// Name in Parameters.parameter.name or in URL
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -312,7 +110,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _NameElement;
             
             /// <summary>
-            /// Name of the parameter
+            /// Name in Parameters.parameter.name or in URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -595,6 +393,208 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
                 if( !DeepComparable.IsExactly(Binding, otherT.Binding)) return false;
                 if( !DeepComparable.IsExactly(Part, otherT.Part)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("OperationDefinitionParameterBindingComponent")]
+        [DataContract]
+        public partial class OperationDefinitionParameterBindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "OperationDefinitionParameterBindingComponent"; } }
+            
+            /// <summary>
+            /// required | extensible | preferred | example
+            /// </summary>
+            [FhirElement("strength", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
+            {
+                get { return _StrengthElement; }
+                set { _StrengthElement = value; OnPropertyChanged("StrengthElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.BindingStrength> _StrengthElement;
+            
+            /// <summary>
+            /// required | extensible | preferred | example
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.BindingStrength? Strength
+            {
+                get { return StrengthElement != null ? StrengthElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StrengthElement = null; 
+                    else
+                      StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
+                    OnPropertyChanged("Strength");
+                }
+            }
+            
+            /// <summary>
+            /// Source of value set
+            /// </summary>
+            [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element ValueSet
+            {
+                get { return _ValueSet; }
+                set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _ValueSet;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OperationDefinitionParameterBindingComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)StrengthElement.DeepCopy();
+                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OperationDefinitionParameterBindingComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionParameterBindingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StrengthElement, otherT.StrengthElement)) return false;
+                if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionParameterBindingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StrengthElement, otherT.StrengthElement)) return false;
+                if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("OperationDefinitionContactComponent")]
+        [DataContract]
+        public partial class OperationDefinitionContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "OperationDefinitionContactComponent"; } }
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Contact details for individual or publisher
+            /// </summary>
+            [FhirElement("telecom", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
+            {
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+                set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OperationDefinitionContactComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OperationDefinitionContactComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OperationDefinitionContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 
                 return true;
             }

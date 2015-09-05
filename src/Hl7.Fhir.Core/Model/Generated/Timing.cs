@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -49,28 +49,6 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Timing"; } }
-        
-        /// <summary>
-        /// A unit of time (units from UCUM)
-        /// </summary>
-        [FhirEnumeration("UnitsOfTime")]
-        public enum UnitsOfTime
-        {
-            [EnumLiteral("s")]
-            S,
-            [EnumLiteral("min")]
-            Min,
-            [EnumLiteral("h")]
-            H,
-            [EnumLiteral("d")]
-            D,
-            [EnumLiteral("wk")]
-            Wk,
-            [EnumLiteral("mo")]
-            Mo,
-            [EnumLiteral("a")]
-            A,
-        }
         
         /// <summary>
         /// Real world event that the schedule relates to
@@ -106,6 +84,28 @@ namespace Hl7.Fhir.Model
             PCD,
             [EnumLiteral("PCV")]
             PCV,
+        }
+        
+        /// <summary>
+        /// A unit of time (units from UCUM)
+        /// </summary>
+        [FhirEnumeration("UnitsOfTime")]
+        public enum UnitsOfTime
+        {
+            [EnumLiteral("s")]
+            S,
+            [EnumLiteral("min")]
+            Min,
+            [EnumLiteral("h")]
+            H,
+            [EnumLiteral("d")]
+            D,
+            [EnumLiteral("wk")]
+            Wk,
+            [EnumLiteral("mo")]
+            Mo,
+            [EnumLiteral("a")]
+            A,
         }
         
         /// <summary>
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Event occurs frequency times per period
+            /// Event occurs up to frequencyMax times per period
             /// </summary>
             [FhirElement("frequencyMax", InSummary=true, Order=100)]
             [DataMember]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Integer _FrequencyMaxElement;
             
             /// <summary>
-            /// Event occurs frequency times per period
+            /// Event occurs up to frequencyMax times per period
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

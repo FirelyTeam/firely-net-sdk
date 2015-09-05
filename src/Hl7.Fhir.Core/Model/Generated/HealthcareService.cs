@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,62 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.HealthcareService; } }
         [NotMapped]
         public override string TypeName { get { return "HealthcareService"; } }
-        
-        /// <summary>
-        /// The code(s) that detail the conditions under which the healthcare service is available/offered
-        /// </summary>
-        [FhirEnumeration("ServiceProvisionConditions")]
-        public enum ServiceProvisionConditions
-        {
-            /// <summary>
-            /// This service is available for no patient cost
-            /// </summary>
-            [EnumLiteral("free")]
-            Free,
-            /// <summary>
-            /// There are discounts available on this service for qualifying patients
-            /// </summary>
-            [EnumLiteral("disc")]
-            Disc,
-            /// <summary>
-            /// Fees apply for this service
-            /// </summary>
-            [EnumLiteral("cost")]
-            Cost,
-        }
-        
-        /// <summary>
-        /// The methods of referral can be used when referring to a specific HealthCareService resource
-        /// </summary>
-        [FhirEnumeration("ReferralMethod")]
-        public enum ReferralMethod
-        {
-            /// <summary>
-            /// Referrals may be accepted by fax
-            /// </summary>
-            [EnumLiteral("fax")]
-            Fax,
-            /// <summary>
-            /// Referrals may be accepted over the phone from a Practitioner
-            /// </summary>
-            [EnumLiteral("phone")]
-            Phone,
-            /// <summary>
-            /// Referrals may be accepted via a secure messaging system. To determine the types of secure messaging systems supported, refer to the identifiers collection. Callers will need to understand the specific identifier system used to know that they are able to transmit messages.
-            /// </summary>
-            [EnumLiteral("elec")]
-            Elec,
-            /// <summary>
-            /// Referrals may be accepted via a secure email. To send please enrypt with the services public key.
-            /// </summary>
-            [EnumLiteral("semail")]
-            Semail,
-            /// <summary>
-            /// Referrals may be accepted via regular postage (or hand delivered)
-            /// </summary>
-            [EnumLiteral("mail")]
-            Mail,
-        }
         
         /// <summary>
         /// The days of the week
@@ -151,105 +95,61 @@ namespace Hl7.Fhir.Model
             Sun,
         }
         
-        [FhirType("HealthcareServiceNotAvailableComponent")]
-        [DataContract]
-        public partial class HealthcareServiceNotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        /// <summary>
+        /// The methods of referral can be used when referring to a specific HealthCareService resource
+        /// </summary>
+        [FhirEnumeration("ReferralMethod")]
+        public enum ReferralMethod
         {
-            [NotMapped]
-            public override string TypeName { get { return "HealthcareServiceNotAvailableComponent"; } }
-            
             /// <summary>
-            /// The reason that can be presented to the user as to why this time is not available
+            /// Referrals may be accepted by fax
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
+            [EnumLiteral("fax")]
+            Fax,
             /// <summary>
-            /// The reason that can be presented to the user as to why this time is not available
+            /// Referrals may be accepted over the phone from a Practitioner
             /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
+            [EnumLiteral("phone")]
+            Phone,
             /// <summary>
-            /// Service is not available (seasonally or for a public holiday) from this date
+            /// Referrals may be accepted via a secure messaging system. To determine the types of secure messaging systems supported, refer to the identifiers collection. Callers will need to understand the specific identifier system used to know that they are able to transmit messages.
             /// </summary>
-            [FhirElement("during", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period During
-            {
-                get { return _During; }
-                set { _During = value; OnPropertyChanged("During"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _During;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as HealthcareServiceNotAvailableComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new HealthcareServiceNotAvailableComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as HealthcareServiceNotAvailableComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(During, otherT.During)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as HealthcareServiceNotAvailableComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(During, otherT.During)) return false;
-                
-                return true;
-            }
-            
+            [EnumLiteral("elec")]
+            Elec,
+            /// <summary>
+            /// Referrals may be accepted via a secure email. To send please enrypt with the services public key.
+            /// </summary>
+            [EnumLiteral("semail")]
+            Semail,
+            /// <summary>
+            /// Referrals may be accepted via regular postage (or hand delivered)
+            /// </summary>
+            [EnumLiteral("mail")]
+            Mail,
         }
         
+        /// <summary>
+        /// The code(s) that detail the conditions under which the healthcare service is available/offered
+        /// </summary>
+        [FhirEnumeration("ServiceProvisionConditions")]
+        public enum ServiceProvisionConditions
+        {
+            /// <summary>
+            /// This service is available for no patient cost
+            /// </summary>
+            [EnumLiteral("free")]
+            Free,
+            /// <summary>
+            /// There are discounts available on this service for qualifying patients
+            /// </summary>
+            [EnumLiteral("disc")]
+            Disc,
+            /// <summary>
+            /// Fees apply for this service
+            /// </summary>
+            [EnumLiteral("cost")]
+            Cost,
+        }
         
         [FhirType("ServiceTypeComponent")]
         [DataContract]
@@ -522,6 +422,106 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("HealthcareServiceNotAvailableComponent")]
+        [DataContract]
+        public partial class HealthcareServiceNotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "HealthcareServiceNotAvailableComponent"; } }
+            
+            /// <summary>
+            /// The reason that can be presented to the user as to why this time is not available
+            /// </summary>
+            [FhirElement("description", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// The reason that can be presented to the user as to why this time is not available
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Service is not available (seasonally or for a public holiday) from this date
+            /// </summary>
+            [FhirElement("during", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period During
+            {
+                get { return _During; }
+                set { _During = value; OnPropertyChanged("During"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _During;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as HealthcareServiceNotAvailableComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new HealthcareServiceNotAvailableComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as HealthcareServiceNotAvailableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(During, otherT.During)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as HealthcareServiceNotAvailableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(During, otherT.During)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         /// <summary>
         /// External Identifiers for this item
         /// </summary>
@@ -551,24 +551,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _ProvidedBy;
         
         /// <summary>
-        /// The location where this healthcare service may be provided
-        /// </summary>
-        [FhirElement("location", InSummary=true, Order=110)]
-        [References("Location")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Location
-        {
-            get { return _Location; }
-            set { _Location = value; OnPropertyChanged("Location"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Location;
-        
-        /// <summary>
         /// Identifies the broad category of service being performed or delivered. Selecting a Service Category then determines the list of relevant service types that can be selected in the Primary Service Type
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=120)]
+        [FhirElement("serviceCategory", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -581,7 +566,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A specific type of service that may be delivered or performed
         /// </summary>
-        [FhirElement("serviceType", InSummary=true, Order=130)]
+        [FhirElement("serviceType", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent> ServiceType
@@ -591,6 +576,21 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent> _ServiceType;
+        
+        /// <summary>
+        /// The location where this healthcare service may be provided
+        /// </summary>
+        [FhirElement("location", InSummary=true, Order=130)]
+        [References("Location")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Location
+        {
+            get { return _Location; }
+            set { _Location = value; OnPropertyChanged("Location"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Further description of the service as it would be presented to a consumer while searching
@@ -983,9 +983,9 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.HealthcareService.ServiceTypeComponent>(ServiceType.DeepCopy());
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(ServiceNameElement != null) dest.ServiceNameElement = (Hl7.Fhir.Model.FhirString)ServiceNameElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)ExtraDetailsElement.DeepCopy();
@@ -1022,9 +1022,9 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(ProvidedBy, otherT.ProvidedBy)) return false;
-            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ServiceNameElement, otherT.ServiceNameElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
@@ -1054,9 +1054,9 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(ProvidedBy, otherT.ProvidedBy)) return false;
-            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ServiceNameElement, otherT.ServiceNameElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;

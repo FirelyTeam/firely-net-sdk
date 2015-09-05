@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,121 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Practitioner; } }
         [NotMapped]
         public override string TypeName { get { return "Practitioner"; } }
+        
+        [FhirType("PractitionerQualificationComponent")]
+        [DataContract]
+        public partial class PractitionerQualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PractitionerQualificationComponent"; } }
+            
+            /// <summary>
+            /// An identifier for this qualification for the practitioner
+            /// </summary>
+            [FhirElement("identifier", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Identifier> Identifier
+            {
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
+            
+            /// <summary>
+            /// Coded representation of the qualification
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Period during which the qualification is valid
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// Organization that regulates and issues the qualification
+            /// </summary>
+            [FhirElement("issuer", InSummary=true, Order=70)]
+            [References("Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Issuer
+            {
+                get { return _Issuer; }
+                set { _Issuer = value; OnPropertyChanged("Issuer"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Issuer;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PractitionerQualificationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PractitionerQualificationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PractitionerQualificationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(Issuer, otherT.Issuer)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PractitionerQualificationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(Issuer, otherT.Issuer)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("PractitionerPractitionerRoleComponent")]
         [DataContract]
@@ -195,121 +310,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
                 if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("PractitionerQualificationComponent")]
-        [DataContract]
-        public partial class PractitionerQualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PractitionerQualificationComponent"; } }
-            
-            /// <summary>
-            /// An identifier for this qualification for the practitioner
-            /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Identifier> Identifier
-            {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Identifier> _Identifier;
-            
-            /// <summary>
-            /// Coded representation of the qualification
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Period during which the qualification is valid
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// Organization that regulates and issues the qualification
-            /// </summary>
-            [FhirElement("issuer", InSummary=true, Order=70)]
-            [References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Issuer
-            {
-                get { return _Issuer; }
-                set { _Issuer = value; OnPropertyChanged("Issuer"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Issuer;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as PractitionerQualificationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new PractitionerQualificationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as PractitionerQualificationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Issuer, otherT.Issuer)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as PractitionerQualificationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Issuer, otherT.Issuer)) return false;
                 
                 return true;
             }

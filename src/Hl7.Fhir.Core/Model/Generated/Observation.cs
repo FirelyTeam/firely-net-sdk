@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,44 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Observation; } }
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
+        
+        /// <summary>
+        /// Codes specifying how two observations are related
+        /// </summary>
+        [FhirEnumeration("ObservationRelationshipType")]
+        public enum ObservationRelationshipType
+        {
+            /// <summary>
+            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group
+            /// </summary>
+            [EnumLiteral("has-member")]
+            HasMember,
+            /// <summary>
+            /// The target resource (Observation or QuestionnaireAnswer) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireAnswer
+            /// </summary>
+            [EnumLiteral("derived-from")]
+            DerivedFrom,
+            /// <summary>
+            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test)
+            /// </summary>
+            [EnumLiteral("sequel-to")]
+            SequelTo,
+            /// <summary>
+            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete
+            /// </summary>
+            [EnumLiteral("replaces")]
+            Replaces,
+            /// <summary>
+            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure)
+            /// </summary>
+            [EnumLiteral("qualified-by")]
+            QualifiedBy,
+            /// <summary>
+            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value)
+            /// </summary>
+            [EnumLiteral("interfered-by")]
+            InterferedBy,
+        }
         
         /// <summary>
         /// Codes providing the status of an observation
@@ -94,159 +132,6 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("unknown")]
             Unknown,
         }
-        
-        /// <summary>
-        /// Codes specifying how two observations are related
-        /// </summary>
-        [FhirEnumeration("ObservationRelationshipType")]
-        public enum ObservationRelationshipType
-        {
-            /// <summary>
-            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group
-            /// </summary>
-            [EnumLiteral("has-member")]
-            HasMember,
-            /// <summary>
-            /// The target resource (Observation or QuestionnaireAnswer) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireAnswer
-            /// </summary>
-            [EnumLiteral("derived-from")]
-            DerivedFrom,
-            /// <summary>
-            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test)
-            /// </summary>
-            [EnumLiteral("sequel-to")]
-            SequelTo,
-            /// <summary>
-            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete
-            /// </summary>
-            [EnumLiteral("replaces")]
-            Replaces,
-            /// <summary>
-            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure)
-            /// </summary>
-            [EnumLiteral("qualified-by")]
-            QualifiedBy,
-            /// <summary>
-            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value)
-            /// </summary>
-            [EnumLiteral("interfered-by")]
-            InterferedBy,
-        }
-        
-        [FhirType("ObservationComponentComponent")]
-        [DataContract]
-        public partial class ObservationComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ObservationComponentComponent"; } }
-            
-            /// <summary>
-            /// Type of component observation (code / type)
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Actual component result
-            /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Value;
-            
-            /// <summary>
-            /// Why the component result is missing
-            /// </summary>
-            [FhirElement("dataAbsentReason", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
-            {
-                get { return _DataAbsentReason; }
-                set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
-            
-            /// <summary>
-            /// Provides guide for interpretation ofcomponent result
-            /// </summary>
-            [FhirElement("referenceRange", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
-            {
-                get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
-                set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ObservationComponentComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
-                    if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
-                    if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ObservationComponentComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ObservationComponentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
-                if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ObservationComponentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
-                if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         [FhirType("ObservationReferenceRangeComponent")]
         [DataContract]
@@ -489,6 +374,121 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ObservationComponentComponent")]
+        [DataContract]
+        public partial class ObservationComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ObservationComponentComponent"; } }
+            
+            /// <summary>
+            /// Type of component observation (code / type)
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Actual component result
+            /// </summary>
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Value;
+            
+            /// <summary>
+            /// Why the component result is missing
+            /// </summary>
+            [FhirElement("dataAbsentReason", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
+            {
+                get { return _DataAbsentReason; }
+                set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
+            
+            /// <summary>
+            /// Provides guide for interpretation ofcomponent result
+            /// </summary>
+            [FhirElement("referenceRange", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
+            {
+                get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
+                set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ObservationComponentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
+                    if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ObservationComponentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ObservationComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ObservationComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
                 
                 return true;
             }

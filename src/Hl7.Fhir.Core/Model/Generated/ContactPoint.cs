@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -49,39 +49,6 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "ContactPoint"; } }
-        
-        /// <summary>
-        /// Telecommunications form for contact point
-        /// </summary>
-        [FhirEnumeration("ContactPointSystem")]
-        public enum ContactPointSystem
-        {
-            /// <summary>
-            /// The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
-            /// </summary>
-            [EnumLiteral("phone")]
-            Phone,
-            /// <summary>
-            /// The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
-            /// </summary>
-            [EnumLiteral("fax")]
-            Fax,
-            /// <summary>
-            /// The value is an email address
-            /// </summary>
-            [EnumLiteral("email")]
-            Email,
-            /// <summary>
-            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system
-            /// </summary>
-            [EnumLiteral("pager")]
-            Pager,
-            /// <summary>
-            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation
-            /// </summary>
-            [EnumLiteral("other")]
-            Other,
-        }
         
         /// <summary>
         /// Use of contact point
@@ -114,6 +81,39 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("mobile")]
             Mobile,
+        }
+        
+        /// <summary>
+        /// Telecommunications form for contact point
+        /// </summary>
+        [FhirEnumeration("ContactPointSystem")]
+        public enum ContactPointSystem
+        {
+            /// <summary>
+            /// The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// </summary>
+            [EnumLiteral("phone")]
+            Phone,
+            /// <summary>
+            /// The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// </summary>
+            [EnumLiteral("fax")]
+            Fax,
+            /// <summary>
+            /// The value is an email address
+            /// </summary>
+            [EnumLiteral("email")]
+            Email,
+            /// <summary>
+            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system
+            /// </summary>
+            [EnumLiteral("pager")]
+            Pager,
+            /// <summary>
+            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation
+            /// </summary>
+            [EnumLiteral("other")]
+            Other,
         }
         
         /// <summary>

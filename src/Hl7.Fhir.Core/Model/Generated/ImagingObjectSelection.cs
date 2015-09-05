@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -256,179 +256,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;
                 if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("InstanceComponent")]
-        [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "InstanceComponent"; } }
-            
-            /// <summary>
-            /// SOP class UID of instance
-            /// </summary>
-            [FhirElement("sopClass", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Oid SopClassElement
-            {
-                get { return _SopClassElement; }
-                set { _SopClassElement = value; OnPropertyChanged("SopClassElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Oid _SopClassElement;
-            
-            /// <summary>
-            /// SOP class UID of instance
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SopClass
-            {
-                get { return SopClassElement != null ? SopClassElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SopClassElement = null; 
-                    else
-                      SopClassElement = new Hl7.Fhir.Model.Oid(value);
-                    OnPropertyChanged("SopClass");
-                }
-            }
-            
-            /// <summary>
-            /// Selected instance UID
-            /// </summary>
-            [FhirElement("uid", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Oid UidElement
-            {
-                get { return _UidElement; }
-                set { _UidElement = value; OnPropertyChanged("UidElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Oid _UidElement;
-            
-            /// <summary>
-            /// Selected instance UID
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Uid
-            {
-                get { return UidElement != null ? UidElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UidElement = null; 
-                    else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
-                    OnPropertyChanged("Uid");
-                }
-            }
-            
-            /// <summary>
-            /// Retrieve instance URL
-            /// </summary>
-            [FhirElement("url", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
-            {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// Retrieve instance URL
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UrlElement = null; 
-                    else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            /// <summary>
-            /// The frame set
-            /// </summary>
-            [FhirElement("frames", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> Frames
-            {
-                get { if(_Frames==null) _Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(); return _Frames; }
-                set { _Frames = value; OnPropertyChanged("Frames"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> _Frames;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as InstanceComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopy();
-                    if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    if(Frames != null) dest.Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(Frames.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new InstanceComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as InstanceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(SopClassElement, otherT.SopClassElement)) return false;
-                if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.Matches(Frames, otherT.Frames)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as InstanceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(SopClassElement, otherT.SopClassElement)) return false;
-                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.IsExactly(Frames, otherT.Frames)) return false;
                 
                 return true;
             }
@@ -684,6 +511,179 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("InstanceComponent")]
+        [DataContract]
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "InstanceComponent"; } }
+            
+            /// <summary>
+            /// SOP class UID of instance
+            /// </summary>
+            [FhirElement("sopClass", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Oid SopClassElement
+            {
+                get { return _SopClassElement; }
+                set { _SopClassElement = value; OnPropertyChanged("SopClassElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Oid _SopClassElement;
+            
+            /// <summary>
+            /// SOP class UID of instance
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SopClass
+            {
+                get { return SopClassElement != null ? SopClassElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      SopClassElement = null; 
+                    else
+                      SopClassElement = new Hl7.Fhir.Model.Oid(value);
+                    OnPropertyChanged("SopClass");
+                }
+            }
+            
+            /// <summary>
+            /// Selected instance UID
+            /// </summary>
+            [FhirElement("uid", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Oid UidElement
+            {
+                get { return _UidElement; }
+                set { _UidElement = value; OnPropertyChanged("UidElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Oid _UidElement;
+            
+            /// <summary>
+            /// Selected instance UID
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Uid
+            {
+                get { return UidElement != null ? UidElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UidElement = null; 
+                    else
+                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                    OnPropertyChanged("Uid");
+                }
+            }
+            
+            /// <summary>
+            /// Retrieve instance URL
+            /// </summary>
+            [FhirElement("url", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UrlElement
+            {
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            
+            /// <summary>
+            /// Retrieve instance URL
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Url
+            {
+                get { return UrlElement != null ? UrlElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UrlElement = null; 
+                    else
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
+                }
+            }
+            
+            /// <summary>
+            /// The frame set
+            /// </summary>
+            [FhirElement("frames", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> Frames
+            {
+                get { if(_Frames==null) _Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(); return _Frames; }
+                set { _Frames = value; OnPropertyChanged("Frames"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> _Frames;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as InstanceComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopy();
+                    if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(Frames != null) dest.Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(Frames.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new InstanceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as InstanceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SopClassElement, otherT.SopClassElement)) return false;
+                if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(Frames, otherT.Frames)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as InstanceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SopClassElement, otherT.SopClassElement)) return false;
+                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(Frames, otherT.Frames)) return false;
                 
                 return true;
             }

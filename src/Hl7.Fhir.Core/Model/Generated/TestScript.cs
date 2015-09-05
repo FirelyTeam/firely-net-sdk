@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,24 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.TestScript; } }
         [NotMapped]
         public override string TypeName { get { return "TestScript"; } }
+        
+        /// <summary>
+        /// The content or mime type.
+        /// </summary>
+        [FhirEnumeration("ContentType")]
+        public enum ContentType
+        {
+            /// <summary>
+            /// XML content-type corresponding to the application/xml+fhir mime-type
+            /// </summary>
+            [EnumLiteral("xml")]
+            Xml,
+            /// <summary>
+            /// JSON content-type corresponding to the application/json+fhir mime-type
+            /// </summary>
+            [EnumLiteral("json")]
+            Json,
+        }
         
         /// <summary>
         /// The type of direction to use for assertion.
@@ -68,6 +86,64 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("request")]
             Request,
+        }
+        
+        /// <summary>
+        /// The type of operator to use for assertion.
+        /// </summary>
+        [FhirEnumeration("AssertionOperatorType")]
+        public enum AssertionOperatorType
+        {
+            /// <summary>
+            /// Default value. Equals comparison.
+            /// </summary>
+            [EnumLiteral("equals")]
+            Equals,
+            /// <summary>
+            /// Not equals comparison.
+            /// </summary>
+            [EnumLiteral("notEquals")]
+            NotEquals,
+            /// <summary>
+            /// Compare value within a known set of values.
+            /// </summary>
+            [EnumLiteral("in")]
+            In,
+            /// <summary>
+            /// Compare value not within a known set of values.
+            /// </summary>
+            [EnumLiteral("notIn")]
+            NotIn,
+            /// <summary>
+            /// Compare value to be greater than a known value.
+            /// </summary>
+            [EnumLiteral("greaterThan")]
+            GreaterThan,
+            /// <summary>
+            /// Compare value to be less than a known value.
+            /// </summary>
+            [EnumLiteral("lessThan")]
+            LessThan,
+            /// <summary>
+            /// Compare value is empty.
+            /// </summary>
+            [EnumLiteral("empty")]
+            Empty,
+            /// <summary>
+            /// Compare value is not empty.
+            /// </summary>
+            [EnumLiteral("notEmpty")]
+            NotEmpty,
+            /// <summary>
+            /// Compare value string contains a known value.
+            /// </summary>
+            [EnumLiteral("contains")]
+            Contains,
+            /// <summary>
+            /// Compare value string does not contain a known value.
+            /// </summary>
+            [EnumLiteral("notContains")]
+            NotContains,
         }
         
         /// <summary>
@@ -138,82 +214,6 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
         
-        /// <summary>
-        /// The type of operator to use for assertion.
-        /// </summary>
-        [FhirEnumeration("AssertionOperatorType")]
-        public enum AssertionOperatorType
-        {
-            /// <summary>
-            /// Default value. Equals comparison.
-            /// </summary>
-            [EnumLiteral("equals")]
-            Equals,
-            /// <summary>
-            /// Not equals comparison.
-            /// </summary>
-            [EnumLiteral("notEquals")]
-            NotEquals,
-            /// <summary>
-            /// Compare value within a known set of values.
-            /// </summary>
-            [EnumLiteral("in")]
-            In,
-            /// <summary>
-            /// Compare value not within a known set of values.
-            /// </summary>
-            [EnumLiteral("notIn")]
-            NotIn,
-            /// <summary>
-            /// Compare value to be greater than a known value.
-            /// </summary>
-            [EnumLiteral("greaterThan")]
-            GreaterThan,
-            /// <summary>
-            /// Compare value to be less than a known value.
-            /// </summary>
-            [EnumLiteral("lessThan")]
-            LessThan,
-            /// <summary>
-            /// Compare value is empty.
-            /// </summary>
-            [EnumLiteral("empty")]
-            Empty,
-            /// <summary>
-            /// Compare value is not empty.
-            /// </summary>
-            [EnumLiteral("notEmpty")]
-            NotEmpty,
-            /// <summary>
-            /// Compare value string contains a known value.
-            /// </summary>
-            [EnumLiteral("contains")]
-            Contains,
-            /// <summary>
-            /// Compare value string does not contain a known value.
-            /// </summary>
-            [EnumLiteral("notContains")]
-            NotContains,
-        }
-        
-        /// <summary>
-        /// The content or mime type.
-        /// </summary>
-        [FhirEnumeration("ContentType")]
-        public enum ContentType
-        {
-            /// <summary>
-            /// XML content-type corresponding to the application/xml+fhir mime-type
-            /// </summary>
-            [EnumLiteral("xml")]
-            Xml,
-            /// <summary>
-            /// JSON content-type corresponding to the application/json+fhir mime-type
-            /// </summary>
-            [EnumLiteral("json")]
-            Json,
-        }
-        
         [FhirType("TestScriptSetupActionOperationRequestHeaderComponent")]
         [DataContract]
         public partial class TestScriptSetupActionOperationRequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "TestScriptSetupActionOperationRequestHeaderComponent"; } }
             
             /// <summary>
-            /// Header field name
+            /// HTTP header field name
             /// </summary>
             [FhirElement("field", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _FieldElement;
             
             /// <summary>
-            /// Header field name
+            /// HTTP header field name
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Header value
+            /// HTTP headerfield value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
-            /// Header value
+            /// HTTP headerfield value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -327,270 +327,6 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(FieldElement, otherT.FieldElement)) return false;
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptMetadataLinkComponent")]
-        [DataContract]
-        public partial class TestScriptMetadataLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataLinkComponent"; } }
-            
-            /// <summary>
-            /// URL to the specification
-            /// </summary>
-            [FhirElement("url", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
-            {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// URL to the specification
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UrlElement = null; 
-                    else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            /// <summary>
-            /// Short description
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Short description
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptMetadataLinkComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptMetadataLinkComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptMetadataLinkComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptMetadataLinkComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptTeardownComponent")]
-        [DataContract]
-        public partial class TestScriptTeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptTeardownComponent"; } }
-            
-            /// <summary>
-            /// Action
-            /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> Action
-            {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(); return _Action; }
-                set { _Action = value; OnPropertyChanged("Action"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> _Action;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptTeardownComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(Action.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptTeardownComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTeardownComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTeardownComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptTestActionComponent")]
-        [DataContract]
-        public partial class TestScriptTestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptTestActionComponent"; } }
-            
-            /// <summary>
-            /// Operation
-            /// </summary>
-            [FhirElement("operation", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent Operation
-            {
-                get { return _Operation; }
-                set { _Operation = value; OnPropertyChanged("Operation"); }
-            }
-            
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
-            
-            /// <summary>
-            /// Assertion
-            /// </summary>
-            [FhirElement("assert", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent Assert
-            {
-                get { return _Assert; }
-                set { _Assert = value; OnPropertyChanged("Assert"); }
-            }
-            
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent _Assert;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptTestActionComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
-                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent)Assert.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptTestActionComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTestActionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
-                if( !DeepComparable.Matches(Assert, otherT.Assert)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTestActionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
-                if( !DeepComparable.IsExactly(Assert, otherT.Assert)) return false;
                 
                 return true;
             }
@@ -698,6 +434,691 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("TestScriptFixtureComponent")]
+        [DataContract]
+        public partial class TestScriptFixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptFixtureComponent"; } }
+            
+            /// <summary>
+            /// Whether or not to implicitly create the fixture during setup
+            /// </summary>
+            [FhirElement("autocreate", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean AutocreateElement
+            {
+                get { return _AutocreateElement; }
+                set { _AutocreateElement = value; OnPropertyChanged("AutocreateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _AutocreateElement;
+            
+            /// <summary>
+            /// Whether or not to implicitly create the fixture during setup
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Autocreate
+            {
+                get { return AutocreateElement != null ? AutocreateElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      AutocreateElement = null; 
+                    else
+                      AutocreateElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Autocreate");
+                }
+            }
+            
+            /// <summary>
+            /// Whether or not to implicitly delete the fixture during teardown
+            /// </summary>
+            [FhirElement("autodelete", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean AutodeleteElement
+            {
+                get { return _AutodeleteElement; }
+                set { _AutodeleteElement = value; OnPropertyChanged("AutodeleteElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _AutodeleteElement;
+            
+            /// <summary>
+            /// Whether or not to implicitly delete the fixture during teardown
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Autodelete
+            {
+                get { return AutodeleteElement != null ? AutodeleteElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      AutodeleteElement = null; 
+                    else
+                      AutodeleteElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Autodelete");
+                }
+            }
+            
+            /// <summary>
+            /// Reference of the resource
+            /// </summary>
+            [FhirElement("resource", InSummary=true, Order=60)]
+            [References()]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Resource
+            {
+                get { return _Resource; }
+                set { _Resource = value; OnPropertyChanged("Resource"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Resource;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptFixtureComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(AutocreateElement != null) dest.AutocreateElement = (Hl7.Fhir.Model.FhirBoolean)AutocreateElement.DeepCopy();
+                    if(AutodeleteElement != null) dest.AutodeleteElement = (Hl7.Fhir.Model.FhirBoolean)AutodeleteElement.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptFixtureComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptFixtureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(AutocreateElement, otherT.AutocreateElement)) return false;
+                if( !DeepComparable.Matches(AutodeleteElement, otherT.AutodeleteElement)) return false;
+                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptFixtureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(AutocreateElement, otherT.AutocreateElement)) return false;
+                if( !DeepComparable.IsExactly(AutodeleteElement, otherT.AutodeleteElement)) return false;
+                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptTestComponent")]
+        [DataContract]
+        public partial class TestScriptTestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptTestComponent"; } }
+            
+            /// <summary>
+            /// Tracking/logging name of this test
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Tracking/logging name of this test
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Tracking/reporting short description of the test
+            /// </summary>
+            [FhirElement("description", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Tracking/reporting short description of the test
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Capabiltities that are expected to function correctly on the FHIR server being tested
+            /// </summary>
+            [FhirElement("metadata", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+            {
+                get { return _Metadata; }
+                set { _Metadata = value; OnPropertyChanged("Metadata"); }
+            }
+            
+            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+            
+            /// <summary>
+            /// A test operation or assert to perform
+            /// </summary>
+            [FhirElement("action", InSummary=true, Order=70)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> Action
+            {
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(); return _Action; }
+                set { _Action = value; OnPropertyChanged("Action"); }
+            }
+            
+            private List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> _Action;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptTestComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(Action.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptTestComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTestComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Metadata, otherT.Metadata)) return false;
+                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTestComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Metadata, otherT.Metadata)) return false;
+                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptSetupComponent")]
+        [DataContract]
+        public partial class TestScriptSetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptSetupComponent"; } }
+            
+            /// <summary>
+            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
+            /// </summary>
+            [FhirElement("metadata", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+            {
+                get { return _Metadata; }
+                set { _Metadata = value; OnPropertyChanged("Metadata"); }
+            }
+            
+            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+            
+            /// <summary>
+            /// A setup operation or assert to perform
+            /// </summary>
+            [FhirElement("action", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> Action
+            {
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(); return _Action; }
+                set { _Action = value; OnPropertyChanged("Action"); }
+            }
+            
+            private List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> _Action;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptSetupComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(Action.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptSetupComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptSetupComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Metadata, otherT.Metadata)) return false;
+                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptSetupComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Metadata, otherT.Metadata)) return false;
+                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptTeardownComponent")]
+        [DataContract]
+        public partial class TestScriptTeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptTeardownComponent"; } }
+            
+            /// <summary>
+            /// One or more teardown operations to perform
+            /// </summary>
+            [FhirElement("action", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> Action
+            {
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(); return _Action; }
+                set { _Action = value; OnPropertyChanged("Action"); }
+            }
+            
+            private List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> _Action;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptTeardownComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(Action.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptTeardownComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTeardownComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTeardownComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptVariableComponent")]
+        [DataContract]
+        public partial class TestScriptVariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptVariableComponent"; } }
+            
+            /// <summary>
+            /// Descriptive name for this variable
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Descriptive name for this variable
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// HTTP header field name for source
+            /// </summary>
+            [FhirElement("headerField", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString HeaderFieldElement
+            {
+                get { return _HeaderFieldElement; }
+                set { _HeaderFieldElement = value; OnPropertyChanged("HeaderFieldElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _HeaderFieldElement;
+            
+            /// <summary>
+            /// HTTP header field name for source
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string HeaderField
+            {
+                get { return HeaderFieldElement != null ? HeaderFieldElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      HeaderFieldElement = null; 
+                    else
+                      HeaderFieldElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("HeaderField");
+                }
+            }
+            
+            /// <summary>
+            /// XPath or JSONPath against the fixture body
+            /// </summary>
+            [FhirElement("path", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PathElement
+            {
+                get { return _PathElement; }
+                set { _PathElement = value; OnPropertyChanged("PathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PathElement;
+            
+            /// <summary>
+            /// XPath or JSONPath against the fixture body
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Path
+            {
+                get { return PathElement != null ? PathElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PathElement = null; 
+                    else
+                      PathElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Path");
+                }
+            }
+            
+            /// <summary>
+            /// Fixture Id of source expression or headerField within this variable
+            /// </summary>
+            [FhirElement("sourceId", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Id SourceIdElement
+            {
+                get { return _SourceIdElement; }
+                set { _SourceIdElement = value; OnPropertyChanged("SourceIdElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Id _SourceIdElement;
+            
+            /// <summary>
+            /// Fixture Id of source expression or headerField within this variable
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SourceId
+            {
+                get { return SourceIdElement != null ? SourceIdElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      SourceIdElement = null; 
+                    else
+                      SourceIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("SourceId");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptVariableComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
+                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptVariableComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptVariableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
+                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(SourceIdElement, otherT.SourceIdElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptVariableComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
+                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(SourceIdElement, otherT.SourceIdElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptTeardownActionComponent")]
+        [DataContract]
+        public partial class TestScriptTeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptTeardownActionComponent"; } }
+            
+            /// <summary>
+            /// The teardown operation to perform
+            /// </summary>
+            [FhirElement("operation", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent Operation
+            {
+                get { return _Operation; }
+                set { _Operation = value; OnPropertyChanged("Operation"); }
+            }
+            
+            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptTeardownActionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptTeardownActionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTeardownActionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptTeardownActionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("TestScriptSetupActionAssertComponent")]
         [DataContract]
         public partial class TestScriptSetupActionAssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -706,7 +1127,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "TestScriptSetupActionAssertComponent"; } }
             
             /// <summary>
-            /// Assertion label
+            /// Tracking/logging assertion label
             /// </summary>
             [FhirElement("label", InSummary=true, Order=40)]
             [DataMember]
@@ -719,7 +1140,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LabelElement;
             
             /// <summary>
-            /// Assertion label
+            /// Tracking/logging assertion label
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -738,7 +1159,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Assertion description
+            /// Tracking/reporting assertion description
             /// </summary>
             [FhirElement("description", InSummary=true, Order=50)]
             [DataMember]
@@ -751,7 +1172,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// Assertion description
+            /// Tracking/reporting assertion description
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -898,7 +1319,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The header field
+            /// HTTP header field name
             /// </summary>
             [FhirElement("headerField", InSummary=true, Order=100)]
             [DataMember]
@@ -911,7 +1332,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _HeaderFieldElement;
             
             /// <summary>
-            /// The header field
+            /// HTTP header field name
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -930,7 +1351,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// MinimumId
+            /// Fixture Id of minimum content resource
             /// </summary>
             [FhirElement("minimumId", InSummary=true, Order=110)]
             [DataMember]
@@ -943,7 +1364,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _MinimumIdElement;
             
             /// <summary>
-            /// MinimumId
+            /// Fixture Id of minimum content resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -962,7 +1383,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Navigation Links
+            /// Perform validation on navigation links?
             /// </summary>
             [FhirElement("navigationLinks", InSummary=true, Order=120)]
             [DataMember]
@@ -975,7 +1396,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _NavigationLinksElement;
             
             /// <summary>
-            /// Navigation Links
+            /// Perform validation on navigation links?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1122,7 +1543,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Response Code
+            /// HTTP response code to test
             /// </summary>
             [FhirElement("responseCode", InSummary=true, Order=170)]
             [DataMember]
@@ -1135,7 +1556,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ResponseCodeElement;
             
             /// <summary>
-            /// Response Code
+            /// HTTP response code to test
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1154,7 +1575,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Fixture Id
+            /// Fixture Id of source expression or headerField
             /// </summary>
             [FhirElement("sourceId", InSummary=true, Order=180)]
             [DataMember]
@@ -1167,7 +1588,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Id _SourceIdElement;
             
             /// <summary>
-            /// Fixture Id
+            /// Fixture Id of source expression or headerField
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1186,7 +1607,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Validate Profile Id
+            /// Profile Id of validation profile reference
             /// </summary>
             [FhirElement("validateProfileId", InSummary=true, Order=190)]
             [DataMember]
@@ -1199,7 +1620,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Id _ValidateProfileIdElement;
             
             /// <summary>
-            /// Validate Profile Id
+            /// Profile Id of validation profile reference
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1250,7 +1671,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Warning Only
+            /// Will this assert produce a warning only on error?
             /// </summary>
             [FhirElement("warningOnly", InSummary=true, Order=210)]
             [DataMember]
@@ -1263,7 +1684,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _WarningOnlyElement;
             
             /// <summary>
-            /// Warning Only
+            /// Will this assert produce a warning only on error?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1376,49 +1797,87 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupComponent")]
+        [FhirType("TestScriptMetadataLinkComponent")]
         [DataContract]
-        public partial class TestScriptSetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestScriptMetadataLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupComponent"; } }
+            public override string TypeName { get { return "TestScriptMetadataLinkComponent"; } }
             
             /// <summary>
-            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
+            /// URL to the specification
             /// </summary>
-            [FhirElement("metadata", InSummary=true, Order=40)]
+            [FhirElement("url", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+            public Hl7.Fhir.Model.FhirUri UrlElement
             {
-                get { return _Metadata; }
-                set { _Metadata = value; OnPropertyChanged("Metadata"); }
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
             
             /// <summary>
-            /// Action
+            /// URL to the specification
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> Action
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Url
             {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(); return _Action; }
-                set { _Action = value; OnPropertyChanged("Action"); }
+                get { return UrlElement != null ? UrlElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UrlElement = null; 
+                    else
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
+                }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> _Action;
+            /// <summary>
+            /// Short description
+            /// </summary>
+            [FhirElement("description", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Short description
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupComponent;
+                var dest = other as TestScriptMetadataLinkComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(Action.DeepCopy());
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -1427,29 +1886,111 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupComponent());
+                return CopyTo(new TestScriptMetadataLinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupComponent;
+                var otherT = other as TestScriptMetadataLinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Metadata, otherT.Metadata)) return false;
-                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupComponent;
+                var otherT = other as TestScriptMetadataLinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Metadata, otherT.Metadata)) return false;
-                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("TestScriptMetadataComponent")]
+        [DataContract]
+        public partial class TestScriptMetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TestScriptMetadataComponent"; } }
+            
+            /// <summary>
+            /// Links to the FHIR specification
+            /// </summary>
+            [FhirElement("link", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> Link
+            {
+                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(); return _Link; }
+                set { _Link = value; OnPropertyChanged("Link"); }
+            }
+            
+            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> _Link;
+            
+            /// <summary>
+            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
+            /// </summary>
+            [FhirElement("capability", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent> Capability
+            {
+                get { if(_Capability==null) _Capability = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent>(); return _Capability; }
+                set { _Capability = value; OnPropertyChanged("Capability"); }
+            }
+            
+            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent> _Capability;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TestScriptMetadataComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(Link.DeepCopy());
+                    if(Capability != null) dest.Capability = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent>(Capability.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TestScriptMetadataComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TestScriptMetadataComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Link, otherT.Link)) return false;
+                if( !DeepComparable.Matches(Capability, otherT.Capability)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TestScriptMetadataComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
+                if( !DeepComparable.IsExactly(Capability, otherT.Capability)) return false;
                 
                 return true;
             }
@@ -1465,7 +2006,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "TestScriptSetupActionComponent"; } }
             
             /// <summary>
-            /// An operation
+            /// The setup operation to perform
             /// </summary>
             [FhirElement("operation", InSummary=true, Order=40)]
             [DataMember]
@@ -1478,7 +2019,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
             
             /// <summary>
-            /// Assertion
+            /// The assertion to perform
             /// </summary>
             [FhirElement("assert", InSummary=true, Order=50)]
             [DataMember]
@@ -1537,150 +2078,15 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptFixtureComponent")]
+        [FhirType("TestScriptMetadataCapabilityComponent")]
         [DataContract]
-        public partial class TestScriptFixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestScriptMetadataCapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptFixtureComponent"; } }
+            public override string TypeName { get { return "TestScriptMetadataCapabilityComponent"; } }
             
             /// <summary>
-            /// Whether or not to implicitly create the fixture during setup
-            /// </summary>
-            [FhirElement("autocreate", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean AutocreateElement
-            {
-                get { return _AutocreateElement; }
-                set { _AutocreateElement = value; OnPropertyChanged("AutocreateElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _AutocreateElement;
-            
-            /// <summary>
-            /// Whether or not to implicitly create the fixture during setup
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Autocreate
-            {
-                get { return AutocreateElement != null ? AutocreateElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      AutocreateElement = null; 
-                    else
-                      AutocreateElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Autocreate");
-                }
-            }
-            
-            /// <summary>
-            /// Whether or not to implicitly delete the fixture during teardown
-            /// </summary>
-            [FhirElement("autodelete", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean AutodeleteElement
-            {
-                get { return _AutodeleteElement; }
-                set { _AutodeleteElement = value; OnPropertyChanged("AutodeleteElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _AutodeleteElement;
-            
-            /// <summary>
-            /// Whether or not to implicitly delete the fixture during teardown
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Autodelete
-            {
-                get { return AutodeleteElement != null ? AutodeleteElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      AutodeleteElement = null; 
-                    else
-                      AutodeleteElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Autodelete");
-                }
-            }
-            
-            /// <summary>
-            /// Reference of the resource
-            /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60)]
-            [References()]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Resource
-            {
-                get { return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Resource;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptFixtureComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(AutocreateElement != null) dest.AutocreateElement = (Hl7.Fhir.Model.FhirBoolean)AutocreateElement.DeepCopy();
-                    if(AutodeleteElement != null) dest.AutodeleteElement = (Hl7.Fhir.Model.FhirBoolean)AutodeleteElement.DeepCopy();
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptFixtureComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptFixtureComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(AutocreateElement, otherT.AutocreateElement)) return false;
-                if( !DeepComparable.Matches(AutodeleteElement, otherT.AutodeleteElement)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptFixtureComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(AutocreateElement, otherT.AutocreateElement)) return false;
-                if( !DeepComparable.IsExactly(AutodeleteElement, otherT.AutodeleteElement)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptMetadataCapabilitiesComponent")]
-        [DataContract]
-        public partial class TestScriptMetadataCapabilitiesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataCapabilitiesComponent"; } }
-            
-            /// <summary>
-            /// Required capabilities
+            /// Are the capabilities required?
             /// </summary>
             [FhirElement("required", InSummary=true, Order=40)]
             [DataMember]
@@ -1693,7 +2099,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
-            /// Required capabilities
+            /// Are the capabilities required?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1712,7 +2118,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Validated capabilities
+            /// Are the capabilities validated?
             /// </summary>
             [FhirElement("validated", InSummary=true, Order=50)]
             [DataMember]
@@ -1725,7 +2131,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _ValidatedElement;
             
             /// <summary>
-            /// Validated capabilities
+            /// Are the capabilities validated?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1744,7 +2150,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The description of the capabilities
+            /// The expected capabilities of the server
             /// </summary>
             [FhirElement("description", InSummary=true, Order=60)]
             [DataMember]
@@ -1757,7 +2163,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// The description of the capabilities
+            /// The expected capabilities of the server
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1857,7 +2263,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptMetadataCapabilitiesComponent;
+                var dest = other as TestScriptMetadataCapabilityComponent;
                 
                 if (dest != null)
                 {
@@ -1876,12 +2282,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptMetadataCapabilitiesComponent());
+                return CopyTo(new TestScriptMetadataCapabilityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataCapabilitiesComponent;
+                var otherT = other as TestScriptMetadataCapabilityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1897,7 +2303,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataCapabilitiesComponent;
+                var otherT = other as TestScriptMetadataCapabilityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1922,7 +2328,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "TestScriptSetupActionOperationComponent"; } }
             
             /// <summary>
-            /// The operation type that will be executed
+            /// The setup operation type that will be executed
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
             [DataMember]
@@ -1967,7 +2373,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Operation label
+            /// Tracking/logging operation label
             /// </summary>
             [FhirElement("label", InSummary=true, Order=60)]
             [DataMember]
@@ -1980,7 +2386,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LabelElement;
             
             /// <summary>
-            /// Operation label
+            /// Tracking/logging operation label
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1999,7 +2405,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Operation description
+            /// Tracking/reporting operation description
             /// </summary>
             [FhirElement("description", InSummary=true, Order=70)]
             [DataMember]
@@ -2012,7 +2418,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// Operation description
+            /// Tracking/reporting operation description
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2159,7 +2565,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Params
+            /// Explicitly defined path parameters
             /// </summary>
             [FhirElement("params", InSummary=true, Order=120)]
             [DataMember]
@@ -2172,7 +2578,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ParamsElement;
             
             /// <summary>
-            /// Params
+            /// Explicitly defined path parameters
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2205,7 +2611,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationRequestHeaderComponent> _RequestHeader;
             
             /// <summary>
-            /// Response Id
+            /// Fixture Id of mapped response
             /// </summary>
             [FhirElement("responseId", InSummary=true, Order=140)]
             [DataMember]
@@ -2218,7 +2624,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Id _ResponseIdElement;
             
             /// <summary>
-            /// Response Id
+            /// Fixture Id of mapped response
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2415,355 +2821,15 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptTestComponent")]
+        [FhirType("TestScriptTestActionComponent")]
         [DataContract]
-        public partial class TestScriptTestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestScriptTestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptTestComponent"; } }
+            public override string TypeName { get { return "TestScriptTestActionComponent"; } }
             
             /// <summary>
-            /// The name of this test
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// The name of this test
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Short description of the test
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Short description of the test
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
-            /// </summary>
-            [FhirElement("metadata", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
-            {
-                get { return _Metadata; }
-                set { _Metadata = value; OnPropertyChanged("Metadata"); }
-            }
-            
-            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
-            
-            /// <summary>
-            /// Action
-            /// </summary>
-            [FhirElement("action", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> Action
-            {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(); return _Action; }
-                set { _Action = value; OnPropertyChanged("Action"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> _Action;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptTestComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(Action.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptTestComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTestComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(Metadata, otherT.Metadata)) return false;
-                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptTestComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(Metadata, otherT.Metadata)) return false;
-                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptVariableComponent")]
-        [DataContract]
-        public partial class TestScriptVariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptVariableComponent"; } }
-            
-            /// <summary>
-            /// Variable name
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Variable name
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Header field name
-            /// </summary>
-            [FhirElement("headerField", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString HeaderFieldElement
-            {
-                get { return _HeaderFieldElement; }
-                set { _HeaderFieldElement = value; OnPropertyChanged("HeaderFieldElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _HeaderFieldElement;
-            
-            /// <summary>
-            /// Header field name
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string HeaderField
-            {
-                get { return HeaderFieldElement != null ? HeaderFieldElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      HeaderFieldElement = null; 
-                    else
-                      HeaderFieldElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("HeaderField");
-                }
-            }
-            
-            /// <summary>
-            /// XPath or JSONPath against the fixture body
-            /// </summary>
-            [FhirElement("path", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString PathElement
-            {
-                get { return _PathElement; }
-                set { _PathElement = value; OnPropertyChanged("PathElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _PathElement;
-            
-            /// <summary>
-            /// XPath or JSONPath against the fixture body
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Path
-            {
-                get { return PathElement != null ? PathElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      PathElement = null; 
-                    else
-                      PathElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Path");
-                }
-            }
-            
-            /// <summary>
-            /// Fixture Id
-            /// </summary>
-            [FhirElement("sourceId", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id SourceIdElement
-            {
-                get { return _SourceIdElement; }
-                set { _SourceIdElement = value; OnPropertyChanged("SourceIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _SourceIdElement;
-            
-            /// <summary>
-            /// Fixture Id
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SourceId
-            {
-                get { return SourceIdElement != null ? SourceIdElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      SourceIdElement = null; 
-                    else
-                      SourceIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("SourceId");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptVariableComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
-                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptVariableComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptVariableComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
-                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.Matches(SourceIdElement, otherT.SourceIdElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptVariableComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
-                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.IsExactly(SourceIdElement, otherT.SourceIdElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptTeardownActionComponent")]
-        [DataContract]
-        public partial class TestScriptTeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptTeardownActionComponent"; } }
-            
-            /// <summary>
-            /// Operation
+            /// The setup operation to perform
             /// </summary>
             [FhirElement("operation", InSummary=true, Order=40)]
             [DataMember]
@@ -2775,14 +2841,28 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
             
+            /// <summary>
+            /// The setup assertion to perform
+            /// </summary>
+            [FhirElement("assert", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent Assert
+            {
+                get { return _Assert; }
+                set { _Assert = value; OnPropertyChanged("Assert"); }
+            }
+            
+            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent _Assert;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptTeardownActionComponent;
+                var dest = other as TestScriptTestActionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
+                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent)Assert.DeepCopy();
                     return dest;
                 }
                 else
@@ -2791,109 +2871,29 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptTeardownActionComponent());
+                return CopyTo(new TestScriptTestActionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownActionComponent;
+                var otherT = other as TestScriptTestActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
+                if( !DeepComparable.Matches(Assert, otherT.Assert)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownActionComponent;
+                var otherT = other as TestScriptTestActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TestScriptMetadataComponent")]
-        [DataContract]
-        public partial class TestScriptMetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataComponent"; } }
-            
-            /// <summary>
-            /// Links to the FHIR specification
-            /// </summary>
-            [FhirElement("link", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> Link
-            {
-                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(); return _Link; }
-                set { _Link = value; OnPropertyChanged("Link"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> _Link;
-            
-            /// <summary>
-            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
-            /// </summary>
-            [FhirElement("capabilities", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilitiesComponent> Capabilities
-            {
-                get { if(_Capabilities==null) _Capabilities = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilitiesComponent>(); return _Capabilities; }
-                set { _Capabilities = value; OnPropertyChanged("Capabilities"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilitiesComponent> _Capabilities;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TestScriptMetadataComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(Link.DeepCopy());
-                    if(Capabilities != null) dest.Capabilities = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilitiesComponent>(Capabilities.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TestScriptMetadataComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TestScriptMetadataComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Link, otherT.Link)) return false;
-                if( !DeepComparable.Matches(Capabilities, otherT.Capabilities)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TestScriptMetadataComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
-                if( !DeepComparable.IsExactly(Capabilities, otherT.Capabilities)) return false;
+                if( !DeepComparable.IsExactly(Assert, otherT.Assert)) return false;
                 
                 return true;
             }
@@ -3033,9 +3033,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// External identifier
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=130)]
+        [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -3067,7 +3080,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=140)]
+        [FhirElement("publisher", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -3099,7 +3112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=150)]
+        [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent> Contact
@@ -3113,7 +3126,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date for this version of the TestScript
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -3145,7 +3158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the TestScript
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=170)]
+        [FhirElement("description", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -3177,7 +3190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=180)]
+        [FhirElement("useContext", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> UseContext
@@ -3191,7 +3204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Scope and Usage this Test Script is for
         /// </summary>
-        [FhirElement("requirements", Order=190)]
+        [FhirElement("requirements", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -3223,7 +3236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or Publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=200)]
+        [FhirElement("copyright", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -3255,7 +3268,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Required capability that is assumed to function correctly on the FHIR server being tested
         /// </summary>
-        [FhirElement("metadata", Order=210)]
+        [FhirElement("metadata", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
         {
@@ -3268,7 +3281,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether or not the tests apply to more than one FHIR server
         /// </summary>
-        [FhirElement("multiserver", Order=220)]
+        [FhirElement("multiserver", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean MultiserverElement
         {
@@ -3300,7 +3313,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Fixture in the test script - by reference (uri)
         /// </summary>
-        [FhirElement("fixture", Order=230)]
+        [FhirElement("fixture", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestScriptFixtureComponent> Fixture
@@ -3314,7 +3327,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference of the validation profile
         /// </summary>
-        [FhirElement("profile", Order=240)]
+        [FhirElement("profile", Order=250)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -3327,9 +3340,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
-        /// Variable
+        /// Placeholder for evaluated elements
         /// </summary>
-        [FhirElement("variable", Order=250)]
+        [FhirElement("variable", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestScriptVariableComponent> Variable
@@ -3343,7 +3356,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A series of required setup operations before tests are executed
         /// </summary>
-        [FhirElement("setup", Order=260)]
+        [FhirElement("setup", Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.TestScriptSetupComponent Setup
         {
@@ -3356,7 +3369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A test in this script
         /// </summary>
-        [FhirElement("test", Order=270)]
+        [FhirElement("test", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestScriptTestComponent> Test
@@ -3370,7 +3383,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A series of required clean up steps
         /// </summary>
-        [FhirElement("teardown", Order=280)]
+        [FhirElement("teardown", Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.TestScriptTeardownComponent Teardown
         {
@@ -3391,6 +3404,7 @@ namespace Hl7.Fhir.Model
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent>(Contact.DeepCopy());
@@ -3428,6 +3442,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
@@ -3458,6 +3473,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;

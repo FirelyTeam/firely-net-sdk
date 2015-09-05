@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MedicationStatementDosageComponent"; } }
             
             /// <summary>
-            /// Dosage Instructions
+            /// Reported dosage information
             /// </summary>
             [FhirElement("text", InSummary=true, Order=40)]
             [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Dosage Instructions
+            /// Reported dosage information
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -504,9 +504,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Additional supporting information
+        /// </summary>
+        [FhirElement("supportingInformation", Order=190)]
+        [References()]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
+        {
+            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
+            set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+        
+        /// <summary>
         /// What medication was taken?
         /// </summary>
-        [FhirElement("medication", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -521,7 +536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of how medication was taken
         /// </summary>
-        [FhirElement("dosage", Order=200)]
+        [FhirElement("dosage", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> Dosage
@@ -549,6 +564,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonForUse != null) dest.ReasonForUse = (Hl7.Fhir.Model.Element)ReasonForUse.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
+                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                 if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent>(Dosage.DeepCopy());
                 return dest;
@@ -578,6 +594,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonForUse, otherT.ReasonForUse)) return false;
             if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
             if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
             
@@ -600,6 +617,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonForUse, otherT.ReasonForUse)) return false;
             if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+            if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
             if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
             

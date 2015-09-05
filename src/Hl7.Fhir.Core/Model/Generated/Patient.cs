@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -74,6 +74,305 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("seealso")]
             Seealso,
         }
+        
+        [FhirType("PatientLinkComponent")]
+        [DataContract]
+        public partial class PatientLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PatientLinkComponent"; } }
+            
+            /// <summary>
+            /// The other patient resource that the link refers to
+            /// </summary>
+            [FhirElement("other", InSummary=true, Order=40)]
+            [References("Patient")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Other
+            {
+                get { return _Other; }
+                set { _Other = value; OnPropertyChanged("Other"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Other;
+            
+            /// <summary>
+            /// replace | refer | seealso - type of link
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
+            
+            /// <summary>
+            /// replace | refer | seealso - type of link
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Patient.LinkType? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TypeElement = null; 
+                    else
+                      TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+                    OnPropertyChanged("Type");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PatientLinkComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PatientLinkComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PatientLinkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Other, otherT.Other)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PatientLinkComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Other, otherT.Other)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("AnimalComponent")]
+        [DataContract]
+        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AnimalComponent"; } }
+            
+            /// <summary>
+            /// E.g. Dog, Cow
+            /// </summary>
+            [FhirElement("species", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Species
+            {
+                get { return _Species; }
+                set { _Species = value; OnPropertyChanged("Species"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Species;
+            
+            /// <summary>
+            /// E.g. Poodle, Angus
+            /// </summary>
+            [FhirElement("breed", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Breed
+            {
+                get { return _Breed; }
+                set { _Breed = value; OnPropertyChanged("Breed"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Breed;
+            
+            /// <summary>
+            /// E.g. Neutered, Intact
+            /// </summary>
+            [FhirElement("genderStatus", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept GenderStatus
+            {
+                get { return _GenderStatus; }
+                set { _GenderStatus = value; OnPropertyChanged("GenderStatus"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _GenderStatus;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as AnimalComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
+                    if(Breed != null) dest.Breed = (Hl7.Fhir.Model.CodeableConcept)Breed.DeepCopy();
+                    if(GenderStatus != null) dest.GenderStatus = (Hl7.Fhir.Model.CodeableConcept)GenderStatus.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new AnimalComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
+                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Species, otherT.Species)) return false;
+                if( !DeepComparable.IsExactly(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("PatientCommunicationComponent")]
+        [DataContract]
+        public partial class PatientCommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PatientCommunicationComponent"; } }
+            
+            /// <summary>
+            /// The language which can be used to communicate with the patient about his or her health
+            /// </summary>
+            [FhirElement("language", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Language
+            {
+                get { return _Language; }
+                set { _Language = value; OnPropertyChanged("Language"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Language;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            [FhirElement("preferred", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean PreferredElement
+            {
+                get { return _PreferredElement; }
+                set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Preferred
+            {
+                get { return PreferredElement != null ? PreferredElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PreferredElement = null; 
+                    else
+                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Preferred");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PatientCommunicationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
+                    if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PatientCommunicationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PatientCommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Language, otherT.Language)) return false;
+                if( !DeepComparable.Matches(PreferredElement, otherT.PreferredElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PatientCommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Language, otherT.Language)) return false;
+                if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ContactComponent")]
         [DataContract]
@@ -250,305 +549,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
                 if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("PatientCommunicationComponent")]
-        [DataContract]
-        public partial class PatientCommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PatientCommunicationComponent"; } }
-            
-            /// <summary>
-            /// The language which can be used to communicate with the patient about his or her health
-            /// </summary>
-            [FhirElement("language", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Language
-            {
-                get { return _Language; }
-                set { _Language = value; OnPropertyChanged("Language"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Language;
-            
-            /// <summary>
-            /// Language preference indicator
-            /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean PreferredElement
-            {
-                get { return _PreferredElement; }
-                set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
-            
-            /// <summary>
-            /// Language preference indicator
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Preferred
-            {
-                get { return PreferredElement != null ? PreferredElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      PreferredElement = null; 
-                    else
-                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Preferred");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as PatientCommunicationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
-                    if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new PatientCommunicationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as PatientCommunicationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Language, otherT.Language)) return false;
-                if( !DeepComparable.Matches(PreferredElement, otherT.PreferredElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as PatientCommunicationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Language, otherT.Language)) return false;
-                if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("AnimalComponent")]
-        [DataContract]
-        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "AnimalComponent"; } }
-            
-            /// <summary>
-            /// E.g. Dog, Cow
-            /// </summary>
-            [FhirElement("species", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Species
-            {
-                get { return _Species; }
-                set { _Species = value; OnPropertyChanged("Species"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Species;
-            
-            /// <summary>
-            /// E.g. Poodle, Angus
-            /// </summary>
-            [FhirElement("breed", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Breed
-            {
-                get { return _Breed; }
-                set { _Breed = value; OnPropertyChanged("Breed"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Breed;
-            
-            /// <summary>
-            /// E.g. Neutered, Intact
-            /// </summary>
-            [FhirElement("genderStatus", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept GenderStatus
-            {
-                get { return _GenderStatus; }
-                set { _GenderStatus = value; OnPropertyChanged("GenderStatus"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _GenderStatus;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as AnimalComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
-                    if(Breed != null) dest.Breed = (Hl7.Fhir.Model.CodeableConcept)Breed.DeepCopy();
-                    if(GenderStatus != null) dest.GenderStatus = (Hl7.Fhir.Model.CodeableConcept)GenderStatus.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new AnimalComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as AnimalComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
-                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
-                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as AnimalComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Species, otherT.Species)) return false;
-                if( !DeepComparable.IsExactly(Breed, otherT.Breed)) return false;
-                if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("PatientLinkComponent")]
-        [DataContract]
-        public partial class PatientLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PatientLinkComponent"; } }
-            
-            /// <summary>
-            /// The other patient resource that the link refers to
-            /// </summary>
-            [FhirElement("other", InSummary=true, Order=40)]
-            [References("Patient")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Other
-            {
-                get { return _Other; }
-                set { _Other = value; OnPropertyChanged("Other"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Other;
-            
-            /// <summary>
-            /// replace | refer | seealso - type of link
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
-            
-            /// <summary>
-            /// replace | refer | seealso - type of link
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Patient.LinkType? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TypeElement = null; 
-                    else
-                      TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as PatientLinkComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new PatientLinkComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as PatientLinkComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Other, otherT.Other)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as PatientLinkComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Other, otherT.Other)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 
                 return true;
             }

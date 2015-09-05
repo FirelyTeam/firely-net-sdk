@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Identifier of request
+        /// Business Identifier
         /// </summary>
         [FhirElement("identifier", Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -143,9 +143,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Date of creation/activation
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Date of creation/activation
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// Referral/Transition of care request type
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -158,7 +190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The clinical specialty (discipline) that the referral is requested for
         /// </summary>
-        [FhirElement("specialty", Order=120)]
+        [FhirElement("specialty", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Specialty
         {
@@ -171,7 +203,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Urgency of referral / transfer of care request
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=130)]
+        [FhirElement("priority", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -184,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient referred to care or transfer
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=140)]
+        [FhirElement("patient", InSummary=true, Order=150)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -198,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Requester of referral / transfer of care
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=150)]
+        [FhirElement("requester", InSummary=true, Order=160)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
@@ -212,7 +244,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Receiver of referral / transfer of care request
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=160)]
+        [FhirElement("recipient", InSummary=true, Order=170)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -225,9 +257,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
-        /// Encounter
+        /// Originating encounter
         /// </summary>
-        [FhirElement("encounter", Order=170)]
+        [FhirElement("encounter", Order=180)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -241,7 +273,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date referral/transfer of care request is sent
         /// </summary>
-        [FhirElement("dateSent", InSummary=true, Order=180)]
+        [FhirElement("dateSent", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateSentElement
         {
@@ -273,7 +305,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for referral / Transfer of care request
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=190)]
+        [FhirElement("reason", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -286,7 +318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A textual description of the referral
         /// </summary>
-        [FhirElement("description", Order=200)]
+        [FhirElement("description", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -316,9 +348,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Service(s) requested
+        /// What actions are requested as part of referral?
         /// </summary>
-        [FhirElement("serviceRequested", InSummary=true, Order=210)]
+        [FhirElement("serviceRequested", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
@@ -332,7 +364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additonal information to support referral or transfer of care request
         /// </summary>
-        [FhirElement("supportingInformation", InSummary=true, Order=220)]
+        [FhirElement("supportingInformation", InSummary=true, Order=230)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -347,7 +379,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Requested service(s) fulfillment time
         /// </summary>
-        [FhirElement("fulfillmentTime", InSummary=true, Order=230)]
+        [FhirElement("fulfillmentTime", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Period FulfillmentTime
         {
@@ -366,6 +398,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus>)StatusElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Specialty != null) dest.Specialty = (Hl7.Fhir.Model.CodeableConcept)Specialty.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
@@ -398,6 +431,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
@@ -423,6 +457,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;

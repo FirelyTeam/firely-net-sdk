@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> _Payload;
         
         /// <summary>
-        /// Communication medium
+        /// A channel of communication
         /// </summary>
         [FhirElement("medium", Order=140)]
         [Cardinality(Min=0,Max=-1)]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
         
         /// <summary>
-        /// Requester of communication
+        /// An individual who requested a communication
         /// </summary>
         [FhirElement("requester", Order=150)]
         [References("Practitioner","Patient","RelatedPerson")]
@@ -323,34 +323,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("scheduledTime", Order=180)]
+        [FhirElement("scheduled", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime ScheduledTimeElement
+        public Hl7.Fhir.Model.Element Scheduled
         {
-            get { return _ScheduledTimeElement; }
-            set { _ScheduledTimeElement = value; OnPropertyChanged("ScheduledTimeElement"); }
+            get { return _Scheduled; }
+            set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _ScheduledTimeElement;
-        
-        /// <summary>
-        /// When scheduled
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ScheduledTime
-        {
-            get { return ScheduledTimeElement != null ? ScheduledTimeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ScheduledTimeElement = null; 
-                else
-                  ScheduledTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("ScheduledTime");
-            }
-        }
+        private Hl7.Fhir.Model.Element _Scheduled;
         
         /// <summary>
         /// Indication for message
@@ -369,15 +351,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered or proposed
         /// </summary>
-        [FhirElement("orderedOn", Order=200)]
+        [FhirElement("requestedOn", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
+        public Hl7.Fhir.Model.FhirDateTime RequestedOnElement
         {
-            get { return _OrderedOnElement; }
-            set { _OrderedOnElement = value; OnPropertyChanged("OrderedOnElement"); }
+            get { return _RequestedOnElement; }
+            set { _RequestedOnElement = value; OnPropertyChanged("RequestedOnElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _OrderedOnElement;
+        private Hl7.Fhir.Model.FhirDateTime _RequestedOnElement;
         
         /// <summary>
         /// When ordered or proposed
@@ -385,16 +367,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string OrderedOn
+        public string RequestedOn
         {
-            get { return OrderedOnElement != null ? OrderedOnElement.Value : null; }
+            get { return RequestedOnElement != null ? RequestedOnElement.Value : null; }
             set
             {
                 if(value == null)
-                  OrderedOnElement = null; 
+                  RequestedOnElement = null; 
                 else
-                  OrderedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("OrderedOn");
+                  RequestedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("RequestedOn");
             }
         }
         
@@ -441,9 +423,9 @@ namespace Hl7.Fhir.Model
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus>)StatusElement.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(ScheduledTimeElement != null) dest.ScheduledTimeElement = (Hl7.Fhir.Model.FhirDateTime)ScheduledTimeElement.DeepCopy();
+                if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                if(OrderedOnElement != null) dest.OrderedOnElement = (Hl7.Fhir.Model.FhirDateTime)OrderedOnElement.DeepCopy();
+                if(RequestedOnElement != null) dest.RequestedOnElement = (Hl7.Fhir.Model.FhirDateTime)RequestedOnElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 return dest;
@@ -472,9 +454,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.Matches(ScheduledTimeElement, otherT.ScheduledTimeElement)) return false;
+            if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(OrderedOnElement, otherT.OrderedOnElement)) return false;
+            if( !DeepComparable.Matches(RequestedOnElement, otherT.RequestedOnElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
             
@@ -496,9 +478,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.IsExactly(ScheduledTimeElement, otherT.ScheduledTimeElement)) return false;
+            if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(OrderedOnElement, otherT.OrderedOnElement)) return false;
+            if( !DeepComparable.IsExactly(RequestedOnElement, otherT.RequestedOnElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
             

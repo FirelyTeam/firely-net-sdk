@@ -84,6 +84,7 @@
     <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Generated\Account.cs" />
     <Compile Include="Model\Generated\Annotation.cs" />
+    <Compile Include="Model\Generated\DetectedIssue.cs" />
     <Compile Include="Model\Generated\ImplementationGuide.cs" />
     <Compile Include="Model\Generated\Markdown.cs" />
     <Compile Include="Model\Generated\MedicationOrder.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="Model\Generated\CommunicationRequest.cs" />
     <Compile Include="Model\Generated\ContactPoint.cs" />
     <Compile Include="Model\Generated\Contract.cs" />
-    <Compile Include="Model\Generated\Contraindication.cs" />
     <Compile Include="Model\Generated\Coverage.cs" />
     <Compile Include="Model\Generated\DataElement.cs" />
     <Compile Include="Model\Generated\DeviceComponent.cs" />
@@ -358,6 +358,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

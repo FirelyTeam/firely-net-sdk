@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Wed, Aug 26, 2015 16:54+0200 for FHIR v0.5.0
+// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,34 +51,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.ProcedureRequest; } }
         [NotMapped]
         public override string TypeName { get { return "ProcedureRequest"; } }
-        
-        /// <summary>
-        /// The priority of the request
-        /// </summary>
-        [FhirEnumeration("ProcedureRequestPriority")]
-        public enum ProcedureRequestPriority
-        {
-            /// <summary>
-            /// The request has a normal priority.
-            /// </summary>
-            [EnumLiteral("routine")]
-            Routine,
-            /// <summary>
-            /// The request should be done urgently.
-            /// </summary>
-            [EnumLiteral("urgent")]
-            Urgent,
-            /// <summary>
-            /// The request is time-critical.
-            /// </summary>
-            [EnumLiteral("stat")]
-            Stat,
-            /// <summary>
-            /// The request should be acted on as soon as possible.
-            /// </summary>
-            [EnumLiteral("asap")]
-            Asap,
-        }
         
         /// <summary>
         /// The status of the request
@@ -138,71 +110,33 @@ namespace Hl7.Fhir.Model
             Aborted,
         }
         
-        [FhirType("ProcedureRequestBodySiteComponent")]
-        [DataContract]
-        public partial class ProcedureRequestBodySiteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        /// <summary>
+        /// The priority of the request
+        /// </summary>
+        [FhirEnumeration("ProcedureRequestPriority")]
+        public enum ProcedureRequestPriority
         {
-            [NotMapped]
-            public override string TypeName { get { return "ProcedureRequestBodySiteComponent"; } }
-            
             /// <summary>
-            /// Target body site
+            /// The request has a normal priority.
             /// </summary>
-            [FhirElement("site", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Site
-            {
-                get { return _Site; }
-                set { _Site = value; OnPropertyChanged("Site"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Site;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ProcedureRequestBodySiteComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ProcedureRequestBodySiteComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ProcedureRequestBodySiteComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ProcedureRequestBodySiteComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
-                
-                return true;
-            }
-            
+            [EnumLiteral("routine")]
+            Routine,
+            /// <summary>
+            /// The request should be done urgently.
+            /// </summary>
+            [EnumLiteral("urgent")]
+            Urgent,
+            /// <summary>
+            /// The request is time-critical.
+            /// </summary>
+            [EnumLiteral("stat")]
+            Stat,
+            /// <summary>
+            /// The request should be acted on as soon as possible.
+            /// </summary>
+            [EnumLiteral("asap")]
+            Asap,
         }
-        
         
         /// <summary>
         /// Identifier
@@ -222,7 +156,7 @@ namespace Hl7.Fhir.Model
         /// Subject
         /// </summary>
         [FhirElement("subject", Order=100)]
-        [References("Patient")]
+        [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -234,18 +168,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Procedure Type
+        /// Procedure Code
         /// </summary>
-        [FhirElement("type", Order=110)]
+        [FhirElement("code", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// Target body sites
@@ -253,41 +187,41 @@ namespace Hl7.Fhir.Model
         [FhirElement("bodySite", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent> BodySite
+        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
         {
-            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent>(); return _BodySite; }
+            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent> _BodySite;
+        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
         /// Indication
         /// </summary>
-        [FhirElement("indication", Order=130)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("reason", Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Indication
+        public Hl7.Fhir.Model.Element Reason
         {
-            get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
-            set { _Indication = value; OnPropertyChanged("Indication"); }
+            get { return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
+        private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
         /// Procedure timing schedule
         /// </summary>
-        [FhirElement("timing", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("scheduled", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Timing
+        public Hl7.Fhir.Model.Element Scheduled
         {
-            get { return _Timing; }
-            set { _Timing = value; OnPropertyChanged("Timing"); }
+            get { return _Scheduled; }
+            set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
         }
         
-        private Hl7.Fhir.Model.Element _Timing;
+        private Hl7.Fhir.Model.Element _Scheduled;
         
         /// <summary>
         /// Encounter
@@ -355,32 +289,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("notes", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> NotesElement
+        public List<Hl7.Fhir.Model.Annotation> Notes
         {
-            get { if(_NotesElement==null) _NotesElement = new List<Hl7.Fhir.Model.FhirString>(); return _NotesElement; }
-            set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
+            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.Annotation>(); return _Notes; }
+            set { _Notes = value; OnPropertyChanged("Notes"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _NotesElement;
-        
-        /// <summary>
-        /// Notes
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Notes
-        {
-            get { return NotesElement != null ? NotesElement.Select(elem => elem.Value) : null; }
-            set
-            {
-                if(value == null)
-                  NotesElement = null; 
-                else
-                  NotesElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("Notes");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Notes;
         
         /// <summary>
         /// PRN
@@ -483,14 +398,14 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestBodySiteComponent>(BodySite.DeepCopy());
-                if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
-                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus>)StatusElement.DeepCopy();
-                if(NotesElement != null) dest.NotesElement = new List<Hl7.Fhir.Model.FhirString>(NotesElement.DeepCopy());
+                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.Annotation>(Notes.DeepCopy());
                 if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                 if(OrderedOnElement != null) dest.OrderedOnElement = (Hl7.Fhir.Model.FhirDateTime)OrderedOnElement.DeepCopy();
                 if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
@@ -514,14 +429,14 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
-            if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.Matches(Notes, otherT.Notes)) return false;
             if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.Matches(OrderedOnElement, otherT.OrderedOnElement)) return false;
             if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
@@ -538,14 +453,14 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
-            if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.IsExactly(Notes, otherT.Notes)) return false;
             if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.IsExactly(OrderedOnElement, otherT.OrderedOnElement)) return false;
             if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
