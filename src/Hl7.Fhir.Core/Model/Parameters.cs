@@ -147,12 +147,20 @@ namespace Hl7.Fhir.Model
             return Get(name, matchPrefix).SingleOrDefault();
         }
 
-
+        /// <summary>
+        /// Returns the Value property of the requested parameter casted to the requested type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="matchPrefix"></param>
+        /// <returns></returns>
         public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Primitive
         {
             if (name == null) throw new ArgumentNullException("name");
-
-            return Get(name, matchPrefix).SingleOrDefault() as T;
+            ParametersParameterComponent p = Get(name, matchPrefix).SingleOrDefault();
+            if (p == null)
+                return null;
+            return p.Value as T;
         }
     }
 }

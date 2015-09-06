@@ -18,44 +18,56 @@ namespace Hl7.Fhir.Rest
     public static class FhirClientOperations
     {
         /// <summary>
-        /// "everything" operation
+        /// Collection of the valid Operation values supported as const strings
         /// </summary>
-        public static string FETCH_PATIENT_RECORD = "everything";
+        /// <remarks>
+        /// This static class is required to keep the operation const values
+        /// separate from the methods in the Fhir Client.
+        /// Specifically the Meta operation clashes with the META const value.
+        /// This would make it un-usable from VB.Net
+        /// </remarks>
+        public static class Operation
+        {
+            /// <summary>
+            /// "everything" operation
+            /// </summary>
+            public const string FETCH_PATIENT_RECORD = "everything";
 
-        /// <summary>
-        /// "expand" operation
-        /// </summary>
-        public static string EXPAND_VALUESET = "expand";
+            /// <summary>
+            /// "expand" operation
+            /// </summary>
+            public const string EXPAND_VALUESET = "expand";
 
-        /// <summary>
-        /// "lookup" operation
-        /// </summary>
-        public static string CONCEPT_LOOKUP = "lookup";
+            /// <summary>
+            /// "lookup" operation
+            /// </summary>
+            public const string CONCEPT_LOOKUP = "lookup";
 
-        /// <summary>
-        /// "validate" operation
-        /// </summary>
-        public static string VALIDATE_RESOURCE = "validate";
+            /// <summary>
+            /// "validate" operation
+            /// </summary>
+            public const string VALIDATE_RESOURCE = "validate";
 
-        /// <summary>
-        /// "meta" operation
-        /// </summary>
-        public static string META = "meta";
+            /// <summary>
+            /// "meta" operation
+            /// </summary>
+            public const string META = "meta";
 
-        /// <summary>
-        /// "meta-add" operation
-        /// </summary>
-        public static string META_ADD = "meta-add";
+            /// <summary>
+            /// "meta-add" operation
+            /// </summary>
+            public const string META_ADD = "meta-add";
 
-        /// <summary>
-        /// "meta-delete" operation
-        /// </summary>
-        public static string META_DELETE= "meta-delete";
+            /// <summary>
+            /// "meta-delete" operation
+            /// </summary>
+            public const string META_DELETE = "meta-delete";
 
-        /// <summary>
-        /// "validate-code" operation
-        /// </summary>
-        public static string VALIDATE_CODE = "validate-code";
+            /// <summary>
+            /// "validate-code" operation
+            /// </summary>
+            public const string VALIDATE_CODE = "validate-code";
+        }
 
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
@@ -66,11 +78,11 @@ namespace Hl7.Fhir.Rest
             
             Resource result;
             if (patient == null)
-                result = client.TypeOperation<Patient>(FETCH_PATIENT_RECORD, par);
+                result = client.TypeOperation<Patient>(Operation.FETCH_PATIENT_RECORD, par);
             else
             {
                 var location = new ResourceIdentity(patient);
-                result = client.InstanceOperation(location.WithoutVersion().MakeRelative(), FETCH_PATIENT_RECORD, par);
+                result = client.InstanceOperation(location.WithoutVersion().MakeRelative(), Operation.FETCH_PATIENT_RECORD, par);
             }
 
             return expect<Bundle>(result);
@@ -97,7 +109,7 @@ namespace Hl7.Fhir.Rest
 
             ResourceIdentity id = new ResourceIdentity(valueset);
 
-            return expect<ValueSet>(client.InstanceOperation(id.WithoutVersion().MakeRelative(), EXPAND_VALUESET, par));
+            return expect<ValueSet>(client.InstanceOperation(id.WithoutVersion().MakeRelative(), Operation.EXPAND_VALUESET, par));
         }
 
 
@@ -111,7 +123,7 @@ namespace Hl7.Fhir.Rest
             if (filter != null) par.Add("filter", filter);
             if (date != null) par.Add("date", date);
             
-            return expect<ValueSet>(client.TypeOperation<ValueSet>(EXPAND_VALUESET, par));
+            return expect<ValueSet>(client.TypeOperation<ValueSet>(Operation.EXPAND_VALUESET, par));
         }
 
 
@@ -123,7 +135,7 @@ namespace Hl7.Fhir.Rest
             if (filter != null) par.Add("filter", filter);
             if (date != null) par.Add("date", date);
 
-            return expect<ValueSet>(client.TypeOperation<ValueSet>(EXPAND_VALUESET, par));
+            return expect<ValueSet>(client.TypeOperation<ValueSet>(Operation.EXPAND_VALUESET, par));
         }
 
         public static Parameters ConceptLookup(this FhirClient client, Coding coding, FhirDateTime date=null)
@@ -134,7 +146,7 @@ namespace Hl7.Fhir.Rest
             par.Add("coding", coding);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(client.TypeOperation<ValueSet>(CONCEPT_LOOKUP, par));
+            return expect<Parameters>(client.TypeOperation<ValueSet>(Operation.CONCEPT_LOOKUP, par));
         }
 
         public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system, FhirString version = null, FhirDateTime date = null)
@@ -146,26 +158,26 @@ namespace Hl7.Fhir.Rest
             if (version != null) par.Add("version", version);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(client.TypeOperation<ValueSet>(CONCEPT_LOOKUP, par));
+            return expect<Parameters>(client.TypeOperation<ValueSet>(Operation.CONCEPT_LOOKUP, par));
         }
 
         //[base]/$meta
         public static Parameters Meta(this FhirClient client)
         {
-            return expect<Parameters>(client.WholeSystemOperation(META));
+            return expect<Parameters>(client.WholeSystemOperation(Operation.META));
         }
 
         //[base]/Resource/$meta
         public static Parameters Meta(this FhirClient client, ResourceType type)
         {             
-            return expect<Parameters>(client.TypeOperation(META, type.ToString()));
+            return expect<Parameters>(client.TypeOperation(Operation.META, type.ToString()));
         }
 
         //[base]/Resource/id/$meta/[_history/vid]
         public static Parameters Meta(this FhirClient client, Uri location)
         {
             Resource result;
-            result = client.InstanceOperation(location, META);
+            result = client.InstanceOperation(location, Operation.META);
 
             return expect<Parameters>(result);
         }
@@ -179,7 +191,7 @@ namespace Hl7.Fhir.Rest
         public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.InstanceOperation(location, META_ADD, par));
+            return expect<Parameters>(client.InstanceOperation(location, Operation.META_ADD, par));
         }
 
         public static Parameters AddMeta(this FhirClient client, string location, Meta meta)
@@ -190,7 +202,7 @@ namespace Hl7.Fhir.Rest
         public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.InstanceOperation(location, META_DELETE, par));
+            return expect<Parameters>(client.InstanceOperation(location, Operation.META_DELETE, par));
         }
 
         public static Parameters DeleteMeta(this FhirClient client, string location, Meta meta)
@@ -205,7 +217,7 @@ namespace Hl7.Fhir.Rest
             var par = new Parameters().Add("resource", resource).Add("mode", new FhirString("create"));
             if (profile != null) par.Add("profile", profile);
 
-            return expect<OperationOutcome>(client.TypeOperation(VALIDATE_RESOURCE, "Resource", par));
+            return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, "Resource", par));
         }
 
         public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id, FhirUri profile = null)
@@ -217,7 +229,7 @@ namespace Hl7.Fhir.Rest
             if (profile != null) par.Add("profile", profile);
 
             var loc = ResourceIdentity.Build("Resource",id);
-            return expect<OperationOutcome>(client.InstanceOperation(loc, VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
         }
 
         public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
@@ -226,7 +238,7 @@ namespace Hl7.Fhir.Rest
 
             var par = new Parameters().Add("mode", new FhirString("delete"));
 
-            return expect<OperationOutcome>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par));
         }
 
         public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource, string id=null, FhirUri profile=null)
@@ -238,12 +250,12 @@ namespace Hl7.Fhir.Rest
 
             if (id == null)
             {
-                return expect<OperationOutcome>(client.TypeOperation(VALIDATE_RESOURCE, resource.TypeName, par));
+                return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
             }
             else
             {
                 var loc = ResourceIdentity.Build("Resource", id);
-                return expect<OperationOutcome>(client.InstanceOperation(loc, VALIDATE_RESOURCE, par));
+                return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
             }
         }
 
@@ -283,7 +295,7 @@ namespace Hl7.Fhir.Rest
         {
             ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
 
-            return expect<Parameters>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), VALIDATE_CODE, par));
+            return expect<Parameters>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_CODE, par));
         }        
     }
 }
