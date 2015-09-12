@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
         /// http://www.codeproject.com/Articles/298519/Fast-Token-Replacement-in-Csharp
         /// The RegEx approach does not require multiple passes or string creations
         /// while replacing all the items.
-        /// It occurs in O(n) StringBuilder contatenations + O(n) dictionary lookups
+        /// It occurs in O(n) StringBuilder concatenations + O(n) dictionary lookups
         /// </remarks>
         /// <param name="xml"></param>
         /// <returns></returns>
