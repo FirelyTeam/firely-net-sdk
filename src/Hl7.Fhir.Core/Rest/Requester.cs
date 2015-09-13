@@ -57,6 +57,13 @@ namespace Hl7.Fhir.Rest
 
             LastResult = doRequest(interaction);
             var status = LastResult.Response.Status;
+            HttpStatusCode statusCode;
+            if (!Enum.TryParse<HttpStatusCode>(status, out statusCode))
+            {
+                // If the status code is unable to be parsed, then report
+                // in internal server error
+                statusCode = HttpStatusCode.InternalServerError;
+            }
 
             if (status.StartsWith("2"))      // 2xx codes - success
             {
@@ -70,7 +77,7 @@ namespace Hl7.Fhir.Rest
                     
                     var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Request.Method,
                         LastResult.Request.Url, expected.Name, LastResult.Resource.GetType().Name);
-                    throw new FhirOperationException(message);
+                    throw new FhirOperationException(message, statusCode);
                 }
 
                 return LastResult;
@@ -86,10 +93,10 @@ namespace Hl7.Fhir.Rest
                 var outcome = LastResult.Resource as OperationOutcome;
                 if (outcome != null)
                 {
-                    throw new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), outcome);
+                    throw new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), statusCode, outcome);
                 }
                 else
-                    throw new FhirOperationException(message);                
+                    throw new FhirOperationException(message, statusCode);
             }
             else
             {

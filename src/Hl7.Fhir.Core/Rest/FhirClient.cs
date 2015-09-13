@@ -33,6 +33,15 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="verifyFhirVersion">
+        /// If parameter is set to true the first time a request is made to the server a 
+        /// conformance check will be made to check that the FHIR versions are compatible.
+        /// When they are not compatible, a FhirException will be thrown.
+        /// </param>
         public FhirClient(Uri endpoint, bool verifyFhirVersion = false)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
@@ -55,6 +64,15 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="verifyFhirVersion">
+        /// If parameter is set to true the first time a request is made to the server a 
+        /// conformance check will be made to check that the FHIR versions are compatible.
+        /// When they are not compatible, a FhirException will be thrown.
+        /// </param>
         public FhirClient(string endpoint, bool verifyFhirVersion = false)
             : this(new Uri(endpoint), verifyFhirVersion)
         {
@@ -463,7 +481,7 @@ namespace Hl7.Fhir.Rest
         public Resource WholeSystemOperation(string operationName, Parameters parameters = null)
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
-            return internalOperation(operationName);
+            return internalOperation(operationName, parameters: parameters);
         }
 
         public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null) where TResource : Resource
@@ -513,7 +531,9 @@ namespace Hl7.Fhir.Rest
 
         private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)
         {
-            if (parameters == null) parameters = new Parameters();
+            // Brian: Not sure why we would create this parameters object as empty.
+            //        I would imagine that a null parameters object is different to an empty one?
+            // if (parameters == null) parameters = new Parameters();
 
             Bundle tx;
 
@@ -789,7 +809,9 @@ namespace Hl7.Fhir.Rest
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
-                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.Response.Status));
+                HttpStatusCode code;
+                Enum.TryParse<HttpStatusCode>(response.Response.Status, out code);
+                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
             }
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
