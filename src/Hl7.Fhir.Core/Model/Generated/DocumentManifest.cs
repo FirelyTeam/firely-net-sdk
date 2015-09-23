@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
-        /// What kind of document set this is
+        /// Kind of document set
         /// </summary>
         [FhirElement("type", Order=130)]
         [DataMember]

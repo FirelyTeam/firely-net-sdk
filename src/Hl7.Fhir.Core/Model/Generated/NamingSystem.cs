@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,51 +53,51 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "NamingSystem"; } }
         
         /// <summary>
-        /// Identifies the style of unique identifier used to identify a namepace
+        /// Identifies the style of unique identifier used to identify a namespace.
         /// </summary>
         [FhirEnumeration("NamingSystemIdentifierType")]
         public enum NamingSystemIdentifierType
         {
             /// <summary>
-            /// An ISO object identifier.  E.g. 1.2.3.4.5
+            /// An ISO object identifier; e.g. 1.2.3.4.5.
             /// </summary>
             [EnumLiteral("oid")]
             Oid,
             /// <summary>
-            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11
+            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
             /// </summary>
             [EnumLiteral("uuid")]
             Uuid,
             /// <summary>
-            /// A uniform resource identifier (ideally a URL - uniform resource locator).  E.g. http://unitsofmeasure.org
+            /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
             /// </summary>
             [EnumLiteral("uri")]
             Uri,
             /// <summary>
-            /// Some other type of unique identifier.  E.g HL7-assigned reserved string such as LN for LOINC
+            /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
             /// </summary>
             [EnumLiteral("other")]
             Other,
         }
         
         /// <summary>
-        /// Identifies the purpose of the namingsystem
+        /// Identifies the purpose of the naming system.
         /// </summary>
         [FhirEnumeration("NamingSystemType")]
         public enum NamingSystemType
         {
             /// <summary>
-            /// The namingsystem is used to define concepts and symbols to represent those concepts.  E.g. UCUM, LOINC, NDC code, local lab codes, etc.
+            /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
             /// </summary>
             [EnumLiteral("codesystem")]
             Codesystem,
             /// <summary>
-            /// The namingsystem is used to manage identifiers (e.g. license numbers, order numbers, etc.)
+            /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
             /// </summary>
             [EnumLiteral("identifier")]
             Identifier,
             /// <summary>
-            /// The namingsystem is used as the root for other identifiers and namingsystems
+            /// The naming system is used as the root for other identifiers and naming systems.
             /// </summary>
             [EnumLiteral("root")]
             Root,
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// e.g. driver,  provider,  patient, bank etc
+        /// e.g. driver,  provider,  patient, bank etc.
         /// </summary>
         [FhirElement("type", Order=160)]
         [DataMember]
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// What does namingsystem identify?
+        /// What does naming system identify?
         /// </summary>
         [FhirElement("description", Order=170)]
         [DataMember]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// What does namingsystem identify?
+        /// What does naming system identify?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationAdministration"; } }
         
         /// <summary>
-        /// A set of codes indicating the current status of a MedicationAdministration
+        /// A set of codes indicating the current status of a MedicationAdministration.
         /// </summary>
         [FhirEnumeration("MedicationAdministrationStatus")]
         public enum MedicationAdministrationStatus
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who received medication?
+        /// Who received medication
         /// </summary>
         [FhirElement("patient", Order=110)]
         [References("Patient")]
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// Who administered substance?
+        /// Who administered substance
         /// </summary>
         [FhirElement("practitioner", Order=120)]
         [References("Practitioner","Patient","RelatedPerson")]
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _EffectiveTime;
         
         /// <summary>
-        /// What was administered?
+        /// What was administered
         /// </summary>
         [FhirElement("medication", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,43 +53,43 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ReferralRequest"; } }
         
         /// <summary>
-        /// The status of the referral
+        /// The status of the referral.
         /// </summary>
         [FhirEnumeration("ReferralStatus")]
         public enum ReferralStatus
         {
             /// <summary>
-            /// A draft referral that has yet to be send
+            /// A draft referral that has yet to be send.
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The referral has been transmitted, but not yet acknowledged by the recipient
+            /// The referral has been transmitted, but not yet acknowledged by the recipient.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The referral has been acknowledged by the recipient, and is in the process of being actioned
+            /// The referral has been acknowledged by the recipient, and is in the process of being actioned.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The referral has been cancelled without being completed. For example it is no longer needed
+            /// The referral has been cancelled without being completed. For example it is no longer needed.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The recipient has agreed to deliver the care requested by the referral
+            /// The recipient has agreed to deliver the care requested by the referral.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The recipient has declined to accept the referral
+            /// The recipient has declined to accept the referral.
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The referral has been completely actioned
+            /// The referral has been completely actioned.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Business Identifier
+        /// Business identifier
         /// </summary>
         [FhirElement("identifier", Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reason for referral / Transfer of care request
+        /// Reason for referral / transfer of care request
         /// </summary>
         [FhirElement("reason", InSummary=true, Order=200)]
         [DataMember]
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// What actions are requested as part of referral?
+        /// Actions requested as part of the referral
         /// </summary>
         [FhirElement("serviceRequested", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]

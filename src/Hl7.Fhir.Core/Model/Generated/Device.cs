@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An instance of a manufactured thing that is used in the provision of healthcare
+    /// An instance of a manufactured te that is used in the provision of healthcare
     /// </summary>
     [FhirType("Device", IsResource=true)]
     [DataContract]
@@ -53,23 +53,23 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Device"; } }
         
         /// <summary>
-        /// The availability status of the device
+        /// The availability status of the device.
         /// </summary>
         [FhirEnumeration("DeviceStatus")]
         public enum DeviceStatus
         {
             /// <summary>
-            /// The Device is available for use
+            /// The Device is available for use.
             /// </summary>
             [EnumLiteral("available")]
             Available,
             /// <summary>
-            /// The Device is no longer available for use ( e.g lost, expired, damaged)
+            /// The Device is no longer available for use (e.g. lost, expired, damaged).
             /// </summary>
             [EnumLiteral("not-available")]
             NotAvailable,
             /// <summary>
-            /// The Device was entered in error and voided
+            /// The Device was entered in error and voided.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// FDA Mandated Unique Device Identifier
+        /// FDA mandated Unique Device Identifier
         /// </summary>
         [FhirElement("udi", Order=180)]
         [DataMember]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _UdiElement;
         
         /// <summary>
-        /// FDA Mandated Unique Device Identifier
+        /// FDA mandated Unique Device Identifier
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,23 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>
-        /// Indicates the potential degree of impact of the identified issue on the patient
+        /// Indicates the potential degree of impact of the identified issue on the patient.
         /// </summary>
         [FhirEnumeration("DetectedIssueSeverity")]
         public enum DetectedIssueSeverity
         {
             /// <summary>
-            /// Indicates the issue may be life-threatening or has the potential to cause permanent injury
+            /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
             /// </summary>
             [EnumLiteral("high")]
             High,
             /// <summary>
-            /// Indicates the issue may result in noticable adverse adverse consequences but is unlikely to be life-threatening or cause permanent injury
+            /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
             /// </summary>
             [EnumLiteral("moderate")]
             Moderate,
             /// <summary>
-            /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subjec
+            /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
             /// </summary>
             [EnumLiteral("low")]
             Low,
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// E.g. Drug-drug, duplicate therapy, etc.
+        /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
         /// </summary>
         [FhirElement("category", InSummary=true, Order=100)]
         [DataMember]

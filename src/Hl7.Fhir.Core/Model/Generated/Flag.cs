@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,23 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Flag"; } }
         
         /// <summary>
-        /// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or entered in error
+        /// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or entered in error.
         /// </summary>
         [FhirEnumeration("FlagStatus")]
         public enum FlagStatus
         {
             /// <summary>
-            /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag
+            /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The flag does not need to be displayed any more
+            /// The flag does not need to be displayed any more.
             /// </summary>
             [EnumLiteral("inactive")]
             Inactive,
             /// <summary>
-            /// The flag was added in error, and should no longer be displayed
+            /// The flag was added in error, and should no longer be displayed.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,74 +53,74 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Conformance"; } }
         
         /// <summary>
-        /// How the system supports versioning for a resource
+        /// How the system supports versioning for a resource.
         /// </summary>
         [FhirEnumeration("ResourceVersionPolicy")]
         public enum ResourceVersionPolicy
         {
             /// <summary>
-            /// VersionId meta-property is not suppoerted (server) or used (client)
+            /// VersionId meta-property is not supported (server) or used (client).
             /// </summary>
             [EnumLiteral("no-version")]
             NoVersion,
             /// <summary>
-            /// VersionId meta-property is suppoerted (server) or used (client)
+            /// VersionId meta-property is supported (server) or used (client).
             /// </summary>
             [EnumLiteral("versioned")]
             Versioned,
             /// <summary>
-            /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client)
+            /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client).
             /// </summary>
             [EnumLiteral("versioned-update")]
             VersionedUpdate,
         }
         
         /// <summary>
-        /// Whether the application produces or consumes documents
+        /// Whether the application produces or consumes documents.
         /// </summary>
         [FhirEnumeration("DocumentMode")]
         public enum DocumentMode
         {
             /// <summary>
-            /// The application produces documents of the specified type
+            /// The application produces documents of the specified type.
             /// </summary>
             [EnumLiteral("producer")]
             Producer,
             /// <summary>
-            /// The application consumes documents of the specified type
+            /// The application consumes documents of the specified type.
             /// </summary>
             [EnumLiteral("consumer")]
             Consumer,
         }
         
         /// <summary>
-        /// A supported modifier for a search parameter
+        /// A supported modifier for a search parameter.
         /// </summary>
         [FhirEnumeration("SearchModifierCode")]
         public enum SearchModifierCode
         {
             /// <summary>
-            /// The search parameter returns resources that have a value or not
+            /// The search parameter returns resources that have a value or not.
             /// </summary>
             [EnumLiteral("missing")]
             Missing,
             /// <summary>
-            /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents)
+            /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
             /// </summary>
             [EnumLiteral("exact")]
             Exact,
             /// <summary>
-            /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched
+            /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
             /// </summary>
             [EnumLiteral("contains")]
             Contains,
             /// <summary>
-            /// The search parameter returns resources that do not contain a match
+            /// The search parameter returns resources that do not contain a match .
             /// </summary>
             [EnumLiteral("not")]
             Not,
             /// <summary>
-            /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text
+            /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text.
             /// </summary>
             [EnumLiteral("text")]
             Text,
@@ -130,29 +130,29 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in")]
             In,
             /// <summary>
-            /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set
+            /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
             /// </summary>
             [EnumLiteral("not-in")]
             NotIn,
             /// <summary>
-            /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or heirarchical relationships)
+            /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
             /// </summary>
             [EnumLiteral("below")]
             Below,
             /// <summary>
-            /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or heirarchical relationships)
+            /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
             /// </summary>
             [EnumLiteral("above")]
             Above,
             /// <summary>
-            /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc)
+            /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
             /// </summary>
             [EnumLiteral("type")]
             Type,
         }
         
         /// <summary>
-        /// Operations supported by REST at the type or instance level
+        /// Operations supported by REST at the type or instance level.
         /// </summary>
         [FhirEnumeration("TypeRestfulInteraction")]
         public enum TypeRestfulInteraction
@@ -178,45 +178,45 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Types of security services used with FHIR
+        /// Types of security services used with FHIR.
         /// </summary>
         [FhirEnumeration("RestfulSecurityService")]
         public enum RestfulSecurityService
         {
             /// <summary>
-            /// Oauth (unspecified version see oauth.net)
+            /// Oauth (unspecified version see oauth.net).
             /// </summary>
             [EnumLiteral("OAuth")]
             OAuth,
             /// <summary>
-            /// OAuth2 using SMART-on-FHIR profile (see http://docs.smarthealthit.org/)
+            /// OAuth2 using SMART-on-FHIR profile (see http://docs.smarthealthit.org/).
             /// </summary>
             [EnumLiteral("SMART-on-FHIR")]
             SMARTOnFHIR,
             /// <summary>
-            /// Microsoft NTLM Authentication
+            /// Microsoft NTLM Authentication.
             /// </summary>
             [EnumLiteral("NTLM")]
             NTLM,
             /// <summary>
-            /// Basic authentication defined in HTTP specification
+            /// Basic authentication defined in HTTP specification.
             /// </summary>
             [EnumLiteral("Basic")]
             Basic,
             /// <summary>
-            /// see http://www.ietf.org/rfc/rfc4120.txt
+            /// see http://www.ietf.org/rfc/rfc4120.txt.
             /// </summary>
             [EnumLiteral("Kerberos")]
             Kerberos,
             /// <summary>
-            /// SSL where client must have a certificate registered with the server
+            /// SSL where client must have a certificate registered with the server.
             /// </summary>
             [EnumLiteral("Certificates")]
             Certificates,
         }
         
         /// <summary>
-        /// Operations supported by REST at the system level
+        /// Operations supported by REST at the system level.
         /// </summary>
         [FhirEnumeration("SystemRestfulInteraction")]
         public enum SystemRestfulInteraction
@@ -230,87 +230,87 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The protocol used for message transport
+        /// The protocol used for message transport.
         /// </summary>
         [FhirEnumeration("MessageTransport")]
         public enum MessageTransport
         {
             /// <summary>
-            /// The application sends or receives messages using HTTP POST (may be over http or https)
+            /// The application sends or receives messages using HTTP POST (may be over http: or https:).
             /// </summary>
             [EnumLiteral("http")]
             Http,
             /// <summary>
-            /// The application sends or receives messages using File Transfer Protocol
+            /// The application sends or receives messages using File Transfer Protocol.
             /// </summary>
             [EnumLiteral("ftp")]
             Ftp,
             /// <summary>
-            /// The application sends or receivers messages using HL7's Minimal Lower Level Protocol
+            /// The application sends or receives messages using HL7's Minimal Lower Level Protocol.
             /// </summary>
             [EnumLiteral("mllp")]
             Mllp,
         }
         
         /// <summary>
-        /// The impact of the content of a message
+        /// The impact of the content of a message.
         /// </summary>
         [FhirEnumeration("MessageSignificanceCategory")]
         public enum MessageSignificanceCategory
         {
             /// <summary>
-            /// The message represents/requests a change that should not be processed more than once. E.g. Making a booking for an appointment
+            /// The message represents/requests a change that should not be processed more than once; e.g. Making a booking for an appointment.
             /// </summary>
             [EnumLiteral("Consequence")]
             Consequence,
             /// <summary>
-            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful
+            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
             /// </summary>
             [EnumLiteral("Currency")]
             Currency,
             /// <summary>
-            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications
+            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
             /// </summary>
             [EnumLiteral("Notification")]
             Notification,
         }
         
         /// <summary>
-        /// A code that indicates how transactions are supported
+        /// A code that indicates how transactions are supported.
         /// </summary>
         [FhirEnumeration("TransactionMode")]
         public enum TransactionMode
         {
             /// <summary>
-            /// Neither Batch or Transaction supported
+            /// Neither batch or transaction is supported.
             /// </summary>
             [EnumLiteral("not-supported")]
             NotSupported,
             /// <summary>
-            /// Batches supported
+            /// Batches are  supported.
             /// </summary>
             [EnumLiteral("batch")]
             Batch,
             /// <summary>
-            /// Transactions Supported
+            /// Transactions are supported.
             /// </summary>
             [EnumLiteral("transaction")]
             Transaction,
             /// <summary>
-            /// Both Batches and Transactions Supported
+            /// Both batches and transactions are supported.
             /// </summary>
             [EnumLiteral("both")]
             Both,
         }
         
         /// <summary>
-        /// How a conformance statement is intended to be used
+        /// How a conformance statement is intended to be used.
         /// </summary>
         [FhirEnumeration("ConformanceStatementKind")]
         public enum ConformanceStatementKind
         {
             /// <summary>
-            /// The Conformance instance represents the present capabilities of a specific system instance.  This is the kind returned by OPTIONS for a FHIR server end-point
+            /// The Conformance instance represents the present capabilities of a specific system instance.  This is the kind returned by OPTIONS for a FHIR server end-point.
             /// </summary>
             [EnumLiteral("instance")]
             Instance,
@@ -320,94 +320,94 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("capability")]
             Capability,
             /// <summary>
-            /// The Conformance instance represents a set of requirements for other systems to meet.  E.g. as part of an implementation guide or 'request for proposal'
+            /// The Conformance instance represents a set of requirements for other systems to meet; e.g. as part of an implementation guide or 'request for proposal'.
             /// </summary>
             [EnumLiteral("requirements")]
             Requirements,
         }
         
         /// <summary>
-        /// The mode of a message conformance statement
+        /// The mode of a message conformance statement.
         /// </summary>
         [FhirEnumeration("ConformanceEventMode")]
         public enum ConformanceEventMode
         {
             /// <summary>
-            /// The application sends requests and receives responses
+            /// The application sends requests and receives responses.
             /// </summary>
             [EnumLiteral("sender")]
             Sender,
             /// <summary>
-            /// The application receives requests and sends responses
+            /// The application receives requests and sends responses.
             /// </summary>
             [EnumLiteral("receiver")]
             Receiver,
         }
         
         /// <summary>
-        /// A code that indicates whether an application accepts unknown elements or extensions when reading resources
+        /// A code that indicates whether an application accepts unknown elements or extensions when reading resources.
         /// </summary>
         [FhirEnumeration("UnknownContentCode")]
         public enum UnknownContentCode
         {
             /// <summary>
-            /// The application does not accept either unknown elements or extensions
+            /// The application does not accept either unknown elements or extensions.
             /// </summary>
             [EnumLiteral("no")]
             No,
             /// <summary>
-            /// The application accepts unknown extensions, but not unknown elements
+            /// The application accepts unknown extensions, but not unknown elements.
             /// </summary>
             [EnumLiteral("extensions")]
             Extensions,
             /// <summary>
-            /// The application accepts unknown elements, but not unknown extensions
+            /// The application accepts unknown elements, but not unknown extensions.
             /// </summary>
             [EnumLiteral("elements")]
             Elements,
             /// <summary>
-            /// The application accepts unknown elements and extensions
+            /// The application accepts unknown elements and extensions.
             /// </summary>
             [EnumLiteral("both")]
             Both,
         }
         
         /// <summary>
-        /// The mode of a RESTful conformance statement
+        /// The mode of a RESTful conformance statement.
         /// </summary>
         [FhirEnumeration("RestfulConformanceMode")]
         public enum RestfulConformanceMode
         {
             /// <summary>
-            /// The application acts as a client for this resource
+            /// The application acts as a client for this resource.
             /// </summary>
             [EnumLiteral("client")]
             Client,
             /// <summary>
-            /// The application acts as a server for this resource
+            /// The application acts as a server for this resource.
             /// </summary>
             [EnumLiteral("server")]
             Server,
         }
         
         /// <summary>
-        /// A code that indicates how the server supports conditional delete
+        /// A code that indicates how the server supports conditional delete.
         /// </summary>
         [FhirEnumeration("ConditionalDeleteStatus")]
         public enum ConditionalDeleteStatus
         {
             /// <summary>
-            /// No support for conditional deletes
+            /// No support for conditional deletes.
             /// </summary>
             [EnumLiteral("not-supported")]
             NotSupported,
             /// <summary>
-            /// Conditional deletes are supported, but only single resources at a time
+            /// Conditional deletes are supported, but only single resources at a time.
             /// </summary>
             [EnumLiteral("single")]
             Single,
             /// <summary>
-            /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction
+            /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
             /// </summary>
             [EnumLiteral("multiple")]
             Multiple,
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ConformanceMessagingComponent"; } }
             
             /// <summary>
-            /// A messaging service end point
+            /// A messaging service end-point
             /// </summary>
             [FhirElement("endpoint", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -2185,7 +2185,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Protocol;
             
             /// <summary>
-            /// Address of end point
+            /// Address of end-point
             /// </summary>
             [FhirElement("address", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -2199,7 +2199,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _AddressElement;
             
             /// <summary>
-            /// Address of end point
+            /// Address of end-point
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -3322,7 +3322,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=190)]
         [DataMember]
@@ -3335,7 +3335,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

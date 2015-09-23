@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum NutritionOrderStatus
         {
             /// <summary>
-            /// The request has been proposed
+            /// The request has been proposed.
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// The request is in preliminary form prior to being sent
+            /// The request is in preliminary form prior to being sent.
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The request has been planned
+            /// The request has been planned.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The request has been placed
+            /// The request has been placed.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "NutritionOrderOralDietTextureComponent"; } }
             
             /// <summary>
-            /// Code to indicate how to alter the texture of the foods, e.g., pureed
+            /// Code to indicate how to alter the texture of the foods, e.g. pureed
             /// </summary>
             [FhirElement("modifier", InSummary=true, Order=40)]
             [DataMember]
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The encounter associated with that this nutrition order
+        /// The encounter associated with this nutrition order
         /// </summary>
         [FhirElement("encounter", Order=120)]
         [References("Encounter")]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,46 +51,46 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ElementDefinition"; } }
         
         /// <summary>
-        /// How slices are interpreted when evaluating an instance
+        /// How slices are interpreted when evaluating an instance.
         /// </summary>
         [FhirEnumeration("SlicingRules")]
         public enum SlicingRules
         {
             /// <summary>
-            /// No additional content is allowed other than that described by the slices in this profile
+            /// No additional content is allowed other than that described by the slices in this profile.
             /// </summary>
             [EnumLiteral("closed")]
             Closed,
             /// <summary>
-            /// Additional content is allowed anywhere in the list
+            /// Additional content is allowed anywhere in the list.
             /// </summary>
             [EnumLiteral("open")]
             Open,
             /// <summary>
-            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required
+            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
             /// </summary>
             [EnumLiteral("openAtEnd")]
             OpenAtEnd,
         }
         
         /// <summary>
-        /// How resource references can be aggregated
+        /// How resource references can be aggregated.
         /// </summary>
         [FhirEnumeration("AggregationMode")]
         public enum AggregationMode
         {
             /// <summary>
-            /// The reference is a local reference to a contained resource
+            /// The reference is a local reference to a contained resource.
             /// </summary>
             [EnumLiteral("contained")]
             Contained,
             /// <summary>
-            /// The reference to a resource that has to be resolved externally to the resource that includes the reference
+            /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
             /// </summary>
             [EnumLiteral("referenced")]
             Referenced,
             /// <summary>
-            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference
+            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
             /// </summary>
             [EnumLiteral("bundled")]
             Bundled,
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         public enum ConstraintSeverity
         {
             /// <summary>
-            /// If the constraint is violated, the resource is not conformant
+            /// If the constraint is violated, the resource is not conformant.
             /// </summary>
             [EnumLiteral("error")]
             Error,
@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// How a property is represented on the wire
+        /// How a property is represented on the wire.
         /// </summary>
         [FhirEnumeration("PropertyRepresentation")]
         public enum PropertyRepresentation
         {
             /// <summary>
-            /// In XML, this property is represented as an attribute not an element
+            /// In XML, this property is represented as an attribute not an element.
             /// </summary>
             [EnumLiteral("xmlAttr")]
             XmlAttr,

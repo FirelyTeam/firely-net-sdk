@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Prescription for Vision correction products for a patient
+    /// Prescription for vision correction products for a patient
     /// </summary>
     [FhirType("VisionPrescription", IsResource=true)]
     [DataContract]
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Contact Lens power
+            /// Contact lens power
             /// </summary>
             [FhirElement("power", InSummary=true, Order=120)]
             [DataMember]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _PowerElement;
             
             /// <summary>
-            /// Contact Lens power
+            /// Contact lens power
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Contact Lens diameter
+            /// Contact lens diameter
             /// </summary>
             [FhirElement("diameter", InSummary=true, Order=140)]
             [DataMember]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _DiameterElement;
             
             /// <summary>
-            /// Contact Lens diameter
+            /// Contact lens diameter
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// Who authorizes the Vision product
+        /// Who authorizes the vision product
         /// </summary>
         [FhirElement("prescriber", Order=120)]
         [References("Practitioner")]

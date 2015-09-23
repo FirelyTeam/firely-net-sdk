@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,38 +53,38 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Condition"; } }
         
         /// <summary>
-        /// The verification status to support or decline the clinical status of the Condition or diagnosis.
+        /// The verification status to support or decline the clinical status of the condition or diagnosis.
         /// </summary>
         [FhirEnumeration("ConditionVerificationStatus")]
         public enum ConditionVerificationStatus
         {
             /// <summary>
-            /// This is a tentative diagnosis - still a candidate that is under consideration
+            /// This is a tentative diagnosis - still a candidate that is under consideration.
             /// </summary>
             [EnumLiteral("provisional")]
             Provisional,
             /// <summary>
-            /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment
+            /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment.
             /// </summary>
             [EnumLiteral("differential")]
             Differential,
             /// <summary>
-            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition
+            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
             /// </summary>
             [EnumLiteral("confirmed")]
             Confirmed,
             /// <summary>
-            /// This condition has been ruled out by diagnostic and clinical evidence
+            /// This condition has been ruled out by diagnostic and clinical evidence.
             /// </summary>
             [EnumLiteral("refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and Is not valid
+            /// The statement was entered in error and is not valid.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown"
+            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,

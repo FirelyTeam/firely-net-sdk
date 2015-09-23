@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Type of instance (image etc)
+            /// Type of instance (image etc.)
             /// </summary>
             [FhirElement("type", InSummary=true, Order=70)]
             [DataMember]
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
             /// <summary>
-            /// Type of instance (image etc)
+            /// Type of instance (image etc.)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Order;
         
         /// <summary>
-        /// All series.modality if actual acquisition modalities
+        /// All series modality if actual acquisition modalities
         /// </summary>
         [FhirElement("modalityList", Order=150)]
         [Cardinality(Min=0,Max=-1)]

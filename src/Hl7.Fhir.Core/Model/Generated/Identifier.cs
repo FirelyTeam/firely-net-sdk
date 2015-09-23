@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,28 +51,28 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Identifier"; } }
         
         /// <summary>
-        /// Identifies the purpose for this identifier, if known
+        /// Identifies the purpose for this identifier, if known .
         /// </summary>
         [FhirEnumeration("IdentifierUse")]
         public enum IdentifierUse
         {
             /// <summary>
-            /// the identifier recommended for display and use in real-world interactions
+            /// The identifier recommended for display and use in real-world interactions.
             /// </summary>
             [EnumLiteral("usual")]
             Usual,
             /// <summary>
-            /// the identifier considered to be most trusted for the identification of this item
+            /// The identifier considered to be most trusted for the identification of this item.
             /// </summary>
             [EnumLiteral("official")]
             Official,
             /// <summary>
-            /// A temporary identifier
+            /// A temporary identifier.
             /// </summary>
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context
+            /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
             /// </summary>
             [EnumLiteral("secondary")]
             Secondary,

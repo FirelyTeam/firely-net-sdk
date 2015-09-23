@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Claim"; } }
         
         /// <summary>
-        /// Complete, proposed, exploratory, other
+        /// Complete, proposed, exploratory, other.
         /// </summary>
         [FhirEnumeration("Use")]
         public enum Use
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The type or discipline-style of the claim
+        /// The type or discipline-style of the claim.
         /// </summary>
         [FhirEnumeration("ClaimType")]
         public enum ClaimType
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("professional")]
             Professional,
             /// <summary>
-            /// A claim for Vision (Opthamologist, Optometrist and Optician) goods and services.
+            /// A claim for Vision (Ophthamologist, Optometrist and Optician) goods and services.
             /// </summary>
             [EnumLiteral("vision")]
             Vision,
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Is the focal Coverage
+            /// The focal Coverage
             /// </summary>
             [FhirElement("focal", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _FocalElement;
             
             /// <summary>
-            /// Is the focal Coverage
+            /// The focal Coverage
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

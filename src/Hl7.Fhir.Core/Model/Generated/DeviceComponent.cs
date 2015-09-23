@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,63 +53,63 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceComponent"; } }
         
         /// <summary>
-        /// Different measurement principle supported by the device
+        /// Different measurement principle supported by the device.
         /// </summary>
         [FhirEnumeration("Measmnt-Principle")]
         public enum MeasmntPrinciple
         {
             /// <summary>
-            /// Measurement principle isn't in the list
+            /// Measurement principle isn't in the list.
             /// </summary>
             [EnumLiteral("other")]
             Other,
             /// <summary>
-            /// Measurement is done using chemical
+            /// Measurement is done using the chemical principle.
             /// </summary>
             [EnumLiteral("chemical")]
             Chemical,
             /// <summary>
-            /// Measurement is done using electrical
+            /// Measurement is done using the electrical principle.
             /// </summary>
             [EnumLiteral("electrical")]
             Electrical,
             /// <summary>
-            /// Measurement is done using impedance
+            /// Measurement is done using the impedance principle.
             /// </summary>
             [EnumLiteral("impedance")]
             Impedance,
             /// <summary>
-            /// Measurement is done using nuclear
+            /// Measurement is done using the nuclear principle.
             /// </summary>
             [EnumLiteral("nuclear")]
             Nuclear,
             /// <summary>
-            /// Measurement is done using optical
+            /// Measurement is done using the optical principle.
             /// </summary>
             [EnumLiteral("optical")]
             Optical,
             /// <summary>
-            /// Measurement is done using thermal
+            /// Measurement is done using the thermal principle.
             /// </summary>
             [EnumLiteral("thermal")]
             Thermal,
             /// <summary>
-            /// Measurement is done using biological
+            /// Measurement is done using the biological principle.
             /// </summary>
             [EnumLiteral("biological")]
             Biological,
             /// <summary>
-            /// Measurement is done using mechanical
+            /// Measurement is done using the mechanical principle.
             /// </summary>
             [EnumLiteral("mechanical")]
             Mechanical,
             /// <summary>
-            /// Measurement is done using acoustical
+            /// Measurement is done using the acoustical principle.
             /// </summary>
             [EnumLiteral("acoustical")]
             Acoustical,
             /// <summary>
-            /// Measurement is done using manual
+            /// Measurement is done using the manual principle.
             /// </summary>
             [EnumLiteral("manual")]
             Manual,

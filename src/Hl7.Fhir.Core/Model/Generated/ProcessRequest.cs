@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,18 +53,18 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ProcessRequest"; } }
         
         /// <summary>
-        /// List of allowable action which this resource can request
+        /// List of allowable action which this resource can request.
         /// </summary>
         [FhirEnumeration("ActionList")]
         public enum ActionList
         {
             /// <summary>
-            /// Cancel, Reverse or nullify the target resource.
+            /// Cancel, reverse or nullify the target resource.
             /// </summary>
             [EnumLiteral("cancel")]
             Cancel,
             /// <summary>
-            /// Check for previously un-read/ not-retrieved resources
+            /// Check for previously un-read/ not-retrieved resources.
             /// </summary>
             [EnumLiteral("poll")]
             Poll,

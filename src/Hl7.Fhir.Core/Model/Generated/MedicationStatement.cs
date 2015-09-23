@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationStatement"; } }
         
         /// <summary>
-        /// A set of codes indicating the current status of a MedicationStatement
+        /// A set of codes indicating the current status of a MedicationStatement.
         /// </summary>
         [FhirEnumeration("MedicationStatementStatus")]
         public enum MedicationStatementStatus
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// When/how often was medication taken?
+            /// When/how often was medication taken
             /// </summary>
             [FhirElement("timing", InSummary=true, Order=50)]
             [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Timing _Timing;
             
             /// <summary>
-            /// Take "as needed" f(or x)
+            /// Take "as needed" (for x)
             /// </summary>
             [FhirElement("asNeeded", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _AsNeeded;
             
             /// <summary>
-            /// Where on body was medication administered?
+            /// Where (on body) medication is/was administered
             /// </summary>
             [FhirElement("site", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Site;
             
             /// <summary>
-            /// How did the medication enter the body?
+            /// How the medication entered the body
             /// </summary>
             [FhirElement("route", InSummary=true, Order=80)]
             [DataMember]
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// External Identifier
+        /// External identifier
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Who was/is taking medication
+        /// Who is/was taking  the medication
         /// </summary>
         [FhirElement("patient", Order=100)]
         [References("Patient")]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
         
         /// <summary>
-        /// What medication was taken?
+        /// What medication was taken
         /// </summary>
         [FhirElement("medication", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

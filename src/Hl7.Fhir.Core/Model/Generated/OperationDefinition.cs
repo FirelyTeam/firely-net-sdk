@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,36 +53,36 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "OperationDefinition"; } }
         
         /// <summary>
-        /// Whether an operation parameter is an input or an output parameter
+        /// Whether an operation parameter is an input or an output parameter.
         /// </summary>
         [FhirEnumeration("OperationParameterUse")]
         public enum OperationParameterUse
         {
             /// <summary>
-            /// This is an input parameter
+            /// This is an input parameter.
             /// </summary>
             [EnumLiteral("in")]
             In,
             /// <summary>
-            /// This is an output parameter
+            /// This is an output parameter.
             /// </summary>
             [EnumLiteral("out")]
             Out,
         }
         
         /// <summary>
-        /// Whether an operation is a normal operation or a query
+        /// Whether an operation is a normal operation or a query.
         /// </summary>
         [FhirEnumeration("OperationKind")]
         public enum OperationKind
         {
             /// <summary>
-            /// This operation is invoked as an operation
+            /// This operation is invoked as an operation.
             /// </summary>
             [EnumLiteral("operation")]
             Operation,
             /// <summary>
-            /// This operation is a named query, invoked using the search mechanism
+            /// This operation is a named query, invoked using the search mechanism.
             /// </summary>
             [EnumLiteral("query")]
             Query,
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical url to reference this operation definition
+        /// Logical URL to reference this operation definition
         /// </summary>
         [FhirElement("url", Order=90)]
         [DataMember]
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical url to reference this operation definition
+        /// Logical URL to reference this operation definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

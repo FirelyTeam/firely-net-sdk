@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "OtherElementComponent"; } }
             
             /// <summary>
-            /// Reference to element/field/valueset mapping depends on
+            /// Reference to element/field/ValueSet mapping depends on
             /// </summary>
             [FhirElement("element", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _ElementElement;
             
             /// <summary>
-            /// Reference to element/field/valueset mapping depends on
+            /// Reference to element/field/ValueSet mapping depends on
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of the publisher (Organization or individual)
+        /// Name of the publisher (organization or individual)
         /// </summary>
         [FhirElement("publisher", InSummary=true, Order=150)]
         [DataMember]
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
-        /// Name of the publisher (Organization or individual)
+        /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
-        /// Why is this needed?
+        /// Why needed
         /// </summary>
         [FhirElement("requirements", Order=200)]
         [DataMember]
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
-        /// Why is this needed?
+        /// Why needed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -997,7 +997,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=210)]
         [DataMember]
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

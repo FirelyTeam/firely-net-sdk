@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Details of a Technology mediated contact point (phone, fax, email, etc)
+    /// Details of a Technology mediated contact point (phone, fax, email, etc.)
     /// </summary>
     [FhirType("ContactPoint")]
     [DataContract]
@@ -72,12 +72,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// This contact point is no longer in use (or was never correct, but retained for records)
+            /// This contact point is no longer in use (or was never correct, but retained for records).
             /// </summary>
             [EnumLiteral("old")]
             Old,
             /// <summary>
-            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business
+            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
             /// </summary>
             [EnumLiteral("mobile")]
             Mobile,
@@ -100,17 +100,17 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("fax")]
             Fax,
             /// <summary>
-            /// The value is an email address
+            /// The value is an email address.
             /// </summary>
             [EnumLiteral("email")]
             Email,
             /// <summary>
-            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system
+            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system.
             /// </summary>
             [EnumLiteral("pager")]
             Pager,
             /// <summary>
-            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation
+            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation.
             /// </summary>
             [EnumLiteral("other")]
             Other,

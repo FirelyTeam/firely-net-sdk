@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,51 +53,51 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "StructureDefinition"; } }
         
         /// <summary>
-        /// Defines the type of structure that a definition is describing
+        /// Defines the type of structure that a definition is describing.
         /// </summary>
         [FhirEnumeration("StructureDefinitionKind")]
         public enum StructureDefinitionKind
         {
             /// <summary>
-            /// A data type - either a primitive or complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions
+            /// A data type - either a primitive or complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions.
             /// </summary>
             [EnumLiteral("datatype")]
             Datatype,
             /// <summary>
-            /// A resource defined by the FHIR specification
+            /// A resource defined by the FHIR specification.
             /// </summary>
             [EnumLiteral("resource")]
             Resource,
             /// <summary>
-            /// A logical model - a conceptual package of data that will be mapped to resources for implementation
+            /// A logical model - a conceptual package of data that will be mapped to resources for implementation.
             /// </summary>
             [EnumLiteral("logical")]
             Logical,
         }
         
         /// <summary>
-        /// How an extension context is interpreted
+        /// How an extension context is interpreted.
         /// </summary>
         [FhirEnumeration("ExtensionContext")]
         public enum ExtensionContext
         {
             /// <summary>
-            /// The context is all elements matching a particular resource element path
+            /// The context is all elements matching a particular resource element path.
             /// </summary>
             [EnumLiteral("resource")]
             Resource,
             /// <summary>
-            /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name)
+            /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
             /// </summary>
             [EnumLiteral("datatype")]
             Datatype,
             /// <summary>
-            /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used
+            /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used.
             /// </summary>
             [EnumLiteral("mapping")]
             Mapping,
             /// <summary>
-            /// The context is a particular extension from a particular profile, a uri that identifies the extension definition
+            /// The context is a particular extension from a particular profile, a uri that identifies the extension definition.
             /// </summary>
             [EnumLiteral("extension")]
             Extension,
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Versions, Issues, Scope limitations etc
+            /// Versions, Issues, Scope limitations etc.
             /// </summary>
             [FhirElement("comments", InSummary=true, Order=70)]
             [DataMember]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
-            /// Versions, Issues, Scope limitations etc
+            /// Versions, Issues, Scope limitations etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Literal URL used to reference this StructureDefinition
+        /// Absolute URL used to reference this StructureDefinition
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Literal URL used to reference this StructureDefinition
+        /// Absolute URL used to reference this StructureDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=220)]
         [DataMember]
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

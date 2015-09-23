@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,18 +50,18 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Account"; } }
         
         /// <summary>
-        /// Indicates whether the account is available to be used
+        /// Indicates whether the account is available to be used.
         /// </summary>
         [FhirEnumeration("AccountStatus")]
         public enum AccountStatus
         {
             /// <summary>
-            /// This account is active and may be used
+            /// This account is active and may be used.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// This account is inactive and should not be used to track financial information
+            /// This account is inactive and should not be used to track financial information.
             /// </summary>
             [EnumLiteral("inactive")]
             Inactive,

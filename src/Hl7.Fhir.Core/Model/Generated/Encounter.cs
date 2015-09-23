@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,32 +59,32 @@ namespace Hl7.Fhir.Model
         public enum EncounterState
         {
             /// <summary>
-            /// The Encounter has not yet started
+            /// The Encounter has not yet started.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The Patient is present for the encounter, however is not currently meeting with a practitioner
+            /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
             /// </summary>
             [EnumLiteral("arrived")]
             Arrived,
             /// <summary>
-            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting
+            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The Encounter has begun, but the patient is temporarily on leave
+            /// The Encounter has begun, but the patient is temporarily on leave.
             /// </summary>
             [EnumLiteral("onleave")]
             Onleave,
             /// <summary>
-            /// The Encounter has ended
+            /// The Encounter has ended.
             /// </summary>
             [EnumLiteral("finished")]
             Finished,
             /// <summary>
-            /// The Encounter has ended before it has begun
+            /// The Encounter has ended before it has begun.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
@@ -97,77 +97,76 @@ namespace Hl7.Fhir.Model
         public enum EncounterClass
         {
             /// <summary>
-            /// An encounter during which the patient is hospitalized and stays overnight
+            /// An encounter during which the patient is hospitalized and stays overnight.
             /// </summary>
             [EnumLiteral("inpatient")]
             Inpatient,
             /// <summary>
-            /// An encounter during which the patient is not hospitalized overnight
+            /// An encounter during which the patient is not hospitalized overnight.
             /// </summary>
             [EnumLiteral("outpatient")]
             Outpatient,
             /// <summary>
-            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit
+            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
             /// </summary>
             [EnumLiteral("ambulatory")]
             Ambulatory,
             /// <summary>
-            /// An encounter in the Emergency Care Department
+            /// An encounter in the Emergency Care Department.
             /// </summary>
             [EnumLiteral("emergency")]
             Emergency,
             /// <summary>
-            /// An encounter where the practitioner visits the patient at his/her home
+            /// An encounter where the practitioner visits the patient at his/her home.
             /// </summary>
             [EnumLiteral("home")]
             Home,
             /// <summary>
-            /// An encounter taking place outside the regular environment for giving care
+            /// An encounter taking place outside the regular environment for giving care.
             /// </summary>
             [EnumLiteral("field")]
             Field,
             /// <summary>
-            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight
+            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
             /// </summary>
             [EnumLiteral("daytime")]
             Daytime,
             /// <summary>
-            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact
+            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
             /// </summary>
             [EnumLiteral("virtual")]
             Virtual,
             /// <summary>
-            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is
+            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
             /// </summary>
             [EnumLiteral("other")]
             Other,
         }
         
         /// <summary>
-        /// The status of the location
+        /// The status of the location.
         /// </summary>
         [FhirEnumeration("EncounterLocationStatus")]
         public enum EncounterLocationStatus
         {
             /// <summary>
-            /// The patient is planned to be moved to this location at some point in the future
+            /// The patient is planned to be moved to this location at some point in the future.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The patient is currently at this location, or was between the period specified
-            /// A system may update these records when the patient leaves the location to either 
-            /// reserved, or completed.
+            /// The patient is currently at this location, or was between the period specified.
+            /// A system may update these records when the patient leaves the location to either reserved, or completed
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// This location is held empty for this patient
+            /// This location is held empty for this patient.
             /// </summary>
             [EnumLiteral("reserved")]
             Reserved,
             /// <summary>
-            /// The patient was at this location during the period specified
+            /// The patient was at this location during the period specified.
             /// Not to be used when the patient is currently at the location
             /// </summary>
             [EnumLiteral("completed")]
@@ -222,7 +221,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
             
             /// <summary>
-            /// The admitting Diagnosis as reported by admitting practitioner
+            /// The admitting diagnosis as reported by admitting practitioner
             /// </summary>
             [FhirElement("admittingDiagnosis", InSummary=true, Order=70)]
             [References("Condition")]
@@ -278,7 +277,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _SpecialCourtesy;
             
             /// <summary>
-            /// Wheelchair, translator, stretcher, etc
+            /// Wheelchair, translator, stretcher, etc.
             /// </summary>
             [FhirElement("specialArrangement", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
@@ -771,7 +770,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// List of Encounter statuses
+        /// List of past encounter statuses
         /// </summary>
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
@@ -873,7 +872,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EpisodeOfCare;
         
         /// <summary>
-        /// The Referral that initiated this encounter
+        /// The ReferralRequest that initiated this encounter
         /// </summary>
         [FhirElement("incomingReferral", Order=170)]
         [References("ReferralRequest")]
@@ -984,7 +983,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent _Hospitalization;
         
         /// <summary>
-        /// List of locations the patient has been at
+        /// List of locations where the patient has been
         /// </summary>
         [FhirElement("location", Order=250)]
         [Cardinality(Min=0,Max=-1)]

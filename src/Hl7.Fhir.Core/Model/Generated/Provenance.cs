@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Provenance"; } }
         
         /// <summary>
-        /// How an entity was used in an activity
+        /// How an entity was used in an activity.
         /// </summary>
         [FhirEnumeration("ProvenanceEntityRole")]
         public enum ProvenanceEntityRole
         {
             /// <summary>
-            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity
+            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
             /// </summary>
             [EnumLiteral("derivation")]
             Derivation,
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("revision")]
             Revision,
             /// <summary>
-            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author
+            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
             /// </summary>
             [EnumLiteral("quotation")]
             Quotation,
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Reference to other agent in this resource by id
+            /// Reference to other agent in this resource by identifier
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _TargetElement;
             
             /// <summary>
-            /// Reference to other agent in this resource by id
+            /// Reference to other agent in this resource by identifier
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

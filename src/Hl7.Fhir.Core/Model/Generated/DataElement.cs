@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DataElement"; } }
         
         /// <summary>
-        /// Indicates the degree of precision of the data element definition
+        /// Indicates the degree of precision of the data element definition.
         /// </summary>
         [FhirEnumeration("DataElementStringency")]
         public enum DataElementStringency
@@ -64,22 +64,22 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("comparable")]
             Comparable,
             /// <summary>
-            /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully compareable
+            /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully comparable.
             /// </summary>
             [EnumLiteral("fully-specified")]
             FullySpecified,
             /// <summary>
-            /// The data element allows multiple units of measure having equivalent meaning.  E.g. "cc" (cubic centimeter) and "mL".
+            /// The data element allows multiple units of measure having equivalent meaning; e.g. "cc" (cubic centimeter) and "mL" (milliliter).
             /// </summary>
             [EnumLiteral("equivalent")]
             Equivalent,
             /// <summary>
-            /// The data element allows multiple units of measure that are convertable between each other (e.g. Inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning
+            /// The data element allows multiple units of measure that are convertable between each other (e.g. inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
             /// </summary>
             [EnumLiteral("convertable")]
             Convertable,
             /// <summary>
-            /// A convertable data element where unit conversions are different only by a power of 10.  E.g. g, mg, kg
+            /// A convertable data element where unit conversions are different only by a power of 10; e.g. g, mg, kg.
             /// </summary>
             [EnumLiteral("scaleable")]
             Scaleable,
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Versions, Issues, Scope limitations etc
+            /// Versions, Issues, Scope limitations etc.
             /// </summary>
             [FhirElement("comments", InSummary=true, Order=70)]
             [DataMember]
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
-            /// Versions, Issues, Scope limitations etc
+            /// Versions, Issues, Scope limitations etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=190)]
         [DataMember]
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

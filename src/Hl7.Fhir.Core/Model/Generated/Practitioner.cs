@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PractitionerPractitionerRoleComponent"; } }
             
             /// <summary>
-            /// The Organization where the Practitioner performs the roles associated
+            /// Organization where the roles are performed
             /// </summary>
             [FhirElement("managingOrganization", InSummary=true, Order=40)]
             [References("Organization")]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
         /// <summary>
-        /// The list of Roles/Organizations that the Practitioner is associated with
+        /// Roles/organizations the practitioner is associated with
         /// </summary>
         [FhirElement("practitionerRole", Order=170)]
         [Cardinality(Min=0,Max=-1)]

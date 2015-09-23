@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,38 +53,38 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AppointmentResponse"; } }
         
         /// <summary>
-        /// The Participation status of an appointment
+        /// The Participation status of an appointment.
         /// </summary>
         [FhirEnumeration("ParticipantStatus")]
         public enum ParticipantStatus
         {
             /// <summary>
-            /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse
+            /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The appointment participant has declined the appointment
+            /// The appointment participant has declined the appointment.
             /// </summary>
             [EnumLiteral("declined")]
             Declined,
             /// <summary>
-            /// The appointment participant has tentatively accepted the appointment
+            /// The appointment participant has tentatively accepted the appointment.
             /// </summary>
             [EnumLiteral("tentative")]
             Tentative,
             /// <summary>
-            /// The participant has in-process the appointment
+            /// The participant has in-process the appointment.
             /// </summary>
             [EnumLiteral("in-process")]
             InProcess,
             /// <summary>
-            /// The participant has completed the appointment
+            /// The participant has completed the appointment.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment
+            /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment.
             /// </summary>
             [EnumLiteral("needs-action")]
             NeedsAction,
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Parent appointment that this response is replying to
+        /// Appointment this response relates to
         /// </summary>
         [FhirElement("appointment", InSummary=true, Order=100)]
         [References("Appointment")]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
-        /// Date/Time that the appointment is to take place, or requested new start time
+        /// Time from appointment, or requested new start time
         /// </summary>
         [FhirElement("start", Order=110)]
         [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to take place, or requested new start time
+        /// Time from appointment, or requested new start time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude, or requested new end time
+        /// Time from appointment, or requested new end time
         /// </summary>
         [FhirElement("end", Order=120)]
         [DataMember]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude, or requested new end time
+        /// Time from appointment, or requested new end time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
         
         /// <summary>
-        /// A Person, Location/HealthcareService or Device that is participating in the appointment
+        /// Person, Location/HealthcareService or Device
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=140)]
         [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Additional comments about the appointment
+        /// Additional comments
         /// </summary>
         [FhirElement("comment", Order=160)]
         [DataMember]
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Additional comments about the appointment
+        /// Additional comments
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

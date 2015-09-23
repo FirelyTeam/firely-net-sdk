@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,22 +59,22 @@ namespace Hl7.Fhir.Model
         public enum AuditEventOutcome
         {
             /// <summary>
-            /// The operation completed successfully (whether with warnings or not)
+            /// The operation completed successfully (whether with warnings or not).
             /// </summary>
             [EnumLiteral("0")]
             N0,
             /// <summary>
-            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response)
+            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
             /// </summary>
             [EnumLiteral("4")]
             N4,
             /// <summary>
-            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response)
+            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
             /// </summary>
             [EnumLiteral("8")]
             N8,
             /// <summary>
-            /// An error of such magnitude occurred that the system is not longer available for use (i.e. the system died)
+            /// An error of such magnitude occurred that the system is no longer available for use (i.e. the system died).
             /// </summary>
             [EnumLiteral("12")]
             N12,
@@ -87,27 +87,27 @@ namespace Hl7.Fhir.Model
         public enum AuditEventAction
         {
             /// <summary>
-            /// Create a new database object, such as Placing an Order.
+            /// Create a new database object, such as placing an order.
             /// </summary>
             [EnumLiteral("C")]
             C,
             /// <summary>
-            /// Display or print data, such as a Doctor Census
+            /// Display or print data, such as a doctor census.
             /// </summary>
             [EnumLiteral("R")]
             R,
             /// <summary>
-            /// Update data, such as Revise Patient Information
+            /// Update data, such as revise patient information.
             /// </summary>
             [EnumLiteral("U")]
             U,
             /// <summary>
-            /// Delete items, such as a doctor master file record
+            /// Delete items, such as a doctor master file record.
             /// </summary>
             [EnumLiteral("D")]
             D,
             /// <summary>
-            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation
+            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
             /// </summary>
             [EnumLiteral("E")]
             E,
@@ -120,34 +120,34 @@ namespace Hl7.Fhir.Model
         public enum AuditEventParticipantNetworkType
         {
             /// <summary>
-            /// Machine Name, including DNS name
+            /// The machine name, including DNS name.
             /// </summary>
             [EnumLiteral("1")]
             N1,
             /// <summary>
-            /// IP Address
+            /// The assigned Internet Protocol (IP) address.
             /// </summary>
             [EnumLiteral("2")]
             N2,
             /// <summary>
-            /// Telephone Number
+            /// The assigned telephone number.
             /// </summary>
             [EnumLiteral("3")]
             N3,
             /// <summary>
-            /// Email address
+            /// The assigned email address.
             /// </summary>
             [EnumLiteral("4")]
             N4,
             /// <summary>
-            /// URI (User directory, HTTP-PUT, ftp, etc.)
+            /// URI (User directory, HTTP-PUT, ftp, etc.).
             /// </summary>
             [EnumLiteral("5")]
             N5,
         }
         
         /// <summary>
-        /// Identifier for the data life-cycle stage for the object
+        /// Identifier for the data life-cycle stage for the object.
         /// </summary>
         [FhirEnumeration("AuditEventObjectLifecycle")]
         public enum AuditEventObjectLifecycle
@@ -230,13 +230,13 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Code representing the role the Object played in the event
+        /// Code representing the role the Object played in the event.
         /// </summary>
         [FhirEnumeration("AuditEventObjectRole")]
         public enum AuditEventObjectRole
         {
             /// <summary>
-            /// This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal
+            /// This object is the patient that is the subject of care related to this event.  It is identifiable by patient ID or equivalent.  The patient may be either human or animal.
             /// </summary>
             [EnumLiteral("1")]
             N1,
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("5")]
             N5,
             /// <summary>
-            /// A human participant not otherwise identified by some other category
+            /// A human participant not otherwise identified by some other category.
             /// </summary>
             [EnumLiteral("6")]
             N6,
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("16")]
             N16,
             /// <summary>
-            /// A source or destination for data transfer, that acts as an archive, database, or similar role.
+            /// A source or destination for data transfer that acts as an archive, database, or similar role.
             /// </summary>
             [EnumLiteral("17")]
             N17,
@@ -331,12 +331,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("19")]
             N19,
             /// <summary>
-            /// An order, task, work item, procedure step, or other description of work to be performed.  E.g., a particular instance of an MPPS.
+            /// An order, task, work item, procedure step, or other description of work to be performed; e.g. a particular instance of an MPPS.
             /// </summary>
             [EnumLiteral("20")]
             N20,
             /// <summary>
-            /// A list of jobs or a system that provides lists of jobs.  E.g., an MWL SCP.
+            /// A list of jobs or a system that provides lists of jobs; e.g. an MWL SCP.
             /// </summary>
             [EnumLiteral("21")]
             N21,
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Code for the object type involved audited
+        /// Code for the object type involved audited.
         /// </summary>
         [FhirEnumeration("AuditEventObjectType")]
         public enum AuditEventObjectType

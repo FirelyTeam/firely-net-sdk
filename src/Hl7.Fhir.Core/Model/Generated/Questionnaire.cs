@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,63 +53,63 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>
-        /// The expected format of an answer
+        /// The expected format of an answer.
         /// </summary>
         [FhirEnumeration("AnswerFormat")]
         public enum AnswerFormat
         {
             /// <summary>
-            /// Answer is a yes/no answer
+            /// Answer is a yes/no answer.
             /// </summary>
             [EnumLiteral("boolean")]
             Boolean,
             /// <summary>
-            /// Answer is a floating point number
+            /// Answer is a floating point number.
             /// </summary>
             [EnumLiteral("decimal")]
             Decimal,
             /// <summary>
-            /// Answer is an integer
+            /// Answer is an integer.
             /// </summary>
             [EnumLiteral("integer")]
             Integer,
             /// <summary>
-            /// Answer is a date
+            /// Answer is a date.
             /// </summary>
             [EnumLiteral("date")]
             Date,
             /// <summary>
-            /// Answer is a date and time
+            /// Answer is a date and time.
             /// </summary>
             [EnumLiteral("dateTime")]
             DateTime,
             /// <summary>
-            /// Answer is a system timestamp
+            /// Answer is a system timestamp.
             /// </summary>
             [EnumLiteral("instant")]
             Instant,
             /// <summary>
-            /// Answer is a time (hour/minute/second) independent of date
+            /// Answer is a time (hour/minute/second) independent of date.
             /// </summary>
             [EnumLiteral("time")]
             Time,
             /// <summary>
-            /// Answer is a short (few words to short sentence) free-text entry
+            /// Answer is a short (few words to short sentence) free-text entry.
             /// </summary>
             [EnumLiteral("string")]
             String,
             /// <summary>
-            /// Answer is a long (potentially multi-paragram) free-text entry (still captured as a string)
+            /// Answer is a long (potentially multi-paragraph) free-text entry (still captured as a string).
             /// </summary>
             [EnumLiteral("text")]
             Text,
             /// <summary>
-            /// Answer is a url (website, FTP site, etc.)
+            /// Answer is a url (website, FTP site, etc.).
             /// </summary>
             [EnumLiteral("url")]
             Url,
             /// <summary>
-            /// Answer is a Coding drawn from a list of options
+            /// Answer is a Coding drawn from a list of options.
             /// </summary>
             [EnumLiteral("choice")]
             Choice,
@@ -124,19 +124,19 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("attachment")]
             Attachment,
             /// <summary>
-            /// Answer is a reference to another resource (practitioner, organization, etc.)
+            /// Answer is a reference to another resource (practitioner, organization, etc.).
             /// </summary>
             [EnumLiteral("reference")]
             Reference,
             /// <summary>
-            /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc)
+            /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc.).
             /// </summary>
             [EnumLiteral("quantity")]
             Quantity,
         }
         
         /// <summary>
-        /// Lifecycle status of the questionnaire
+        /// Lifecycle status of the questionnaire.
         /// </summary>
         [FhirEnumeration("QuestionnaireStatus")]
         public enum QuestionnaireStatus
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Concept that represents this section on a questionnaire
+            /// Concept that represents this section in a questionnaire
             /// </summary>
             [FhirElement("concept", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Must group be included in data results?
+            /// Whether the group must be included in data results
             /// </summary>
             [FhirElement("required", InSummary=true, Order=80)]
             [DataMember]
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
-            /// Must group be included in data results?
+            /// Whether the group must be included in data results
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Must question be answered in data results?
+            /// Whether the question must be answered in data results
             /// </summary>
             [FhirElement("required", InSummary=true, Order=80)]
             [DataMember]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
             
             /// <summary>
-            /// Must question be answered in data results?
+            /// Whether the question must be answered in data results
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Can question  have multiple answers?
+            /// Whether the question  can have multiple answers
             /// </summary>
             [FhirElement("repeats", InSummary=true, Order=90)]
             [DataMember]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _RepeatsElement;
             
             /// <summary>
-            /// Can question  have multiple answers?
+            /// Whether the question  can have multiple answers
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// External Ids for this questionnaire
+        /// External identifiers for this questionnaire
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Logical id for this version of Questionnaire
+        /// Logical identifier for this version of Questionnaire
         /// </summary>
         [FhirElement("version", InSummary=true, Order=100)]
         [DataMember]
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
-        /// Logical id for this version of Questionnaire
+        /// Logical identifier for this version of Questionnaire
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,41 +53,41 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Location"; } }
         
         /// <summary>
-        /// Indicates whether the location is still in use
+        /// Indicates whether the location is still in use.
         /// </summary>
         [FhirEnumeration("LocationStatus")]
         public enum LocationStatus
         {
             /// <summary>
-            /// The location is operational
+            /// The location is operational.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The location is temporarily closed
+            /// The location is temporarily closed.
             /// </summary>
             [EnumLiteral("suspended")]
             Suspended,
             /// <summary>
-            /// The location is no longer used
+            /// The location is no longer used.
             /// </summary>
             [EnumLiteral("inactive")]
             Inactive,
         }
         
         /// <summary>
-        /// Indicates whether a resource instance represents a specific location or a class of locations
+        /// Indicates whether a resource instance represents a specific location or a class of locations.
         /// </summary>
         [FhirEnumeration("LocationMode")]
         public enum LocationMode
         {
             /// <summary>
-            /// The Location resource represents a specific instance of a Location (e.g. Operating Theatre 1A)
+            /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
             /// </summary>
             [EnumLiteral("instance")]
             Instance,
             /// <summary>
-            /// The Location represents a class of Locations (e.g. Any Operating Theatre). Although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc)
+            /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
             /// </summary>
             [EnumLiteral("kind")]
             Kind,
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Description of the Location, which helps in finding or referencing the place
+        /// Description of the location
         /// </summary>
         [FhirElement("description", InSummary=true, Order=120)]
         [DataMember]
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// Description of the Location, which helps in finding or referencing the place
+        /// Description of the location
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates the type of function performed at the location
+        /// Type of function performed
         /// </summary>
         [FhirElement("type", InSummary=true, Order=140)]
         [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Location.LocationPositionComponent _Position;
         
         /// <summary>
-        /// The organization that is responsible for the provisioning and upkeep of the location
+        /// Organization responsible for provisioning and upkeep
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=190)]
         [References("Organization")]
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
-        /// Another Location which this Location is physically part of
+        /// Another Location this one is physically part of
         /// </summary>
         [FhirElement("partOf", Order=200)]
         [References("Location")]

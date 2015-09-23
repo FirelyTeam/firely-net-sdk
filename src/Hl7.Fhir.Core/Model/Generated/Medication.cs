@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
-            /// How much ingredient in product
+            /// Quantity of ingredient present
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
-            /// How many are in the package?
+            /// Quantity present in the package
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=50)]
             [DataMember]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Container;
             
             /// <summary>
-            /// What is  in the package?
+            /// What is  in the package
             /// </summary>
             [FhirElement("content", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]

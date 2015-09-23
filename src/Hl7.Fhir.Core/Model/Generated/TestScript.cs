@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Model
         public enum ContentType
         {
             /// <summary>
-            /// XML content-type corresponding to the application/xml+fhir mime-type
+            /// XML content-type corresponding to the application/xml+fhir mime-type.
             /// </summary>
             [EnumLiteral("xml")]
             Xml,
             /// <summary>
-            /// JSON content-type corresponding to the application/json+fhir mime-type
+            /// JSON content-type corresponding to the application/json+fhir mime-type.
             /// </summary>
             [EnumLiteral("json")]
             Json,
@@ -77,12 +77,12 @@ namespace Hl7.Fhir.Model
         public enum AssertionDirectionType
         {
             /// <summary>
-            /// Default value. Assertion is evaluated on the response.
+            /// The assertion is evaluated on the response. This is the default value.
             /// </summary>
             [EnumLiteral("response")]
             Response,
             /// <summary>
-            /// Not equals comparison.
+            /// The assertion is evaluated on the request.
             /// </summary>
             [EnumLiteral("request")]
             Request,
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Capabiltities that are expected to function correctly on the FHIR server being tested
+            /// Capabilities  that are expected to function correctly on the FHIR server being tested
             /// </summary>
             [FhirElement("metadata", InSummary=true, Order=60)]
             [DataMember]
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "TestScriptSetupComponent"; } }
             
             /// <summary>
-            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
+            /// Capabilities  that are assumed to function correctly on the FHIR server being tested
             /// </summary>
             [FhirElement("metadata", InSummary=true, Order=40)]
             [DataMember]
@@ -1938,7 +1938,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> _Link;
             
             /// <summary>
-            /// Capabiltities that are assumed to function correctly on the FHIR server being tested
+            /// Capabilities  that are assumed to function correctly on the FHIR server being tested
             /// </summary>
             [FhirElement("capability", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=-1)]
@@ -2902,7 +2902,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Literal URL used to reference this TestScript
+        /// Absolute URL used to reference this TestScript
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -2916,7 +2916,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Literal URL used to reference this TestScript
+        /// Absolute URL used to reference this TestScript
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3234,7 +3234,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=210)]
         [DataMember]
@@ -3247,7 +3247,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Money _Amount;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=60)]
             [DataMember]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _ValueElement;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Money _Amount;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=60)]
             [DataMember]
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _ValueElement;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Money _Amount;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=60)]
             [DataMember]
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _ValueElement;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Money _Amount;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=60)]
             [DataMember]
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _ValueElement;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Money _Amount;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=60)]
             [DataMember]
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _ValueElement;
             
             /// <summary>
-            /// Non-monitory value
+            /// Non-monetary value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1772,7 +1772,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
-            /// Note explanitory text
+            /// Note explanatory text
             /// </summary>
             [FhirElement("text", InSummary=true, Order=60)]
             [DataMember]
@@ -1785,7 +1785,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Note explanitory text
+            /// Note explanatory text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2114,7 +2114,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Money _TotalCost;
         
         /// <summary>
-        /// Unallocated deductable
+        /// Unallocated deductible
         /// </summary>
         [FhirElement("unallocDeductable", Order=240)]
         [DataMember]

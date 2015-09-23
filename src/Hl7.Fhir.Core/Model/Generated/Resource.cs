@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,17 +58,17 @@ namespace Hl7.Fhir.Model
         public enum ResourceValidationMode
         {
             /// <summary>
-            /// The server checks the content, and then checks that the content would be acceptable as a create (e.g. that the content would not violate any uniqueness constraints)
+            /// The server checks the content, and then checks that the content would be acceptable as a create (e.g. that the content would not violate any uniqueness constraints).
             /// </summary>
             [EnumLiteral("create")]
             Create,
             /// <summary>
-            /// The server checks the content, and then checks that it would accept it as an update against the nominated specific resource (e.g. that there are no changes to immutable fields the server does not allow to change, and checking version integrity if appropriate)
+            /// The server checks the content, and then checks that it would accept it as an update against the nominated specific resource (e.g. that there are no changes to immutable fields the server does not allow to change, and checking version integrity if appropriate).
             /// </summary>
             [EnumLiteral("update")]
             Update,
             /// <summary>
-            /// The server ignores the content, and checks that the nominated resource is allowed to be deleted (e.g. checking referential integrity rules)
+            /// The server ignores the content, and checks that the nominated resource is allowed to be deleted (e.g. checking referential integrity rules).
             /// </summary>
             [EnumLiteral("delete")]
             Delete,

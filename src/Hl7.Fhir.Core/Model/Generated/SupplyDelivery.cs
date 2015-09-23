@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,23 +53,23 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "SupplyDelivery"; } }
         
         /// <summary>
-        /// Status of the Supply delivery
+        /// Status of the supply delivery.
         /// </summary>
         [FhirEnumeration("SupplyDeliveryStatus")]
         public enum SupplyDeliveryStatus
         {
             /// <summary>
-            /// Supply has been requested, but not delivered
+            /// Supply has been requested, but not delivered.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// Supply has been delivered. ( "completed")
+            /// Supply has been delivered ("completed").
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// Dispensing was not completed
+            /// Dispensing was not completed.
             /// </summary>
             [EnumLiteral("abandoned")]
             Abandoned,

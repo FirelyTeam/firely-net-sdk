@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Composition"; } }
         
         /// <summary>
-        /// The workflow/clinical status of the composition
+        /// The workflow/clinical status of the composition.
         /// </summary>
         [FhirEnumeration("CompositionStatus")]
         public enum CompositionStatus
         {
             /// <summary>
-            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified
+            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
             /// </summary>
             [EnumLiteral("preliminary")]
             Preliminary,
@@ -69,40 +69,40 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person
+            /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
             /// </summary>
             [EnumLiteral("amended")]
             Amended,
             /// <summary>
-            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid
+            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
         /// <summary>
-        /// The way in which a person authenticated a composition
+        /// The way in which a person authenticated a composition.
         /// </summary>
         [FhirEnumeration("CompositionAttestationMode")]
         public enum CompositionAttestationMode
         {
             /// <summary>
-            /// The person authenticated the content in their personal capacity
+            /// The person authenticated the content in their personal capacity.
             /// </summary>
             [EnumLiteral("personal")]
             Personal,
             /// <summary>
-            /// The person authenticated the content in their professional capacity
+            /// The person authenticated the content in their professional capacity.
             /// </summary>
             [EnumLiteral("professional")]
             Professional,
             /// <summary>
-            /// The person authenticated the content and accepted legal responsibility for its content
+            /// The person authenticated the content and accepted legal responsibility for its content.
             /// </summary>
             [EnumLiteral("legal")]
             Legal,
             /// <summary>
-            /// The organization authenticated the content as consistent with their policies and procedures
+            /// The organization authenticated the content as consistent with their policies and procedures.
             /// </summary>
             [EnumLiteral("official")]
             Official,
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// What order the section entries are in
+            /// Order of section entries
             /// </summary>
             [FhirElement("orderedBy", InSummary=true, Order=80)]
             [DataMember]
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> _Attester;
         
         /// <summary>
-        /// Org which maintains the composition
+        /// Organization which maintains the composition
         /// </summary>
         [FhirElement("custodian", InSummary=true, Order=190)]
         [References("Organization")]
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Composition.CompositionEventComponent> _Event;
         
         /// <summary>
-        /// Context of the conposition
+        /// Context of the Composition
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=210)]
         [References("Encounter")]

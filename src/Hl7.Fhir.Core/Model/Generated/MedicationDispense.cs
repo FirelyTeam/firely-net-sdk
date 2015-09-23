@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MedicationDispenseSubstitutionComponent"; } }
             
             /// <summary>
-            /// Type of substitiution
+            /// Type of substitution
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Handover time
+        /// When product was given out
         /// </summary>
         [FhirElement("whenHandedOver", Order=190)]
         [DataMember]
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _WhenHandedOverElement;
         
         /// <summary>
-        /// Handover time
+        /// When product was given out
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Medicine administration instructions to the patient/carer
+        /// Medicine administration instructions to the patient/caregiver
         /// </summary>
         [FhirElement("dosageInstruction", Order=230)]
         [Cardinality(Min=0,Max=-1)]

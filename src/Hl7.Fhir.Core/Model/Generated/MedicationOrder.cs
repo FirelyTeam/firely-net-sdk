@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("stopped")]
             Stopped,
             /// <summary>
-            /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, needs to be run through decision support process.
+            /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, and needs to be run through decision support process.
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Period _ValidityPeriod;
             
             /// <summary>
-            /// # of refills authorized
+            /// Number of refills authorized
             /// </summary>
             [FhirElement("numberOfRepeatsAllowed", InSummary=true, Order=60)]
             [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.PositiveInt _NumberOfRepeatsAllowedElement;
             
             /// <summary>
-            /// # of refills authorized
+            /// Number of refills authorized
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
-            /// Days supply per dispense
+            /// Number of days supply per dispense
             /// </summary>
             [FhirElement("expectedSupplyDuration", InSummary=true, Order=80)]
             [DataMember]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Why should substitution (not) be made
+            /// Why should (not) substitution be made
             /// </summary>
             [FhirElement("reason", InSummary=true, Order=50)]
             [DataMember]
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Prescriber;
         
         /// <summary>
-        /// Created during encounter / admission / stay
+        /// Created during encounter/admission/stay
         /// </summary>
         [FhirElement("encounter", Order=160)]
         [References("Encounter")]
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.MedicationOrder.MedicationOrderDispenseRequestComponent _DispenseRequest;
         
         /// <summary>
-        /// Any restrictions on medication substitution?
+        /// Any restrictions on medication substitution
         /// </summary>
         [FhirElement("substitution", Order=220)]
         [DataMember]

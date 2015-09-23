@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,17 +57,17 @@ namespace Hl7.Fhir.Model
         public enum AddressType
         {
             /// <summary>
-            /// Mailing addresses - PO Boxes and care-of addresses
+            /// Mailing addresses - PO Boxes and care-of addresses.
             /// </summary>
             [EnumLiteral("postal")]
             Postal,
             /// <summary>
-            /// A physical address that can be visited
+            /// A physical address that can be visited.
             /// </summary>
             [EnumLiteral("physical")]
             Physical,
             /// <summary>
-            /// An address that is both physical and postal
+            /// An address that is both physical and postal.
             /// </summary>
             [EnumLiteral("both")]
             Both,
@@ -80,22 +80,22 @@ namespace Hl7.Fhir.Model
         public enum AddressUse
         {
             /// <summary>
-            /// A communication address at a home
+            /// A communication address at a home.
             /// </summary>
             [EnumLiteral("home")]
             Home,
             /// <summary>
-            /// An office address. First choice for business related contacts during business hours
+            /// An office address. First choice for business related contacts during business hours.
             /// </summary>
             [EnumLiteral("work")]
             Work,
             /// <summary>
-            /// A temporary address. The period can provide more detailed information
+            /// A temporary address. The period can provide more detailed information.
             /// </summary>
             [EnumLiteral("temp")]
             Temp,
             /// <summary>
-            /// This address is no longer in use (or was never correct, but retained for records)
+            /// This address is no longer in use (or was never correct, but retained for records).
             /// </summary>
             [EnumLiteral("old")]
             Old,
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Street name, number, direction &amp; P.O. Box etc
+        /// Street name, number, direction &amp; P.O. Box etc.
         /// </summary>
         [FhirElement("line", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _LineElement;
         
         /// <summary>
-        /// Street name, number, direction &amp; P.O. Box etc
+        /// Street name, number, direction &amp; P.O. Box etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Sub-unit of country (abreviations ok)
+        /// Sub-unit of country (abbreviations ok)
         /// </summary>
         [FhirElement("state", InSummary=true, Order=90)]
         [DataMember]
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _StateElement;
         
         /// <summary>
-        /// Sub-unit of country (abreviations ok)
+        /// Sub-unit of country (abbreviations ok)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,94 +53,94 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Appointment"; } }
         
         /// <summary>
-        /// Is the Participant required to attend the appointment
+        /// Is the Participant required to attend the appointment.
         /// </summary>
         [FhirEnumeration("ParticipantRequired")]
         public enum ParticipantRequired
         {
             /// <summary>
-            /// The participant is required to attend the appointment
+            /// The participant is required to attend the appointment.
             /// </summary>
             [EnumLiteral("required")]
             Required,
             /// <summary>
-            /// The participant may optionally attend the appointment
+            /// The participant may optionally attend the appointment.
             /// </summary>
             [EnumLiteral("optional")]
             Optional,
             /// <summary>
-            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (appointment is about them, not for them - such as 2 doctors discussing results about a patient's test)
+            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
             /// </summary>
             [EnumLiteral("information-only")]
             InformationOnly,
         }
         
         /// <summary>
-        /// The free/busy status of an appointment
+        /// The free/busy status of an appointment.
         /// </summary>
         [FhirEnumeration("AppointmentStatus")]
         public enum AppointmentStatus
         {
             /// <summary>
-            /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet
+            /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet.
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// Some or all of the participant(s) have not finalized their acceptance of the appointment request
+            /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
             /// </summary>
             [EnumLiteral("pending")]
             Pending,
             /// <summary>
-            /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified
+            /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
             /// </summary>
             [EnumLiteral("booked")]
             Booked,
             /// <summary>
-            /// Some of the patients have arrived
+            /// Some of the patients have arrived.
             /// </summary>
             [EnumLiteral("arrived")]
             Arrived,
             /// <summary>
-            /// This appointment has completed and may have resulted in an encounter
+            /// This appointment has completed and may have resulted in an encounter.
             /// </summary>
             [EnumLiteral("fulfilled")]
             Fulfilled,
             /// <summary>
-            /// The appointment has been cancelled
+            /// The appointment has been cancelled.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient)
+            /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
             /// </summary>
             [EnumLiteral("noshow")]
             Noshow,
         }
         
         /// <summary>
-        /// The Participation status of an appointment
+        /// The Participation status of an appointment.
         /// </summary>
         [FhirEnumeration("ParticipationStatus")]
         public enum ParticipationStatus
         {
             /// <summary>
-            /// The participant has accepted the appointment
+            /// The participant has accepted the appointment.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The participant has declined the appointment and will not participate in the appointment
+            /// The participant has declined the appointment and will not participate in the appointment.
             /// </summary>
             [EnumLiteral("declined")]
             Declined,
             /// <summary>
-            /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur
+            /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
             /// </summary>
             [EnumLiteral("tentative")]
             Tentative,
             /// <summary>
-            /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses
+            /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
             /// </summary>
             [EnumLiteral("needs-action")]
             NeedsAction,
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
-            /// A Person, Location/HealthcareService or Device that is participating in the appointment
+            /// Person, Location/HealthcareService or Device
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
             [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// The reason that this appointment is being scheduled, this is more clinical than administrative
+        /// Reason this appointment is scheduled
         /// </summary>
         [FhirElement("reason", InSummary=true, Order=120)]
         [DataMember]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Reason;
         
         /// <summary>
-        /// The priority of the appointment. Can be used to make informed decisions if needing to re-prioritize appointments. (The iCal Standard specifies 0 as undefined, 1 as highest, 9 as lowest priority)
+        /// Used to make informed decisions if needing to re-prioritize
         /// </summary>
         [FhirElement("priority", Order=130)]
         [DataMember]
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.UnsignedInt _PriorityElement;
         
         /// <summary>
-        /// The priority of the appointment. Can be used to make informed decisions if needing to re-prioritize appointments. (The iCal Standard specifies 0 as undefined, 1 as highest, 9 as lowest priority)
+        /// Used to make informed decisions if needing to re-prioritize
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The brief description of the appointment as would be shown on a subject line in a meeting request, or appointment list. Detailed or expanded information should be put in the comment field
+        /// Shown on a subject line in a meeting request, or appointment list
         /// </summary>
         [FhirElement("description", Order=140)]
         [DataMember]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// The brief description of the appointment as would be shown on a subject line in a meeting request, or appointment list. Detailed or expanded information should be put in the comment field
+        /// Shown on a subject line in a meeting request, or appointment list
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date/Time that the appointment is to take place
+        /// When appointment is to take place
         /// </summary>
         [FhirElement("start", InSummary=true, Order=150)]
         [DataMember]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to take place
+        /// When appointment is to take place
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude
+        /// When appointment is to conclude
         /// </summary>
         [FhirElement("end", InSummary=true, Order=160)]
         [DataMember]
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
-        /// Date/Time that the appointment is to conclude
+        /// When appointment is to conclude
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Number of minutes that the appointment is to take. This can be less than the duration between the start and end times (where actual time of appointment is only an estimate or is a planned appointment request)
+        /// Can be less than start/end (e.g. estimate)
         /// </summary>
         [FhirElement("minutesDuration", Order=170)]
         [DataMember]
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.PositiveInt _MinutesDurationElement;
         
         /// <summary>
-        /// Number of minutes that the appointment is to take. This can be less than the duration between the start and end times (where actual time of appointment is only an estimate or is a planned appointment request)
+        /// Can be less than start/end (e.g. estimate)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The slot that this appointment is filling. If provided then the schedule will not be provided as slots are not recursive, and the start/end values MUST be the same as from the slot
+        /// If provided, then no schedule and start/end values MUST match slot
         /// </summary>
         [FhirElement("slot", Order=180)]
         [References("Slot")]
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Slot;
         
         /// <summary>
-        /// Additional comments about the appointment
+        /// Additional comments
         /// </summary>
         [FhirElement("comment", Order=190)]
         [DataMember]
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Additional comments about the appointment
+        /// Additional comments
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// List of participants involved in the appointment
+        /// Participants involved in appointment
         /// </summary>
         [FhirElement("participant", Order=200)]
         [Cardinality(Min=1,Max=-1)]

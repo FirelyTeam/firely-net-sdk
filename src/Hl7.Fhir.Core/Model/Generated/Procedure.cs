@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An action that was or is currently being performed on a patient
+    /// An action that is being or was performed on a patient
     /// </summary>
     [FhirType("Procedure", IsResource=true)]
     [DataContract]
@@ -53,46 +53,46 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Procedure"; } }
         
         /// <summary>
-        /// The nature of the relationship with this procedure
+        /// The nature of the relationship with this procedure.
         /// </summary>
         [FhirEnumeration("ProcedureRelationshipType")]
         public enum ProcedureRelationshipType
         {
             /// <summary>
-            /// This procedure had to be performed because of the related one
+            /// This procedure had to be performed because of the related one.
             /// </summary>
             [EnumLiteral("caused-by")]
             CausedBy,
             /// <summary>
-            /// This procedure caused the related one to be performed
+            /// This procedure caused the related one to be performed.
             /// </summary>
             [EnumLiteral("because-of")]
             BecauseOf,
         }
         
         /// <summary>
-        /// A code specifying the state of the procedure record
+        /// A code specifying the state of the procedure.
         /// </summary>
         [FhirEnumeration("ProcedureStatus")]
         public enum ProcedureStatus
         {
             /// <summary>
-            /// The procedure is still occurring
+            /// The procedure is still occurring.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The procedure was terminated without completing successfully
+            /// The procedure was terminated without completing successfully.
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,
             /// <summary>
-            /// All actions involved in the procedure have taken place
+            /// All actions involved in the procedure have taken place.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The statement was entered in error and Is not valid
+            /// The statement was entered in error and Is not valid.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// External Ids for this procedure
+        /// External Identifiers for this procedure
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Who procedure was performed on
+        /// Who the procedure was performed on
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
         [References("Patient","Group")]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reason procedure not performed
+        /// Reason procedure was not performed
         /// </summary>
         [FhirElement("reasonNotPerformed", Order=150)]
         [Cardinality(Min=0,Max=-1)]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Performed;
         
         /// <summary>
-        /// The encounter when procedure performed
+        /// The encounter associated with the procedure
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=200)]
         [References("Encounter")]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
-        /// What was result of procedure?
+        /// The result of procedure
         /// </summary>
         [FhirElement("outcome", InSummary=true, Order=220)]
         [DataMember]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Outcome;
         
         /// <summary>
-        /// Any report that results from the procedure
+        /// Any report resulting from the procedure
         /// </summary>
         [FhirElement("report", Order=230)]
         [References("DiagnosticReport")]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
-        /// Additional information about procedure
+        /// Additional information about the procedure
         /// </summary>
         [FhirElement("notes", Order=270)]
         [Cardinality(Min=0,Max=-1)]

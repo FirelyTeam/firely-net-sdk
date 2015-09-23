@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Pure binary content defined by sime other format than FHIR
+    /// Pure binary content defined by some other format than FHIR
     /// </summary>
     [FhirType("Binary", IsResource=true)]
     [DataContract]

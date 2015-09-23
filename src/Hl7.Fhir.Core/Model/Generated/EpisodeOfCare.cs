@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,38 +53,38 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "EpisodeOfCare"; } }
         
         /// <summary>
-        /// The status of the encounter
+        /// The status of the encounter.
         /// </summary>
         [FhirEnumeration("EpisodeOfCareStatus")]
         public enum EpisodeOfCareStatus
         {
             /// <summary>
-            /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services
+            /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled)
+            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
             /// </summary>
             [EnumLiteral("waitlist")]
             Waitlist,
             /// <summary>
-            /// This episode of care is current
+            /// This episode of care is current.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite)
+            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
             /// </summary>
             [EnumLiteral("onhold")]
             Onhold,
             /// <summary>
-            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms
+            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
             /// </summary>
             [EnumLiteral("finished")]
             Finished,
             /// <summary>
-            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow
+            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EpisodeOfCareCareTeamComponent"; } }
             
             /// <summary>
-            /// The role that this team member is taking within this episode of care
+            /// Role taken by this team member
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             /// <summary>
-            /// The period of time that this practitioner is performing some role within the episode of care
+            /// Period of time for this role
             /// </summary>
             [FhirElement("period", InSummary=true, Order=50)]
             [DataMember]
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The period during this EpisodeOfCare that the specific status applied
+            /// Period for the status
             /// </summary>
             [FhirElement("period", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Identifier(s) by which this EpisodeOfCare is known
+        /// Identifier(s) for the EpisodeOfCare
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The history of statuses that the EpisodeOfCare has been through (without requiring processing the history of the resource)
+        /// Past list of status codes
         /// </summary>
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> _StatusHistory;
         
         /// <summary>
-        /// Specific type of EpisodeOfCare
+        /// Type/class  - e.g. specialist referral, disease management
         /// </summary>
         [FhirElement("type", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
-        /// A list of conditions/problems/diagnoses that this episode of care is intended to be providing care for
+        /// Conditions/problems/diagnoses this episode of care is for
         /// </summary>
         [FhirElement("condition", Order=130)]
         [References("Condition")]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Condition;
         
         /// <summary>
-        /// The patient that this EpisodeOfCare applies to
+        /// Patient for this episode of care
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
         [References("Patient")]
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// The organization that has assumed the specific responsibilities for the specified duration
+        /// Organization that assumes care
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=150)]
         [References("Organization")]
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
-        /// The interval during which the managing organization assumes the defined responsibility
+        /// Interval during responsibility is assumed
         /// </summary>
         [FhirElement("period", InSummary=true, Order=160)]
         [DataMember]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
-        /// Referral Request(s) that this EpisodeOfCare manages activities within
+        /// Originating Referral Request(s)
         /// </summary>
         [FhirElement("referralRequest", Order=170)]
         [References("ReferralRequest")]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _ReferralRequest;
         
         /// <summary>
-        /// The practitioner that is the care manager/care co-ordinator for this patient
+        /// Care manager/care co-ordinator for the patient
         /// </summary>
         [FhirElement("careManager", Order=180)]
         [References("Practitioner")]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _CareManager;
         
         /// <summary>
-        /// The list of practitioners that may be facilitating this episode of care for specific purposes
+        /// Other practitioners facilitating this episode of care
         /// </summary>
         [FhirElement("careTeam", Order=190)]
         [Cardinality(Min=0,Max=-1)]

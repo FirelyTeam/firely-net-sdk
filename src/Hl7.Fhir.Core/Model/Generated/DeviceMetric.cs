@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceMetric"; } }
         
         /// <summary>
-        /// Describes the type of a metric calibration
+        /// Describes the type of a metric calibration.
         /// </summary>
         [FhirEnumeration("DeviceMetricCalibrationType")]
         public enum DeviceMetricCalibrationType
@@ -81,55 +81,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the typical color of representation
+        /// Describes the typical color of representation.
         /// </summary>
         [FhirEnumeration("DeviceMetricColor")]
         public enum DeviceMetricColor
         {
             /// <summary>
-            /// Color for representation - black
+            /// Color for representation - black.
             /// </summary>
             [EnumLiteral("black")]
             Black,
             /// <summary>
-            /// Color for representation - red
+            /// Color for representation - red.
             /// </summary>
             [EnumLiteral("red")]
             Red,
             /// <summary>
-            /// Color for representation - green
+            /// Color for representation - green.
             /// </summary>
             [EnumLiteral("green")]
             Green,
             /// <summary>
-            /// Color for representation - yellow
+            /// Color for representation - yellow.
             /// </summary>
             [EnumLiteral("yellow")]
             Yellow,
             /// <summary>
-            /// Color for representation - blue
+            /// Color for representation - blue.
             /// </summary>
             [EnumLiteral("blue")]
             Blue,
             /// <summary>
-            /// Color for representation - magenta
+            /// Color for representation - magenta.
             /// </summary>
             [EnumLiteral("magenta")]
             Magenta,
             /// <summary>
-            /// Color for representation - cyan
+            /// Color for representation - cyan.
             /// </summary>
             [EnumLiteral("cyan")]
             Cyan,
             /// <summary>
-            /// Color for representation - white
+            /// Color for representation - white.
             /// </summary>
             [EnumLiteral("white")]
             White,
         }
         
         /// <summary>
-        /// Describes the state of a metric calibration
+        /// Describes the state of a metric calibration.
         /// </summary>
         [FhirEnumeration("DeviceMetricCalibrationState")]
         public enum DeviceMetricCalibrationState
@@ -157,30 +157,30 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the operational status of the DeviceMetric
+        /// Describes the operational status of the DeviceMetric.
         /// </summary>
         [FhirEnumeration("DeviceMetricOperationalStatus")]
         public enum DeviceMetricOperationalStatus
         {
             /// <summary>
-            /// The DeviceMetric is operating and will generate DeviceObservations
+            /// The DeviceMetric is operating and will generate DeviceObservations.
             /// </summary>
             [EnumLiteral("on")]
             On,
             /// <summary>
-            /// The DeviceMetric is not operating
+            /// The DeviceMetric is not operating.
             /// </summary>
             [EnumLiteral("off")]
             Off,
             /// <summary>
-            /// The DeviceMetric is operating, but will not generate any DeviceObservations
+            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
             /// </summary>
             [EnumLiteral("standby")]
             Standby,
         }
         
         /// <summary>
-        /// Describes the category of the metric
+        /// Describes the category of the metric.
         /// </summary>
         [FhirEnumeration("DeviceMetricCategory")]
         public enum DeviceMetricCategory

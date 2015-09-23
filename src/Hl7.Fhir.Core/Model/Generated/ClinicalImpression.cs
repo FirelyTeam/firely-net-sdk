@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ClinicalImpression"; } }
         
         /// <summary>
-        /// The workflow state of a clinical impression
+        /// The workflow state of a clinical impression.
         /// </summary>
         [FhirEnumeration("ClinicalImpressionStatus")]
         public enum ClinicalImpressionStatus
@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The assessment is done and the results are final
+            /// The assessment is done and the results are final.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient)
+            /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Trigger;
         
         /// <summary>
-        /// One or more sets of investigations (signs, symptions, etc)
+        /// One or more sets of investigations (signs, symptions, etc.)
         /// </summary>
         [FhirElement("investigations", Order=170)]
         [Cardinality(Min=0,Max=-1)]
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent> _Finding;
         
         /// <summary>
-        /// Diagnosies/conditions resolved since previous assessment
+        /// Diagnoses/conditions resolved since previous assessment
         /// </summary>
         [FhirElement("resolved", Order=210)]
         [Cardinality(Min=0,Max=-1)]

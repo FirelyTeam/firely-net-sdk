@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,79 +53,79 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Subscription"; } }
         
         /// <summary>
-        /// The type of method used to execute a subscription
+        /// The type of method used to execute a subscription.
         /// </summary>
         [FhirEnumeration("SubscriptionChannelType")]
         public enum SubscriptionChannelType
         {
             /// <summary>
-            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made
+            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
             /// </summary>
             [EnumLiteral("rest-hook")]
             RestHook,
             /// <summary>
-            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL
+            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
             /// </summary>
             [EnumLiteral("websocket")]
             Websocket,
             /// <summary>
-            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:)
+            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
             /// </summary>
             [EnumLiteral("email")]
             Email,
             /// <summary>
-            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:)
+            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
             /// </summary>
             [EnumLiteral("sms")]
             Sms,
             /// <summary>
-            /// The channel Is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc) to the application identified in the URI
+            /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
             /// </summary>
             [EnumLiteral("message")]
             Message,
         }
         
         /// <summary>
-        /// The status of a subscription
+        /// The status of a subscription.
         /// </summary>
         [FhirEnumeration("SubscriptionStatus")]
         public enum SubscriptionStatus
         {
             /// <summary>
-            /// The client has requested the subscription, and the server has not yet set it up
+            /// The client has requested the subscription, and the server has not yet set it up.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The subscription is active
+            /// The subscription is active.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The server has an error executing the notification
+            /// The server has an error executing the notification.
             /// </summary>
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// Too many errors have occurred or the subscription has expired
+            /// Too many errors have occurred or the subscription has expired.
             /// </summary>
             [EnumLiteral("off")]
             Off,
         }
         
         /// <summary>
-        /// Tags to put on a resource after subscriptions sent
+        /// Tags to put on a resource after subscriptions have been sent.
         /// </summary>
         [FhirEnumeration("SubscriptionTag")]
         public enum SubscriptionTag
         {
             /// <summary>
-            /// The message has been queued for processing on a destination systems
+            /// The message has been queued for processing on a destination systems.
             /// </summary>
             [EnumLiteral("queued")]
             Queued,
             /// <summary>
-            /// The message has been delivered to its intended recipient
+            /// The message has been delivered to its intended recipient.
             /// </summary>
             [EnumLiteral("delivered")]
             Delivered,

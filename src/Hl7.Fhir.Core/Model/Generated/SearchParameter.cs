@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,33 +53,33 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "SearchParameter"; } }
         
         /// <summary>
-        /// How a search parameter relates to the set of elements returned by evaluating the its xpath query
+        /// How a search parameter relates to the set of elements returned by evaluating its xpath query.
         /// </summary>
         [FhirEnumeration("XPathUsageType")]
         public enum XPathUsageType
         {
             /// <summary>
-            /// The search parameter is derived directly from the selected nodes based on the type definitions
+            /// The search parameter is derived directly from the selected nodes based on the type definitions.
             /// </summary>
             [EnumLiteral("normal")]
             Normal,
             /// <summary>
-            /// The search parameter is derived by a phonetic transform from the selected nodes
+            /// The search parameter is derived by a phonetic transform from the selected nodes.
             /// </summary>
             [EnumLiteral("phonetic")]
             Phonetic,
             /// <summary>
-            /// The search parameter is based on a spatial transform of the selected nodes
+            /// The search parameter is based on a spatial transform of the selected nodes.
             /// </summary>
             [EnumLiteral("nearby")]
             Nearby,
             /// <summary>
-            /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle
+            /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle.
             /// </summary>
             [EnumLiteral("distance")]
             Distance,
             /// <summary>
-            /// The interpretation of the xpath statement is unknown (and can't be automated)
+            /// The interpretation of the xpath statement is unknown (and can't be automated).
             /// </summary>
             [EnumLiteral("other")]
             Other,
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Literal URL used to reference this search parameter
+        /// Absolute URL used to reference this search parameter
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Literal URL used to reference this search parameter
+        /// Absolute URL used to reference this search parameter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,104 +53,104 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ImplementationGuide"; } }
         
         /// <summary>
-        /// Why a resource is included in the guide
+        /// Why a resource is included in the guide.
         /// </summary>
         [FhirEnumeration("GuideResourcePurpose")]
         public enum GuideResourcePurpose
         {
             /// <summary>
-            /// The resource is intended as an example
+            /// The resource is intended as an example.
             /// </summary>
             [EnumLiteral("example")]
             Example,
             /// <summary>
-            /// The resource defines a value set or concept map used in the Implementation Guide
+            /// The resource defines a value set or concept map used in the implementation guide.
             /// </summary>
             [EnumLiteral("terminology")]
             Terminology,
             /// <summary>
-            /// The resource defines a profile (StructureDefinition) that is used in the implementation guide
+            /// The resource defines a profile (StructureDefinition) that is used in the implementation guide.
             /// </summary>
             [EnumLiteral("profile")]
             Profile,
             /// <summary>
-            /// The resource defines an extension (StructureDefinition) that is used in the implementation guide
+            /// The resource defines an extension (StructureDefinition) that is used in the implementation guide.
             /// </summary>
             [EnumLiteral("extension")]
             Extension,
             /// <summary>
-            /// The resource contains a dictionary that is part of the implementation guide
+            /// The resource contains a dictionary that is part of the implementation guide.
             /// </summary>
             [EnumLiteral("dictionary")]
             Dictionary,
             /// <summary>
-            /// The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide
+            /// The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide.
             /// </summary>
             [EnumLiteral("logical")]
             Logical,
         }
         
         /// <summary>
-        /// The kind of an included page
+        /// The kind of an included page.
         /// </summary>
         [FhirEnumeration("GuidePageKind")]
         public enum GuidePageKind
         {
             /// <summary>
-            /// This is a page of content that is included in the implementation guide. It has no particular function
+            /// This is a page of content that is included in the implementation guide. It has no particular function.
             /// </summary>
             [EnumLiteral("page")]
             Page,
             /// <summary>
-            /// This is a page that represents a human readable rendering of an example
+            /// This is a page that represents a human readable rendering of an example.
             /// </summary>
             [EnumLiteral("example")]
             Example,
             /// <summary>
-            /// This is a page that represents a list of resources of one or more types
+            /// This is a page that represents a list of resources of one or more types.
             /// </summary>
             [EnumLiteral("list")]
             List,
             /// <summary>
-            /// This is a page that is where an included guide is injected
+            /// This is a page showing where an included guide is injected.
             /// </summary>
             [EnumLiteral("include")]
             Include,
             /// <summary>
-            /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section
+            /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
             /// </summary>
             [EnumLiteral("directory")]
             Directory,
             /// <summary>
-            /// This is a page that creates the listed resources as a dictionary
+            /// This is a page that creates the listed resources as a dictionary.
             /// </summary>
             [EnumLiteral("dictionary")]
             Dictionary,
             /// <summary>
-            /// This is a generated page that contains the table of contents
+            /// This is a generated page that contains the table of contents.
             /// </summary>
             [EnumLiteral("toc")]
             Toc,
             /// <summary>
-            /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations
+            /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
             /// </summary>
             [EnumLiteral("resource")]
             Resource,
         }
         
         /// <summary>
-        /// How a dependency is represented when the guide is published
+        /// How a dependency is represented when the guide is published.
         /// </summary>
         [FhirEnumeration("GuideDependencyType")]
         public enum GuideDependencyType
         {
             /// <summary>
-            /// The guide is referred to by URL
+            /// The guide is referred to by URL.
             /// </summary>
             [EnumLiteral("reference")]
             Reference,
             /// <summary>
-            /// The guide is embedded in this guide when published
+            /// The guide is embedded in this guide when published.
             /// </summary>
             [EnumLiteral("inclusion")]
             Inclusion,
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Format of the page (e.g. html, markdown etc)
+            /// Format of the page (e.g. html, markdown, etc.)
             /// </summary>
             [FhirElement("format", InSummary=true, Order=90)]
             [DataMember]
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _FormatElement;
             
             /// <summary>
-            /// Format of the page (e.g. html, markdown etc)
+            /// Format of the page (e.g. html, markdown, etc.)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1119,7 +1119,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Literal URL used to reference this Implementation Guide
+        /// Absolute URL used to reference this Implementation Guide
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Literal URL used to reference this Implementation Guide
+        /// Absolute URL used to reference this Implementation Guide
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         [FhirElement("copyright", Order=190)]
         [DataMember]
@@ -1419,7 +1419,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
-        /// Use and/or Publishing restrictions
+        /// Use and/or publishing restrictions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent> _Global;
         
         /// <summary>
-        /// Image, css, script, etc
+        /// Image, css, script, etc.
         /// </summary>
         [FhirElement("binary", Order=240)]
         [Cardinality(Min=0,Max=-1)]
@@ -1526,7 +1526,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirUri> _BinaryElement;
         
         /// <summary>
-        /// Image, css, script, etc
+        /// Image, css, script, etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// The gender of a person used for administrative purposes
+    /// The gender of a person used for administrative purposes.
     /// </summary>
     [FhirEnumeration("AdministrativeGender")]
     public enum AdministrativeGender
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
     }
     
     /// <summary>
-    /// A valueSet of UCUM codes for representing age value units
+    /// A valueSet of UCUM codes for representing age value units.
     /// </summary>
     [FhirEnumeration("AgeUnits")]
     public enum AgeUnits
@@ -89,13 +89,13 @@ namespace Hl7.Fhir.Model
     }
     
     /// <summary>
-    /// Indication of the degree of conformance expectations associated with a binding
+    /// Indication of the degree of conformance expectations associated with a binding.
     /// </summary>
     [FhirEnumeration("BindingStrength")]
     public enum BindingStrength
     {
         /// <summary>
-        /// To be conformant, instances of this element SHALL include a code from the specified value set
+        /// To be conformant, instances of this element SHALL include a code from the specified value set.
         /// </summary>
         [EnumLiteral("required")]
         Required,
@@ -105,171 +105,171 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("extensible")]
         Extensible,
         /// <summary>
-        /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant
+        /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
         /// </summary>
         [EnumLiteral("preferred")]
         Preferred,
         /// <summary>
-        /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included
+        /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.
         /// </summary>
         [EnumLiteral("example")]
         Example,
     }
     
     /// <summary>
-    /// The degree of equivalence between concepts
+    /// The degree of equivalence between concepts.
     /// </summary>
     [FhirEnumeration("ConceptMapEquivalence")]
     public enum ConceptMapEquivalence
     {
         /// <summary>
-        /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical)
+        /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
         /// </summary>
         [EnumLiteral("equivalent")]
         Equivalent,
         /// <summary>
-        /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identifical or irrelevant (i.e. intensionally identical)
+        /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identical or irrelevant (i.e. intentionally identical).
         /// </summary>
         [EnumLiteral("equal")]
         Equal,
         /// <summary>
-        /// The target mapping is wider in meaning than the source concept
+        /// The target mapping is wider in meaning than the source concept.
         /// </summary>
         [EnumLiteral("wider")]
         Wider,
         /// <summary>
-        /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target)
+        /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
         /// </summary>
         [EnumLiteral("subsumes")]
         Subsumes,
         /// <summary>
-        /// The target mapping is narrower in meaning that the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally
+        /// The target mapping is narrower in meaning that the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
         /// </summary>
         [EnumLiteral("narrower")]
         Narrower,
         /// <summary>
-        /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source)
+        /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source).
         /// </summary>
         [EnumLiteral("specializes")]
         Specializes,
         /// <summary>
-        /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when atempting to use these mappings operationally
+        /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
         /// </summary>
         [EnumLiteral("inexact")]
         Inexact,
         /// <summary>
-        /// There is no match for this concept in the destination concept system
+        /// There is no match for this concept in the destination concept system.
         /// </summary>
         [EnumLiteral("unmatched")]
         Unmatched,
         /// <summary>
-        /// This is an explicit assertion that there is no mapping between the source and target concept
+        /// This is an explicit assertion that there is no mapping between the source and target concept.
         /// </summary>
         [EnumLiteral("disjoint")]
         Disjoint,
     }
     
     /// <summary>
-    /// The lifecycle status of a Value Set or Concept Map
+    /// The lifecycle status of a Value Set or Concept Map.
     /// </summary>
     [FhirEnumeration("ConformanceResourceStatus")]
     public enum ConformanceResourceStatus
     {
         /// <summary>
-        /// This resource is still under development
+        /// This resource is still under development.
         /// </summary>
         [EnumLiteral("draft")]
         Draft,
         /// <summary>
-        /// This resource is ready for normal use
+        /// This resource is ready for normal use.
         /// </summary>
         [EnumLiteral("active")]
         Active,
         /// <summary>
-        /// This resource has been withdrawn or superseded and should no longer be used
+        /// This resource has been withdrawn or superseded and should no longer be used.
         /// </summary>
         [EnumLiteral("retired")]
         Retired,
     }
     
     /// <summary>
-    /// Used to specify why the normally expected content of the data element is missing
+    /// Used to specify why the normally expected content of the data element is missing.
     /// </summary>
     [FhirEnumeration("DataAbsentReason")]
     public enum DataAbsentReason
     {
         /// <summary>
-        /// The value is not known
+        /// The value is not known.
         /// </summary>
         [EnumLiteral("unknown")]
         Unknown,
         /// <summary>
-        /// The source human does not know the value
+        /// The source human does not know the value.
         /// </summary>
         [EnumLiteral("asked")]
         Asked,
         /// <summary>
-        /// There is reason to expect (from the workflow) that the value may become known
+        /// There is reason to expect (from the workflow) that the value may become known.
         /// </summary>
         [EnumLiteral("temp")]
         Temp,
         /// <summary>
-        /// The workflow didn't lead to this value being known
+        /// The workflow didn't lead to this value being known.
         /// </summary>
         [EnumLiteral("not-asked")]
         NotAsked,
         /// <summary>
-        /// The information is not available due to security, privacy or related reasons
+        /// The information is not available due to security, privacy or related reasons.
         /// </summary>
         [EnumLiteral("masked")]
         Masked,
         /// <summary>
-        /// The source system wasn't capable of supporting this element
+        /// The source system wasn't capable of supporting this element.
         /// </summary>
         [EnumLiteral("unsupported")]
         Unsupported,
         /// <summary>
-        /// The content of the data is represented in the resource narrative
+        /// The content of the data is represented in the resource narrative.
         /// </summary>
         [EnumLiteral("astext")]
         Astext,
         /// <summary>
-        /// Some system or workflow process error means that the information is not available
+        /// Some system or workflow process error means that the information is not available.
         /// </summary>
         [EnumLiteral("error")]
         Error,
         /// <summary>
-        /// NaN, standing for not a number, is a numeric data type value representing an undefined or unrepresentable value
+        /// NaN, standing for not a number, is a numeric data type value representing an undefined or unrepresentable value.
         /// </summary>
         [EnumLiteral("NaN")]
         NaN,
     }
     
     /// <summary>
-    /// The status of the document reference
+    /// The status of the document reference.
     /// </summary>
     [FhirEnumeration("DocumentReferenceStatus")]
     public enum DocumentReferenceStatus
     {
         /// <summary>
-        /// This is the current reference for this document
+        /// This is the current reference for this document.
         /// </summary>
         [EnumLiteral("current")]
         Current,
         /// <summary>
-        /// This reference has been superseded by another reference
+        /// This reference has been superseded by another reference.
         /// </summary>
         [EnumLiteral("superseded")]
         Superseded,
         /// <summary>
-        /// This reference was created in error
+        /// This reference was created in error.
         /// </summary>
         [EnumLiteral("entered-in-error")]
         EnteredInError,
     }
     
     /// <summary>
-    /// The presentation types of notes
+    /// The presentation types of notes.
     /// </summary>
     [FhirEnumeration("NoteType")]
     public enum NoteType
@@ -303,93 +303,93 @@ namespace Hl7.Fhir.Model
         [EnumLiteral("complete")]
         Complete,
         /// <summary>
-        /// The processing identified with errors.
+        /// The processing identified errors.
         /// </summary>
         [EnumLiteral("error")]
         Error,
     }
     
     /// <summary>
-    /// Data types allowed to be used for search parameters
+    /// Data types allowed to be used for search parameters.
     /// </summary>
     [FhirEnumeration("SearchParamType")]
     public enum SearchParamType
     {
         /// <summary>
-        /// Search parameter SHALL be a number (a whole number, or a decimal)
+        /// Search parameter SHALL be a number (a whole number, or a decimal).
         /// </summary>
         [EnumLiteral("number")]
         Number,
         /// <summary>
-        /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported
+        /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
         /// </summary>
         [EnumLiteral("date")]
         Date,
         /// <summary>
-        /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces
+        /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
         /// </summary>
         [EnumLiteral("string")]
         String,
         /// <summary>
-        /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used
+        /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
         /// </summary>
         [EnumLiteral("token")]
         Token,
         /// <summary>
-        /// A reference to another resource
+        /// A reference to another resource.
         /// </summary>
         [EnumLiteral("reference")]
         Reference,
         /// <summary>
-        /// A composite search parameter that combines a search on two values together
+        /// A composite search parameter that combines a search on two values together.
         /// </summary>
         [EnumLiteral("composite")]
         Composite,
         /// <summary>
-        /// A search parameter that searches on a quantity
+        /// A search parameter that searches on a quantity.
         /// </summary>
         [EnumLiteral("quantity")]
         Quantity,
         /// <summary>
-        /// A search parameter that searches on a URI (RFC 3986)
+        /// A search parameter that searches on a URI (RFC 3986).
         /// </summary>
         [EnumLiteral("uri")]
         Uri,
     }
     
     /// <summary>
-    /// A set of generally useful codes defined so they can be included in value sets
+    /// A set of generally useful codes defined so they can be included in value sets.
     /// </summary>
     [FhirEnumeration("SpecialValues")]
     public enum SpecialValues
     {
         /// <summary>
-        /// Boolean true
+        /// Boolean true.
         /// </summary>
         [EnumLiteral("true")]
         True,
         /// <summary>
-        /// Boolean false
+        /// Boolean false.
         /// </summary>
         [EnumLiteral("false")]
         False,
         /// <summary>
-        /// The content is greater than zero, but too small to be quantified
+        /// The content is greater than zero, but too small to be quantified.
         /// </summary>
         [EnumLiteral("trace")]
         Trace,
         /// <summary>
-        /// The specific quantity is not known, but is known to be non-zero and is not specified because it makes up the bulk of the material
+        /// The specific quantity is not known, but is known to be non-zero and is not specified because it makes up the bulk of the material.
         /// </summary>
         [EnumLiteral("sufficient")]
         Sufficient,
         /// <summary>
-        /// The value is no longer available
+        /// The value is no longer available.
         /// </summary>
         [EnumLiteral("withdrawn")]
         Withdrawn,
         /// <summary>
-        /// The are no known applicable values in this context
+        /// The are no known applicable values in this context.
         /// </summary>
         [EnumLiteral("nil-known")]
         NilKnown,

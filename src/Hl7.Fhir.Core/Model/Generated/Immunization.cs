@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ImmunizationReactionComponent"; } }
             
             /// <summary>
-            /// When did reaction start?
+            /// When reaction started
             /// </summary>
             [FhirElement("date", InSummary=true, Order=40)]
             [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
-            /// When did reaction start?
+            /// When reaction started
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Detail;
             
             /// <summary>
-            /// Was reaction self-reported?
+            /// Indicates self-reported reaction
             /// </summary>
             [FhirElement("reported", InSummary=true, Order=60)]
             [DataMember]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
             
             /// <summary>
-            /// Was reaction self-reported?
+            /// Indicates self-reported reaction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ImmunizationVaccinationProtocolComponent"; } }
             
             /// <summary>
-            /// What dose number within series?
+            /// Dose number within series
             /// </summary>
             [FhirElement("doseSequence", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
             
             /// <summary>
-            /// What dose number within series?
+            /// Dose number within series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
             
             /// <summary>
-            /// Does dose count towards immunity?
+            /// Indicates if dose counts towards immunity
             /// </summary>
             [FhirElement("doseStatus", InSummary=true, Order=100)]
             [Cardinality(Min=1,Max=1)]
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _DoseStatus;
             
             /// <summary>
-            /// Why does does count/not count?
+            /// Why dose does (not) count
             /// </summary>
             [FhirElement("doseStatusReason", InSummary=true, Order=110)]
             [DataMember]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
         
         /// <summary>
-        /// Who was immunized?
+        /// Who was immunized
         /// </summary>
         [FhirElement("patient", Order=130)]
         [References("Patient")]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Is this a self-reported record?
+        /// Indicates a self-reported record
         /// </summary>
         [FhirElement("reported", Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
         
         /// <summary>
-        /// Is this a self-reported record?
+        /// Indicates a self-reported record
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who administered vaccine?
+        /// Who administered vaccine
         /// </summary>
         [FhirElement("performer", Order=160)]
         [References("Practitioner")]
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// Who ordered vaccination?
+        /// Who ordered vaccination
         /// </summary>
         [FhirElement("requester", Order=170)]
         [References("Practitioner")]
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
-        /// Where did vaccination occur?
+        /// Where vaccination occurred
         /// </summary>
         [FhirElement("location", Order=200)]
         [References("Location")]
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// Administration / non-administration reasons
+        /// Administration/non-administration reasons
         /// </summary>
         [FhirElement("explanation", Order=270)]
         [DataMember]

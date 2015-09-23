@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,43 +53,43 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DiagnosticReport"; } }
         
         /// <summary>
-        /// The status of the diagnostic report as a whole
+        /// The status of the diagnostic report as a whole.
         /// </summary>
         [FhirEnumeration("DiagnosticReportStatus")]
         public enum DiagnosticReportStatus
         {
             /// <summary>
-            /// The existence of the report is registered, but there is nothing yet available
+            /// The existence of the report is registered, but there is nothing yet available.
             /// </summary>
             [EnumLiteral("registered")]
             Registered,
             /// <summary>
-            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified
+            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
             /// </summary>
             [EnumLiteral("partial")]
             Partial,
             /// <summary>
-            /// The report is complete and verified by an authorized person
+            /// The report is complete and verified by an authorized person.
             /// </summary>
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
             /// </summary>
             [EnumLiteral("corrected")]
             Corrected,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
+            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
             /// </summary>
             [EnumLiteral("appended")]
             Appended,
             /// <summary>
-            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
+            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The report has been withdrawn following previous Final release
+            /// The report has been withdrawn following a previous final release.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _CodedDiagnosis;
         
         /// <summary>
-        /// Entire Report as issued
+        /// Entire report as issued
         /// </summary>
         [FhirElement("presentedForm", Order=250)]
         [Cardinality(Min=0,Max=-1)]

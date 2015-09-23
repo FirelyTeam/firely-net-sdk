@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "OrderResponse"; } }
         
         /// <summary>
-        /// The status of the response to an order
+        /// The status of the response to an order.
         /// </summary>
         [FhirEnumeration("OrderStatus")]
         public enum OrderStatus
@@ -79,27 +79,27 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("error")]
             Error,
             /// <summary>
-            /// The order has been accepted, and work is in progress
+            /// The order has been accepted, and work is in progress.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// Processing the order was halted at the initiators request
+            /// Processing the order was halted at the initiators request.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The order has been cancelled and replaced by another
+            /// The order has been cancelled and replaced by another.
             /// </summary>
             [EnumLiteral("replaced")]
             Replaced,
             /// <summary>
-            /// Processing the order was stopped because of some workflow/business logic reason
+            /// Processing the order was stopped because of some workflow/business logic reason.
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,
             /// <summary>
-            /// The order has been completed
+            /// The order has been completed.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,

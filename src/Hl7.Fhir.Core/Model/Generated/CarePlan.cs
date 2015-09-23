@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,30 +59,30 @@ namespace Hl7.Fhir.Model
         public enum CarePlanRelationship
         {
             /// <summary>
-            /// The referenced plan is considered to be part of this plan
+            /// The referenced plan is considered to be part of this plan.
             /// </summary>
             [EnumLiteral("includes")]
             Includes,
             /// <summary>
-            /// This plan takes the places of the referenced plan
+            /// This plan takes the places of the referenced plan.
             /// </summary>
             [EnumLiteral("replaces")]
             Replaces,
             /// <summary>
-            /// This plan provides details about how to perform activities defined at a higher level by the referenced plan
+            /// This plan provides details about how to perform activities defined at a higher level by the referenced plan.
             /// </summary>
             [EnumLiteral("fulfills")]
             Fulfills,
         }
         
         /// <summary>
-        /// Indicates whether the plan is currently being acted upon, represents future intentions or is now just historical record.
+        /// Indicates whether the plan is currently being acted upon, represents future intentions or is now a historical record.
         /// </summary>
         [FhirEnumeration("CarePlanStatus")]
         public enum CarePlanStatus
         {
             /// <summary>
-            /// The plan has been suggested but no commitment to it has yet been made
+            /// The plan has been suggested but no commitment to it has yet been made.
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
@@ -92,40 +92,40 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The plan is intended to be followed and used as part of patient care
+            /// The plan is intended to be followed and used as part of patient care.
             /// </summary>
             [EnumLiteral("active")]
             Active,
             /// <summary>
-            /// The plan is no longer in use and is not expected to be followed or used in patient care
+            /// The plan is no longer in use and is not expected to be followed or used in patient care.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The plan has been terminated prior to reaching completion (though it may have been replaced by a new plan)
+            /// The plan has been terminated prior to reaching completion (though it may have been replaced by a new plan).
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
         }
         
         /// <summary>
-        /// Indicates where the activity is at in its overall life cycle
+        /// Indicates where the activity is at in its overall life cycle.
         /// </summary>
         [FhirEnumeration("CarePlanActivityStatus")]
         public enum CarePlanActivityStatus
         {
             /// <summary>
-            /// Activity is planned but no action has yet been taken
+            /// Activity is planned but no action has yet been taken.
             /// </summary>
             [EnumLiteral("not-started")]
             NotStarted,
             /// <summary>
-            /// Appointment or other booking has occurred but activity has not yet begun
+            /// Appointment or other booking has occurred but activity has not yet begun.
             /// </summary>
             [EnumLiteral("scheduled")]
             Scheduled,
             /// <summary>
-            /// Activity has been started but is not yet complete
+            /// Activity has been started but is not yet complete.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
@@ -135,12 +135,12 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("on-hold")]
             OnHold,
             /// <summary>
-            /// The activities have been completed (more or less) as planned
+            /// The activities have been completed (more or less) as planned.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The activities have been ended prior to completion (perhaps even before they were started)
+            /// The activities have been ended prior to completion (perhaps even before they were started).
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,101 +53,101 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DiagnosticOrder"; } }
         
         /// <summary>
-        /// The status of a diagnostic order
+        /// The status of a diagnostic order.
         /// </summary>
         [FhirEnumeration("DiagnosticOrderStatus")]
         public enum DiagnosticOrderStatus
         {
             /// <summary>
-            /// The request has been proposed
+            /// The request has been proposed.
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// the request is in preliminary form prior to being sent
+            /// The request is in preliminary form prior to being sent.
             /// </summary>
             [EnumLiteral("draft")]
             Draft,
             /// <summary>
-            /// The request has been planned
+            /// The request has been planned.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The request has been placed
+            /// The request has been placed.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The receiving system has received the order, but not yet decided whether it will be performed
+            /// The receiving system has received the order, but not yet decided whether it will be performed.
             /// </summary>
             [EnumLiteral("received")]
             Received,
             /// <summary>
-            /// The receiving system has accepted the order, but work has not yet commenced
+            /// The receiving system has accepted the order, but work has not yet commenced.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The work to fulfill the order is happening
+            /// The work to fulfill the order is happening.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The work is complete, and the outcomes are being reviewed for approval
+            /// The work is complete, and the outcomes are being reviewed for approval.
             /// </summary>
             [EnumLiteral("review")]
             Review,
             /// <summary>
-            /// The work has been complete, the report(s) released, and no further work is planned
+            /// The work has been completed, the report(s) released, and no further work is planned.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// the request has been withdrawn
+            /// The request has been withdrawn.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The request has been held by originating system/user request
+            /// The request has been held by originating system/user request.
             /// </summary>
             [EnumLiteral("suspended")]
             Suspended,
             /// <summary>
-            /// The receiving system has declined to fulfill the request
+            /// The receiving system has declined to fulfill the request.
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed
+            /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
             /// </summary>
             [EnumLiteral("failed")]
             Failed,
         }
         
         /// <summary>
-        /// The clinical priority of a diagnostic order
+        /// The clinical priority of a diagnostic order.
         /// </summary>
         [FhirEnumeration("DiagnosticOrderPriority")]
         public enum DiagnosticOrderPriority
         {
             /// <summary>
-            /// The order has a normal priority
+            /// The order has a normal priority .
             /// </summary>
             [EnumLiteral("routine")]
             Routine,
             /// <summary>
-            /// The order should be urgently
+            /// The order should be urgently.
             /// </summary>
             [EnumLiteral("urgent")]
             Urgent,
             /// <summary>
-            /// The order is time-critical
+            /// The order is time-critical.
             /// </summary>
             [EnumLiteral("stat")]
             Stat,
             /// <summary>
-            /// The order should be acted on as soon as possible
+            /// The order should be acted on as soon as possible.
             /// </summary>
             [EnumLiteral("asap")]
             Asap,

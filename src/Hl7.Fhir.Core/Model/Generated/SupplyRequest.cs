@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,28 +53,46 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "SupplyRequest"; } }
         
         /// <summary>
+        /// Why the supply item was requested
+        /// </summary>
+        [FhirEnumeration("SupplyRequestReason")]
+        public enum SupplyRequestReason
+        {
+            /// <summary>
+            /// The supply has been requested for use in direct patient care.
+            /// </summary>
+            [EnumLiteral("patient-care")]
+            PatientCare,
+            /// <summary>
+            /// The supply has been requested for for creating or replenishing ward stock.
+            /// </summary>
+            [EnumLiteral("ward-stock")]
+            WardStock,
+        }
+        
+        /// <summary>
         /// Status of the supply request
         /// </summary>
         [FhirEnumeration("SupplyRequestStatus")]
         public enum SupplyRequestStatus
         {
             /// <summary>
-            /// Supply has been requested, but not dispensed
+            /// Supply has been requested, but not dispensed.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// Supply has been received by the requestor
+            /// Supply has been received by the requestor.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The supply will not be completed because the supplier was unable or unwilling to supply the item
+            /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
             /// </summary>
             [EnumLiteral("failed")]
             Failed,
             /// <summary>
-            /// The orderer of the supply cancelled the request
+            /// The orderer of the supply cancelled the request.
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
@@ -266,7 +284,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The kind of supply (central, non-stock, etc)
+        /// The kind of supply (central, non-stock, etc.)
         /// </summary>
         [FhirElement("kind", Order=140)]
         [DataMember]

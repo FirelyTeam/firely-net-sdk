@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,81 +53,81 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Observation"; } }
         
         /// <summary>
-        /// Codes specifying how two observations are related
+        /// Codes specifying how two observations are related.
         /// </summary>
         [FhirEnumeration("ObservationRelationshipType")]
         public enum ObservationRelationshipType
         {
             /// <summary>
-            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group
+            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
             /// </summary>
             [EnumLiteral("has-member")]
             HasMember,
             /// <summary>
-            /// The target resource (Observation or QuestionnaireAnswer) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireAnswer
+            /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireResponse.
             /// </summary>
             [EnumLiteral("derived-from")]
             DerivedFrom,
             /// <summary>
-            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test)
+            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
             /// </summary>
             [EnumLiteral("sequel-to")]
             SequelTo,
             /// <summary>
-            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete
+            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
             /// </summary>
             [EnumLiteral("replaces")]
             Replaces,
             /// <summary>
-            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipaemia measure target from a plasma measure)
+            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
             /// </summary>
             [EnumLiteral("qualified-by")]
             QualifiedBy,
             /// <summary>
-            /// The value of the target observation interferes (degardes quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value)
+            /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
             /// </summary>
             [EnumLiteral("interfered-by")]
             InterferedBy,
         }
         
         /// <summary>
-        /// Codes providing the status of an observation
+        /// Codes providing the status of an observation.
         /// </summary>
         [FhirEnumeration("ObservationStatus")]
         public enum ObservationStatus
         {
             /// <summary>
-            /// The existence of the observation is registered, but there is no result yet available
+            /// The existence of the observation is registered, but there is no result yet available.
             /// </summary>
             [EnumLiteral("registered")]
             Registered,
             /// <summary>
-            /// This is an initial or interim observation: data may be incomplete or unverified
+            /// This is an initial or interim observation: data may be incomplete or unverified.
             /// </summary>
             [EnumLiteral("preliminary")]
             Preliminary,
             /// <summary>
-            /// The observation is complete and verified by an authorized person
+            /// The observation is complete and verified by an authorized person.
             /// </summary>
             [EnumLiteral("final")]
             Final,
             /// <summary>
-            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person
+            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
             /// </summary>
             [EnumLiteral("amended")]
             Amended,
             /// <summary>
-            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
+            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
             /// </summary>
             [EnumLiteral("cancelled")]
             Cancelled,
             /// <summary>
-            /// The observation has been withdrawn following previous Final release
+            /// The observation has been withdrawn following previous final release.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown"
+            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
             /// </summary>
             [EnumLiteral("unknown")]
             Unknown,
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
             
             /// <summary>
-            /// Provides guide for interpretation ofcomponent result
+            /// Provides guide for interpretation of component result
             /// </summary>
             [FhirElement("referenceRange", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
-        /// Clinically Relevant time/time-period for observation
+        /// Clinically relevant time/time-period for observation
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]

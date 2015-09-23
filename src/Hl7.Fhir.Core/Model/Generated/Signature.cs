@@ -36,12 +36,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc
+    /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc.
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The actual signature content (XML DigSig. JWT, picture, etc)
+        /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
         [FhirElement("blob", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Base64Binary _BlobElement;
         
         /// <summary>
-        /// The actual signature content (XML DigSig. JWT, picture, etc)
+        /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

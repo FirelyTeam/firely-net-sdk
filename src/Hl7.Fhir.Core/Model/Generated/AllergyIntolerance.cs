@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
-        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance
+        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCriticality")]
         public enum AllergyIntoleranceCriticality
@@ -69,14 +69,14 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("CRITH")]
             CRITH,
             /// <summary>
-            /// Unable to assess the potential clinical impact with the information available
+            /// Unable to assess the potential clinical impact with the information available.
             /// </summary>
             [EnumLiteral("CRITU")]
             CRITU,
         }
         
         /// <summary>
-        /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified Substance
+        /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified Substance.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceStatus")]
         public enum AllergyIntoleranceStatus
@@ -112,60 +112,60 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and is not valid
+            /// The statement was entered in error and is not valid.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
         }
         
         /// <summary>
-        /// Identification of the underlying physiological mechanism for a Reaction Risk
+        /// Identification of the underlying physiological mechanism for a Reaction Risk.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceType")]
         public enum AllergyIntoleranceType
         {
             /// <summary>
-            /// Immune-mediated hypersensitivity reaction.
+            /// A propensity for hypersensitivity reaction(s) to a substance.  These reactions are most typically type I hypersensitivity, plus other "allergy-like" reactions, including pseudoallergy.
             /// </summary>
             [EnumLiteral("allergy")]
             Allergy,
             /// <summary>
-            /// Adverse reaction to a substance, not judged to be immune-mediated (non-allergic).  This can include (but is not limited to) pseudoallergic reactions, side effects, drug toxicities (eg to Gentamicin), drug-drug interactions, food-drug interactions, and drug-disease interactions.
+            /// A propensity for adverse reactions to a substance that is not judged to be allergic or "allergy-like".  These reactions are typically (but not necessarily) non-immune.  They are to some degree idiosyncratic and/or individually specific (i.e. are not a reaction that is expected to occur with most or all patients given similar circumstances).
             /// </summary>
             [EnumLiteral("intolerance")]
             Intolerance,
         }
         
         /// <summary>
-        /// Category of an identified Substance
+        /// Category of an identified Substance.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCategory")]
         public enum AllergyIntoleranceCategory
         {
             /// <summary>
-            /// Any substance consumed to provide nutritional support for the body
+            /// Any substance consumed to provide nutritional support for the body.
             /// </summary>
             [EnumLiteral("food")]
             Food,
             /// <summary>
-            /// Substances administered to achieve a physiological effect
+            /// Substances administered to achieve a physiological effect.
             /// </summary>
             [EnumLiteral("medication")]
             Medication,
             /// <summary>
-            /// Substances that are encountered in the environment
+            /// Substances that are encountered in the environment.
             /// </summary>
             [EnumLiteral("environment")]
             Environment,
             /// <summary>
-            /// Other substances that are not covered by any other category
+            /// Other substances that are not covered by any other category.
             /// </summary>
             [EnumLiteral("other")]
             Other,
         }
         
         /// <summary>
-        /// Statement about the degree of clinical certainty that a Specific Substance was the cause of the Manifestation in an reaction event
+        /// Statement about the degree of clinical certainty that a Specific Substance was the cause of the Manifestation in an reaction event.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCertainty")]
         public enum AllergyIntoleranceCertainty
@@ -188,23 +188,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations
+        /// Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations.
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceSeverity")]
         public enum AllergyIntoleranceSeverity
         {
             /// <summary>
-            /// Causes mild physiological effects
+            /// Causes mild physiological effects.
             /// </summary>
             [EnumLiteral("mild")]
             Mild,
             /// <summary>
-            /// Causes moderate physiological effects
+            /// Causes moderate physiological effects.
             /// </summary>
             [EnumLiteral("moderate")]
             Moderate,
             /// <summary>
-            /// Causes severe physiological effects
+            /// Causes severe physiological effects.
             /// </summary>
             [EnumLiteral("severe")]
             Severe,
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// External Ids for this item
+        /// External ids for this item
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date(/time) of last known occurence of a reaction
+        /// Date(/time) of last known occurrence of a reaction
         /// </summary>
         [FhirElement("lastOccurence", InSummary=true, Order=200)]
         [DataMember]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _LastOccurenceElement;
         
         /// <summary>
-        /// Date(/time) of last known occurence of a reaction
+        /// Date(/time) of last known occurrence of a reaction
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

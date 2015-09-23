@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>
-        /// HTTP verbs (in the HTTP command line)
+        /// HTTP verbs (in the HTTP command line).
         /// </summary>
         [FhirEnumeration("HTTPVerb")]
         public enum HTTPVerb
@@ -81,76 +81,76 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates the purpose of a bundle- how it was intended to be used
+        /// Indicates the purpose of a bundle - how it was intended to be used.
         /// </summary>
         [FhirEnumeration("BundleType")]
         public enum BundleType
         {
             /// <summary>
-            /// The bundle is a document. The first resource is a Composition
+            /// The bundle is a document. The first resource is a Composition.
             /// </summary>
             [EnumLiteral("document")]
             Document,
             /// <summary>
-            /// The bundle is a message. The first resource is a MessageHeader
+            /// The bundle is a message. The first resource is a MessageHeader.
             /// </summary>
             [EnumLiteral("message")]
             Message,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as an atomic commit
+            /// The bundle is a transaction - intended to be processed by a server as an atomic commit.
             /// </summary>
             [EnumLiteral("transaction")]
             Transaction,
             /// <summary>
-            /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free
+            /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free.
             /// </summary>
             [EnumLiteral("transaction-response")]
             TransactionResponse,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as a group of actions
+            /// The bundle is a transaction - intended to be processed by a server as a group of actions.
             /// </summary>
             [EnumLiteral("batch")]
             Batch,
             /// <summary>
-            /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success
+            /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success.
             /// </summary>
             [EnumLiteral("batch-response")]
             BatchResponse,
             /// <summary>
-            /// The bundle is a list of resources from a _history interaction on a server
+            /// The bundle is a list of resources from a history interaction on a server.
             /// </summary>
             [EnumLiteral("history")]
             History,
             /// <summary>
-            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message
+            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message.
             /// </summary>
             [EnumLiteral("searchset")]
             Searchset,
             /// <summary>
-            /// The bundle is a set of resources collected into a single document for ease of distribution
+            /// The bundle is a set of resources collected into a single document for ease of distribution.
             /// </summary>
             [EnumLiteral("collection")]
             Collection,
         }
         
         /// <summary>
-        /// Why an entry is in the result set - whether it's included as a match or because of an _include requirement
+        /// Why an entry is in the result set - whether it's included as a match or because of an _include requirement.
         /// </summary>
         [FhirEnumeration("SearchEntryMode")]
         public enum SearchEntryMode
         {
             /// <summary>
-            /// This resource matched the search specification
+            /// This resource matched the search specification.
             /// </summary>
             [EnumLiteral("match")]
             Match,
             /// <summary>
-            /// This resource is returned because it is referred to from another resource in the search set
+            /// This resource is returned because it is referred to from another resource in the search set.
             /// </summary>
             [EnumLiteral("include")]
             Include,
             /// <summary>
-            /// An OperationOutcome that provides additional information about the processing of a search
+            /// An OperationOutcome that provides additional information about the processing of a search.
             /// </summary>
             [EnumLiteral("outcome")]
             Outcome,

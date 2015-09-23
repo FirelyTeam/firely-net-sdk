@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Person"; } }
         
         /// <summary>
-        /// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels
+        /// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
         /// </summary>
         [FhirEnumeration("IdentityAssuranceLevel")]
         public enum IdentityAssuranceLevel
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// A Human identifier for this person
+        /// A human identifier for this person
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
-        /// Image of the Person
+        /// Image of the person
         /// </summary>
         [FhirElement("photo", Order=150)]
         [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Attachment _Photo;
         
         /// <summary>
-        /// The Organization that is the custodian of the person record
+        /// The organization that is the custodian of the person record
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=160)]
         [References("Organization")]

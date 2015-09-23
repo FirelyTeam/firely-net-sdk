@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceUseRequest"; } }
         
         /// <summary>
-        /// Codes representing the priority of the request
+        /// Codes representing the priority of the request.
         /// </summary>
         [FhirEnumeration("DeviceUseRequestPriority")]
         public enum DeviceUseRequestPriority
@@ -81,58 +81,58 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Codes representing the status of the request
+        /// Codes representing the status of the request.
         /// </summary>
         [FhirEnumeration("DeviceUseRequestStatus")]
         public enum DeviceUseRequestStatus
         {
             /// <summary>
-            /// The request has been proposed
+            /// The request has been proposed.
             /// </summary>
             [EnumLiteral("proposed")]
             Proposed,
             /// <summary>
-            /// The request has been planned
+            /// The request has been planned.
             /// </summary>
             [EnumLiteral("planned")]
             Planned,
             /// <summary>
-            /// The request has been placed
+            /// The request has been placed.
             /// </summary>
             [EnumLiteral("requested")]
             Requested,
             /// <summary>
-            /// The receiving system has received the request but not yet decided whether it will be performed
+            /// The receiving system has received the request but not yet decided whether it will be performed.
             /// </summary>
             [EnumLiteral("received")]
             Received,
             /// <summary>
-            /// The receiving system has accepted the request but work has not yet commenced
+            /// The receiving system has accepted the request but work has not yet commenced.
             /// </summary>
             [EnumLiteral("accepted")]
             Accepted,
             /// <summary>
-            /// The work to fulfill the order is happening
+            /// The work to fulfill the order is happening.
             /// </summary>
             [EnumLiteral("in-progress")]
             InProgress,
             /// <summary>
-            /// The work has been complete, the report(s) released, and no further work is planned
+            /// The work has been complete, the report(s) released, and no further work is planned.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// The request has been held by originating system/user request
+            /// The request has been held by originating system/user request.
             /// </summary>
             [EnumLiteral("suspended")]
             Suspended,
             /// <summary>
-            /// The receiving system has declined to fulfill the request
+            /// The receiving system has declined to fulfill the request.
             /// </summary>
             [EnumLiteral("rejected")]
             Rejected,
             /// <summary>
-            /// The request was attempted, but due to some procedural error, it could not be completed
+            /// The request was attempted, but due to some procedural error, it could not be completed.
             /// </summary>
             [EnumLiteral("aborted")]
             Aborted,

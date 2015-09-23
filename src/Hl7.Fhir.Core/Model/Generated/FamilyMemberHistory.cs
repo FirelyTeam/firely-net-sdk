@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,28 +53,28 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "FamilyMemberHistory"; } }
         
         /// <summary>
-        /// A code that identifies the status of the family history record
+        /// A code that identifies the status of the family history record.
         /// </summary>
         [FhirEnumeration("FamilyHistoryStatus")]
         public enum FamilyHistoryStatus
         {
             /// <summary>
-            /// Some health information is known and captured, but not complete - see notes for details
+            /// Some health information is known and captured, but not complete - see notes for details.
             /// </summary>
             [EnumLiteral("partial")]
             Partial,
             /// <summary>
-            /// All relevant health information is known and captured
+            /// All relevant health information is known and captured.
             /// </summary>
             [EnumLiteral("completed")]
             Completed,
             /// <summary>
-            /// This instance should not have been part of this patient's medical record
+            /// This instance should not have been part of this patient's medical record.
             /// </summary>
             [EnumLiteral("entered-in-error")]
             EnteredInError,
             /// <summary>
-            /// Health information for this individual is unavailable/unknown
+            /// Health information for this individual is unavailable/unknown.
             /// </summary>
             [EnumLiteral("health-unknown")]
             HealthUnknown,
