@@ -259,7 +259,13 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class TestFhirClient : Rest.FhirClient
         {
-            public int Status { get; private set; } = 0;
+            private int _status = 0;
+
+            public int Status 
+            { 
+                get { return _status; }
+                private set { _status = value; }
+            }
 
             public TestFhirClient(Uri endpoint) : base(endpoint) { Status = 1; }
 

@@ -7,22 +7,24 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hl7.Fhir")]
-[assembly: AssemblyDescription("FHIR Resource model classes for .NET")]
+[assembly: AssemblyTitle("Hl7.Fhir.Core")]
+[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HL7 International")]
 [assembly: AssemblyProduct("FHIR")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: ComVisible(false)]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("HL7.Fhir.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
+#endif
+
+#if RELEASE
+[assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
 #endif
 
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("1.0.1.7109")]
-[assembly: AssemblyFileVersion("1.0.1.7109")]
+[assembly: AssemblyVersion("1.0.1.*")]
