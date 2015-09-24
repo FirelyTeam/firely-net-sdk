@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Rest
     {
         public const string testEndpoint = "http://fhir-dev.healthintersections.com.au/open";
 
-        [TestMethod]
+        [TestMethod, Ignore] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirClient(testEndpoint);

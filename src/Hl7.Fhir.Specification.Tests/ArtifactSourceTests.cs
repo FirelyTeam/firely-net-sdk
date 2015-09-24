@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
             fa.Mask = "*.xml|*.xsd";
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(4, names.Count());
+            Assert.AreEqual(3, names.Count());
             Assert.IsTrue(names.Contains("extension-definitions.xml"));
             Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(pat);
             }
 
-            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase") as StructureDefinition;
+            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-preferred") as StructureDefinition;
            
             Assert.IsNotNull(vs);
 
