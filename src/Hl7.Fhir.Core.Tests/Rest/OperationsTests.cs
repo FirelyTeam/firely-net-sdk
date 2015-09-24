@@ -84,14 +84,14 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]//returns 500: validation of slices is not done yet.
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);
 
-            var pat = client.Read<Patient>("Patient/uslab-example1");
+            var pat = client.Read<Patient>("Patient/patient-uslab-example1");
             var vresult = client.ValidateResource(pat, null,
-                new FhirUri("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/patient-uslab-uslabpatient"));
+                new FhirUri("http://hl7.org/fhir/StructureDefinition/uslab-patient"));
 
             Assert.IsTrue(vresult.Success());
         }
