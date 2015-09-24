@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(entry);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
-            Assert.AreEqual(HttpStatusCode.OK.ToString(), client.LastResult.Status);
+            Assert.AreEqual("200", client.LastResult.Status);
         }
 
 
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
             catch (FhirOperationException)
             {
-                Assert.AreEqual(HttpStatusCode.NotFound.ToString(), client.LastResult.Status);
+                Assert.AreEqual("404", client.LastResult.Status);
             }
 
             var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestWithParam()
         {
             var client = new FhirClient(testEndpoint);
-            var res = client.Get("ValueSet/101/$validate?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
+            var res = client.Get("ValueSet/patient-contact-relationship/$validate-code?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
             Assert.IsNotNull(res);
         }
 
