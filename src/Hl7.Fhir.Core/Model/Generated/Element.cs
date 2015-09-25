@@ -112,14 +112,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
             
             return true;
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(String property)
-        {
-            if (PropertyChanged != null)
-            	PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
-        }
+        }        
     }
     
 }

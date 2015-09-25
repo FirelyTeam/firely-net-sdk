@@ -32,23 +32,18 @@ namespace Hl7.Fhir.Serialization
 
         public Resource Deserialize(Resource existing=null)
         {
-            if (_reader.CurrentToken == TokenType.Object)
-            {
-                // If there's no a priori knowledge of the type of Resource we will encounter,
-                // we'll have to determine from the data itself. 
-                var resourceTypeName = _reader.GetResourceTypeName();
-                var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
+            // If there's no a priori knowledge of the type of Resource we will encounter,
+            // we'll have to determine from the data itself. 
+            var resourceTypeName = _reader.GetResourceTypeName();
+            var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
 
-                if (mapping == null)
-                    throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader);
+            if (mapping == null)
+                throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader);
              
-                // Delegate the actual work to the ComplexTypeReader, since
-                // the serialization of Resources and ComplexTypes are virtually the same
-                var cplxReader = new ComplexTypeReader(_reader);
-                return (Resource)cplxReader.Deserialize(mapping, existing);
-            }
-            else
-                throw Error.Format("Trying to read a resource, but reader is not at the start of an object", _reader);
+            // Delegate the actual work to the ComplexTypeReader, since
+            // the serialization of Resources and ComplexTypes are virtually the same
+            var cplxReader = new ComplexTypeReader(_reader);
+            return (Resource)cplxReader.Deserialize(mapping, existing);
         }
     }
 }

@@ -21,25 +21,5 @@ namespace Hl7.Fhir.Serialization
         IEnumerable<Tuple<string, IFhirReader>> GetMembers();
 
         object GetPrimitiveValue();
-
-        TokenType CurrentToken { get; }
-    }
-
-    public enum TokenType
-    {
-        Object,
-        String,
-        Boolean,
-        Number,
-    }
-
-    public static class FhirReaderExtensions
-    {
-        public static bool IsPrimitive(this IFhirReader reader)
-        {
-            return reader.CurrentToken == TokenType.Boolean ||
-                    reader.CurrentToken == TokenType.Number ||
-                    reader.CurrentToken == TokenType.String;
-        }
     }
 }

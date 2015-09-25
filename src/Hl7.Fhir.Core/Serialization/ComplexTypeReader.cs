@@ -58,27 +58,7 @@ namespace Hl7.Fhir.Serialization
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;
 
-            if (_current.CurrentToken == TokenType.Object)
-            {
-                members = _current.GetMembers();
-            }
-            else if(_current.IsPrimitive())
-            {
-                // Ok, we expected a complex type, but we found a primitive instead. This may happen
-                // in Json where the value property and the other elements are separately put into
-                // member and _member. In this case, we will parse the primitive into the Value property
-                // of the complex type
-                if (!mapping.HasPrimitiveValueMember)
-                    throw Error.Format("Complex object does not have a value property, yet the reader is at a primitive", _current);
-
-                // Simulate this as actually receiving a member "Value" in a normal complex object,
-                // and resume normally
-                var valueMember = Tuple.Create(mapping.PrimitiveValueProperty.Name, _current);
-                members = new List<Tuple<string, IFhirReader>> { valueMember };
-            }
-            else
-                throw Error.Format("Trying to read a complex object, but reader is not at the start of an object or primitive", _current);
-
+            members = _current.GetMembers();
             read(mapping, members, existing);
 
             return existing;

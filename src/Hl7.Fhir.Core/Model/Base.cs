@@ -37,6 +37,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
@@ -60,7 +61,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 if (UserData != null) dest.UserData = new Dictionary<string,object>(UserData);
-                if (FormatComments != null) dest.FormatComments = new List<string>(FormatComments);
+                if (FhirComments != null) dest.FhirComments = new List<string>(FhirComments);
                 return dest;
             }
             else
@@ -82,17 +83,51 @@ namespace Hl7.Fhir.Model
             get { return _userData; }
             private set { _userData = value; }
         }
-        
-        /**
-         * Round tracking xml comments for testing convenience
-         */
-        private List<string> FormatComments { get; set; }
 
 
-        public bool HasFormatComment()
+        public const string COMMENT_USERDATA_KEY = "$FHIR_COMMENTS";
+
+
+        /// <summary>
+        /// Given names (not always 'first'). Includes middle names
+        /// </summary>
+        [FhirElement("fhir_comments", InSummary = false, Order = 5)]
+        [Cardinality(Min = 0, Max = -1)]
+        public List<Hl7.Fhir.Model.FhirString> FhirCommentsElement
         {
-            return (FormatComments != null && FormatComments.Any());
+            get { if (_FhirCommentsElement == null) _FhirCommentsElement = new List<Hl7.Fhir.Model.FhirString>(); return _FhirCommentsElement; }
+            set { _FhirCommentsElement = value; OnPropertyChanged("FhirCommentsElement"); }
         }
+
+        private List<Hl7.Fhir.Model.FhirString> _FhirCommentsElement;
+
+        /// <summary>
+        /// Given names (not always 'first'). Includes middle names
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> FhirComments
+        {
+            get { return FhirCommentsElement != null ? FhirCommentsElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                    FhirCommentsElement = null;
+                else
+                    FhirCommentsElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("FhirComments");
+            }
+        }
+
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(String property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
+        }
+
 
         public abstract string TypeName { get; }
     }

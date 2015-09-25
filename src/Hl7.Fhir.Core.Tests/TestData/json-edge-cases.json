@@ -1,12 +1,15 @@
 {
     "resourceType": "Patient",
-    "identifier": [{
-        "period": {"start": "2001-05-06"},
-        "assigner": {"display": "Acme\u202fHealthcare"},
-        "use": "usual",
-        "system": "urn:oid:1.2.36.146.595.217.0.1",
-        "value": "12345"
-    }],
+    "identifier": [
+        {
+            "period": { "start": "2001-05-06" },
+            "assigner": { "display": "Acme\u202fHealthcare" },
+            "use": "usual",
+            "system": "urn:oid:1.2.36.146.595.217.0.1",
+            "value": "12345",     
+            "_value": { "fhir_comments": [ "     seems like a likely choice     " ] }       
+        }
+    ],
     "managingOrganization": {"reference": "Organization/1"},
     "_active": {"extension": [{
         "url": "http://example.org/fhir/StructureDefinition/recordStatus",

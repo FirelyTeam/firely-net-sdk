@@ -37,17 +37,6 @@ namespace Hl7.Fhir.Serialization
         {
             if (nativeType == null) throw Error.ArgumentNull("nativeType");
                  
-            if (_current.IsPrimitive())
-            {
-                return read(nativeType);
-            }
-            else
-                throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", _current);
-        }
-
-
-        private object read(Type nativeType)
-        {
             object primitiveValue = _current.GetPrimitiveValue();
             
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))

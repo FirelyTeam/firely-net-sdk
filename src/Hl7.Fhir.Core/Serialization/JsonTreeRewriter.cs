@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class JsonTreeRewriter
     {
-        private const string PRIMITIVE_PROP_NAME = "value";
-        private const string SPEC_CHILD_ID = "id";
-        private const string SPEC_CHILD_URL = "url";
-        private const string SPEC_PARENT_EXTENSION = "extension";
-        private const string SPEC_PARENT_MODIFIEREXTENSION = "modifierExtension";
+        public const string PRIMITIVE_PROP_NAME = "value";
+        //public const string SPEC_CHILD_ID = "id";
+        //public const string SPEC_CHILD_URL = "url";
+        //private const string SPEC_PARENT_EXTENSION = "extension";
+        //private const string SPEC_PARENT_MODIFIEREXTENSION = "modifierExtension";
 
         // Expand the children of a property given in the parameter. The property may only contain either a primitive JValue or a
         // complex JObject, and will list its children, which are only JValues and JObjects as well (JArrays get expanded to a list
@@ -89,7 +89,8 @@ namespace Hl7.Fhir.Serialization
             {
                 if (child.Value.Type == JTokenType.Null) 
                     yield return child;
-                else if (child.Value is JValue && !isTruePrimitive(child,parentName,inResource))
+              //  else if (child.Value is JValue && !isTruePrimitive(child,parentName,inResource))
+                else if (child.Value is JValue)
                     yield return new JProperty(child.Name, new JObject(new JProperty(PRIMITIVE_PROP_NAME, child.Value)));
                 else
                     yield return child;
@@ -98,15 +99,15 @@ namespace Hl7.Fhir.Serialization
 
         // parentName and inResource provide just enough context to guess which json properties are actually
         // attributes (so always primitive) in the Xml representation
-        private static bool isTruePrimitive(JProperty property, string parentName,bool inResource)
-        {
-            return property.Value is JValue && 
-                property.Name == PRIMITIVE_PROP_NAME ||
-                property.Name == SPEC_CHILD_ID && !inResource ||               // id attr that all types can have
-                (property.Name == "div" && parentName == "text") ||
-                (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_EXTENSION)) ||     // url attr of extension
-                (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_MODIFIEREXTENSION));    // contentType attr of Binary resource
-        }
+        //private static bool isTruePrimitive(JProperty property, string parentName,bool inResource)
+        //{
+        //    return property.Value is JValue && 
+        //        property.Name == PRIMITIVE_PROP_NAME ||
+        //        property.Name == SPEC_CHILD_ID && !inResource ||               // id attr that all types can have
+        //        (property.Name == "div" && parentName == "text") ||
+        //        (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_EXTENSION)) ||     // url attr of extension
+        //        (property.Name == SPEC_CHILD_URL && parentName != null && parentName.StartsWith(SPEC_PARENT_MODIFIEREXTENSION));    // contentType attr of Binary resource
+        //}
 
         private static IEnumerable<JProperty> combineChildren(IEnumerable<JProperty> children)
         {

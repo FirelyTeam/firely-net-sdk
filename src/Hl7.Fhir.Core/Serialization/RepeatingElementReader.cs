@@ -38,9 +38,6 @@ namespace Hl7.Fhir.Serialization
 
             IList result = existing;
 
-            if(_current.CurrentToken != TokenType.Object)  // Xml has repeating members, so this results in an "array" of just 1 member
-                throw Error.Format("Expecting to be either at a repeating complex element or an array when parsing a repeating member.", _current);
-
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
             var reader = new DispatchingReader(_current, arrayMode: true);                 

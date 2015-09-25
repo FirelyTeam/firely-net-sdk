@@ -13,6 +13,7 @@ using Hl7.Fhir.Serialization;
 using System.Text;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -118,6 +119,47 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<entry"));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+        }
+
+
+        [TestMethod]
+        public void HandleCommentsJson()
+        {
+            string json = File.ReadAllText(@"TestData\TestPatient.json");
+
+            var pat = FhirParser.ParseFromJson(json) as Patient;
+
+            Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
+            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+
+            pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
+
+            json = FhirSerializer.SerializeResourceToJson(pat);
+            pat = FhirParser.ParseFromJson(json) as Patient;
+
+            Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
+            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+            Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
+        }
+
+        [TestMethod, Ignore]
+        public void HandleCommentsXml()
+        {
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+
+            var pat = FhirParser.ParseFromXml(xml) as Patient;
+
+            Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
+            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+
+            pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
+
+            xml = FhirSerializer.SerializeResourceToXml(pat);
+            pat = FhirParser.ParseFromXml(xml) as Patient;
+
+            Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
+            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+            Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
         }
 
 

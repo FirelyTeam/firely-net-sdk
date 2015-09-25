@@ -149,37 +149,32 @@ namespace Hl7.Fhir.Serialization
         //        rewriteExtensionProperties(element,nested);
         //}
 
-        public TokenType CurrentToken
-        {
-            get
-            {
-                if (_current is JObject) return TokenType.Object;
-                if (_current is JValue)
-                {
-                    var val = (JValue)_current;
-                    if(val.Type == JTokenType.Integer || val.Type == JTokenType.Float) return TokenType.Number;
-                    if(val.Type == JTokenType.Boolean) return TokenType.Boolean;
-                    if(val.Type == JTokenType.String) return TokenType.String;
-
-                    throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", this, val.Type);
-                }
-
-                throw Error.Format("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", this, _current.GetType().Name);
-            }
-        }
-
         public object GetPrimitiveValue()
         {
             if (_current is JValue)
                 return ((JValue)_current).Value;
+            else if(_current is JObject)
+            {
+                // Hack: primitives have been expanded to objects by the JsonTreeRewriter, so if this is the case, just get the "value" property
+                var cplx = _current as JObject;
+                JToken value = null;
+
+                if (cplx.TryGetValue(JsonTreeRewriter.PRIMITIVE_PROP_NAME, out value))
+                {
+                    var nestedReader = new JsonDomFhirReader(value);
+                    return nestedReader.GetPrimitiveValue();
+                }
+                else
+                    throw Error.Format("Tried to read a primitive value while reader is at a complex object", this);
+            }
             else
                 throw Error.Format("Tried to read a primitive value while reader is not at a json primitive", this);
         }
 
         public string GetResourceTypeName()
         {
-            if (CurrentToken != TokenType.Object)
-                throw Error.Format("Need to be at a complex object to determine resource type", this);
+            if (!(_current is JObject))
+                throw Error.Format("Cannot read resource type: reader not at a complex object", this);
 
             var resourceTypeMember = ((JObject)_current)[JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME];
 
