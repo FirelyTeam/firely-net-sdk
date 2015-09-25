@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void AcceptNsReassignments()
         {
-            var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\" value=\"...\"/></ns4:ValueSet>";
+            var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\"><f:value value=\"....\"/></f:identifier></ns4:ValueSet>";
 
             FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));

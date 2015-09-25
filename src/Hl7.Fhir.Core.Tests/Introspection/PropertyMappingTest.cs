@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var mapping = ClassMapping.Create(typeof(Base64Binary));
             Assert.AreEqual("base64Binary", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension & value
+            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             var valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.AreEqual("value", valueProp.Name);
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Introspection
             mapping = ClassMapping.Create(typeof(Code<Address.AddressUse>));
             Assert.AreEqual("codeOfT<Hl7.Fhir.Model.Address+AddressUse>", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension & value
+            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection);
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Tests.Introspection
             mapping = ClassMapping.Create(typeof(FhirUri));
             Assert.AreEqual("uri", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension & value
+            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection); 
