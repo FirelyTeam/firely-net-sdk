@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Hl7.Fhir.Core")]
-[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]
+[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.1)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("FHIR")]
 [assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2015")]
@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("1.0.1.*")]
+[assembly: AssemblyVersion("0.9.0.*")]
