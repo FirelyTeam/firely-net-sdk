@@ -2,6 +2,12 @@
 layout: default
 title: What's new?
 ---
+### In 0.9.0
+* Updated the model to be compatible with DSTU2 (1.0.1)
+* Added support for comments in Json
+* Fixed a bug where elements called 'value' in Json could not have extensions or comments
+* FhirClient now returns the status code in an OperationException
+* Bugfixes
 
 ### In 0.50.2
 * Many bug and stability fixes
