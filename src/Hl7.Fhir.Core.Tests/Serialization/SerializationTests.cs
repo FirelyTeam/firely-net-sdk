@@ -97,6 +97,31 @@ namespace Hl7.Fhir.Tests.Serialization
             var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+
+            var q = new Questionnaire();
+
+            q.Status = Questionnaire.QuestionnaireStatus.Published;
+            q.Date = "2015-09-27";
+            q.Group = new Questionnaire.GroupComponent();
+            q.Group.Title = "TITLE";
+            q.Group.Text = "TEXT";
+            q.Group.LinkId = "linkid";
+
+            var qfull = FhirSerializer.SerializeResourceToXml(q);
+            Console.WriteLine(qfull);
+            Assert.IsTrue(qfull.Contains("<status value=\"published\""));
+            Assert.IsTrue(qfull.Contains("<date value=\"2015-09-27\""));
+            Assert.IsTrue(qfull.Contains("<title value=\"TITLE\""));
+            Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
+            Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
+
+            var qSum = FhirSerializer.SerializeResourceToXml(q, summary: true);
+            Console.WriteLine(qSum);
+            Assert.IsTrue(qSum.Contains("<status value=\"published\""));
+            Assert.IsTrue(qSum.Contains("<date value=\"2015-09-27\""));
+            Assert.IsTrue(qSum.Contains("<title value=\"TITLE\""));
+            Assert.IsFalse(qSum.Contains("<text value=\"TEXT\""));
+            Assert.IsFalse(qSum.Contains("<linkId value=\"linkid\""));
         }
 
         [TestMethod]

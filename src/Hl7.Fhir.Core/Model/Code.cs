@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
     public class Code<T> : Element where T : struct
     {
         // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue=true)]
+        [FhirElement("value", InSummary=true, IsPrimitiveValue=true)]
         [DataMember]
         public T? Value { get; set; }
 

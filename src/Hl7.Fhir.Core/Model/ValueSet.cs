@@ -13,9 +13,11 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
+        public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+        {
+            [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
+            public ValueSetCodeSystemComponent Define { get; set; }
 
-    //    public partial class ValueSet : Hl7.Fhir.Model.Resource
-    //    {
     //        public static bool CodeEquals(string code, string value, bool caseSensitive)
     //        {
     //            return String.Equals(code, value,
@@ -67,5 +69,5 @@ namespace Hl7.Fhir.Model
     //                return null;
     //        }
     //    }
-    //}
+    }
 }
