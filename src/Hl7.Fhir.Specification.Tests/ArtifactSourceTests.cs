@@ -226,6 +226,30 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
+        public void ValidateConformanceInformationScanner()
+        {
+            var fa = ZipArtifactSource.CreateValidationSource();
+
+            var allConformanceInformation = fa.ListConformanceResources();
+
+            var dicomVS = allConformanceInformation.Where(ci => ci.ValueSetSystem == "http://nema.org/dicom/dicm").SingleOrDefault();
+            Assert.IsNotNull(dicomVS);
+            Assert.AreEqual("http://hl7.org/fhir/ValueSet/dicom-dcim",dicomVS.Url);
+            Assert.AreEqual("DICOM Controlled Terminology Definitions",dicomVS.Name);
+
+            var moneySD = allConformanceInformation.Where(ci => ci.Url == "http://hl7.org/fhir/StructureDefinition/Money").SingleOrDefault();
+            Assert.IsNotNull(moneySD);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Money", moneySD.Url);
+            Assert.AreEqual("Money", moneySD.Name);
+
+            var reasonEXT = allConformanceInformation.Where(ci => ci.Url == "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason").SingleOrDefault();
+            Assert.IsNotNull(reasonEXT);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason", reasonEXT.Url);
+            Assert.AreEqual("Reason for this order", reasonEXT.Name);
+        }
+
+
+        [TestMethod]
         public void TestSetupIsOnce()
         {
             var fa = ZipArtifactSource.CreateValidationSource();

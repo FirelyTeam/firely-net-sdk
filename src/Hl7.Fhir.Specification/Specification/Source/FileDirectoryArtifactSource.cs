@@ -130,6 +130,7 @@ namespace Hl7.Fhir.Specification.Source
                 }
                 catch(XmlException)
                 {
+                    throw;
                 }
             }
 
