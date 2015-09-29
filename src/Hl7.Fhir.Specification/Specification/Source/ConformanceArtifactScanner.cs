@@ -49,6 +49,17 @@ namespace Hl7.Fhir.Specification.Source
                 getPrimitiveValueElement(res,"url") == url).SingleOrDefault();
         }
 
+        private string getValueSetSystem(XElement vs)
+        {
+            var codeSystemElement = vs.Element(XmlNs.XFHIR + "codeSystem");
+            if (codeSystemElement != null)
+            {
+                return getPrimitiveValueElement(codeSystemElement, "system");
+            }
+
+            return null;
+        }
+
         private string getPrimitiveValueElement(XElement element, string name)
         {
             var valueElem = element.Element(XmlNs.XFHIR + name);
@@ -76,6 +87,7 @@ namespace Hl7.Fhir.Specification.Source
                         {
                             Url = getPrimitiveValueElement(res, "url"),
                             Name = getPrimitiveValueElement(res, "name"),
+                            ValueSetSystem = getValueSetSystem(res),
                             Origin = _origin,
                             Type = stringNameToEnum(res.Name.LocalName)
                         });                       

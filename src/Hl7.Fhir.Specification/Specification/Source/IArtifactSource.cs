@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Specification.Source
                 
         public string Name { get; set; }
 
+        public string ValueSetSystem { get; set; }
+
         public string Origin { get; set; }
 
         public override string ToString()

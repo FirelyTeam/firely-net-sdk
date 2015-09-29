@@ -157,5 +157,15 @@ namespace Hl7.Fhir.Specification.Source
             return LoadConformanceResourceByUrl(url) as ValueSet;
         }
 
+        public ValueSet GetValueSetBySystem(string system)
+        {
+            var vsInfo = ListConformanceResources().Where(ci => ci.ValueSetSystem == system).SingleOrDefault();
+
+            if(vsInfo != null)
+                return GetValueSet(vsInfo.Url);
+
+            return null;
+        }
+
     }
 }

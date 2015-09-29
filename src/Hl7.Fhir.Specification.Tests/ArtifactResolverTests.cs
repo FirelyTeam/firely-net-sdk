@@ -76,6 +76,20 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
         }
 
+
+        [TestMethod]
+        public void ResolveValueSet()
+        {
+            var vsDICOM = source.GetValueSetBySystem("http://nema.org/dicom/dicm");
+            Assert.IsNotNull(vsDICOM);
+
+            vsDICOM = source.GetValueSet(vsDICOM.Url);
+            Assert.IsNotNull(vsDICOM);
+
+            vsDICOM = source.GetValueSetBySystem("http://nema.org/dicom/dicmQQQQ");
+            Assert.IsNull(vsDICOM);            
+        }
+
         [TestMethod]
         public void GetCoreModelTypeUrls()
         {
