@@ -47,7 +47,8 @@ namespace Hl7.Fhir.Specification.Source
         public Hl7.Fhir.Model.Resource LoadConformanceResourceByUrl(string url)
         {
             if (url == null) throw Error.ArgumentNull("identifier");
-            if (!ResourceIdentity.IsRestResourceIdentity(url)) throw Error.Argument("url", "Canonical url must be a FHIR REST identity");
+
+            if (!ResourceIdentity.IsRestResourceIdentity(url)) return null;     // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
 
             var id = new ResourceIdentity(url);
 
