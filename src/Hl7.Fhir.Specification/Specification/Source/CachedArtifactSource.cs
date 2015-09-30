@@ -8,11 +8,11 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -87,32 +87,37 @@ namespace Hl7.Fhir.Specification.Source
                 _duration = duration;
             }
 
-            private List<CacheEntry<T>> _cache = new List<CacheEntry<T>>();
+            private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
+            private Object getLock = new Object();
+
 
             public T Get(string identifier)
             {
-                // Check the cache
-                var entry = _cache.Where(ce => ce.Identifier == identifier).SingleOrDefault();
-
-                // Remove entry if it's too old
-                if(entry != null && entry.Expired)
+                lock (getLock)
                 {
-                    _cache.Remove(entry);
-                    entry = null;
-                }
+                    // Check the cache
+                    var entry = _cache.Where(ce => ce.Identifier == identifier).SingleOrDefault();
 
-                // If we still have a fresh entry, return it
-                if (entry != null)
-                    return entry.Data;
-                else
-                {
-                    // Otherwise, fetch it and cache it.
-                    T newData = default(T);
+                    // Remove entry if it's too old
+                    if (entry != null && entry.Expired)
+                    {
+                        _cache.Remove(entry);
+                        entry = null;
+                    }
 
-                    newData = _onCacheMiss(identifier);
-                    _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+                    // If we still have a fresh entry, return it
+                    if (entry != null)
+                        return entry.Data;
+                    else
+                    {
+                        // Otherwise, fetch it and cache it.
+                        T newData = default(T);
 
-                    return newData;
+                        newData = _onCacheMiss(identifier);
+                        _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+
+                        return newData;
+                    }
                 }
             }
         }
