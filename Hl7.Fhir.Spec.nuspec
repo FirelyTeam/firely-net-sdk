@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Hl7.Fhir.Specification.DSTU2</id>
-    <version>0.90.1-beta1</version>
+    <version>0.90.1-beta2</version>
 	<title>HL7 FHIR Additional functionality support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
@@ -18,7 +18,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</tags>
     <dependencies>
-	  <dependency id="Hl7.Fhir.DSTU2" version="0.90.1-beta1" />
+	  <dependency id="Hl7.Fhir.DSTU2" version="0.90.1-beta2" />
       <dependency id="Newtonsoft.Json" version="6.0.7" />
     </dependencies>
   </metadata>
@@ -36,6 +36,6 @@
 		
 <!--		<file src="src\Hl7.Fhir.Specification\bin\Release\Portable45\Hl7.Fhir.Specification.dll" target="lib\portable-net45+netcore45+wpa81+wp8\" />
 		<file src="src\Hl7.Fhir.Specification\bin\Release\Portable45\Hl7.Fhir.Specification.xml" target="lib\portable-net45+netcore45+wpa81+wp8\" />
-		<file src="src\Hl7.Fhir.Specification\bin\Release\Portable45\Hl7.Fhir.Specification.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" />	-->
+		<file src="src\Hl7.Fhir.Specification\bin\Release\Portable45\Hl7.Fhir.Specification.pdb" target="lib\portable-net45+netcore45+wpa81+wp8\" /> -->
     </files>
 </package>
