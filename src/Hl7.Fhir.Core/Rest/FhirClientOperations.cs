@@ -29,6 +29,11 @@ namespace Hl7.Fhir.Rest
         public static class Operation
         {
             /// <summary>
+            /// "translate" operation
+            /// </summary>
+            public const string TRANSLATE = "translate"; 
+            
+            /// <summary>
             /// "everything" operation
             /// </summary>
             public const string FETCH_PATIENT_RECORD = "everything";
@@ -289,6 +294,61 @@ namespace Hl7.Fhir.Rest
             var par = new Parameters().Add("codeableConcept", codeableConcept);
 
             return validateCodeForValueSetId(client, valueSetId, par);
+        }
+
+
+        public class TranslateConceptDependency
+        {
+            public FhirUri Element;
+
+            public CodeableConcept Concept;
+        }
+
+
+        public static Parameters TranslateConcept(this FhirClient client, string id, Code code, FhirUri system, FhirString version,
+        FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies)
+        {
+            Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
+            var loc = ResourceIdentity.Build("ConceptMap", id);
+            return expect<Parameters>(client.InstanceOperation(loc, Operation.TRANSLATE, par));
+        }
+
+
+        public static Parameters TranslateConcept(this FhirClient client, Code code, FhirUri system, FhirString version,
+           FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies )
+        {
+            Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
+
+            return expect<Parameters>(client.TypeOperation<ConceptMap>(Operation.TRANSLATE, par));
+        }
+
+        private static Parameters createTranslateConceptParams(Code code, FhirUri system, FhirString version, FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies)
+        {
+            if (target == null) throw new ArgumentNullException("target");
+
+            var par = new Parameters().Add("target", target);
+
+            if (code != null) par.Add("code", code);
+            if (system != null) par.Add("system", system);
+            if (version != null) par.Add("version", version);
+            if (valueSet != null) par.Add("valueSet", valueSet);
+            if (coding != null) par.Add("coding", coding);
+            if (codeableConcept != null) par.Add("codeableConcept", codeableConcept);
+
+            if (dependencies != null && dependencies.Any())
+            {
+                foreach (var dependency in dependencies)
+                {
+                    var dependencyPar = new List<Tuple<string, Base>>();
+
+                    if (dependency.Element != null) dependencyPar.Add(Tuple.Create("element", (Base)dependency.Element));
+                    if (dependency.Concept != null) dependencyPar.Add(Tuple.Create("concept", (Base)dependency.Concept));
+
+                    par.Add("dependency", dependencyPar);
+                }
+            }
+
+            return par;
         }
 
         private static Parameters validateCodeForValueSetId(FhirClient client, string valueSetId, Parameters par)
