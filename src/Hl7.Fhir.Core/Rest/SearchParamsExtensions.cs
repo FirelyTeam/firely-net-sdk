@@ -54,11 +54,31 @@ namespace Hl7.Fhir.Rest
             return qry;
         }
 
-        public static SearchParams SummaryOnly(this SearchParams qry, bool summaryOnly = true)
+        public static SearchParams CountOnly(this SearchParams qry)
         {
-            qry.Summary = summaryOnly;
+            qry.Summary = SummaryType.Count;
             return qry;
         }
+
+
+        public static SearchParams SummaryOnly(this SearchParams qry, bool summaryOnly = true)
+        {            
+            qry.Summary = summaryOnly ? SummaryType.True : SummaryType.False;
+            return qry;
+        }
+
+        public static SearchParams TextOnly(this SearchParams qry)
+        {
+            qry.Summary = SummaryType.Text;
+            return qry;
+        }
+
+        public static SearchParams DataOnly(this SearchParams qry)
+        {
+            qry.Summary = SummaryType.Data;
+            return qry;
+        }
+
 
     }
 }

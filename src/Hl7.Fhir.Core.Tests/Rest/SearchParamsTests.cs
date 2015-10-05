@@ -61,30 +61,34 @@ namespace Hl7.Fhir.Test.Rest
             var q = new SearchParams();
             q.Query = "special";
             q.Count = 31;
-            q.Summary = true;
+            q.Summary = SummaryType.Data;
             q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
             q.Include.Add("Patient.name");
             q.Include.Add("Observation.subject");
+            q.Elements.Add("field1");
 
             Assert.AreEqual("special", q.Query);
             Assert.AreEqual(31, q.Count);
-            Assert.AreEqual(true, q.Summary);
+            Assert.AreEqual(SummaryType.Data, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
             Assert.AreEqual(2, q.Include.Count);
             Assert.AreEqual("Patient.name", q.Include.First());
             Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
-
+            Assert.AreEqual(1, q.Elements.Count);
+            Assert.AreEqual("field1", q.Elements.First());
+            
             q.Query = "special2";
             q.Count = 32;
-            q.Summary = false;
+            q.Summary = SummaryType.True;
             q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
             q.Include.Add("Patient.name2");
             q.Include.Remove("Patient.name");
             q.Include.Add("Observation.subject2");
+            q.Elements.Add("field2");
 
             Assert.AreEqual("special2", q.Query);
             Assert.AreEqual(32, q.Count);
-            Assert.AreEqual(false, q.Summary);
+            Assert.AreEqual(SummaryType.True, q.Summary);
             Assert.AreEqual(2,q.Sort.Count);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
             Assert.AreEqual(3, q.Include.Count);
@@ -92,6 +96,10 @@ namespace Hl7.Fhir.Test.Rest
             Assert.IsFalse(q.Include.Contains("Patient.name"));
             Assert.IsTrue(q.Include.Contains("Observation.subject"));
             Assert.IsTrue(q.Include.Contains("Observation.subject2"));
+            Assert.AreEqual(2, q.Elements.Count);
+            Assert.AreEqual("field1", q.Elements.First());
+            Assert.AreEqual("field2", q.Elements.Skip(1).First());
+
         }
 
         [TestMethod]
@@ -99,7 +107,7 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams()
                .Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
-                .SummaryOnly().Include("Patient.managingOrganization")
+                .SummaryOnly().Include("Patient.managingOrganization").Select("field1", "field2")
                 .LimitTo(20);
 
             var parameters = q.ToUriParamList();
@@ -112,7 +120,11 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual("birthDate", o.First().Item1);
             Assert.AreEqual(SortOrder.Descending, o.First().Item2);
 
-            Assert.IsTrue(q.Summary.Value);
+            Assert.AreEqual("field1", q.Elements.First());
+            Assert.AreEqual("field2", q.Elements.Skip(1).First());
+            Assert.AreEqual(2, q.Elements.Count);
+
+            Assert.AreEqual(q.Summary, SummaryType.True);
             Assert.IsTrue(q.Include.Contains("Patient.managingOrganization"));
             Assert.AreEqual(20, q.Count);
         }
@@ -122,10 +134,10 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams()
                 .Custom("mySearch").OrderBy("adsfadf").OrderBy("q", SortOrder.Descending)
-                    .LimitTo(10).LimitTo(20).Custom("miSearch").SummaryOnly().SummaryOnly(false);
+                    .LimitTo(10).LimitTo(20).Custom("miSearch").SummaryOnly().DataOnly();
 
             Assert.AreEqual("miSearch", q.Query);
-            Assert.IsFalse(q.Summary.Value);
+            Assert.AreEqual(q.Summary, SummaryType.Data);
 
             var o = q.Sort;
             Assert.AreEqual("adsfadf", o.First().Item1);
@@ -134,8 +146,6 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(SortOrder.Descending, o.Skip(1).First().Item2);
 
             Assert.AreEqual(20, q.Count);
-
-            Assert.IsFalse(q.Summary.Value);
         }
 
         [TestMethod]
@@ -144,14 +154,16 @@ namespace Hl7.Fhir.Test.Rest
             var q = new SearchParams();
             q.Query = "special";
             q.Count = 31;
-            q.Summary = true;
+            q.Summary = SummaryType.Text;
             q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
             q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
             q.Include.Add("Patient.name");
             q.Include.Add("Observation.subject");
+            q.Elements.Add("field1");
+            q.Elements.Add("field2");
 
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=text&_elements=field1%2Cfield2", output);
         }
 
         [TestMethod]
@@ -160,15 +172,15 @@ namespace Hl7.Fhir.Test.Rest
             var q = new SearchParams();
             q.Add("_query", "special");
             q.Add("_count", "31");
-            q.Add("_summary", "true");
+            q.Add("_summary", "data");
             q.Add("_sort:desc", "sorted");
             q.Add("_sort:asc", "sorted2");
             q.Add("_include", "Patient.name");
             q.Add("_include", "Observation.subject");
             q.Add("image:missing", "true");
-
+            q.Add("_elements", "field1,field2");
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=true&image%3Amissing=true", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
 
             var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
 
@@ -179,6 +191,7 @@ namespace Hl7.Fhir.Test.Rest
             CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
             CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
+            CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
         }
     }
 }

@@ -63,11 +63,12 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null, bool? summary = false) 
+        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
             where TResource : Resource, new()
         {
             return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize, summary);
         }
+
 
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -81,12 +82,14 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, bool? summary = false)
+        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
-            return Search(toQuery(criteria, includes, pageSize, summary.Value), resource);
+            return Search(toQuery(criteria, includes, pageSize, summary), resource);
         }
+
+
 
         /// <summary>
         /// Search for Resources across the whol server that match the given criteria
@@ -99,7 +102,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null, bool? summary = false)
+        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return Search(toQuery(criteria, includes, pageSize, summary));
         }
@@ -141,10 +144,10 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw Error.ArgumentNull("id");
 
             string criterium = "_id=" + id;
-            return Search(toQuery(new string[] { criterium }, includes, pageSize, summary:false), resource);
+            return Search(toQuery(new string[] { criterium }, includes, pageSize, SummaryType.False), resource);
         }
 
-        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, bool? summary)
+        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType summary)
         {
             var q = new SearchParams();
             

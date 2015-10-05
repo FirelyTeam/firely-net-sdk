@@ -56,6 +56,7 @@ namespace Hl7.Fhir.Rest
             RevInclude = new List<string>();
             Sort = new List<Tuple<string, SortOrder>>();
             Parameters = new List<Tuple<string, string>>();
+            Elements = new List<string>();
         }
 
         /// <summary>
@@ -76,7 +77,8 @@ namespace Hl7.Fhir.Rest
             SEARCH_PARAM_REVINCLUDE,
             SEARCH_PARAM_SUMMARY,
             SEARCH_PARAM_CONTAINED,
-            SEARCH_PARAM_CONTAINEDTYPE
+            SEARCH_PARAM_CONTAINEDTYPE,
+            SEARCH_PARAM_ELEMENTS
             };
      
      
@@ -93,6 +95,12 @@ namespace Hl7.Fhir.Rest
         public const string SEARCH_CONTAINED_TYPE_CONTAINER = "container";
         public const string SEARCH_CONTAINED_TYPE_CONTAINED = "contained";
 
+        public SearchParams Select(params string[] elements)
+        {
+            Elements.AddRange(elements);
+            return this;
+        }
+
         /// <summary>
         /// Add a parameter with a given name and value.
         /// </summary>
@@ -103,6 +111,7 @@ namespace Hl7.Fhir.Rest
         {
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
+            if (String.IsNullOrEmpty(value)) throw Error.Argument("value", "value cannot be empty");
 
             if (name == SEARCH_PARAM_QUERY) Query = value;
             else if (name == SEARCH_PARAM_TEXT) Text = value;
@@ -120,9 +129,11 @@ namespace Hl7.Fhir.Rest
             }
             else if (name == SEARCH_PARAM_SUMMARY)
             {
-                if (value == "true") Summary = true;
-                else if (value == "false") Summary = false;
-                else throw Error.Format("Cannot parse summary value '{0}'", null, value);
+                SummaryType st = SummaryType.False;
+                if (Enum.TryParse<SummaryType>(value, ignoreCase: true, result: out st))
+                    Summary = st;
+                else
+                    throw Error.Format("Cannot parse summary value '{0}'", null, value);
             }
             else if (name == SEARCH_PARAM_FILTER) Filter = value;
             else if (name == SEARCH_PARAM_CONTAINED)
@@ -137,6 +148,10 @@ namespace Hl7.Fhir.Rest
                 if (SEARCH_CONTAINED_TYPE_CONTAINED.Equals(value)) ContainedType = ContainedResult.Contained;
                 else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
                 else throw Error.Format("Cannot parse containedType value '{0}'", null, value);
+            }
+            else if (name== SEARCH_PARAM_ELEMENTS)
+            {
+                Elements.AddRange(value.Split(','));
             }
             else
                 Parameters.Add(Tuple.Create(name, value));
@@ -202,7 +217,8 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? Summary { get; set; }
+        public SummaryType? Summary { get; set; }
+
 
 
         public const string SEARCH_PARAM_FILTER = "_filter";
@@ -261,6 +277,13 @@ namespace Hl7.Fhir.Rest
         [IgnoreDataMemberAttribute]
         public ContainedResult? ContainedType { get; private set; }
 
+
+        public const string SEARCH_PARAM_ELEMENTS = "_elements";
+
+        public List<string> Elements { get; private set;  }
+
+
+
         public static SearchParams FromUriParamList(IEnumerable<Tuple<string,string>> parameters)
         {
             var result = new SearchParams();
@@ -290,10 +313,11 @@ namespace Hl7.Fhir.Rest
             if (Include.Any()) result.AddRange(Include.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE, i)));
             if (RevInclude.Any()) result.AddRange(RevInclude.Select(i => Tuple.Create(SEARCH_PARAM_REVINCLUDE, i)));
             if (Sort.Any()) result.AddRange(Sort.Select(s => Tuple.Create(createSortParamName(s.Item2), s.Item1)));
-            if (Summary != null) result.Add(Tuple.Create(SEARCH_PARAM_SUMMARY, Summary.Value ? "true" : "false"));
+            if (Summary != null) result.Add(Tuple.Create(SEARCH_PARAM_SUMMARY, Summary.Value.ToString().ToLower()));
             if (!String.IsNullOrEmpty(Filter)) result.Add(Tuple.Create(SEARCH_PARAM_FILTER, Filter));
             if (Contained != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINED, Contained.Value.ToString().ToLower()));
             if (ContainedType != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINEDTYPE, ContainedType.Value.ToString().ToLower()));
+            if (Elements.Any()) result.Add(Tuple.Create(SEARCH_PARAM_ELEMENTS, String.Join(",",Elements)));
 
             result.AddRange(Parameters);
             return result;
@@ -345,6 +369,36 @@ namespace Hl7.Fhir.Rest
         False,
         Both
     }
+
+
+    public enum SummaryType
+    {
+        /// <summary>
+        /// Return only those elements marked as "summary" in the base definition of the resource(s)
+        /// </summary>
+        True,
+
+        /// <summary>
+        /// Return only the "text" element, and any mandatory elements
+        /// </summary>
+        Text,
+
+        /// <summary>
+        /// Remove the text element
+        /// </summary>
+        Data,
+
+        /// <summary>
+        /// Search only: just return a count of the matching resources, without returning the actual matches
+        /// </summary>
+        Count,
+
+        /// <summary>
+        /// Return all parts of the resource(s)
+        /// </summary>
+        False
+    }
+
 
     public enum ContainedResult
     {
