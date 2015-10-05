@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var pats =
               client.Search<Patient>(
-                new[] { string.Format("identifier={0}|{1}", "http://hl7.org/fhir/sid/us-ssn", "444222222") });
+                new[] { string.Format("identifier={0}|{1}", "http://hl7.org/fhir/sid/us-ssn", "444888888") });
             var pat = (Patient)pats.Entry.First().Resource;
             client.Update<Patient>(pat);
         }
@@ -711,17 +711,18 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var testEndpointDSTU2 = new Uri("http://spark-dstu2.furore.com/fhir");
             var testEndpointDSTU1 = new Uri("http://spark.furore.com/fhir");
+            var testEndpointDSTU12 = new Uri("http://fhirtest.uhn.ca/baseDstu1");
             var testEndpointDSTU22 = new Uri("http://fhirtest.uhn.ca/baseDstu2");
             var testEndpointDSTU23 = new Uri("http://fhir-dev.healthintersections.com.au/open");
 
             var client = new FhirClient(testEndpointDSTU1);
 
-            Patient p;
+            Conformance p;
 
             try
             {
                 client = new FhirClient(testEndpointDSTU23, verifyFhirVersion: true);
-                p = client.Read<Patient>("Patient/example");
+                p = client.Conformance();
             }
             catch (NotSupportedException)
             {
@@ -729,7 +730,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             client = new FhirClient(testEndpointDSTU23);
-            p = client.Read<Patient>("Patient/example");
+            p = client.Conformance();
 
             //client = new FhirClient(testEndpointDSTU2);
             //p = client.Read<Patient>("Patient/example");
@@ -740,12 +741,12 @@ namespace Hl7.Fhir.Tests.Rest
             //p = client.Read<Patient>("Patient/example");
 
 
-            client = new FhirClient(testEndpointDSTU1);
+            client = new FhirClient(testEndpointDSTU12);
                        
             try
             {
-                p = client.Read<Patient>("Patient/example");
-                Assert.Fail("Reading a DSTU1 example using DSTU2 parsers should have failed");
+                p = client.Conformance();
+                Assert.Fail("Getting DSTU1 data using DSTU2 parsers should have failed");
             }
             catch (FormatException)
             {

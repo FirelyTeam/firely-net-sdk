@@ -12,9 +12,6 @@
   <contained>
     <Patient>      
       <id value="1"/>     
-      <meta>
-        <lastUpdated value="2012-05-29T23:45:32Z"/>
-      </meta>
       <identifier>
         <system value="http://hl7.org/fhir/sid/us-ssn"/>
         <value value="444222222"/>

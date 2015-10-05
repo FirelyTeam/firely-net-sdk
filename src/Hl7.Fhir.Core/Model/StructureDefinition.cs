@@ -53,7 +53,13 @@ namespace Hl7.Fhir.Model
         public bool IsConstraint {  get { return ConstrainedType != null && !IsExtension; } }
 
         [NotMapped]
-        public bool IsExtension {  get { return ConstrainedType == "Extension"; } }
+        public bool IsExtension
+        {
+            get
+            {
+                return ConstrainedType == "Extension" || Base == "http://hl7.org/fhir/StructureDefinition/Extension";
+            }
+        }
     }
 }
 
