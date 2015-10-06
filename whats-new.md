@@ -2,7 +2,14 @@
 layout: default
 title: What's new?
 ---
-### In 0.9.0
+### In 0.90.2
+* Added support for $translate operations on ConceptMap
+* Added support for the changed _summary parameter
+* ArtifactResolver can now resolve ValueSets based on system
+* The CachedArtifactSource is now thread-safe
+
+
+### In 0.90.0
 * Updated the model to be compatible with DSTU2 (1.0.1)
 * Added support for comments in Json
 * Fixed a bug where elements called 'value' in Json could not have extensions or comments
