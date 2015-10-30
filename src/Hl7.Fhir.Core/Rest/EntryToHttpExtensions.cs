@@ -62,8 +62,7 @@ namespace Hl7.Fhir.Rest
 
             if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)
             {
-                if (bodyPreference == Prefer.ReturnMinimal)
-                    request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
+                request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
             }
 
             if (entry.Resource != null) setBodyAndContentType(request, entry.Resource, format, out body);
