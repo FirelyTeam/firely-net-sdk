@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         /// <param name="name"></param>
         /// <param name="matchPrefix"></param>
         /// <returns></returns>
-        public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Primitive
+        public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Element
         {
             if (name == null) throw new ArgumentNullException("name");
             ParametersParameterComponent p = Get(name, matchPrefix).SingleOrDefault();
