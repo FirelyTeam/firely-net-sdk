@@ -817,21 +817,22 @@ namespace Hl7.Fhir.Rest
             Resource result;
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
-            // explicitly go out to the server to get the resource and return it. This behaviour is only valid for PUT and POST requests,
-            // where the server may device whether or not to return the full body of the alterend resource.
-            if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)
+            // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
+            // This behaviour is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
+            if (response.Resource == null || response.Resource is OperationOutcome && isPostOrPut(request) && ReturnFullResource && response.Response.Location != null)
             {
-                if (response.Response.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
                 result = Get(response.Response.Location);
             }
             else
                 result = response.Resource;
 
-            // We have a body, but the body may not be of the type we expect.
-            if (result != null && result is TResource)
+            if (result == null) return null;
+            
+            // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
+            if (!(result is TResource))
             {
                 // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                // the LastResult, and return null as the result.
+                // the LastResult, and return null as the result. Otherwise, throw.
                 if (result is OperationOutcome)
                     return null;
 
@@ -839,9 +840,8 @@ namespace Hl7.Fhir.Rest
                     response.Request.Url, typeof(TResource).Name, result.GetType().Name);
                 throw new FhirOperationException(message, _requester.LastResponse.StatusCode);
             }
-
-            return LastResult as TResource;
-
+            else
+                return result as TResource;
         }
 
         private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
