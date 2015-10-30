@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
         {
             if (String.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
 
-            var f = contentType.ToLowerInvariant();
+            var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
 
             if (JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;

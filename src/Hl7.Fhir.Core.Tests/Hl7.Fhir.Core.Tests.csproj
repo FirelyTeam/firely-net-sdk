@@ -87,6 +87,7 @@
     <Compile Include="Rest\ReferenceExtensionsTest.cs" />
     <Compile Include="Rest\TransactionBuilderTests.cs" />
     <Compile Include="Rest\TestRestUrl.cs" />
+    <Compile Include="Rest\UtilityTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="Serialization\MeasurePerformance.cs" />
