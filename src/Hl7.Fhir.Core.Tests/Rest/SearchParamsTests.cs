@@ -99,8 +99,22 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
             Assert.AreEqual("field2", q.Elements.Skip(1).First());
-
         }
+
+        [TestMethod]
+        public void ParamOrderHasDefault()
+        {
+            var q = new SearchParams();
+
+            q.Add("_sort", "birthdate");
+            q.Add("_sort:asc", "name");
+            q.Add("_sort:desc", "active");
+            Assert.AreEqual(3, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("birthdate", SortOrder.Ascending), q.Sort.First());
+            Assert.AreEqual(Tuple.Create("name", SortOrder.Ascending), q.Sort.Skip(1).First());
+            Assert.AreEqual(Tuple.Create("active", SortOrder.Descending), q.Sort.Skip(2).First());
+        }
+
 
         [TestMethod]
         public void ManageSearchResult()
