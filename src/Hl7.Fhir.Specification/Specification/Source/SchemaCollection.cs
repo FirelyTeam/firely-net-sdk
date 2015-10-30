@@ -44,7 +44,6 @@ namespace Hl7.Fhir.Specification.Source
                         throw new FileNotFoundException("Cannot find manifest resources that represent the minimal set of schemas required for validation");
 
                     schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
-                    schema.Dispose();
                 }
             }
 

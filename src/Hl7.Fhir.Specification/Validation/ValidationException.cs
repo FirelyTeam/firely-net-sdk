@@ -5,78 +5,64 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
-
 using System;
 using System.Runtime.Serialization;
 using System.Security;
 
-using Hl7.Fhir.Model;
-using System.Net;
-
-namespace Hl7.Fhir.Rest
+namespace Hl7.Fhir.Profiling
 {
     /// <summary>
-    /// Represents HL7 FHIR errors that occur during application execution.
+    /// Represents validation errors that occur during application execution.
     /// </summary>
     [Serializable]
-    public class FhirOperationException : Exception
+    public class ValidationException : Exception
     {
         /// <summary>
-        /// Gets or sets the outcome of the operation <see cref="OperationOutcome"/>.
+        /// Gets or sets the <see cref="Outcome"/>.
         /// </summary>
-        public OperationOutcome Outcome { get; set; }
-        /// <summary>
-        /// The HTTP Status Code that resulted in this Exception
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        public HttpStatusCode Status { get; set; }
+        public Outcome Outcome { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FhirOperationException"/> class with a specified error message.
+        /// Initializes a new instance of the <see cref="ValidationException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        /// <param name="status">The http status code associated with the message</param>
-        public FhirOperationException(string message, HttpStatusCode status)
+        public ValidationException(string message)
             : base(message)
         {
-            Status = status;
         }
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="FhirOperationException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the <see cref="ValidationException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="status">The http status code associated with the message</param>
-        /// <param name="inner">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, Exception inner)
-            : base(message, inner)
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
+        public ValidationException(string message, Exception innerException)
+            : base(message, innerException)
         {
-            Status = status;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FhirOperationException"/> class with a specified error message.
+        /// Initializes a new instance of the <see cref="ValidationException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        /// <param name="status">The http status code associated with the message</param>
-        /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
-        /// <param name="inner">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome, Exception inner)
-            : base(message, inner)
-        {
-            Outcome = outcome;
-            Status = status;
-        }
-
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome)
+        /// <param name="outcome">The <see cref="Outcome"/>.</param>
+        public ValidationException(string message, Outcome outcome)
             : base(message)
         {
-            Outcome = outcome;
-            Status = status;
+            this.Outcome = outcome;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidationException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
+        /// <param name="outcome">The <see cref="Outcome"/>.</param>
+        public ValidationException(string message, Exception innerException, Outcome outcome)
+            : base(message, innerException)
+        {
+            this.Outcome = outcome;
+        }
 
         /// <summary>
         /// When overridden in a derived class, sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with information about the exception.

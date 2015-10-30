@@ -15,16 +15,6 @@ using Hl7.Fhir.Specification.Model;
 namespace Hl7.Fhir.Validation
 {
     public delegate void OutcomeLogger(Outcome outcome);
-
-    public class ValidationException : Exception
-    {
-        public Outcome Outcome;
-        public ValidationException(Outcome outcome) 
-        {
-            this.Outcome = outcome;
-        }
-    }
-
     public class ReportBuilder
     {
         private int nesting = 0;
