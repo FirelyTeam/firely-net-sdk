@@ -38,18 +38,24 @@ namespace Hl7.Fhir.Model
     public interface IConformanceResource
     {
         string Name { get; set; }
+        FhirString NameElement { get; set; }
+
         string Url { get; set; }
-        //List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
-        //string Display { get; set; }
+        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
+
         string Publisher { get; set; }
-        //List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent> Contact { get; set; }
+        FhirString PublisherElement { get; set; }
+
         string Description { get; set; }
-        //string Requirements { get; set; }
-        //Hl7.Fhir.Model.FhirString CopyrightElement { get; set; }
-        //List<Hl7.Fhir.Model.Coding> Code { get; set; }
+        FhirString DescriptionElement { get; set; }
+
         ConformanceResourceStatus? Status { get; set; }
+        Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement { get; set; }
         bool? Experimental { get; set; }
+        Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
         string Date { get; set; }
+        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+
         List<CodeableConcept> UseContext { get; set; }
         //List<ContactPoint> Contact { get; set; }
     }
@@ -63,7 +69,8 @@ namespace Hl7.Fhir.Model
     public interface IVersionableConformanceResource : IConformanceResource
     {
         string Version { get; set; }
-        
+
+        Hl7.Fhir.Model.FhirString VersionElement { get; set; }
     }
 
     public partial class StructureDefinition : IVersionableConformanceResource
@@ -116,6 +123,13 @@ namespace Hl7.Fhir.Model
             set { ; }
         }
 
+        [NotMapped]
+        public FhirString DescriptionElement
+        {
+            get { return null; }
+            set {; }
+        }
+
         public partial class DataElementContactComponent : IConformanceResourceContact
         { }
     }
@@ -150,10 +164,24 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
+        public FhirBoolean ExperimentalElement
+        {
+            get { return null; }
+            set {; }
+        }
+
+        [NotMapped]
         public string Url
         {
             get { return null; }
             set { ; }
+        }
+
+        [NotMapped]
+        public FhirUri UrlElement
+        {
+            get { return null; }
+            set {; }
         }
 
         public partial class NamingSystemContactComponent : IConformanceResourceContact
