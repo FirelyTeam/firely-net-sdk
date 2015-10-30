@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Rest
             verifyServerVersion();
 
             var request = tx.Entry[0];
-            var response = _requester.Execute(request, typeof(TResource));
+            var response = _requester.Execute(request);
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
@@ -814,16 +814,34 @@ namespace Hl7.Fhir.Rest
                 throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
             }
 
+            Resource result;
+
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // explicitly go out to the server to get the resource and return it. This behaviour is only valid for PUT and POST requests,
             // where the server may device whether or not to return the full body of the alterend resource.
             if (response.Resource == null && isPostOrPut(request) && ReturnFullResource)
             {
                 if (response.Response.Location == null) throw Error.InvalidOperation("Server did not return a Location header nor a body: no way to retrieve the created/updated resource");
-                return (TResource)Get(response.Response.Location);
+                result = Get(response.Response.Location);
             }
             else
-                return (TResource)response.Resource;
+                result = response.Resource;
+
+            // We have a body, but the body may not be of the type we expect.
+            if (result != null && result is TResource)
+            {
+                // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
+                // the LastResult, and return null as the result.
+                if (result is OperationOutcome)
+                    return null;
+
+                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", response.Request.Method,
+                    response.Request.Url, typeof(TResource).Name, result.GetType().Name);
+                throw new FhirOperationException(message, _requester.LastResponse.StatusCode);
+            }
+
+            return LastResult as TResource;
+
         }
 
         private bool isPostOrPut(Bundle.BundleEntryComponent interaction)

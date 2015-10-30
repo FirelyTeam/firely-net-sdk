@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Rest
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
 
-        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction, Type expected)
+        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction)
         {
             if (interaction == null) throw Error.ArgumentNull("interaction");
 
@@ -67,19 +67,6 @@ namespace Hl7.Fhir.Rest
 
             if (status.StartsWith("2"))      // 2xx codes - success
             {
-                // We have a successful call, but the body is not of the type we expect.
-                if (LastResult.Resource != null && !LastResult.Resource.GetType().CanBeTreatedAsType(expected))
-                {                                     
-                    // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                    // the LastResult, and return null as the result.
-                    if (LastResult.Resource is OperationOutcome)
-                        return null;
-                    
-                    var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", LastResult.Request.Method,
-                        LastResult.Request.Url, expected.Name, LastResult.Resource.GetType().Name);
-                    throw new FhirOperationException(message, statusCode);
-                }
-
                 return LastResult;
             }
             else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
