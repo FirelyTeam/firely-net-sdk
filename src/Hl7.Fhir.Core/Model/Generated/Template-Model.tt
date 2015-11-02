@@ -27,6 +27,8 @@
     System.Xml.XmlNamespaceManager nsT = new System.Xml.XmlNamespaceManager(docTypes.NameTable);
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
+	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
+
 	Dictionary<string, string> enums = new Dictionary<string, string>();
 	System.Collections.Generic.List<string> generatedSets = new System.Collections.Generic.List<string>();
 	foreach (System.Xml.XmlElement valueset in docExpansions.SelectNodes(
@@ -131,7 +133,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
 //
 namespace Hl7.Fhir.Model
 {
