@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// <#= pd.Summary #>
             /// </summary>
-            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : "" #>)]
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
             [References(<#= pd.ReferenceTargets #>)]
 <# }
@@ -411,6 +411,8 @@ namespace Hl7.Fhir.Model
 
 	// Read each of the properties out
 	int nPropNum = 80;
+	if (resourceBaseType == "Hl7.Fhir.Model.Resource")
+		nPropNum = 40;
 	foreach (PropertyDetails pd in props)
     {
 		nPropNum += 10;
@@ -418,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// <#= pd.Summary #>
         /// </summary>
-        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : "" #>)]
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [References(<#= pd.ReferenceTargets #>)]
 <# }
@@ -604,6 +606,7 @@ namespace Hl7.Fhir.Model
 				case "Identifier" : return "Hl7.Fhir.Model.Identifier";
 				case "CodeableConcept" : return "Hl7.Fhir.Model.CodeableConcept";
 				case "Reference" : return "Hl7.Fhir.Model.ResourceReference";
+				case "Resource" : return "Hl7.Fhir.Model.Resource"; 
 				case "code" : return "Hl7.Fhir.Model.Code"; 
 				case "Code" : return "Hl7.Fhir.Model.Code"; 
 				case "HumanName" : return "Hl7.Fhir.Model.HumanName"; 
@@ -687,6 +690,7 @@ namespace Hl7.Fhir.Model
 					result.BackboneComponentType = temp.BackboneComponentType;
 					result.NativeType = temp.NativeType;
 					result.ReferenceTargets = temp.ReferenceTargets;
+					result.AllowedTypes = temp.AllowedTypes;
 				}
 			}
 
@@ -785,6 +789,9 @@ namespace Hl7.Fhir.Model
 								break;
 				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
 								result.NativeType = "byte[]";
+								break;
+				case "Resource" : result.PropType = "Hl7.Fhir.Model.Resource"; 
+								result.AllowedTypes = "typeof(Hl7.Fhir.Model.Resource)";
 								break;
 				case "dateTime" : result.PropType = "Hl7.Fhir.Model.FhirDateTime"; 
 								result.NativeType = "string";
@@ -988,6 +995,9 @@ namespace Hl7.Fhir.Model
 				case "Identifier" : result.PropType = "Hl7.Fhir.Model.Identifier"; break;
 				case "CodeableConcept" : result.PropType = "Hl7.Fhir.Model.CodeableConcept"; break;
 				case "Reference" : result.PropType = "Hl7.Fhir.Model.ResourceReference"; break;
+				case "Resource" : result.PropType = "Hl7.Fhir.Model.Resource"; 
+								result.AllowedTypes = "typeof(Hl7.Fhir.Model.Resource)";
+								break;
 				case "Code" : result.PropType = "Hl7.Fhir.Model.Code"; 
 								result.NativeType = "string";
 								// If the binding is required, then we can change to the 
