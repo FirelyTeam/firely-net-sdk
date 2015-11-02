@@ -44,13 +44,13 @@
 
 			// Check to see if this is used in more than one resource
 			var nodes = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:snapshot/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
 			var nodesTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:snapshot/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
 			var nodePaths = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:snapshot/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsR);
 			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:snapshot/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsT);
 			if (nodes.Count + nodesTypes.Count > 1)
 			{
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
@@ -77,8 +77,8 @@
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
 			string resourceDescription = "";
-			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR) != null)
-				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR).Value;
+			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:snapshot/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR) != null)
+				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:snapshot/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR).Value;
 			if (resourceName == "Resource" || resourceName == "DomainResource")
 				continue;
 			manager.StartNewFile(resourceName + ".cs");
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
 <#
 			foreach (System.Xml.XmlNode eProp in 
 				(e as System.Xml.XmlElement).SelectNodes( //and fhir:min/@value = '1' and fhir:max/@value = '1' 
-				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required']]", nsR))
+				"fhir:snapshot/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required']]", nsR))
 			{
 				if (eProp is System.Xml.XmlElement)
 				{
@@ -555,14 +555,6 @@ namespace Hl7.Fhir.Model
 			name = name.Substring(1);
 		if (name == "=")
 			return "Equal";
-		if (name == "<")
-			return "LessThan";
-		if (name == "<=")
-			return "LessOrEqual";
-		if (name == ">=")
-			return "GreaterOrEqual";
-		if (name == ">")
-			return "GreaterThan";
 		string[] bits = name.Split(new char[] {' ', '-'});
 		string result = null;
 		foreach (var bit in bits)
