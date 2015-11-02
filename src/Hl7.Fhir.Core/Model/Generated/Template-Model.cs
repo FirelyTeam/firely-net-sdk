@@ -63,15 +63,6 @@
 	// Used in model class (resource): Composition.section.mode
 	// Used in model class (resource): List.mode
 
-// Generated Shared Enumeration: QuantityComparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-	// Used in model class (type): Quantity.comparator
-
 // Generated helper templates
 // Generated items
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
