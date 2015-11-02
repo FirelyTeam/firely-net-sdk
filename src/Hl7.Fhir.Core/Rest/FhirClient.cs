@@ -811,15 +811,15 @@ namespace Hl7.Fhir.Rest
             {
                 HttpStatusCode code;
                 Enum.TryParse<HttpStatusCode>(response.Response.Status, out code);
-                throw new FhirOperationException("Operation concluded succesfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
+                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
             }
 
             Resource result;
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-            // This behaviour is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            if (response.Resource == null || response.Resource is OperationOutcome && isPostOrPut(request) && ReturnFullResource && response.Response.Location != null)
+            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
+            if (response.Resource == null && response.Response.Location != null || response.Resource is OperationOutcome && isPostOrPut(request) && ReturnFullResource && response.Response.Location != null)
             {
                 result = Get(response.Response.Location);
             }
