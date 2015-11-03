@@ -34,7 +34,8 @@ namespace Hl7.Fhir.Tests.Rest
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-       // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        // Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
 
         [TestInitialize]
         public void TestInitialize()
@@ -314,7 +315,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             FhirClient client = new FhirClient(testEndpoint);
 
-            var fe = client.Create(pat);
+            var fe = client.Update(pat); // Update not create as we are providing the ID to be used.
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
             Assert.IsNotNull(fe.Meta.VersionId);

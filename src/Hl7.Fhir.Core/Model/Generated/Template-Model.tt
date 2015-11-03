@@ -89,8 +89,14 @@
 				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Resource")
 					resourceBaseType = "Hl7.Fhir.Model.Resource";
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
+					resourceBaseType = "Hl7.Fhir.Model.Element";
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Quantity")
+					resourceBaseType = "Hl7.Fhir.Model.Quantity";
 				else
 					resourceBaseType = "Hl7.Fhir.Model.DomainResource";
+				if (resourceBaseType == "Hl7.Fhir.Model.Quantity")
+					continue;
             }
 
 #>
@@ -140,13 +146,13 @@ namespace Hl7.Fhir.Model
 <# if (!string.IsNullOrEmpty(resourceDescription)) { #>    /// <summary>
     /// <#= resourceDescription #>
     /// </summary>
-<# } #>    [FhirType("<#= resourceName #>", IsResource=true)]
+<# } #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
     [DataContract]
     public partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
     {
-        [NotMapped]
+<# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-        [NotMapped]
+<# } #>        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
@@ -413,6 +419,9 @@ namespace Hl7.Fhir.Model
 	int nPropNum = 80;
 	if (resourceBaseType == "Hl7.Fhir.Model.Resource")
 		nPropNum = 40;
+	if (resourceBaseType == "Hl7.Fhir.Model.Element")
+		nPropNum = 20;
+
 	foreach (PropertyDetails pd in props)
     {
 		nPropNum += 10;
@@ -615,6 +624,7 @@ namespace Hl7.Fhir.Model
 				case "CodeableConcept" : return "Hl7.Fhir.Model.CodeableConcept";
 				case "Reference" : return "Hl7.Fhir.Model.ResourceReference";
 				case "Resource" : return "Hl7.Fhir.Model.Resource"; 
+				case "SampledData" : return "Hl7.Fhir.Model.SampledData"; 
 				case "code" : return "Hl7.Fhir.Model.Code"; 
 				case "Code" : return "Hl7.Fhir.Model.Code"; 
 				case "HumanName" : return "Hl7.Fhir.Model.HumanName"; 
