@@ -121,7 +121,9 @@
     <None Include="TestData\examples.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\json-edge-cases.json" />
+    <None Include="TestData\json-edge-cases.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\TestPatient.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
