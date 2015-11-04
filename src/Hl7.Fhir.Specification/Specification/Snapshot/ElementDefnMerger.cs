@@ -18,7 +18,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 
 
-namespace Hl7.Fhir.Specification.Expansion
+namespace Hl7.Fhir.Specification.Snapshot
 {
     internal class ElementDefnMerger
     {
@@ -70,17 +70,29 @@ namespace Hl7.Fhir.Specification.Expansion
             snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
             snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
 
-            // ElementDefinition.nameReference cannot be overridden by a derived profile
+            // snap.base should already be there, and is not changed by the diff
 
+            // Type is just overridden
+            if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
+            {
+                snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
+                foreach (var element in snap.Type) markChange(snap);
+            }
+
+            // ElementDefinition.nameReference cannot be overridden by a derived profile
             // defaultValue and meaningWhenMissing can only be set in a resource/datatype/extension definition and cannot be overridden
 
             snap.Fixed = mergeComplexAttribute(snap.Fixed, diff.Fixed);
             snap.Pattern = mergeComplexAttribute(snap.Pattern, diff.Pattern);
             snap.Example = mergeComplexAttribute(snap.Example, diff.Example);
+            snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
+            snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
 
             snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
 
             // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
+            // Constraints are cumulative bassed on Constraint.id
+            snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
 
             snap.MustSupportElement = mergePrimitiveAttribute(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -94,17 +106,6 @@ namespace Hl7.Fhir.Specification.Expansion
 
             snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
 
-            // Type is just overridden
-            if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
-            {
-                snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                foreach (var element in snap.Type) markChange(snap);
-            }
-
-
-            // Constraints are cumulative bassed on Constraint.id
-            snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
-
             snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
 
             // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
@@ -116,7 +117,15 @@ namespace Hl7.Fhir.Specification.Expansion
                 snap.SetExtension(SnapshotGenerator.CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
         }
         
-
+        /// <summary>
+        /// Merges two FHIR primitives. Normally this means the diff overrides the snap, but if the diffd is a
+        /// string, and it start with ellipsis ('...'), the diff is appended to the snap.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="snap"></param>
+        /// <param name="diff"></param>
+        /// <param name="allowAppend"></param>
+        /// <returns></returns>
         private T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
         {
             if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))

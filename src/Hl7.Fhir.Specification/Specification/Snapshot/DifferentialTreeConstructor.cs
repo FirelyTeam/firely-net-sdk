@@ -15,7 +15,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Specification.Expansion
+namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>
     /// Differential structures may contain paths that "skip" over parents. For our profile expansion logic,

@@ -17,7 +17,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Expansion;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Navigation;
 
 namespace Hl7.Fhir.Specification.Tests
