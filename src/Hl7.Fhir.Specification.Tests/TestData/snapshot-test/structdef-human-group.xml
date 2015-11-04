@@ -126,3 +126,13 @@
     </element>
   </differential>
 </StructureDefinition>
+
+<!-- 
+
+TODO:
+
+* Add a derived profile that slices entity into active/non active members (discriminator = 'inactive')
+* Add a derived derived profile that re-slices the active slice into Practitioners and Patients
+* Use an explicit slice entry in the diff
+* Also, name a slice to override some constraints
+-->

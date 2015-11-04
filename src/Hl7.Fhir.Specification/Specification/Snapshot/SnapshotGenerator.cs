@@ -59,57 +59,65 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        private void merge(ElementNavigator snap, ElementNavigator diff)
+        private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
+        {
+            var matches = (new ElementMatcher()).Match(snapNav, diffNav);
+
+            foreach (var match in matches)
+            {
+                if (!snapNav.ReturnToBookmark(match.BaseBookmark))
+                    throw Error.InvalidOperation("Internal merging error: bookmark {0} in snap is no longer available", match.BaseBookmark);
+                if (!diffNav.ReturnToBookmark(match.DiffBookmark))
+                    throw Error.InvalidOperation("Internal merging error: bookmark {0} in diff is no longer available", match.DiffBookmark);
+
+                if (match.Action == ElementMatcher.MatchAction.Add)
+                {
+                    // Find last entry in slice to add to the end
+                    var current = snapNav.Path;
+                    while (snapNav.Current.Path == current && snapNav.MoveToNext()) ;
+                    var dest = snapNav.Bookmark();
+                    snapNav.ReturnToBookmark(match.BaseBookmark);
+                    snapNav.DuplicateAfter(dest);
+
+                    mergeElement(snapNav, diffNav);
+                    snapNav.Current.Slicing = null;         // Probably not good enough...
+                }
+                else if(match.Action == ElementMatcher.MatchAction.Merge)
+                {
+                    mergeElement(snapNav, diffNav);
+                }
+                else if(match.Action == ElementMatcher.MatchAction.Slice)
+                {
+
+                }
+            }
+
+        }
+
+
+        private void mergeElement(ElementNavigator snap, ElementNavigator diff)
         {
             (new ElementDefnMerger(_markChanges)).Merge(snap.Current, diff.Current);
 
-            // If there are children, move into them, and recursively merge them
-            if (diff.MoveToFirstChild())
+            if (diff.HasChildren && !snap.HasChildren)
             {
-                if (!snap.HasChildren)
-                {
-                    // The differential moves into an element that has no children in the base.
-                    // This is allowable if the base's element has a nameReference or a TypeRef,
-                    // in which case needs to be expanded before we can move to the path indicated
-                    // by the differential
+                // The differential moves into an element that has no children in the base.
+                // This is allowable if the base's element has a nameReference or a TypeRef,
+                // in which case needs to be expanded before we can move to the path indicated
+                // by the differential
 
-                    if (snap.Current.Type.Count > 1)
-                        throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
+                // Note that since we merged the parent, a (shorthand) typeslice will already
+                // have reduced the numer of types to 1. Still, if you don't do that, we cannot
+                // accept constraints on children, need to select a single type first...
+                if (snap.Current.Type.Count > 1)
+                    throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
 
-                    expandBaseElement(snap, diff);
-                }
-
-                // Due to how MoveToFirstChild() works, we have to move to the first matching *child*
-                // when entering the loop for the first time, after that we can look for the next
-                // matching *sibling*.
-                bool firstEntry = true;
-
-                do
-                {
-                    if ((firstEntry && !snap.MoveToChild(diff.PathName)) ||
-                        (!firstEntry && !snap.MoveTo(diff.PathName)) ) // HACK: I don't think it should be allowed for a diff to list constraints in the wrong order...
-                    {
-                        throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base", diff.Path);
-                    }
-                    firstEntry = false;
-
-                    // Child found in both, merge them
-                    if (countChildNameRepeats(diff) > 1 || diff.Current.IsExtension())
-                    {
-                        // The child in the diff repeats or we recognize it as an extension slice -> we're on the first element of a slice!
-                        mergeSlice(snap, diff);
-                    }
-                    else
-                        merge(snap, diff);
-                }
-                while (diff.MoveToNext());
-
-                // After the merge, return the diff and snapho back to their original position
-                diff.MoveToParent();
-                snap.MoveToParent();
+                expandBaseElement(snap, diff);
             }
-        }
 
+            // Now, recursively merge the children
+            merge(snap, diff);
+        }
 
         private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
         {
@@ -123,37 +131,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        private static int countChildNameRepeats(ElementNavigator diff)
-        {
-            //TODO: We use this function to determine whether an element is sliced...doing this by counting repeats of elements
-            //in the diff. However, when reslicing, the diff doesn't need to have repeating elements, and you have to derive from the
-            //base (snapshot) that the element is sliced.
-
-            var repeats = 1;
-
-            var currentPath = diff.PathName;
-            var bm = diff.Bookmark();
-            while (diff.MoveToNext())
-            {
-                // check whether the next sibling in the differential has the same name,
-                // that means we're looking at a slice
-                if (diff.PathName == currentPath)
-                    repeats++;
-                else
-                    break;
-            }
-
-            diff.ReturnToBookmark(bm);
-            return repeats;
-        }
-
-        private void mergeSlice(ElementNavigator snap, ElementNavigator diff)
+        private void makeSlice(ElementNavigator snap, ElementNavigator diff)
         {
             // diff is now located at the first repeat of a slice, which is (possibly) the slice entry
             // snap is located at the base definition of the element that will become sliced. But snap is not yet sliced.
 
             // Before we start, is the base element sliceable?
-            if(!snap.Current.IsRepeating() && !snap.Current.IsChoice())
+            if (!snap.Current.IsRepeating() && !snap.Current.IsChoice())
                 throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an slice, but the base element is not a repeating or choice element",
                    diff.Current.Path);
 
@@ -197,14 +181,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             while (diff.MoveToNext(slicingName) && snap.MoveToNext(slicingName));
 
-            //if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
-            //{
-            //    // Slices that are open in some form need to repeat the original "base" definition,
-            //    // so that the open slices have a place to "fit in"
-            //    snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
-            //}
+            if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
+            {
+                // Slices that are open in some form need to repeat the original "base" definition,
+                // so that the open slices have a place to "fit in"
+                snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
+            }
 
-            //TODO: update/check the slice entry's min/max property to match what we've found in the slice group
+            //TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
 
         private void markChange(Element snap)
