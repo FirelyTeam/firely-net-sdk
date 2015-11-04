@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="human-group" />
+  <url value="http://example.org/fhir/StructureDefinition/human-group" />
+  <version value="1.0" />
+  <name value="Human Group" />
+  <display value="Group with just humans" />
+  <status value="draft" />
+  <publisher value="HL7 (FHIR Project)"/>
+  <contact>
+    <telecom>
+      <system value="other"/>
+      <value value="http://hl7.org/fhir"/>
+    </telecom>
+    <telecom>
+      <system value="email"/>
+      <value value="fhir@lists.hl7.org"/>
+    </telecom>
+  </contact>
+  <date value="2015-11-04T10:14:00+01:00" />
+  <description value="A group with just humans, i.e. member.entity.reference types are limited to Patient and Practitioner." />
+  <fhirVersion value="1.0.1" />
+  <kind value="resource" />
+  <constrainedType value="Group" />
+  <abstract value="false" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Group" />
+  <differential>
+    <element>
+      <path value="Group" />
+      <short value="Group of human beings" />
+      <definition value="... In this case, a group with just human beings" />
+    </element>
+    <element>
+      <path value="Group.type" />
+      <short value="person | practitioner" />
+      <definition value="Identifies whether the group includes persons or practitioners" />
+      <min value="1" />
+      <max value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="http://example.org/fhir/ValueSet/group-type-human" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element>
+      <path value="Group.actual" />
+      <fixedBoolean value="true" />
+    </element>
+    <element>
+      <path value="Group.name.extension" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://example.org/fhir/StructureDefinition/string-translation" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.characteristic" />
+      <slicing>
+        <discriminator value="code" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <short value="Trait of group members" />
+      <definition value="..., which in this case are all humans" />
+    </element>
+    <element>
+      <path value="Group.characteristic" />
+      <name value="isSenior" />
+      <label value="Is senior?" />
+      <short value="The group members are seniors" />
+      <definition value="The group members are seniors" />
+      <min value="0" />
+      <max value="1" />
+    </element>
+    <element>
+      <path value="Group.characteristic.code" />
+      <min value="1" />
+      <max value="1" />      
+      <fixedCodeableConcept>
+        <coding>
+          <system value="http://snomed.info/sct"/>
+          <code value="105436006"/>
+          <display value="Elderly person"/>
+        </coding>        
+      </fixedCodeableConcept>
+    </element>
+    <element>
+      <path value="Group.characteristic.valueBoolean" />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="boolean" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.characteristic.exclude" />
+      <fixedBoolean value="true" />
+    </element>
+    <element>
+      <path value="Group.characteristic.period" />
+      <min value="0" />
+      <max value="0" />
+    </element>
+    <element>
+      <path value="Group.member.entity" />
+      <short value="Reference to the group member" />
+      <definition value="A reference to the entity that is a member of the group. Must be consistent with Group.type." />
+      <comments value="The allowed reference types for this element have been reduced to just human beings." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+      </type>
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.member.period" />
+      <min value="0" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>
