@@ -16,7 +16,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
-
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -45,7 +45,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // representation cannot be overridden
-
             snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
             
             // Codes are cumulative based on the code value
@@ -59,24 +58,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Definition = "An Extension"; markChange(snap.DefinitionElement);
                 snap.Comments = null;
                 snap.Requirements = null;
-                snap.Label = "Extension"; markChange(snap.LabelElement);
                 snap.AliasElement = new List<FhirString>();
                 snap.Mapping = new List<ElementDefinition.ElementDefinitionMappingComponent>();
             }
-            else
-            {
-                snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
-                snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
-                snap.CommentsElement = mergePrimitiveAttribute(snap.CommentsElement, diff.CommentsElement, allowAppend: true);
-                snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
-                snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
-                // Aliases are cumulative based on the string value
-                snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
+            snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
+            snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
+            snap.CommentsElement = mergePrimitiveAttribute(snap.CommentsElement, diff.CommentsElement, allowAppend: true);
+            snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
+            snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
-                // Mappings are cumulative, but keep unique on full contents
-                snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
-            }
+            // Aliases are cumulative based on the string value
+            snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
+
+            // Mappings are cumulative, but keep unique on full contents
+            snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
             snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
             snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
@@ -102,8 +98,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
 
             // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
-            // Constraints are cumulative bassed on Constraint.id
-            snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.Key == b.Key);
+            // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
+            snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
 
             snap.MustSupportElement = mergePrimitiveAttribute(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -182,13 +178,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var result = snap == null ? new List<T>() : new List<T>((IEnumerable<T>)snap.DeepCopy());
 
-                // Add new elements to the result, but replace existing ones
+                // Just add new elements to the result, never replace existing ones
                 foreach (var element in diff)
                 {
-                    result.RemoveAll(e => elemComparer(element, e));
-                    var newElement = (T)element.DeepCopy();
-                    markChange(newElement);
-                    result.Add(newElement);
+                    if (!result.Any(e => elemComparer(e, element)))
+                    {
+                        var newElement = (T)element.DeepCopy();
+                        markChange(newElement);
+                        result.Add(newElement);
+                    }
                 }
 
                 return result;

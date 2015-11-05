@@ -46,6 +46,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at {0} to have a snapshot representation", structure.Base);
 
             var snapshot = (StructureDefinition.StructureDefinitionSnapshotComponent)baseStructure.Snapshot.DeepCopy();
+            generateBaseElements(snapshot.Element);
             var snapNav = new ElementNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
@@ -67,8 +68,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = (new ElementMatcher()).Match(snapNav, diffNav);
 
-                Debug.WriteLine("Matches for children of {0}".FormatWith(snapNav.Path));
-                matches.DumpMatches(snapNav, diffNav);
+                //Debug.WriteLine("Matches for children of {0}".FormatWith(snapNav.Path));
+                //matches.DumpMatches(snapNav, diffNav);
 
                 foreach (var match in matches)
                 {
@@ -131,7 +132,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (snap.Current.Type.Count > 1)
                         throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
 
-                    snap.ExpandElement(_resolver);
+                    ExpandElement(snap, _resolver);
 
                     if (!snap.HasChildren)
                     {
@@ -159,7 +160,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             ElementDefinition slicingEntry = diff.Current;
 
-            // Mmmm....no slicing entry in the differential. This is only alloweable for extension slices, as a shorthand notation.                 
+            //Mmmm....no slicing entry in the differential. This is only alloweable for extension slices, as a shorthand notation.
             if (slicingEntry.Slicing == null)
             {
                 if (slicingEntry.IsExtension())
@@ -195,6 +196,63 @@ namespace Hl7.Fhir.Specification.Snapshot
             slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
 
             return slicingDiff;
+        }
+
+
+        internal static bool ExpandElement(ElementNavigator nav, ArtifactResolver resolver)
+        {
+            if (resolver == null) throw Error.ArgumentNull("source");
+            if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
+
+            if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
+
+            var defn = nav.Current;
+
+            if (!String.IsNullOrEmpty(defn.NameReference))
+            {
+                var sourceNav = new ElementNavigator(nav);
+                var success = sourceNav.JumpToNameReference(defn.NameReference);
+
+                if (!success)
+                    throw Error.InvalidOperation("Trying to navigate down a node that has a nameReference of '{0}', which cannot be found in the StructureDefinition".FormatWith(defn.NameReference));
+
+                nav.CopyChildren(sourceNav);
+            }
+            else if (defn.Type != null && defn.Type.Count > 0)
+            {
+                if (defn.Type.Count > 1)
+                    throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
+                else
+                {
+                    var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code);
+
+                    if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
+                    if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));
+
+                    generateBaseElements(coreType.Snapshot.Element);
+                    var sourceNav = new ElementNavigator(coreType.Snapshot.Element);
+                    sourceNav.MoveToFirstChild();
+                    nav.CopyChildren(sourceNav);
+                }
+            }
+
+            return true;
+        }
+
+        private static void generateBaseElements(IEnumerable<ElementDefinition> elements)
+        {
+            foreach(var element in elements)
+            {
+                if (element.Base == null)
+                {
+                    element.Base = new ElementDefinition.ElementDefinitionBaseComponent()
+                    {
+                        MaxElement = (FhirString)element.MaxElement.DeepCopy(),
+                        MinElement = (Integer)element.MinElement.DeepCopy(),
+                        PathElement = (FhirString)element.PathElement.DeepCopy()
+                    };
+                }
+            }
         }
     }
 }
