@@ -50,7 +50,7 @@
     <element>
       <path value="Group.name.extension" />
       <min value="0" />
-      <max value="*" />
+      <max value="5" />
       <type>
         <code value="Extension" />
         <profile value="http://example.org/fhir/StructureDefinition/string-translation" />
@@ -63,7 +63,7 @@
         <rules value="openAtEnd" />
       </slicing>
       <short value="Trait of group members" />
-      <definition value="..., which in this case are all humans" />
+      <definition value="...In this case, these are all humans." />
     </element>
     <element>
       <path value="Group.characteristic" />

@@ -374,6 +374,7 @@ namespace Hl7.Fhir.Specification.Navigation
             foreach (var elem in source.Reverse<ElementDefinition>())
                 Elements.Insert(dest, (ElementDefinition)elem.DeepCopy());
 
+            OrdinalPosition = dest;
             return true;
         }
     

@@ -33,6 +33,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
+            // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
+            // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
+            if(snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
+            {
+                if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.Capitalize() != diff.Path)
+                    throw Error.InvalidOperation("Path cannot be changed from {0} to {1}, since the type is sliced to {2}"
+                            .FormatWith(snap.Path, diff.Path, diff.Type.First().Code));
+
+                snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
+            }
+
             // representation cannot be overridden
 
             snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
@@ -132,14 +143,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var result = (T)diff.DeepCopy();
 
-                if (allowAppend && diff is FhirString)
+                if (allowAppend && diff.ObjectValue is string)
                 {
-                    var diffText = (diff as FhirString).Value;
+                    var diffText = diff.ObjectValue as string;
 
                     if (diffText.StartsWith("..."))
-                        diffText = (snap as FhirString).Value + "\r\n" + diffText.Substring(3);
+                        diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
 
-                    (result as FhirString).Value = diffText;
+                    result.ObjectValue = diffText;
                 }
 
                 markChange(result);

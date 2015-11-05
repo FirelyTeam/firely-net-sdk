@@ -60,45 +60,55 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
         {
-            var matches = (new ElementMatcher()).Match(snapNav, diffNav);
+            var snapPos = snapNav.Bookmark();
+            var diffPos = diffNav.Bookmark();
 
-            Debug.WriteLine("Matches for children of {0}".FormatWith(snapNav.Path));
-            matches.DumpMatches(snapNav,diffNav);
-
-            foreach (var match in matches)
+            try
             {
-                if (!snapNav.ReturnToBookmark(match.BaseBookmark))
-                    throw Error.InvalidOperation("Internal merging error: bookmark {0} in snap is no longer available", match.BaseBookmark);
-                if (!diffNav.ReturnToBookmark(match.DiffBookmark))
-                    throw Error.InvalidOperation("Internal merging error: bookmark {0} in diff is no longer available", match.DiffBookmark);
+                var matches = (new ElementMatcher()).Match(snapNav, diffNav);
 
-                if (match.Action == ElementMatcher.MatchAction.Add)
-                {
-                    // TODO: move this logic to matcher, the Add should point to the last slice where
-                    // the new slice will be added after.
+                Debug.WriteLine("Matches for children of {0}".FormatWith(snapNav.Path));
+                matches.DumpMatches(snapNav, diffNav);
 
-                    // Find last entry in slice to add to the end
-                    var current = snapNav.Path;
-                    while (snapNav.Current.Path == current && snapNav.MoveToNext()) ;
-                    snapNav.MoveToPrevious();       // take one step back...
-                    var dest = snapNav.Bookmark();
-                    snapNav.ReturnToBookmark(match.BaseBookmark);
-                    snapNav.DuplicateAfter(dest);
-                    markChange(snapNav.Current);
+                foreach (var match in matches)
+                {
+                    if (!snapNav.ReturnToBookmark(match.BaseBookmark))
+                        throw Error.InvalidOperation("Internal merging error: bookmark {0} in snap is no longer available", match.BaseBookmark);
+                    if (!diffNav.ReturnToBookmark(match.DiffBookmark))
+                        throw Error.InvalidOperation("Internal merging error: bookmark {0} in diff is no longer available", match.DiffBookmark);
 
-                    mergeElement(snapNav, diffNav);
-                    snapNav.Current.Slicing = null;         // Probably not good enough...
-                }
-                else if(match.Action == ElementMatcher.MatchAction.Merge)
-                {
-                    mergeElement(snapNav, diffNav);
-                }
-                else if(match.Action == ElementMatcher.MatchAction.Slice)
-                {
-                    makeSlice(snapNav, diffNav);
+                    if (match.Action == ElementMatcher.MatchAction.Add)
+                    {
+                        // TODO: move this logic to matcher, the Add should point to the last slice where
+                        // the new slice will be added after.
+
+                        // Find last entry in slice to add to the end
+                        var current = snapNav.Path;
+                        while (snapNav.Current.Path == current && snapNav.MoveToNext()) ;
+                        snapNav.MoveToPrevious();       // take one step back...
+                        var dest = snapNav.Bookmark();
+                        snapNav.ReturnToBookmark(match.BaseBookmark);
+                        snapNav.DuplicateAfter(dest);
+                        markChange(snapNav.Current);
+
+                        mergeElement(snapNav, diffNav);
+                        snapNav.Current.Slicing = null;         // Probably not good enough...
+                    }
+                    else if (match.Action == ElementMatcher.MatchAction.Merge)
+                    {
+                        mergeElement(snapNav, diffNav);
+                    }
+                    else if (match.Action == ElementMatcher.MatchAction.Slice)
+                    {
+                        makeSlice(snapNav, diffNav);
+                    }
                 }
             }
-
+            finally
+            {
+                snapNav.ReturnToBookmark(snapPos);
+                diffNav.ReturnToBookmark(diffPos);
+            }
         }
 
 
@@ -121,22 +131,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (snap.Current.Type.Count > 1)
                         throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
 
-                    expandBaseElement(snap, diff);
+                    snap.ExpandElement(_resolver);
+
+                    if (!snap.HasChildren)
+                    {
+                        // Snapshot's element turns out not to be expandable, so we can't move to the desired path
+                        throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
+                    }
                 }
 
                 // Now, recursively merge the children
                 merge(snap, diff);
-            }
-        }
-
-        private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
-        {
-            snap.ExpandElement(_resolver);
-
-            if (!snap.HasChildren)
-            {
-                // Snapshot's element turns out not to be expandable, so we can't move to the desired path
-                throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
             }
         }
 
