@@ -16,10 +16,32 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
-
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
+    internal static class MatchPrinter
+    {
+        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementNavigator snapNav, ElementNavigator diffNav)
+        {
+            var sbm = snapNav.Bookmark();
+            var dbm = diffNav.Bookmark();
+
+            foreach(var match in matches)
+            {
+                if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+                    throw Error.InvalidOperation("Found unreachable bookmark in matches");
+
+                var bPos = snapNav.Path + "[{0}]".FormatWith(snapNav.OrdinalPosition);
+                var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
+                Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
+            }
+
+            snapNav.ReturnToBookmark(sbm);
+            diffNav.ReturnToBookmark(dbm);
+        }
+    }
+
 
     internal class ElementMatcher
     {
@@ -52,8 +74,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </remarks>
         public List<MatchInfo> Match(ElementNavigator snapNav, ElementNavigator diffNav)
         {
-            if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element {0} in snap has no children".FormatWith(snapNav.PathName));
-            if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element {0} in diff has no children".FormatWith(diffNav.PathName));
+            if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.PathName));
+            if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.PathName));
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
             var baseStartBM = snapNav.Bookmark();
@@ -101,7 +123,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Try to match nameXXXXX to name[x]
         private static bool isPossibleTypeSlice(string baseName, string diffName)
         {
-            return String.Compare(baseName, 0, diffName, 0, baseName.Length - 3) == 0;
+            return String.Compare(baseName, 0, diffName, 0, baseName.Length - 3) == 0 && diffName.Length > baseName.Length;
         }
 
         /// <summary>
@@ -188,7 +210,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (baseIsSliced)
                 throw Error.NotSupported("Cannot yet handle re-slicing found at diff {0}".FormatWith(diffNav.Path));
 
-
             // For the first entries with explicit slicing information (or implicit if this is an extension),
             // generate a match between the base's unsliced element and the first entry in the diff
             if(diffNav.Current.Slicing != null || diffNav.Current.IsExtension() )
@@ -201,9 +222,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Action = MatchAction.Slice
                 });
 
-                if(diffNav.Current.Name == null)
+                if(!diffNav.Current.IsExtension())
                 {
-                    // Diff has an explicit slicing entry, move to next for the first real slice
                     if (!diffNav.MoveToNext())
                         throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
                 }

@@ -34,40 +34,41 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _source = ArtifactResolver.CreateOffline();
+            IArtifactSource multi = new MultiArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test"), new FileDirectoryArtifactSource(includeSubdirectories: true), ZipArtifactSource.CreateValidationSource());
+            _source = new ArtifactResolver(new CachedArtifactSource(multi));
         }
 
 
-        [TestMethod, Ignore]
-        public void GenerateLipidSnapshot()
-        {            
-            var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
+        [TestMethod]
+        public void GenerateGroupSnapshot()
+        {                                  
+            var sd = _source.GetStructureDefinition("http://example.org/fhir/StructureDefinition/human-group");
             Assert.IsNotNull(sd);
 
             generateSnapshotAndCompare(sd, _source);
         }
 
 
-        [TestMethod, Ignore]
-        public void GenerateNorwegianSnapshots()
-        {
-            var mySource = new FileDirectoryArtifactSource(@"C:\Git\helsenord.ig\Source\Chapter.3.Package", includeSubdirectories: false);
-            var stdSource = ZipArtifactSource.CreateValidationSource();
-            var resolver = new ArtifactResolver(new MultiArtifactSource(mySource, stdSource));
+        //[TestMethod, Ignore]
+        //public void GenerateNorwegianSnapshots()
+        //{
+        //    var mySource = new FileDirectoryArtifactSource(@"C:\Git\helsenord.ig\Source\Chapter.3.Package", includeSubdirectories: false);
+        //    var stdSource = ZipArtifactSource.CreateValidationSource();
+        //    var resolver = new ArtifactResolver(new MultiArtifactSource(mySource, stdSource));
 
-            var sources = new[] { "noHealthcareService", "noHealthcareServiceLocation", "noOrganization", "noPractitioner", "acronym" };
+        //    var sources = new[] { "noHealthcareService", "noHealthcareServiceLocation", "noOrganization", "noPractitioner", "acronym" };
 
-            var generator = new SnapshotGenerator(resolver, markChanges: false);        
+        //    var generator = new SnapshotGenerator(resolver, markChanges: false);        
 
-            foreach (var source in sources)
-            {
-                var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source);
-                Assert.IsNotNull(sd, "Cannot find SD " + sd.Url);
+        //    foreach (var source in sources)
+        //    {
+        //        var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source);
+        //        Assert.IsNotNull(sd, "Cannot find SD " + sd.Url);
 
-                generator.Generate(sd);
-                File.WriteAllText(@"C:\Git\helsenord.ig\Source\Chapter.3.Package\structure." + source + ".xml", FhirSerializer.SerializeResourceToXml(sd));
-            }           
-        }
+        //        generator.Generate(sd);
+        //        File.WriteAllText(@"C:\Git\helsenord.ig\Source\Chapter.3.Package\structure." + source + ".xml", FhirSerializer.SerializeResourceToXml(sd));
+        //    }           
+        //}
 
 
         [TestMethod,Ignore]
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Fix choiceXXX -> choice[x] bug in Grahame's differentials
            //     repairChoiceBug(original.Snapshot);
-                repairChoiceBug(original.Differential);
+               // repairChoiceBug(original.Differential);
 
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
 
@@ -105,17 +106,17 @@ namespace Hl7.Fhir.Specification.Tests
             generator.Generate(expanded);
 
             // Simulate bug in Grahame's expander
-            if (original.Snapshot.Element.Count == expanded.Snapshot.Element.Count)
-            {
-                for (var ix = 0; ix < expanded.Snapshot.Element.Count; ix++)
-                {
-                    if (original.Snapshot.Element[ix].Path == expanded.Snapshot.Element[ix].Path)
-                    {
-                        expanded.Snapshot.Element[ix].Min = original.Snapshot.Element[ix].Min;
-                        expanded.Snapshot.Element[ix].MustSupport = original.Snapshot.Element[ix].MustSupport;
-                    }
-                }
-            }
+            //if (original.Snapshot.Element.Count == expanded.Snapshot.Element.Count)
+            //{
+            //    for (var ix = 0; ix < expanded.Snapshot.Element.Count; ix++)
+            //    {
+            //        if (original.Snapshot.Element[ix].Path == expanded.Snapshot.Element[ix].Path)
+            //        {
+            //            expanded.Snapshot.Element[ix].Min = original.Snapshot.Element[ix].Min;
+            //            expanded.Snapshot.Element[ix].MustSupport = original.Snapshot.Element[ix].MustSupport;
+            //        }
+            //    }
+            //}
             
             var areEqual = original.IsExactly(expanded);
 

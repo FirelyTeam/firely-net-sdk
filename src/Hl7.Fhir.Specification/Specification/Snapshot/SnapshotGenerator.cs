@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -46,12 +47,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var snapshot = (StructureDefinition.StructureDefinitionSnapshotComponent)baseStructure.Snapshot.DeepCopy();
             var snapNav = new ElementNavigator(snapshot.Element);
-            snapNav.MoveToFirstChild();
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
             var diffNav = new ElementNavigator(fullDifferential);
-            diffNav.MoveToFirstChild();
 
             merge(snapNav, diffNav);
            
@@ -63,6 +62,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var matches = (new ElementMatcher()).Match(snapNav, diffNav);
 
+            Debug.WriteLine("Matches for children of {0}".FormatWith(snapNav.Path));
+            matches.DumpMatches(snapNav,diffNav);
+
             foreach (var match in matches)
             {
                 if (!snapNav.ReturnToBookmark(match.BaseBookmark))
@@ -72,12 +74,17 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (match.Action == ElementMatcher.MatchAction.Add)
                 {
+                    // TODO: move this logic to matcher, the Add should point to the last slice where
+                    // the new slice will be added after.
+
                     // Find last entry in slice to add to the end
                     var current = snapNav.Path;
                     while (snapNav.Current.Path == current && snapNav.MoveToNext()) ;
+                    snapNav.MoveToPrevious();       // take one step back...
                     var dest = snapNav.Bookmark();
                     snapNav.ReturnToBookmark(match.BaseBookmark);
                     snapNav.DuplicateAfter(dest);
+                    markChange(snapNav.Current);
 
                     mergeElement(snapNav, diffNav);
                     snapNav.Current.Slicing = null;         // Probably not good enough...
@@ -88,7 +95,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else if(match.Action == ElementMatcher.MatchAction.Slice)
                 {
-
+                    makeSlice(snapNav, diffNav);
                 }
             }
 
@@ -99,24 +106,27 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             (new ElementDefnMerger(_markChanges)).Merge(snap.Current, diff.Current);
 
-            if (diff.HasChildren && !snap.HasChildren)
+            if (diff.HasChildren)
             {
-                // The differential moves into an element that has no children in the base.
-                // This is allowable if the base's element has a nameReference or a TypeRef,
-                // in which case needs to be expanded before we can move to the path indicated
-                // by the differential
+                if (!snap.HasChildren)
+                {
+                    // The differential moves into an element that has no children in the base.
+                    // This is allowable if the base's element has a nameReference or a TypeRef,
+                    // in which case needs to be expanded before we can move to the path indicated
+                    // by the differential
 
-                // Note that since we merged the parent, a (shorthand) typeslice will already
-                // have reduced the numer of types to 1. Still, if you don't do that, we cannot
-                // accept constraints on children, need to select a single type first...
-                if (snap.Current.Type.Count > 1)
-                    throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
+                    // Note that since we merged the parent, a (shorthand) typeslice will already
+                    // have reduced the numer of types to 1. Still, if you don't do that, we cannot
+                    // accept constraints on children, need to select a single type first...
+                    if (snap.Current.Type.Count > 1)
+                        throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
 
-                expandBaseElement(snap, diff);
+                    expandBaseElement(snap, diff);
+                }
+
+                // Now, recursively merge the children
+                merge(snap, diff);
             }
-
-            // Now, recursively merge the children
-            merge(snap, diff);
         }
 
         private void expandBaseElement(ElementNavigator snap, ElementNavigator diff)
@@ -133,7 +143,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void makeSlice(ElementNavigator snap, ElementNavigator diff)
         {
-            // diff is now located at the first repeat of a slice, which is (possibly) the slice entry
+            // diff is now located at the first repeat of a slice, which is normally the slice entry (Extension slices need
+            // not have a slicing entry)
             // snap is located at the base definition of the element that will become sliced. But snap is not yet sliced.
 
             // Before we start, is the base element sliceable?
@@ -141,54 +152,25 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an slice, but the base element is not a repeating or choice element",
                    diff.Current.Path);
 
-            ElementDefinition slicingEntry;
+            ElementDefinition slicingEntry = diff.Current;
 
-            // Yes, so, first, add the slicing entry to the snapshot. 
-            if (diff.Current.Slicing != null)
+            // Mmmm....no slicing entry in the differential. This is only alloweable for extension slices, as a shorthand notation.                 
+            if (slicingEntry.Slicing == null)
             {
-                slicingEntry = createSliceEntry(snap.Current, diff.Current);
-                markChange(slicingEntry);
-                snap.InsertBefore(slicingEntry);
-
-                if (!diff.MoveToNext(diff.PathName))
-                    throw Error.InvalidOperation("Slicing has no elements beyond the slicing entry");  // currently impossible to happen
-            }
-            else
-            {
-                // Mmmm....no slicing entry in the differential. This is only alloweable for extension slices, as a shorthand notation.                 
-                if (!snap.Current.IsExtension())
+                if (slicingEntry.IsExtension())
+                {
+                    // In this case we insert a "prefab" extension slice.
+                    slicingEntry = createExtensionSlicingEntry();
+                }
+                else
+                {
                     throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
-
-                // In this case we insert a "prefab" extension slice.
-                slicingEntry = createExtensionSlicingEntry(snap.Path, snap.Current);
-                markChange(slicingEntry);
-                snap.InsertBefore(slicingEntry);
+                }
             }
 
-            snap.MoveToNext();
+            (new ElementDefnMerger(_markChanges)).Merge(snap.Current, slicingEntry);
 
-            // The differential and the snapshot are now both positioned on the first "real" slicing content element
-            // Start by duplicating the current unsliced base definition as many times as we have slices, so we can
-            // update these copies for each slice.
-            var numSlices = countChildNameRepeats(diff);
-            for (var count = 0; count < numSlices - 1; count++) snap.Duplicate();
-
-            var slicingName = snap.PathName;
-
-            do
-            {
-                merge(snap, diff);
-            }
-            while (diff.MoveToNext(slicingName) && snap.MoveToNext(slicingName));
-
-            if (slicingEntry.Slicing.Rules != Profile.SlicingRules.Closed)
-            {
-                // Slices that are open in some form need to repeat the original "base" definition,
-                // so that the open slices have a place to "fit in"
-                snap.InsertAfter((Profile.ElementComponent)slicingTemplate.DeepCopy());
-            }
-
-            //TODO: update / check the slice entry's min/max property to match what we've found in the slice group
+            ////TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
 
         private void markChange(Element snap)
@@ -198,22 +180,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        private static bool isSlicedToOne(ElementDefinition element)
-        {
-            return element.Slicing != null && element.Max == "1";
-        }
-
-
-        private ElementDefinition createSliceEntry(ElementDefinition baseDefn, ElementDefinition diff)
-        {
-            var slicingEntry = (ElementDefinition)baseDefn.DeepCopy();
-
-            (new ElementDefnMerger(_markChanges)).Merge(slicingEntry, diff);
-
-            return slicingEntry;
-        }
-
-        private ElementDefinition createExtensionSlicingEntry(string path, ElementDefinition template)
+        private static ElementDefinition createExtensionSlicingEntry()
         {
             // Create a pre-fab extension slice, filled with sensible defaults
             var slicingDiff = new ElementDefinition();
@@ -222,9 +189,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             slicingDiff.Slicing.Ordered = false;
             slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
 
-            var result = createSliceEntry(template, slicingDiff);
-
-            return result;
+            return slicingDiff;
         }
     }
 }
