@@ -55,8 +55,18 @@ namespace Hl7.Fhir.Rest
             {
                 result.Response.SetBody(body);
 
-                if (IsBinaryResponse(response.ResponseUri.OriginalString))
+                if (IsBinaryResponse(response.ResponseUri.OriginalString, contentType))
+                {
                     result.Resource = makeBinaryResource(body, contentType);
+                    if (result.Response.Location != null)
+                    {
+                        var ri = new ResourceIdentity(result.Response.Location);
+                        result.Resource.Id = ri.Id;
+                        result.Resource.Meta = new Meta();
+                        result.Resource.Meta.VersionId = ri.VersionId;
+                        result.Resource.ResourceBase = ri.BaseUri;
+                    }
+                }
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
@@ -138,8 +148,11 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        internal static bool IsBinaryResponse(string responseUri)
+        internal static bool IsBinaryResponse(string responseUri, string contentType)
         {
+            if (!string.IsNullOrEmpty(contentType) && (contentType.ToLower() == "application/xml+fhir" || contentType.ToLower() == "application/json+fhir"))
+                return false;
+
             if (ResourceIdentity.IsRestResourceIdentity(responseUri))
             {
                 var id = new ResourceIdentity(responseUri);
