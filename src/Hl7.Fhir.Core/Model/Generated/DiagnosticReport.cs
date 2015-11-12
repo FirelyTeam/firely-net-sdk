@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,47 +55,55 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the diagnostic report as a whole.
+        /// (url: http://hl7.org/fhir/ValueSet/diagnostic-report-status)
         /// </summary>
         [FhirEnumeration("DiagnosticReportStatus")]
         public enum DiagnosticReportStatus
         {
             /// <summary>
             /// The existence of the report is registered, but there is nothing yet available.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("registered")]
+            [EnumLiteral("registered"), Description("Registered")]
             Registered,
             /// <summary>
             /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("partial")]
+            [EnumLiteral("partial"), Description("Partial")]
             Partial,
             /// <summary>
             /// The report is complete and verified by an authorized person.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("final")]
+            [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("corrected")]
+            [EnumLiteral("corrected"), Description("Corrected")]
             Corrected,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("appended")]
+            [EnumLiteral("appended"), Description("Appended")]
             Appended,
             /// <summary>
             /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The report has been withdrawn following a previous final release.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
+
         [FhirType("DiagnosticReportImageComponent")]
         [DataContract]
         public partial class DiagnosticReportImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -105,7 +114,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Comment about the image (e.g. explanation)
             /// </summary>
-            [FhirElement("comment", InSummary=true, Order=40)]
+            [FhirElement("comment", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentElement
             {

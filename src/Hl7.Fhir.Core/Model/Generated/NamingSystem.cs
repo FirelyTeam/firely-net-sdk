@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,56 +54,65 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "NamingSystem"; } }
         
         /// <summary>
-        /// Identifies the style of unique identifier used to identify a namespace.
-        /// </summary>
-        [FhirEnumeration("NamingSystemIdentifierType")]
-        public enum NamingSystemIdentifierType
-        {
-            /// <summary>
-            /// An ISO object identifier; e.g. 1.2.3.4.5.
-            /// </summary>
-            [EnumLiteral("oid")]
-            Oid,
-            /// <summary>
-            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
-            /// </summary>
-            [EnumLiteral("uuid")]
-            Uuid,
-            /// <summary>
-            /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
-            /// </summary>
-            [EnumLiteral("uri")]
-            Uri,
-            /// <summary>
-            /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
-            /// </summary>
-            [EnumLiteral("other")]
-            Other,
-        }
-        
-        /// <summary>
         /// Identifies the purpose of the naming system.
+        /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
         /// </summary>
         [FhirEnumeration("NamingSystemType")]
         public enum NamingSystemType
         {
             /// <summary>
             /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("codesystem")]
+            [EnumLiteral("codesystem"), Description("Code System")]
             Codesystem,
             /// <summary>
             /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("identifier")]
+            [EnumLiteral("identifier"), Description("Identifier")]
             Identifier,
             /// <summary>
             /// The naming system is used as the root for other identifiers and naming systems.
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("root")]
+            [EnumLiteral("root"), Description("Root")]
             Root,
         }
-        
+
+        /// <summary>
+        /// Identifies the style of unique identifier used to identify a namespace.
+        /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
+        /// </summary>
+        [FhirEnumeration("NamingSystemIdentifierType")]
+        public enum NamingSystemIdentifierType
+        {
+            /// <summary>
+            /// An ISO object identifier; e.g. 1.2.3.4.5.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("oid"), Description("OID")]
+            Oid,
+            /// <summary>
+            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("uuid"), Description("UUID")]
+            Uuid,
+            /// <summary>
+            /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("uri"), Description("URI")]
+            Uri,
+            /// <summary>
+            /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("other"), Description("Other")]
+            Other,
+        }
+
         [FhirType("NamingSystemContactComponent")]
         [DataContract]
         public partial class NamingSystemContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -213,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -246,7 +256,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50)]
+            [FhirElement("value", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -279,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this the id that should be used for this type
             /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=60)]
+            [FhirElement("preferred", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean PreferredElement
             {
@@ -311,7 +321,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {

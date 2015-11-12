@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,27 +55,31 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates the potential degree of impact of the identified issue on the patient.
+        /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
         /// </summary>
         [FhirEnumeration("DetectedIssueSeverity")]
         public enum DetectedIssueSeverity
         {
             /// <summary>
             /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("high")]
+            [EnumLiteral("high"), Description("High")]
             High,
             /// <summary>
             /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("moderate")]
+            [EnumLiteral("moderate"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("low")]
+            [EnumLiteral("low"), Description("Low")]
             Low,
         }
-        
+
         [FhirType("DetectedIssueMitigationComponent")]
         [DataContract]
         public partial class DetectedIssueMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -85,7 +90,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What mitigation?
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
+            [FhirElement("action", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Action
@@ -99,7 +104,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date committed
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=50)]
+            [FhirElement("date", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -131,7 +136,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is committing?
             /// </summary>
-            [FhirElement("author", InSummary=true, Order=60)]
+            [FhirElement("author", Order=60)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author

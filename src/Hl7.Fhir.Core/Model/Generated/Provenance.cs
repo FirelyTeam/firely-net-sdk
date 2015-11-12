@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,133 +55,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// How an entity was used in an activity.
+        /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
         /// </summary>
         [FhirEnumeration("ProvenanceEntityRole")]
         public enum ProvenanceEntityRole
         {
             /// <summary>
             /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
+            /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("derivation")]
+            [EnumLiteral("derivation"), Description("Derivation")]
             Derivation,
             /// <summary>
             /// A derivation for which the resulting entity is a revised version of some original.
+            /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("revision")]
+            [EnumLiteral("revision"), Description("Revision")]
             Revision,
             /// <summary>
             /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
+            /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("quotation")]
+            [EnumLiteral("quotation"), Description("Quotation")]
             Quotation,
             /// <summary>
             /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
+            /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("source")]
+            [EnumLiteral("source"), Description("Source")]
             Source,
         }
-        
-        [FhirType("ProvenanceAgentRelatedAgentComponent")]
-        [DataContract]
-        public partial class ProvenanceAgentRelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ProvenanceAgentRelatedAgentComponent"; } }
-            
-            /// <summary>
-            /// Type of relationship between agents
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Type;
-            
-            /// <summary>
-            /// Reference to other agent in this resource by identifier
-            /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri TargetElement
-            {
-                get { return _TargetElement; }
-                set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _TargetElement;
-            
-            /// <summary>
-            /// Reference to other agent in this resource by identifier
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Target
-            {
-                get { return TargetElement != null ? TargetElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TargetElement = null; 
-                    else
-                      TargetElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Target");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ProvenanceAgentRelatedAgentComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(TargetElement != null) dest.TargetElement = (Hl7.Fhir.Model.FhirUri)TargetElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ProvenanceAgentRelatedAgentComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ProvenanceAgentRelatedAgentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ProvenanceAgentRelatedAgentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
+
         [FhirType("ProvenanceAgentComponent")]
         [DataContract]
         public partial class ProvenanceAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -289,6 +194,107 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
                 if( !DeepComparable.IsExactly(UserId, otherT.UserId)) return false;
                 if( !DeepComparable.IsExactly(RelatedAgent, otherT.RelatedAgent)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ProvenanceAgentRelatedAgentComponent")]
+        [DataContract]
+        public partial class ProvenanceAgentRelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProvenanceAgentRelatedAgentComponent"; } }
+            
+            /// <summary>
+            /// Type of relationship between agents
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// Reference to other agent in this resource by identifier
+            /// </summary>
+            [FhirElement("target", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri TargetElement
+            {
+                get { return _TargetElement; }
+                set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _TargetElement;
+            
+            /// <summary>
+            /// Reference to other agent in this resource by identifier
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Target
+            {
+                get { return TargetElement != null ? TargetElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TargetElement = null; 
+                    else
+                      TargetElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Target");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProvenanceAgentRelatedAgentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(TargetElement != null) dest.TargetElement = (Hl7.Fhir.Model.FhirUri)TargetElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProvenanceAgentRelatedAgentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProvenanceAgentRelatedAgentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProvenanceAgentRelatedAgentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
                 
                 return true;
             }
@@ -487,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", Order=90)]
+        [FhirElement("target", InSummary=true, Order=90)]
         [References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -502,7 +508,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity occurred
         /// </summary>
-        [FhirElement("period", Order=100)]
+        [FhirElement("period", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -515,7 +521,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", Order=110)]
+        [FhirElement("recorded", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement
@@ -548,7 +554,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the activity is occurring
         /// </summary>
-        [FhirElement("reason", Order=120)]
+        [FhirElement("reason", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -562,7 +568,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Activity that occurred
         /// </summary>
-        [FhirElement("activity", Order=130)]
+        [FhirElement("activity", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Activity
         {
@@ -575,7 +581,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the activity occurred, if relevant
         /// </summary>
-        [FhirElement("location", Order=140)]
+        [FhirElement("location", InSummary=true, Order=140)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -589,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Policy or plan the activity was defined by
         /// </summary>
-        [FhirElement("policy", Order=150)]
+        [FhirElement("policy", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -622,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Agents involved in creating resource
         /// </summary>
-        [FhirElement("agent", Order=160)]
+        [FhirElement("agent", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> Agent
@@ -636,7 +642,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An entity used in this activity
         /// </summary>
-        [FhirElement("entity", Order=170)]
+        [FhirElement("entity", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> Entity
@@ -650,7 +656,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Signature on target
         /// </summary>
-        [FhirElement("signature", Order=180)]
+        [FhirElement("signature", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Signature> Signature

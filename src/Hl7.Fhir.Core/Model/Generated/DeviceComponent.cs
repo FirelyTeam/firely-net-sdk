@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,67 +55,79 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Different measurement principle supported by the device.
+        /// (url: http://hl7.org/fhir/ValueSet/measurement-principle)
         /// </summary>
-        [FhirEnumeration("Measmnt-Principle")]
-        public enum MeasmntPrinciple
+        [FhirEnumeration("Measmnt_Principle")]
+        public enum Measmnt_Principle
         {
             /// <summary>
             /// Measurement principle isn't in the list.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("other")]
+            [EnumLiteral("other"), Description("MSP Other")]
             Other,
             /// <summary>
             /// Measurement is done using the chemical principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("chemical")]
+            [EnumLiteral("chemical"), Description("MSP Chemical")]
             Chemical,
             /// <summary>
             /// Measurement is done using the electrical principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("electrical")]
+            [EnumLiteral("electrical"), Description("MSP Electrical")]
             Electrical,
             /// <summary>
             /// Measurement is done using the impedance principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("impedance")]
+            [EnumLiteral("impedance"), Description("MSP Impedance")]
             Impedance,
             /// <summary>
             /// Measurement is done using the nuclear principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("nuclear")]
+            [EnumLiteral("nuclear"), Description("MSP Nuclear")]
             Nuclear,
             /// <summary>
             /// Measurement is done using the optical principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("optical")]
+            [EnumLiteral("optical"), Description("MSP Optical")]
             Optical,
             /// <summary>
             /// Measurement is done using the thermal principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("thermal")]
+            [EnumLiteral("thermal"), Description("MSP Thermal")]
             Thermal,
             /// <summary>
             /// Measurement is done using the biological principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("biological")]
+            [EnumLiteral("biological"), Description("MSP Biological")]
             Biological,
             /// <summary>
             /// Measurement is done using the mechanical principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("mechanical")]
+            [EnumLiteral("mechanical"), Description("MSP Mechanical")]
             Mechanical,
             /// <summary>
             /// Measurement is done using the acoustical principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("acoustical")]
+            [EnumLiteral("acoustical"), Description("MSP Acoustical")]
             Acoustical,
             /// <summary>
             /// Measurement is done using the manual principle.
+            /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("manual")]
+            [EnumLiteral("manual"), Description("MSP Manual")]
             Manual,
         }
-        
+
         [FhirType("DeviceComponentProductionSpecificationComponent")]
         [DataContract]
         public partial class DeviceComponentProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -233,7 +246,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What kind of component it is
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -247,7 +260,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instance id assigned by the software stack
         /// </summary>
-        [FhirElement("identifier", Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -261,7 +274,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Recent system change timestamp
         /// </summary>
-        [FhirElement("lastSystemChange", Order=110)]
+        [FhirElement("lastSystemChange", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastSystemChangeElement
@@ -294,7 +307,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A source device of this component
         /// </summary>
-        [FhirElement("source", Order=120)]
+        [FhirElement("source", InSummary=true, Order=120)]
         [References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -308,7 +321,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Parent resource link
         /// </summary>
-        [FhirElement("parent", Order=130)]
+        [FhirElement("parent", InSummary=true, Order=130)]
         [References("DeviceComponent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
@@ -322,7 +335,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Component operational status
         /// </summary>
-        [FhirElement("operationalStatus", Order=140)]
+        [FhirElement("operationalStatus", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
@@ -336,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Current supported parameter group
         /// </summary>
-        [FhirElement("parameterGroup", Order=150)]
+        [FhirElement("parameterGroup", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ParameterGroup
         {
@@ -349,15 +362,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
         /// </summary>
-        [FhirElement("measurementPrinciple", Order=160)]
+        [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
+        public Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> MeasurementPrincipleElement
         {
             get { return _MeasurementPrincipleElement; }
             set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> _MeasurementPrincipleElement;
+        private Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> _MeasurementPrincipleElement;
         
         /// <summary>
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
@@ -365,7 +378,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
+        public Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle? MeasurementPrinciple
         {
             get { return MeasurementPrincipleElement != null ? MeasurementPrincipleElement.Value : null; }
             set
@@ -373,7 +386,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   MeasurementPrincipleElement = null; 
                 else
-                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
+                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>(value);
                 OnPropertyChanged("MeasurementPrinciple");
             }
         }
@@ -381,7 +394,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Production specification of the component
         /// </summary>
-        [FhirElement("productionSpecification", Order=170)]
+        [FhirElement("productionSpecification", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent> ProductionSpecification
@@ -395,7 +408,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Language code for the human-readable text strings produced by the device
         /// </summary>
-        [FhirElement("languageCode", Order=180)]
+        [FhirElement("languageCode", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept LanguageCode
         {
@@ -419,7 +432,7 @@ namespace Hl7.Fhir.Model
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(OperationalStatus != null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
                 if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
-                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopy();
+                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>)MeasurementPrincipleElement.DeepCopy();
                 if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
                 if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
                 return dest;

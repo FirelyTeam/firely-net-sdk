@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,41 +55,149 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the encounter.
+        /// (url: http://hl7.org/fhir/ValueSet/episode-of-care-status)
         /// </summary>
         [FhirEnumeration("EpisodeOfCareStatus")]
         public enum EpisodeOfCareStatus
         {
             /// <summary>
             /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services.
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("waitlist")]
+            [EnumLiteral("waitlist"), Description("Waitlist")]
             Waitlist,
             /// <summary>
             /// This episode of care is current.
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("onhold")]
+            [EnumLiteral("onhold"), Description("On Hold")]
             Onhold,
             /// <summary>
             /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("finished")]
+            [EnumLiteral("finished"), Description("Finished")]
             Finished,
             /// <summary>
             /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
         }
+
+        [FhirType("EpisodeOfCareStatusHistoryComponent")]
+        [DataContract]
+        public partial class EpisodeOfCareStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "EpisodeOfCareStatusHistoryComponent"; } }
+            
+            /// <summary>
+            /// planned | waitlist | active | onhold | finished | cancelled
+            /// </summary>
+            [FhirElement("status", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
+            {
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
+            
+            /// <summary>
+            /// planned | waitlist | active | onhold | finished | cancelled
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
+            /// Period for the status
+            /// </summary>
+            [FhirElement("period", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as EpisodeOfCareStatusHistoryComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new EpisodeOfCareStatusHistoryComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as EpisodeOfCareStatusHistoryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as EpisodeOfCareStatusHistoryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("EpisodeOfCareCareTeamComponent")]
         [DataContract]
@@ -100,7 +209,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Role taken by this team member
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("role", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -114,7 +223,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Period of time for this role
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -127,7 +236,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The practitioner (or Organization) within the team
             /// </summary>
-            [FhirElement("member", InSummary=true, Order=60)]
+            [FhirElement("member", Order=60)]
             [References("Practitioner","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
@@ -181,107 +290,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("EpisodeOfCareStatusHistoryComponent")]
-        [DataContract]
-        public partial class EpisodeOfCareStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "EpisodeOfCareStatusHistoryComponent"; } }
-            
-            /// <summary>
-            /// planned | waitlist | active | onhold | finished | cancelled
-            /// </summary>
-            [FhirElement("status", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
-            {
-                get { return _StatusElement; }
-                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
-            
-            /// <summary>
-            /// planned | waitlist | active | onhold | finished | cancelled
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
-            {
-                get { return StatusElement != null ? StatusElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StatusElement = null; 
-                    else
-                      StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
-                    OnPropertyChanged("Status");
-                }
-            }
-            
-            /// <summary>
-            /// Period for the status
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as EpisodeOfCareStatusHistoryComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new EpisodeOfCareStatusHistoryComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as EpisodeOfCareStatusHistoryComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as EpisodeOfCareStatusHistoryComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
             }

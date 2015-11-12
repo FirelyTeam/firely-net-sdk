@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,32 +55,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
+        /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
         /// </summary>
         [FhirEnumeration("IdentityAssuranceLevel")]
         public enum IdentityAssuranceLevel
         {
             /// <summary>
             /// Little or no confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level1")]
+            [EnumLiteral("level1"), Description("Level 1")]
             Level1,
             /// <summary>
             /// Some confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level2")]
+            [EnumLiteral("level2"), Description("Level 2")]
             Level2,
             /// <summary>
             /// High confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level3")]
+            [EnumLiteral("level3"), Description("Level 3")]
             Level3,
             /// <summary>
             /// Very high confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level4")]
+            [EnumLiteral("level4"), Description("Level 4")]
             Level4,
         }
-        
+
         [FhirType("PersonLinkComponent")]
         [DataContract]
         public partial class PersonLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -90,7 +96,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The resource to which this actual person is associated
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=40)]
+            [FhirElement("target", Order=40)]
             [References("Patient","Practitioner","RelatedPerson","Person")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -105,7 +111,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// level1 | level2 | level3 | level4
             /// </summary>
-            [FhirElement("assurance", InSummary=true, Order=50)]
+            [FhirElement("assurance", Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
             {

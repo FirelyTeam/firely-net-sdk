@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,32 +55,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Codes providing the status/availability of a specimen.
+        /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
         /// </summary>
         [FhirEnumeration("SpecimenStatus")]
         public enum SpecimenStatus
         {
             /// <summary>
             /// The physical specimen is present and in good condition.
+            /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("available")]
+            [EnumLiteral("available"), Description("Available")]
             Available,
             /// <summary>
             /// There is no physical specimen because it is either lost, destroyed or consumed.
+            /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unavailable")]
+            [EnumLiteral("unavailable"), Description("Unavailable")]
             Unavailable,
             /// <summary>
             /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
+            /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unsatisfactory")]
+            [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
             Unsatisfactory,
             /// <summary>
             /// The specimen was entered in error and therefore nullified.
+            /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered-in-error")]
             EnteredInError,
         }
-        
+
         [FhirType("SpecimenCollectionComponent")]
         [DataContract]
         public partial class SpecimenCollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -104,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Collector comments
             /// </summary>
-            [FhirElement("comment", InSummary=true, Order=50)]
+            [FhirElement("comment", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> CommentElement
@@ -151,7 +157,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The quantity of specimen collected
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
+            [FhirElement("quantity", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
@@ -164,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Technique used to perform collection
             /// </summary>
-            [FhirElement("method", InSummary=true, Order=80)]
+            [FhirElement("method", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
@@ -177,7 +183,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Anatomical collection site
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=90)]
+            [FhirElement("bodySite", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {
@@ -246,6 +252,123 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("SpecimenTreatmentComponent")]
+        [DataContract]
+        public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SpecimenTreatmentComponent"; } }
+            
+            /// <summary>
+            /// Textual description of procedure
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Textual description of procedure
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Indicates the treatment or processing step  applied to the specimen
+            /// </summary>
+            [FhirElement("procedure", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Procedure
+            {
+                get { return _Procedure; }
+                set { _Procedure = value; OnPropertyChanged("Procedure"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Procedure;
+            
+            /// <summary>
+            /// Material used in the processing step
+            /// </summary>
+            [FhirElement("additive", Order=60)]
+            [References("Substance")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Additive
+            {
+                get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.ResourceReference>(); return _Additive; }
+                set { _Additive = value; OnPropertyChanged("Additive"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Additive;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SpecimenTreatmentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
+                    if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.ResourceReference>(Additive.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new SpecimenTreatmentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SpecimenTreatmentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
+                if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SpecimenTreatmentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
+                if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("SpecimenContainerComponent")]
         [DataContract]
         public partial class SpecimenContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -270,7 +393,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Textual description of the container
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -302,7 +425,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Kind of container directly associated with specimen
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=60)]
+            [FhirElement("type", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -315,7 +438,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Container volume or size
             /// </summary>
-            [FhirElement("capacity", InSummary=true, Order=70)]
+            [FhirElement("capacity", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Capacity
             {
@@ -328,7 +451,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of specimen within container
             /// </summary>
-            [FhirElement("specimenQuantity", InSummary=true, Order=80)]
+            [FhirElement("specimenQuantity", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity SpecimenQuantity
             {
@@ -341,7 +464,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additive associated with container
             /// </summary>
-            [FhirElement("additive", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Additive
@@ -403,123 +526,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Capacity, otherT.Capacity)) return false;
                 if( !DeepComparable.IsExactly(SpecimenQuantity, otherT.SpecimenQuantity)) return false;
-                if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("SpecimenTreatmentComponent")]
-        [DataContract]
-        public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "SpecimenTreatmentComponent"; } }
-            
-            /// <summary>
-            /// Textual description of procedure
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Textual description of procedure
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Indicates the treatment or processing step  applied to the specimen
-            /// </summary>
-            [FhirElement("procedure", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Procedure
-            {
-                get { return _Procedure; }
-                set { _Procedure = value; OnPropertyChanged("Procedure"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Procedure;
-            
-            /// <summary>
-            /// Material used in the processing step
-            /// </summary>
-            [FhirElement("additive", InSummary=true, Order=60)]
-            [References("Substance")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Additive
-            {
-                get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.ResourceReference>(); return _Additive; }
-                set { _Additive = value; OnPropertyChanged("Additive"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Additive;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SpecimenTreatmentComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
-                    if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.ResourceReference>(Additive.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SpecimenTreatmentComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SpecimenTreatmentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
-                if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SpecimenTreatmentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
                 if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
                 
                 return true;

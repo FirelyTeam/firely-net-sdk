@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Possible outcome for the subject
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=40)]
+            [FhirElement("outcome", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Outcome
@@ -76,7 +77,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Likelihood of specified outcome
             /// </summary>
-            [FhirElement("probability", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relative likelihood
             /// </summary>
-            [FhirElement("relativeRisk", InSummary=true, Order=60)]
+            [FhirElement("relativeRisk", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RelativeRiskElement
             {
@@ -122,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Timeframe or age range
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("when", Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element When
@@ -136,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Explanation of prediction
             /// </summary>
-            [FhirElement("rationale", InSummary=true, Order=80)]
+            [FhirElement("rationale", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RationaleElement
             {

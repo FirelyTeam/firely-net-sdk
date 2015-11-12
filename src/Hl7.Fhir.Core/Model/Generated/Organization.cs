@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The type of contact
             /// </summary>
-            [FhirElement("purpose", InSummary=true, Order=40)]
+            [FhirElement("purpose", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Purpose
             {
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the contact
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact details (telephone, email, etc.)  for a contact
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=60)]
+            [FhirElement("telecom", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -102,7 +103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Visiting or postal addresses for the contact
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=70)]
+            [FhirElement("address", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {

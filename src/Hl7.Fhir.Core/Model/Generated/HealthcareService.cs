@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,103 +55,55 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The days of the week.
+        /// (url: http://hl7.org/fhir/ValueSet/days-of-week)
         /// </summary>
         [FhirEnumeration("DaysOfWeek")]
         public enum DaysOfWeek
         {
             /// <summary>
             /// Monday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("mon")]
+            [EnumLiteral("mon"), Description("Monday")]
             Mon,
             /// <summary>
             /// Tuesday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("tue")]
+            [EnumLiteral("tue"), Description("Tuesday")]
             Tue,
             /// <summary>
             /// Wednesday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("wed")]
+            [EnumLiteral("wed"), Description("Wednesday")]
             Wed,
             /// <summary>
             /// Thursday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("thu")]
+            [EnumLiteral("thu"), Description("Thursday")]
             Thu,
             /// <summary>
             /// Friday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("fri")]
+            [EnumLiteral("fri"), Description("Friday")]
             Fri,
             /// <summary>
             /// Saturday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("sat")]
+            [EnumLiteral("sat"), Description("Saturday")]
             Sat,
             /// <summary>
             /// Sunday
+            /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("sun")]
+            [EnumLiteral("sun"), Description("Sunday")]
             Sun,
         }
-        
-        /// <summary>
-        /// The methods of referral can be used when referring to a specific HealthCareService resource.
-        /// </summary>
-        [FhirEnumeration("ReferralMethod")]
-        public enum ReferralMethod
-        {
-            /// <summary>
-            /// Referrals may be accepted by fax.
-            /// </summary>
-            [EnumLiteral("fax")]
-            Fax,
-            /// <summary>
-            /// Referrals may be accepted over the phone from a practitioner.
-            /// </summary>
-            [EnumLiteral("phone")]
-            Phone,
-            /// <summary>
-            /// Referrals may be accepted via a secure messaging system. To determine the types of secure messaging systems supported, refer to the identifiers collection. Callers will need to understand the specific identifier system used to know that they are able to transmit messages.
-            /// </summary>
-            [EnumLiteral("elec")]
-            Elec,
-            /// <summary>
-            /// Referrals may be accepted via a secure email. To send please enrypt with the services public key.
-            /// </summary>
-            [EnumLiteral("semail")]
-            Semail,
-            /// <summary>
-            /// Referrals may be accepted via regular postage (or hand delivered).
-            /// </summary>
-            [EnumLiteral("mail")]
-            Mail,
-        }
-        
-        /// <summary>
-        /// The code(s) that detail the conditions under which the healthcare service is available/offered.
-        /// </summary>
-        [FhirEnumeration("ServiceProvisionConditions")]
-        public enum ServiceProvisionConditions
-        {
-            /// <summary>
-            /// This service is available for no patient cost.
-            /// </summary>
-            [EnumLiteral("free")]
-            Free,
-            /// <summary>
-            /// There are discounts available on this service for qualifying patients.
-            /// </summary>
-            [EnumLiteral("disc")]
-            Disc,
-            /// <summary>
-            /// Fees apply for this service.
-            /// </summary>
-            [EnumLiteral("cost")]
-            Cost,
-        }
-        
+
         [FhirType("ServiceTypeComponent")]
         [DataContract]
         public partial class ServiceTypeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -243,16 +196,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
-            [FhirElement("daysOfWeek", InSummary=true, Order=40)]
+            [FhirElement("daysOfWeek", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> DaysOfWeekElement
+            public List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> DaysOfWeek_Element
             {
-                get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(); return _DaysOfWeekElement; }
-                set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
+                get { if(_DaysOfWeek_Element==null) _DaysOfWeek_Element = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(); return _DaysOfWeek_Element; }
+                set { _DaysOfWeek_Element = value; OnPropertyChanged("DaysOfWeek_Element"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> _DaysOfWeekElement;
+            private List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>> _DaysOfWeek_Element;
             
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
@@ -260,23 +213,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.HealthcareService.DaysOfWeek?> DaysOfWeek
+            public IEnumerable<Hl7.Fhir.Model.HealthcareService.DaysOfWeek?> DaysOfWeek_
             {
-                get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
+                get { return DaysOfWeek_Element != null ? DaysOfWeek_Element.Select(elem => elem.Value) : null; }
                 set
                 {
                     if(value == null)
-                      DaysOfWeekElement = null; 
+                      DaysOfWeek_Element = null; 
                     else
-                      DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>(elem)));
-                    OnPropertyChanged("DaysOfWeek");
+                      DaysOfWeek_Element = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>(elem)));
+                    OnPropertyChanged("DaysOfWeek_");
                 }
             }
             
             /// <summary>
             /// Always available? e.g. 24 hour service
             /// </summary>
-            [FhirElement("allDay", InSummary=true, Order=50)]
+            [FhirElement("allDay", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean AllDayElement
             {
@@ -308,7 +261,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Opening time of day (ignored if allDay = true)
             /// </summary>
-            [FhirElement("availableStartTime", InSummary=true, Order=60)]
+            [FhirElement("availableStartTime", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Time AvailableStartTimeElement
             {
@@ -340,7 +293,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Closing time of day (ignored if allDay = true)
             /// </summary>
-            [FhirElement("availableEndTime", InSummary=true, Order=70)]
+            [FhirElement("availableEndTime", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Time AvailableEndTimeElement
             {
@@ -376,7 +329,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DaysOfWeekElement != null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
+                    if(DaysOfWeek_Element != null) dest.DaysOfWeek_Element = new List<Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(DaysOfWeek_Element.DeepCopy());
                     if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
                     if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopy();
                     if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopy();
@@ -397,7 +350,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
+                if( !DeepComparable.Matches(DaysOfWeek_Element, otherT.DaysOfWeek_Element)) return false;
                 if( !DeepComparable.Matches(AllDayElement, otherT.AllDayElement)) return false;
                 if( !DeepComparable.Matches(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
                 if( !DeepComparable.Matches(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
@@ -411,7 +364,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
+                if( !DeepComparable.IsExactly(DaysOfWeek_Element, otherT.DaysOfWeek_Element)) return false;
                 if( !DeepComparable.IsExactly(AllDayElement, otherT.AllDayElement)) return false;
                 if( !DeepComparable.IsExactly(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
                 if( !DeepComparable.IsExactly(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
@@ -432,7 +385,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reason presented to the user explaining why time not available
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
+            [FhirElement("description", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -465,7 +418,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Service not availablefrom this date
             /// </summary>
-            [FhirElement("during", InSummary=true, Order=50)]
+            [FhirElement("during", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Period During
             {
@@ -842,13 +795,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("referralMethod", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod_
+        public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
         {
-            get { if(_ReferralMethod_==null) _ReferralMethod_ = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod_; }
-            set { _ReferralMethod_ = value; OnPropertyChanged("ReferralMethod_"); }
+            get { if(_ReferralMethod==null) _ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod; }
+            set { _ReferralMethod = value; OnPropertyChanged("ReferralMethod"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod_;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod;
         
         /// <summary>
         /// PKI Public keys to support secure communications
@@ -997,7 +950,7 @@ namespace Hl7.Fhir.Model
                 if(EligibilityNoteElement != null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)EligibilityNoteElement.DeepCopy();
                 if(ProgramNameElement != null) dest.ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(ProgramNameElement.DeepCopy());
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(Characteristic.DeepCopy());
-                if(ReferralMethod_ != null) dest.ReferralMethod_ = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod_.DeepCopy());
+                if(ReferralMethod != null) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod.DeepCopy());
                 if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
                 if(AppointmentRequiredElement != null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AppointmentRequiredElement.DeepCopy();
                 if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(AvailableTime.DeepCopy());
@@ -1036,7 +989,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
             if( !DeepComparable.Matches(ProgramNameElement, otherT.ProgramNameElement)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
-            if( !DeepComparable.Matches(ReferralMethod_, otherT.ReferralMethod_)) return false;
+            if( !DeepComparable.Matches(ReferralMethod, otherT.ReferralMethod)) return false;
             if( !DeepComparable.Matches(PublicKeyElement, otherT.PublicKeyElement)) return false;
             if( !DeepComparable.Matches(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
             if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
@@ -1068,7 +1021,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
             if( !DeepComparable.IsExactly(ProgramNameElement, otherT.ProgramNameElement)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
-            if( !DeepComparable.IsExactly(ReferralMethod_, otherT.ReferralMethod_)) return false;
+            if( !DeepComparable.IsExactly(ReferralMethod, otherT.ReferralMethod)) return false;
             if( !DeepComparable.IsExactly(PublicKeyElement, otherT.PublicKeyElement)) return false;
             if( !DeepComparable.IsExactly(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
             if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;

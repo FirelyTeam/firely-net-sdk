@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,133 +54,38 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Procedure"; } }
         
         /// <summary>
-        /// The nature of the relationship with this procedure.
-        /// </summary>
-        [FhirEnumeration("ProcedureRelationshipType")]
-        public enum ProcedureRelationshipType
-        {
-            /// <summary>
-            /// This procedure had to be performed because of the related one.
-            /// </summary>
-            [EnumLiteral("caused-by")]
-            CausedBy,
-            /// <summary>
-            /// This procedure caused the related one to be performed.
-            /// </summary>
-            [EnumLiteral("because-of")]
-            BecauseOf,
-        }
-        
-        /// <summary>
         /// A code specifying the state of the procedure.
+        /// (url: http://hl7.org/fhir/ValueSet/procedure-status)
         /// </summary>
         [FhirEnumeration("ProcedureStatus")]
         public enum ProcedureStatus
         {
             /// <summary>
             /// The procedure is still occurring.
+            /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The procedure was terminated without completing successfully.
+            /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("aborted")]
+            [EnumLiteral("aborted"), Description("Aboted")]
             Aborted,
             /// <summary>
             /// All actions involved in the procedure have taken place.
+            /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The statement was entered in error and Is not valid.
+            /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
-        [FhirType("ProcedureFocalDeviceComponent")]
-        [DataContract]
-        public partial class ProcedureFocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ProcedureFocalDeviceComponent"; } }
-            
-            /// <summary>
-            /// Kind of change to device
-            /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Action
-            {
-                get { return _Action; }
-                set { _Action = value; OnPropertyChanged("Action"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Action;
-            
-            /// <summary>
-            /// Device that was changed
-            /// </summary>
-            [FhirElement("manipulated", InSummary=true, Order=50)]
-            [References("Device")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Manipulated
-            {
-                get { return _Manipulated; }
-                set { _Manipulated = value; OnPropertyChanged("Manipulated"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Manipulated;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ProcedureFocalDeviceComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Action != null) dest.Action = (Hl7.Fhir.Model.CodeableConcept)Action.DeepCopy();
-                    if(Manipulated != null) dest.Manipulated = (Hl7.Fhir.Model.ResourceReference)Manipulated.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ProcedureFocalDeviceComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ProcedureFocalDeviceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
-                if( !DeepComparable.Matches(Manipulated, otherT.Manipulated)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ProcedureFocalDeviceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
-                if( !DeepComparable.IsExactly(Manipulated, otherT.Manipulated)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
+
         [FhirType("ProcedurePerformerComponent")]
         [DataContract]
         public partial class ProcedurePerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -254,6 +160,88 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ProcedureFocalDeviceComponent")]
+        [DataContract]
+        public partial class ProcedureFocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProcedureFocalDeviceComponent"; } }
+            
+            /// <summary>
+            /// Kind of change to device
+            /// </summary>
+            [FhirElement("action", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Action
+            {
+                get { return _Action; }
+                set { _Action = value; OnPropertyChanged("Action"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Action;
+            
+            /// <summary>
+            /// Device that was changed
+            /// </summary>
+            [FhirElement("manipulated", Order=50)]
+            [References("Device")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Manipulated
+            {
+                get { return _Manipulated; }
+                set { _Manipulated = value; OnPropertyChanged("Manipulated"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Manipulated;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProcedureFocalDeviceComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Action != null) dest.Action = (Hl7.Fhir.Model.CodeableConcept)Action.DeepCopy();
+                    if(Manipulated != null) dest.Manipulated = (Hl7.Fhir.Model.ResourceReference)Manipulated.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProcedureFocalDeviceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProcedureFocalDeviceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
+                if( !DeepComparable.Matches(Manipulated, otherT.Manipulated)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProcedureFocalDeviceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
+                if( !DeepComparable.IsExactly(Manipulated, otherT.Manipulated)) return false;
                 
                 return true;
             }

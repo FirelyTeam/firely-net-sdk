@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,105 +55,124 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of a diagnostic order.
+        /// (url: http://hl7.org/fhir/ValueSet/diagnostic-order-status)
         /// </summary>
         [FhirEnumeration("DiagnosticOrderStatus")]
         public enum DiagnosticOrderStatus
         {
             /// <summary>
             /// The request has been proposed.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request is in preliminary form prior to being sent.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("draft")]
+            [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
             /// The request has been planned.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// The request has been placed.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the order, but not yet decided whether it will be performed.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("received")]
+            [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the order, but work has not yet commenced.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the order is happening.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In-Progress")]
             InProgress,
             /// <summary>
             /// The work is complete, and the outcomes are being reviewed for approval.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("review")]
+            [EnumLiteral("review"), Description("Review")]
             Review,
             /// <summary>
             /// The work has been completed, the report(s) released, and no further work is planned.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been withdrawn.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The request has been held by originating system/user request.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("failed")]
+            [EnumLiteral("failed"), Description("Failed")]
             Failed,
         }
-        
+
         /// <summary>
         /// The clinical priority of a diagnostic order.
+        /// (url: http://hl7.org/fhir/ValueSet/diagnostic-order-priority)
         /// </summary>
         [FhirEnumeration("DiagnosticOrderPriority")]
         public enum DiagnosticOrderPriority
         {
             /// <summary>
             /// The order has a normal priority .
+            /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("routine")]
+            [EnumLiteral("routine"), Description("Routine")]
             Routine,
             /// <summary>
             /// The order should be urgently.
+            /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("urgent")]
+            [EnumLiteral("urgent"), Description("Urgent")]
             Urgent,
             /// <summary>
             /// The order is time-critical.
+            /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("stat")]
+            [EnumLiteral("stat"), Description("Stat")]
             Stat,
             /// <summary>
             /// The order should be acted on as soon as possible.
+            /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("asap")]
+            [EnumLiteral("asap"), Description("ASAP")]
             Asap,
         }
-        
+
         [FhirType("DiagnosticOrderEventComponent")]
         [DataContract]
         public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -242,7 +262,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who recorded or did this
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=70)]
+            [FhirElement("actor", Order=70)]
             [References("Practitioner","Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -330,7 +350,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If this item relates to specific specimens
             /// </summary>
-            [FhirElement("specimen", InSummary=true, Order=50)]
+            [FhirElement("specimen", Order=50)]
             [References("Specimen")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -345,7 +365,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location of requested test (if applicable)
             /// </summary>
-            [FhirElement("bodySite", InSummary=true, Order=60)]
+            [FhirElement("bodySite", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {

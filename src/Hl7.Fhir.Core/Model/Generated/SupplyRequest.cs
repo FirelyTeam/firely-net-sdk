@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,51 +54,38 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "SupplyRequest"; } }
         
         /// <summary>
-        /// Why the supply item was requested
-        /// </summary>
-        [FhirEnumeration("SupplyRequestReason")]
-        public enum SupplyRequestReason
-        {
-            /// <summary>
-            /// The supply has been requested for use in direct patient care.
-            /// </summary>
-            [EnumLiteral("patient-care")]
-            PatientCare,
-            /// <summary>
-            /// The supply has been requested for for creating or replenishing ward stock.
-            /// </summary>
-            [EnumLiteral("ward-stock")]
-            WardStock,
-        }
-        
-        /// <summary>
         /// Status of the supply request
+        /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
         /// </summary>
         [FhirEnumeration("SupplyRequestStatus")]
         public enum SupplyRequestStatus
         {
             /// <summary>
             /// Supply has been requested, but not dispensed.
+            /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// Supply has been received by the requestor.
+            /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Received")]
             Completed,
             /// <summary>
             /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
+            /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("failed")]
+            [EnumLiteral("failed"), Description("Failed")]
             Failed,
             /// <summary>
             /// The orderer of the supply cancelled the request.
+            /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
         }
-        
+
         [FhirType("SupplyRequestWhenComponent")]
         [DataContract]
         public partial class SupplyRequestWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -181,7 +169,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", Order=90)]
+        [FhirElement("patient", InSummary=true, Order=90)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -195,7 +183,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who initiated this order
         /// </summary>
-        [FhirElement("source", Order=100)]
+        [FhirElement("source", InSummary=true, Order=100)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -209,7 +197,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the request was made
         /// </summary>
-        [FhirElement("date", Order=110)]
+        [FhirElement("date", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -241,7 +229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=120)]
+        [FhirElement("identifier", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -254,7 +242,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | completed | failed | cancelled
         /// </summary>
-        [FhirElement("status", Order=130)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
         {
@@ -286,7 +274,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The kind of supply (central, non-stock, etc.)
         /// </summary>
-        [FhirElement("kind", Order=140)]
+        [FhirElement("kind", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Kind
         {
@@ -299,7 +287,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", Order=150)]
+        [FhirElement("orderedItem", InSummary=true, Order=150)]
         [References("Medication","Substance","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OrderedItem
@@ -313,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is intended to fulfill the request
         /// </summary>
-        [FhirElement("supplier", Order=160)]
+        [FhirElement("supplier", InSummary=true, Order=160)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -328,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the supply item was requested
         /// </summary>
-        [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -342,7 +330,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the request should be fulfilled
         /// </summary>
-        [FhirElement("when", Order=180)]
+        [FhirElement("when", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.SupplyRequest.SupplyRequestWhenComponent When
         {

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,41 +55,130 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The verification status to support or decline the clinical status of the condition or diagnosis.
+        /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
         /// </summary>
         [FhirEnumeration("ConditionVerificationStatus")]
         public enum ConditionVerificationStatus
         {
             /// <summary>
             /// This is a tentative diagnosis - still a candidate that is under consideration.
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("provisional")]
+            [EnumLiteral("provisional"), Description("Provisional")]
             Provisional,
             /// <summary>
             /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment.
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("differential")]
+            [EnumLiteral("differential"), Description("Differential")]
             Differential,
             /// <summary>
             /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("confirmed")]
+            [EnumLiteral("confirmed"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// This condition has been ruled out by diagnostic and clinical evidence.
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("refuted")]
+            [EnumLiteral("refuted"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// The statement was entered in error and is not valid.
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("unknown")]
+            [EnumLiteral("unknown"), Description("Unknown")]
             Unknown,
         }
+
+        [FhirType("ConditionStageComponent")]
+        [DataContract]
+        public partial class ConditionStageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ConditionStageComponent"; } }
+            
+            /// <summary>
+            /// Simple summary (disease specific)
+            /// </summary>
+            [FhirElement("summary", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Summary
+            {
+                get { return _Summary; }
+                set { _Summary = value; OnPropertyChanged("Summary"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Summary;
+            
+            /// <summary>
+            /// Formal record of assessment
+            /// </summary>
+            [FhirElement("assessment", InSummary=true, Order=50)]
+            [References("ClinicalImpression","DiagnosticReport","Observation")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Assessment
+            {
+                get { if(_Assessment==null) _Assessment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Assessment; }
+                set { _Assessment = value; OnPropertyChanged("Assessment"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ConditionStageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Summary != null) dest.Summary = (Hl7.Fhir.Model.CodeableConcept)Summary.DeepCopy();
+                    if(Assessment != null) dest.Assessment = new List<Hl7.Fhir.Model.ResourceReference>(Assessment.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ConditionStageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ConditionStageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Summary, otherT.Summary)) return false;
+                if( !DeepComparable.Matches(Assessment, otherT.Assessment)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ConditionStageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Summary, otherT.Summary)) return false;
+                if( !DeepComparable.IsExactly(Assessment, otherT.Assessment)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ConditionEvidenceComponent")]
         [DataContract]
@@ -172,92 +262,10 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionStageComponent")]
-        [DataContract]
-        public partial class ConditionStageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ConditionStageComponent"; } }
-            
-            /// <summary>
-            /// Simple summary (disease specific)
-            /// </summary>
-            [FhirElement("summary", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Summary
-            {
-                get { return _Summary; }
-                set { _Summary = value; OnPropertyChanged("Summary"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Summary;
-            
-            /// <summary>
-            /// Formal record of assessment
-            /// </summary>
-            [FhirElement("assessment", InSummary=true, Order=50)]
-            [References("ClinicalImpression","DiagnosticReport","Observation")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Assessment
-            {
-                get { if(_Assessment==null) _Assessment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Assessment; }
-                set { _Assessment = value; OnPropertyChanged("Assessment"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ConditionStageComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Summary != null) dest.Summary = (Hl7.Fhir.Model.CodeableConcept)Summary.DeepCopy();
-                    if(Assessment != null) dest.Assessment = new List<Hl7.Fhir.Model.ResourceReference>(Assessment.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ConditionStageComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ConditionStageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Summary, otherT.Summary)) return false;
-                if( !DeepComparable.Matches(Assessment, otherT.Assessment)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ConditionStageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Summary, otherT.Summary)) return false;
-                if( !DeepComparable.IsExactly(Assessment, otherT.Assessment)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         /// <summary>
         /// External Ids for this condition
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -271,7 +279,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who has the condition?
         /// </summary>
-        [FhirElement("patient", Order=100)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -286,7 +294,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("encounter", Order=110)]
+        [FhirElement("encounter", InSummary=true, Order=110)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -300,7 +308,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Person who asserts this condition
         /// </summary>
-        [FhirElement("asserter", Order=120)]
+        [FhirElement("asserter", InSummary=true, Order=120)]
         [References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
@@ -314,7 +322,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When first entered
         /// </summary>
-        [FhirElement("dateRecorded", Order=130)]
+        [FhirElement("dateRecorded", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date DateRecordedElement
         {
@@ -346,7 +354,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identification of the condition, problem or diagnosis
         /// </summary>
-        [FhirElement("code", Order=140)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -360,7 +368,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// complaint | symptom | finding | diagnosis
         /// </summary>
-        [FhirElement("category", Order=150)]
+        [FhirElement("category", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -373,7 +381,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | relapse | remission | resolved
         /// </summary>
-        [FhirElement("clinicalStatus", Order=160)]
+        [FhirElement("clinicalStatus", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Code ClinicalStatusElement
         {
@@ -405,7 +413,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// provisional | differential | confirmed | refuted | entered-in-error | unknown
         /// </summary>
-        [FhirElement("verificationStatus", Order=170)]
+        [FhirElement("verificationStatus", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
@@ -438,7 +446,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", Order=180)]
+        [FhirElement("severity", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
@@ -451,7 +459,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
@@ -465,7 +473,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
@@ -479,7 +487,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", Order=210)]
+        [FhirElement("stage", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
         {
@@ -492,7 +500,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", Order=220)]
+        [FhirElement("evidence", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
@@ -506,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("bodySite", Order=230)]
+        [FhirElement("bodySite", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -520,7 +528,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about the Condition
         /// </summary>
-        [FhirElement("notes", Order=240)]
+        [FhirElement("notes", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement
         {

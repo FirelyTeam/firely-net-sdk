@@ -44,7 +44,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Model
 {
     /*
-    * A class with methods to retrieve informationa about the
+    * A class with methods to retrieve information about the
     * FHIR definitions based on which this assembly was generated.
     */
     public static partial class ModelInfo

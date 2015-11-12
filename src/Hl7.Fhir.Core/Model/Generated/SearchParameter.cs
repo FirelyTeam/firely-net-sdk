@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,37 +55,43 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// How a search parameter relates to the set of elements returned by evaluating its xpath query.
+        /// (url: http://hl7.org/fhir/ValueSet/search-xpath-usage)
         /// </summary>
         [FhirEnumeration("XPathUsageType")]
         public enum XPathUsageType
         {
             /// <summary>
             /// The search parameter is derived directly from the selected nodes based on the type definitions.
+            /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("normal")]
+            [EnumLiteral("normal"), Description("Normal")]
             Normal,
             /// <summary>
             /// The search parameter is derived by a phonetic transform from the selected nodes.
+            /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("phonetic")]
+            [EnumLiteral("phonetic"), Description("Phonetic")]
             Phonetic,
             /// <summary>
             /// The search parameter is based on a spatial transform of the selected nodes.
+            /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("nearby")]
+            [EnumLiteral("nearby"), Description("Nearby")]
             Nearby,
             /// <summary>
             /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle.
+            /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("distance")]
+            [EnumLiteral("distance"), Description("Distance")]
             Distance,
             /// <summary>
             /// The interpretation of the xpath statement is unknown (and can't be automated).
+            /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("other")]
+            [EnumLiteral("other"), Description("Other")]
             Other,
         }
-        
+
         [FhirType("SearchParameterContactComponent")]
         [DataContract]
         public partial class SearchParameterContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -464,13 +471,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("base", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code BaseElement
+        public Code<Hl7.Fhir.Model.ResourceType> BaseElement
         {
             get { return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _BaseElement;
+        private Code<Hl7.Fhir.Model.ResourceType> _BaseElement;
         
         /// <summary>
         /// The resource type this search parameter applies to
@@ -478,7 +485,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Base
+        public Hl7.Fhir.Model.ResourceType? Base
         {
             get { return BaseElement != null ? BaseElement.Value : null; }
             set
@@ -486,7 +493,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   BaseElement = null; 
                 else
-                  BaseElement = new Hl7.Fhir.Model.Code(value);
+                  BaseElement = new Code<Hl7.Fhir.Model.ResourceType>(value);
                 OnPropertyChanged("Base");
             }
         }
@@ -627,13 +634,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("target", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Code> TargetElement
+        public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
         {
-            get { if(_TargetElement==null) _TargetElement = new List<Hl7.Fhir.Model.Code>(); return _TargetElement; }
+            get { if(_TargetElement==null) _TargetElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _TargetElement; }
             set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
         }
         
-        private List<Hl7.Fhir.Model.Code> _TargetElement;
+        private List<Code<Hl7.Fhir.Model.ResourceType>> _TargetElement;
         
         /// <summary>
         /// Types of resource (if a resource reference)
@@ -641,7 +648,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Target
+        public IEnumerable<Hl7.Fhir.Model.ResourceType?> Target
         {
             get { return TargetElement != null ? TargetElement.Select(elem => elem.Value) : null; }
             set
@@ -649,7 +656,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   TargetElement = null; 
                 else
-                  TargetElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                  TargetElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
                 OnPropertyChanged("Target");
             }
         }
@@ -670,12 +677,12 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.Code)BaseElement.DeepCopy();
+                if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.ResourceType>)BaseElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>)XpathUsageElement.DeepCopy();
-                if(TargetElement != null) dest.TargetElement = new List<Hl7.Fhir.Model.Code>(TargetElement.DeepCopy());
+                if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
                 return dest;
             }
             else

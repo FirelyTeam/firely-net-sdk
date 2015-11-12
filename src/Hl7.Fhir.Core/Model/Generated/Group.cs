@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,41 +55,183 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Types of resources that are part of group
+        /// (url: http://hl7.org/fhir/ValueSet/group-type)
         /// </summary>
         [FhirEnumeration("GroupType")]
         public enum GroupType
         {
             /// <summary>
             /// Group contains "person" Patient resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("person")]
+            [EnumLiteral("person"), Description("Person")]
             Person,
             /// <summary>
             /// Group contains "animal" Patient resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("animal")]
+            [EnumLiteral("animal"), Description("Animal")]
             Animal,
             /// <summary>
             /// Group contains healthcare practitioner resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("practitioner")]
+            [EnumLiteral("practitioner"), Description("Practitioner")]
             Practitioner,
             /// <summary>
             /// Group contains Device resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("device")]
+            [EnumLiteral("device"), Description("Device")]
             Device,
             /// <summary>
             /// Group contains Medication resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("medication")]
+            [EnumLiteral("medication"), Description("Medication")]
             Medication,
             /// <summary>
             /// Group contains Substance resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("substance")]
+            [EnumLiteral("substance"), Description("Substance")]
             Substance,
         }
+
+        [FhirType("GroupCharacteristicComponent")]
+        [DataContract]
+        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "GroupCharacteristicComponent"; } }
+            
+            /// <summary>
+            /// Kind of characteristic
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Value held by characteristic
+            /// </summary>
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Value;
+            
+            /// <summary>
+            /// Group includes or excludes
+            /// </summary>
+            [FhirElement("exclude", Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ExcludeElement
+            {
+                get { return _ExcludeElement; }
+                set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
+            
+            /// <summary>
+            /// Group includes or excludes
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Exclude
+            {
+                get { return ExcludeElement != null ? ExcludeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ExcludeElement = null; 
+                    else
+                      ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Exclude");
+                }
+            }
+            
+            /// <summary>
+            /// Period over which characteristic is tested
+            /// </summary>
+            [FhirElement("period", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as GroupCharacteristicComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new GroupCharacteristicComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as GroupCharacteristicComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as GroupCharacteristicComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("GroupMemberComponent")]
         [DataContract]
@@ -100,7 +243,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to the group member
             /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40)]
+            [FhirElement("entity", Order=40)]
             [References("Patient","Practitioner","Device","Medication","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -115,7 +258,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Period member belonged to the group
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -128,7 +271,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If member is no longer in group
             /// </summary>
-            [FhirElement("inactive", InSummary=true, Order=60)]
+            [FhirElement("inactive", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean InactiveElement
             {
@@ -200,141 +343,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(InactiveElement, otherT.InactiveElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("GroupCharacteristicComponent")]
-        [DataContract]
-        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "GroupCharacteristicComponent"; } }
-            
-            /// <summary>
-            /// Kind of characteristic
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Value held by characteristic
-            /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Value;
-            
-            /// <summary>
-            /// Group includes or excludes
-            /// </summary>
-            [FhirElement("exclude", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean ExcludeElement
-            {
-                get { return _ExcludeElement; }
-                set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
-            
-            /// <summary>
-            /// Group includes or excludes
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Exclude
-            {
-                get { return ExcludeElement != null ? ExcludeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ExcludeElement = null; 
-                    else
-                      ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Exclude");
-                }
-            }
-            
-            /// <summary>
-            /// Period over which characteristic is tested
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as GroupCharacteristicComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
-                    if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new GroupCharacteristicComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as GroupCharacteristicComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as GroupCharacteristicComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
             }

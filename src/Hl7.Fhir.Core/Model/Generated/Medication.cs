@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// powder | tablets | carton +
             /// </summary>
-            [FhirElement("form", InSummary=true, Order=40)]
+            [FhirElement("form", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Form
             {
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Active or inactive ingredient
             /// </summary>
-            [FhirElement("ingredient", InSummary=true, Order=50)]
+            [FhirElement("ingredient", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
@@ -86,7 +87,10 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
             
-            [FhirElement("batch", InSummary=true, Order=60)]
+            /// <summary>
+            /// 
+            /// </summary>
+            [FhirElement("batch", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent> Batch
@@ -157,7 +161,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The product contained
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
+            [FhirElement("item", Order=40)]
             [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -172,7 +176,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of ingredient present
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=50)]
+            [FhirElement("amount", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Amount
             {
@@ -229,88 +233,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationPackageContentComponent")]
-        [DataContract]
-        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "MedicationPackageContentComponent"; } }
-            
-            /// <summary>
-            /// A product in the package
-            /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
-            [References("Medication")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
-            {
-                get { return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Item;
-            
-            /// <summary>
-            /// Quantity present in the package
-            /// </summary>
-            [FhirElement("amount", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Amount
-            {
-                get { return _Amount; }
-                set { _Amount = value; OnPropertyChanged("Amount"); }
-            }
-            
-            private Hl7.Fhir.Model.SimpleQuantity _Amount;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as MedicationPackageContentComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new MedicationPackageContentComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as MedicationPackageContentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
-                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as MedicationPackageContentComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("MedicationProductBatchComponent")]
         [DataContract]
         public partial class MedicationProductBatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -318,7 +240,10 @@ namespace Hl7.Fhir.Model
             [NotMapped]
             public override string TypeName { get { return "MedicationProductBatchComponent"; } }
             
-            [FhirElement("lotNumber", InSummary=true, Order=40)]
+            /// <summary>
+            /// 
+            /// </summary>
+            [FhirElement("lotNumber", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LotNumberElement
             {
@@ -328,6 +253,10 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.FhirString _LotNumberElement;
             
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string LotNumber
@@ -343,7 +272,10 @@ namespace Hl7.Fhir.Model
                 }
             }
             
-            [FhirElement("expirationDate", InSummary=true, Order=50)]
+            /// <summary>
+            /// 
+            /// </summary>
+            [FhirElement("expirationDate", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
             {
@@ -353,6 +285,10 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
             
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ExpirationDate
@@ -425,7 +361,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. box, vial, blister-pack
             /// </summary>
-            [FhirElement("container", InSummary=true, Order=40)]
+            [FhirElement("container", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Container
             {
@@ -438,7 +374,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What is  in the package
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=50)]
+            [FhirElement("content", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
@@ -489,6 +425,88 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("MedicationPackageContentComponent")]
+        [DataContract]
+        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "MedicationPackageContentComponent"; } }
+            
+            /// <summary>
+            /// A product in the package
+            /// </summary>
+            [FhirElement("item", Order=40)]
+            [References("Medication")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Item;
+            
+            /// <summary>
+            /// Quantity present in the package
+            /// </summary>
+            [FhirElement("amount", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Amount
+            {
+                get { return _Amount; }
+                set { _Amount = value; OnPropertyChanged("Amount"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Amount;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as MedicationPackageContentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new MedicationPackageContentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MedicationPackageContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
             }

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,57 +55,67 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates whether the goal has been met and is still being targeted
+        /// (url: http://hl7.org/fhir/ValueSet/goal-status)
         /// </summary>
         [FhirEnumeration("GoalStatus")]
         public enum GoalStatus
         {
             /// <summary>
             /// A goal is proposed for this patient
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// A goal is planned for this patient
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// A proposed goal was accepted
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// A proposed goal was rejected
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The goal has been met and no further action is needed
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("achieved")]
+            [EnumLiteral("achieved"), Description("Achieved")]
             Achieved,
             /// <summary>
             /// The goal has been met, but ongoing activity is needed to sustain the goal objective
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("sustaining")]
+            [EnumLiteral("sustaining"), Description("Sustaining")]
             Sustaining,
             /// <summary>
             /// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("on-hold")]
+            [EnumLiteral("on-hold"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// The goal is no longer being sought
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
         }
-        
+
         [FhirType("GoalOutcomeComponent")]
         [DataContract]
         public partial class GoalOutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -115,7 +126,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code or observation that resulted from goal
             /// </summary>
-            [FhirElement("result", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("result", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Result

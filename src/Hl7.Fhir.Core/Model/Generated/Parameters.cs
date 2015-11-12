@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -95,8 +96,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a data type
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Meta))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a whole resource
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -123,7 +124,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Named part of a parameter (e.g. Tuple)
             /// </summary>
-            [FhirElement("part", InSummary=true, Order=70)]
+            [FhirElement("part", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Part

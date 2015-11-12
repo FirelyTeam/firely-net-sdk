@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,231 +55,49 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates the degree of precision of the data element definition.
+        /// (url: http://hl7.org/fhir/ValueSet/dataelement-stringency)
         /// </summary>
         [FhirEnumeration("DataElementStringency")]
         public enum DataElementStringency
         {
             /// <summary>
             /// The data element is sufficiently well-constrained that multiple pieces of data captured according to the constraints of the data element will be comparable (though in some cases, a degree of automated conversion/normalization may be required).
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("comparable")]
+            [EnumLiteral("comparable"), Description("Comparable")]
             Comparable,
             /// <summary>
             /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully comparable.
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("fully-specified")]
+            [EnumLiteral("fully-specified"), Description("Fully Specified")]
             FullySpecified,
             /// <summary>
             /// The data element allows multiple units of measure having equivalent meaning; e.g. "cc" (cubic centimeter) and "mL" (milliliter).
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("equivalent")]
+            [EnumLiteral("equivalent"), Description("Equivalent")]
             Equivalent,
             /// <summary>
             /// The data element allows multiple units of measure that are convertable between each other (e.g. inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("convertable")]
+            [EnumLiteral("convertable"), Description("Convertable")]
             Convertable,
             /// <summary>
-            /// A convertable data element where unit conversions are different only by a power of 10; e.g. g, mg, kg.
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("scaleable")]
+            [EnumLiteral("scaleable"), Description("Scaleable")]
             Scaleable,
             /// <summary>
             /// The data element is unconstrained in units, choice of data types and/or choice of vocabulary such that automated comparison of data captured using the data element is not possible.
+            /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("flexible")]
+            [EnumLiteral("flexible"), Description("Flexible")]
             Flexible,
         }
-        
-        [FhirType("DataElementMappingComponent")]
-        [DataContract]
-        public partial class DataElementMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "DataElementMappingComponent"; } }
-            
-            /// <summary>
-            /// Internal id when this mapping is used
-            /// </summary>
-            [FhirElement("identity", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id IdentityElement
-            {
-                get { return _IdentityElement; }
-                set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _IdentityElement;
-            
-            /// <summary>
-            /// Internal id when this mapping is used
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Identity
-            {
-                get { return IdentityElement != null ? IdentityElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      IdentityElement = null; 
-                    else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("Identity");
-                }
-            }
-            
-            /// <summary>
-            /// Identifies what this mapping refers to
-            /// </summary>
-            [FhirElement("uri", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UriElement
-            {
-                get { return _UriElement; }
-                set { _UriElement = value; OnPropertyChanged("UriElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UriElement;
-            
-            /// <summary>
-            /// Identifies what this mapping refers to
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Uri
-            {
-                get { return UriElement != null ? UriElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UriElement = null; 
-                    else
-                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Uri");
-                }
-            }
-            
-            /// <summary>
-            /// Names what this mapping refers to
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Names what this mapping refers to
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Versions, Issues, Scope limitations etc.
-            /// </summary>
-            [FhirElement("comments", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString CommentsElement
-            {
-                get { return _CommentsElement; }
-                set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _CommentsElement;
-            
-            /// <summary>
-            /// Versions, Issues, Scope limitations etc.
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Comments
-            {
-                get { return CommentsElement != null ? CommentsElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      CommentsElement = null; 
-                    else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Comments");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as DataElementMappingComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
-                    if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new DataElementMappingComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as DataElementMappingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
-                if( !DeepComparable.Matches(UriElement, otherT.UriElement)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as DataElementMappingComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
-                if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
+
         [FhirType("DataElementContactComponent")]
         [DataContract]
         public partial class DataElementContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -372,6 +191,195 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("DataElementMappingComponent")]
+        [DataContract]
+        public partial class DataElementMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DataElementMappingComponent"; } }
+            
+            /// <summary>
+            /// Internal id when this mapping is used
+            /// </summary>
+            [FhirElement("identity", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Id IdentityElement
+            {
+                get { return _IdentityElement; }
+                set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Id _IdentityElement;
+            
+            /// <summary>
+            /// Internal id when this mapping is used
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Identity
+            {
+                get { return IdentityElement != null ? IdentityElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      IdentityElement = null; 
+                    else
+                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("Identity");
+                }
+            }
+            
+            /// <summary>
+            /// Identifies what this mapping refers to
+            /// </summary>
+            [FhirElement("uri", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UriElement
+            {
+                get { return _UriElement; }
+                set { _UriElement = value; OnPropertyChanged("UriElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UriElement;
+            
+            /// <summary>
+            /// Identifies what this mapping refers to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Uri
+            {
+                get { return UriElement != null ? UriElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UriElement = null; 
+                    else
+                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Uri");
+                }
+            }
+            
+            /// <summary>
+            /// Names what this mapping refers to
+            /// </summary>
+            [FhirElement("name", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Names what this mapping refers to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Versions, Issues, Scope limitations etc.
+            /// </summary>
+            [FhirElement("comments", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString CommentsElement
+            {
+                get { return _CommentsElement; }
+                set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _CommentsElement;
+            
+            /// <summary>
+            /// Versions, Issues, Scope limitations etc.
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Comments
+            {
+                get { return CommentsElement != null ? CommentsElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CommentsElement = null; 
+                    else
+                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Comments");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DataElementMappingComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
+                    if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DataElementMappingComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DataElementMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.Matches(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DataElementMappingComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
+                if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
                 
                 return true;
             }

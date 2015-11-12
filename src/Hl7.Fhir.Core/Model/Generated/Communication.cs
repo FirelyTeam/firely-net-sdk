@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,37 +55,43 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the communication.
+        /// (url: http://hl7.org/fhir/ValueSet/communication-status)
         /// </summary>
         [FhirEnumeration("CommunicationStatus")]
         public enum CommunicationStatus
         {
             /// <summary>
             /// The communication transmission is ongoing.
+            /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The message transmission is complete, i.e., delivered to the recipient's destination.
+            /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The communication transmission has been held by originating system/user request.
+            /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to accept the message.
+            /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// There was a failure in transmitting the message out.
+            /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("failed")]
+            [EnumLiteral("failed"), Description("Failed")]
             Failed,
         }
-        
+
         [FhirType("CommunicationPayloadComponent")]
         [DataContract]
         public partial class CommunicationPayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -154,7 +161,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -168,7 +175,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message category
         /// </summary>
-        [FhirElement("category", Order=100)]
+        [FhirElement("category", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -181,7 +188,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message sender
         /// </summary>
-        [FhirElement("sender", Order=110)]
+        [FhirElement("sender", InSummary=true, Order=110)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
@@ -195,7 +202,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message recipient
         /// </summary>
-        [FhirElement("recipient", Order=120)]
+        [FhirElement("recipient", InSummary=true, Order=120)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -210,7 +217,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("payload", Order=130)]
+        [FhirElement("payload", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> Payload
@@ -224,7 +231,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A channel of communication
         /// </summary>
-        [FhirElement("medium", Order=140)]
+        [FhirElement("medium", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -238,7 +245,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in-progress | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=150)]
+        [FhirElement("status", InSummary=true, Order=150)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Communication.CommunicationStatus> StatusElement
         {
@@ -270,7 +277,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter leading to message
         /// </summary>
-        [FhirElement("encounter", Order=160)]
+        [FhirElement("encounter", InSummary=true, Order=160)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -284,7 +291,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When sent
         /// </summary>
-        [FhirElement("sent", Order=170)]
+        [FhirElement("sent", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime SentElement
         {
@@ -316,7 +323,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When received
         /// </summary>
-        [FhirElement("received", Order=180)]
+        [FhirElement("received", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedElement
         {
@@ -348,7 +355,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", Order=190)]
+        [FhirElement("reason", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -362,7 +369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", Order=200)]
+        [FhirElement("subject", InSummary=true, Order=200)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -376,7 +383,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// CommunicationRequest producing this message
         /// </summary>
-        [FhirElement("requestDetail", Order=210)]
+        [FhirElement("requestDetail", InSummary=true, Order=210)]
         [References("CommunicationRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestDetail

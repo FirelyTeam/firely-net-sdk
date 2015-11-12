@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,26 +55,113 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The workflow state of a clinical impression.
+        /// (url: http://hl7.org/fhir/ValueSet/clinical-impression-status)
         /// </summary>
         [FhirEnumeration("ClinicalImpressionStatus")]
         public enum ClinicalImpressionStatus
         {
             /// <summary>
             /// The assessment is still on-going and results are not yet final.
+            /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In progress")]
             InProgress,
             /// <summary>
             /// The assessment is done and the results are final.
+            /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
+            /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
+
+        [FhirType("ClinicalImpressionInvestigationsComponent")]
+        [DataContract]
+        public partial class ClinicalImpressionInvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ClinicalImpressionInvestigationsComponent"; } }
+            
+            /// <summary>
+            /// A name/code for the set
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Record of a specific investigation
+            /// </summary>
+            [FhirElement("item", Order=50)]
+            [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Item
+            {
+                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.ResourceReference>(); return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Item;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ClinicalImpressionInvestigationsComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ResourceReference>(Item.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ClinicalImpressionInvestigationsComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+            
+        }
+        
         
         [FhirType("ClinicalImpressionFindingComponent")]
         [DataContract]
@@ -85,7 +173,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific text or code for finding
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
+            [FhirElement("item", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Item
@@ -99,7 +187,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Which investigations support finding
             /// </summary>
-            [FhirElement("cause", InSummary=true, Order=50)]
+            [FhirElement("cause", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CauseElement
             {
@@ -185,7 +273,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific text of code for diagnosis
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40)]
+            [FhirElement("item", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Item
@@ -199,7 +287,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Grounds for elimination
             /// </summary>
-            [FhirElement("reason", InSummary=true, Order=50)]
+            [FhirElement("reason", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ReasonElement
             {
@@ -268,89 +356,6 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ClinicalImpressionInvestigationsComponent")]
-        [DataContract]
-        public partial class ClinicalImpressionInvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ClinicalImpressionInvestigationsComponent"; } }
-            
-            /// <summary>
-            /// A name/code for the set
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Record of a specific investigation
-            /// </summary>
-            [FhirElement("item", InSummary=true, Order=50)]
-            [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Item
-            {
-                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.ResourceReference>(); return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Item;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ClinicalImpressionInvestigationsComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ResourceReference>(Item.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ClinicalImpressionInvestigationsComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ClinicalImpressionInvestigationsComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ClinicalImpressionInvestigationsComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
             }

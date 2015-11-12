@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,88 +52,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Substance; } }
         [NotMapped]
         public override string TypeName { get { return "Substance"; } }
-        
-        [FhirType("SubstanceIngredientComponent")]
-        [DataContract]
-        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "SubstanceIngredientComponent"; } }
-            
-            /// <summary>
-            /// Optional amount (concentration)
-            /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Ratio Quantity
-            {
-                get { return _Quantity; }
-                set { _Quantity = value; OnPropertyChanged("Quantity"); }
-            }
-            
-            private Hl7.Fhir.Model.Ratio _Quantity;
-            
-            /// <summary>
-            /// A component of the substance
-            /// </summary>
-            [FhirElement("substance", InSummary=true, Order=50)]
-            [References("Substance")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Substance
-            {
-                get { return _Substance; }
-                set { _Substance = value; OnPropertyChanged("Substance"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Substance;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SubstanceIngredientComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SubstanceIngredientComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SubstanceIngredientComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SubstanceIngredientComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
-                
-                return true;
-            }
-            
-        }
-        
         
         [FhirType("SubstanceInstanceComponent")]
         [DataContract]
@@ -242,6 +161,88 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(ExpiryElement, otherT.ExpiryElement)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("SubstanceIngredientComponent")]
+        [DataContract]
+        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SubstanceIngredientComponent"; } }
+            
+            /// <summary>
+            /// Optional amount (concentration)
+            /// </summary>
+            [FhirElement("quantity", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Ratio Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.Ratio _Quantity;
+            
+            /// <summary>
+            /// A component of the substance
+            /// </summary>
+            [FhirElement("substance", InSummary=true, Order=50)]
+            [References("Substance")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Substance
+            {
+                get { return _Substance; }
+                set { _Substance = value; OnPropertyChanged("Substance"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Substance;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SubstanceIngredientComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new SubstanceIngredientComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SubstanceIngredientComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SubstanceIngredientComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
                 
                 return true;
             }

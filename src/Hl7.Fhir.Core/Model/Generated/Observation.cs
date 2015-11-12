@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,86 +54,101 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Observation"; } }
         
         /// <summary>
-        /// Codes specifying how two observations are related.
-        /// </summary>
-        [FhirEnumeration("ObservationRelationshipType")]
-        public enum ObservationRelationshipType
-        {
-            /// <summary>
-            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
-            /// </summary>
-            [EnumLiteral("has-member")]
-            HasMember,
-            /// <summary>
-            /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireResponse.
-            /// </summary>
-            [EnumLiteral("derived-from")]
-            DerivedFrom,
-            /// <summary>
-            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
-            /// </summary>
-            [EnumLiteral("sequel-to")]
-            SequelTo,
-            /// <summary>
-            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
-            /// </summary>
-            [EnumLiteral("replaces")]
-            Replaces,
-            /// <summary>
-            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
-            /// </summary>
-            [EnumLiteral("qualified-by")]
-            QualifiedBy,
-            /// <summary>
-            /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
-            /// </summary>
-            [EnumLiteral("interfered-by")]
-            InterferedBy,
-        }
-        
-        /// <summary>
         /// Codes providing the status of an observation.
+        /// (url: http://hl7.org/fhir/ValueSet/observation-status)
         /// </summary>
         [FhirEnumeration("ObservationStatus")]
         public enum ObservationStatus
         {
             /// <summary>
             /// The existence of the observation is registered, but there is no result yet available.
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("registered")]
+            [EnumLiteral("registered"), Description("Registered")]
             Registered,
             /// <summary>
             /// This is an initial or interim observation: data may be incomplete or unverified.
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("preliminary")]
+            [EnumLiteral("preliminary"), Description("Preliminary")]
             Preliminary,
             /// <summary>
             /// The observation is complete and verified by an authorized person.
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("final")]
+            [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
             /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("amended")]
+            [EnumLiteral("amended"), Description("Amended")]
             Amended,
             /// <summary>
             /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("cancelled")]
             Cancelled,
             /// <summary>
             /// The observation has been withdrawn following previous final release.
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("unknown")]
+            [EnumLiteral("unknown"), Description("Unknown Status")]
             Unknown,
         }
-        
+
+        /// <summary>
+        /// Codes specifying how two observations are related.
+        /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
+        /// </summary>
+        [FhirEnumeration("ObservationRelationshipType")]
+        public enum ObservationRelationshipType
+        {
+            /// <summary>
+            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("has-member"), Description("Has Member")]
+            HasMember,
+            /// <summary>
+            /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireResponse.
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("derived-from"), Description("Derived From")]
+            DerivedFrom,
+            /// <summary>
+            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("sequel-to"), Description("Sequel To")]
+            SequelTo,
+            /// <summary>
+            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("replaces"), Description("Replaces")]
+            Replaces,
+            /// <summary>
+            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("qualified-by"), Description("Qualified By")]
+            QualifiedBy,
+            /// <summary>
+            /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
+            /// </summary>
+            [EnumLiteral("interfered-by"), Description("Interfered By")]
+            InterferedBy,
+        }
+
         [FhirType("ObservationReferenceRangeComponent")]
         [DataContract]
         public partial class ObservationReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -143,7 +159,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Low Range, if relevant
             /// </summary>
-            [FhirElement("low", InSummary=true, Order=40)]
+            [FhirElement("low", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Low
             {
@@ -156,7 +172,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// High Range, if relevant
             /// </summary>
-            [FhirElement("high", InSummary=true, Order=50)]
+            [FhirElement("high", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity High
             {
@@ -169,7 +185,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indicates the meaning/use of this range of this range
             /// </summary>
-            [FhirElement("meaning", InSummary=true, Order=60)]
+            [FhirElement("meaning", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Meaning
             {
@@ -182,7 +198,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Applicable age range, if relevant
             /// </summary>
-            [FhirElement("age", InSummary=true, Order=70)]
+            [FhirElement("age", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Range Age
             {
@@ -195,7 +211,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text based reference range in an observation
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=80)]
+            [FhirElement("text", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -290,7 +306,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
             {
@@ -322,7 +338,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource that is related to this one
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
+            [FhirElement("target", Order=50)]
             [References("Observation","QuestionnaireResponse")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -406,7 +422,7 @@ namespace Hl7.Fhir.Model
             /// Actual component result
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -419,7 +435,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why the component result is missing
             /// </summary>
-            [FhirElement("dataAbsentReason", InSummary=true, Order=60)]
+            [FhirElement("dataAbsentReason", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
             {
@@ -432,7 +448,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Provides guide for interpretation of component result
             /// </summary>
-            [FhirElement("referenceRange", InSummary=true, Order=70)]
+            [FhirElement("referenceRange", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
@@ -663,7 +679,7 @@ namespace Hl7.Fhir.Model
         /// Actual result
         /// </summary>
         [FhirElement("value", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {

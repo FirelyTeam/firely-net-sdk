@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,62 +55,73 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the communication.
+        /// (url: http://hl7.org/fhir/ValueSet/communication-request-status)
         /// </summary>
         [FhirEnumeration("CommunicationRequestStatus")]
         public enum CommunicationRequestStatus
         {
             /// <summary>
             /// The request has been proposed.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request has been planned.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// The request has been placed.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the request but not yet decided whether it will be performed.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("received")]
+            [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the order, but work has not yet commenced.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the order is happening.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been held by originating system/user request.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The communication was attempted, but due to some procedural error, it could not be completed.
+            /// (system: http://hl7.org/fhir/communication-request-status)
             /// </summary>
-            [EnumLiteral("failed")]
+            [EnumLiteral("failed"), Description("Failed")]
             Failed,
         }
-        
+
         [FhirType("CommunicationRequestPayloadComponent")]
         [DataContract]
         public partial class CommunicationRequestPayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -179,7 +191,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -193,7 +205,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message category
         /// </summary>
-        [FhirElement("category", Order=100)]
+        [FhirElement("category", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -206,7 +218,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message sender
         /// </summary>
-        [FhirElement("sender", Order=110)]
+        [FhirElement("sender", InSummary=true, Order=110)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
@@ -220,7 +232,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message recipient
         /// </summary>
-        [FhirElement("recipient", Order=120)]
+        [FhirElement("recipient", InSummary=true, Order=120)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -235,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("payload", Order=130)]
+        [FhirElement("payload", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestPayloadComponent> Payload
@@ -249,7 +261,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A channel of communication
         /// </summary>
-        [FhirElement("medium", Order=140)]
+        [FhirElement("medium", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -263,7 +275,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An individual who requested a communication
         /// </summary>
-        [FhirElement("requester", Order=150)]
+        [FhirElement("requester", InSummary=true, Order=150)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
@@ -277,7 +289,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", Order=160)]
+        [FhirElement("status", InSummary=true, Order=160)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus> StatusElement
         {
@@ -309,7 +321,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter leading to message
         /// </summary>
-        [FhirElement("encounter", Order=170)]
+        [FhirElement("encounter", InSummary=true, Order=170)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -323,7 +335,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("scheduled", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("scheduled", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Scheduled
@@ -337,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", Order=190)]
+        [FhirElement("reason", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -351,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered or proposed
         /// </summary>
-        [FhirElement("requestedOn", Order=200)]
+        [FhirElement("requestedOn", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RequestedOnElement
         {
@@ -383,7 +395,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", Order=210)]
+        [FhirElement("subject", InSummary=true, Order=210)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -397,7 +409,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message urgency
         /// </summary>
-        [FhirElement("priority", Order=220)]
+        [FhirElement("priority", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
