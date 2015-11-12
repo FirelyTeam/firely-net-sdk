@@ -29,13 +29,11 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotGeneratorTest
 #endif
     {
-        private ArtifactResolver _coreSource;
         private ArtifactResolver _testSource;
 
         [TestInitialize]
         public void Setup()
         {
-            _coreSource = new ArtifactResolver(new CachedArtifactSource(ZipArtifactSource.CreateValidationSource()));
             _testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
         }
 
@@ -46,7 +44,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/genetics");
             Assert.IsNotNull(sd);
 
-            generateSnapshotAndCompare(sd, _coreSource);
+            generateSnapshotAndCompare(sd, _testSource);
         }
 
   
@@ -59,7 +57,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
 
-                generateSnapshotAndCompare(original, _coreSource);
+                generateSnapshotAndCompare(original, _testSource);
             }
         }
 
@@ -138,18 +136,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandChild()
         {            
-            var qStructDef = _coreSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             Assert.IsNotNull(qStructDef);
             Assert.IsNotNull(qStructDef.Snapshot);
 
             var nav = new ElementNavigator(qStructDef.Snapshot.Element);
             
             nav.JumpToFirst("Questionnaire.telecom");
-            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_coreSource));
+            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource));
             Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
             nav.JumpToFirst("Questionnaire.group");
-            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_coreSource));
+            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource));
             Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
         }
 

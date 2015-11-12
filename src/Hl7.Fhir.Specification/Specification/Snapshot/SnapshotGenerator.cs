@@ -165,7 +165,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 if (slicingEntry.IsExtension())
                 {
-                    // In this case we insert a "prefab" extension slice.
+                    // In this case we create a "prefab" extension slice (with just slincing info)
+                    // that's simply merged with the original element in base
                     slicingEntry = createExtensionSlicingEntry();
                 }
                 else
