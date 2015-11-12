@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
 			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
 			result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 
-			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeName = result.Name;
@@ -818,6 +818,7 @@ namespace Hl7.Fhir.Model
 								result.NativeType = "string";
 								break;
 				case "time" : result.PropType = "Hl7.Fhir.Model.Time"; 
+								result.NativeType = "string";
 								break;
 				case "instant" : result.PropType = "Hl7.Fhir.Model.Instant"; 
 								result.NativeType = "DateTimeOffset?";
