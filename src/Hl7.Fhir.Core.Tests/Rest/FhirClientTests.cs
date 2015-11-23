@@ -32,9 +32,9 @@ namespace Hl7.Fhir.Tests.Rest
         //Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-       // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
 
         [TestInitialize]
         public void TestInitialize()
@@ -299,6 +299,40 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
+        [TestMethod]
+        public void StackOverflow()
+        {
+            var client = new FhirClient("http://spark.furore.com/fhir");
+            var pat = client.Read<Patient>("Patient/1");
+        }
+
+        [TestMethod, TestCategory("FhirClient")]
+        public void CreateAndFullRepresentation()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            client.ReturnFullResource = true;       // which is also the default
+
+            var pat = client.Read<Patient>("Patient/1");
+            pat.Id = null;
+            pat.Identifier.Clear();
+            var patC = client.Create<Patient>(pat);
+            Assert.IsNotNull(patC);
+
+            client.ReturnFullResource = false;
+            patC = client.Create<Patient>(pat);
+
+            Assert.IsNull(patC);
+
+            if (client.LastBody != null)
+            {
+                var returned = client.LastBodyAsResource;
+                Assert.IsTrue(returned is OperationOutcome);
+            }
+        }
+
+
+
+
         private Uri createdTestPatientUrl = null;
 
         /// <summary>
@@ -309,10 +343,14 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDelete()
         {
             var pat = (Patient)FhirParser.ParseResourceFromXml(File.ReadAllText(@"TestData\TestPatient.xml"));
-            var key = new Random().Next();
-            pat.Id = "NetApiCRUDTestPatient" + key;
+//            var key = new Random().Next();
+//            pat.Id = "NetApiCRUDTestPatient" + key;
 
             FhirClient client = new FhirClient(testEndpoint);
+            pat = client.Read<Patient>("Patient/1");
+            pat.Id = null;
+            pat.Identifier.Clear();
+            pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
             var fe = client.Create(pat);
             Assert.IsNotNull(fe);

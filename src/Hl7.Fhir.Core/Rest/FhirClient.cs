@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private bool _returnFullResource = false;
+        //private bool _returnFullResource = false;
 
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content?
@@ -123,11 +123,10 @@ namespace Hl7.Fhir.Rest
         {
             get 
             {
-                return _returnFullResource;
+                return _requester.Prefer == Prefer.ReturnRepresentation;
             }
             set 
             {
-                _returnFullResource = value;
                 _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
             }
         }
