@@ -20,6 +20,8 @@ namespace Hl7.Fhir.Tests.FhirPath
     [TestClass]
     public class FhirPathLexerTest
     {
+        // TODO: Implement .Named() method to provide error info - also unit test!
+
         [TestMethod]
         public void FhirPath_Lex_Identifier()
         {
@@ -64,19 +66,19 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "**");
         }
 
-        private void SucceedsConst(Parser<string> parser, string expr) => AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
+        private void SucceedsPrefixString(Parser<string> parser, string expr) => AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
 
         [TestMethod]
         public void FhirPath_Lex_Const()
         {
             var parser = Lexer.Const.End();
 
-            SucceedsConst(parser, "%c");
-            SucceedsConst(parser, "%const");
-            SucceedsConst(parser, "%0");
-            SucceedsConst(parser, "%0123");
-            SucceedsConst(parser, "%a-1");
-            SucceedsConst(parser, "%a----1");
+            SucceedsPrefixString(parser, "%c");
+            SucceedsPrefixString(parser, "%const");
+            SucceedsPrefixString(parser, "%0");
+            SucceedsPrefixString(parser, "%0123");
+            SucceedsPrefixString(parser, "%a-1");
+            SucceedsPrefixString(parser, "%a----1");
 
             AssertParser.FailsMatch(parser, "%");
             AssertParser.FailsMatch(parser, "%%");
@@ -85,16 +87,14 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "%*");
         }
 
-        //private void SucceedsUnicode(Parser<string> parser, string expr) => AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
-
         [TestMethod]
         public void FhirPath_Lex_Unicode()
         {
             var parser = Lexer.Unicode.End();
 
-            //SucceedsUnicode(parser, "u0000");
-            //SucceedsUnicode(parser, "u09af");
-            //SucceedsUnicode(parser, "uffff");
+            //SucceedsPrefixString(parser, "u0000");
+            //SucceedsPrefixString(parser, "u09af");
+            //SucceedsPrefixString(parser, "uffff");
 
             AssertParser.SucceedsMatch(parser, "u0000");
             AssertParser.SucceedsMatch(parser, "u09af");
@@ -168,6 +168,118 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "1");
             AssertParser.FailsMatch(parser, "0");
         }
+
+        [TestMethod]
+        public void FhirPath_Lex_Int()
+        {
+            var parser = Lexer.Int.End();
+
+            for (int i = 0; i < 100; i++)
+            {
+                AssertParser.SucceedsMatch(parser, i.ToString());
+                // TODO: Negative values
+                AssertParser.SucceedsMatch(parser, "-" + i.ToString());
+            }
+
+            // Very large integers - how to cast to (32-bit) int?
+            AssertParser.SucceedsMatch(parser, "100000000000000000000000000000000");
+            AssertParser.SucceedsMatch(parser, "999999999999999999999999999999999");
+            AssertParser.SucceedsMatch(parser, "-100000000000000000000000000000000");
+            AssertParser.SucceedsMatch(parser, "-999999999999999999999999999999999");
+
+            // FHIR disallows leading zeroes
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "01");
+            AssertParser.FailsMatch(parser, "a0");
+            AssertParser.FailsMatch(parser, "0.1");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_Logic()
+        {
+            var parser = Lexer.Logic;
+
+            AssertParser.SucceedsMatch(parser, "and");
+            AssertParser.SucceedsMatch(parser, "or");
+            AssertParser.SucceedsMatch(parser, "xor");
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "AND");
+            AssertParser.FailsMatch(parser, "And");
+            AssertParser.FailsMatch(parser, "OR");
+            AssertParser.FailsMatch(parser, "Or");
+            AssertParser.FailsMatch(parser, "XOR");
+            AssertParser.FailsMatch(parser, "Xor");
+
+            AssertParser.FailsMatch(parser, "not");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_Comp()
+        {
+            var parser = Lexer.Comp.End();
+
+            AssertParser.SucceedsMatch(parser, "=");
+            AssertParser.SucceedsMatch(parser, "~");
+            AssertParser.SucceedsMatch(parser, "!=");
+            AssertParser.SucceedsMatch(parser, "!~");
+            AssertParser.SucceedsMatch(parser, ">");
+            AssertParser.SucceedsMatch(parser, "<");
+            AssertParser.SucceedsMatch(parser, ">=");
+            AssertParser.SucceedsMatch(parser, "<=");
+            AssertParser.SucceedsMatch(parser, "in");
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "In");
+            AssertParser.FailsMatch(parser, "IN");
+            AssertParser.FailsMatch(parser, "==");
+            AssertParser.FailsMatch(parser, "!==");
+            AssertParser.FailsMatch(parser, "=!=");
+            AssertParser.FailsMatch(parser, "<<");
+            AssertParser.FailsMatch(parser, ">>");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_RootSpec()
+        {
+            var parser = Lexer.RootSpec.End();
+
+            SucceedsPrefixString(parser, "$context");
+            SucceedsPrefixString(parser, "$resource");
+            SucceedsPrefixString(parser, "$parent");
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "$test");
+            AssertParser.FailsMatch(parser, "$$context");
+            AssertParser.FailsMatch(parser, "$Context");
+            AssertParser.FailsMatch(parser, "$Resource");
+            AssertParser.FailsMatch(parser, "$Parent");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_AxisSpec()
+        {
+            var parser = Lexer.AxisSpec.End();
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.SucceedsMatch(parser, "*");
+            AssertParser.SucceedsMatch(parser, "**");
+            AssertParser.FailsMatch(parser, "***");
+            AssertParser.FailsMatch(parser, "#");
+            AssertParser.FailsMatch(parser, "abc");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_Recurse()
+        {
+            var parser = Lexer.Recurse.End();
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.SucceedsMatch(parser, "*");
+            AssertParser.FailsMatch(parser, "**");
+            AssertParser.FailsMatch(parser, "***");
+            AssertParser.FailsMatch(parser, "#");
+            AssertParser.FailsMatch(parser, "abc");
+        }
     }
 }
-

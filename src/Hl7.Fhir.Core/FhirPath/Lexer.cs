@@ -8,10 +8,7 @@
 
 using Sprache;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -98,7 +95,6 @@ namespace Hl7.Fhir.FhirPath
         public static readonly Parser<string> Unicode =
             from u in Parse.Char('u')
             from hex in Parse.Chars("0123456789ABCDEFabcdef").Repeat(4).Text()
-                // select hex;
             select u + hex;
 
         public static readonly Parser<string> Escape =
@@ -109,9 +105,6 @@ namespace Hl7.Fhir.FhirPath
 
         public static Parser<string> makeStringContentParser(char delimiter)
         {
-            // return Parse.CharExcept(delimiter + "\\").Many().Text()
-            //     .XOr(Escape).Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b)).Contained(Parse.Char(delimiter), Parse.Char(delimiter));
-
             return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape)
                 .Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b))
                 .Contained(Parse.Char(delimiter), Parse.Char(delimiter));
