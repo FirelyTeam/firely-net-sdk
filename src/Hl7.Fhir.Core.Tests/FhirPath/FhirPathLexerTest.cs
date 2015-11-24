@@ -13,6 +13,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.FhirPath;
 using Sprache;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -129,22 +130,22 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, @"\x");
         }
 
-        private void SucceedsString(Parser<string> parser, string s) => AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
+        private void SucceedsDelimitedString(Parser<string> parser, string s) => AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
 
         [TestMethod]
         public void FhirPath_Lex_String()
         {
             var parser = Lexer.String.End();
 
-            SucceedsString(parser, @"'single quotes'");
-            SucceedsString(parser, @"'single \' quotes'");
-            SucceedsString(parser, @"''");
+            SucceedsDelimitedString(parser, @"'single quotes'");
+            SucceedsDelimitedString(parser, @"'single \' quotes'");
+            SucceedsDelimitedString(parser, @"''");
 
-            SucceedsString(parser, @"""double quotes""");
-            SucceedsString(parser, @"""double \"" quotes""");
-            SucceedsString(parser, @"""""");
+            SucceedsDelimitedString(parser, @"""double quotes""");
+            SucceedsDelimitedString(parser, @"""double \"" quotes""");
+            SucceedsDelimitedString(parser, @"""""");
 
-            SucceedsString(parser, @"'xxx \u0123 yyyy \\\/\b\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
+            SucceedsDelimitedString(parser, @"'xxx \u0123 yyyy \\\/\b\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
 
             AssertParser.FailsMatch(parser, @"no quotes");
             AssertParser.FailsMatch(parser, @"""mixed quotes'");
