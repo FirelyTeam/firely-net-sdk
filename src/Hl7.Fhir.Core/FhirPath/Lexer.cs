@@ -17,6 +17,23 @@ namespace Hl7.Fhir.FhirPath
 {
     internal class Lexer
     {
+        // recurse: '*';
+        public static readonly Parser<string> Recurse =
+            Parse.Char('*').Once().Text();
+
+        // axis_spec: '*' | '**' ;
+        public static readonly Parser<string> AxisSpec =
+            Parse.Char('*').Repeat(1, 2).Text();
+
+        // root_spec: '$context' | '$resource' | '$parent';
+        public static readonly Parser<string> RootSpec =
+            from first in Parse.Char('$')
+            from spec in (Parse.String("context")
+                .Or(Parse.String("resource"))
+                .Or(Parse.String("parent")))
+            select new String(spec.ToArray());
+
+
         //ID: ALPHA ALPHANUM* ;
         //fragment ALPHA: [a-zA-Z];
         //fragment ALPHANUM: ALPHA | [0-9];
@@ -42,7 +59,24 @@ namespace Hl7.Fhir.FhirPath
                     .Text()
             select name;
 
+        // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
+        public static readonly Parser<string> Comp =
+            Parse.Chars("=~").Select(s => new char[] { s })
+            .Or(Parse.String("!="))
+            .Or(Parse.String("!~"))
+            .Or(Parse.String("<="))
+            .Or(Parse.String(">="))
+            .Or(Parse.String(">"))
+            .Or(Parse.String("<"))
+            .Or(Parse.String("in"))
+            .Text();
 
+        // LOGIC: 'and' | 'or' | 'xor';
+        public static readonly Parser<string> Logic =
+            Parse.String("and")
+            .XOr(Parse.String("or"))
+            .XOr(Parse.String("xor"))
+            .Text();
 
         // NUMBER: INT '.' [0-9]+ EXP? | INT EXP | INT;
         // fragment INT: '0' | [1-9][0-9]*;
@@ -54,9 +88,7 @@ namespace Hl7.Fhir.FhirPath
             .XOr(Parse.Char('0').Once().Text());
 
 
-        public static readonly Parser<string> Number = Int;
-
-
+        public static readonly Parser<string> Number = Int;   
 
         // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
         //         '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
@@ -77,7 +109,9 @@ namespace Hl7.Fhir.FhirPath
 
         public static Parser<string> makeStringContentParser(char delimiter)
         {
-            return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape).Many().Select(ss => ss.Aggregate((a, b) => a + b)).Contained(Parse.Char(delimiter), Parse.Char(delimiter));
+            return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape)
+                .Many().Select(ss => ss.Aggregate((a, b) => a + b))
+                .Contained(Parse.Char(delimiter), Parse.Char(delimiter));
         }
 
         public static readonly Parser<string> String =

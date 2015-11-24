@@ -35,16 +35,19 @@ namespace Hl7.Fhir.FhirPath
                 select l + o + r;
         }
 
-
         // term:
         //   '(' expr ')' |
         //   predicate |
         //   fpconst;
+        public static readonly Parser<string> BracketExpr =
+            from lparen in Parse.Char('(')
+            from expr in Parse.Ref(() => LogicExpr)
+            from rparen in Parse.Char(')')
+            select "(" + expr + ")";
+
         public static readonly Parser<string> Term =
-            (from lparen in Parse.Char('(')
-             from expr in Parse.Ref(() => LogicExpr)
-             from rparen in Parse.Char(')')
-             select expr)
+            BracketExpr
+             .Or(Path.Predicate)
              .XOr(FpConst);
 
         //expr:
@@ -55,21 +58,22 @@ namespace Hl7.Fhir.FhirPath
         //  expr COMP expr |
         //  expr LOGIC expr;
         public static readonly Parser<string> MulExpr =
-            Parse.ChainOperator(Parse.Char('*'), Term, (op, left, right) => left + " " + op + " " + right);
+            Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> AddExpr =
-            Parse.ChainOperator(Parse.Char('+'), MulExpr, (op, left, right) => left + " " + op + " " + right);
+            Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> JoinExpr =
-            Parse.ChainOperator(Parse.Char('|'), AddExpr, (op, left, right) => left + " " + op + " " + right);
+            Parse.ChainOperator(Parse.Chars("|&"), AddExpr, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> CompExpr =
-            Parse.ChainOperator(Parse.Char('>'), JoinExpr, (op, left, right) => left + " " + op + " " + right);
+            Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> LogicExpr =
-            Parse.ChainOperator(Parse.String("and"), CompExpr, (op, left, right) => left + " " + op + " " + right);
+            Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left + " " + op + " " + right);
 
-        public static readonly Parser<string> Expr =
-            LogicExpr.End();
+        public static readonly Parser<string> Expr = LogicExpr.End();
+     
+
     }
 }
