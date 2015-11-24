@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            var result = Expression.Expr.Parse("(4>$parent.bla*.blie.(jee+4).bloe.where[parent>5])and(%bla>=6)");
+            var result = Expression.Expr.Parse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5))and(%bla>=6)");
             Assert.AreEqual("(4 > $parent.bla.blie.bloe)and(%bla>=6)", result);
         }
     
