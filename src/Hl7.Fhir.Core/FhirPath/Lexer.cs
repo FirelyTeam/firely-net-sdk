@@ -43,14 +43,15 @@ namespace Hl7.Fhir.FhirPath
             select name;
 
         // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
-        //'\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
+        //         '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
         // fragment ESC: '\\' (["'\\/bfnrt] | UNICODE);    // allow \", \', \\, \/, \b, etc. and \uXXX
         // fragment UNICODE: 'u' HEX HEX HEX HEX;
         // fragment HEX: [0-9a-fA-F];
         public static readonly Parser<string> Unicode =
             from u in Parse.Char('u')
             from hex in Parse.Chars("0123456789ABCDEFabcdef").Repeat(4).Text()
-            select hex;
+                // select hex;
+            select u + hex;
 
         public static readonly Parser<string> Escape =
             from backslash in Parse.Char('\\')
