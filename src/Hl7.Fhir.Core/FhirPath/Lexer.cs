@@ -42,6 +42,22 @@ namespace Hl7.Fhir.FhirPath
                     .Text()
             select name;
 
+
+
+        // NUMBER: INT '.' [0-9]+ EXP? | INT EXP | INT;
+        // fragment INT: '0' | [1-9][0-9]*;
+        // fragment EXP: [Ee][+\-]? INT;
+        public static readonly Parser<string> Int =
+            (from first in Parse.Chars("123456789").Once().Text()
+             from rest in Parse.Digit.Many().Text()
+             select first + rest)
+            .XOr(Parse.Char('0').Once().Text());
+
+
+        public static readonly Parser<string> Number = Int;
+
+
+
         // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
         //'\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
         // fragment ESC: '\\' (["'\\/bfnrt] | UNICODE);    // allow \", \', \\, \/, \b, etc. and \uXXX
