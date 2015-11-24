@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
                     "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
 
-                if (sd.IsConstraint)
+                if (sd.IsConstraint || sd.IsExtension)
                     yield return sd;
             }
         }
