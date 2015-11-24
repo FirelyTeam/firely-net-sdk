@@ -109,9 +109,13 @@ namespace Hl7.Fhir.FhirPath
 
         public static Parser<string> makeStringContentParser(char delimiter)
         {
+            // return Parse.CharExcept(delimiter + "\\").Many().Text()
+            //     .XOr(Escape).Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b)).Contained(Parse.Char(delimiter), Parse.Char(delimiter));
+
             return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape)
-                .Many().Select(ss => ss.Aggregate((a, b) => a + b))
+                .Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b))
                 .Contained(Parse.Char(delimiter), Parse.Char(delimiter));
+
         }
 
         public static readonly Parser<string> String =
