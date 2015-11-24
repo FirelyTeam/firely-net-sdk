@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="FhirPath\AssertParser.cs" />
     <Compile Include="FhirPath\FhirPathLexerTest.cs" />
+    <Compile Include="FhirPath\FhirPathTest.cs" />
     <Compile Include="Introspection\ClassMappingTest.cs" />
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
