@@ -16,45 +16,44 @@ namespace Hl7.Fhir.FhirPath
     {
         // recurse: '*';
         public static readonly Parser<string> Recurse =
-            Parse.Char('*').Once().Text();
+            Parse.Char('*').Once().Text().Named("Recurse");
 
         // axis_spec: '*' | '**' ;
         public static readonly Parser<string> AxisSpec =
-            Parse.Char('*').Repeat(1, 2).Text();
+            Parse.Char('*').Repeat(1, 2).Text().Named("AxisSpec");
 
         // root_spec: '$context' | '$resource' | '$parent';
         public static readonly Parser<string> RootSpec =
-            from first in Parse.Char('$')
+            (from first in Parse.Char('$')
             from spec in (Parse.String("context")
                 .Or(Parse.String("resource"))
                 .Or(Parse.String("parent")))
-            select new String(spec.ToArray());
-
+            select new String(spec.ToArray())).Named("RootSpec");
 
         //ID: ALPHA ALPHANUM* ;
         //fragment ALPHA: [a-zA-Z];
         //fragment ALPHANUM: ALPHA | [0-9];
         public static readonly Parser<string> Id =
-            Parse.Identifier(Parse.Letter, Parse.LetterOrDigit);
+            Parse.Identifier(Parse.Letter, Parse.LetterOrDigit).Named("Id");
 
         // CHOICE: '[x]';
         public static readonly Parser<string> Choice =
-            Parse.String("[x]").Text();
+            Parse.String("[x]").Text().Named("Choice");
 
         // element: ID CHOICE?;
         public static readonly Parser<string> Element =
-            from id in Id
+            (from id in Id
             from choice in Choice.Optional()
-            select id + choice.GetOrDefault();
+            select id + choice.GetOrDefault()).Named("Element");
 
         // CONST: '%' ALPHANUM(ALPHANUM | [\-.])*;
         public static readonly Parser<string> Const =
-            from perc in Parse.Char('%')
+            (from perc in Parse.Char('%')
             from name in Parse.LetterOrDigit.Once().Concat(
                     Parse.LetterOrDigit
                         .XOr(Parse.Chars("-.")).Many())
                     .Text()
-            select name;
+            select name).Named("Const");
 
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
         public static readonly Parser<string> Comp =
@@ -66,14 +65,14 @@ namespace Hl7.Fhir.FhirPath
             .Or(Parse.String(">"))
             .Or(Parse.String("<"))
             .Or(Parse.String("in"))
-            .Text();
+            .Text().Named("Comp");
 
         // LOGIC: 'and' | 'or' | 'xor';
         public static readonly Parser<string> Logic =
             Parse.String("and")
             .XOr(Parse.String("or"))
             .XOr(Parse.String("xor"))
-            .Text();
+            .Text().Named("Logic");
 
         // NUMBER: INT '.' [0-9]+ EXP? | INT EXP | INT;
         // fragment INT: '0' | [1-9][0-9]*;
@@ -82,7 +81,8 @@ namespace Hl7.Fhir.FhirPath
             (from first in Parse.Chars("123456789").Once().Text()
              from rest in Parse.Digit.Many().Text()
              select first + rest)
-            .XOr(Parse.Char('0').Once().Text());
+            .XOr(Parse.Char('0').Once().Text())
+            .Named("Int");
 
 
         public static readonly Parser<string> Number = Int;   
@@ -112,11 +112,10 @@ namespace Hl7.Fhir.FhirPath
         }
 
         public static readonly Parser<string> String =
-            makeStringContentParser('"').XOr(makeStringContentParser('\''));
+            makeStringContentParser('"').XOr(makeStringContentParser('\'')).Named("String");
 
         // BOOL: 'true' | 'false';
         public static readonly Parser<string> Bool =
-            Parse.String("true").Text().XOr(Parse.String("false")).Text();
-
+            Parse.String("true").Text().XOr(Parse.String("false")).Text().Named("Bool");
     }
 }

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.FhirPath;
 using Sprache;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -28,8 +29,17 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            var result = Expression.Expr.Parse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5))and(%bla>=6)");
-            Assert.AreEqual("(4 > $parent.bla.blie.bloe)and(%bla>=6)", result);
+            var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
+
+            if (result.WasSuccessful)
+            {
+                Assert.AreEqual("(4 > $parent.bla.blie.bloe)and(%bla>=6)", result);
+            }
+            else
+            {
+                Debug.WriteLine("Expectations: " + String.Join(",",result.Expectations));
+                Assert.Fail(result.ToString());
+            }            
         }
     
     }

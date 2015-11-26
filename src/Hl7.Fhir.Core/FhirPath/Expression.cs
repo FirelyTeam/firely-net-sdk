@@ -22,7 +22,8 @@ namespace Hl7.Fhir.FhirPath
             Lexer.String
             .XOr(Lexer.Number)
             .XOr(Lexer.Bool)
-            .XOr(Lexer.Const);
+            .XOr(Lexer.Const)
+            .Named("FpConst");
 
         public static Parser<string> makeOperator(Parser<string> left, char op, Parser<string> right)
         {
@@ -38,16 +39,18 @@ namespace Hl7.Fhir.FhirPath
         //   predicate |
         //   fpconst;
         public static readonly Parser<string> BracketExpr =
-            from lparen in Parse.Char('(')
-            from expr in Parse.Ref(() => LogicExpr)
-            from rparen in Parse.Char(')')
-            select "(" + expr + ")";
+            (from lparen in Parse.Char('(')
+             from expr in Parse.Ref(() => LogicExpr)
+             from rparen in Parse.Char(')')
+             select "(" + expr + ")")
+            .Named("BracketExpr");
 
         public static readonly Parser<string> Term =
-            BracketExpr
-             .Or(Path.Predicate)
-             .XOr(FpConst);
-
+            FpConst
+            .XOr(BracketExpr)
+            .Or(Path.Predicate)
+            .Named("Term");
+  
         //expr:
         //  term |
         //  expr('*' | '/') expr |
