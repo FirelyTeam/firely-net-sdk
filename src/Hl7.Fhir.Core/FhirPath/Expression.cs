@@ -70,8 +70,6 @@ namespace Hl7.Fhir.FhirPath
         public static readonly Parser<string> LogicExpr =
             Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left + " " + op + " " + right);
 
-        public static readonly Parser<string> Expr = LogicExpr.End();
-     
-
+        public static readonly Parser<string> Expr = LogicExpr;    
     }
 }
