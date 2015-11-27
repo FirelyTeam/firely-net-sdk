@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Navigation
             Func<PropertyInfo, bool> predicate = null)
             where TNode : INavTreeNode<TNode>, INavTreeBuilder<TNode>
         {
-            if (createLeafNode == null) { throw new ArgumentNullException(nameof(createLeafNode)); }
+            if (createLeafNode == null) { throw new ArgumentNullException("createLeafNode"); } // nameof(createLeafNode)
             if (obj == null) { return default(TNode); }
 
             var node = createInternalNode(name);

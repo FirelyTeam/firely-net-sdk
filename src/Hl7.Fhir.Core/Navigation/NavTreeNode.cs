@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Navigation
 
         protected BaseNavTreeNode(TNode parent, string name)
         {
-            if (string.IsNullOrEmpty(name)) { throw new ArgumentException("Must specify a node name.", nameof(name)); }
+            if (string.IsNullOrEmpty(name)) { throw new ArgumentException("Must specify a node name.", "name"); } // nameof(name)
             Name = name;
             Parent = parent;
         }
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Appends a new sibling node.</summary>
         public T AppendSibling<T>(T node) where T : TNode
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (node.Parent != null) { throw new InvalidOperationException("The specified node is already attached to a parent node."); }
             if (node.PreviousSibling != null) { throw new InvalidOperationException("The specified node is already attached to a preceding sibling node."); }
 
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Appends a new child node.</summary>
         public TNode AppendChild<TNode>(TNode node) where TNode : NavTreeNode
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (node.Parent != null) { throw new InvalidOperationException("The specified node is already attached to a parent node."); }
             if (node.PreviousSibling != null) { throw new InvalidOperationException("The specified node is already attached to a preceding sibling node."); }
 

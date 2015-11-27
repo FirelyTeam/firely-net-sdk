@@ -18,14 +18,14 @@ namespace Hl7.Fhir.Navigation
 
         public static T LastSibling<T>(this T node) where T : INavTreeLeafNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (T next; (next = node.NextSibling) != null; node = next) ;
             return node;
         }
 
         public static T FirstSibling<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
 
             // Optimization: try node.Parent.FirstChild
             var parent = node.Parent;
@@ -40,17 +40,14 @@ namespace Hl7.Fhir.Navigation
         }
 
         // [WMR] Null propagation operator requires additional generic class constraint
-        public static T LastChild<T>(this T node) where T : class, INavTreeNode<T> => node?.FirstChild?.LastSibling();
+        // public static T LastChild<T>(this T node) where T : class, INavTreeNode<T> => node?.FirstChild?.LastSibling();
 
-        //public static T LastChild<T>(this T node) where T : ITreeNode<T>
-        //{
-        //    if (node != null)
-        //    {
-        //        var parent = node.Parent;
-        //        if (parent != null) { return parent.LastSibling(); }
-        //    }
-        //    return default(T);
-        //}
+        public static T LastChild<T>(this T node) where T : INavTreeNode<T>
+        {
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
+            var first = node.FirstChild;
+            return first != null ? first.LastSibling() : default(T);
+        }
 
         // For trees that also store parent node references, the following algorithm outperforms a nested foreach loop
         // The classical trade-off: performance vs. memory
@@ -67,10 +64,10 @@ namespace Hl7.Fhir.Navigation
         /// <remarks>The implementation is O(n).</remarks>
         public static IEnumerable<T> DepthFirst<T>(T root, Func<T, T> getFirstChild, Func<T, T> getNextSibling, Func<T, T> getParent)
         {
-            if (root == null) { throw new ArgumentNullException(nameof(root)); }
-            if (getFirstChild == null) { throw new ArgumentNullException(nameof(getFirstChild)); }
-            if (getNextSibling == null) { throw new ArgumentNullException(nameof(getNextSibling)); }
-            if (getParent == null) { throw new ArgumentNullException(nameof(getParent)); }
+            if (root == null) { throw new ArgumentNullException("root"); } // nameof(root)
+            if (getFirstChild == null) { throw new ArgumentNullException("getFirstChild"); } // nameof(getFirstChild)
+            if (getNextSibling == null) { throw new ArgumentNullException("getNextSibling"); } // nameof(getNextSibling)
+            if (getParent == null) { throw new ArgumentNullException("getParent"); } // nameof(getParent)
 
             var node = root;
             while (true)
@@ -115,7 +112,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> Children<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
 
             var child = node.FirstChild;
             while (child != null)
@@ -158,7 +155,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> DescendantsAndSelf<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             return DepthFirst(node);
         }
 
@@ -168,7 +165,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> Ancestors<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (node = node.Parent; node != null; node = node.Parent) { yield return node; }
             yield break;
         }
@@ -179,7 +176,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> AncestorsAndSelf<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (; node != null; node = node.Parent) { yield return node; }
             yield break;
 
@@ -191,7 +188,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> PrecedingSiblings<T>(this T node) where T : INavTreeLeafNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (node = node.PreviousSibling; node != null; node = node.PreviousSibling) { yield return node; }
             yield break;
         }
@@ -202,7 +199,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> FollowingSiblings<T>(this T node) where T : INavTreeLeafNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (node = node.NextSibling; node != null; node = node.NextSibling) { yield return node; }
             yield break;
         }
@@ -210,7 +207,7 @@ namespace Hl7.Fhir.Navigation
 #if false
         public static IEnumerable<T> Siblings<T>(this T node) where T : INavTreeLeafNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             for (var sibling = node.FirstSibling(); sibling != null; sibling = sibling.NextSibling)
             {
                 if (!object.ReferenceEquals(node, sibling)) { yield return sibling; }
@@ -230,7 +227,7 @@ namespace Hl7.Fhir.Navigation
 
         public static bool IsMatch<T>(this T node, string nodeName) where T : ITreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (string.IsNullOrEmpty(nodeName)) { throw new ArgumentNullException(nameof(nodeName)); }
 
             return nodeName == NodeNameWildcard | node.Name == nodeName | IsPolymorphicMatch(node, nodeName);
