@@ -39,6 +39,18 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Gets a reference to the following sibling node.</summary>
         public TNode NextSibling { get; protected set; }
 
+        /// <summary>Returns <c>true</c> if the current instance represents a root node (<see cref="Parent"/> equals <c>null</c>).</summary>
+        public bool IsRoot { get { return Parent == null; } }
+
+        /// <summary>Returns <c>true</c> if the current node has any children (the node implements <see cref="INavTreeNode{TNode}"/> and <see cref="INavTreeNode{TNode}.FirstChild"/> is not <c>null</c>).</summary>
+        public bool HasChildren { get { return NullExtensions.IfNotNull(this as INavTreeNode<TNode>, n => n.FirstChild != null); } }
+
+        /// <summary>Returns <c>true</c> if the current instance represents a leaf node (the node does not implement the <see cref="INavTreeNode{TNode}"/> interface).</summary>
+        public bool IsLeaf { get { return !(this is INavTreeNode<TNode>); } }
+
+        /// <summary>Returns <c>true</c> if the current instance represents a value leaf node (the node implement the <see cref="IValue{TValue}"/> interface).</summary>
+        public bool IsValue { get { return this is IValue; } }
+
         /// <summary>Appends a new sibling node.</summary>
         public T AppendSiblingNode<T>(T node) where T : TNode
         {
@@ -112,7 +124,7 @@ namespace Hl7.Fhir.Navigation
 
     /// <summary>A leaf node in a navigable tree structure. A leaf node has a typed value and no child nodes.</summary>
     /// <typeparam name="TValue">The type of the node value.</typeparam>
-    public class NavTreeLeafNode<TValue> : NavTreeNode, INavTreeValueLeafNode<NavTreeNode, TValue>
+    public class NavTreeLeafNode<TValue> : NavTreeNode, IValue<TValue> // INavTreeValueLeafNode<NavTreeNode, TValue>
     {
         public NavTreeLeafNode(string name) : base(name) { }
 
@@ -127,6 +139,8 @@ namespace Hl7.Fhir.Navigation
             get { return null; }
             protected set { throw new InvalidOperationException("Cannot add children to a leaf node."); }
         }
+
+        public Type ValueType { get { return typeof(TValue); } }
 
         /// <summary>Gets or sets the value of the leaf node.</summary>
         public TValue Value { get; set; }

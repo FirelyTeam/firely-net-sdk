@@ -32,6 +32,22 @@ namespace Hl7.Fhir.Support
             if (element.ObjectValue == null) return true;
 
             return false;
-        }                
+        }
+
+        // [WMR] Following method operates on any type
+        // Not an extension method, to prevent global namespace pollution
+
+        /// <summary>Utility function to simulate C# 6 null propagation operator ?.</summary>
+        /// <typeparam name="TInstance">The type of the current instance.</typeparam>
+        /// <typeparam name="TValue">The return type of the specified projection.</typeparam>
+        /// <param name="instance">An object instance.</param>
+        /// <param name="projection">A function from <typeparamref name="TInstance"/> to <typeparamref name="TValue"/>.</param>
+        /// <param name="defaultValue">The value to return when the instance equals <c>null</c>.</param>
+        /// <returns>A value of type <typeparamref name="TValue"/>.</returns>
+        public static TValue IfNotNull<TInstance, TValue>(TInstance instance, Func<TInstance, TValue> projection, TValue defaultValue = default(TValue))
+        {
+            return instance != null ? projection(instance) : defaultValue;
+        }
+
     }
 }

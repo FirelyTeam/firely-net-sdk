@@ -23,14 +23,6 @@ namespace Hl7.Fhir.Navigation
         string Name { get; }
     }
 
-    /// <summary>Generic interface for a strongly-typed value.</summary>
-    /// <typeparam name="TValue">The value type.</typeparam>
-    public interface IValue<out TValue>
-    {
-        /// <summary>Gets a value of type <typeparamref name="TValue"/>.</summary>
-        TValue Value { get; }
-    }
-
     #region Navigation Tree Node interfaces
 
     // [WMR] Note: generic constraints try to enforce the concrete class type of the implementing class
@@ -43,10 +35,25 @@ namespace Hl7.Fhir.Navigation
     {
         /// <summary>Reference to the parent node.</summary>
         TNode Parent { get; }
+
         /// <summary>Reference to preceding sibling node.</summary>
         TNode PreviousSibling { get; }
+
         /// <summary>Reference to following sibling node.</summary>
         TNode NextSibling { get; }
+
+        /// <summary>Returns <c>true</c> if the current instance represents a root node (<see cref="Parent"/> equals <c>null</c>).</summary>
+        bool IsRoot { get; }
+
+        /// <summary>Returns <c>true</c> if the current node has any children (the node implements <see cref="INavTreeNode{TNode}"/> and <see cref="INavTreeNode{TNode}.FirstChild"/> is not <c>null</c>).</summary>
+        bool HasChildren { get; }
+
+        /// <summary>Returns <c>true</c> if the current instance represents a leaf node (the node does not implement the <see cref="INavTreeNode{TNode}"/> interface).</summary>
+        bool IsLeaf { get; }
+
+        /// <summary>Returns <c>true</c> if the current instance represents a value leaf node (the node implement the <see cref="IValue{TValue}"/> interface).</summary>
+        bool IsValue { get; }
+
     }
 
     /// <summary>Generic navigable tree node interface.</summary>
@@ -57,44 +64,5 @@ namespace Hl7.Fhir.Navigation
         TNode FirstChild { get; }
     }
 
-    /// <summary>Generic navigable tree node interface for leaf nodes with a typed value.</summary>
-    /// <typeparam name="TNode">The concrete type of the implementing class.</typeparam>
-    /// <typeparam name="TValue">The type of the node value.</typeparam>
-    public interface INavTreeValueLeafNode<out TNode, out TValue> : INavTreeLeafNode<TNode>, IValue<TValue>
-        where TNode : INavTreeLeafNode<TNode> // INavTreeNode<TNode>
-    {
-        // 
-    }
-
     #endregion
-
-    #region Tree building interfaces
-
-    // - separate interfaces for tree building methods to allow covariance on INavTreeNode interfaces
-    // - separate interfaces per tree building method so leaf nodes do not have to implement FirstChild
-
-    /// <summary>Generic interface for adding siblings to <see cref="INavTreeLeafNode{TNode}"/> tree nodes.</summary>
-    /// <typeparam name="TNode">The type of the receiving node, i.e. of the implementing class.</typeparam>
-    public interface INavTreeLeafBuilder<TNode> where TNode : INavTreeLeafNode<TNode>
-    {
-        /// <summary>Append the specified node as a new sibling node of the current node.</summary>
-        /// <param name="node">The sibling node to append.</param>
-        /// <typeparam name="T">The type of the specified sibling node.</typeparam>
-        /// <returns>The specified node.</returns>
-        T AppendSiblingNode<T>(T node) where T : TNode;
-    }
-
-    /// <summary>Generic interface for adding children to <see cref="INavTreeNode{TNode}"/> tree nodes.</summary>
-    /// <typeparam name="TNode">The type of the receiving node, i.e. of the implementing class.</typeparam>
-    public interface INavTreeBuilder<TNode> : INavTreeLeafBuilder<TNode> where TNode : INavTreeLeafNode<TNode>
-    {
-        /// <summary>Append the specified node as a new child node of the current node.</summary>
-        /// <param name="node">The child node to append.</param>
-        /// <typeparam name="T">The type of the specified child node.</typeparam>
-        /// <returns>The specified node.</returns>
-        T AppendChildNode<T>(T node) where T : TNode;
-    }
-
-    #endregion
-
 }
