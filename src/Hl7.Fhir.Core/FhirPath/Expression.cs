@@ -18,11 +18,17 @@ namespace Hl7.Fhir.FhirPath
         //   '-'? NUMBER |
         //   BOOL |
         //   CONST;
-        public static readonly Parser<Evaluator<object>> FpConst =
-            Lexer.String.Select(s => Eval.Return((object)s))
-            .XOr(Lexer.Number.Select(s => Eval.Return((object)s)))
-            .XOr(Lexer.Bool.Select(s => Eval.Return((object)s)))
-            .XOr(Lexer.Const.Select(s => Eval.Return((object)s)));
+        //public static readonly Parser<Evaluator<object>> FpConst =       
+        //Lexer.String.Select(s => Eval.Return((object)s))
+        //    .XOr(Lexer.Number.Select(s => Eval.Return((object)s)))
+        //    .XOr(Lexer.Bool.Select(s => Eval.Return((object)s)))
+        //    .XOr(Lexer.Const.Select(s => Eval.Return((object)s)));
+
+        public static readonly Parser<string> FpConst =
+            Lexer.String
+            .XOr(Lexer.Number.Select(s => s.ToString()))
+            .XOr(Lexer.Bool.Select(s => s.ToString()))
+            .XOr(Lexer.Const.Select(s => s.ToString()));
 
 
         public static Parser<string> makeOperator(Parser<string> left, char op, Parser<string> right)
@@ -45,12 +51,12 @@ namespace Hl7.Fhir.FhirPath
              select "(" + expr + ")")
             .Named("BracketExpr");
 
-        public static readonly Parser<Evaluator<object>> Term =
+        public static readonly Parser<string> Term =
             FpConst
             .XOr(BracketExpr)
             .Or(Path.Predicate)
             .Named("Term");
-  
+
         //expr:
         //  term |
         //  expr('*' | '/') expr |
@@ -58,11 +64,19 @@ namespace Hl7.Fhir.FhirPath
         //  expr('|' | '&') expr |
         //  expr COMP expr |
         //  expr LOGIC expr;
-        public static readonly Parser<Evaluator<object>> MulExpr =
-            Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left.Mul(right));
+
+        //public static readonly Parser<Evaluator<object>> MulExpr =
+        //    Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left.Mul(right));
+
+        //public static readonly Parser<string> AddExpr =
+        //    Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left.Add(right));
+
+
+        public static readonly Parser<string> MulExpr =
+            Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> AddExpr =
-            Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left.Add(right));
+            Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<string> JoinExpr =
             Parse.ChainOperator(Parse.Chars("|&"), AddExpr, (op, left, right) => left + " " + op + " " + right);
