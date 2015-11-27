@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Navigation
 {
@@ -20,31 +22,34 @@ namespace Hl7.Fhir.Navigation
             );
         }
 
+        static readonly NavTreeNode PatientTree = BuildTree();
+
         static NavTreeNode BuildTree()
         {
             var root = new NavTreeNode("Patient");
+
             root.AppendChild("identifier")
-                    .AppendChild("use", "[use]")
-                    .AppendSibling("type", "[type]")
-                    .AppendSibling("system", "[system]")
-                    .AppendSibling("value", "[value]")
+                    .AppendChild("use", "...use...")
+                    .AppendSibling("type", "...type...")
+                    .AppendSibling("system", "...system...")
+                    .AppendSibling("value", "0123456789")
                     .AppendSibling("period")
-                        .AppendChild("start", "[start]")
-                        .AppendSibling("end", "[end]")
+                        .AppendChild("start", "20151127 12:00")
+                        .AppendSibling("end", "20151130 18:00")
                     .Parent
-                    .AppendSibling("assigner", "[assigner]")
+                    .AppendSibling("assigner", "Dr. House")
                 .Parent
                 .AppendSibling("gender", "F")
                 .AppendSibling("name")
-                    .AppendChild("use", "[use]")
-                    .AppendSibling("text", "[text]")
-                    .AppendSibling("family", "[family]")
-                    .AppendSibling("given", "[given]")
-                    .AppendSibling("prefix", "[prefix]")
-                    .AppendSibling("suffix", "[suffix]")
+                    .AppendChild("use", "...use...")
+                    .AppendSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AppendSibling("family", "Akkermans")
+                    .AppendSibling("given", "Piet")
+                    .AppendSibling("prefix", "Prof. Dr. Ir.")
+                    .AppendSibling("suffix", "MBA")
                     .AppendSibling("period")
-                        .AppendChild("start", "[start]")
-                        .AppendSibling("end", "[end]");
+                        .AppendChild("start", "20151201 03:15")
+                        .AppendSibling("end", "20151231 23:45");
 
             return root;
         }
@@ -52,7 +57,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Nav_TreeBuilder()
         {
-            var root = BuildTree();
+            var root = PatientTree;
             // TODO: Assert result...
             Debug.Print(RenderTree(root));
         }
@@ -159,7 +164,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Nav_Children()
         {
-            var root = BuildTree();
+            var root = PatientTree;
             Assert.AreEqual(root.FirstChild.Name, "identifier");
             Assert.AreEqual(root.LastChild().Name, "name");
 
@@ -175,19 +180,28 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Nav_Descendants()
         {
-            var root = BuildTree();
+            var root = PatientTree;
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
 
-            var descendants = child.Descendants().ToArray();
+            var descendants = child.Descendants();
             var expected = new string[] { "use", "type", "system", "value", "period", "start", "end", "assigner" };
             Assert.IsTrue(descendants.Select(c => c.Name).SequenceEqual(expected));
+
+            // Test on a single leaf element
+            child = child.FirstChild;
+            Assert.AreEqual(child.Name, "use");
+            Assert.IsNull(child.FirstChild);
+            descendants = child.Descendants();
+            var l = descendants.ToList();
+            bool result = l.Count() == 0; // !descendants.Any();
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
         public void Test_Nav_Siblings()
         {
-            var root = BuildTree();
+            var root = PatientTree;
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
 
@@ -205,7 +219,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Nav_Ancestors()
         {
-            var root = BuildTree();
+            var root = PatientTree;
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
             child = child.FollowingSiblings().First(n => n.Name == "period");
@@ -221,7 +235,33 @@ namespace Hl7.Fhir.Navigation
             Assert.AreEqual(child.Name, "end");
             ancestors = child.Ancestors();
             Assert.IsTrue(ancestors.Select(c => c.Name).SequenceEqual(expected.Reverse()));
+        }
 
+        [TestMethod]
+        public void Test_Nav_SimpleExpression()
+        {
+            var root = PatientTree;
+
+            Debug.Print("===== Full tree =====");
+            Debug.Print(RenderTree(root));
+
+            var period_starts = root.Descendants().Where(n => n.Name == "start" && n.Parent.Name == "period");
+
+            Assert.IsTrue(period_starts.All(n => n.Name == "start"));
+            Assert.IsTrue(period_starts.All(n => n.Parent.Name == "period"));
+            Assert.AreEqual(period_starts.Count(), 2);
+
+            Debug.Print("===== period.start nodes: =====");
+            foreach (var item in period_starts)
+            {
+                Debug.Print(item.ToString());
+            }
+
+            var start_values = period_starts.OfType<NavTreeLeafNode<string>>();
+            var maxStart = start_values.Max(n => n.Value);
+            var maxNode = start_values.First(n => n.Value == maxStart);
+            Debug.Print("Max start = {0}", maxNode.Value);
         }
     }
+
 }

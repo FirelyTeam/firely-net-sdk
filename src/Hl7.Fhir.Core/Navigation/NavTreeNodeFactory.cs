@@ -73,18 +73,20 @@ namespace Hl7.Fhir.Navigation
                     var propVal = prop.GetValue(obj);
                     childNode = CreateFromObject<TNode>(propVal, prop.Name, createInternalNode, createLeafNode, predicate);
                 }
-                node.AppendChild(childNode);
+                node.AppendChildNode(childNode);
             }
             return node;
         }
 
+        // Helper function to determine if a property of the specified type can contain sub-properties
+        // Default property Type.IsPrimitive returns true for basic value types, but not for e.g. string
         // https://gist.github.com/jonathanconway/3330614
         static bool IsSimpleType(Type type)
         {
             return type.IsValueType ||
                    type.IsPrimitive ||
                    DerivedSimpleTypes.Contains(type) ||
-                    Convert.GetTypeCode(type) != TypeCode.Object;
+                   Convert.GetTypeCode(type) != TypeCode.Object;
         }
 
         static readonly Type[] DerivedSimpleTypes = new Type[] {

@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir.Navigation
@@ -80,6 +81,19 @@ namespace Hl7.Fhir.Navigation
                 }
                 else
                 {
+#if true
+                    while (true)
+                    {
+                        // [WMR] Handle "root" node with siblings (tree fragment)
+                        if (Object.ReferenceEquals(node, root))
+                        {
+                            yield break;
+                        }
+                        if (getNextSibling(node) != null) { break; }
+                        node = getParent(node);     // Walk up ...
+
+                    };
+#else
                     while (getNextSibling(node) == null)
                     {
                         if (Object.ReferenceEquals(node, root))
@@ -87,12 +101,8 @@ namespace Hl7.Fhir.Navigation
                             yield break;
                         }
                         node = getParent(node);     // Walk up ...
-                        // [WMR] Handle "root" node with siblings (tree fragment)
-                        if (Object.ReferenceEquals(node, root))
-                        {
-                            yield break;
-                        }
                     }
+#endif
                     node = getNextSibling(node);    // ... and right
                 }
 
@@ -102,9 +112,9 @@ namespace Hl7.Fhir.Navigation
         public static IEnumerable<T> DepthFirst<T>(T root) where T : INavTreeNode<T>
         { return DepthFirst(root, node => node.FirstChild, node => node.NextSibling, node => node.Parent); }
 
-        #endregion
+#endregion
 
-        #region Axes navigation
+#region Axes navigation
 
         /// <summary>Enumerate the direct children of the current node.</summary>
         /// <typeparam name="T">The type of a tree node.</typeparam>
@@ -225,7 +235,7 @@ namespace Hl7.Fhir.Navigation
         private const string PolymorphicNodeNameSuffix = "[x]";
         public const string NodeNameWildcard = "*";
 
-        public static bool IsMatch<T>(this T node, string nodeName) where T : ITreeNode<T>
+        public static bool IsMatch<T>(this T node, string nodeName) where T : INavTreeNode<T>
         {
             if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (string.IsNullOrEmpty(nodeName)) { throw new ArgumentNullException("nodeName"); } // nameof(nodeName)
@@ -233,7 +243,7 @@ namespace Hl7.Fhir.Navigation
             return nodeName == NodeNameWildcard | node.Name == nodeName | IsPolymorphicMatch(node, nodeName);
         }
 
-        private static bool IsPolymorphicMatch<T>(T node, string nodeName) where T : ITreeNode<T>
+        private static bool IsPolymorphicMatch<T>(T node, string nodeName) where T : INavTreeNode<T>
         {
             if (nodeName.EndsWith(PolymorphicNodeNameSuffix))
             {

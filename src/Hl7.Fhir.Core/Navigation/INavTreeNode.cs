@@ -13,6 +13,9 @@ namespace Hl7.Fhir.Navigation
     // Separate interfaces for internal nodes (with children) and leaf nodes (with value, without children)
     // Use generic interfaces so implementing classes can operate on concrete (not interface) node references
 
+    // TODO:
+    // - Clone (sub)tree ?
+
     /// <summary>Common tree node interface.</summary>
     public interface INode
     {
@@ -78,7 +81,7 @@ namespace Hl7.Fhir.Navigation
         /// <param name="node">The sibling node to append.</param>
         /// <typeparam name="T">The type of the specified sibling node.</typeparam>
         /// <returns>The specified node.</returns>
-        T AppendSibling<T>(T node) where T : TNode;
+        T AppendSiblingNode<T>(T node) where T : TNode;
     }
 
     /// <summary>Generic interface for adding children to <see cref="INavTreeNode{TNode}"/> tree nodes.</summary>
@@ -89,7 +92,7 @@ namespace Hl7.Fhir.Navigation
         /// <param name="node">The child node to append.</param>
         /// <typeparam name="T">The type of the specified child node.</typeparam>
         /// <returns>The specified node.</returns>
-        T AppendChild<T>(T node) where T : TNode;
+        T AppendChildNode<T>(T node) where T : TNode;
     }
 
     #endregion

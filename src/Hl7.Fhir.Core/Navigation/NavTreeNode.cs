@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Navigation
         public TNode NextSibling { get; protected set; }
 
         /// <summary>Appends a new sibling node.</summary>
-        public T AppendSibling<T>(T node) where T : TNode
+        public T AppendSiblingNode<T>(T node) where T : TNode
         {
             if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (node.Parent != null) { throw new InvalidOperationException("The specified node is already attached to a parent node."); }
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }      
+        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
     }
 
     /// <summary>A node in a navigable tree structure.</summary>
@@ -64,11 +64,13 @@ namespace Hl7.Fhir.Navigation
 
         public NavTreeNode(NavTreeNode parent, string name) : base(parent, name) { }
 
+        public NavTreeNode(NavTreeNode parent, NavTreeNode firstChild, string name) : base(parent, name) { FirstChild = firstChild; }
+
         /// <summary>Gets a reference to the first child node.</summary>
         public virtual NavTreeNode FirstChild { get; protected set; }
 
         /// <summary>Appends a new child node.</summary>
-        public TNode AppendChild<TNode>(TNode node) where TNode : NavTreeNode
+        public TNode AppendChildNode<TNode>(TNode node) where TNode : NavTreeNode
         {
             if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
             if (node.Parent != null) { throw new InvalidOperationException("The specified node is already attached to a parent node."); }
@@ -90,9 +92,7 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        public NavTreeNode AppendChild(string name) { return AppendChild(new NavTreeNode(name)); }
-
-        public NavTreeLeafNode<TValue> AppendChild<TValue>(string name, TValue value) { return AppendChild(new NavTreeLeafNode<TValue>(name, value)); }
+        // Moved to base class
 
         //public TNode AppendSibling<TNode>(TNode node) where TNode : NavTreeNode
         //{
@@ -108,9 +108,6 @@ namespace Hl7.Fhir.Navigation
         //    return node;
         //}
 
-        public NavTreeNode AppendSibling(string name) { return AppendSibling(new NavTreeNode(name)); }
-
-        public NavTreeLeafNode<TValue> AppendSibling<TValue>(string name, TValue value) { return AppendSibling(new NavTreeLeafNode<TValue>(name, value)); }
     }
 
     /// <summary>A leaf node in a navigable tree structure. A leaf node has a typed value and no child nodes.</summary>
@@ -136,4 +133,31 @@ namespace Hl7.Fhir.Navigation
 
         public override string ToString() { return string.Format("{0} = '{1}'", base.ToString(), Value); }
     }
+
+    // Following extension methods are implemented against concrete NavTreeNode class type
+
+    /// <summary>Extension methods to facilitate tree building.</summary>
+    public static class NavTreeNodeTreeBuildingExtensionMethods
+    {
+        public static NavTreeNode AppendChild(this NavTreeNode node, string name)
+        {
+            return node.AppendChildNode(new NavTreeNode(name));
+        }
+
+        public static NavTreeLeafNode<TValue> AppendChild<TValue>(this NavTreeNode node, string name, TValue value)
+        {
+            return node.AppendChildNode(new NavTreeLeafNode<TValue>(name, value));
+        }
+
+        public static NavTreeNode AppendSibling(this NavTreeNode node, string name)
+        {
+            return node.AppendSiblingNode(new NavTreeNode(name));
+        }
+
+        public static NavTreeLeafNode<TValue> AppendSibling<TValue>(this NavTreeNode node, string name, TValue value)
+        {
+            return node.AppendSiblingNode(new NavTreeLeafNode<TValue>(name, value));
+        }
+    }
+
 }
