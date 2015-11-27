@@ -68,9 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
+    <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\Expression.cs" />
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
+    <Compile Include="FhirPath\PathEvaluator.cs" />
+    <Compile Include="FhirPath\Result.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />

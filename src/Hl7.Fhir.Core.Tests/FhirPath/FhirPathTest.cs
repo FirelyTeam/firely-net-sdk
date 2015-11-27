@@ -29,11 +29,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
+            //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
+            var result = Expression.FpConst.TryParse("4.5");
+
 
             if (result.WasSuccessful)
             {
-                Assert.AreEqual("(4 > $parent.bla.blie.bloe)and(%bla>=6)", result);
+                Assert.AreEqual(4.5m, result.Value(new EvaluationContext()));
             }
             else
             {
