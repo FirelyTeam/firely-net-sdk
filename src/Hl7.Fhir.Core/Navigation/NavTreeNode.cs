@@ -53,16 +53,18 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        public override string ToString() => string.Format("({0}) {1}", PrettyTypeName(GetType()), Name);
+        public override string ToString() { return string.Format("({0}) {1}", PrettyTypeName(GetType()), Name); }
 
         // http://stackoverflow.com/questions/1533115/get-generictype-name-in-good-format-using-reflection-on-c-sharp#answer-25287378
         protected static string PrettyTypeName(Type t)
-            => t.IsGenericType
-            ? string.Format(
-                    "{0}<{1}>",
-                    t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.InvariantCulture)),
-                    string.Join(", ", t.GetGenericArguments().Select(PrettyTypeName)))
-            : t.Name;
+        {
+            return t.IsGenericType
+             ? string.Format(
+                     "{0}<{1}>",
+                     t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.InvariantCulture)),
+                     string.Join(", ", t.GetGenericArguments().Select(PrettyTypeName)))
+             : t.Name;
+        }
     }
 
     /// <summary>A node in a navigable tree structure.</summary>
@@ -98,9 +100,9 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        public NavTreeNode AppendChild(string name) => AppendChild(new NavTreeNode(name));
+        public NavTreeNode AppendChild(string name) { return AppendChild(new NavTreeNode(name)); }
 
-        public NavTreeLeafNode<TValue> AppendChild<TValue>(string name, TValue value) => AppendChild(new NavTreeLeafNode<TValue>(name, value));
+        public NavTreeLeafNode<TValue> AppendChild<TValue>(string name, TValue value) { return AppendChild(new NavTreeLeafNode<TValue>(name, value)); }
 
         //public TNode AppendSibling<TNode>(TNode node) where TNode : NavTreeNode
         //{
@@ -116,9 +118,9 @@ namespace Hl7.Fhir.Navigation
         //    return node;
         //}
 
-        public NavTreeNode AppendSibling(string name) => AppendSibling(new NavTreeNode(name));
+        public NavTreeNode AppendSibling(string name) { return AppendSibling(new NavTreeNode(name)); }
 
-        public NavTreeLeafNode<TValue> AppendSibling<TValue>(string name, TValue value) => AppendSibling(new NavTreeLeafNode<TValue>(name, value));
+        public NavTreeLeafNode<TValue> AppendSibling<TValue>(string name, TValue value) { return AppendSibling(new NavTreeLeafNode<TValue>(name, value)); }
     }
 
     /// <summary>A leaf node in a navigable tree structure. A leaf node has a typed value and no child nodes.</summary>
@@ -142,6 +144,6 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Gets or sets the value of the leaf node.</summary>
         public TValue Value { get; set; }
 
-        public override string ToString() => string.Format("{0} = '{1}'", base.ToString(), Value);
+        public override string ToString() { return string.Format("{0} = '{1}'", base.ToString(), Value); }
     }
 }

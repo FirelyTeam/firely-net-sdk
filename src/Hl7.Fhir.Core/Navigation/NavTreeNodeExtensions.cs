@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Navigation
         }
 
         public static IEnumerable<T> DepthFirst<T>(T root) where T : INavTreeNode<T>
-            => DepthFirst(root, node => node.FirstChild, node => node.NextSibling, node => node.Parent);
+        { return DepthFirst(root, node => node.FirstChild, node => node.NextSibling, node => node.Parent); }
 
         #endregion
 
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
         public static IEnumerable<T> Descendants<T>(this T node) where T : INavTreeNode<T>
         {
-            if (node == null) { throw new ArgumentNullException(nameof(node)); }
+            if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
 #if true
             // Skip the root node
             return DepthFirst(node).Skip(1);
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Navigation
         public static bool IsMatch<T>(this T node, string nodeName) where T : ITreeNode<T>
         {
             if (node == null) { throw new ArgumentNullException("node"); } // nameof(node)
-            if (string.IsNullOrEmpty(nodeName)) { throw new ArgumentNullException(nameof(nodeName)); }
+            if (string.IsNullOrEmpty(nodeName)) { throw new ArgumentNullException("nodeName"); } // nameof(nodeName)
 
             return nodeName == NodeNameWildcard | node.Name == nodeName | IsPolymorphicMatch(node, nodeName);
         }

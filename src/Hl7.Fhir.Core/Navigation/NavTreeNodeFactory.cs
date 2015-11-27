@@ -13,7 +13,10 @@ namespace Hl7.Fhir.Navigation
         /// <param name="obj">The (anonymous) object instance to convert to a tree.</param>
         /// <param name="name">The name of the root node.</param>
         /// <returns>A <see cref="NavTreeNode"/> instance that represents the root of the generated tree.</returns>
-        public static NavTreeNode CreateFromObject(object obj, string name) => CreateFromObject<NavTreeNode>(obj, name, CreateNode, CreateNode);
+        public static NavTreeNode CreateFromObject(object obj, string name)
+        {
+            return CreateFromObject<NavTreeNode>(obj, name, CreateNode, CreateNode);
+        }
 
         // Helper function to create a NavTreeNode (without value) or NavTreeNode<T> (with value)
         private static NavTreeNode CreateNode(string name, object value)
@@ -27,7 +30,7 @@ namespace Hl7.Fhir.Navigation
             return instance as NavTreeNode;
         }
 
-        private static NavTreeNode CreateNode(string name) => new NavTreeNode(name);
+        private static NavTreeNode CreateNode(string name) { return new NavTreeNode(name); }
 
         /// <summary>
         /// Create a generic tree structure from a given (anonymous) object hierarchy.

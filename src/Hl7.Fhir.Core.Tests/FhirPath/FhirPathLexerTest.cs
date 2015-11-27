@@ -66,7 +66,10 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "**");
         }
 
-        private void SucceedsPrefixString(Parser<string> parser, string expr) => AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
+        private void SucceedsPrefixString(Parser<string> parser, string expr)
+        {
+            AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
+        }
 
         [TestMethod]
         public void FhirPath_Lex_Const()
@@ -130,7 +133,10 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, @"\x");
         }
 
-        private void SucceedsDelimitedString(Parser<string> parser, string s) => AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
+        private void SucceedsDelimitedString(Parser<string> parser, string s)
+        {
+            AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
+        }
 
         [TestMethod]
         public void FhirPath_Lex_String()

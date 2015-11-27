@@ -13,18 +13,28 @@ namespace Hl7.Fhir.Navigation
     public class NavTreeNodeSetExtensions
     {
         public static IEnumerable<T> Children<T>(IEnumerable<T> nodeSet) where T : INavTreeNode<T>
-            => nodeSet.SelectMany(node => node.Children());
+        {
+            return nodeSet.SelectMany(node => node.Children());
+        }
 
         public static IEnumerable<T> Descendants<T>(IEnumerable<T> nodeSet) where T : INavTreeNode<T>
-            => nodeSet.SelectMany(node => node.Descendants());
+        {
+            return nodeSet.SelectMany(node => node.Descendants());
+        }
 
         public static IEnumerable<T> Ancestors<T>(IEnumerable<T> nodeSet) where T : INavTreeNode<T>
-            => nodeSet.SelectMany(node => node.Ancestors());
+        {
+            return nodeSet.SelectMany(node => node.Ancestors());
+        }
 
         public static IEnumerable<T> PrecedingSiblings<T>(IEnumerable<T> nodeSet) where T : INavTreeLeafNode<T>
-            => nodeSet.SelectMany(node => node.PrecedingSiblings());
+        {
+            return nodeSet.SelectMany(node => node.PrecedingSiblings());
+        }
 
         public static IEnumerable<T> FollowingSiblings<T>(IEnumerable<T> nodeSet) where T : INavTreeLeafNode<T>
-            => nodeSet.SelectMany(node => node.PrecedingSiblings());
+        {
+            return nodeSet.SelectMany(node => node.PrecedingSiblings());
+        }
     }
 }
