@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void FhirPath_Lex_Int()
         {
-            var parser = Lexer.Int.End();
+            var parser = Lexer.Number.End();
 
             for (int i = 0; i < 100; i++)
             {

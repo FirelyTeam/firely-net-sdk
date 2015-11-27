@@ -24,11 +24,15 @@ namespace Hl7.Fhir.FhirPath
             .Named("Function");
 
         // item: element recurse? | function | axis_spec | '(' expr ')';
+        public static readonly Parser<string> ElementPath =
+            from element in Lexer.Element
+            from recurse in Lexer.Recurse.Optional()
+//            from nolparen in Parse.Not(Parse.Char('('))
+            select element + recurse.GetOrDefault();
+
         public static readonly Parser<string> Item =
             Function
-            .Or(from element in Lexer.Element
-                 from recurse in Lexer.Recurse.Optional()
-                 select element + recurse.GetOrDefault())
+            .Or(ElementPath)
             .XOr(Lexer.AxisSpec)
             .XOr(Parse.Ref(() => Expression.BracketExpr));         
             
