@@ -178,9 +178,50 @@ namespace Hl7.Fhir.Navigation
             var root = BuildTree();
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
+
             var descendants = child.Descendants().ToArray();
             var expected = new string[] { "use", "type", "system", "value", "period", "start", "end", "assigner" };
             Assert.IsTrue(descendants.Select(c => c.Name).SequenceEqual(expected));
+        }
+
+        [TestMethod]
+        public void Test_Nav_Siblings()
+        {
+            var root = BuildTree();
+            var child = root.FirstChild.FirstChild;
+            Assert.AreEqual(child.Name, "use");
+
+            var siblings = child.FollowingSiblings().ToArray();
+            var expected = new string[] { "type", "system", "value", "period", "assigner" };
+            Assert.IsTrue(siblings.Select(c => c.Name).SequenceEqual(expected));
+
+            child = child.LastSibling();
+            Assert.AreEqual(child.Name, "assigner");
+            siblings = child.PrecedingSiblings().ToArray();
+            expected = new string[] { "use", "type", "system", "value", "period" };
+            Assert.IsTrue(siblings.Select(c => c.Name).SequenceEqual(expected.Reverse()));
+        }
+
+        [TestMethod]
+        public void Test_Nav_Ancestors()
+        {
+            var root = BuildTree();
+            var child = root.FirstChild.FirstChild;
+            Assert.AreEqual(child.Name, "use");
+            child = child.FollowingSiblings().First(n => n.Name == "period");
+            Assert.AreEqual(child.Name, "period");
+            child = child.FirstChild;
+            Assert.AreEqual(child.Name, "start");
+
+            var ancestors = child.Ancestors();
+            var expected = new string[] { "Patient", "identifier", "period" };
+            Assert.IsTrue(ancestors.Select(c => c.Name).SequenceEqual(expected.Reverse()));
+
+            child = child.NextSibling;
+            Assert.AreEqual(child.Name, "end");
+            ancestors = child.Ancestors();
+            Assert.IsTrue(ancestors.Select(c => c.Name).SequenceEqual(expected.Reverse()));
+
         }
     }
 }

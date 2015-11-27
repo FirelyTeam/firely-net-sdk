@@ -188,6 +188,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             }
 
             // Very large integers - how to cast to (32-bit) int?
+            // [WMR] Suggestion: match all digits, but validate during conversion to int
             AssertParser.SucceedsMatch(parser, "100000000000000000000000000000000");
             AssertParser.SucceedsMatch(parser, "999999999999999999999999999999999");
             AssertParser.SucceedsMatch(parser, "-100000000000000000000000000000000");
