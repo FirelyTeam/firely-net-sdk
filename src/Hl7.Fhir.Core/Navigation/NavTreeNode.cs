@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,18 +54,7 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        public override string ToString() { return string.Format("({0}) {1}", PrettyTypeName(GetType()), Name); }
-
-        // http://stackoverflow.com/questions/1533115/get-generictype-name-in-good-format-using-reflection-on-c-sharp#answer-25287378
-        protected static string PrettyTypeName(Type t)
-        {
-            return t.IsGenericType
-             ? string.Format(
-                     "{0}<{1}>",
-                     t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.InvariantCulture)),
-                     string.Join(", ", t.GetGenericArguments().Select(PrettyTypeName)))
-             : t.Name;
-        }
+        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }      
     }
 
     /// <summary>A node in a navigable tree structure.</summary>
