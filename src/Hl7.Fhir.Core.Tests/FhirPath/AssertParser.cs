@@ -70,9 +70,9 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         // WMR Added
 
-        public static void SucceedsMatch(Parser<string> parser, string input)
+        public static void SucceedsMatch<T>(Parser<T> parser, string input)
         {
-            SucceedsWith<string>(parser, input, result => Assert.AreEqual(input, result));
+            SucceedsWith<T>(parser, input, result => Assert.AreEqual(input, result));
         }
 
         public static void SucceedsMatch(Parser<string> parser, string input, string match)
@@ -80,9 +80,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             SucceedsWith<string>(parser, input, result => Assert.AreEqual(match, result));
         }
 
-        public static void FailsMatch(Parser<string> parser, string input)
+        public static void FailsMatch<T>(Parser<T> parser, string input)
         {
-            FailsWith<string>(parser, input, result => { });
+            FailsWith<T>(parser, input, result => { });
         }
 
     }

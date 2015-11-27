@@ -72,20 +72,12 @@ namespace Hl7.Fhir.FhirPath
             Parse.String("and")
             .XOr(Parse.String("or"))
             .XOr(Parse.String("xor"))
+            .XOr(Parse.String("implies"))
             .Text().Named("Logic");
 
-        // NUMBER: INT '.' [0-9]+ EXP? | INT EXP | INT;
-        // fragment INT: '0' | [1-9][0-9]*;
-        // fragment EXP: [Ee][+\-]? INT;
-        public static readonly Parser<string> Int =
-            (from first in Parse.Chars("123456789").Once().Text()
-             from rest in Parse.Digit.Many().Text()
-             select first + rest)
-            .XOr(Parse.Char('0').Once().Text())
-            .Named("Int");
 
-
-        public static readonly Parser<string> Number = Int;   
+        public static readonly Parser<decimal> Number =
+            Parse.DecimalInvariant.Select(s => Decimal.Parse(s));
 
         // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
         //         '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
@@ -112,10 +104,11 @@ namespace Hl7.Fhir.FhirPath
         }
 
         public static readonly Parser<string> String =
-            makeStringContentParser('"').XOr(makeStringContentParser('\'')).Named("String");
+            makeStringContentParser('"').XOr(makeStringContentParser('\''));
 
         // BOOL: 'true' | 'false';
-        public static readonly Parser<string> Bool =
-            Parse.String("true").Text().XOr(Parse.String("false")).Text().Named("Bool");
+        public static readonly Parser<bool> Bool =
+            Parse.String("true").XOr(Parse.String("false")).Text().Select(s => Boolean.Parse(s));
+
     }
 }
