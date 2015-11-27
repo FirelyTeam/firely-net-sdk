@@ -68,7 +68,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -85,6 +87,7 @@
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\DeepMatchTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Navigation\NavigationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonAssert.cs" />
     <Compile Include="Rest\FhirClientTests.cs" />
