@@ -74,6 +74,7 @@
     <Compile Include="Navigation\INavTreeNode.cs" />
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
+    <Compile Include="Navigation\NavTreeBuilderExtensionMethods.cs" />
     <Compile Include="Navigation\NavTreeNode.cs" />
     <Compile Include="Navigation\NavTreeNodeExtensions.cs" />
     <Compile Include="FhirPath\PathEvaluator.cs" />

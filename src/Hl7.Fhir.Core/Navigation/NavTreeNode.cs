@@ -133,31 +133,4 @@ namespace Hl7.Fhir.Navigation
 
         public override string ToString() { return string.Format("{0} = '{1}'", base.ToString(), Value); }
     }
-
-    // Following extension methods are implemented against concrete NavTreeNode class type
-
-    /// <summary>Extension methods to facilitate tree building.</summary>
-    public static class NavTreeNodeTreeBuildingExtensionMethods
-    {
-        public static NavTreeNode AppendChild(this NavTreeNode node, string name)
-        {
-            return node.AppendChildNode(new NavTreeNode(name));
-        }
-
-        public static NavTreeLeafNode<TValue> AppendChild<TValue>(this NavTreeNode node, string name, TValue value)
-        {
-            return node.AppendChildNode(new NavTreeLeafNode<TValue>(name, value));
-        }
-
-        public static NavTreeNode AppendSibling(this NavTreeNode node, string name)
-        {
-            return node.AppendSiblingNode(new NavTreeNode(name));
-        }
-
-        public static NavTreeLeafNode<TValue> AppendSibling<TValue>(this NavTreeNode node, string name, TValue value)
-        {
-            return node.AppendSiblingNode(new NavTreeLeafNode<TValue>(name, value));
-        }
-    }
-
 }
