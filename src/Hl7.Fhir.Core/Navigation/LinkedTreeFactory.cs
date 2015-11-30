@@ -5,54 +5,63 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Navigation
 {
-    public class NavTreeNodeFactory
+    /// <summary>Provides static methods for creating a <see cref="DoublyLinkedTree"/> structure.</summary>
+    public static class LinkedTreeFactory
     {
         /// <summary>
-        /// Create a structure of <see cref="NavTreeNode"/> instances from the specified (anonymous) object.
+        /// Create a structure of <see cref="DoublyLinkedTree"/> instances from the specified (anonymous) object.
+        /// Recursively reflect on the object properties to generate tree nodes and leaf items.
+        /// Convert complex properties to internal nodes. Convert simple properties to leaf items.
         /// </summary>
         /// <param name="obj">The (anonymous) object instance to convert to a tree.</param>
         /// <param name="name">The name of the root node.</param>
-        /// <returns>A <see cref="NavTreeNode"/> instance that represents the root of the generated tree.</returns>
-        public static NavTreeNode CreateFromObject(object obj, string name)
+        /// <returns>A <see cref="DoublyLinkedTree"/> instance that represents the root of the generated tree.</returns>
+        public static DoublyLinkedTree CreateFromObject(object obj, string name)
         {
-            return CreateFromObject<NavTreeNode>(obj, name, CreateNode, CreateNode);
+            var root = DoublyLinkedTree.Create(name);
+            AddFromObject<DoublyLinkedTree>(root, obj, DoublyLinkedTreeNode.Create, CreateNode);
+            return root;
         }
 
-        // Helper function to create a NavTreeNode (without value) or NavTreeNode<T> (with value)
-        private static NavTreeNode CreateNode(string name, object value)
+        // Helper function to create a tree node (without value) or leaf item (with value)
+        private static DoublyLinkedTree CreateNode(string name, object value)
         {
-            if (value == null) { return new NavTreeNode(name); }
+            if (value == null) { return DoublyLinkedTreeNode.Create(name); }
 
-            // Create a NavTreeNode<T> instance for the specified value of type T
-            var valueNodeType = typeof(NavTreeLeafNode<>).MakeGenericType(value.GetType());
+            // Create a DoublyLinkedTreeLeaf<T> instance for the specified value of type T
+            var valueNodeType = typeof(DoublyLinkedTreeLeaf<>).MakeGenericType(value.GetType());
             var instance = Activator.CreateInstance(valueNodeType, name, value);
 
-            return instance as NavTreeNode;
+            return instance as DoublyLinkedTree;
         }
-
-        private static NavTreeNode CreateNode(string name) { return new NavTreeNode(name); }
 
         /// <summary>
         /// Create a generic tree structure from a given (anonymous) object hierarchy.
         /// Recursively maps object properties to tree nodes using reflection.
         /// </summary>
         /// <typeparam name="TNode">The type of the generated root node.</typeparam>
+        /// <param name="root">The tree root node.</param>
         /// <param name="obj">The (anonymous) object instance to convert to a tree.</param>
-        /// <param name="name">The name of the root node.</param>
         /// <param name="createInternalNode">Factory function that should create a new internal node from the specified name.</param>
         /// <param name="createLeafNode">Factory function that should create a new leaf node from the specified name and value.</param>
         /// <param name="predicate">An optional predicate to filter the enumerated properties. Return <c>false</c> to exclude the specified property.</param>
         /// <returns>A node instance of type <typeparamref name="TNode"/> that represents the root of the generated tree.</returns>
-        public static TNode CreateFromObject<TNode>(object obj, string name,
+        private static void AddFromObject<TNode>(
+            TNode root,
+            object obj,
             Func<string, TNode> createInternalNode,
             Func<string, object, TNode> createLeafNode,
             Func<PropertyInfo, bool> predicate = null)
-            where TNode : INavTreeNode<TNode>, INavTreeBuilder<TNode>
+            where TNode : ILinkedTree<TNode>, ILinkedTreeBuilder<TNode>
         {
-            if (createLeafNode == null) { throw new ArgumentNullException("createLeafNode"); } // nameof(createLeafNode)
-            if (obj == null) { return default(TNode); }
+            // if (obj == null) { return default(TNode); }
 
-            var node = createInternalNode(name);
+            if (obj == null) { throw new ArgumentNullException("obj"); } // nameof(obj)
+            if (root == null) { throw new ArgumentNullException("root"); } // nameof(root)
+            if (createInternalNode == null) { throw new ArgumentNullException("createInternalNode"); } // nameof(createInternalNode)
+            if (createLeafNode == null) { throw new ArgumentNullException("createLeafNode"); } // nameof(createLeafNode)
+
+            // var node = createInternalNode(name);
             var props = obj.GetType().GetProperties() as IEnumerable<PropertyInfo>;
             // Optionally apply the specified filter
             if (predicate != null)
@@ -61,21 +70,18 @@ namespace Hl7.Fhir.Navigation
             }
             foreach (var prop in props)
             {
-                TNode childNode;
-                var propType = prop.PropertyType;
-                if (IsSimpleType(propType))
+                if (IsSimpleType(prop.PropertyType))
                 {
                     // Leaf node
-                    childNode = createLeafNode(prop.Name, prop.GetValue(obj));
+                    var childNode = root.AddChild(prop.Name, prop.GetValue(obj));
                 }
                 else
                 {
-                    var propVal = prop.GetValue(obj);
-                    childNode = CreateFromObject<TNode>(propVal, prop.Name, createInternalNode, createLeafNode, predicate);
+                    var childObj = prop.GetValue(obj);
+                    var childNode = root.AddChild(prop.Name);
+                    AddFromObject(childNode, childObj, createInternalNode, createLeafNode, predicate);
                 }
-                node.AppendChildNode(childNode);
             }
-            return node;
         }
 
         // Helper function to determine if a property of the specified type can contain sub-properties
@@ -97,6 +103,5 @@ namespace Hl7.Fhir.Navigation
             typeof(TimeSpan),
             typeof(Guid)
         };
-
     }
 }

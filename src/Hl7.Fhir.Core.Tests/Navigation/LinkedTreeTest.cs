@@ -1,19 +1,25 @@
-﻿#if false
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
 
-using System;
-using System.Linq;
+using Hl7.Fhir.Navigation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
     [TestClass]
-    public class NavigationTest
+    public class LinkedTreeTest
     {
         // Render tree to formatted string
-        static string RenderTree<T>(T root) where T : INavTreeNode<T>
+        static string RenderTree<T>(T root) where T : IDoublyLinkedTree<T>
         {
             return root.DescendantsAndSelf().Aggregate("",
                 (bc, n) => bc + n.Ancestors().Aggregate("",
@@ -24,48 +30,38 @@ namespace Hl7.Fhir.Navigation
             );
         }
 
-        static readonly NavTreeNode PatientTree = BuildTree();
-
-        static NavTreeNode BuildTree()
+        DoublyLinkedTree CreatePatientTree()
         {
-            var root = new NavTreeNode("Patient");
+            var root = DoublyLinkedTree.Create("Patient");
 
-            root.AppendChild("identifier")
-                    .AppendChild("use", "...use...")
-                    .AppendSibling("type", "...type...")
-                    .AppendSibling("system", "...system...")
-                    .AppendSibling("value", "0123456789")
-                    .AppendSibling("period")
-                        .AppendChild("start", "20151127 12:00")
-                        .AppendSibling("end", "20151130 18:00")
+            root.AddChild("identifier")
+                    .AddChild("use", "...use...")
+                    .AddSibling("type", "...type...")
+                    .AddSibling("system", "...system...")
+                    .AddSibling("value", "0123456789")
+                    .AddSibling("period")
+                        .AddChild("start", "20151127 12:00")
+                        .AddSibling("end", "20151130 18:00")
                     .Parent
-                    .AppendSibling("assigner", "Dr. House")
+                    .AddSibling("assigner", "Dr. House")
                 .Parent
-                .AppendSibling("gender", "F")
-                .AppendSibling("name")
-                    .AppendChild("use", "...use...")
-                    .AppendSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
-                    .AppendSibling("family", "Akkermans")
-                    .AppendSibling("given", "Piet")
-                    .AppendSibling("prefix", "Prof. Dr. Ir.")
-                    .AppendSibling("suffix", "MBA")
-                    .AppendSibling("period")
-                        .AppendChild("start", "20151201 03:15")
-                        .AppendSibling("end", "20151231 23:45");
+                .AddSibling("gender", "F")
+                .AddSibling("name")
+                    .AddChild("use", "...use...")
+                    .AddSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AddSibling("family", "Akkermans")
+                    .AddSibling("given", "Piet")
+                    .AddSibling("prefix", "Prof. Dr. Ir.")
+                    .AddSibling("suffix", "MBA")
+                    .AddSibling("period")
+                        .AddChild("start", "20151201 03:15")
+                        .AddSibling("end", "20151231 23:45");
 
             return root;
         }
 
         [TestMethod]
-        public void Test_Nav_TreeBuilder()
-        {
-            var root = PatientTree;
-            // TODO: Assert result...
-            Debug.Print(RenderTree(root));
-        }
-
-        [TestMethod]
-        public void Test_Nav_CreateFromAnonymousObject()
+        public void Test_Tree_CreateFromAnonymousObject()
         {
             var Patient =
                 new
@@ -100,18 +96,26 @@ namespace Hl7.Fhir.Navigation
                     }
                 };
 
-            var root = NavTreeNodeFactory.CreateFromObject(Patient, "Patient");
+            var root = LinkedTreeFactory.CreateFromObject(Patient, "Patient");
             // TODO: Assert result...
             Debug.Print(RenderTree(root));
         }
 
         [TestMethod]
-        public void Test_Nav_AppendChild()
+        public void Test_Tree_Builder()
         {
-            var root = new NavTreeNode("Homer");
-            var child = root.AppendChild("Marge");
-            var grandchild = child.AppendChild("Bart");
-            var grandchild2 = child.AppendChild("Lisa");
+            var root = CreatePatientTree();
+            // TODO: Assert result...
+            Debug.Print(RenderTree(root));
+        }
+
+        [TestMethod]
+        public void Test_Tree_AddChild()
+        {
+            var root = DoublyLinkedTree.Create("Homer");
+            var child = root.AddChild("Marge");
+            var grandchild = child.AddChild("Bart");
+            var grandchild2 = child.AddChild("Lisa");
 
             Assert.AreEqual(root.FirstChild, child);
             Assert.IsNull(root.Parent);
@@ -135,12 +139,12 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_AppendSiblings()
+        public void Test_Tree_AddSiblings()
         {
-            var root = new NavTreeNode("Homer");
-            var s1 = root.AppendSibling("Marge");
-            var s2 = s1.AppendSibling("Bart");
-            var s3 = s2.AppendSibling("Lisa");
+            var root = DoublyLinkedTree.Create("Homer");
+            var s1 = root.AddSibling("Marge");
+            var s2 = s1.AddSibling("Bart");
+            var s3 = s2.AddSibling("Lisa");
 
             Assert.IsNull(root.FirstChild);
             Assert.IsNull(root.Parent);
@@ -164,9 +168,9 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_Children()
+        public void Test_Tree_Children()
         {
-            var root = PatientTree;
+            var root = CreatePatientTree();
             Assert.AreEqual(root.FirstChild.Name, "identifier");
             Assert.AreEqual(root.LastChild().Name, "name");
 
@@ -180,9 +184,9 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_Descendants()
+        public void Test_Tree_Descendants()
         {
-            var root = PatientTree;
+            var root = CreatePatientTree();
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
 
@@ -201,9 +205,9 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_Siblings()
+        public void Test_Tree_Siblings()
         {
-            var root = PatientTree;
+            var root = CreatePatientTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
 
@@ -219,9 +223,9 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_Ancestors()
+        public void Test_Tree_Ancestors()
         {
-            var root = PatientTree;
+            var root = CreatePatientTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
             child = child.FollowingSiblings().First(n => n.Name == "period");
@@ -240,9 +244,9 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Nav_SimpleExpression()
+        public void Test_Tree_SimpleExpression()
         {
-            var root = PatientTree;
+            var root = CreatePatientTree();
 
             Debug.Print("===== Full tree =====");
             Debug.Print(RenderTree(root));
@@ -259,13 +263,10 @@ namespace Hl7.Fhir.Navigation
                 Debug.Print(item.ToString());
             }
 
-            var start_values = period_starts.OfType<NavTreeLeafNode<string>>();
+            var start_values = period_starts.OfType<DoublyLinkedTreeLeaf<string>>();
             var maxStart = start_values.Max(n => n.Value);
             var maxNode = start_values.First(n => n.Value == maxStart);
             Debug.Print("Max start = {0}", maxNode.Value);
         }
     }
-
 }
-
-#endif

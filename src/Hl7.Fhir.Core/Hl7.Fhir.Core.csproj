@@ -71,12 +71,14 @@
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\Expression.cs" />
-    <Compile Include="Navigation\INavTreeNode.cs" />
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
-    <Compile Include="Navigation\NavTreeBuilderExtensions.cs" />
-    <Compile Include="Navigation\NavTreeNode.cs" />
-    <Compile Include="Navigation\NavTreeNodeExtensions.cs" />
+    <Compile Include="Navigation\ILinkedTree.cs" />
+    <Compile Include="Navigation\IValue.cs" />
+    <Compile Include="Navigation\DoublyLinkedTree.cs" />
+    <Compile Include="Navigation\LinkedTreeExtensions.cs" />
+    <Compile Include="Navigation\LinkedTreeFactory.cs" />
+    <Compile Include="Navigation\LinkedTreeHelpers.cs" />
     <Compile Include="FhirPath\PathEvaluator.cs" />
     <Compile Include="FhirPath\Result.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
@@ -110,8 +112,6 @@
     <Compile Include="Model\Generated\TestScript.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\PositiveInt.cs" />
-    <Compile Include="Navigation\NavTreeNodeFactory.cs" />
-    <Compile Include="Navigation\NavTreeNodeSetExtensions.cs" />
     <Compile Include="Rest\ResourceReferenceExtensions.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Element.cs" />
