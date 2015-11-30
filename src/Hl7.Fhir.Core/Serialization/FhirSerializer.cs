@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Serialization
             MemoryStream stream = new MemoryStream();
 
             var sw = new StreamWriter(stream, new UTF8Encoding(false));
-            JsonWriter jw = new JsonTextWriter(sw);
+            JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
 
             serializer(jw);
 
@@ -110,11 +110,32 @@ namespace Hl7.Fhir.Serialization
             return stream.ToArray();
         }
 
+
+        internal class BetterDecimalJsonTextWriter : JsonTextWriter
+        {
+            public BetterDecimalJsonTextWriter(TextWriter textWriter) : base(textWriter)
+            {
+            }
+
+            public override void WriteValue(decimal value)
+            {
+                WriteRawValue(value.ToString(this.Culture));
+            }
+
+            public override void WriteValue(decimal? value)
+            {
+                if (value.HasValue)
+                    WriteRawValue(value.Value.ToString(this.Culture));
+                else
+                    WriteNull();
+            }
+        }
+
         private static string jsonWriterToString(Action<JsonWriter> serializer)
         {
             StringBuilder resultBuilder = new StringBuilder();
             StringWriter sw = new StringWriter(resultBuilder);
-            JsonWriter jw = new JsonTextWriter(sw);
+            JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
 
             serializer(jw);
             jw.Flush();

@@ -14,6 +14,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -221,6 +223,23 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<id value="));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+        }
+
+        [TestMethod]
+        public void TestDecimalSerializationInJson()
+        {
+            var dec6 = 6m;
+            var dec60 = 6.0m;
+
+            var obs = new Observation { Value = new FhirDecimal(dec6) };
+            var json = FhirSerializer.SerializeResourceToJson(obs);
+            var obs2 = (Observation)FhirParser.ParseFromJson(json);
+            Assert.AreEqual("6", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            obs = new Observation { Value = new FhirDecimal(dec60) };
+            json = FhirSerializer.SerializeResourceToJson(obs);
+            obs2 = (Observation)FhirParser.ParseFromJson(json);
+            Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
     }
