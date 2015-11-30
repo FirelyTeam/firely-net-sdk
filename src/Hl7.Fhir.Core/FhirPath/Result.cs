@@ -16,7 +16,8 @@ namespace Hl7.Fhir.FhirPath
 
     public class Result<T>
     {
-        public Result(T initial)
+        // [WMR] Changed from public to internal - enforce ForValue factory method
+        internal Result(T initial)
         {
             Value = initial;
         }
