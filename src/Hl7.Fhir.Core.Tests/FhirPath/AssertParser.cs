@@ -75,9 +75,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             SucceedsWith<T>(parser, input, result => Assert.AreEqual(input, result));
         }
 
-        public static void SucceedsMatch(Parser<string> parser, string input, string match)
+        public static void SucceedsMatch<T>(Parser<T> parser, string input, T match)
         {
-            SucceedsWith<string>(parser, input, result => Assert.AreEqual(match, result));
+            SucceedsWith<T>(parser, input, result => Assert.AreEqual(match, result));
         }
 
         public static void FailsMatch<T>(Parser<T> parser, string input)

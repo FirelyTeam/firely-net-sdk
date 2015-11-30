@@ -175,30 +175,73 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "0");
         }
 
+#if false
+        // [WMR] All numbers are parsed as decimal
+
         [TestMethod]
         public void FhirPath_Lex_Int()
         {
             var parser = Lexer.Number.End();
 
-            for (int i = 0; i < 100; i++)
+            AssertParser.SucceedsMatch(parser, "0");
+            for (int i = 1; i < 100; i++)
             {
                 AssertParser.SucceedsMatch(parser, i.ToString());
-                // TODO: Negative values
                 AssertParser.SucceedsMatch(parser, "-" + i.ToString());
             }
 
             // Very large integers - how to cast to (32-bit) int?
             // [WMR] Suggestion: match all digits, but validate during conversion to int
-            AssertParser.SucceedsMatch(parser, "100000000000000000000000000000000");
-            AssertParser.SucceedsMatch(parser, "999999999999999999999999999999999");
-            AssertParser.SucceedsMatch(parser, "-100000000000000000000000000000000");
-            AssertParser.SucceedsMatch(parser, "-999999999999999999999999999999999");
+            // AssertParser.SucceedsMatch(parser, "100000000000000000000000000000000");
+            // AssertParser.SucceedsMatch(parser, "999999999999999999999999999999999");
+            // AssertParser.SucceedsMatch(parser, "-100000000000000000000000000000000");
+            // AssertParser.SucceedsMatch(parser, "-999999999999999999999999999999999");
 
             // FHIR disallows leading zeroes
             AssertParser.FailsMatch(parser, "");
             AssertParser.FailsMatch(parser, "01");
             AssertParser.FailsMatch(parser, "a0");
-            AssertParser.FailsMatch(parser, "0.1");
+            // AssertParser.FailsMatch(parser, "0.1");
+        }
+#endif
+
+        [TestMethod]
+        public void FhirPath_Lex_Decimal()
+        {
+            var parser = Lexer.Number.End();
+
+            // TODO: Convert integer values to integer etc.
+
+            // Test positive integer values
+            for (decimal d = 0; d < 100M; d++)
+            {
+                AssertParser.SucceedsMatch(parser, d.ToString(), d);
+            }
+
+            // Test negative integer values
+            // TODO
+            for (decimal d = 0; d > -100M; d--)
+            {
+                AssertParser.SucceedsMatch(parser, d.ToString(), d);
+            }
+
+            // Test fraction values
+
+            // Test max value
+            var max = decimal.MaxValue;
+            AssertParser.SucceedsMatch(parser, max.ToString(), max);
+            // TODO: Handle overflow exception, convert to parsing error
+            AssertParser.FailsMatch(parser, max.ToString() + "0");
+
+            // Test invalid values
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "a0");
+            AssertParser.FailsMatch(parser, "0d");
+            AssertParser.FailsMatch(parser, "0x0");
+
+            // FHIR disallows leading zeroes
+            // TODO
+            AssertParser.FailsMatch(parser, "01");
         }
 
         [TestMethod]
