@@ -477,58 +477,58 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Resource WholeSystemOperation(string operationName, Parameters parameters = null)
+        public Resource WholeSystemOperation(string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
-            return internalOperation(operationName, parameters: parameters);
+            return internalOperation(operationName, parameters: parameters, useGet: useGet);
         }
 
-        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null) where TResource : Resource
+        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null, bool useGet = false) where TResource : Resource
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
             var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            return TypeOperation(operationName, typeName, parameters);
+            return TypeOperation(operationName, typeName, parameters, useGet: useGet);
         }
 
-        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null)
+        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
             if (typeName == null) throw Error.ArgumentNull("typeName");
 
-            return internalOperation(operationName, typeName, parameters: parameters);
+            return internalOperation(operationName, typeName, parameters: parameters, useGet: useGet);
         }
 
-        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null)
+        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
 
-            return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters);
+            return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters, useGet);
         }
 
-        public Resource Operation(Uri location, string operationName, Parameters parameters = null)
+        public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
-            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
-        public Resource Operation(Uri operation, Parameters parameters = null)
+        public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
         {
             if (operation == null) throw Error.ArgumentNull("operation");
 
-            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
-        private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)
+        private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null, bool useGet = false)
         {
             // Brian: Not sure why we would create this parameters object as empty.
             //        I would imagine that a null parameters object is different to an empty one?
@@ -537,11 +537,11 @@ namespace Hl7.Fhir.Rest
             Bundle tx;
 
             if (type == null)
-                tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters, useGet).ToBundle();
             else if (id == null)
-                tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToBundle();
             else
-                tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
