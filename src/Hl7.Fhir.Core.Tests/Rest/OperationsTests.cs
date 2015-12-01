@@ -27,17 +27,17 @@ namespace Hl7.Fhir.Tests.Rest
     {
         public const string testEndpoint = "http://fhir-dev.healthintersections.com.au/open";
 
-        [TestMethod, Ignore] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirClient(testEndpoint);
             var start = new FhirDateTime(2014,11,1);
             var end = new FhirDateTime(2015,1,1);
             var par = new Parameters().Add("start", start).Add("end", end);
-            var bundle = (Bundle)client.InstanceOperation(ResourceIdentity.Build("Patient", "1"), "everything", par);
+            var bundle = (Bundle)client.InstanceOperation(ResourceIdentity.Build("Patient", "example"), "everything", par);
             Assert.IsTrue(bundle.Entry.Any());
 
-            var bundle2 = client.FetchPatientRecord(ResourceIdentity.Build("Patient","1"), start, end);
+            var bundle2 = client.FetchPatientRecord(ResourceIdentity.Build("Patient","example"), start, end);
             Assert.IsTrue(bundle2.Entry.Any());
         }
 
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var vsX = client.ExpandValueSet(vs);
 
-            Assert.IsTrue(vs.Expansion.Contains.Any());
+            Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
         [TestMethod]
@@ -84,16 +84,24 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod,Ignore]//returns 500: validation of slices is not done yet.
+        [TestMethod]//returns 500: validation of slices is not done yet.
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);
 
             var pat = client.Read<Patient>("Patient/patient-uslab-example1");
-            var vresult = client.ValidateResource(pat, null,
-                new FhirUri("http://hl7.org/fhir/StructureDefinition/uslab-patient"));
 
-            Assert.IsTrue(vresult.Success());
+            try
+            {
+                var vresult = client.ValidateResource(pat, null,
+                    new FhirUri("http://hl7.org/fhir/StructureDefinition/uslab-patient"));
+                Assert.Fail("Should have resulted in 400");
+            }
+            catch(FhirOperationException fe)
+            {
+                Assert.AreEqual(System.Net.HttpStatusCode.BadRequest, fe.Status);
+                Assert.IsTrue(fe.Outcome.Issue.Where(i => i.Severity == OperationOutcome.IssueSeverity.Error).Any());
+            }
         }
     }
 }

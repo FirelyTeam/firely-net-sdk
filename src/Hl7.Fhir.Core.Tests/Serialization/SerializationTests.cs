@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(FhirParser.ProbeIsXml("<?xml />"));
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestSummary()
         {
             var p = new Patient();
