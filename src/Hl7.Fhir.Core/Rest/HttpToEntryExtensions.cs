@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
 
             if(result != null)
             {
-                if(result.StartsWith(@"W\")) result = result.Substring(2);
+                if(result.StartsWith(@"W/")) result = result.Substring(2);
                 result = result.Trim('\"');
             }
 
