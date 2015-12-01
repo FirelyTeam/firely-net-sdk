@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Model;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -137,45 +138,22 @@ namespace Hl7.Fhir.Tests.Serialization
 
         // TODO: Unfortunately, this is currently too much work to validate. See comments on the bottom of
         // https://github.com/ewoutkramer/fhir-net-api/issues/20
-        [TestMethod, Ignore]
+        [TestMethod]
         public void CatchArrayWithNull()
         {
             var json = @"{
-                'resourceType': 'Profile',
-                'identifier': 'oh1394156991825',
-                'name': 'a new profile',
-                'publisher': 'Orion Health',
-                'description': 'xcv',
-                'status': 'draft',
-                'experimental': true,
-                'date': '2014-03-07T14:49:51+13:00',
-                'requirements': 'cxv',
-                'extensionDefn': [{
-                    'code': 'test1',
-                    'contextType': 'resource',
-                    'context': [null],
-                    'definition': {
-                        'short': 'should change - and again',
-                        'formal': '',
-                        'min': '0',
-                        'max': '1',
-                        'type': [{'code': 'date'}],
-                        'isModifier': false,
-                        'binding': {
-                            'name': 'ValueSet1',
-                            'referenceResource': {'reference': 'http://spark.furore.com/fhir/ValueSet/3216371'}
-                        }
-                    },
-                    }]}";
+                'resourceType': 'Patient',
+                'identifier': [null]
+                }";
 
             try
             {
                 var prof = FhirParser.ParseResourceFromJson(json);
                 Assert.Fail("Should have failed parsing");
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
-
+                Assert.IsTrue(ex.Message.Contains("both be null"));
             }
         }
     }
