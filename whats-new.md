@@ -3,7 +3,7 @@ layout: default
 title: What's new?
 ---
 
-### In 0.90.3
+### In 0.90.3 (released 20151201)
 * Enhancement: IConformanceResource now also exposes the xxxElement members. Thanks, wmrutten!
 * Enhancement: Parameters.GetSingleValue<> now accepts non-primtives as generic param. Thanks, yunwang!
 * Enhancement: ContentType.GetResourceFormatFromContentType now supports charset information. Thanks, CorinaCiocanea!
