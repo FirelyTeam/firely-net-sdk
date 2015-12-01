@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void TestDecimalSerializationInJson()
+        public void TestDecimalPrecisionSerializationInJson()
         {
             var dec6 = 6m;
             var dec60 = 6.0m;
@@ -240,6 +240,16 @@ namespace Hl7.Fhir.Tests.Serialization
             json = FhirSerializer.SerializeResourceToJson(obs);
             obs2 = (Observation)FhirParser.ParseFromJson(json);
             Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        [TestMethod]
+        public void TestLongDecimalSerialization()
+        {
+            var dec = 3.1415926535897932384626433833m;
+            var obs = new Observation { Value = new FhirDecimal(dec) };
+            var json = FhirSerializer.SerializeResourceToJson(obs);
+            var obs2 = (Observation)FhirParser.ParseFromJson(json);
+            Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
     }
