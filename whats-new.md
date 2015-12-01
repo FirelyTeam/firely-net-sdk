@@ -2,6 +2,22 @@
 layout: default
 title: What's new?
 ---
+
+### In 0.90.3
+* Enhancement: IConformanceResource now also exposes the xxxElement members. Thanks, wmrutten!
+* Enhancement: Parameters.GetSingleValue<> now accepts non-primtives as generic param. Thanks, yunwang!
+* Enhancement: ContentType.GetResourceFormatFromContentType now supports charset information. Thanks, CorinaCiocanea!
+* Enhancement: Operations can now be invoked using GET
+* Fix: Small code analysis fixes. Thanks, bnantz!
+* Fix: SearchParams now supports `_sort` without modifiers. Thanks, sunvenu!
+* Fix: FhirClient: The "Prefer" header was never set. Thanks, CorinaCiocanea!
+* Fix: FhirClient could not handle spurious OperationOutcome results on successful POST/PUT when Prefer=minimal. Thanks, CorinaCiocanea!
+* Fix: Json serializer serialized decimal value "6" to "6.0". Thanks, CorinaCiocanea!
+* Fix: Json serializer now retains full precision of decimal on roundtrip.
+* Fix: ETag header was not correctly parsed. Thanks, CorinaCiocanea! 
+* Fix: Parameters with an "=" in the value (like pre-DSTU2 =<=) would become garbled when doing FhirClient.Continue(). Thanks rtaixghealth!
+* Fix: FhirClient.Meta() operations will use GET and return Meta (not Parameters)
+
 ### In 0.90.2
 * Added support for $translate operations on ConceptMap
 * Added support for the changed _summary parameter
