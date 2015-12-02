@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,20 +27,47 @@ namespace Hl7.Fhir.Navigation
         public static DoublyLinkedTree CreateFromObject(object obj, string name)
         {
             var root = DoublyLinkedTree.Create(name);
-            AddFromObject<DoublyLinkedTree>(root, obj, DoublyLinkedTreeNode.Create, CreateNode);
+            AddFromObject<DoublyLinkedTree>(root, obj);
             return root;
         }
 
         // Helper function to create a tree node (without value) or leaf item (with value)
-        private static DoublyLinkedTree CreateNode(string name, object value)
+        //private static DoublyLinkedTree CreateNode(string name, object value)
+        //{
+        //    if (value == null) { return DoublyLinkedTree.Create(name); }
+        //    // Create a DoublyLinkedTreeLeaf<T> instance for the specified value of type T
+        //    var valueNodeType = typeof(DoublyLinkedTreeLeaf<>).MakeGenericType(value.GetType());
+        //    var instance = Activator.CreateInstance(valueNodeType, name, value);
+        //    return instance as DoublyLinkedTree;
+        //}
+
+        // Private static helper class for caching the generic MethodInfo
+        private static class LinkedTreeBuilderHelper<TNode>
+            where TNode : ILinkedTree<TNode>, ILinkedTreeBuilder<TNode>
         {
-            if (value == null) { return DoublyLinkedTreeNode.Create(name); }
+            private const string memberName = "AddLastChild"; // nameof(ILinkedTreeBuilder<TNode>.AddLastChild)
 
-            // Create a DoublyLinkedTreeLeaf<T> instance for the specified value of type T
-            var valueNodeType = typeof(DoublyLinkedTreeLeaf<>).MakeGenericType(value.GetType());
-            var instance = Activator.CreateInstance(valueNodeType, name, value);
+            public static MethodInfo MiAddLastChild =
+                
+                // Awkward way of retrieving the desired methodinfo
+                // http://stackoverflow.com/questions/588149/referencing-desired-overloaded-generic-method
 
-            return instance as DoublyLinkedTree;
+                (from m in typeof(ILinkedTreeBuilder<TNode>).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                 where m.Name == memberName && m.GetGenericArguments().Length == 1
+                 && m.GetParameters().Length == 2
+                 && m.ReturnType == typeof(TNode)
+                 select m).Single();
+        }
+
+        // Create a leaf node of type IValue<T> for the specified value, where T is the runtime value type
+        private static TNode AddLastChild<TNode>(TNode root, string name, object value)
+            where TNode : ILinkedTree<TNode>, ILinkedTreeBuilder<TNode>
+        {
+            // Dynamically create and invoke a concrete methodinfo for the specified runtime value type
+            var miAddLastChild = LinkedTreeBuilderHelper<TNode>.MiAddLastChild;
+            var mi = miAddLastChild.MakeGenericMethod(value.GetType());
+            var result = mi.Invoke(root, new object[] { name, value });
+            return (TNode)result;
         }
 
         /// <summary>
@@ -42,15 +77,11 @@ namespace Hl7.Fhir.Navigation
         /// <typeparam name="TNode">The type of the generated root node.</typeparam>
         /// <param name="root">The tree root node.</param>
         /// <param name="obj">The (anonymous) object instance to convert to a tree.</param>
-        /// <param name="createInternalNode">Factory function that should create a new internal node from the specified name.</param>
-        /// <param name="createLeafNode">Factory function that should create a new leaf node from the specified name and value.</param>
         /// <param name="predicate">An optional predicate to filter the enumerated properties. Return <c>false</c> to exclude the specified property.</param>
         /// <returns>A node instance of type <typeparamref name="TNode"/> that represents the root of the generated tree.</returns>
         private static void AddFromObject<TNode>(
             TNode root,
             object obj,
-            Func<string, TNode> createInternalNode,
-            Func<string, object, TNode> createLeafNode,
             Func<PropertyInfo, bool> predicate = null)
             where TNode : ILinkedTree<TNode>, ILinkedTreeBuilder<TNode>
         {
@@ -58,8 +89,6 @@ namespace Hl7.Fhir.Navigation
 
             if (obj == null) { throw new ArgumentNullException("obj"); } // nameof(obj)
             if (root == null) { throw new ArgumentNullException("root"); } // nameof(root)
-            if (createInternalNode == null) { throw new ArgumentNullException("createInternalNode"); } // nameof(createInternalNode)
-            if (createLeafNode == null) { throw new ArgumentNullException("createLeafNode"); } // nameof(createLeafNode)
 
             // var node = createInternalNode(name);
             var props = obj.GetType().GetProperties() as IEnumerable<PropertyInfo>;
@@ -73,13 +102,13 @@ namespace Hl7.Fhir.Navigation
                 if (IsSimpleType(prop.PropertyType))
                 {
                     // Leaf node
-                    var childNode = root.AddChild(prop.Name, prop.GetValue(obj));
+                    var childNode = AddLastChild(root, prop.Name, prop.GetValue(obj));
                 }
                 else
                 {
                     var childObj = prop.GetValue(obj);
-                    var childNode = root.AddChild(prop.Name);
-                    AddFromObject(childNode, childObj, createInternalNode, createLeafNode, predicate);
+                    var childNode = root.AddLastChild(prop.Name);
+                    AddFromObject(childNode, childObj, predicate);
                 }
             }
         }
@@ -104,4 +133,5 @@ namespace Hl7.Fhir.Navigation
             typeof(Guid)
         };
     }
+
 }

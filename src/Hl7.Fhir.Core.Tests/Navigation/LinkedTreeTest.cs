@@ -34,28 +34,28 @@ namespace Hl7.Fhir.Navigation
         {
             var root = DoublyLinkedTree.Create("Patient");
 
-            root.AddChild("identifier")
-                    .AddChild("use", "...use...")
-                    .AddSibling("type", "...type...")
-                    .AddSibling("system", "...system...")
-                    .AddSibling("value", "0123456789")
-                    .AddSibling("period")
-                        .AddChild("start", "20151127 12:00")
-                        .AddSibling("end", "20151130 18:00")
+            root.AddLastChild("identifier")
+                    .AddLastChild("use", "...use...")
+                    .AddLastSibling("type", "...type...")
+                    .AddLastSibling("system", "...system...")
+                    .AddLastSibling("value", "0123456789")
+                    .AddLastSibling("period")
+                        .AddLastChild("start", "20151127 12:00")
+                        .AddLastSibling("end", "20151130 18:00")
                     .Parent
-                    .AddSibling("assigner", "Dr. House")
+                    .AddLastSibling("assigner", "Dr. House")
                 .Parent
-                .AddSibling("gender", "F")
-                .AddSibling("name")
-                    .AddChild("use", "...use...")
-                    .AddSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
-                    .AddSibling("family", "Akkermans")
-                    .AddSibling("given", "Piet")
-                    .AddSibling("prefix", "Prof. Dr. Ir.")
-                    .AddSibling("suffix", "MBA")
-                    .AddSibling("period")
-                        .AddChild("start", "20151201 03:15")
-                        .AddSibling("end", "20151231 23:45");
+                .AddLastSibling("gender", "F")
+                .AddLastSibling("name")
+                    .AddLastChild("use", "...use...")
+                    .AddLastSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AddLastSibling("family", "Akkermans")
+                    .AddLastSibling("given", "Piet")
+                    .AddLastSibling("prefix", "Prof. Dr. Ir.")
+                    .AddLastSibling("suffix", "MBA")
+                    .AddLastSibling("period")
+                        .AddLastChild("start", "20151201 03:15")
+                        .AddLastSibling("end", "20151231 23:45");
 
             return root;
         }
@@ -113,9 +113,9 @@ namespace Hl7.Fhir.Navigation
         public void Test_Tree_AddChild()
         {
             var root = DoublyLinkedTree.Create("Homer");
-            var child = root.AddChild("Marge");
-            var grandchild = child.AddChild("Bart");
-            var grandchild2 = child.AddChild("Lisa");
+            var child = root.AddLastChild("Marge");
+            var grandchild = child.AddLastChild("Bart");
+            var grandchild2 = child.AddLastChild("Lisa");
 
             Assert.AreEqual(root.FirstChild, child);
             Assert.IsNull(root.Parent);
@@ -142,9 +142,9 @@ namespace Hl7.Fhir.Navigation
         public void Test_Tree_AddSiblings()
         {
             var root = DoublyLinkedTree.Create("Homer");
-            var s1 = root.AddSibling("Marge");
-            var s2 = s1.AddSibling("Bart");
-            var s3 = s2.AddSibling("Lisa");
+            var s1 = root.AddLastSibling("Marge");
+            var s2 = s1.AddLastSibling("Bart");
+            var s3 = s2.AddLastSibling("Lisa");
 
             Assert.IsNull(root.FirstChild);
             Assert.IsNull(root.Parent);
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Navigation
                 Debug.Print(item.ToString());
             }
 
-            var start_values = period_starts.OfType<DoublyLinkedTreeLeaf<string>>();
+            var start_values = period_starts.OfType<IValue<string>>();
             var maxStart = start_values.Max(n => n.Value);
             var maxNode = start_values.First(n => n.Value == maxStart);
             Debug.Print("Max start = {0}", maxNode.Value);

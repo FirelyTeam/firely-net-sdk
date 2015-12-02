@@ -6,23 +6,38 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+#define PRIVATE_SUBCLASS
+
 using Hl7.Fhir.Support;
 using System;
 
 namespace Hl7.Fhir.Navigation
 {
+    // Advantages of a doubly linked tree:
+    // - O(N) navigation on all axes in both directions
+    // - O(N) insert/remove
+
     /// <summary>Common interface for a doubly linked tree item.</summary>
     public interface IDoublyLinkedTree : IDoublyLinkedTree<DoublyLinkedTree> { }
 
     /// <summary>Abstract base class for doubly linked tree items.</summary>
     public abstract class DoublyLinkedTree : IDoublyLinkedTree, ILinkedTreeBuilder<DoublyLinkedTree>
     {
-        /// <summary>Static factory method. Creates a new tree root node with the specified name.</summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <summary>Static factory method. Creates a new tree node with the specified name.</summary>
+        /// <param name="name">The name of the node.</param>
+        /// <returns>A <see cref="DoublyLinkedTree"/> node.</returns>
         public static DoublyLinkedTree Create(string name)
         {
-            return DoublyLinkedTreeNode.Create(name, null, null);
+            return CreateNode(name, null, null);
+        }
+
+        /// <summary>Static factory method. Creates a new tree leaf item with the specified name and value.</summary>
+        /// <param name="name">The name of the node.</param>
+        /// <param name="value">The value of the node.</param>
+        /// <returns>A <see cref="DoublyLinkedTree"/> leaf item.</returns>
+        public static DoublyLinkedTree Create<V>(string name, V value)
+        {
+            return CreateLeaf<V>(name, value, null, null);
         }
 
         protected DoublyLinkedTree(string name) { Name = name; }
@@ -38,8 +53,8 @@ namespace Hl7.Fhir.Navigation
         /// <summary>The name of the tree item.</summary>
         public string Name { get; }
 
-        /// <summary>Returns <c>true</c> if the tree item supports the <see cref="IValue"/> interface.</summary>
-        public bool IsValue { get { return this is IValue; } }
+        // <summary>Returns <c>true</c> if the tree item supports the <see cref="IValue"/> interface.</summary>
+        // public bool IsValue { get { return this is IValue; } }
 
         #endregion
 
@@ -77,9 +92,9 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Add a new sibling node with the specified name.</summary>
         /// <param name="name">The name of the new sibling node.</param>
         /// <returns>A reference to the new sibling node.</returns>
-        public DoublyLinkedTree AddSibling(string name)
+        public DoublyLinkedTree AddLastSibling(string name)
         {
-            return AddSibling(last => CreateNode(name, Parent, last));
+            return AddLastSibling(last => CreateNode(name, Parent, last));
         }
 
         /// <summary>Add a new sibling leaf item with the specified name and value.</summary>
@@ -87,17 +102,17 @@ namespace Hl7.Fhir.Navigation
         /// <param name="name">The name of the new sibling leaf item.</param>
         /// <param name="value">The item value.</param>
         /// <returns>A reference to the new sibling leaf item.</returns>
-        public DoublyLinkedTree AddSibling<V>(string name, V value)
+        public DoublyLinkedTree AddLastSibling<V>(string name, V value)
         {
-            return AddSibling(last => CreateLeaf(name, value, Parent, last));
+            return AddLastSibling(last => CreateLeaf(name, value, Parent, last));
         }
 
         /// <summary>Add a new child node with the specified name.</summary>
         /// <param name="name">The name of the new child node.</param>
         /// <returns>A reference to the new child node.</returns>
-        public DoublyLinkedTree AddChild(string name)
+        public DoublyLinkedTree AddLastChild(string name)
         {
-            return AddChild(last => CreateNode(name, this, last));
+            return AddLastChild(last => CreateNode(name, this, last));
         }
 
         /// <summary>Add a new child node with the specified name and value.</summary>
@@ -105,16 +120,16 @@ namespace Hl7.Fhir.Navigation
         /// <param name="name">The name of the new child leaf item.</param>
         /// <param name="value">The item value.</param>
         /// <returns>A reference to the new child leaf item.</returns>
-        public DoublyLinkedTree AddChild<V>(string name, V value)
+        public DoublyLinkedTree AddLastChild<V>(string name, V value)
         {
-            return AddChild(last => CreateLeaf(name, value, this, last));
+            return AddLastChild(last => CreateLeaf(name, value, this, last));
         }
 
         #endregion
 
         #region Private members
 
-        private DoublyLinkedTree AddSibling(Func<DoublyLinkedTree, DoublyLinkedTree> factory)
+        private DoublyLinkedTree AddLastSibling(Func<DoublyLinkedTree, DoublyLinkedTree> factory)
         {
             var last = this.LastSibling();
             var node = factory(last);
@@ -122,7 +137,7 @@ namespace Hl7.Fhir.Navigation
             return node;
         }
 
-        private DoublyLinkedTree AddChild(Func<DoublyLinkedTree, DoublyLinkedTree> factory)
+        private DoublyLinkedTree AddLastChild(Func<DoublyLinkedTree, DoublyLinkedTree> factory)
         {
             DoublyLinkedTree node = null;
             var first = FirstChild;
@@ -133,91 +148,68 @@ namespace Hl7.Fhir.Navigation
             else
             {
                 var last = first.LastSibling();
-                node = last.AddSibling(factory);
+                node = last.AddLastSibling(factory);
             }
             return node;
         }
 
-        // Following members link the base class to the (private) derived classes below
+        // Following members link the base class to the concrete derived classes below
 
-        // delegate T CreateNode<T>(string name, T parent, T previousSibling) where T : ILinkedTree<T>;
-        // delegate T CreateLeaf<T, V>(string name, V value, T parent, T previousSibling) where T : ILinkedTree<T>;
+        // delegate T CreateNodeHandler<T>(string name, T parent, T previousSibling) where T : ILinkedTree<T>;
+        // delegate T CreateLeafHandler<T, V>(string name, V value, T parent, T previousSibling) where T : ILinkedTree<T>;
 
-        private static DoublyLinkedTree CreateNode(string name, DoublyLinkedTree parent, DoublyLinkedTree last)
+        private static DoublyLinkedTree CreateNode(string name, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
         {
-            return DoublyLinkedTreeNode.Create(name, parent, last);
+            return new Node(name, parent, previousSibling);
         }
 
-        private static DoublyLinkedTree CreateLeaf<V>(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree last)
+        private static DoublyLinkedTree CreateLeaf<V>(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
         {
-            return DoublyLinkedTreeLeaf<V>.Create(name, value, parent, last);
+            return new Leaf<V>(name, value, parent, previousSibling);
+        }
+
+        // Private concrete derived classes for nodes and leaves
+
+        private sealed class Node : DoublyLinkedTree
+        {
+            public Node(string name, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
+                : base(name, parent, previousSibling)
+            {
+            }
+
+            public override DoublyLinkedTree FirstChild { get; protected set; }
+
+            public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
+        }
+
+        private sealed class Leaf<V> : DoublyLinkedTree, IValue<V>
+        {
+            public Leaf(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
+                : base(name, parent, previousSibling)
+            {
+                Value = value;
+            }
+
+            public override DoublyLinkedTree FirstChild
+            {
+                get { return null; }
+                protected set { throw new InvalidOperationException("You cannot add children to a tree leaf item."); }
+            }
+
+            #region IValue
+
+            public Type ValueType { get { return typeof(V); } }
+
+            public V Value { get; }
+
+            #endregion
+
+            public override string ToString() { return string.Format("({0}) {1} = '{2}'", ReflectionHelper.PrettyTypeName(GetType()), Name, Value); }
         }
 
         #endregion
 
+
     }
 
-
-    /// <summary>
-    /// Represents an internal node in a doubly linked tree structure.
-    /// An internal node can have children, but cannot contain a value.
-    /// </summary>
-    public sealed class DoublyLinkedTreeNode : DoublyLinkedTree
-    {
-        internal static DoublyLinkedTreeNode Create(string name, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
-        {
-            return new DoublyLinkedTreeNode(name, parent, previousSibling);
-        }
-
-        private DoublyLinkedTreeNode(string name, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
-            : base(name, parent, previousSibling)
-        {
-        }
-
-        /// <summary>Returns a reference to the first child tree item.</summary>
-        public override DoublyLinkedTree FirstChild { get; protected set; }
-
-        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
-    }
-
-    /// <summary>
-    /// Represents an leaf item in a doubly linked tree structure.
-    /// A leaf item can contain a value, but cannot reference any children.
-    /// </summary>
-    public sealed class DoublyLinkedTreeLeaf<V> : DoublyLinkedTree, IValue<V>
-    {
-        internal static DoublyLinkedTreeLeaf<V> Create(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
-        {
-            return new DoublyLinkedTreeLeaf<V>(name, value, parent, previousSibling);
-        }
-
-        private DoublyLinkedTreeLeaf(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
-            : base(name, parent, previousSibling)
-        {
-            Value = value;
-        }
-
-        /// <summary>This property always returns <c>null</c>, as leaf items have no children.</summary>
-        /// <exception cref="InvalidOperationException">Thrown on assignment.</exception>
-        public override DoublyLinkedTree FirstChild
-        {
-            get { return null; }
-            protected set { throw new InvalidOperationException("You cannot add children to a tree leaf item."); }
-        }
-
-        #region IValue
-
-        /// <summary>
-        /// Returns the type of the value.
-        /// You can access the value via the <see cref="IValue{V}"/> interface, where V is the returned value type.
-        /// </summary>
-        public Type ValueType { get { return typeof(V); } }
-
-        /// <summary>Gets a value of type <typeparamref name="V"/>.</summary>
-        public V Value { get; }
-
-        #endregion
-
-        public override string ToString() { return string.Format("({0}) {1} = '{2}'", ReflectionHelper.PrettyTypeName(GetType()), Name, Value); }
-    }
 }
